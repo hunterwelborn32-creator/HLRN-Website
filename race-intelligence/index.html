@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Race Intelligence | High Line Racing Network</title>
+<title>HLRN Race Intelligence</title>
 
 <style>
 :root{
@@ -1523,349 +1523,27 @@ body::after{
 }
 </style>
 
-<link rel="stylesheet" href="../assets/site-shell.css?v=20260921ri1">
 
-<style id="hlrn-race-intelligence-global-nav-guard">
-#hlrn-global-nav,
-#hlrn-global-nav *{
-  box-sizing:border-box;
-}
-#hlrn-global-nav{
+<style id="hlrn-shadow-nav-host-css">
+#hlrn-site-nav-host{
   display:block!important;
   visibility:visible!important;
   opacity:1!important;
   width:100%!important;
-  max-width:none!important;
-  min-height:68px!important;
   height:auto!important;
+  min-height:68px!important;
   margin:0!important;
   padding:0!important;
   position:relative!important;
-  z-index:2147483000!important;
+  z-index:2147483640!important;
   background:#090b0f!important;
-}
-#hlrn-global-nav .hgn-inner{
-  display:flex!important;
-}
-</style>
-
-
-<style id="ri-static-global-nav-css">
-#hlrn-global-nav.ri-static-nav{
-  --nav-red:#e31837;
-  --nav-bg:#080a0e;
-  --nav-panel:#12151b;
-  --nav-line:#262b34;
-  display:block!important;
-  visibility:visible!important;
-  opacity:1!important;
-  width:100%!important;
-  max-width:none!important;
-  min-height:68px!important;
-  height:auto!important;
-  margin:0!important;
-  padding:0!important;
-  position:relative!important;
-  z-index:2147483000!important;
-  background:var(--nav-bg)!important;
-  color:#fff!important;
-  font-family:Arial,Helvetica,sans-serif!important;
-  border-top:3px solid var(--nav-red)!important;
-  box-shadow:0 2px 0 rgba(255,255,255,.04),0 9px 24px rgba(0,0,0,.22)!important;
-}
-#hlrn-global-nav.ri-static-nav *,
-#hlrn-global-nav.ri-static-nav *:before,
-#hlrn-global-nav.ri-static-nav *:after{box-sizing:border-box!important}
-#hlrn-global-nav .hgn-inner{
-  width:min(100%,1540px)!important;
-  min-height:68px!important;
-  margin:0 auto!important;
-  padding:0 18px!important;
-  display:flex!important;
-  align-items:center!important;
-  gap:22px!important;
-}
-#hlrn-global-nav .hgn-brand{
-  flex:0 0 auto!important;
-  display:flex!important;
-  align-items:center!important;
-  gap:10px!important;
-  color:#fff!important;
-  text-decoration:none!important;
-  min-width:max-content!important;
-}
-#hlrn-global-nav .hgn-mark{
-  display:grid!important;
-  place-items:center!important;
-  width:43px!important;
-  height:32px!important;
-  background:#fff!important;
-  color:#090b0f!important;
-  font-size:18px!important;
-  line-height:1!important;
-  font-weight:1000!important;
-  font-style:italic!important;
-  transform:skewX(-12deg)!important;
-}
-#hlrn-global-nav .hgn-name{
-  color:#fff!important;
-  font-size:12px!important;
-  line-height:1.05!important;
-  font-weight:1000!important;
-  letter-spacing:.08em!important;
-  text-transform:uppercase!important;
-  white-space:nowrap!important;
-}
-#hlrn-global-nav .hgn-name small{
-  display:block!important;
-  margin-top:4px!important;
-  color:#7f8791!important;
-  font-size:7px!important;
-  font-weight:900!important;
-  letter-spacing:.16em!important;
-}
-#hlrn-global-nav .hgn-links{
-  flex:1 1 auto!important;
-  align-self:stretch!important;
-  display:flex!important;
-  align-items:stretch!important;
-  justify-content:center!important;
-  min-width:0!important;
-}
-#hlrn-global-nav .hgn-link{
-  position:relative!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  min-height:65px!important;
-  padding:0 13px!important;
-  border:0!important;
-  background:transparent!important;
-  color:#b7bec8!important;
-  text-decoration:none!important;
-  font-size:9px!important;
-  line-height:1!important;
-  font-weight:1000!important;
-  letter-spacing:.08em!important;
-  text-transform:uppercase!important;
-  white-space:nowrap!important;
-  cursor:pointer!important;
-}
-#hlrn-global-nav .hgn-link:hover,
-#hlrn-global-nav .hgn-link.active{
-  color:#fff!important;
-  background:#10141a!important;
-}
-#hlrn-global-nav .hgn-link.active:after{
-  content:""!important;
-  position:absolute!important;
-  left:12px!important;
-  right:12px!important;
-  bottom:0!important;
-  height:3px!important;
-  background:var(--nav-red)!important;
-}
-#hlrn-global-nav .hgn-live{
-  flex:0 0 auto!important;
-  display:inline-flex!important;
-  align-items:center!important;
-  gap:8px!important;
-  padding:10px 12px!important;
-  border:1px solid #3a404a!important;
-  background:#11151b!important;
-  color:#fff!important;
-  text-decoration:none!important;
-  font-size:8px!important;
-  font-weight:1000!important;
-  letter-spacing:.08em!important;
-  text-transform:uppercase!important;
-  white-space:nowrap!important;
-}
-#hlrn-global-nav .hgn-live i{
-  width:7px!important;height:7px!important;border-radius:50%!important;
-  background:#3fe378!important;
-  box-shadow:0 0 10px rgba(63,227,120,.6)!important;
-}
-#hlrn-global-nav .hgn-more-wrap{
-  position:relative!important;
-  display:flex!important;
-  align-items:stretch!important;
-}
-#hlrn-global-nav .hgn-more-arrow{margin-left:6px!important;font-size:8px!important}
-#hlrn-global-nav .hgn-more-menu{
-  position:absolute!important;
-  top:100%!important;
-  right:0!important;
-  width:240px!important;
-  padding:8px 0!important;
-  background:#202020!important;
-  border-top:3px solid var(--nav-red)!important;
-  box-shadow:0 18px 40px rgba(0,0,0,.48)!important;
-  opacity:0!important;
-  visibility:hidden!important;
-  transform:translateY(-5px)!important;
-  pointer-events:none!important;
-  transition:.16s ease!important;
-}
-#hlrn-global-nav .hgn-more-wrap.open .hgn-more-menu,
-#hlrn-global-nav .hgn-more-wrap:hover .hgn-more-menu,
-#hlrn-global-nav .hgn-more-wrap:focus-within .hgn-more-menu{
-  opacity:1!important;
-  visibility:visible!important;
-  transform:none!important;
-  pointer-events:auto!important;
-}
-#hlrn-global-nav .hgn-more-item{
-  display:flex!important;
-  align-items:center!important;
-  min-height:48px!important;
-  padding:0 32px!important;
-  color:#f2f2f2!important;
-  text-decoration:none!important;
-  font-size:13px!important;
-  font-weight:600!important;
-  text-transform:uppercase!important;
-}
-#hlrn-global-nav .hgn-more-item:hover{background:#2b2b2b!important;color:#fff!important}
-#hlrn-global-nav .hgn-menu{
-  display:none!important;
-  border:1px solid #313741!important;
-  background:#11151b!important;
-  color:#fff!important;
-  width:42px!important;
-  height:38px!important;
-  font-size:20px!important;
-  cursor:pointer!important;
-}
-#hlrn-global-nav .hgn-mobile{display:none!important}
-
-@media(max-width:1180px){
-  #hlrn-global-nav .hgn-links,
-  #hlrn-global-nav .hgn-live{display:none!important}
-  #hlrn-global-nav .hgn-menu{display:block!important;margin-left:auto!important}
-  #hlrn-global-nav .hgn-inner{min-height:64px!important}
-  #hlrn-global-nav .hgn-mobile.open{
-    display:grid!important;
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
-    gap:6px!important;
-    padding:10px!important;
-    background:#090b0f!important;
-    border-top:1px solid #242933!important;
-  }
-  #hlrn-global-nav .hgn-mobile > a,
-  #hlrn-global-nav .hgn-mobile-more{
-    display:flex!important;
-    align-items:center!important;
-    justify-content:center!important;
-    min-height:42px!important;
-    border:1px solid #252b34!important;
-    background:#11151b!important;
-    color:#c9cfd7!important;
-    text-decoration:none!important;
-    font-size:9px!important;
-    font-weight:1000!important;
-    text-transform:uppercase!important;
-  }
-  #hlrn-global-nav .hgn-mobile > a.active{color:#fff!important;border-color:var(--nav-red)!important}
-  #hlrn-global-nav .hgn-mobile-more{cursor:pointer!important}
-  #hlrn-global-nav .hgn-mobile-more-menu{display:none!important;grid-column:1/-1!important}
-  #hlrn-global-nav .hgn-mobile-more-menu.open{
-    display:grid!important;
-    grid-template-columns:repeat(3,minmax(0,1fr))!important;
-    gap:6px!important;
-  }
-  #hlrn-global-nav .hgn-mobile-more-menu a{
-    min-height:40px!important;
-    display:flex!important;
-    align-items:center!important;
-    justify-content:center!important;
-    background:#1a1d22!important;
-    border:1px solid #2d3138!important;
-    color:#fff!important;
-    text-decoration:none!important;
-    font-size:9px!important;
-    font-weight:1000!important;
-    text-transform:uppercase!important;
-  }
-}
-@media(max-width:600px){
-  #hlrn-global-nav .hgn-name{display:none!important}
-  #hlrn-global-nav .hgn-mobile.open{grid-template-columns:1fr!important}
-  #hlrn-global-nav .hgn-mobile-more-menu.open{grid-template-columns:1fr!important}
-}
-
-/* Keep Race Intelligence's own header as a page-level league switcher. */
-body > .shell > .header{
-  margin-top:0!important;
 }
 </style>
 
 </head>
 
 <body>
-
-<nav id="hlrn-global-nav" class="ri-static-nav" aria-label="HLRN primary navigation">
-  <div class="hgn-inner">
-    <a class="hgn-brand" href="../">
-      <span class="hgn-mark">HL</span>
-      <span class="hgn-name">
-        High Line Racing Network
-        <small>HLRN // Official Network</small>
-      </span>
-    </a>
-
-    <div class="hgn-links">
-      <a class="hgn-link" href="../">Home</a>
-      <a class="hgn-link" href="../live/">Live</a>
-      <a class="hgn-link" href="../standings/">Standings</a>
-      <a class="hgn-link active" href="./">Intelligence</a>
-      <a class="hgn-link" href="../results/">Results</a>
-      <a class="hgn-link" href="../drivers/">Drivers</a>
-      <a class="hgn-link" href="../fantasy/">Fantasy</a>
-      <a class="hgn-link" href="../news/">News</a>
-
-      <div class="hgn-more-wrap">
-        <button class="hgn-link hgn-more-btn" type="button" aria-haspopup="true" aria-expanded="false">
-          More <span class="hgn-more-arrow" aria-hidden="true">▾</span>
-        </button>
-
-        <div class="hgn-more-menu" role="menu">
-          <a class="hgn-more-item" href="../rules/" role="menuitem">Rules</a>
-          <a class="hgn-more-item" href="../broadcasters/" role="menuitem">Broadcasters</a>
-          <a class="hgn-more-item" href="../store/" role="menuitem">Store</a>
-        </div>
-      </div>
-    </div>
-
-    <a class="hgn-live" href="../live/">
-      <i></i> Race Center
-    </a>
-
-    <button class="hgn-menu" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
-  </div>
-
-  <div class="hgn-mobile">
-    <a href="../">Home</a>
-    <a href="../live/">Live</a>
-    <a href="../standings/">Standings</a>
-    <a class="active" href="./">Intelligence</a>
-    <a href="../results/">Results</a>
-    <a href="../drivers/">Drivers</a>
-    <a href="../fantasy/">Fantasy</a>
-    <a href="../news/">News</a>
-
-    <button class="hgn-mobile-more" type="button" aria-expanded="false">
-      More <span>▾</span>
-    </button>
-
-    <div class="hgn-mobile-more-menu">
-      <a href="../rules/">Rules</a>
-      <a href="../broadcasters/">Broadcasters</a>
-      <a href="../store/">Store</a>
-    </div>
-  </div>
-</nav>
-
+<div id="hlrn-site-nav-host"></div>
 <div class="shell">
 
   <header class="header">
@@ -6583,32 +6261,361 @@ body:before,.cc-cursor{display:none!important}
 }
 </style>
 
-<script id="ri-static-global-nav-js">
+
+<script id="hlrn-shadow-nav-script">
 (function(){
-  const nav=document.getElementById("hlrn-global-nav");
-  if(!nav)return;
+  const host=document.getElementById("hlrn-site-nav-host");
+  if(!host)return;
 
-  const menuBtn=nav.querySelector(".hgn-menu");
-  const mobile=nav.querySelector(".hgn-mobile");
-  const moreWrap=nav.querySelector(".hgn-more-wrap");
-  const moreBtn=nav.querySelector(".hgn-more-btn");
-  const mobileMoreBtn=nav.querySelector(".hgn-mobile-more");
-  const mobileMoreMenu=nav.querySelector(".hgn-mobile-more-menu");
+  const shadow=host.attachShadow({mode:"open"});
 
-  function closeMore(){
-    moreWrap?.classList.remove("open");
-    moreBtn?.setAttribute("aria-expanded","false");
-  }
+  shadow.innerHTML=`
+  <style>
+    :host{all:initial;display:block;width:100%;font-family:Arial,Helvetica,sans-serif}
+    *{box-sizing:border-box}
+
+    nav{
+      --red:#e31837;
+      width:100%;
+      min-height:68px;
+      margin:0;
+      padding:0;
+      background:#090b0f;
+      color:#fff;
+      border-top:3px solid var(--red);
+      box-shadow:0 2px 0 rgba(255,255,255,.04),0 8px 22px rgba(0,0,0,.28);
+      font-family:Arial,Helvetica,sans-serif;
+      position:relative;
+      z-index:10;
+    }
+
+    .inner{
+      width:min(100%,1540px);
+      min-height:65px;
+      margin:0 auto;
+      padding:0 18px;
+      display:flex;
+      align-items:center;
+      gap:20px;
+    }
+
+    .brand{
+      flex:0 0 auto;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:max-content;
+      color:#fff;
+      text-decoration:none;
+    }
+
+    .mark{
+      display:grid;
+      place-items:center;
+      width:43px;
+      height:32px;
+      background:#fff;
+      color:#090b0f;
+      font-size:18px;
+      line-height:1;
+      font-weight:1000;
+      font-style:italic;
+      transform:skewX(-12deg);
+    }
+
+    .brand-name{
+      color:#fff;
+      font-size:12px;
+      line-height:1.05;
+      font-weight:1000;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      white-space:nowrap;
+    }
+
+    .brand-name small{
+      display:block;
+      margin-top:4px;
+      color:#7f8791;
+      font-size:7px;
+      font-weight:900;
+      letter-spacing:.16em;
+    }
+
+    .links{
+      flex:1 1 auto;
+      align-self:stretch;
+      display:flex;
+      align-items:stretch;
+      justify-content:center;
+      min-width:0;
+    }
+
+    .link,.more-btn{
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:65px;
+      padding:0 13px;
+      border:0;
+      background:transparent;
+      color:#b7bec8;
+      text-decoration:none;
+      font-family:inherit;
+      font-size:9px;
+      line-height:1;
+      font-weight:1000;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      white-space:nowrap;
+      cursor:pointer;
+    }
+
+    .link:hover,.more-btn:hover,.link.active{
+      color:#fff;
+      background:#10141a;
+    }
+
+    .link.active:after{
+      content:"";
+      position:absolute;
+      left:12px;
+      right:12px;
+      bottom:0;
+      height:3px;
+      background:var(--red);
+    }
+
+    .race-center{
+      flex:0 0 auto;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+      border:1px solid #3a404a;
+      background:#11151b;
+      color:#fff;
+      text-decoration:none;
+      font-size:8px;
+      font-weight:1000;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      white-space:nowrap;
+    }
+
+    .race-center i{
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:#3fe378;
+      box-shadow:0 0 10px rgba(63,227,120,.6);
+    }
+
+    .more{
+      position:relative;
+      display:flex;
+      align-items:stretch;
+    }
+
+    .arrow{
+      margin-left:6px;
+      font-size:8px;
+      transition:transform .16s ease;
+    }
+
+    .more.open .arrow{transform:rotate(180deg)}
+
+    .more-menu{
+      position:absolute;
+      top:100%;
+      right:0;
+      width:240px;
+      padding:8px 0;
+      background:#202020;
+      border-top:3px solid var(--red);
+      box-shadow:0 18px 40px rgba(0,0,0,.48);
+      opacity:0;
+      visibility:hidden;
+      transform:translateY(-5px);
+      pointer-events:none;
+      transition:.16s ease;
+      z-index:50;
+    }
+
+    .more.open .more-menu,
+    .more:hover .more-menu,
+    .more:focus-within .more-menu{
+      opacity:1;
+      visibility:visible;
+      transform:none;
+      pointer-events:auto;
+    }
+
+    .more-item{
+      display:flex;
+      align-items:center;
+      min-height:48px;
+      padding:0 34px;
+      color:#f1f1f1;
+      text-decoration:none;
+      font-size:13px;
+      font-weight:600;
+      text-transform:uppercase;
+    }
+
+    .more-item:hover{
+      background:#2b2b2b;
+      color:#fff;
+    }
+
+    .menu-btn{
+      display:none;
+      margin-left:auto;
+      width:42px;
+      height:38px;
+      border:1px solid #313741;
+      background:#11151b;
+      color:#fff;
+      font-size:20px;
+      cursor:pointer;
+    }
+
+    .mobile{
+      display:none;
+      background:#090b0f;
+      border-top:1px solid #252a32;
+      padding:10px;
+    }
+
+    .mobile a,.mobile-more{
+      min-height:42px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid #252b34;
+      background:#11151b;
+      color:#c9cfd7;
+      text-decoration:none;
+      font-family:inherit;
+      font-size:9px;
+      font-weight:1000;
+      text-transform:uppercase;
+    }
+
+    .mobile a.active{
+      color:#fff;
+      border-color:var(--red);
+    }
+
+    .mobile-more{
+      width:100%;
+      cursor:pointer;
+    }
+
+    .mobile-more-menu{
+      display:none;
+      grid-column:1/-1;
+      gap:6px;
+    }
+
+    .mobile-more-menu.open{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+
+    @media(max-width:1180px){
+      .links,.race-center{display:none}
+      .menu-btn{display:block}
+      .mobile.open{
+        display:grid;
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:6px;
+      }
+    }
+
+    @media(max-width:600px){
+      .brand-name{display:none}
+      .mobile.open{grid-template-columns:1fr}
+      .mobile-more-menu.open{grid-template-columns:1fr}
+    }
+  </style>
+
+  <nav aria-label="HLRN primary navigation">
+    <div class="inner">
+      <a class="brand" href="../">
+        <span class="mark">HL</span>
+        <span class="brand-name">
+          High Line Racing Network
+          <small>HLRN // Official Network</small>
+        </span>
+      </a>
+
+      <div class="links">
+        <a class="link" href="../">Home</a>
+        <a class="link" href="../live/">Live</a>
+        <a class="link" href="../standings/">Standings</a>
+        <a class="link active" href="./">Intelligence</a>
+        <a class="link" href="../results/">Results</a>
+        <a class="link" href="../drivers/">Drivers</a>
+        <a class="link" href="../fantasy/">Fantasy</a>
+        <a class="link" href="../news/">News</a>
+
+        <div class="more">
+          <button class="more-btn" type="button" aria-expanded="false">
+            More <span class="arrow">▾</span>
+          </button>
+          <div class="more-menu">
+            <a class="more-item" href="../rules/">Rules</a>
+            <a class="more-item" href="../broadcasters/">Broadcasters</a>
+            <a class="more-item" href="../store/">Store</a>
+          </div>
+        </div>
+      </div>
+
+      <a class="race-center" href="../live/"><i></i> Race Center</a>
+      <button class="menu-btn" type="button" aria-expanded="false">☰</button>
+    </div>
+
+    <div class="mobile">
+      <a href="../">Home</a>
+      <a href="../live/">Live</a>
+      <a href="../standings/">Standings</a>
+      <a class="active" href="./">Intelligence</a>
+      <a href="../results/">Results</a>
+      <a href="../drivers/">Drivers</a>
+      <a href="../fantasy/">Fantasy</a>
+      <a href="../news/">News</a>
+
+      <button class="mobile-more" type="button" aria-expanded="false">More ▾</button>
+      <div class="mobile-more-menu">
+        <a href="../rules/">Rules</a>
+        <a href="../broadcasters/">Broadcasters</a>
+        <a href="../store/">Store</a>
+      </div>
+    </div>
+  </nav>
+  `;
+
+  const more=shadow.querySelector(".more");
+  const moreBtn=shadow.querySelector(".more-btn");
+  const menuBtn=shadow.querySelector(".menu-btn");
+  const mobile=shadow.querySelector(".mobile");
+  const mobileMore=shadow.querySelector(".mobile-more");
+  const mobileMoreMenu=shadow.querySelector(".mobile-more-menu");
 
   moreBtn?.addEventListener("click",function(e){
     e.stopPropagation();
-    const open=!moreWrap.classList.contains("open");
-    moreWrap.classList.toggle("open",open);
+    const open=!more.classList.contains("open");
+    more.classList.toggle("open",open);
     moreBtn.setAttribute("aria-expanded",String(open));
   });
 
-  document.addEventListener("click",function(e){
-    if(moreWrap && !moreWrap.contains(e.target))closeMore();
+  shadow.addEventListener("click",function(e){
+    if(more && !more.contains(e.target)){
+      more.classList.remove("open");
+      moreBtn?.setAttribute("aria-expanded","false");
+    }
   });
 
   menuBtn?.addEventListener("click",function(){
@@ -6617,20 +6624,9 @@ body:before,.cc-cursor{display:none!important}
     menuBtn.textContent=open?"×":"☰";
   });
 
-  mobileMoreBtn?.addEventListener("click",function(){
+  mobileMore?.addEventListener("click",function(){
     const open=mobileMoreMenu.classList.toggle("open");
-    mobileMoreBtn.setAttribute("aria-expanded",String(open));
-  });
-
-  document.addEventListener("keydown",function(e){
-    if(e.key==="Escape"){
-      closeMore();
-      mobile?.classList.remove("open");
-      mobileMoreMenu?.classList.remove("open");
-      menuBtn?.setAttribute("aria-expanded","false");
-      mobileMoreBtn?.setAttribute("aria-expanded","false");
-      if(menuBtn)menuBtn.textContent="☰";
-    }
+    mobileMore.setAttribute("aria-expanded",String(open));
   });
 })();
 </script>
