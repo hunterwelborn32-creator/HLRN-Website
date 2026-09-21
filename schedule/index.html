@@ -3,1538 +3,973 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HLRN 2026 Schedule | High Line Racing Network</title>
+<title>2026 HLRN Schedule | High Line Racing Network</title>
+<meta name="description" content="2026 High Line Racing Network Sunday and Monday league schedule, race winners, upcoming events and race information.">
+<link rel="stylesheet" href="../assets/site-shell.css">
+
 <style>
+:root{
+  --red:#e31b23;
+  --green:#37a447;
+  --yellow:#ffd400;
+  --ink:#111214;
+  --soft:#f4f4f4;
+  --line:#d8d8d8;
+  --muted:#6e6e72;
+  --white:#fff;
+  --max:1450px;
+}
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;background:#030303;color:#fff;font-family:Arial,Helvetica,sans-serif}
-body{overflow-x:hidden}
-body:before{
-  content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;
-  background:
-    radial-gradient(circle at 50% 15%,#333 0,transparent 35%),
-    linear-gradient(115deg,transparent 45%,rgba(255,255,255,.035) 50%,transparent 55%);
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:#f4f4f4;
+  color:var(--ink);
+  font-family:Arial,Helvetica,sans-serif;
 }
-.hlrn-page{width:100%;max-width:1550px;margin:auto;padding:12px}
-.hlrn-columns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:stretch}
-.hlrn-column{
-  position:relative;min-width:0;background:linear-gradient(180deg,#0d0d0d,#070707);
-  border:1px solid #292929;border-radius:4px;overflow:hidden;
-  box-shadow:0 12px 35px rgba(0,0,0,.45)
-}
-.hlrn-column:after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px}
-.sunday{border-top:3px solid #69e000}.sunday:after{background:#69e000}
-.hosted,.monday{border-top:3px solid #ff2525}.hosted:after,.monday:after{background:#ff2525}
+a{text-decoration:none;color:inherit}
+button,select{font:inherit}
+button{cursor:pointer}
+.hlrn-schedule-page{min-height:100vh}
+.shell{width:min(var(--max),calc(100% - 36px));margin:0 auto}
 
-.page-header{text-align:center;padding:23px 12px 15px;position:relative}
-.page-header:before{
-  content:"";position:absolute;left:18px;right:18px;top:10px;height:1px;
-  background:linear-gradient(90deg,transparent,currentColor,transparent);opacity:.18
+/* HEADER */
+.page-heading{
+  padding:34px 0 18px;
+  border-bottom:1px solid #c9c9c9;
 }
-.page-header h1{margin:0;font-size:clamp(22px,2.25vw,32px);line-height:1.05;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:.3px}
-.page-header h1 span{color:#ff2525}.sunday .page-header h1 span{color:#69e000}
-.page-header p{margin:9px 0 0;color:#858585;font-size:8px;font-weight:800;letter-spacing:3px;text-transform:uppercase}
+.crumbs{
+  margin-bottom:18px;
+  color:#777;
+  font-size:11px;
+  font-weight:800;
+  text-transform:uppercase;
+}
+.crumbs b{color:#111}
+.crumbs span{padding:0 8px;color:#aaa}
+.heading-row{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:28px;
+}
+.heading-row h1{
+  margin:0;
+  font-size:clamp(38px,5vw,72px);
+  line-height:.95;
+  letter-spacing:-.055em;
+  font-weight:1000;
+  text-transform:uppercase;
+}
+.heading-row h1 em{
+  color:var(--red);
+  font-style:normal;
+}
+.heading-row p{
+  max-width:590px;
+  margin:0 0 6px;
+  color:#666;
+  font-size:13px;
+  line-height:1.55;
+  font-weight:600;
+}
 
-.sponsors,.info-bar,.schedule-wrapper,.feature-box,.bottom-bar{margin-left:18px;margin-right:18px}
-.sponsors{
-  padding:12px 10px 13px;background:#101010;border:1px solid #353535;border-radius:3px;
-  box-shadow:inset 0 0 20px rgba(255,255,255,.015)
-}
-.sponsor-heading{text-align:center;color:#888;font-size:8px;font-weight:900;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px}
-.sponsor-row{display:flex;justify-content:center;align-items:stretch;gap:7px;flex-wrap:nowrap}
-.sponsor{
-  height:34px;min-width:0;flex:1 1 0;padding:0 6px;display:flex;align-items:center;justify-content:center;
-  background:#111;border:1px solid #555;color:#eee;font-size:7px;font-weight:900;font-style:italic;
-  text-align:center;white-space:nowrap;text-transform:uppercase;overflow:hidden;border-radius:2px
-}
-.sponsor.admin{color:#ff2525;border-color:#ff2525}.sunday .sponsor.admin{color:#69e000;border-color:#69e000}
-.sunday .sponsor-row .admin{flex:0 1 86px}.sunday .sponsor-row .pedley{flex:0 1 116px}.sunday .sponsor-row .twrs{flex:0 1 68px}
-.hosted .sponsor-row .admin{flex:0 1 86px}.hosted .sponsor-row .pedley{flex:0 1 116px}.hosted .sponsor-row .rsi{flex:0 1 62px}
-.monday .sponsor-row{gap:4px}.monday .sponsor-row .admin{flex:1.05}.monday .sponsor-row .pedley{flex:1.55}.monday .sponsor-row .rsi{flex:.75}.monday .sponsor-row .twrs{flex:.75}.monday .sponsor-row .bsm{flex:1}
-.rsi{flex-direction:column!important;padding:2px 3px}.rsi-main{font-size:11px;line-height:10px;font-weight:900;font-style:italic}.rsi-sub{margin-top:2px;color:#bbb;font-size:4px;line-height:5px;font-weight:800;letter-spacing:.4px}
-.twrs{font-size:10px!important;letter-spacing:.5px}.bsm{flex-direction:column!important;padding:2px 3px}.bsm-main{font-size:10px;line-height:9px;font-weight:900;font-style:italic}.bsm-sub{margin-top:1px;color:#bbb;font-size:3.6px;line-height:5px;font-weight:800;white-space:nowrap}
-
-.info-bar{
-  margin-top:14px;margin-bottom:14px;padding:10px 8px;background:#111;border:1px solid #353535;
-  text-align:center;font-size:7px;line-height:12px;font-weight:900;letter-spacing:1.4px;text-transform:uppercase
-}
-.sunday .info-bar{color:#69e000;border-color:#315e00}.hosted .info-bar,.monday .info-bar{color:#ff2525;border-color:#612020}
-
-.schedule-wrapper{margin-bottom:18px;overflow:hidden;border:1px solid #2b2b2b}
-.schedule{width:100%;border-collapse:collapse;table-layout:fixed;background:#070707}
-.schedule th{height:28px;padding:4px 2px;background:linear-gradient(#181818,#111);border:1px solid #292929;font-size:7px;line-height:8px;font-weight:900;text-transform:uppercase}
-.sunday .schedule th{color:#69e000}.monday .schedule th{color:#ff2525}
-.schedule td{height:31px;padding:4px 2px;border:1px solid #232323;text-align:center;font-size:6.8px;line-height:8px;font-weight:800;text-transform:uppercase;overflow-wrap:break-word}
-.schedule tbody tr:nth-child(even) td{background:#0b0b0b}.schedule td:first-child{font-weight:900}.sunday .schedule td:first-child{color:#69e000}.monday .schedule td:first-child{color:#ff2525}
-
-.section-title{
-  display:flex;align-items:center;gap:10px;margin:18px 18px 10px;color:#ff2525;
-  font-size:13px;line-height:16px;font-weight:900;letter-spacing:4px;text-transform:uppercase
-}
-.section-title:before,.section-title:after{content:"";height:1px;background:linear-gradient(90deg,transparent,#ff2525);flex:1}
-.section-title:after{background:linear-gradient(90deg,#ff2525,transparent)}
-
-.feature-box{padding:11px;border:1px solid #303030;background:#0b0b0b;border-radius:3px}
-.feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.feature{
-  min-width:0;min-height:78px;padding:9px;background:linear-gradient(145deg,#151515,#0e0e0e);
-  border:1px solid #303030;display:flex;flex-direction:column;justify-content:center;align-items:center;
-  text-align:center;border-radius:3px;transition:.2s
-}
-.feature:hover{border-color:#ff2525;transform:translateY(-1px)}
-.feature-icon{margin-bottom:4px;font-size:20px;line-height:21px}.feature-title{font-size:8px;line-height:10px;font-weight:900;text-transform:uppercase}.feature-sub{margin-top:3px;color:#777;font-size:5.5px;line-height:7px;text-transform:uppercase}
-.bottom-bar{
-  margin-top:14px;margin-bottom:18px;padding:11px 8px;background:#101010;border:1px solid #3a3a3a;
-  text-align:center;color:#ff2525;font-size:7px;line-height:11px;font-weight:900;letter-spacing:1.8px;text-transform:uppercase
-}
-.sunday .bottom-bar{color:#69e000;border-color:#315e00}
-.bottom-bar span{color:#ff2525;margin:0 4px}
-.sunday .bottom-bar span{color:#69e000}
-
-.footer-panel{
-  margin:0 18px 20px;
-  min-height:72px;
-  padding:12px 18px;
-  background:linear-gradient(180deg,#0d0d0d,#080808);
-  border:1px solid #292929;
+/* SERIES TABS */
+.series-tabs{
   display:flex;
   align-items:center;
+  gap:0;
+  margin:22px 0 24px;
+  background:#fff;
+  border:1px solid var(--line);
+  overflow:auto;
+}
+.series-tab{
+  min-width:180px;
+  border:0;
+  border-right:1px solid var(--line);
+  background:#fff;
+  padding:17px 24px;
+  color:#333;
+  font-size:12px;
+  font-weight:1000;
+  letter-spacing:.03em;
+  text-transform:uppercase;
+}
+.series-tab:hover{background:#f2f2f2}
+.series-tab.active[data-series="sunday"]{background:var(--red);color:#fff}
+.series-tab.active[data-series="monday"]{background:var(--green);color:#fff}
+.series-tab.active[data-series="hosted"]{background:#111;color:#fff}
+
+/* PREVIOUS / NEXT */
+.race-snapshot{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  background:#fff;
+  border:1px solid var(--line);
+  margin-bottom:22px;
+}
+.snapshot-card{
+  min-height:220px;
+  padding:25px 30px;
+  position:relative;
+  overflow:hidden;
+}
+.snapshot-card + .snapshot-card{border-left:1px solid var(--line)}
+.snapshot-kicker{
+  margin-bottom:17px;
+  color:#6c6c6c;
+  font-size:11px;
+  font-weight:1000;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+}
+.snapshot-date{
+  color:#777;
+  font-size:12px;
+  font-weight:800;
+  text-transform:uppercase;
+}
+.snapshot-track{
+  max-width:720px;
+  margin:7px 0 9px;
+  font-size:clamp(27px,3vw,42px);
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:-.04em;
+  text-transform:uppercase;
+}
+.snapshot-meta{
+  color:#666;
+  font-size:12px;
+  line-height:1.5;
+  font-weight:700;
+}
+.winner-block{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  margin-top:18px;
+}
+.winner-mark{
+  width:34px;height:34px;
+  display:grid;place-items:center;
+  background:#111;color:#fff;
+  font-size:17px;
+}
+.winner-copy small{
+  display:block;
+  color:#777;
+  font-size:9px;
+  font-weight:900;
+  text-transform:uppercase;
+}
+.winner-copy b{
+  display:block;
+  margin-top:2px;
+  font-size:16px;
+  text-transform:uppercase;
+}
+.snapshot-button{
+  display:inline-flex;
+  align-items:center;
+  margin-top:19px;
+  padding:10px 14px;
+  background:#111;
+  color:#fff;
+  font-size:10px;
+  font-weight:1000;
+  text-transform:uppercase;
+}
+.next-card:after{
+  content:"NEXT";
+  position:absolute;
+  right:-17px;
+  bottom:-30px;
+  font-size:110px;
+  line-height:1;
+  font-weight:1000;
+  color:rgba(0,0,0,.035);
+  transform:rotate(-6deg);
+  pointer-events:none;
+}
+
+/* LARGE NEXT EVENT */
+.next-feature{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  margin-bottom:28px;
+  background:#171719;
+  color:#fff;
+  overflow:hidden;
+}
+.next-feature-main{
+  padding:32px 34px;
+  position:relative;
+  min-height:280px;
+}
+.next-feature-main:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity:.24;
+  background:
+    linear-gradient(120deg,transparent 48%,rgba(255,255,255,.11) 49% 51%,transparent 52%),
+    repeating-linear-gradient(135deg,transparent 0 37px,rgba(255,255,255,.035) 37px 39px);
+}
+.next-feature-main > *{position:relative;z-index:1}
+.next-series{
+  display:inline-flex;
+  padding:5px 9px;
+  margin-bottom:16px;
+  background:var(--red);
+  font-size:10px;
+  font-weight:1000;
+  text-transform:uppercase;
+}
+.next-feature[data-series="monday"] .next-series{background:var(--green)}
+.next-feature h2{
+  max-width:800px;
+  margin:0;
+  font-size:clamp(34px,4vw,58px);
+  line-height:.95;
+  letter-spacing:-.05em;
+  text-transform:uppercase;
+}
+.next-feature-date{
+  margin-top:12px;
+  color:#ddd;
+  font-size:14px;
+  font-weight:800;
+  text-transform:uppercase;
+}
+.next-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:22px}
+.next-actions a{
+  display:inline-flex;
+  padding:11px 15px;
+  border:1px solid #666;
+  font-size:10px;
+  font-weight:1000;
+  text-transform:uppercase;
+}
+.next-actions a.primary{
+  border-color:var(--red);
+  background:var(--red);
+}
+.next-feature[data-series="monday"] .next-actions a.primary{
+  border-color:var(--green);
+  background:var(--green);
+}
+.next-details{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  background:#0f0f11;
+  border-left:1px solid #333;
+}
+.detail{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-height:93px;
+  padding:18px 22px;
+  border-right:1px solid #2b2b2b;
+  border-bottom:1px solid #2b2b2b;
+}
+.detail small{
+  color:#999;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.detail strong{
+  margin-top:5px;
+  font-size:19px;
+  text-transform:uppercase;
+}
+
+/* CONTROLS */
+.schedule-controls{
+  display:flex;
+  align-items:end;
   justify-content:space-between;
   gap:20px;
+  padding:22px 0 18px;
+  border-top:4px solid #111;
 }
-.hlrn-logo{text-align:left;line-height:1}
-.logo-main{
-  font-size:29px;
+.control-group label{
+  display:block;
+  margin-bottom:7px;
+  color:#5f5f62;
+  font-size:9px;
   font-weight:1000;
-  font-style:italic;
-  letter-spacing:-2px;
-  background:linear-gradient(90deg,#fff 0 47%,#ff2525 48% 72%,#fff 73%);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
+  text-transform:uppercase;
 }
-.logo-sub{
-  margin-top:3px;
-  font-size:5px;
+.control-group select{
+  min-width:190px;
+  height:42px;
+  padding:0 13px;
+  border:1px solid #bbb;
+  background:#fff;
+  color:#111;
+  font-size:12px;
   font-weight:900;
-  letter-spacing:2px;
-  color:#aaa;
 }
-.footer-socials{display:flex;align-items:center;gap:15px}
-.footer-social{
-  width:34px;height:34px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  background:#f2f2f2;color:#111;text-decoration:none;cursor:pointer;
-  transition:.2s;
-}
-.footer-social svg{width:18px;height:18px;fill:currentColor}
-.footer-social:hover{transform:translateY(-2px);background:#fff}
-.footer-social.youtube:hover{color:#ff0000}
-.footer-social.facebook:hover{color:#1877f2}
-.footer-social.discord:hover{color:#5865f2}
-
-@media(max-width:600px){
-  .footer-panel{margin-left:7px;margin-right:7px;padding:10px 12px}
-  .logo-main{font-size:24px}
-  .logo-sub{font-size:4px;letter-spacing:1.5px}
-  .footer-socials{gap:9px}
-  .footer-social{width:31px;height:31px}
-}
-
-
-.socials{
-  display:flex;justify-content:center;gap:9px;margin:0 18px 18px
-}
-.social{
-  width:40px;height:40px;border:1px solid #454545;background:#111;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;text-decoration:none;cursor:pointer;color:#fff;
-  transition:.2s;box-shadow:0 4px 12px rgba(0,0,0,.35)
-}
-.social svg{width:21px;height:21px;fill:currentColor;display:block}
-.social:hover{transform:translateY(-2px);background:#191919}
-.social.youtube{color:#fff}.social.youtube:hover{border-color:#ff0000;color:#ff0000}
-.social.facebook{color:#fff}.social.facebook:hover{border-color:#1877f2;color:#1877f2}
-.social.discord{color:#fff}.social.discord:hover{border-color:#5865f2;color:#5865f2}
-.social-label{display:block;font-size:0}
-
-@media(max-width:1100px){
-  .hlrn-columns{gap:10px}.sponsors,.info-bar,.schedule-wrapper,.feature-box,.bottom-bar{margin-left:10px;margin-right:10px}
-  .section-title{margin-left:10px;margin-right:10px}
-  .socials{margin-left:10px;margin-right:10px}
-  .sponsor{font-size:6px}.twrs{font-size:8px!important}.rsi-main{font-size:9px}.bsm-main{font-size:8px}.bsm-sub{font-size:3px}
-}
-@media(max-width:850px){
-  .hlrn-columns{grid-template-columns:1fr 1fr}.hosted{grid-column:span 2}
-}
-@media(max-width:600px){
-  .hlrn-page{padding:5px}.hlrn-columns{grid-template-columns:1fr;gap:12px}.hosted{grid-column:auto}
-  .page-header{padding-top:19px}.page-header h1{font-size:22px}.sponsor-row{gap:4px}.sponsor{height:31px}
-  .schedule td,.schedule th{font-size:6px}.section-title{font-size:11px}
-}
-@media(max-width:400px){
-  .sponsors,.info-bar,.schedule-wrapper,.feature-box,.bottom-bar{margin-left:7px;margin-right:7px}
-  .section-title{margin-left:7px;margin-right:7px}.socials{margin-left:7px;margin-right:7px}
-  .sponsor{padding:0 2px;font-size:5.5px}.twrs{font-size:7px!important}.rsi-main{font-size:8px}.rsi-sub{font-size:3px}.bsm-main{font-size:7px}.bsm-sub{font-size:2.7px}
-}
-
-
-/* =========================================================
-   HLRN SCHEDULE — NASCAR / BROADCAST STYLE UPGRADE
-   Existing schedule data is preserved.
-========================================================= */
-:root{
-  --hlrn-red:#ed1c24;
-  --hlrn-yellow:#ffd400;
-  --hlrn-green:#69e000;
-  --hlrn-black:#030303;
-  --hlrn-steel:#171717;
-}
-body{
-  background:
-    radial-gradient(circle at 50% -10%,rgba(255,255,255,.055),transparent 28%),
-    linear-gradient(180deg,#050505,#000 72%);
-}
-body:after{
-  content:"";
-  position:fixed;
-  left:0;right:0;bottom:0;
-  height:105px;
-  pointer-events:none;
-  opacity:.07;
-  background:
-    linear-gradient(45deg,#fff 25%,transparent 25%,transparent 75%,#fff 75%),
-    linear-gradient(45deg,#fff 25%,transparent 25%,transparent 75%,#fff 75%);
-  background-size:36px 36px;
-  background-position:0 0,18px 18px;
-  -webkit-mask-image:linear-gradient(to top,#000,transparent);
-  mask-image:linear-gradient(to top,#000,transparent);
-}
-
-.hlrn-page{
-  max-width:1600px!important;
-  padding-top:0!important;
-}
-
-/* Schedule ticker */
-.schedule-ticker{
-  position:sticky;
-  top:0;
-  z-index:100;
-  display:grid;
-  grid-template-columns:auto 1fr auto;
-  align-items:center;
-  min-height:38px;
-  overflow:hidden;
-  border:1px solid #333;
-  border-top:4px solid var(--hlrn-red);
-  background:#070707;
-  box-shadow:0 10px 30px rgba(0,0,0,.55);
-}
-.schedule-ticker .ticker-label{
-  height:100%;
+.past-toggle{
   display:flex;
   align-items:center;
-  padding:0 18px;
-  margin-left:-7px;
-  background:var(--hlrn-yellow);
-  color:#050505;
-  font-size:9px;
+  gap:10px;
+  height:42px;
+  border:0;
+  background:transparent;
+  color:#111;
+  font-size:11px;
   font-weight:1000;
-  letter-spacing:.16em;
   text-transform:uppercase;
-  transform:skewX(-12deg);
 }
-.schedule-ticker .ticker-label span{
-  transform:skewX(12deg);
+.toggle-box{
+  width:38px;height:22px;
+  padding:2px;
+  border-radius:99px;
+  background:#bbb;
+  transition:.2s;
 }
-.schedule-ticker .ticker-window{
-  overflow:hidden;
-  white-space:nowrap;
-  color:#ddd;
+.toggle-knob{
+  width:18px;height:18px;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:0 1px 3px rgba(0,0,0,.2);
+  transition:.2s;
+}
+.past-toggle.on .toggle-box{background:#111}
+.past-toggle.on .toggle-knob{transform:translateX(16px)}
+
+/* MONTH / RACE LIST */
+.month-section{margin-bottom:32px}
+.month-title{
+  margin:0;
+  padding:11px 2px;
+  border-bottom:4px solid #111;
+  font-size:25px;
+  font-weight:1000;
+  text-transform:uppercase;
+}
+.race-list{background:#fff;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+.race-row{
+  display:grid;
+  grid-template-columns:115px minmax(220px,1.3fr) minmax(130px,.65fr) 125px minmax(170px,.75fr) 130px;
+  align-items:stretch;
+  min-height:112px;
+  border-bottom:1px solid var(--line);
+  transition:.18s;
+}
+.race-row:hover{background:#f9f9f9}
+.race-row.past{background:#efefef;color:#777}
+.race-row.past:not(.show-past){display:none}
+.race-row.next{
+  background:#fffdf0;
+  box-shadow:inset 6px 0 0 var(--yellow);
+}
+.race-row.live{
+  background:#fff1f1;
+  box-shadow:inset 6px 0 0 var(--red);
+}
+.race-row > div{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:15px 16px;
+  border-right:1px solid #e2e2e2;
+}
+.race-row > div:last-child{border-right:0}
+.race-date small{
+  color:#777;
   font-size:9px;
   font-weight:900;
-  letter-spacing:.11em;
   text-transform:uppercase;
 }
-.schedule-ticker .ticker-track{
-  display:inline-block;
-  padding-left:100%;
-  animation:scheduleTickerMove 28s linear infinite;
+.race-date strong{
+  margin-top:3px;
+  font-size:20px;
+  text-transform:uppercase;
 }
-.schedule-ticker .ticker-track b{color:#fff}
-.schedule-ticker .ticker-track em{
-  color:var(--hlrn-red);
-  font-style:normal;
-  margin:0 14px;
+.race-main .week{
+  margin-bottom:4px;
+  color:var(--red);
+  font-size:9px;
+  font-weight:1000;
+  text-transform:uppercase;
 }
-.schedule-ticker .ticker-network{
-  padding:0 15px;
+.schedule-list[data-series="monday"] .race-main .week{color:var(--green)}
+.race-main strong{
+  font-size:21px;
+  line-height:1.05;
+  text-transform:uppercase;
+}
+.race-main span{
+  margin-top:5px;
+  color:#777;
+  font-size:10px;
+  font-weight:700;
+  text-transform:uppercase;
+}
+.cell-label{
   color:#888;
   font-size:8px;
   font-weight:1000;
-  letter-spacing:.14em;
-}
-@keyframes scheduleTickerMove{
-  from{transform:translateX(0)}
-  to{transform:translateX(-100%)}
-}
-
-/* Columns */
-.hlrn-columns{
-  gap:14px!important;
-  margin-top:14px;
-}
-.hlrn-column{
-  border-radius:3px!important;
-  border:1px solid #353535!important;
-  border-top:0!important;
-  box-shadow:0 18px 42px rgba(0,0,0,.55)!important;
-  background:
-    linear-gradient(135deg,rgba(255,255,255,.025),transparent 24%),
-    linear-gradient(180deg,#111,#060606)!important;
-}
-.hlrn-column:before{
-  content:"";
-  position:absolute;
-  top:0;left:0;right:0;
-  height:4px;
-  z-index:5;
-}
-.sunday:before{
-  background:linear-gradient(90deg,var(--hlrn-yellow) 0 12%,var(--hlrn-green) 12% 68%,transparent);
-}
-.hosted:before,.monday:before{
-  background:linear-gradient(90deg,var(--hlrn-yellow) 0 12%,var(--hlrn-red) 12% 68%,transparent);
-}
-.hlrn-column:after{
-  height:3px!important;
-}
-
-/* Header */
-.page-header{
-  overflow:hidden;
-  background:
-    linear-gradient(115deg,transparent 0 68%,rgba(255,255,255,.045) 68.2% 69%,transparent 69.2%),
-    linear-gradient(180deg,#131313,#080808);
-}
-.page-header:after{
-  content:"";
-  position:absolute;
-  right:-32px;
-  bottom:-38px;
-  width:115px;
-  height:115px;
-  opacity:.05;
-  transform:rotate(45deg);
-  background:
-    linear-gradient(45deg,#fff 25%,transparent 25%,transparent 75%,#fff 75%),
-    linear-gradient(45deg,#fff 25%,transparent 25%,transparent 75%,#fff 75%);
-  background-size:18px 18px;
-  background-position:0 0,9px 9px;
-}
-.page-header h1{
-  letter-spacing:-.035em!important;
-  text-shadow:3px 3px 0 #151515;
-}
-.page-header p{
-  color:#bcbcbc!important;
-}
-
-/* Sponsors */
-.sponsors{
-  border-radius:2px!important;
-  background:linear-gradient(180deg,#121212,#080808)!important;
-}
-.sponsor-heading{
-  color:#aaa!important;
-}
-.sponsor{
-  border-radius:2px!important;
-  transition:.18s ease;
-}
-.sponsor:hover{
-  transform:translateY(-2px);
-  border-color:#777!important;
-}
-.sunday .sponsor.admin{
-  color:var(--hlrn-green)!important;
-  border-color:var(--hlrn-green)!important;
-}
-.hosted .sponsor.admin,.monday .sponsor.admin{
-  color:var(--hlrn-red)!important;
-  border-color:var(--hlrn-red)!important;
-}
-
-/* Info bars */
-.info-bar{
-  border-radius:2px;
-  background:
-    linear-gradient(90deg,rgba(255,212,0,.04),transparent 28%),
-    #0d0d0d!important;
-  box-shadow:inset 4px 0 0 var(--hlrn-yellow);
-}
-
-/* Schedule table = timing/scoring pylon */
-.schedule-wrapper{
-  position:relative;
-  border-radius:2px;
-  border:1px solid #3a3a3a!important;
-  box-shadow:0 12px 28px rgba(0,0,0,.42);
-}
-.schedule-wrapper:before{
-  content:"TIMING & SCORING";
-  position:absolute;
-  top:-19px;
-  right:0;
-  padding:4px 8px;
-  color:#050505;
-  background:var(--hlrn-yellow);
-  font-size:6px;
-  font-weight:1000;
-  letter-spacing:.1em;
-  transform:skewX(-10deg);
-}
-.schedule th{
-  height:30px!important;
-  background:linear-gradient(180deg,#1a1a1a,#0f0f0f)!important;
-  border-color:#343434!important;
-  letter-spacing:.06em;
-}
-.schedule td{
-  border-color:#272727!important;
-  transition:.16s ease;
-}
-.schedule tbody tr{
-  transition:.16s ease;
-}
-.schedule tbody tr:hover td{
-  background:#151515!important;
-}
-.sunday .schedule tbody tr:hover td:first-child{
-  background:#162207!important;
-}
-.monday .schedule tbody tr:hover td:first-child{
-  background:#260909!important;
-}
-.schedule td:first-child{
-  font-style:italic;
-  font-size:8px!important;
-}
-.sunday .schedule td:first-child{
-  color:var(--hlrn-green)!important;
-}
-.monday .schedule td:first-child{
-  color:var(--hlrn-red)!important;
-}
-
-/* Highlight next upcoming race row */
-.schedule tr.next-race td{
-  background:linear-gradient(90deg,rgba(255,212,0,.08),rgba(255,212,0,.02))!important;
-  border-top:1px solid #715f00!important;
-  border-bottom:1px solid #715f00!important;
-}
-.schedule tr.next-race td:first-child{
-  position:relative;
-}
-.schedule tr.next-race td:first-child:after{
-  content:"NEXT";
-  display:block;
-  margin-top:2px;
-  color:var(--hlrn-yellow);
-  font-size:4.8px;
-  letter-spacing:.08em;
-}
-
-/* Hosted cards */
-.section-title{
-  color:var(--hlrn-yellow)!important;
-  font-style:italic;
-}
-.section-title:before,.section-title:after{
-  background:linear-gradient(90deg,transparent,var(--hlrn-yellow))!important;
-}
-.section-title:after{
-  background:linear-gradient(90deg,var(--hlrn-red),transparent)!important;
-}
-.feature-box{
-  border-radius:2px!important;
-  background:linear-gradient(180deg,#101010,#080808)!important;
-}
-.feature{
-  border-radius:2px!important;
-  position:relative;
-  overflow:hidden;
-}
-.feature:before{
-  content:"";
-  position:absolute;
-  left:0;top:0;bottom:0;
-  width:3px;
-  background:var(--hlrn-red);
-}
-.feature:hover{
-  border-color:var(--hlrn-yellow)!important;
-  transform:translateY(-3px)!important;
-}
-.feature-icon{
-  filter:drop-shadow(0 4px 8px rgba(0,0,0,.45));
-}
-
-/* Bottom bars */
-.bottom-bar{
-  border-radius:2px;
-  box-shadow:inset 4px 0 0 var(--hlrn-yellow);
-}
-.bottom-bar span{
-  color:var(--hlrn-yellow)!important;
-}
-
-/* Footer panel */
-.footer-panel{
-  position:relative;
-  border-radius:2px;
-  border-top:3px solid var(--hlrn-red)!important;
-}
-.footer-panel:before{
-  content:"";
-  position:absolute;
-  top:-3px;left:0;
-  width:34%;
-  height:3px;
-  background:var(--hlrn-yellow);
-}
-.footer-social{
-  border-radius:3px!important;
-}
-
-/* Reveal */
-.schedule-reveal{
-  opacity:0;
-  transform:translateY(14px);
-  transition:opacity .5s ease,transform .5s ease;
-}
-.schedule-reveal.in-view{
-  opacity:1;
-  transform:none;
-}
-
-@media(max-width:850px){
-  .schedule-ticker{
-    position:relative;
-    grid-template-columns:auto 1fr;
-  }
-  .schedule-ticker .ticker-network{
-    display:none;
-  }
-}
-
-</style>
-
-<style>
-/* =========================================================
-   UNIQUE SCHEDULE IDENTITY
-   Same HLRN NASCAR family — different visual language
-========================================================= */
-
-/* Replace the generic ticker with a segmented race-week board */
-.schedule-ticker{
-  position:relative !important;
-  top:auto !important;
-  display:grid !important;
-  grid-template-columns:1fr 1fr 1fr !important;
-  min-height:74px !important;
-  border:0 !important;
-  border-bottom:1px solid #333 !important;
-  background:#050505 !important;
-  overflow:visible !important;
-  box-shadow:0 14px 32px rgba(0,0,0,.5) !important;
-}
-
-.schedule-ticker .ticker-label,
-.schedule-ticker .ticker-window,
-.schedule-ticker .ticker-network{
-  display:none !important;
-}
-
-.schedule-board-cell{
-  position:relative;
-  min-width:0;
-  padding:13px 16px 12px;
-  background:
-    linear-gradient(135deg,rgba(255,255,255,.025),transparent 25%),
-    linear-gradient(180deg,#151515,#090909);
-  border-right:1px solid #2e2e2e;
-  overflow:hidden;
-}
-.schedule-board-cell:last-child{
-  border-right:0;
-}
-.schedule-board-cell:before{
-  content:"";
-  position:absolute;
-  left:0;right:0;top:0;
-  height:4px;
-}
-.schedule-board-cell.sunday-cell:before{background:#69e000}
-.schedule-board-cell.hosted-cell:before{background:#ffd400}
-.schedule-board-cell.monday-cell:before{background:#ed1c24}
-
-.schedule-board-label{
-  color:#777;
-  font-size:7px;
-  font-weight:1000;
-  letter-spacing:.18em;
   text-transform:uppercase;
 }
-.schedule-board-cell.sunday-cell .schedule-board-label{color:#69e000}
-.schedule-board-cell.hosted-cell .schedule-board-label{color:#ffd400}
-.schedule-board-cell.monday-cell .schedule-board-label{color:#ff3a3f}
-
-.schedule-board-main{
+.cell-value{
   margin-top:5px;
-  color:#fff;
-  font-size:15px;
-  line-height:1.05;
-  font-weight:1000;
-  font-style:italic;
-  text-transform:uppercase;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-.schedule-board-sub{
-  margin-top:4px;
-  color:#999;
-  font-size:7px;
+  font-size:14px;
   font-weight:900;
-  letter-spacing:.08em;
   text-transform:uppercase;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+}
+.winner-cell .cell-value{font-size:13px}
+.state-badge{
+  display:inline-flex;
+  align-self:flex-start;
+  padding:6px 9px;
+  background:#efefef;
+  color:#555;
+  font-size:9px;
+  font-weight:1000;
+  text-transform:uppercase;
+}
+.race-row.next .state-badge{background:var(--yellow);color:#111}
+.race-row.live .state-badge{background:var(--red);color:#fff}
+.schedule-list[data-series="monday"] .race-row.live .state-badge{background:var(--green)}
+.results-link{
+  display:inline-flex;
+  align-self:flex-start;
+  margin-top:7px;
+  color:#111;
+  border-bottom:2px solid var(--red);
+  font-size:9px;
+  font-weight:1000;
+  text-transform:uppercase;
+}
+.schedule-list[data-series="monday"] .results-link{border-color:var(--green)}
+
+/* HOSTED */
+.hosted-view{
+  display:none;
+  margin-bottom:50px;
+}
+.hosted-hero{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  background:#111;
+  color:#fff;
+}
+.hosted-copy{padding:42px}
+.hosted-copy h2{
+  margin:0;
+  font-size:clamp(36px,5vw,66px);
+  line-height:.94;
+  text-transform:uppercase;
+}
+.hosted-copy p{max-width:680px;color:#bbb;line-height:1.55;font-size:13px}
+.hosted-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  background:#1a1a1c;
+}
+.hosted-stat{
+  min-height:130px;
+  padding:22px;
+  border-left:1px solid #333;
+  border-bottom:1px solid #333;
+}
+.hosted-stat small{color:#999;font-size:9px;font-weight:900;text-transform:uppercase}
+.hosted-stat strong{display:block;margin-top:6px;font-size:24px;text-transform:uppercase}
+
+.footer-note{
+  padding:12px 0 50px;
+  color:#777;
+  font-size:10px;
+  font-weight:800;
+  text-align:center;
+  text-transform:uppercase;
 }
 
-/* Make the 3 main sections look like separate garage boards */
-.hlrn-columns{
-  align-items:start !important;
-  gap:18px !important;
-}
-.hlrn-column{
-  border-radius:0 !important;
-  border:1px solid #2e2e2e !important;
-  box-shadow:0 16px 34px rgba(0,0,0,.42) !important;
-}
-.hlrn-column:before{
-  height:6px !important;
-}
-.hlrn-column:after{
-  display:none !important;
-}
-
-/* Different header shape */
-.page-header{
-  text-align:left !important;
-  padding:24px 20px 17px !important;
-  border-bottom:1px solid #292929;
-}
-.page-header:before{
-  left:20px !important;
-  right:auto !important;
-  top:auto !important;
-  bottom:8px !important;
-  width:72px !important;
-  height:3px !important;
-  opacity:1 !important;
-  background:#555 !important;
-}
-.sunday .page-header:before{background:#69e000 !important}
-.hosted .page-header:before{background:#ffd400 !important}
-.monday .page-header:before{background:#ed1c24 !important}
-
-.page-header h1{
-  font-size:clamp(24px,2.4vw,36px) !important;
-  line-height:.92 !important;
-}
-.page-header p{
-  margin-top:11px !important;
-  letter-spacing:2px !important;
-}
-
-/* Sponsors look like contingency stickers */
-.sponsors{
-  margin-top:14px;
-  padding:10px !important;
-  border:0 !important;
-  border-top:1px solid #272727 !important;
-  border-bottom:1px solid #272727 !important;
-  background:#090909 !important;
-  box-shadow:none !important;
-}
-.sponsor-heading{
-  text-align:left !important;
-  margin-bottom:8px !important;
-  letter-spacing:2px !important;
-}
-.sponsor-row{
-  justify-content:flex-start !important;
-}
-.sponsor{
-  height:29px !important;
-  background:#121212 !important;
-  border-color:#353535 !important;
-}
-
-/* Info bar becomes race control strip */
-.info-bar{
-  position:relative;
-  margin-top:12px !important;
-  margin-bottom:23px !important;
-  padding:9px 11px !important;
-  text-align:left !important;
-  letter-spacing:.9px !important;
-  box-shadow:none !important;
-  border-left:5px solid #555 !important;
-}
-.sunday .info-bar{border-left-color:#69e000 !important}
-.hosted .info-bar{border-left-color:#ffd400 !important}
-.monday .info-bar{border-left-color:#ed1c24 !important}
-
-/* Tables become NASCAR spotter-sheet style */
-.schedule-wrapper{
-  margin-top:0 !important;
-  border:0 !important;
-  box-shadow:none !important;
-  overflow:visible !important;
-}
-.schedule-wrapper:before{
-  content:"RACE WEEK GRID" !important;
-  top:-17px !important;
-  right:auto !important;
-  left:0 !important;
-  background:#111 !important;
-  color:#777 !important;
-  border-left:3px solid #555;
-  padding:4px 7px !important;
-  transform:none !important;
-}
-.sunday .schedule-wrapper:before{border-left-color:#69e000}
-.monday .schedule-wrapper:before{border-left-color:#ed1c24}
-
-.schedule{
-  border-collapse:separate !important;
-  border-spacing:0 5px !important;
-  background:transparent !important;
-}
-.schedule thead{
-  display:table-header-group;
-}
-.schedule th{
-  height:24px !important;
-  border:0 !important;
-  border-bottom:1px solid #343434 !important;
-  background:#070707 !important;
-  color:#777 !important;
-  text-align:left !important;
-  padding-left:7px !important;
-}
-.schedule td{
-  height:34px !important;
-  border:0 !important;
-  border-top:1px solid #252525 !important;
-  border-bottom:1px solid #252525 !important;
-  background:#0d0d0d !important;
-  text-align:left !important;
-  padding:6px 7px !important;
-  font-size:7px !important;
-}
-.schedule td:first-child{
-  width:42px;
-  text-align:center !important;
-  border-left:4px solid #555 !important;
-  background:#111 !important;
-}
-.schedule td:last-child{
-  border-right:1px solid #252525 !important;
-}
-.sunday .schedule td:first-child{border-left-color:#69e000 !important}
-.monday .schedule td:first-child{border-left-color:#ed1c24 !important}
-
-.schedule tbody tr:hover td{
-  background:#151515 !important;
-  transform:none !important;
-}
-
-.schedule tr.next-race td{
-  background:#16130a !important;
-  border-top-color:#665c17 !important;
-  border-bottom-color:#665c17 !important;
-}
-.schedule tr.next-race td:first-child{
-  border-left-color:#ffd400 !important;
-}
-.schedule tr.next-race td:first-child:after{
-  color:#ffd400 !important;
-}
-
-/* Hosted center column becomes more of a garage menu */
-.hosted .feature-box{
-  padding:12px !important;
-  border:0 !important;
-  background:#090909 !important;
-}
-.hosted .feature-grid{
-  gap:7px !important;
-}
-.hosted .feature{
-  min-height:82px !important;
-  align-items:flex-start !important;
-  text-align:left !important;
-  padding:12px !important;
-  border:1px solid #2d2d2d !important;
-  background:#101010 !important;
-}
-.hosted .feature:before{
-  width:4px !important;
-  background:#ffd400 !important;
-}
-.hosted .feature-icon{
-  font-size:18px !important;
-}
-.hosted .feature-title{
-  margin-top:4px;
-  font-size:9px !important;
-}
-.hosted .feature-sub{
-  color:#8b8b8b !important;
-}
-.hosted .section-title{
-  justify-content:flex-start !important;
-  margin-top:22px !important;
-  letter-spacing:2px !important;
-}
-.hosted .section-title:before{
-  display:none !important;
-}
-.hosted .section-title:after{
-  max-width:90px;
-  background:linear-gradient(90deg,#ffd400,transparent) !important;
-}
-
-/* Bottom callouts look like pit board messages */
-.bottom-bar{
-  text-align:left !important;
-  padding:10px 12px !important;
-  border:0 !important;
-  border-top:1px solid #2f2f2f !important;
-  border-bottom:1px solid #2f2f2f !important;
-  background:#0a0a0a !important;
-  box-shadow:none !important;
-  letter-spacing:1.1px !important;
-}
-
-/* Hosted footer panel becomes compact team panel */
-.footer-panel{
-  margin-top:16px !important;
-  min-height:66px !important;
-  border:1px solid #2f2f2f !important;
-  border-top:0 !important;
-  background:#0b0b0b !important;
-}
-.footer-panel:before{
-  top:0 !important;
-  width:100% !important;
-  height:3px !important;
-  background:linear-gradient(90deg,#ffd400,#ed1c24,transparent) !important;
-}
-
-/* Responsive */
-@media(max-width:850px){
-  .schedule-ticker{
-    grid-template-columns:1fr !important;
+@media(max-width:1050px){
+  .race-row{
+    grid-template-columns:105px minmax(240px,1.4fr) 110px 105px minmax(155px,.8fr);
   }
-  .schedule-board-cell{
-    border-right:0;
-    border-bottom:1px solid #2e2e2e;
+  .race-status{display:none!important}
+  .next-feature{grid-template-columns:1fr}
+  .next-details{border-left:0;border-top:1px solid #333}
+}
+@media(max-width:800px){
+  .shell{width:min(var(--max),calc(100% - 20px))}
+  .heading-row{display:block}
+  .heading-row p{margin-top:14px}
+  .race-snapshot{grid-template-columns:1fr}
+  .snapshot-card + .snapshot-card{border-left:0;border-top:1px solid var(--line)}
+  .schedule-controls{align-items:center}
+  .race-row{
+    grid-template-columns:88px minmax(0,1fr) 88px;
+    min-height:105px;
   }
-  .schedule-board-cell:last-child{
-    border-bottom:0;
+  .race-car,.winner-cell{display:none!important}
+  .race-date strong{font-size:16px}
+  .race-main strong{font-size:17px}
+  .hosted-hero{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .page-heading{padding-top:23px}
+  .series-tab{min-width:145px;padding:15px 14px}
+  .snapshot-card{padding:21px}
+  .next-feature-main{padding:26px 22px}
+  .next-details{grid-template-columns:1fr 1fr}
+  .detail{padding:14px;min-height:84px}
+  .detail strong{font-size:16px}
+  .schedule-controls{display:block}
+  .past-toggle{margin-top:8px}
+  .race-row{
+    grid-template-columns:76px 1fr;
   }
+  .race-laps,.race-status{display:none!important}
+  .race-row > div{padding:12px 10px}
+  .month-title{font-size:21px}
 }
 </style>
-
-
-<style id="hlrn-million-upgrade">
-:root{
-  --mx-red:#ed1c24;--mx-yellow:#ffd400;--mx-green:#69e000;--mx-blue:#2687ff;
-  --mx-bg:#030303;--mx-panel:#0a0a0a;--mx-line:#2d2d2d;--mx-muted:#868686;
-}
-html{scroll-behavior:smooth}
-body{background:#020202!important}
-body:before{opacity:.09!important;background:
-  radial-gradient(circle at 50% -5%,rgba(255,255,255,.12),transparent 26%),
-  radial-gradient(circle at 12% 28%,rgba(105,224,0,.045),transparent 21%),
-  radial-gradient(circle at 88% 30%,rgba(237,28,36,.055),transparent 22%)!important}
-body:after{height:150px!important;opacity:.045!important}
-
-/* ========= NETWORK HERO ========= */
-.mx-hero{position:relative;isolation:isolate;overflow:hidden;border-bottom:1px solid #313131;background:
-  linear-gradient(110deg,rgba(105,224,0,.05),transparent 28%,transparent 65%,rgba(237,28,36,.065)),
-  radial-gradient(circle at 50% 0,rgba(255,255,255,.075),transparent 38%),
-  linear-gradient(180deg,#101010 0,#050505 100%)}
-.mx-hero:before{content:"";position:absolute;inset:-80px -20%;z-index:-1;opacity:.12;background:repeating-linear-gradient(115deg,transparent 0 66px,rgba(255,255,255,.12) 67px 68px);animation:mxDrift 18s linear infinite}
-.mx-hero:after{content:"";position:absolute;left:-10%;right:-10%;bottom:0;height:4px;background:linear-gradient(90deg,transparent,var(--mx-green) 12%,var(--mx-yellow) 48%,var(--mx-red) 82%,transparent);box-shadow:0 0 22px rgba(255,212,0,.22)}
-@keyframes mxDrift{from{transform:translateX(0)}to{transform:translateX(180px)}}
-.mx-hero-inner{max-width:1600px;margin:auto;padding:24px 18px 21px;display:grid;grid-template-columns:1.35fr .65fr;gap:28px;align-items:end}
-.mx-kicker{display:flex;align-items:center;gap:9px;color:var(--mx-yellow);font-size:8px;font-weight:1000;letter-spacing:.22em;text-transform:uppercase}.mx-kicker:before{content:"";width:42px;height:3px;background:var(--mx-yellow);transform:skewX(-20deg)}
-.mx-title{margin:9px 0 0;font-family:Impact,"Arial Narrow",Arial,sans-serif;font-size:clamp(46px,6.5vw,92px);line-height:.82;letter-spacing:-.035em;font-style:italic;text-transform:uppercase;text-shadow:5px 5px 0 #121212}.mx-title span{color:var(--mx-red)}
-.mx-deck{margin-top:14px;max-width:760px;color:#a5a5a5;font-size:10px;line-height:1.55;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
-.mx-hero-side{display:grid;grid-template-columns:1fr 1fr;border:1px solid #343434;background:rgba(7,7,7,.78);backdrop-filter:blur(8px)}
-.mx-stat{min-height:74px;padding:13px 14px;border-right:1px solid #2c2c2c;border-bottom:1px solid #2c2c2c}.mx-stat:nth-child(2n){border-right:0}.mx-stat:nth-last-child(-n+2){border-bottom:0}.mx-stat-label{color:#696969;font-size:6px;font-weight:1000;letter-spacing:.18em;text-transform:uppercase}.mx-stat-value{margin-top:6px;color:#fff;font-family:Impact,"Arial Narrow",Arial,sans-serif;font-size:21px;line-height:1;font-style:italic;text-transform:uppercase}.mx-stat-value.green{color:var(--mx-green)}.mx-stat-value.red{color:#ff3d43}.mx-stat-value.yellow{color:var(--mx-yellow)}
-
-.mx-livebar{max-width:1600px;margin:0 auto 14px;display:grid;grid-template-columns:auto 1fr auto auto;border:1px solid #303030;background:#070707;min-height:42px;overflow:hidden}
-.mx-live-label{display:flex;align-items:center;gap:8px;padding:0 18px;background:var(--mx-red);font-size:8px;font-weight:1000;letter-spacing:.16em;text-transform:uppercase}.mx-live-dot{width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 12px #fff;animation:mxPulse 1.25s ease-in-out infinite}
-@keyframes mxPulse{50%{opacity:.35;transform:scale(.78)}}
-.mx-live-main{display:flex;align-items:center;padding:0 15px;min-width:0;font-size:8px;font-weight:1000;letter-spacing:.12em;text-transform:uppercase;color:#dedede;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.mx-clock,.mx-sync{display:flex;align-items:center;padding:0 14px;border-left:1px solid #2d2d2d;color:#8d8d8d;font-size:7px;font-weight:1000;letter-spacing:.11em;text-transform:uppercase;white-space:nowrap}.mx-clock strong{margin-left:6px;color:#fff;font-size:10px}
-
-/* ========= COMMAND CENTER ========= */
-.mx-command{max-width:1600px;margin:0 auto 16px;display:grid;grid-template-columns:1.2fr .8fr .8fr;border:1px solid #333;background:#080808;box-shadow:0 18px 50px rgba(0,0,0,.45)}
-.mx-next{position:relative;padding:18px 20px;overflow:hidden;background:linear-gradient(130deg,rgba(255,212,0,.075),transparent 45%),#0b0b0b;border-right:1px solid #303030}.mx-next:before{content:"NEXT EVENT";position:absolute;right:-13px;top:13px;padding:4px 18px;background:var(--mx-yellow);color:#050505;font-size:6px;font-weight:1000;letter-spacing:.13em;transform:skewX(-12deg)}
-.mx-next-series{font-size:7px;font-weight:1000;letter-spacing:.18em;text-transform:uppercase;color:var(--mx-yellow)}
-.mx-next-track{margin-top:7px;font-family:Impact,"Arial Narrow",Arial,sans-serif;font-size:clamp(27px,3vw,42px);line-height:.95;font-style:italic;text-transform:uppercase}.mx-next-meta{margin-top:8px;color:#919191;font-size:8px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.mx-countdown{display:flex;gap:6px;margin-top:14px}.mx-count-unit{min-width:58px;padding:8px 7px;border:1px solid #333;background:#080808;text-align:center}.mx-count-unit strong{display:block;font-family:Impact,"Arial Narrow",Arial,sans-serif;font-size:21px;line-height:1;color:#fff}.mx-count-unit span{display:block;margin-top:4px;color:#666;font-size:5px;font-weight:1000;letter-spacing:.13em;text-transform:uppercase}
-.mx-series-panel{padding:17px 18px;border-right:1px solid #303030;position:relative}.mx-series-panel:last-child{border-right:0}.mx-series-panel.su{box-shadow:inset 0 4px 0 var(--mx-green)}.mx-series-panel.mo{box-shadow:inset 0 4px 0 var(--mx-red)}.mx-series-label{color:#747474;font-size:6px;font-weight:1000;letter-spacing:.18em;text-transform:uppercase}.mx-series-panel.su .mx-series-label{color:var(--mx-green)}.mx-series-panel.mo .mx-series-label{color:#ff4146}.mx-series-main{margin-top:8px;color:#fff;font-family:Impact,"Arial Narrow",Arial,sans-serif;font-size:22px;line-height:1;font-style:italic;text-transform:uppercase}.mx-series-sub{margin-top:6px;color:#858585;font-size:7px;line-height:1.5;font-weight:900;text-transform:uppercase}.mx-progress-label{display:flex;justify-content:space-between;margin-top:14px;color:#696969;font-size:5px;font-weight:1000;letter-spacing:.1em;text-transform:uppercase}.mx-progress{height:5px;margin-top:5px;background:#202020;overflow:hidden}.mx-progress span{display:block;height:100%;width:0;transition:width .8s cubic-bezier(.16,.8,.2,1)}.su .mx-progress span{background:linear-gradient(90deg,var(--mx-green),var(--mx-yellow))}.mo .mx-progress span{background:linear-gradient(90deg,var(--mx-red),var(--mx-yellow))}
-
-/* ========= NAV ========= */
-.mx-jump{max-width:1600px;margin:0 auto 14px;display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.mx-jump a{display:flex;justify-content:center;align-items:center;min-height:34px;border:1px solid #343434;background:linear-gradient(180deg,#111,#080808);color:#aaa;text-decoration:none;font-size:7px;font-weight:1000;letter-spacing:.14em;text-transform:uppercase;transition:.18s}.mx-jump a:hover{transform:translateY(-2px);color:#fff;border-color:#6a6a6a}.mx-jump a:nth-child(1):hover{box-shadow:inset 0 -3px 0 var(--mx-green)}.mx-jump a:nth-child(2):hover{box-shadow:inset 0 -3px 0 var(--mx-yellow)}.mx-jump a:nth-child(3):hover{box-shadow:inset 0 -3px 0 var(--mx-red)}
-
-/* ========= EXISTING RACE WEEK BOARD ========= */
-.schedule-ticker{max-width:1600px;margin:0 auto!important;border:1px solid #333!important;border-top:0!important;box-shadow:0 12px 28px rgba(0,0,0,.45)!important}
-.schedule-board-cell{min-height:82px!important;padding:15px 17px!important}.schedule-board-main{font-size:18px!important}.schedule-board-sub{font-size:7px!important}
-
-/* ========= THREE MAIN BOARDS ========= */
-.hlrn-page{max-width:1600px!important;padding:0 12px 26px!important}.hlrn-columns{gap:16px!important;margin-top:16px!important}
-.hlrn-column{overflow:visible!important;transition:transform .22s ease,border-color .22s ease}.hlrn-column:hover{border-color:#454545!important;transform:translateY(-2px)}
-.hlrn-column .page-header{min-height:116px!important;padding:27px 20px 18px!important}.page-header h1{font-size:clamp(27px,2.55vw,40px)!important}.page-header p{font-size:7px!important}
-.sunday{box-shadow:0 20px 52px rgba(0,0,0,.5),0 0 0 1px rgba(105,224,0,.03)!important}.monday{box-shadow:0 20px 52px rgba(0,0,0,.5),0 0 0 1px rgba(237,28,36,.03)!important}.hosted{box-shadow:0 20px 52px rgba(0,0,0,.5),0 0 0 1px rgba(255,212,0,.03)!important}
-
-/* Make schedules feel like real scoring sheets */
-.schedule{border-spacing:0 6px!important}.schedule th{height:28px!important;color:#777!important;font-size:6px!important;letter-spacing:.1em!important}.schedule td{height:38px!important;font-size:7px!important;transition:background .18s,border-color .18s,opacity .18s!important}.schedule tbody tr{position:relative}.schedule tbody tr[data-race-state="complete"] td{opacity:.46}.schedule tbody tr[data-race-state="complete"]:hover td{opacity:.8}.schedule tbody tr[data-race-state="next"] td{opacity:1!important;background:linear-gradient(90deg,#1a1608,#121007)!important;border-top-color:#756500!important;border-bottom-color:#756500!important}.schedule tbody tr[data-race-state="next"] td:first-child{border-left-color:var(--mx-yellow)!important;box-shadow:inset 4px 0 0 var(--mx-yellow)}.schedule tbody tr[data-race-state="next"] td:first-child:after{content:"NEXT"!important;display:block!important;color:var(--mx-yellow)!important;font-size:5px!important;letter-spacing:.12em!important}.schedule tbody tr[data-race-state="live"] td{animation:mxLiveRow 1.35s ease-in-out infinite alternate;background:#190809!important;border-color:#7a1d20!important}@keyframes mxLiveRow{to{background:#290b0d!important;box-shadow:inset 0 0 14px rgba(237,28,36,.08)}}
-.schedule-wrapper:before{font-size:6px!important;letter-spacing:.14em!important;color:#999!important;background:#0e0e0e!important}
-
-/* sponsor strips */
-.sponsors{padding:11px!important}.sponsor-heading{font-size:6px!important;color:#777!important}.sponsor{height:32px!important;background:linear-gradient(180deg,#151515,#0c0c0c)!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.015)}.sponsor:hover{transform:translateY(-3px) scale(1.015)!important;background:#191919!important}
-
-/* hosted garage */
-.hosted .feature-grid{grid-template-columns:1fr 1fr!important}.hosted .feature{min-height:91px!important;transition:.2s ease!important}.hosted .feature:hover{transform:translateX(3px)!important;background:#151515!important}.hosted .feature-icon{font-size:22px!important}.hosted .feature-title{font-size:9px!important}.hosted .feature-sub{font-size:5.5px!important;line-height:1.4!important}.hosted .section-title{color:var(--mx-yellow)!important}
-
-/* footer + social */
-.footer-panel{box-shadow:0 12px 28px rgba(0,0,0,.4)!important}.footer-social{transition:.2s ease!important}.footer-social:hover{transform:translateY(-4px) scale(1.06)!important}.logo-main{font-size:34px!important}
-
-/* ========= FLOATING RACE STRIPE ========= */
-.mx-race-stripe{height:8px;max-width:1600px;margin:0 auto;background:repeating-linear-gradient(90deg,#fff 0 18px,#111 18px 36px);opacity:.13;clip-path:polygon(0 0,100% 0,99.5% 100%,.5% 100%)}
-
-/* reveal */
-.mx-reveal{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s ease}.mx-reveal.mx-show{opacity:1;transform:none}
-
-@media(max-width:1100px){.mx-hero-inner{grid-template-columns:1fr}.mx-hero-side{max-width:700px}.mx-command{grid-template-columns:1fr 1fr}.mx-next{grid-column:1/-1;border-right:0;border-bottom:1px solid #303030}.hlrn-columns{grid-template-columns:1fr 1fr!important}.hosted{grid-column:1/-1!important}}
-@media(max-width:760px){.mx-hero-inner{padding:20px 12px 17px}.mx-title{font-size:52px}.mx-livebar{margin-left:7px;margin-right:7px;grid-template-columns:auto 1fr}.mx-clock,.mx-sync{display:none}.mx-command{margin-left:7px;margin-right:7px;grid-template-columns:1fr}.mx-next{grid-column:auto}.mx-series-panel{border-right:0;border-bottom:1px solid #303030}.mx-series-panel:last-child{border-bottom:0}.mx-jump{margin-left:7px;margin-right:7px}.schedule-ticker{margin-left:7px!important;margin-right:7px!important}.hlrn-columns{grid-template-columns:1fr!important}.hosted{grid-column:auto!important}.mx-hero-side{grid-template-columns:1fr 1fr}.mx-deck{font-size:8px}.mx-count-unit{min-width:48px}.mx-count-unit strong{font-size:18px}}
-@media(max-width:480px){.mx-title{font-size:43px}.mx-hero-side{grid-template-columns:1fr 1fr}.mx-stat{min-height:66px;padding:11px}.mx-stat-value{font-size:18px}.mx-jump{grid-template-columns:1fr}.mx-live-label{padding:0 10px}.mx-live-main{font-size:6.5px}.schedule-board-main{font-size:15px!important}.schedule-board-sub{font-size:6px!important}.schedule td{font-size:6px!important;padding:5px!important}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}.mx-reveal{opacity:1!important;transform:none!important}}
-</style>
-
-
-<style id="hlrn-corrected-series-colors">
-/* HLRN corrected series identity: Sunday red • Monday green • Hosted yellow */
-.sunday{border-top-color:#ed1c24!important}
-.sunday:after{background:#ed1c24!important}
-.sunday .page-header h1 span,
-.sunday .schedule th,
-.sunday .schedule td:first-child,
-.sunday .info-bar,
-.sunday .bottom-bar{color:#ed1c24!important}
-.sunday .sponsor.admin{color:#ed1c24!important;border-color:#ed1c24!important}
-.sunday .page-header:before,
-.sunday .hlrn-column:before{background:#ed1c24!important}
-.sunday .info-bar,
-.sunday .schedule td:first-child,
-.sunday .schedule-wrapper:before{border-left-color:#ed1c24!important}
-.sunday-cell:before{background:#ed1c24!important}
-.sunday-cell .schedule-board-label{color:#ed1c24!important}
-.mx-series-panel.su{box-shadow:inset 0 4px 0 #ed1c24!important}
-.mx-series-panel.su .mx-series-label{color:#ed1c24!important}
-.mx-series-panel.su .mx-progress span{background:linear-gradient(90deg,#ed1c24,#ffd400)!important}
-
-.monday{border-top-color:#69e000!important}
-.monday:after{background:#69e000!important}
-.monday .page-header h1 span,
-.monday .schedule th,
-.monday .schedule td:first-child,
-.monday .info-bar,
-.monday .bottom-bar{color:#69e000!important}
-.monday .sponsor.admin{color:#69e000!important;border-color:#69e000!important}
-.monday .page-header:before,
-.monday .hlrn-column:before{background:#69e000!important}
-.monday .info-bar,
-.monday .schedule td:first-child,
-.monday .schedule-wrapper:before{border-left-color:#69e000!important}
-.monday-cell:before{background:#69e000!important}
-.monday-cell .schedule-board-label{color:#69e000!important}
-.mx-series-panel.mo{box-shadow:inset 0 4px 0 #69e000!important}
-.mx-series-panel.mo .mx-series-label{color:#69e000!important}
-.mx-series-panel.mo .mx-progress span{background:linear-gradient(90deg,#69e000,#ffd400)!important}
-
-.hosted{border-top-color:#ffd400!important}
-.hosted:after{background:#ffd400!important}
-.hosted .page-header h1 span,
-.hosted .info-bar,
-.hosted .bottom-bar{color:#ffd400!important}
-.hosted .sponsor.admin{color:#ffd400!important;border-color:#ffd400!important}
-.hosted .page-header:before,
-.hosted .hlrn-column:before{background:#ffd400!important}
-.hosted .info-bar{border-left-color:#ffd400!important}
-</style>
-
-<link rel="stylesheet" href="../assets/site-shell.css">
 </head>
+
 <body>
+<div class="hlrn-schedule-page">
 
-<div class="mx-hero">
-  <div class="mx-hero-inner">
-    <div>
-      <div class="mx-kicker">HLRN Competition Operations • 2026 Season</div>
-      <div class="mx-title">SEASON <span>HEADQUARTERS</span></div>
-      <div class="mx-deck">Sunday Night League • Hosted Racing • Monday Night League — one command center for the full High Line Racing Network race calendar.</div>
+<main class="shell">
+  <header class="page-heading">
+    <div class="crumbs"><b>HLRN</b><span>/</span> Schedule <span>/</span> 2026</div>
+    <div class="heading-row">
+      <h1>HLRN <em>Schedule</em></h1>
+      <p>Race dates, previous winners, upcoming events and the complete 2026 Sunday and Monday championship schedules.</p>
     </div>
-    <div class="mx-hero-side">
-      <div class="mx-stat"><div class="mx-stat-label">Network Status</div><div class="mx-stat-value green" id="mxNetworkStatus">ONLINE</div></div>
-      <div class="mx-stat"><div class="mx-stat-label">Eastern Time</div><div class="mx-stat-value" id="mxHeroClock">--:-- --</div></div>
-      <div class="mx-stat"><div class="mx-stat-label">Sunday Season</div><div class="mx-stat-value green" id="mxSundayWeek">WEEK --</div></div>
-      <div class="mx-stat"><div class="mx-stat-label">Monday Season</div><div class="mx-stat-value red" id="mxMondayWeek">WEEK --</div></div>
-    </div>
+  </header>
+
+  <div class="series-tabs" id="seriesTabs">
+    <button class="series-tab active" data-series="sunday">Sunday Night League</button>
+    <button class="series-tab" data-series="monday">Monday Night League</button>
+    <button class="series-tab" data-series="hosted">Hosted Racing</button>
   </div>
-</div>
-<div class="mx-race-stripe"></div>
-<div class="mx-livebar">
-  <div class="mx-live-label"><span class="mx-live-dot"></span><span id="mxLiveLabel">RACE CONTROL</span></div>
-  <div class="mx-live-main" id="mxLiveMain">Scanning the HLRN calendar for the next event...</div>
-  <div class="mx-clock">Eastern <strong id="mxClock">--:-- --</strong></div>
-  <div class="mx-sync" id="mxDate">--</div>
-</div>
-<div class="mx-command mx-reveal">
-  <section class="mx-next">
-    <div class="mx-next-series" id="mxNextSeries">UP NEXT</div>
-    <div class="mx-next-track" id="mxNextTrack">Loading...</div>
-    <div class="mx-next-meta" id="mxNextMeta">Checking race week...</div>
-    <div class="mx-countdown" aria-label="Countdown to next HLRN event">
-      <div class="mx-count-unit"><strong id="mxDays">--</strong><span>Days</span></div>
-      <div class="mx-count-unit"><strong id="mxHours">--</strong><span>Hours</span></div>
-      <div class="mx-count-unit"><strong id="mxMinutes">--</strong><span>Minutes</span></div>
-      <div class="mx-count-unit"><strong id="mxSeconds">--</strong><span>Seconds</span></div>
+
+  <div id="leagueView">
+    <section class="race-snapshot">
+      <article class="snapshot-card previous-card">
+        <div class="snapshot-kicker">Previous Race</div>
+        <div class="snapshot-date" id="prevDate">—</div>
+        <div class="snapshot-track" id="prevTrack">—</div>
+        <div class="snapshot-meta" id="prevMeta">—</div>
+        <div class="winner-block">
+          <div class="winner-mark">🏆</div>
+          <div class="winner-copy">
+            <small>Winner</small>
+            <b id="prevWinner">Winner pending</b>
+          </div>
+        </div>
+        <a class="snapshot-button" href="../results/">Race Results →</a>
+      </article>
+
+      <article class="snapshot-card next-card">
+        <div class="snapshot-kicker">Next Race</div>
+        <div class="snapshot-date" id="nextDate">—</div>
+        <div class="snapshot-track" id="nextTrack">—</div>
+        <div class="snapshot-meta" id="nextMeta">—</div>
+        <div class="winner-block">
+          <div class="winner-mark">▶</div>
+          <div class="winner-copy">
+            <small>Race Time</small>
+            <b>8:30 PM ET</b>
+          </div>
+        </div>
+        <a class="snapshot-button" href="../live/">Race Center →</a>
+      </article>
+    </section>
+
+    <section class="next-feature" id="nextFeature" data-series="sunday">
+      <div class="next-feature-main">
+        <div class="next-series" id="featureSeries">Sunday Night League</div>
+        <h2 id="featureTrack">Loading next HLRN race...</h2>
+        <div class="next-feature-date" id="featureDate">—</div>
+        <div class="next-actions">
+          <a class="primary" href="../live/">HLRN Race Center</a>
+          <a href="../standings/">Standings</a>
+          <a href="../results/">Results</a>
+        </div>
+      </div>
+      <div class="next-details">
+        <div class="detail"><small>Week</small><strong id="featureWeek">—</strong></div>
+        <div class="detail"><small>Car</small><strong id="featureCar">—</strong></div>
+        <div class="detail"><small>Laps</small><strong id="featureLaps">—</strong></div>
+        <div class="detail"><small>Start</small><strong>8:30 PM ET</strong></div>
+      </div>
+    </section>
+
+    <section class="schedule-controls">
+      <div class="control-group">
+        <label for="seasonSelect">Season</label>
+        <select id="seasonSelect">
+          <option>2026</option>
+        </select>
+      </div>
+
+      <button class="past-toggle" id="pastToggle" type="button" aria-pressed="false">
+        <span class="toggle-box"><span class="toggle-knob"></span></span>
+        <span>Show Past Races</span>
+      </button>
+    </section>
+
+    <div class="schedule-list" id="scheduleList" data-series="sunday"></div>
+  </div>
+
+  <section class="hosted-view" id="hostedView">
+    <div class="hosted-hero">
+      <div class="hosted-copy">
+        <div class="snapshot-kicker" style="color:#ffd400">HLRN Hosted Racing</div>
+        <h2>Open Racing All Week</h2>
+        <p>Hosted races are posted throughout the week with multiple NASCAR-style cars, tracks and fixed-setup events. Check the HLRN Race Center and announcements for the next hosted session.</p>
+        <div class="next-actions">
+          <a class="primary" href="../live/" style="background:#ffd400;border-color:#ffd400;color:#111">Race Center</a>
+          <a href="../results/">Hosted Results</a>
+        </div>
+      </div>
+      <div class="hosted-grid">
+        <div class="hosted-stat"><small>Race Types</small><strong>Cup • Trucks • ARCA</strong></div>
+        <div class="hosted-stat"><small>Setup</small><strong>Fixed Racing</strong></div>
+        <div class="hosted-stat"><small>Schedule</small><strong>Posted Regularly</strong></div>
+        <div class="hosted-stat"><small>Tracks</small><strong>NASCAR Venues</strong></div>
+      </div>
     </div>
   </section>
-  <section class="mx-series-panel su">
-    <div class="mx-series-label">Sunday Night Championship</div>
-    <div class="mx-series-main" id="mxSundayMain">Loading...</div>
-    <div class="mx-series-sub" id="mxSundaySub">Race week intelligence</div>
-    <div class="mx-progress-label"><span>Season Progress</span><span id="mxSundayProgressText">0 / 16</span></div>
-    <div class="mx-progress"><span id="mxSundayProgress"></span></div>
-  </section>
-  <section class="mx-series-panel mo">
-    <div class="mx-series-label">Monday Night Championship</div>
-    <div class="mx-series-main" id="mxMondayMain">Loading...</div>
-    <div class="mx-series-sub" id="mxMondaySub">Race week intelligence</div>
-    <div class="mx-progress-label"><span>Season Progress</span><span id="mxMondayProgressText">0 / 16</span></div>
-    <div class="mx-progress"><span id="mxMondayProgress"></span></div>
-  </section>
-</div>
-<nav class="mx-jump mx-reveal" aria-label="Jump to HLRN schedule section">
-  <a href="#mxSundayBoard">Sunday League</a>
-  <a href="#mxHostedBoard">Hosted Racing</a>
-  <a href="#mxMondayBoard">Monday League</a>
-</nav>
 
+  <div class="footer-note">High Line Racing Network • 2026 Schedule • Sunday • Monday • Hosted Racing</div>
+</main>
 
-
-<div class="schedule-ticker" aria-label="HLRN race week board">
-  <div class="schedule-board-cell sunday-cell">
-    <div class="schedule-board-label">Next Sunday</div>
-    <div class="schedule-board-main" id="boardSundayMain">Loading Sunday...</div>
-    <div class="schedule-board-sub" id="boardSundaySub">HLRN Sunday Night League</div>
-  </div>
-  <div class="schedule-board-cell hosted-cell">
-    <div class="schedule-board-label">Hosted Racing</div>
-    <div class="schedule-board-main">Open Racing All Week</div>
-    <div class="schedule-board-sub">New races posted daily • multiple cars • NASCAR tracks</div>
-  </div>
-  <div class="schedule-board-cell monday-cell">
-    <div class="schedule-board-label">Next Monday</div>
-    <div class="schedule-board-main" id="boardMondayMain">Loading Monday...</div>
-    <div class="schedule-board-sub" id="boardMondaySub">HLRN Monday Night League</div>
-  </div>
-</div>
-<div class="hlrn-page">
-<div class="hlrn-columns">
-
-<!-- SUNDAY -->
-<div class="hlrn-column sunday">
-<div class="page-header">
-<h1>HLRN <span>SUNDAY NIGHT</span><br>LEAGUE SCHEDULE</h1>
-<p>ONE LINE • ONE PASSION • ONE NETWORK</p>
-</div>
-<div class="sponsors">
-<div class="sponsor-heading">PROUDLY SUPPORTED BY</div>
-<div class="sponsor-row">
-<div class="sponsor admin">ADMIN BOX</div>
-<div class="sponsor pedley">PEDLEY'S GARAGE</div>
-<div class="sponsor twrs">TWRS</div>
-</div>
-</div>
-<div class="info-bar">★ SUNDAY LOBBY OPENS 7:30 PM EST ★ &nbsp; • &nbsp; RACE BEGINS 8:30 PM EST</div>
-<div class="schedule-wrapper">
-<table class="schedule">
-<thead><tr><th>WEEK</th><th>DATE</th><th>TRACK</th><th>CAR</th><th>LAPS</th></tr></thead>
-<tbody>
-<tr><td>1</td><td>June 14th</td><td>Daytona</td><td>Gen 7</td><td>100</td></tr>
-<tr><td>2</td><td>June 28th</td><td>Iowa</td><td>Trucks</td><td>200</td></tr>
-<tr><td>3</td><td>July 12th</td><td>Chicagoland</td><td>ARCA</td><td>175</td></tr>
-<tr><td>4</td><td>July 19th</td><td>Echo Park</td><td>Gen 6</td><td>175</td></tr>
-<tr><td>5</td><td>August 9th</td><td>Charloette</td><td>Gen 7</td><td>175</td></tr>
-<tr><td>6</td><td>August 16th</td><td>Texas</td><td>Trucks</td><td>175</td></tr>
-<tr><td>7</td><td>August 23rd</td><td>Auto Club</td><td>ARCA</td><td>125</td></tr>
-<tr><td>8</td><td>August 30th</td><td>Talladega</td><td>Gen 6</td><td>100</td></tr>
-<tr><td>9</td><td>September 13th</td><td>Homestead Miami</td><td>Gen 7</td><td>175</td></tr>
-<tr><td>10</td><td>September 20th</td><td>Michigan</td><td>Trucks</td><td>125</td></tr>
-<tr><td>11</td><td>September 27th</td><td>Indianapolis</td><td>ARCA</td><td>100</td></tr>
-<tr><td>12</td><td>October 4th</td><td>IRSS</td><td>Gen 6</td><td>100</td></tr>
-<tr><td>13</td><td>October 11th</td><td>Kansas</td><td>Gen 7</td><td>175</td></tr>
-<tr><td>14</td><td>October 18th</td><td>Las Vegas</td><td>Trucks</td><td>175</td></tr>
-<tr><td>15</td><td>October 25th</td><td>Daytona</td><td>ARCA</td><td>100</td></tr>
-<tr><td>16</td><td>November 1st</td><td>Talladega</td><td>Gen 6</td><td>100</td></tr>
-</tbody>
-</table>
-</div>
-<div class="bottom-bar">🏆 COMPETE • RESPECT • REPEAT</div>
-</div>
-
-<!-- HOSTED -->
-<div class="hlrn-column hosted">
-<div class="page-header">
-<h1>HLRN <span>HOSTED RACES</span><br>HOSTED RACING</h1>
-<p>NEW RACES POSTED DAILY</p>
-</div>
-<div class="sponsors">
-<div class="sponsor-heading">HLRN HOSTED RACING PARTNERS</div>
-<div class="sponsor-row">
-<div class="sponsor admin">ADMIN BOX</div>
-<div class="sponsor pedley">PEDLEY'S GARAGE</div>
-<div class="sponsor rsi"><span class="rsi-main">RSI</span><span class="rsi-sub">RACING</span></div>
-</div>
-</div>
-<div class="info-bar">MULTIPLE SERIES • MULTIPLE CARS • ALL NASCAR TRACKS</div>
-
-<div class="section-title">RACE TYPES</div>
-<div class="feature-box"><div class="feature-grid">
-<div class="feature"><div class="feature-icon">🏁</div><div class="feature-title">NASCAR CUP</div><div class="feature-sub">GEN 7 CUP RACING</div></div>
-<div class="feature"><div class="feature-icon">🏎️</div><div class="feature-title">CLASSIC NASCAR</div><div class="feature-sub">80'S / 2000'S</div></div>
-<div class="feature"><div class="feature-icon">🚚</div><div class="feature-title">TRUCKS</div><div class="feature-sub">TRUCK SERIES</div></div>
-<div class="feature"><div class="feature-icon">⚙️</div><div class="feature-title">FIXED SETUPS</div><div class="feature-sub">EVERYONE RUNS THE SAME SETUP</div></div>
-</div></div>
-
-<div class="section-title">RACE INFO</div>
-<div class="feature-box"><div class="feature-grid">
-<div class="feature"><div class="feature-icon">🗓️</div><div class="feature-title">NEW RACES</div><div class="feature-sub">POSTED DAILY</div></div>
-<div class="feature"><div class="feature-icon">🏁</div><div class="feature-title">FIXED SETUPS</div><div class="feature-sub">EQUAL RACING</div></div>
-<div class="feature"><div class="feature-icon">⏱️</div><div class="feature-title">RACE ANYTIME</div><div class="feature-sub">ALL WEEK</div></div>
-<div class="feature"><div class="feature-icon">🏆</div><div class="feature-title">HAVE FUN</div><div class="feature-sub">RACE HARD</div></div>
-</div></div>
-
-<div class="bottom-bar">RACE YOUR WAY <span>•</span> ANY TRACK <span>•</span> ANY CAR</div>
-<div class="footer-panel">
-  <div class="hlrn-logo">
-    <div class="logo-main">HLRN</div>
-    <div class="logo-sub">HIGH LINE RACING NETWORK</div>
-  </div>
-
-  <div class="footer-socials">
-    <a class="footer-social youtube" href="https://www.youtube.com/@High_Line_Racing" onclick="window.open(this.href, '_blank'); return false;" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube">
-      <svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.8 31.8 0 0 0 0 12a31.8 31.8 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.8 31.8 0 0 0 24 12a31.8 31.8 0 0 0-.5-5.8ZM9.6 15.9V8.1l6.5 3.9-6.5 3.9Z"/></svg>
-    </a>
-    <a class="footer-social facebook" href="https://www.facebook.com/search/top?q=high%20line%20racing%20network" onclick="window.open(this.href, '_blank'); return false;" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook">
-      <svg viewBox="0 0 24 24"><path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.6 1.7-1.6h1.8V3.8c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3V10H7.5v3h2.8v8h3.2Z"/></svg>
-    </a>
-    <a class="footer-social discord" href="https://discord.gg/6sRg57RAy" onclick="window.open(this.href, '_blank'); return false;" target="_blank" rel="noopener" aria-label="Discord" title="Discord">
-      <svg viewBox="0 0 24 24"><path d="M19.5 5.2A16.2 16.2 0 0 0 15.7 4l-.5 1a14.7 14.7 0 0 0-6.4 0l-.5-1a16.2 16.2 0 0 0-3.8 1.2C2.1 8.1 1.5 12.9 1.8 17.6a16.4 16.4 0 0 0 4.7 2.4l1.1-1.5a10.4 10.4 0 0 1-1.8-.9l.4-.3c3.5 1.6 7.3 1.6 10.8 0l.4.3c-.6.4-1.2.7-1.8.9l1.1 1.5a16.4 16.4 0 0 0 4.7-2.4c.4-5.5-.7-10.3-1.9-12.4ZM8.3 15.2c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Zm7.4 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Z"/></svg>
-    </a>
-  </div>
-</div>
-</div>
-
-<!-- MONDAY -->
-<div class="hlrn-column monday">
-<div class="page-header">
-<h1>HLRN <span>MONDAY NIGHT</span><br>LEAGUE SCHEDULE</h1>
-<p>ONE LEAGUE • ONE GOAL • CHAMPIONSHIP</p>
-</div>
-<div class="sponsors">
-<div class="sponsor-heading">MONDAY NIGHT LEAGUE SPONSORS</div>
-<div class="sponsor-row">
-<div class="sponsor admin">ADMIN BOX</div>
-<div class="sponsor pedley">PEDLEY'S GARAGE</div>
-<div class="sponsor rsi"><span class="rsi-main">RSI</span><span class="rsi-sub">RACING</span></div>
-<div class="sponsor twrs">TWRS</div>
-<div class="sponsor bsm"><span class="bsm-main">BSM</span><span class="bsm-sub">BILL SIMMONS MEMORIAL</span></div>
-</div>
-</div>
-<div class="info-bar">★ MONDAY LOBBY OPENS 7:30 PM EST ★ &nbsp; • &nbsp; RACE BEGINS 8:30 PM EST</div>
-<div class="schedule-wrapper">
-<table class="schedule">
-<thead><tr><th>WEEK</th><th>DATE</th><th>TRACK</th><th>CAR</th><th>LAPS</th></tr></thead>
-<tbody>
-<tr><td>1</td><td>August 17th</td><td>Daytona</td><td>Gen 7</td><td>100</td></tr>
-<tr><td>2</td><td>August 24th</td><td>Iowa</td><td>Trucks</td><td>150</td></tr>
-<tr><td>3</td><td>August 31st</td><td>Chicagoland</td><td>ARCA</td><td>125</td></tr>
-<tr><td>4</td><td>September 14th</td><td>Echo Park</td><td>Gen 7</td><td>125</td></tr>
-<tr><td>5</td><td>September 21st</td><td>Charloette</td><td>Gen 7</td><td>125</td></tr>
-<tr><td>6</td><td>September 28th</td><td>Texas</td><td>Trucks</td><td>125</td></tr>
-<tr><td>7</td><td>October 5th</td><td>Auto Club</td><td>ARCA</td><td>75</td></tr>
-<tr><td>8</td><td>October 12th</td><td>Talladega</td><td>Trucks</td><td>75</td></tr>
-<tr><td>9</td><td>October 19th</td><td>Homestead Miami</td><td>Gen 7</td><td>125</td></tr>
-<tr><td>10</td><td>October 26th</td><td>Michigan</td><td>Trucks</td><td>125</td></tr>
-<tr><td>11</td><td>November 2nd</td><td>Indianapolis</td><td>ARCA</td><td>80</td></tr>
-<tr><td>12</td><td>November 9th</td><td>IRSS</td><td>Trucks</td><td>75</td></tr>
-<tr><td>13</td><td>November 16th</td><td>Kansas</td><td>Gen 7</td><td>125</td></tr>
-<tr><td>14</td><td>November 23rd</td><td>Las Vegas</td><td>Trucks</td><td>125</td></tr>
-<tr><td>15</td><td>November 30th</td><td>Daytona</td><td>ARCA</td><td>100</td></tr>
-<tr><td>16</td><td>December 7th</td><td>Talladega</td><td>Gen 7</td><td>100</td></tr>
-</tbody>
-</table>
-</div>
-<div class="bottom-bar">MONDAY NIGHT LEAGUE • SAME TRACKS • NEW CHALLENGES</div>
-</div>
-
-</div>
 </div>
 
 <script>
-(function(){
+const HLRN_API_URL="https://script.google.com/macros/s/AKfycbwo4C9RyV-H-F4ekKFcgmrYVpyOUsh9dmFf2jVhJwvieCTKpKzAR_k6lNcppBuehj58/exec";
+const TZ="America/New_York";
 
-  function monthNum(name){
-    const map={
-      january:0,february:1,march:2,april:3,may:4,june:5,
-      july:6,august:7,september:8,october:9,november:10,december:11
-    };
-    return map[String(name||"").toLowerCase()];
+const schedules={
+  sunday:[
+    {week:1,date:"2026-06-14",track:"Daytona",car:"Gen 7",laps:100},
+    {week:2,date:"2026-06-28",track:"Iowa",car:"Trucks",laps:200},
+    {week:3,date:"2026-07-12",track:"Chicagoland",car:"ARCA",laps:175},
+    {week:4,date:"2026-07-19",track:"EchoPark",car:"Gen 6",laps:175},
+    {week:5,date:"2026-08-09",track:"Charlotte",car:"Gen 7",laps:175},
+    {week:6,date:"2026-08-16",track:"Texas",car:"Trucks",laps:175},
+    {week:7,date:"2026-08-23",track:"Auto Club",car:"ARCA",laps:125},
+    {week:8,date:"2026-08-30",track:"Talladega",car:"Gen 6",laps:100},
+    {week:9,date:"2026-09-13",track:"Homestead-Miami",car:"Gen 7",laps:175},
+    {week:10,date:"2026-09-20",track:"Michigan",car:"Trucks",laps:125},
+    {week:11,date:"2026-09-27",track:"Indianapolis",car:"ARCA",laps:100},
+    {week:12,date:"2026-10-04",track:"IRSS",car:"Gen 6",laps:100},
+    {week:13,date:"2026-10-11",track:"Kansas",car:"Gen 7",laps:175},
+    {week:14,date:"2026-10-18",track:"Las Vegas",car:"Trucks",laps:175},
+    {week:15,date:"2026-10-25",track:"Daytona",car:"ARCA",laps:100},
+    {week:16,date:"2026-11-01",track:"Talladega",car:"Gen 6",laps:100}
+  ],
+  monday:[
+    {week:1,date:"2026-08-17",track:"Daytona",car:"Gen 7",laps:100},
+    {week:2,date:"2026-08-24",track:"Iowa",car:"Trucks",laps:150},
+    {week:3,date:"2026-08-31",track:"Chicagoland",car:"ARCA",laps:125},
+    {week:4,date:"2026-09-14",track:"EchoPark",car:"Gen 7",laps:125},
+    {week:5,date:"2026-09-21",track:"Charlotte",car:"Gen 7",laps:125},
+    {week:6,date:"2026-09-28",track:"Texas",car:"Trucks",laps:125},
+    {week:7,date:"2026-10-05",track:"Auto Club",car:"ARCA",laps:75},
+    {week:8,date:"2026-10-12",track:"Talladega",car:"Trucks",laps:75},
+    {week:9,date:"2026-10-19",track:"Homestead-Miami",car:"Gen 7",laps:125},
+    {week:10,date:"2026-10-26",track:"Michigan",car:"Trucks",laps:125},
+    {week:11,date:"2026-11-02",track:"Indianapolis",car:"ARCA",laps:80},
+    {week:12,date:"2026-11-09",track:"IRSS",car:"Trucks",laps:75},
+    {week:13,date:"2026-11-16",track:"Kansas",car:"Gen 7",laps:125},
+    {week:14,date:"2026-11-23",track:"Las Vegas",car:"Trucks",laps:125},
+    {week:15,date:"2026-11-30",track:"Daytona",car:"ARCA",laps:100},
+    {week:16,date:"2026-12-07",track:"Talladega",car:"Gen 7",laps:100}
+  ]
+};
+
+const winners={
+  sunday:{
+    1:"Ethan Fonseca Moreno",
+    2:"Nicholas Baumann",
+    3:"Ethan Fonseca Moreno",
+    4:"Craig Rowe",
+    5:"Nicholas Baumann",
+    6:"Nicholas Baumann",
+    7:"Nicholas Baumann",
+    8:"Craig Rowe",
+    9:"Dylan C Jones"
+  },
+  monday:{
+    1:"Ethan Eckert",
+    2:"Ethan Eckert",
+    3:"Ethan Eckert",
+    4:"Ethan Eckert"
+  }
+};
+
+let currentSeries="sunday";
+let showPast=false;
+
+function escapeHtml(v){
+  return String(v??"").replace(/[&<>"']/g,m=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[m]));
+}
+
+/* Convert an America/New_York wall-clock time to a real Date. */
+function zonedDate(dateStr,hour=20,minute=30){
+  const [y,m,d]=dateStr.split("-").map(Number);
+  let guess=Date.UTC(y,m-1,d,hour,minute,0);
+
+  function parts(ms){
+    const p=new Intl.DateTimeFormat("en-US",{
+      timeZone:TZ,year:"numeric",month:"2-digit",day:"2-digit",
+      hour:"2-digit",minute:"2-digit",second:"2-digit",hourCycle:"h23"
+    }).formatToParts(new Date(ms));
+    const x={};
+    p.forEach(a=>{if(a.type!=="literal")x[a.type]=Number(a.value)});
+    return x;
   }
 
-  function parseDateText(text){
-    const m=String(text||"").trim().match(/^([A-Za-z]+)\s+(\d{1,2})(?:st|nd|rd|th)?$/);
-    if(!m) return null;
-    const month=monthNum(m[1]);
-    if(month===undefined) return null;
-    return new Date(2026,month,Number(m[2]),0,0,0,0);
+  for(let i=0;i<2;i++){
+    const p=parts(guess);
+    const seen=Date.UTC(p.year,p.month-1,p.day,p.hour,p.minute,p.second||0);
+    const wanted=Date.UTC(y,m-1,d,hour,minute,0);
+    guess+=wanted-seen;
   }
+  return new Date(guess);
+}
 
-  function markNextRace(table){
-    const rows=[...table.querySelectorAll("tbody tr")];
-    const now=new Date();
-    let best=null;
+function raceState(race,now=new Date()){
+  const start=zonedDate(race.date);
+  const end=new Date(start.getTime()+4*60*60*1000);
+  if(now>=start && now<=end)return "live";
+  if(now>end)return "past";
+  return "future";
+}
 
-    rows.forEach(row=>{
-      const cells=row.querySelectorAll("td");
-      if(cells.length<3) return;
+function classify(series){
+  const list=schedules[series];
+  const now=new Date();
+  const decorated=list.map(r=>({...r,state:raceState(r,now),start:zonedDate(r.date)}));
+  const past=decorated.filter(r=>r.state==="past");
+  const live=decorated.find(r=>r.state==="live");
+  const future=decorated.filter(r=>r.state==="future");
+  const previous=past.length?past[past.length-1]:null;
+  const next=live||future[0]||null;
+  return {decorated,previous,next};
+}
 
-      const date=parseDateText(cells[1].textContent);
-      if(!date) return;
+function fmtDate(dateStr,long=false){
+  const d=new Date(dateStr+"T12:00:00");
+  return new Intl.DateTimeFormat("en-US",{
+    month:long?"long":"short",
+    day:"numeric",
+    year:long?"numeric":undefined
+  }).format(d);
+}
 
-      if(date>=new Date(now.getFullYear(),now.getMonth(),now.getDate())){
-        if(!best || date<best.date){
-          best={row,date};
-        }
-      }
-    });
+function monthName(dateStr){
+  const d=new Date(dateStr+"T12:00:00");
+  return new Intl.DateTimeFormat("en-US",{month:"long"}).format(d).toUpperCase();
+}
 
-    if(best){
-      best.row.classList.add("next-race");
-      return {
-        week:best.row.children[0]?.textContent.trim()||"",
-        date:best.row.children[1]?.textContent.trim()||"",
-        track:best.row.children[2]?.textContent.trim()||"",
-        car:best.row.children[3]?.textContent.trim()||"",
-        laps:best.row.children[4]?.textContent.trim()||""
-      };
+function jsonp(action,league){
+  return new Promise((resolve,reject)=>{
+    const cb="hlrn_schedule_"+action+"_"+league+"_"+Date.now()+"_"+Math.floor(Math.random()*99999);
+    const s=document.createElement("script");
+    let finished=false;
+
+    function cleanup(){
+      if(finished)return;
+      finished=true;
+      clearTimeout(timer);
+      try{delete window[cb]}catch{}
+      try{s.remove()}catch{}
     }
 
-    return null;
-  }
+    window[cb]=data=>{cleanup();resolve(data)};
+    s.src=HLRN_API_URL+"?action="+encodeURIComponent(action)+"&league="+encodeURIComponent(league)+"&callback="+encodeURIComponent(cb)+"&t="+Date.now();
+    s.async=true;
+    s.onerror=()=>{cleanup();reject(new Error("HLRN results unavailable"))};
+    document.body.appendChild(s);
+    const timer=setTimeout(()=>{cleanup();reject(new Error("HLRN results timed out"))},12000);
+  });
+}
 
-  function buildTicker(){
-    const ticker=document.getElementById("scheduleTickerTrack");
-    if(!ticker) return;
+function applyResultFeed(series,feed){
+  if(!feed || feed.success===false || !Array.isArray(feed.results))return;
 
-    const sundayTable=document.querySelector(".sunday .schedule");
-    const mondayTable=document.querySelector(".monday .schedule");
-
-    const sunday=sundayTable ? markNextRace(sundayTable) : null;
-    const monday=mondayTable ? markNextRace(mondayTable) : null;
-
-    const parts=[];
-
-    if(sunday){
-      parts.push(
-        "<b>NEXT SUNDAY</b> • WEEK "+sunday.week+
-        " • "+sunday.track+
-        " • "+sunday.date+
-        " • "+sunday.car+
-        " • "+sunday.laps+" LAPS • 8:30 PM EST"
-      );
-    }
-
-    parts.push(
-      "<b>HOSTED RACING</b> • NEW RACES POSTED DAILY • MULTIPLE SERIES • MULTIPLE CARS • NASCAR TRACKS"
-    );
-
-    if(monday){
-      parts.push(
-        "<b>NEXT MONDAY</b> • WEEK "+monday.week+
-        " • "+monday.track+
-        " • "+monday.date+
-        " • "+monday.car+
-        " • "+monday.laps+" LAPS • 8:30 PM EST"
-      );
-    }
-
-    parts.push(
-      "<b>HIGH LINE RACING NETWORK</b> • RACE • BROADCAST • COMPETE"
-    );
-
-    ticker.innerHTML=parts.join("<em>◆</em>");
-    ticker.style.animationDuration="34s";
-  }
-
-  document.addEventListener("DOMContentLoaded",function(){
-    buildTicker();
-
-    const targets=document.querySelectorAll(
-      ".hlrn-column,.sponsors,.info-bar,.schedule-wrapper,.feature-box,.footer-panel"
-    );
-
-    targets.forEach(el=>el.classList.add("schedule-reveal"));
-
-    if("IntersectionObserver" in window){
-      const io=new IntersectionObserver(entries=>{
-        entries.forEach(entry=>{
-          if(entry.isIntersecting){
-            entry.target.classList.add("in-view");
-            io.unobserve(entry.target);
-          }
-        });
-      },{threshold:.08});
-
-      targets.forEach(el=>io.observe(el));
-    }else{
-      targets.forEach(el=>el.classList.add("in-view"));
+  feed.results.forEach(r=>{
+    const finish=Number(r.finish);
+    const week=Number(r.raceNumber);
+    if(finish===1 && Number.isFinite(week) && week>0){
+      const name=r.driver||r.driverName||r.name;
+      if(name) winners[series][week]=String(name).replace(/(\p{L})\d+$/u,"$1");
     }
   });
+}
 
-})();
-</script>
-
-
-<script>
-(function(){
-  function monthNum(name){
-    const map={
-      january:0,february:1,march:2,april:3,may:4,june:5,
-      july:6,august:7,september:8,october:9,november:10,december:11
-    };
-    return map[String(name||"").toLowerCase()];
+async function refreshWinners(){
+  try{
+    const [sun,mon]=await Promise.all([
+      jsonp("results","sunday"),
+      jsonp("results","monday")
+    ]);
+    applyResultFeed("sunday",sun);
+    applyResultFeed("monday",mon);
+    render();
+  }catch(e){
+    /* fallback winners stay visible */
   }
+}
 
-  function parseDateText(text){
-    const m=String(text||"").trim().match(/^([A-Za-z]+)\s+(\d{1,2})(?:st|nd|rd|th)?$/);
-    if(!m) return null;
-    const month=monthNum(m[1]);
-    if(month===undefined) return null;
-    return new Date(2026,month,Number(m[2]),0,0,0,0);
+function renderSnapshots(){
+  const c=classify(currentSeries);
+  const prev=c.previous;
+  const next=c.next;
+
+  document.getElementById("prevDate").textContent=prev?fmtDate(prev.date,true):"No previous race";
+  document.getElementById("prevTrack").textContent=prev?prev.track:"Season opener";
+  document.getElementById("prevMeta").textContent=prev?`Week ${prev.week} • ${prev.car} • ${prev.laps} laps`:"—";
+  document.getElementById("prevWinner").textContent=prev?(winners[currentSeries][prev.week]||"Winner pending"):"—";
+
+  document.getElementById("nextDate").textContent=next?fmtDate(next.date,true):"Season complete";
+  document.getElementById("nextTrack").textContent=next?next.track:"Season Complete";
+  document.getElementById("nextMeta").textContent=next?`Week ${next.week} • ${next.car} • ${next.laps} laps`:"No remaining races";
+
+  const feature=document.getElementById("nextFeature");
+  feature.dataset.series=currentSeries;
+  document.getElementById("featureSeries").textContent=currentSeries==="sunday"?"Sunday Night League":"Monday Night League";
+  document.getElementById("featureTrack").textContent=next?next.track:"2026 Season Complete";
+  document.getElementById("featureDate").textContent=next?`${fmtDate(next.date,true)} • 8:30 PM Eastern`:"Thanks for racing with HLRN";
+  document.getElementById("featureWeek").textContent=next?`Week ${next.week}`:"—";
+  document.getElementById("featureCar").textContent=next?next.car:"—";
+  document.getElementById("featureLaps").textContent=next?String(next.laps):"—";
+}
+
+function raceRow(race,isNext){
+  const winner=winners[currentSeries][race.week]||"";
+  const isPast=race.state==="past";
+  const stateClass=race.state==="live"?"live":isNext?"next":isPast?"past":"future";
+  const stateText=race.state==="live"?"Live Now":isNext?"Next Race":isPast?"Complete":"Upcoming";
+  const resultText=isPast
+    ? (winner||"Winner pending")
+    : "—";
+
+  return `
+    <div class="race-row ${stateClass} ${isPast&&showPast?"show-past":""}">
+      <div class="race-date">
+        <small>${escapeHtml(monthName(race.date))}</small>
+        <strong>${escapeHtml(new Date(race.date+"T12:00:00").getDate())}</strong>
+      </div>
+
+      <div class="race-main">
+        <span class="week">Week ${escapeHtml(race.week)}</span>
+        <strong>${escapeHtml(race.track)}</strong>
+        <span>8:30 PM ET</span>
+      </div>
+
+      <div class="race-car">
+        <span class="cell-label">Car</span>
+        <span class="cell-value">${escapeHtml(race.car)}</span>
+      </div>
+
+      <div class="race-laps">
+        <span class="cell-label">Laps</span>
+        <span class="cell-value">${escapeHtml(race.laps)}</span>
+      </div>
+
+      <div class="winner-cell">
+        <span class="cell-label">${isPast?"Winner":"Winner"}</span>
+        <span class="cell-value">${escapeHtml(resultText)}</span>
+        ${isPast?`<a class="results-link" href="../results/">Race Results →</a>`:""}
+      </div>
+
+      <div class="race-status">
+        <span class="state-badge">${escapeHtml(stateText)}</span>
+      </div>
+    </div>`;
+}
+
+function renderSchedule(){
+  const list=document.getElementById("scheduleList");
+  list.dataset.series=currentSeries;
+
+  const c=classify(currentSeries);
+  const races=c.decorated;
+  const nextRace=c.next;
+
+  const groups={};
+  races.forEach(r=>{
+    const month=monthName(r.date);
+    if(!groups[month])groups[month]=[];
+    groups[month].push(r);
+  });
+
+  list.innerHTML=Object.entries(groups).map(([month,rows])=>{
+    const rendered=rows.map(r=>{
+      const isNext=!!nextRace && r.week===nextRace.week && r.date===nextRace.date;
+      return raceRow(r,isNext);
+    }).join("");
+
+    /* Hide entire past-only months until Show Past Races is on. */
+    const onlyPast=rows.every(r=>r.state==="past");
+    const monthStyle=(onlyPast&&!showPast)?' style="display:none"':"";
+
+    return `<section class="month-section"${monthStyle}>
+      <h2 class="month-title">${escapeHtml(month)}</h2>
+      <div class="race-list">${rendered}</div>
+    </section>`;
+  }).join("");
+}
+
+function render(){
+  if(currentSeries==="hosted")return;
+  renderSnapshots();
+  renderSchedule();
+}
+
+function selectSeries(series){
+  currentSeries=series;
+  document.querySelectorAll(".series-tab").forEach(btn=>{
+    btn.classList.toggle("active",btn.dataset.series===series);
+  });
+
+  const leagueView=document.getElementById("leagueView");
+  const hosted=document.getElementById("hostedView");
+
+  if(series==="hosted"){
+    leagueView.style.display="none";
+    hosted.style.display="block";
+  }else{
+    leagueView.style.display="";
+    hosted.style.display="none";
+    render();
   }
+}
 
-  function nextFrom(table){
-    if(!table) return null;
-    const today=new Date();
-    const start=new Date(today.getFullYear(),today.getMonth(),today.getDate());
-    let found=null;
+document.getElementById("seriesTabs").addEventListener("click",e=>{
+  const btn=e.target.closest(".series-tab");
+  if(btn) selectSeries(btn.dataset.series);
+});
 
-    [...table.querySelectorAll("tbody tr")].forEach(row=>{
-      const c=row.querySelectorAll("td");
-      if(c.length<5) return;
-      const d=parseDateText(c[1].textContent);
-      if(!d || d<start) return;
-      if(!found || d<found.date){
-        found={
-          date:d,
-          week:c[0].textContent.trim(),
-          dateText:c[1].textContent.trim(),
-          track:c[2].textContent.trim(),
-          car:c[3].textContent.trim(),
-          laps:c[4].textContent.trim()
-        };
-      }
-    });
-    return found;
-  }
+document.getElementById("pastToggle").addEventListener("click",function(){
+  showPast=!showPast;
+  this.classList.toggle("on",showPast);
+  this.setAttribute("aria-pressed",String(showPast));
+  renderSchedule();
+});
 
-  function updateBoard(){
-    const sunday=nextFrom(document.querySelector(".sunday .schedule"));
-    const monday=nextFrom(document.querySelector(".monday .schedule"));
-
-    if(sunday){
-      document.getElementById("boardSundayMain").textContent=
-        "WEEK "+sunday.week+" • "+sunday.track;
-      document.getElementById("boardSundaySub").textContent=
-        sunday.dateText+" • "+sunday.car+" • "+sunday.laps+" LAPS • 8:30 PM EST";
-    }else{
-      document.getElementById("boardSundayMain").textContent="Season Complete";
-      document.getElementById("boardSundaySub").textContent="HLRN Sunday Night League";
-    }
-
-    if(monday){
-      document.getElementById("boardMondayMain").textContent=
-        "WEEK "+monday.week+" • "+monday.track;
-      document.getElementById("boardMondaySub").textContent=
-        monday.dateText+" • "+monday.car+" • "+monday.laps+" LAPS • 8:30 PM EST";
-    }else{
-      document.getElementById("boardMondayMain").textContent="Season Complete";
-      document.getElementById("boardMondaySub").textContent="HLRN Monday Night League";
-    }
-  }
-
-  document.addEventListener("DOMContentLoaded",updateBoard);
-})();
-</script>
-
-
-<script id="hlrn-million-live-system">
-(function(){
-  const TZ='America/New_York';
-  const YEAR=2026;
-  const monthMap={january:0,february:1,march:2,april:3,may:4,june:5,july:6,august:7,september:8,october:9,november:10,december:11};
-
-  function parseDateText(text){
-    const m=String(text||'').trim().match(/^([A-Za-z]+)\s+(\d{1,2})(?:st|nd|rd|th)?$/);
-    if(!m) return null;
-    const mo=monthMap[m[1].toLowerCase()];
-    if(mo===undefined) return null;
-    return {year:YEAR,month:mo+1,day:+m[2]};
-  }
-
-  // Convert an America/New_York wall-clock date to a real UTC Date.
-  function easternDate(parts,hour=20,minute=30){
-    const guess=Date.UTC(parts.year,parts.month-1,parts.day,hour,minute,0);
-    const fmt=new Intl.DateTimeFormat('en-US',{timeZone:TZ,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
-    const p=Object.fromEntries(fmt.formatToParts(new Date(guess)).filter(x=>x.type!=='literal').map(x=>[x.type,x.value]));
-    const represented=Date.UTC(+p.year,+p.month-1,+p.day,+p.hour,+p.minute,+p.second);
-    const offset=represented-guess;
-    return new Date(guess-offset);
-  }
-
-  function raceRows(selector){
-    const table=document.querySelector(selector);
-    if(!table) return [];
-    return [...table.querySelectorAll('tbody tr')].map(row=>{
-      const c=row.querySelectorAll('td');
-      const d=parseDateText(c[1]?.textContent);
-      if(!d) return null;
-      return {row,week:c[0]?.textContent.trim()||'',dateText:c[1]?.textContent.trim()||'',track:c[2]?.textContent.trim()||'',car:c[3]?.textContent.trim()||'',laps:c[4]?.textContent.trim()||'',start:easternDate(d,20,30)};
-    }).filter(Boolean);
-  }
-
-  function classify(rows,now){
-    rows.forEach(r=>{
-      r.row.removeAttribute('data-race-state');
-      const liveEnd=new Date(r.start.getTime()+3.5*60*60*1000);
-      const liveStart=new Date(r.start.getTime()-10*60*1000);
-      if(now>=liveStart && now<=liveEnd) r.row.dataset.raceState='live';
-      else if(now>liveEnd) r.row.dataset.raceState='complete';
-    });
-    const next=rows.find(r=>r.start>now);
-    if(next && !next.row.dataset.raceState) next.row.dataset.raceState='next';
-    return {next,live:rows.find(r=>r.row.dataset.raceState==='live'),completed:rows.filter(r=>r.row.dataset.raceState==='complete').length,total:rows.length};
-  }
-
-  function currentWeek(info){
-    if(info.live) return 'WEEK '+info.live.week;
-    if(info.next) return 'WEEK '+info.next.week;
-    return 'SEASON COMPLETE';
-  }
-
-  function setText(id,val){const e=document.getElementById(id);if(e)e.textContent=val}
-  function setWidth(id,val){const e=document.getElementById(id);if(e)e.style.width=val+'%'}
-
-  function fmtClock(now){return new Intl.DateTimeFormat('en-US',{timeZone:TZ,hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true}).format(now)}
-  function fmtDate(now){return new Intl.DateTimeFormat('en-US',{timeZone:TZ,weekday:'short',month:'short',day:'numeric',year:'numeric'}).format(now)}
-
-  function update(){
-    const now=new Date();
-    const sunday=classify(raceRows('.sunday .schedule'),now);
-    const monday=classify(raceRows('.monday .schedule'),now);
-
-    setText('mxClock',fmtClock(now));setText('mxHeroClock',fmtClock(now));setText('mxDate',fmtDate(now));
-    setText('mxSundayWeek',currentWeek(sunday));setText('mxMondayWeek',currentWeek(monday));
-
-    const suRace=sunday.live||sunday.next;
-    const moRace=monday.live||monday.next;
-    setText('mxSundayMain',suRace ? 'WEEK '+suRace.week+' • '+suRace.track : 'Season Complete');
-    setText('mxSundaySub',suRace ? suRace.dateText+' • '+suRace.car+' • '+suRace.laps+' LAPS • 8:30 PM ET' : '2026 Sunday schedule complete');
-    setText('mxMondayMain',moRace ? 'WEEK '+moRace.week+' • '+moRace.track : 'Season Complete');
-    setText('mxMondaySub',moRace ? moRace.dateText+' • '+moRace.car+' • '+moRace.laps+' LAPS • 8:30 PM ET' : '2026 Monday schedule complete');
-    setText('mxSundayProgressText',sunday.completed+' / '+sunday.total);setText('mxMondayProgressText',monday.completed+' / '+monday.total);
-    setWidth('mxSundayProgress',sunday.total?sunday.completed/sunday.total*100:0);setWidth('mxMondayProgress',monday.total?monday.completed/monday.total*100:0);
-
-    const live=sunday.live ? {series:'SUNDAY NIGHT LEAGUE',race:sunday.live} : monday.live ? {series:'MONDAY NIGHT LEAGUE',race:monday.live} : null;
-    const upcoming=[sunday.next&&{series:'SUNDAY NIGHT LEAGUE',race:sunday.next},monday.next&&{series:'MONDAY NIGHT LEAGUE',race:monday.next}].filter(Boolean).sort((a,b)=>a.race.start-b.race.start)[0];
-    const focus=live||upcoming;
-
-    if(live){
-      setText('mxLiveLabel','LIVE NOW');
-      setText('mxNetworkStatus','LIVE');
-      setText('mxLiveMain',live.series+' • WEEK '+live.race.week+' • '+live.race.track+' • '+live.race.car+' • '+live.race.laps+' LAPS');
-    }else{
-      setText('mxLiveLabel','RACE CONTROL');
-      setText('mxNetworkStatus','ONLINE');
-      setText('mxLiveMain',upcoming ? 'NEXT HLRN EVENT • '+upcoming.series+' • '+upcoming.race.track+' • '+upcoming.race.dateText+' • 8:30 PM ET' : '2026 HLRN LEAGUE SCHEDULE COMPLETE');
-    }
-
-    if(focus){
-      setText('mxNextSeries',live ? 'LIVE • '+focus.series : 'UP NEXT • '+focus.series);
-      setText('mxNextTrack','WEEK '+focus.race.week+' • '+focus.race.track);
-      setText('mxNextMeta',focus.race.dateText+' • '+focus.race.car+' • '+focus.race.laps+' LAPS • 8:30 PM EASTERN');
-      const target=focus.race.start;
-      let diff=Math.max(0,target-now);
-      if(live) diff=0;
-      const d=Math.floor(diff/86400000);diff%=86400000;
-      const h=Math.floor(diff/3600000);diff%=3600000;
-      const m=Math.floor(diff/60000);diff%=60000;
-      const s=Math.floor(diff/1000);
-      setText('mxDays',String(d).padStart(2,'0'));setText('mxHours',String(h).padStart(2,'0'));setText('mxMinutes',String(m).padStart(2,'0'));setText('mxSeconds',String(s).padStart(2,'0'));
-    }else{
-      setText('mxNextSeries','2026 SEASON');setText('mxNextTrack','League Schedule Complete');setText('mxNextMeta','Thank you for racing with High Line Racing Network');
-      ['mxDays','mxHours','mxMinutes','mxSeconds'].forEach(id=>setText(id,'00'));
-    }
-  }
-
-  function assignAnchors(){
-    const su=document.querySelector('.hlrn-column.sunday');const ho=document.querySelector('.hlrn-column.hosted');const mo=document.querySelector('.hlrn-column.monday');
-    if(su)su.id='mxSundayBoard';if(ho)ho.id='mxHostedBoard';if(mo)mo.id='mxMondayBoard';
-  }
-
-  function reveal(){
-    const els=document.querySelectorAll('.mx-reveal');
-    if(!('IntersectionObserver' in window)){els.forEach(e=>e.classList.add('mx-show'));return}
-    const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('mx-show');io.unobserve(x.target)}}),{threshold:.08});
-    els.forEach(e=>io.observe(e));
-  }
-
-  document.addEventListener('DOMContentLoaded',()=>{assignAnchors();update();reveal();setInterval(update,1000)});
-})();
+selectSeries("sunday");
+refreshWinners();
+setInterval(refreshWinners,60000);
+setInterval(()=>{if(currentSeries!=="hosted")render()},30000);
 </script>
 
 <script src="../assets/site-shell.js"></script>
