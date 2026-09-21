@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Broadcasters | High Line Racing Network</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#f5f5f5;color:#111;font-family:Inter,Arial,sans-serif}
+body{overflow-x:hidden}
+:root{--red:#e10600;--black:#090909;--line:#d6d6d6;--muted:#6f6f6f;--green:#1c9b46;--yellow:#ffd400;--display:"Barlow Condensed",Arial,sans-serif}
+.channel{width:100%;min-height:100vh;background:#f5f5f5}
+.topbar{height:62px;background:#050505;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 32px;border-bottom:5px solid var(--red)}
+.brand{display:flex;align-items:center;gap:13px;font-family:var(--display);font-weight:900;font-style:italic;font-size:27px;letter-spacing:-.02em;text-transform:uppercase}
+.brand-mark{width:9px;height:31px;background:var(--red);transform:skewX(-12deg)}
+.brand span{color:#fff}.brand b{color:var(--red)}
+.status{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase}
+.status-dot{width:9px;height:9px;border-radius:50%;background:#777}.status.live .status-dot{background:#37cf68;box-shadow:0 0 12px rgba(55,207,104,.7)}
+.clock{font-variant-numeric:tabular-nums;color:#cfcfcf;font-size:12px;font-weight:800}
+.nav{background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:30px;padding:0 32px;min-height:52px}
+.nav button{appearance:none;border:0;background:transparent;padding:17px 0 14px;cursor:pointer;color:#555;font-family:var(--display);font-size:17px;font-weight:900;text-transform:uppercase;position:relative}
+.nav button.active{color:#111}.nav button.active:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:4px;background:var(--red)}
+.wrap{max-width:1480px;margin:0 auto;padding:26px 24px 58px}
+.live-label{display:flex;align-items:center;gap:8px;color:var(--red);font-family:var(--display);font-size:22px;font-weight:900;text-transform:uppercase;margin-bottom:12px}.live-label:before{content:"";width:10px;height:10px;border-radius:50%;background:var(--red)}
+.stage{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(320px,.75fr);min-height:560px;background:#090909;color:#fff;overflow:hidden;box-shadow:0 14px 35px rgba(0,0,0,.15)}
+.stage-visual{position:relative;min-height:560px;overflow:hidden;background:#111}
+.duo{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr}
+.person{position:relative;overflow:hidden;background:#111}
+.person img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;filter:contrast(1.03) saturate(1.02)}
+.person:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.25) 42%,rgba(0,0,0,.05) 75%),linear-gradient(90deg,rgba(0,0,0,.1),transparent)}
+.person:nth-child(1){border-right:2px solid rgba(255,255,255,.12)}
+.person-copy{position:absolute;left:28px;right:24px;bottom:28px;z-index:2}.person-day{font-size:10px;font-weight:900;letter-spacing:.18em;color:var(--yellow);text-transform:uppercase}.person-name{margin-top:4px;font-family:var(--display);font-size:clamp(34px,3vw,54px);line-height:.88;font-weight:900;font-style:italic;text-transform:uppercase}.person-role{margin-top:7px;color:#d0d0d0;font-size:10px;font-weight:800;letter-spacing:.11em;text-transform:uppercase}
+.stage-side{display:flex;flex-direction:column;padding:34px;background:#0b0b0b;border-left:1px solid #2d2d2d}.eyebrow{font-size:10px;font-weight:900;letter-spacing:.18em;color:#aaa;text-transform:uppercase}.stage-side h1{margin:7px 0 8px;font-family:var(--display);font-size:clamp(50px,5vw,78px);line-height:.78;font-weight:900;font-style:italic;text-transform:uppercase}.stage-side h1 span{color:var(--red)}.stage-side p{margin:10px 0 24px;color:#aaa;font-size:13px;line-height:1.7}.onair{display:flex;align-items:center;gap:10px;padding:12px 14px;background:#171717;border-left:5px solid var(--red);font-size:11px;font-weight:900;text-transform:uppercase}.onair strong{color:#fff}.onair span{color:#8a8a8a}.nextbox{margin-top:12px;padding:17px 16px;border:1px solid #2c2c2c;background:#111}.nextbox small{display:block;color:#777;font-size:8px;font-weight:900;letter-spacing:.15em;text-transform:uppercase}.nextbox strong{display:block;margin-top:5px;font-family:var(--display);font-size:25px;font-style:italic}.stage-actions{margin-top:auto;display:grid;gap:10px}.watch{display:flex;align-items:center;justify-content:center;min-height:48px;text-decoration:none;background:var(--red);color:#fff;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.watch.alt{background:#fff;color:#111}.watch:hover{filter:brightness(.94)}
+.section{margin-top:42px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;border-bottom:2px solid #111;padding-bottom:10px;margin-bottom:18px}.section-head h2{margin:0;font-family:var(--display);font-size:38px;line-height:.9;font-weight:900;font-style:italic;text-transform:uppercase}.section-head p{margin:0;color:#777;font-size:11px;font-weight:700}.shows{display:grid;grid-template-columns:1fr 1fr;gap:18px}.show{background:#fff;border:1px solid var(--line);display:grid;grid-template-columns:210px 1fr;min-height:230px;overflow:hidden;transition:.2s ease}.show:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(0,0,0,.10)}.show-img{position:relative;background:#111;overflow:hidden}.show-img img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}.show-img:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.68),transparent 50%)}.badge{position:absolute;z-index:2;left:13px;bottom:13px;background:var(--red);color:#fff;padding:7px 9px;font-size:8px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}.show.monday .badge{background:var(--green)}.show-copy{padding:22px;display:flex;flex-direction:column}.show-copy small{font-size:8px;font-weight:900;letter-spacing:.15em;color:#777;text-transform:uppercase}.show-copy h3{margin:5px 0 7px;font-family:var(--display);font-size:34px;line-height:.92;font-weight:900;font-style:italic;text-transform:uppercase}.show-copy .time{font-size:12px;font-weight:900;color:var(--red);text-transform:uppercase}.show.monday .time{color:var(--green)}.show-copy p{margin:12px 0 18px;color:#666;font-size:11px;line-height:1.6}.show-copy a{margin-top:auto;color:#111;text-decoration:none;font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.show-copy a:hover{color:var(--red)}
+.lineup{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.slot{background:#fff;border:1px solid var(--line);padding:20px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:15px}.slot-day{min-width:78px;font-family:var(--display);font-size:24px;font-weight:900;font-style:italic}.slot-title strong{display:block;font-size:13px}.slot-title span{display:block;margin-top:4px;color:#777;font-size:9px;text-transform:uppercase}.slot-time{text-align:right;font-family:var(--display);font-size:24px;font-weight:900;font-style:italic}.slot.sunday{border-left:5px solid var(--red)}.slot.monday{border-left:5px solid var(--green)}
+.faq{background:#fff;border-top:4px solid #111}.faq details{border-bottom:1px solid var(--line);padding:0 22px}.faq summary{cursor:pointer;list-style:none;padding:20px 0;font-family:var(--display);font-size:22px;font-weight:900;text-transform:uppercase}.faq summary::-webkit-details-marker{display:none}.faq summary:after{content:"+";float:right;color:var(--red)}.faq details[open] summary:after{content:"−"}.faq p{margin:0 0 20px;color:#666;font-size:12px;line-height:1.7;max-width:900px}.footer{margin-top:42px;background:#090909;color:#fff;text-align:center;padding:30px 18px;border-top:5px solid var(--red)}.footer strong{font-family:var(--display);font-size:26px;font-style:italic}.footer span{display:block;margin-top:5px;color:#777;font-size:8px;letter-spacing:.15em;text-transform:uppercase}
+@media(max-width:1020px){.stage{grid-template-columns:1fr}.stage-side{border-left:0;border-top:1px solid #2d2d2d}.shows{grid-template-columns:1fr}.lineup{grid-template-columns:1fr}}
+@media(max-width:680px){.topbar{padding:0 14px}.brand{font-size:22px}.clock{display:none}.nav{padding:0 14px;gap:20px}.wrap{padding:18px 10px 40px}.stage-visual{min-height:620px}.duo{grid-template-columns:1fr;grid-template-rows:1fr 1fr}.person:nth-child(1){border-right:0;border-bottom:2px solid rgba(255,255,255,.12)}.person-copy{left:18px;bottom:16px}.stage-side{padding:24px 20px}.show{grid-template-columns:145px 1fr}.show-copy{padding:17px}.show-copy h3{font-size:28px}.slot{grid-template-columns:1fr auto}.slot-day{grid-column:1/-1}.section-head{align-items:flex-start;flex-direction:column}.status span:last-child{display:none}}
+</style>
+
+<style id="HLRN_BROADCASTER_SPACING_V2">
+/* Give Tommy and Randy their own clear TV-card space */
+.stage-visual{
+  padding:22px!important;
+  background:#111!important;
+}
+
+.duo{
+  position:relative!important;
+  inset:auto!important;
+  width:100%!important;
+  height:100%!important;
+  min-height:516px!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  gap:30px!important;
+}
+
+.person{
+  min-width:0!important;
+  border:1px solid #343434!important;
+  border-radius:12px!important;
+  overflow:hidden!important;
+  box-shadow:0 14px 32px rgba(0,0,0,.32)!important;
+  background:#0a0a0a!important;
+}
+
+.person:nth-child(1){
+  border-right:1px solid #343434!important;
+}
+
+.person img{
+  width:100%!important;
+  height:100%!important;
+  min-height:516px!important;
+  object-fit:cover!important;
+  object-position:center top!important;
+}
+
+.person-copy{
+  left:26px!important;
+  right:26px!important;
+  bottom:24px!important;
+}
+
+.shows{
+  gap:28px!important;
+}
+
+@media(max-width:1020px){
+  .stage-visual{
+    padding:20px!important;
+  }
+  .duo{
+    gap:24px!important;
+  }
+}
+
+@media(max-width:680px){
+  .stage-visual{
+    min-height:auto!important;
+    padding:12px!important;
+  }
+  .duo{
+    grid-template-columns:1fr!important;
+    grid-template-rows:none!important;
+    gap:18px!important;
+    min-height:0!important;
+  }
+  .person{
+    min-height:420px!important;
+  }
+  .person:nth-child(1){
+    border-right:1px solid #343434!important;
+    border-bottom:1px solid #343434!important;
+  }
+  .person img{
+    min-height:420px!important;
+  }
+  .person-copy{
+    left:18px!important;
+    right:18px!important;
+    bottom:18px!important;
+  }
+}
+</style>
+
+
+<style id="HLRN_BROADCASTER_FULL_PICTURES_V3">
+/* Show the full broadcaster images without cropping */
+.person{
+  display:flex!important;
+  align-items:stretch!important;
+  justify-content:center!important;
+  min-height:560px!important;
+  padding:0!important;
+  background:#0a0a0a!important;
+}
+
+.person img{
+  width:100%!important;
+  height:100%!important;
+  min-height:560px!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  background:#0a0a0a!important;
+}
+
+.show-img{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:8px!important;
+  background:#0a0a0a!important;
+}
+
+.show-img img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  background:#0a0a0a!important;
+}
+
+@media(max-width:680px){
+  .person{
+    min-height:440px!important;
+  }
+  .person img{
+    min-height:440px!important;
+  }
+}
+</style>
+
+
+<style id="HLRN_BOTTOM_WHITE_BAR_FIX_V4">
+/* Remove the light strip below the footer */
+.wrap{
+  padding-bottom:0!important;
+}
+
+.footer{
+  margin-bottom:0!important;
+}
+
+.channel{
+  padding-bottom:0!important;
+}
+
+/* If the embed is taller than the content, keep the leftover area dark */
+html,
+body{
+  min-height:100%!important;
+}
+
+body{
+  background:#090909!important;
+}
+
+.channel{
+  background:
+    linear-gradient(
+      to bottom,
+      #f5f5f5 0,
+      #f5f5f5 calc(100% - 1px),
+      #090909 calc(100% - 1px)
+    )!important;
+}
+</style>
+
+
+<style id="HLRN_GOOGLE_SITES_SAFE_TABS_V5">
+/* Real in-place tabs: never scroll the Google Sites iframe */
+#live,#upcoming,#lineup,#faq{scroll-margin-top:0!important}
+.channel-tab-hidden{display:none!important}
+.nav{position:relative!important;top:auto!important}
+.nav button{touch-action:manipulation!important}
+html,body{scroll-behavior:auto!important}
+/* Keep the active panel starting in the same place so the embed never jumps. */
+.wrap{overflow:visible!important}
+</style>
+
+<link rel="stylesheet" href="../assets/site-shell.css?v=20260921d">
+
+<style id="hlrn-broadcasters-global-nav-guard">
+#hlrn-global-nav,
+#hlrn-global-nav *{
+  box-sizing:border-box;
+}
+#hlrn-global-nav{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:0!important;
+  position:relative!important;
+  z-index:2147483000!important;
+  background:#090b0f!important;
+}
+#hlrn-global-nav .hgn-inner{
+  display:flex!important;
+}
+</style>
+
+</head>
+<body>
+<div class="channel">
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark"></span><span>HLRN <b>CHANNEL</b></span></div>
+    <div class="status" id="netStatus"><span class="status-dot"></span><span id="netText">NETWORK READY</span></div>
+    <div class="clock" id="clock">--:--:-- ET</div>
+  </header>
+  <nav class="nav" aria-label="HLRN Channel navigation">
+    <button class="active" data-target="live">Live</button>
+    <button data-target="upcoming">Upcoming Shows</button>
+    <button data-target="faq">Channel FAQ</button>
+  </nav>
+
+  <main class="wrap">
+    <section id="live">
+      <div class="live-label">HLRN Live</div>
+      <div class="stage">
+        <div class="stage-visual">
+          <div class="duo">
+            <div class="person">
+              <img src="https://lh3.googleusercontent.com/d/1Z9gUw1HHBTfVDYRLGjqCCaP-SykvidpA" alt="Tommy Rogers">
+              <div class="person-copy"><div class="person-day">Sunday Night • 8:30 PM ET</div><div class="person-name">Tommy Rogers</div><div class="person-role">Fresh • HLRN Owner • Broadcaster</div></div>
+            </div>
+            <div class="person">
+              <img src="https://lh3.googleusercontent.com/d/1PA5IWGaV31ApyCbY81F2LKje1CS9YXkn" alt="Randy Schweitzer">
+              <div class="person-copy"><div class="person-day">Monday Night • 8:30 PM ET</div><div class="person-name">Randy Schweitzer</div><div class="person-role">RSI Broadcasting • Broadcaster</div></div>
+            </div>
+          </div>
+        </div>
+        <aside class="stage-side">
+          <div class="eyebrow">High Line Racing Network</div>
+          <h1>HLRN <span>Broadcasters</span></h1>
+          <p>Weekly live league-racing coverage featuring the voices of Tommy Rogers on Sunday night and Randy Schweitzer / RSI Broadcasting on Monday night.</p>
+          <div class="onair"><strong id="airHeadline">HLRN CHANNEL</strong><span id="airSub">Ready for the next broadcast</span></div>
+          <div class="nextbox"><small>Up Next</small><strong id="nextShow">Sunday Night • 8:30 PM ET</strong><span id="nextCountdown" style="display:block;margin-top:4px;color:#888;font-size:10px;font-weight:800">Calculating…</span></div>
+          <div class="stage-actions">
+            <a class="watch" href="https://www.youtube.com/@High_Line_Racing" target="_blank" rel="noopener noreferrer">Watch Sunday — HLRN</a>
+            <a class="watch alt" href="https://www.youtube.com/@rsibroadcasting" target="_blank" rel="noopener noreferrer">Watch Monday — RSI</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="upcoming">
+      <div class="section-head"><h2>Upcoming Shows</h2><p>Every week • 8:30 PM Eastern</p></div>
+      <div class="shows">
+        <article class="show sunday">
+          <div class="show-img"><img src="https://lh3.googleusercontent.com/d/1Z9gUw1HHBTfVDYRLGjqCCaP-SykvidpA" alt="Tommy Rogers"><span class="badge">Sunday Night</span></div>
+          <div class="show-copy"><small>High Line Racing Network</small><h3>Sunday Night League</h3><div class="time">8:30 PM ET • Tommy Rogers</div><p>Tommy Rogers brings the HLRN Sunday Night League to life with the drivers, battles, strategy and race action from green flag to checkered flag.</p><a href="https://www.youtube.com/@High_Line_Racing" target="_blank" rel="noopener noreferrer">Watch HLRN Sunday →</a></div>
+        </article>
+        <article class="show monday">
+          <div class="show-img"><img src="https://lh3.googleusercontent.com/d/1PA5IWGaV31ApyCbY81F2LKje1CS9YXkn" alt="Randy Schweitzer"><span class="badge">Monday Night</span></div>
+          <div class="show-copy"><small>RSI Broadcasting</small><h3>Monday Night League</h3><div class="time">8:30 PM ET • Randy Schweitzer</div><p>Randy Schweitzer and RSI Broadcasting deliver HLRN Monday Night League coverage with the action and excitement of each weekly race.</p><a href="https://www.youtube.com/@rsibroadcasting" target="_blank" rel="noopener noreferrer">Watch RSI Monday →</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="lineup">
+      <div class="section-head"><h2>Weekly Lineup</h2><p>HLRN Channel programming</p></div>
+      <div class="lineup">
+        <div class="slot sunday"><div class="slot-day">SUN</div><div class="slot-title"><strong>HLRN Sunday Night League</strong><span>Tommy Rogers • High Line Racing</span></div><div class="slot-time">8:30 PM ET</div></div>
+        <div class="slot monday"><div class="slot-day">MON</div><div class="slot-title"><strong>HLRN Monday Night League</strong><span>Randy Schweitzer • RSI Broadcasting</span></div><div class="slot-time">8:30 PM ET</div></div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="section-head"><h2>HLRN Channel FAQ</h2><p>Broadcast information</p></div>
+      <div class="faq">
+        <details open><summary>What is the HLRN Channel?</summary><p>The HLRN Channel is the broadcast home for High Line Racing Network league coverage, featuring Sunday Night League coverage from Tommy Rogers and Monday Night League coverage from Randy Schweitzer and RSI Broadcasting.</p></details>
+        <details><summary>When does HLRN race?</summary><p>Sunday Night League and Monday Night League broadcasts are scheduled for 8:30 PM Eastern each week.</p></details>
+        <details><summary>Where can I watch?</summary><p>Sunday broadcasts are available through the High Line Racing YouTube channel. Monday broadcasts are available through RSI Broadcasting on YouTube. Use the watch buttons above to open either channel.</p></details>
+      </div>
+    </section>
+
+    <footer class="footer"><strong>HIGH LINE RACING NETWORK</strong><span>HLRN Broadcasters • Sunday & Monday Live Coverage</span></footer>
+  </main>
+</div>
+<script>
+(function(){
+  const $=s=>document.querySelector(s);
+  const dayNames=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  function easternProxy(){return new Date(new Date().toLocaleString('en-US',{timeZone:'America/New_York'}))}
+  function nextEvent(day){
+    const now=easternProxy(), t=new Date(now); let diff=(day-now.getDay()+7)%7;
+    t.setDate(now.getDate()+diff);t.setHours(20,30,0,0);if(t<=now)t.setDate(t.getDate()+7);return {now,t};
+  }
+  function fmtCountdown(ms){const total=Math.max(0,Math.floor(ms/60000));const d=Math.floor(total/1440),h=Math.floor(total%1440/60),m=total%60;return (d?d+'D ':'')+h+'H '+m+'M'}
+  function update(){
+    const now=easternProxy();
+    $('#clock').textContent=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true}).format(new Date())+' ET';
+    const minutes=now.getHours()*60+now.getMinutes(), dow=now.getDay();
+    const live=(dow===0||dow===1)&&minutes>=20*60+15&&minutes<=23*60;
+    $('#netStatus').classList.toggle('live',live);$('#netText').textContent=live?'HLRN ON AIR':'NETWORK READY';
+    if(live){
+      const who=dow===0?'Tommy Rogers • Sunday Night':'Randy Schweitzer • Monday Night';
+      $('#airHeadline').textContent='LIVE NOW';$('#airSub').textContent=who;$('#nextShow').textContent=who;
+      $('#nextCountdown').textContent='ON AIR';return;
+    }
+    const s=nextEvent(0),m=nextEvent(1);const n=s.t<m.t?{...s,day:0,name:'Sunday Night • Tommy Rogers'}:{...m,day:1,name:'Monday Night • Randy Schweitzer'};
+    $('#airHeadline').textContent='UP NEXT';$('#airSub').textContent=n.name;
+    $('#nextShow').textContent=n.name+' • 8:30 PM ET';$('#nextCountdown').textContent=fmtCountdown(n.t-n.now)+' UNTIL GREEN';
+  }
+  const tabButtons=[...document.querySelectorAll('.nav button')];
+  const livePanel=document.getElementById('live');
+  const upcomingPanel=document.getElementById('upcoming');
+  const lineupPanel=document.getElementById('lineup');
+  const faqPanel=document.getElementById('faq');
+
+  function showChannelTab(target){
+    // Never use scrollIntoView/location.hash in Google Sites embeds.
+    tabButtons.forEach(b=>b.classList.toggle('active',b.dataset.target===target));
+
+    [livePanel,upcomingPanel,lineupPanel,faqPanel].forEach(p=>{
+      if(p) p.classList.add('channel-tab-hidden');
+    });
+
+    if(target==='live'){
+      if(livePanel) livePanel.classList.remove('channel-tab-hidden');
+    }else if(target==='upcoming'){
+      if(upcomingPanel) upcomingPanel.classList.remove('channel-tab-hidden');
+      if(lineupPanel) lineupPanel.classList.remove('channel-tab-hidden');
+    }else if(target==='faq'){
+      if(faqPanel) faqPanel.classList.remove('channel-tab-hidden');
+    }
+
+    // Keep the iframe at its current scroll position.
+    // If the browser altered it while focusing the button, immediately restore top.
+    try{ window.scrollTo({top:0,left:0,behavior:'auto'}); }catch(e){ window.scrollTo(0,0); }
+  }
+
+  tabButtons.forEach(btn=>btn.addEventListener('click',(e)=>{
+    e.preventDefault();
+    e.stopPropagation();
+    showChannelTab(btn.dataset.target);
+  }));
+
+  // Start on Live without moving the page.
+  showChannelTab('live');
+  update();setInterval(update,1000);
+})();
+</script>
+<script src="../assets/site-shell.js?v=20260921d"></script>
+</body>
+</html>
