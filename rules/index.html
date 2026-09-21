@@ -1,3 +1,4008 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Rules | HLRN</title><link rel="stylesheet" href="../assets/site-shell.css"><style>
-    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#050608;color:#fff;font-family:Arial,Helvetica,sans-serif}body{min-height:100vh;background:radial-gradient(circle at 75% 8%,rgba(227,24,55,.13),transparent 29%),linear-gradient(180deg,#0b0d11,#040506 56%)}.stage{max-width:1350px;margin:auto;padding:64px 22px 110px}.eyebrow{display:flex;align-items:center;gap:10px;color:#ff3150;font-size:10px;font-weight:1000;letter-spacing:.2em;text-transform:uppercase}.eyebrow:before{content:"";width:45px;height:3px;background:#e31837;transform:skewX(-20deg)}h1{margin:14px 0 12px;font:1000 italic clamp(48px,8vw,105px)/.84 Impact,'Arial Narrow',Arial,sans-serif;text-transform:uppercase;letter-spacing:-.035em}p{max-width:790px;margin:0;color:#a9b0bb;font-size:17px;line-height:1.65}.grid{margin-top:38px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.card{min-height:180px;padding:22px;background:linear-gradient(180deg,#11141a,#090b0f);border:1px solid #292d35;border-top:3px solid #e31837}.num{font:1000 italic 42px/1 Impact,Arial;color:#343943}.card h2{margin:20px 0 7px;font-size:15px;text-transform:uppercase;letter-spacing:.08em}.card span{color:#858e9b;font-size:12px;line-height:1.5}.next{margin-top:25px;padding:16px 18px;border:1px solid #57202a;background:#19090d;color:#ff8293;font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase}@media(max-width:800px){.grid{grid-template-columns:1fr}.stage{padding-top:44px}}
-    </style></head><body><main class="stage"><div class="eyebrow">HLRN Website 2.0</div><h1>Rulebook</h1><p>The standalone HLRN rulebook will preserve the current rules while adding cleaner navigation, search and easier updates for race administration.</p><div class="grid"><div class="card"><div class="num">01</div><h2>Unified HLRN Design</h2><span>Same navigation, driver imagery, typography and racing identity as the rest of the network.</span></div><div class="card"><div class="num">02</div><h2>Real HLRN Data</h2><span>This route is ready for the existing HLRN data source instead of becoming another disconnected page.</span></div><div class="card"><div class="num">03</div><h2>Mobile + Desktop</h2><span>Built as part of the standalone site rather than inside a Google Sites embed.</span></div></div><div class="next">NEXT MIGRATION: move the current searchable rulebook</div></main><script src="../assets/site-shell.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Rules | High Line Racing Network</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:
+        radial-gradient(
+            circle at top,
+            #252525 0%,
+            #111 45%,
+            #050505 100%
+        );
+    color:#fff;
+    line-height:1.6;
+}
+
+.page{
+    width:100%;
+    max-width:1200px;
+    margin:auto;
+    padding:25px 18px 50px;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    position:relative;
+    overflow:hidden;
+    border:1px solid #333;
+    border-top:4px solid #e31820;
+    border-radius:10px;
+    padding:45px 25px;
+    text-align:center;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,0,0,.10),
+            rgba(0,0,0,.85)
+        );
+    box-shadow:0 15px 45px rgba(0,0,0,.5);
+}
+
+.hero:before{
+    content:"";
+    position:absolute;
+    inset:0;
+
+    background:
+        repeating-linear-gradient(
+            135deg,
+            transparent 0px,
+            transparent 45px,
+            rgba(255,255,255,.025) 46px,
+            transparent 47px
+        );
+
+    pointer-events:none;
+}
+
+.logo{
+    position:relative;
+    color:#aaa;
+    font-size:13px;
+    font-weight:800;
+    letter-spacing:5px;
+    text-transform:uppercase;
+    margin-bottom:12px;
+}
+
+.hero h1{
+    position:relative;
+    font-size:clamp(42px,7vw,78px);
+    line-height:1;
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:2px;
+}
+
+.hero h1 span{
+    color:#e31820;
+}
+
+.hero p{
+    position:relative;
+    max-width:750px;
+    margin:20px auto 0;
+    color:#aaa;
+    font-size:15px;
+}
+
+.hero-line{
+    position:relative;
+    width:110px;
+    height:4px;
+    background:#e31820;
+    margin:23px auto 0;
+}
+
+/* =========================
+   QUICK CARDS
+========================= */
+
+.quick{
+    margin-top:20px;
+
+    display:grid;
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:10px;
+}
+
+.quick-card{
+    background:#151515;
+    border:1px solid #333;
+    border-top:3px solid #e31820;
+    border-radius:7px;
+    padding:15px 10px;
+    text-align:center;
+}
+
+.quick-number{
+    font-size:22px;
+    font-weight:900;
+}
+
+.quick-label{
+    color:#777;
+    font-size:9px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+}
+
+/* =========================
+   RULE TABS
+========================= */
+
+.tabs{
+    margin-top:25px;
+
+    display:grid;
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:8px;
+}
+
+.tab{
+    border:1px solid #333;
+    background:#151515;
+    color:#aaa;
+
+    padding:16px 10px;
+
+    border-radius:6px;
+
+    cursor:pointer;
+
+    text-align:center;
+
+    font-size:11px;
+    font-weight:900;
+
+    text-transform:uppercase;
+
+    letter-spacing:.7px;
+
+    transition:.2s;
+}
+
+.tab:hover{
+    background:#222;
+    color:#fff;
+    border-color:#555;
+}
+
+.tab.active{
+    background:#d71920;
+    border-color:#ff3940;
+    color:#fff;
+    box-shadow:
+        0 5px 20px
+        rgba(215,25,32,.25);
+}
+
+/* =========================
+   TAB CONTENT
+========================= */
+
+.tab-content{
+    display:none;
+
+    margin-top:15px;
+
+    background:#111;
+
+    border:1px solid #333;
+
+    border-radius:9px;
+
+    overflow:hidden;
+
+    animation:fadeIn .25s ease;
+}
+
+.tab-content.active{
+    display:block;
+}
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+        transform:translateY(5px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+/* =========================
+   SECTION HEADER
+========================= */
+
+.section-header{
+    background:
+        linear-gradient(
+            90deg,
+            #a80e14,
+            #e31820,
+            #a80e14
+        );
+
+    padding:18px 22px;
+
+    font-size:20px;
+
+    font-weight:900;
+
+    text-transform:uppercase;
+
+    letter-spacing:1.5px;
+}
+
+.section-body{
+    padding:25px;
+}
+
+/* =========================
+   RULE
+========================= */
+
+.rule{
+    padding:18px 0;
+
+    border-bottom:1px solid #292929;
+}
+
+.rule:last-child{
+    border-bottom:none;
+}
+
+.rule h3{
+    color:#e6c58a;
+
+    font-size:16px;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+
+    margin-bottom:8px;
+}
+
+.rule p{
+    color:#c5c5c5;
+
+    font-size:14px;
+
+    margin:5px 0;
+}
+
+.rule ul{
+    margin:8px 0 0 22px;
+
+    color:#c5c5c5;
+}
+
+.rule li{
+    margin:5px 0;
+}
+
+/* =========================
+   PENALTIES
+========================= */
+
+.penalty-title{
+    margin-top:5px;
+
+    color:#fff;
+
+    font-size:18px;
+
+    font-weight:900;
+
+    text-transform:uppercase;
+}
+
+.penalties{
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:10px;
+
+    margin-top:15px;
+}
+
+.penalty{
+    padding:20px 10px;
+
+    background:#181818;
+
+    border:1px solid #333;
+
+    border-radius:7px;
+
+    text-align:center;
+}
+
+.penalty strong{
+    display:block;
+
+    font-size:22px;
+
+    font-weight:900;
+}
+
+.penalty span{
+    color:#888;
+
+    font-size:10px;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+}
+
+.penalty.danger{
+    background:#2a0d0f;
+
+    border-color:#76262b;
+}
+
+.penalty.danger strong{
+    color:#ff3c43;
+}
+
+/* =========================
+   ESCALATION
+========================= */
+
+.escalation{
+    display:grid;
+
+    gap:8px;
+
+    margin-top:15px;
+}
+
+.escalation div{
+    background:#191919;
+
+    border:1px solid #333;
+
+    border-radius:6px;
+
+    padding:14px;
+
+    font-weight:800;
+}
+
+.escalation .danger{
+    background:#300d10;
+
+    border-color:#76262b;
+
+    color:#ff4b52;
+}
+
+/* =========================
+   NOTICE
+========================= */
+
+.notice{
+    margin-top:20px;
+
+    padding:20px;
+
+    text-align:center;
+
+    background:#1b0b0d;
+
+    border:1px solid #64262b;
+
+    border-radius:7px;
+}
+
+.notice strong{
+    color:#ff3c43;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+}
+
+.notice p{
+    color:#aaa;
+
+    font-size:13px;
+
+    margin-top:5px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+    text-align:center;
+
+    padding:30px 15px;
+
+    margin-top:25px;
+
+    border-top:1px solid #333;
+}
+
+.footer-title{
+    color:#e31820;
+
+    font-size:19px;
+
+    font-weight:900;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+}
+
+.footer-sub{
+    color:#666;
+
+    font-size:10px;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    margin-top:5px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:850px){
+
+    .tabs{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .quick{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .penalties{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:500px){
+
+    .page{
+        padding:12px 8px 35px;
+    }
+
+    .hero{
+        padding:35px 15px;
+    }
+
+    .hero h1{
+        font-size:42px;
+    }
+
+    .tabs{
+        grid-template-columns:1fr;
+    }
+
+    .quick{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .section-body{
+        padding:18px;
+    }
+
+    .section-header{
+        font-size:16px;
+    }
+
+}
+
+</style>
+
+<style>
+/* =========================================================
+   HLRN OFFICIAL RULES — NASCAR / RACE CONTROL STYLE
+   Existing rule text and tab behavior preserved.
+========================================================= */
+:root{
+  --hlrn-red:#ed1c24;
+  --hlrn-yellow:#ffd400;
+  --hlrn-green:#35c46a;
+  --hlrn-black:#030303;
+  --hlrn-steel:#171717;
+}
+
+body{
+  background:
+    radial-gradient(circle at 50% -10%,rgba(255,255,255,.055),transparent 28%),
+    linear-gradient(180deg,#050505,#000 72%)!important;
+  overflow-x:hidden;
+}
+
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  pointer-events:none;
+  background:
+    repeating-linear-gradient(115deg,transparent 0 88px,rgba(255,255,255,.014) 89px 90px),
+    linear-gradient(90deg,rgba(237,28,36,.03),transparent 25%,transparent 75%,rgba(237,28,36,.03));
+}
+
+body:after{
+  content:"";
+  position:fixed;
+  left:0;right:0;bottom:0;
+  height:110px;
+  z-index:-1;
+  pointer-events:none;
+  opacity:.07;
+  background:
+    linear-gradient(45deg,#fff 25%,transparent 25%,transparent 75%,#fff 75%),
+    linear-gradient(45deg,#fff 25%,transparent 25%,transparent 75%,#fff 75%);
+  background-size:36px 36px;
+  background-position:0 0,18px 18px;
+  -webkit-mask-image:linear-gradient(to top,#000,transparent);
+  mask-image:linear-gradient(to top,#000,transparent);
+}
+
+.page{
+  max-width:1280px!important;
+}
+
+/* HERO */
+.hero{
+  position:relative;
+  overflow:hidden;
+  border-radius:3px!important;
+  border:1px solid #333!important;
+  border-top:5px solid var(--hlrn-red)!important;
+  padding:52px 30px!important;
+  text-align:left!important;
+  background:
+    linear-gradient(115deg,transparent 0 61%,rgba(255,212,0,.10) 61.2% 62%,transparent 62.2%),
+    linear-gradient(145deg,#151515,#070707 65%,#101010)!important;
+  box-shadow:0 22px 52px rgba(0,0,0,.58)!important;
+  animation:rulesHeroIn .8s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.hero:before{
+  background:
+    linear-gradient(115deg,transparent 0 55%,rgba(237,28,36,.32) 55.2% 57.5%,transparent 57.7%),
+    linear-gradient(115deg,transparent 0 63%,rgba(255,255,255,.07) 63.2% 63.8%,transparent 64%)!important;
+}
+
+.hero:after{
+  content:"RACE CONTROL";
+  position:absolute;
+  right:-10px;
+  bottom:-18px;
+  color:rgba(255,255,255,.035);
+  font-size:clamp(72px,9vw,138px);
+  font-weight:1000;
+  font-style:italic;
+  letter-spacing:-.07em;
+  transform:skewX(-10deg);
+  white-space:nowrap;
+  pointer-events:none;
+}
+
+.logo,
+.hero h1,
+.hero p,
+.hero-line{
+  position:relative;
+  z-index:2;
+}
+
+.logo{
+  color:var(--hlrn-yellow)!important;
+  font-weight:1000!important;
+}
+
+.hero h1{
+  font-style:italic;
+  letter-spacing:-.045em!important;
+  text-shadow:4px 4px 0 #111;
+}
+
+.hero h1 span{
+  color:var(--hlrn-yellow)!important;
+}
+
+.hero p{
+  margin-left:0!important;
+  margin-right:0!important;
+}
+
+.hero-line{
+  margin-left:0!important;
+  width:110px!important;
+  height:5px!important;
+  background:linear-gradient(90deg,var(--hlrn-yellow) 0 28%,var(--hlrn-red) 28% 100%)!important;
+  transform:skewX(-18deg);
+}
+
+/* TOP TICKER */
+.rules-ticker{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  min-height:40px;
+  margin:-6px 0 20px;
+  overflow:hidden;
+  border:1px solid #333;
+  border-top:0;
+  background:#070707;
+  box-shadow:0 10px 28px rgba(0,0,0,.5);
+}
+
+.rules-ticker .ticker-label{
+  height:100%;
+  display:flex;
+  align-items:center;
+  padding:0 18px;
+  margin-left:-7px;
+  transform:skewX(-12deg);
+  background:var(--hlrn-yellow);
+  color:#050505;
+  font-size:9px;
+  font-weight:1000;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+
+.rules-ticker .ticker-label span{transform:skewX(12deg)}
+
+.rules-ticker .ticker-window{
+  overflow:hidden;
+  white-space:nowrap;
+  color:#ddd;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+}
+
+.rules-ticker .ticker-track{
+  display:inline-block;
+  padding-left:100%;
+  animation:rulesTickerMove 34s linear infinite;
+}
+
+.rules-ticker .ticker-track b{color:#fff}
+.rules-ticker .ticker-track em{
+  color:var(--hlrn-red);
+  font-style:normal;
+  margin:0 14px;
+}
+
+.rules-ticker .ticker-network{
+  padding:0 14px;
+  color:#777;
+  font-size:8px;
+  font-weight:1000;
+  letter-spacing:.14em;
+}
+
+/* QUICK INFO */
+.quick-card{
+  position:relative;
+  overflow:hidden;
+  border-radius:3px!important;
+  border:1px solid #353535!important;
+  border-top:0!important;
+  background:linear-gradient(160deg,#151515,#080808)!important;
+  box-shadow:0 12px 30px rgba(0,0,0,.35);
+  transition:.2s ease;
+}
+
+.quick-card:before{
+  content:"";
+  position:absolute;
+  top:0;left:0;right:0;
+  height:4px;
+  background:linear-gradient(90deg,var(--hlrn-yellow) 0 14%,var(--hlrn-red) 14% 65%,transparent);
+}
+
+.quick-card:hover{
+  transform:translateY(-4px);
+  border-color:var(--hlrn-yellow)!important;
+}
+
+.quick-number{
+  color:var(--hlrn-yellow);
+  font-style:italic;
+}
+
+/* NOTICES */
+.notice{
+  border-radius:3px!important;
+  border-left:5px solid var(--hlrn-red)!important;
+  background:linear-gradient(160deg,#160b0c,#090909)!important;
+  position:relative;
+  overflow:hidden;
+}
+
+.notice:after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-35%;
+  width:20%;
+  height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent);
+  transform:skewX(-18deg);
+  animation:noticeSweep 6s ease-in-out infinite;
+}
+
+.notice strong{
+  color:var(--hlrn-yellow)!important;
+}
+
+/* TABS */
+.tabs{
+  gap:6px!important;
+  position:relative;
+  z-index:4;
+}
+
+.tab{
+  border-radius:2px!important;
+  background:linear-gradient(180deg,#161616,#0b0b0b)!important;
+  border:1px solid #3a3a3a!important;
+  color:#b5b5b5!important;
+  transition:.18s ease;
+}
+
+.tab:hover{
+  border-color:var(--hlrn-yellow)!important;
+  transform:translateY(-2px);
+}
+
+.tab.active{
+  background:linear-gradient(135deg,var(--hlrn-yellow) 0 10%,var(--hlrn-red) 10% 100%)!important;
+  border-color:var(--hlrn-red)!important;
+  color:#fff!important;
+  box-shadow:5px 5px 0 rgba(0,0,0,.24)!important;
+}
+
+/* CONTENT PANELS */
+.tab-content{
+  border-radius:3px!important;
+  border:1px solid #363636!important;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.02),transparent 20%),
+    linear-gradient(160deg,#121212,#070707)!important;
+  box-shadow:0 18px 42px rgba(0,0,0,.45);
+  animation:rulesPanelIn .35s ease!important;
+}
+
+.section-header{
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(90deg,#970d13,var(--hlrn-red),#6f090d)!important;
+  font-style:italic;
+}
+
+.section-header:after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-30%;
+  width:20%;
+  height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.14),transparent);
+  transform:skewX(-18deg);
+  animation:headerSweep 4.8s ease-in-out infinite;
+}
+
+/* RULES */
+.rule{
+  position:relative;
+  padding:22px 0!important;
+  transition:.18s ease;
+}
+
+.rule:hover{
+  background:linear-gradient(90deg,rgba(255,212,0,.025),transparent);
+  padding-left:12px!important;
+}
+
+.rule h3{
+  color:var(--hlrn-yellow)!important;
+  font-style:italic;
+}
+
+.rule h3:before{
+  content:"";
+  display:inline-block;
+  width:5px;
+  height:16px;
+  margin-right:9px;
+  vertical-align:-2px;
+  background:var(--hlrn-red);
+  transform:skewX(-12deg);
+}
+
+.rule p,
+.rule li{
+  color:#c8c8c8!important;
+}
+
+/* PENALTIES */
+.penalties{
+  gap:12px!important;
+}
+
+.penalty{
+  position:relative;
+  overflow:hidden;
+  border-radius:3px!important;
+  border:1px solid #363636!important;
+  border-top:4px solid var(--hlrn-yellow)!important;
+  background:linear-gradient(160deg,#151515,#080808)!important;
+  transition:.2s ease;
+}
+
+.penalty:hover{
+  transform:translateY(-5px);
+  border-color:var(--hlrn-yellow)!important;
+}
+
+.penalty strong{
+  font-style:italic;
+}
+
+.penalty.danger{
+  border-top-color:var(--hlrn-red)!important;
+  background:linear-gradient(160deg,#250b0d,#080808)!important;
+}
+
+.penalty.danger strong{
+  color:#ff4b52!important;
+  animation:dangerPulse 1.8s ease-in-out infinite;
+}
+
+/* ESCALATION */
+.escalation div{
+  position:relative;
+  overflow:hidden;
+  border-radius:2px!important;
+  border-left:4px solid var(--hlrn-yellow)!important;
+  background:#111!important;
+}
+
+.escalation .danger{
+  border-left-color:var(--hlrn-red)!important;
+  background:#24090b!important;
+}
+
+/* FOOTER */
+.footer{
+  position:relative;
+  overflow:hidden;
+  border-top:3px solid var(--hlrn-red)!important;
+  background:
+    radial-gradient(circle at center,rgba(255,255,255,.03),transparent 45%),
+    linear-gradient(135deg,#101010,#040404 55%,#0c0c0c);
+}
+
+.footer:before{
+  content:"";
+  position:absolute;
+  top:-3px;
+  left:0;
+  width:34%;
+  height:3px;
+  background:var(--hlrn-yellow);
+}
+
+.footer-title{
+  color:var(--hlrn-yellow)!important;
+  font-style:italic;
+}
+
+/* SCROLL REVEALS */
+.rules-reveal{
+  opacity:0;
+  transform:translateY(18px);
+  transition:opacity .55s ease,transform .55s cubic-bezier(.2,.8,.2,1);
+}
+
+.rules-reveal.in-view{
+  opacity:1;
+  transform:none;
+}
+
+/* ANIMATIONS */
+@keyframes rulesHeroIn{
+  from{opacity:0;transform:translateY(-18px);filter:brightness(.72)}
+  to{opacity:1;transform:none;filter:brightness(1)}
+}
+
+@keyframes rulesTickerMove{
+  from{transform:translateX(0)}
+  to{transform:translateX(-100%)}
+}
+
+@keyframes rulesPanelIn{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:none}
+}
+
+@keyframes noticeSweep{
+  0%,60%{left:-35%;opacity:0}
+  68%{opacity:.8}
+  86%{left:120%;opacity:0}
+  100%{left:120%;opacity:0}
+}
+
+@keyframes headerSweep{
+  0%,55%{left:-30%;opacity:0}
+  65%{opacity:.85}
+  86%{left:120%;opacity:0}
+  100%{left:120%;opacity:0}
+}
+
+@keyframes dangerPulse{
+  0%,100%{text-shadow:0 0 0 rgba(255,75,82,0)}
+  50%{text-shadow:0 0 14px rgba(255,75,82,.28)}
+}
+
+@media(max-width:850px){
+  .rules-ticker{
+    grid-template-columns:auto 1fr;
+  }
+
+  .rules-ticker .ticker-network{
+    display:none;
+  }
+}
+
+@media(max-width:500px){
+  .hero{
+    text-align:center!important;
+  }
+
+  .hero p{
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+
+  .hero-line{
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,
+  *:before,
+  *:after{
+    animation-duration:.001ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.001ms!important;
+    scroll-behavior:auto!important;
+  }
+}
+</style>
+
+
+<style>
+/* =========================================================
+   HLRN RULEBOOK SEARCH
+========================================================= */
+.rc-rule-tools{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:10px;
+    margin:20px 0 16px;
+}
+
+.rc-search-wrap{
+    position:relative;
+}
+
+.rc-search{
+    width:100%;
+    height:48px;
+    padding:0 48px 0 15px;
+    background:linear-gradient(160deg,#111,#080808);
+    color:#fff;
+    border:1px solid #363636;
+    border-left:4px solid var(--hlrn-yellow,#ffd400);
+    border-radius:2px;
+    outline:none;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.2px;
+    transition:.18s ease;
+}
+
+.rc-search::placeholder{
+    color:#777;
+}
+
+.rc-search:focus{
+    border-color:var(--hlrn-yellow,#ffd400);
+    box-shadow:
+        0 0 0 2px rgba(255,212,0,.08),
+        0 12px 30px rgba(0,0,0,.35);
+}
+
+.rc-search-icon{
+    position:absolute;
+    right:16px;
+    top:50%;
+    transform:translateY(-50%);
+    color:var(--hlrn-yellow,#ffd400);
+    font-size:18px;
+    font-weight:900;
+    pointer-events:none;
+}
+
+.rc-search-status{
+    min-width:145px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0 15px;
+    border:1px solid #343434;
+    border-left:4px solid var(--hlrn-red,#ed1c24);
+    background:#0d0d0d;
+    color:#777;
+    font-size:8px;
+    font-weight:1000;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    white-space:nowrap;
+}
+
+.rc-search-status strong{
+    color:#fff;
+    margin-right:5px;
+    font-size:11px;
+}
+
+.rule mark[data-rc-search]{
+    background:rgba(255,212,0,.22);
+    color:#fff;
+    padding:0 2px;
+    border-bottom:1px solid var(--hlrn-yellow,#ffd400);
+}
+
+.rule.rc-match{
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255,212,0,.06),
+            transparent
+        ) !important;
+    box-shadow:
+        inset 4px 0 0 var(--hlrn-yellow,#ffd400);
+}
+
+@media(max-width:650px){
+    .rc-rule-tools{
+        grid-template-columns:1fr;
+    }
+
+    .rc-search-status{
+        min-height:40px;
+    }
+}
+</style>
+
+
+<style id="hlrn-rulebook-redesign">
+/* =========================================================
+   HLRN 2026 RULEBOOK REDESIGN
+   Same colors + same rule information, upgraded full layout
+========================================================= */
+
+:root{
+    --hlrn-red:#ed1c24;
+    --hlrn-red-dark:#991017;
+    --hlrn-yellow:#ffd400;
+    --hlrn-black:#050505;
+    --hlrn-panel:#0d0d0f;
+    --hlrn-panel-2:#121214;
+    --hlrn-line:#2a2a2f;
+    --hlrn-text:#f3f3f3;
+    --hlrn-muted:#a6a6ad;
+    --hlrn-soft:#6c6c75;
+    --hlrn-glow:0 18px 45px rgba(0,0,0,.45);
+}
+
+html{
+    scroll-padding-top:20px;
+}
+
+body{
+    color:var(--hlrn-text)!important;
+    background:
+        radial-gradient(circle at top left, rgba(237,28,36,.11), transparent 28%),
+        radial-gradient(circle at top right, rgba(255,212,0,.08), transparent 22%),
+        linear-gradient(180deg, #070707 0%, #020202 100%)!important;
+    overflow-x:hidden;
+}
+
+body:before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-2;
+    background:
+        linear-gradient(90deg, transparent 0%, rgba(255,255,255,.015) 50%, transparent 100%),
+        repeating-linear-gradient(
+            135deg,
+            transparent 0 36px,
+            rgba(255,255,255,.012) 36px 37px
+        );
+}
+
+body:after{
+    content:"";
+    position:fixed;
+    inset:auto 0 0 0;
+    height:180px;
+    pointer-events:none;
+    z-index:-1;
+    opacity:.08;
+    background:
+        linear-gradient(45deg,#fff 25%,transparent 25%,transparent 75%,#fff 75%),
+        linear-gradient(45deg,#fff 25%,transparent 25%,transparent 75%,#fff 75%);
+    background-size:40px 40px;
+    background-position:0 0,20px 20px;
+    -webkit-mask-image:linear-gradient(to top,#000,transparent);
+    mask-image:linear-gradient(to top,#000,transparent);
+}
+
+.page{
+    max-width:1380px!important;
+    padding:24px 18px 60px!important;
+}
+
+.rc-opsbar-redesign{
+    display:grid;
+    grid-template-columns:minmax(220px,1.4fr) repeat(4,minmax(120px,1fr));
+    gap:10px;
+    align-items:center;
+    margin:0 0 18px;
+}
+
+.rc-ops-brand,
+.rc-ops-pill{
+    min-height:46px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid #313136;
+    background:
+        linear-gradient(160deg, rgba(255,255,255,.025), transparent 28%),
+        linear-gradient(180deg, #121214, #0a0a0c);
+    box-shadow:var(--hlrn-glow);
+    color:#ddd;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    font-size:10px;
+    font-weight:900;
+}
+
+.rc-ops-brand{
+    justify-content:flex-start;
+    padding:0 16px;
+    border-left:4px solid var(--hlrn-red);
+    color:#fff;
+    font-size:13px;
+}
+
+.rc-ops-brand span{
+    color:var(--hlrn-yellow);
+    margin-left:8px;
+}
+
+.rc-ops-pill{
+    border-left:4px solid var(--hlrn-yellow);
+}
+
+.rc-ops-pill.warn{
+    border-left-color:var(--hlrn-red);
+}
+
+.hero{
+    border:none!important;
+    border-radius:18px!important;
+    padding:58px 38px!important;
+    text-align:left!important;
+    background:
+        linear-gradient(120deg, rgba(255,212,0,.08) 0 10%, transparent 10% 100%),
+        radial-gradient(circle at top right, rgba(237,28,36,.28), transparent 32%),
+        linear-gradient(145deg, #18181b 0%, #0d0d10 58%, #080809 100%)!important;
+    box-shadow:0 24px 60px rgba(0,0,0,.50)!important;
+    overflow:hidden;
+    position:relative;
+    isolation:isolate;
+}
+
+.hero:before{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    background:
+        linear-gradient(115deg, transparent 0 58%, rgba(237,28,36,.22) 58% 60%, transparent 60%),
+        linear-gradient(115deg, transparent 0 66%, rgba(255,255,255,.06) 66% 66.6%, transparent 66.6%)!important;
+}
+
+.hero:after{
+    content:"RULEBOOK";
+    position:absolute;
+    right:-8px;
+    bottom:-18px;
+    font-size:clamp(60px, 9vw, 140px);
+    font-weight:1000;
+    font-style:italic;
+    letter-spacing:-.06em;
+    color:rgba(255,255,255,.04);
+    transform:skewX(-14deg);
+    pointer-events:none;
+    z-index:0;
+}
+
+.logo,
+.hero h1,
+.hero p,
+.hero-line{
+    position:relative;
+    z-index:2;
+}
+
+.logo{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:9px 14px;
+    margin-bottom:18px!important;
+    border:1px solid rgba(255,212,0,.22);
+    border-radius:999px;
+    background:rgba(255,212,0,.06);
+    color:var(--hlrn-yellow)!important;
+    font-size:11px!important;
+    font-weight:1000!important;
+    letter-spacing:.22em!important;
+}
+
+.hero h1{
+    max-width:850px;
+    font-size:clamp(44px, 7vw, 88px)!important;
+    letter-spacing:-.05em!important;
+    line-height:.95!important;
+    font-style:italic;
+    text-transform:uppercase;
+    text-shadow:4px 5px 0 rgba(0,0,0,.45);
+    margin-bottom:12px;
+}
+
+.hero h1 span{
+    color:var(--hlrn-yellow)!important;
+}
+
+.hero p{
+    max-width:760px;
+    margin:0!important;
+    color:#d0d0d4!important;
+    font-size:15px!important;
+    line-height:1.75!important;
+}
+
+.hero-line{
+    width:150px!important;
+    height:6px!important;
+    margin:24px 0 0!important;
+    border-radius:999px;
+    background:
+        linear-gradient(
+            90deg,
+            var(--hlrn-yellow) 0 25%,
+            var(--hlrn-red) 25% 100%
+        )!important;
+    transform:skewX(-20deg);
+}
+
+.rules-ticker{
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    align-items:center;
+    min-height:46px;
+    margin:14px 0 22px!important;
+    border:1px solid #2e2e33!important;
+    border-radius:14px;
+    background:linear-gradient(180deg,#101013,#09090b)!important;
+    box-shadow:var(--hlrn-glow);
+    overflow:hidden;
+}
+
+.rules-ticker .ticker-label{
+    margin-left:0!important;
+    height:100%;
+    padding:0 22px!important;
+    background:linear-gradient(90deg,var(--hlrn-yellow),#ffea75)!important;
+    color:#090909!important;
+    font-size:10px!important;
+    font-weight:1000!important;
+    letter-spacing:.18em!important;
+    transform:skewX(-14deg);
+}
+
+.rules-ticker .ticker-label span{
+    transform:skewX(14deg);
+}
+
+.rules-ticker .ticker-window{
+    padding:0 8px;
+    color:#dadade!important;
+    font-size:10px!important;
+    letter-spacing:.12em!important;
+}
+
+.rules-ticker .ticker-track em{
+    color:var(--hlrn-red)!important;
+}
+
+.rules-ticker .ticker-network{
+    padding:0 16px!important;
+    color:#8d8d94!important;
+    font-size:9px!important;
+    letter-spacing:.16em!important;
+    font-weight:1000!important;
+}
+
+.quick{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    gap:14px!important;
+    margin-top:0!important;
+    margin-bottom:18px!important;
+}
+
+.quick-card{
+    min-height:118px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:flex-start;
+    padding:20px 18px!important;
+    border:none!important;
+    border-radius:16px!important;
+    background:
+        linear-gradient(165deg, rgba(255,255,255,.035), transparent 32%),
+        linear-gradient(180deg, #151519 0%, #0d0d10 100%)!important;
+    box-shadow:var(--hlrn-glow)!important;
+    position:relative;
+    overflow:hidden;
+}
+
+.quick-card:before{
+    content:"";
+    position:absolute;
+    inset:0 0 auto 0;
+    height:5px;
+    background:linear-gradient(90deg, var(--hlrn-yellow) 0 18%, var(--hlrn-red) 18% 100%);
+}
+
+.quick-card:after{
+    content:"";
+    position:absolute;
+    right:-18px;
+    top:-18px;
+    width:85px;
+    height:85px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(237,28,36,.16), transparent 70%);
+}
+
+.quick-card:hover{
+    transform:translateY(-4px) scale(1.01)!important;
+}
+
+.quick-number{
+    margin-bottom:10px;
+    color:var(--hlrn-yellow)!important;
+    font-size:34px!important;
+    font-weight:1000!important;
+    font-style:italic;
+    letter-spacing:-.04em;
+}
+
+.quick-label{
+    color:#c9c9cf!important;
+    font-size:10px!important;
+    letter-spacing:.18em!important;
+}
+
+.notice{
+    margin-top:14px!important;
+    padding:22px 22px 20px!important;
+    border:none!important;
+    border-radius:16px!important;
+    border-left:5px solid var(--hlrn-red)!important;
+    background:
+        linear-gradient(165deg, rgba(255,255,255,.028), transparent 35%),
+        linear-gradient(180deg, #151518 0%, #0c0c0f 100%)!important;
+    box-shadow:var(--hlrn-glow)!important;
+}
+
+.notice strong{
+    display:block;
+    color:var(--hlrn-yellow)!important;
+    font-size:13px;
+    font-weight:1000;
+    letter-spacing:.12em;
+    margin-bottom:5px;
+}
+
+.notice p{
+    color:#c2c2c8!important;
+    font-size:14px!important;
+    line-height:1.65!important;
+}
+
+.rc-rule-tools{
+    gap:12px!important;
+    margin:18px 0 18px!important;
+}
+
+.rc-search-wrap{
+    position:relative;
+}
+
+.rc-search{
+    height:56px!important;
+    padding:0 56px 0 18px!important;
+    border:none!important;
+    border-left:5px solid var(--hlrn-yellow)!important;
+    border-radius:16px!important;
+    background:
+        linear-gradient(165deg, rgba(255,255,255,.03), transparent 35%),
+        linear-gradient(180deg, #151518 0%, #0c0c0f 100%)!important;
+    color:#fff!important;
+    box-shadow:var(--hlrn-glow)!important;
+    font-size:13px!important;
+    font-weight:900!important;
+    letter-spacing:.02em;
+}
+
+.rc-search:focus{
+    box-shadow:
+        0 0 0 2px rgba(255,212,0,.12),
+        0 18px 42px rgba(0,0,0,.38)!important;
+}
+
+.rc-search::placeholder{
+    color:#7e7e86!important;
+}
+
+.rc-search-icon{
+    right:18px!important;
+    color:var(--hlrn-yellow)!important;
+    font-size:20px!important;
+}
+
+.rc-search-status{
+    min-width:190px!important;
+    border:none!important;
+    border-left:5px solid var(--hlrn-red)!important;
+    border-radius:16px!important;
+    background:
+        linear-gradient(165deg, rgba(255,255,255,.03), transparent 35%),
+        linear-gradient(180deg, #151518 0%, #0c0c0f 100%)!important;
+    color:#8f8f98!important;
+    box-shadow:var(--hlrn-glow)!important;
+    font-size:10px!important;
+}
+
+.rc-search-status strong{
+    color:#fff!important;
+    font-size:14px!important;
+}
+
+.tabs{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    gap:12px!important;
+    margin-top:6px!important;
+    margin-bottom:14px!important;
+}
+
+.tab{
+    min-height:88px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    padding:18px 10px!important;
+    border:none!important;
+    border-radius:16px!important;
+    background:
+        linear-gradient(165deg, rgba(255,255,255,.03), transparent 35%),
+        linear-gradient(180deg, #151519 0%, #0c0c0f 100%)!important;
+    color:#babac2!important;
+    box-shadow:var(--hlrn-glow)!important;
+    font-size:12px!important;
+    font-weight:1000!important;
+    letter-spacing:.06em!important;
+    text-transform:uppercase;
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+
+.tab:hover{
+    transform:translateY(-4px)!important;
+    color:#fff!important;
+    box-shadow:0 22px 50px rgba(0,0,0,.48)!important;
+}
+
+.tab.active{
+    color:#fff!important;
+    background:
+        linear-gradient(135deg, rgba(255,212,0,.17) 0 12%, transparent 12%),
+        linear-gradient(135deg, #c0141b 0%, #8d0f15 100%)!important;
+    box-shadow:
+        0 18px 42px rgba(0,0,0,.48),
+        inset 0 0 0 1px rgba(255,255,255,.06)!important;
+}
+
+.tab-content{
+    margin-top:0!important;
+    border:none!important;
+    border-radius:20px!important;
+    background:
+        linear-gradient(165deg, rgba(255,255,255,.02), transparent 22%),
+        linear-gradient(180deg, #121215 0%, #0a0a0d 100%)!important;
+    box-shadow:0 26px 56px rgba(0,0,0,.52)!important;
+    overflow:hidden!important;
+}
+
+.section-header{
+    padding:22px 26px!important;
+    background:
+        linear-gradient(90deg, #8f1117 0%, var(--hlrn-red) 52%, #7f0e14 100%)!important;
+    font-size:22px!important;
+    font-weight:1000!important;
+    letter-spacing:.08em!important;
+    font-style:italic;
+    text-transform:uppercase;
+    position:relative;
+    overflow:hidden;
+}
+
+.section-header:after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-25%;
+    width:16%;
+    height:100%;
+    background:linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
+    transform:skewX(-18deg);
+    animation:hlrnHeaderSweep 5.5s ease-in-out infinite;
+}
+
+.section-body{
+    padding:24px!important;
+}
+
+.rule{
+    margin:0 0 14px!important;
+    padding:18px 18px 16px!important;
+    border:none!important;
+    border-radius:16px!important;
+    background:
+        linear-gradient(160deg, rgba(255,255,255,.02), transparent 30%),
+        linear-gradient(180deg, #151519 0%, #0d0d10 100%)!important;
+    box-shadow:0 14px 30px rgba(0,0,0,.26);
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+    position:relative;
+    overflow:hidden;
+}
+
+.rule:last-child{
+    margin-bottom:0!important;
+}
+
+.rule:before{
+    content:"";
+    position:absolute;
+    inset:0 auto 0 0;
+    width:4px;
+    background:linear-gradient(180deg, var(--hlrn-yellow), var(--hlrn-red));
+    opacity:.95;
+}
+
+.rule:hover{
+    transform:translateX(4px);
+    box-shadow:0 18px 36px rgba(0,0,0,.34);
+}
+
+.rule h3{
+    margin:0 0 10px 0!important;
+    color:var(--hlrn-yellow)!important;
+    font-size:18px!important;
+    font-style:italic;
+    letter-spacing:.02em!important;
+}
+
+.rule h3:before{
+    display:none!important;
+}
+
+.rule p,
+.rule li{
+    color:#d4d4d8!important;
+    font-size:14px!important;
+    line-height:1.7!important;
+}
+
+.rule ul{
+    margin:8px 0 0 20px!important;
+}
+
+.penalty-title{
+    margin:2px 0 12px!important;
+    color:#fff!important;
+    font-size:18px!important;
+    font-style:italic;
+    letter-spacing:.06em;
+}
+
+.penalties{
+    gap:14px!important;
+    margin-top:10px!important;
+}
+
+.penalty{
+    border:none!important;
+    border-radius:16px!important;
+    padding:24px 18px!important;
+    background:
+        linear-gradient(160deg, rgba(255,255,255,.03), transparent 36%),
+        linear-gradient(180deg, #17171b 0%, #0d0d10 100%)!important;
+    box-shadow:0 14px 30px rgba(0,0,0,.28)!important;
+}
+
+.penalty strong{
+    color:var(--hlrn-yellow)!important;
+    font-size:26px!important;
+    font-style:italic;
+}
+
+.penalty span{
+    color:#c7c7cd!important;
+    font-size:11px!important;
+    letter-spacing:.12em!important;
+}
+
+.penalty.danger{
+    background:
+        linear-gradient(160deg, rgba(255,255,255,.03), transparent 36%),
+        linear-gradient(180deg, #2a0c10 0%, #12090a 100%)!important;
+}
+
+.penalty.danger strong{
+    color:#ff5962!important;
+}
+
+.escalation{
+    gap:12px!important;
+    margin-top:12px!important;
+}
+
+.escalation div{
+    border:none!important;
+    border-left:5px solid var(--hlrn-yellow)!important;
+    border-radius:14px!important;
+    padding:16px 16px!important;
+    background:
+        linear-gradient(160deg, rgba(255,255,255,.025), transparent 36%),
+        linear-gradient(180deg, #151519 0%, #0d0d10 100%)!important;
+    box-shadow:0 12px 28px rgba(0,0,0,.22);
+    color:#e8e8ec!important;
+}
+
+.escalation .danger{
+    border-left-color:var(--hlrn-red)!important;
+    background:
+        linear-gradient(160deg, rgba(255,255,255,.025), transparent 36%),
+        linear-gradient(180deg, #2b0d11 0%, #12090a 100%)!important;
+    color:#ff6a73!important;
+}
+
+.footer{
+    margin-top:24px!important;
+    padding:28px 20px!important;
+    border:none!important;
+    border-radius:18px!important;
+    border-top:5px solid var(--hlrn-red)!important;
+    background:
+        linear-gradient(160deg, rgba(255,255,255,.025), transparent 36%),
+        linear-gradient(180deg, #151519 0%, #0d0d10 100%)!important;
+    box-shadow:0 18px 42px rgba(0,0,0,.34)!important;
+}
+
+.footer-title{
+    color:var(--hlrn-yellow)!important;
+    font-size:24px!important;
+    font-style:italic;
+    letter-spacing:.04em!important;
+}
+
+.footer-sub{
+    color:#b1b1b8!important;
+    font-size:11px!important;
+    letter-spacing:.14em!important;
+    margin-top:8px!important;
+}
+
+.rule mark[data-rc-search]{
+    background:rgba(255,212,0,.25)!important;
+    color:#fff!important;
+    border-bottom:1px solid var(--hlrn-yellow)!important;
+    border-radius:4px;
+}
+
+.rule.rc-match{
+    box-shadow:
+        0 18px 34px rgba(0,0,0,.34),
+        inset 0 0 0 1px rgba(255,212,0,.06)!important;
+}
+
+@keyframes hlrnHeaderSweep{
+    0%,55%{left:-25%;opacity:0}
+    65%{opacity:.85}
+    88%{left:125%;opacity:0}
+    100%{left:125%;opacity:0}
+}
+
+@media(max-width:1100px){
+    .rc-opsbar-redesign{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+    .tabs{
+        grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    }
+}
+
+@media(max-width:820px){
+    .quick{
+        grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    }
+
+    .section-header{
+        font-size:18px!important;
+    }
+}
+
+@media(max-width:650px){
+    .page{
+        padding:14px 10px 45px!important;
+    }
+
+    .rc-opsbar-redesign{
+        grid-template-columns:1fr;
+    }
+
+    .hero{
+        padding:38px 20px!important;
+        text-align:center!important;
+    }
+
+    .hero p{
+        margin:0 auto!important;
+    }
+
+    .hero-line{
+        margin:22px auto 0!important;
+    }
+
+    .quick{
+        grid-template-columns:1fr!important;
+    }
+
+    .tabs{
+        grid-template-columns:1fr!important;
+    }
+
+    .rc-search-status{
+        min-height:46px;
+    }
+
+    .rules-ticker{
+        grid-template-columns:auto 1fr!important;
+    }
+
+    .rules-ticker .ticker-network{
+        display:none;
+    }
+}
+</style>
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style id="HLRN_NASCAR_RULES_FINAL">
+:root{
+  --nr-red:#d71920;
+  --nr-red-dark:#a70f15;
+  --nr-black:#111214;
+  --nr-ink:#181a1d;
+  --nr-muted:#666d74;
+  --nr-line:#d7dbe0;
+  --nr-soft:#f4f5f6;
+  --nr-soft2:#fafafa;
+  --nr-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --nr-body:"Inter","Segoe UI",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:auto!important;background:#fff!important}
+body{
+  margin:0!important;
+  background:#fff!important;
+  background-image:none!important;
+  color:var(--nr-ink)!important;
+  font-family:var(--nr-body)!important;
+  line-height:1.6!important;
+  overflow-x:hidden!important;
+}
+body:before,body:after{display:none!important}
+.page{
+  width:min(1180px,calc(100% - 32px))!important;
+  max-width:1180px!important;
+  margin:0 auto!important;
+  padding:28px 0 54px!important;
+  background:#fff!important;
+}
+
+/* Remove the old race-control/dashboard layers. */
+.rc-opsbar-redesign,.rules-ticker{display:none!important}
+
+/* NASCAR-style article breadcrumb / hero */
+.hero{
+  position:relative!important;
+  display:block!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:38px 0 28px!important;
+  border:0!important;
+  border-radius:0!important;
+  border-bottom:1px solid var(--nr-line)!important;
+  background:#fff!important;
+  background-image:none!important;
+  box-shadow:none!important;
+  text-align:left!important;
+  overflow:visible!important;
+  animation:none!important;
+  isolation:auto!important;
+}
+.hero:before,.hero:after{display:none!important}
+.logo{
+  display:block!important;
+  width:auto!important;
+  margin:0 0 10px!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:none!important;
+  color:#6a7076!important;
+  font:800 11px/1.2 var(--nr-body)!important;
+  letter-spacing:.14em!important;
+  text-transform:uppercase!important;
+}
+.logo:before{content:"HIGH LINE RACING NETWORK  /  ";color:#111214;font-weight:800}
+.hero h1{
+  margin:0!important;
+  max-width:none!important;
+  color:var(--nr-black)!important;
+  font:900 italic clamp(52px,7vw,88px)/.9 var(--nr-display)!important;
+  letter-spacing:-.045em!important;
+  text-transform:uppercase!important;
+  text-shadow:none!important;
+}
+.hero h1 span{color:var(--nr-red)!important}
+.hero p{
+  max-width:760px!important;
+  margin:16px 0 0!important;
+  color:#4e545a!important;
+  font:500 15px/1.65 var(--nr-body)!important;
+}
+.hero-line{
+  width:74px!important;
+  height:5px!important;
+  margin:21px 0 0!important;
+  border-radius:0!important;
+  background:var(--nr-red)!important;
+  transform:none!important;
+}
+
+/* Small facts row -- flat, clean, no dark cards. */
+.quick{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:0!important;
+  margin:0!important;
+  border-bottom:1px solid var(--nr-line)!important;
+}
+.quick-card{
+  min-height:84px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  align-items:flex-start!important;
+  margin:0!important;
+  padding:16px 20px!important;
+  border:0!important;
+  border-right:1px solid var(--nr-line)!important;
+  border-radius:0!important;
+  background:#fff!important;
+  background-image:none!important;
+  box-shadow:none!important;
+  text-align:left!important;
+  transform:none!important;
+}
+.quick-card:last-child{border-right:0!important}
+.quick-card:before,.quick-card:after{display:none!important}
+.quick-card:hover{transform:none!important;border-color:var(--nr-line)!important}
+.quick-number{
+  margin:0!important;
+  color:var(--nr-black)!important;
+  font:900 italic 28px/1 var(--nr-display)!important;
+  letter-spacing:-.02em!important;
+}
+.quick-label{
+  margin-top:7px!important;
+  color:#72787e!important;
+  font:800 9px/1.2 var(--nr-body)!important;
+  letter-spacing:.12em!important;
+  text-transform:uppercase!important;
+}
+
+/* Intro notices become editorial callouts. */
+.notice,
+.notice[style]{
+  margin:20px 0 0!important;
+  padding:16px 18px!important;
+  border:1px solid var(--nr-line)!important;
+  border-left:4px solid var(--nr-red)!important;
+  border-radius:0!important;
+  background:#fff!important;
+  background-image:none!important;
+  box-shadow:none!important;
+  text-align:left!important;
+  overflow:visible!important;
+}
+.notice:after{display:none!important}
+.notice strong,.notice[style] strong{
+  display:block!important;
+  margin:0 0 3px!important;
+  color:var(--nr-black)!important;
+  font:900 15px/1.25 var(--nr-display)!important;
+  letter-spacing:.02em!important;
+  text-transform:uppercase!important;
+}
+.notice p,.notice[style] p{
+  margin:0!important;
+  color:#4e545a!important;
+  font:500 13px/1.55 var(--nr-body)!important;
+}
+
+/* Rule search */
+.rc-rule-tools{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  gap:10px!important;
+  margin:22px 0 16px!important;
+}
+.rc-search{
+  height:48px!important;
+  padding:0 48px 0 14px!important;
+  border:1px solid #bfc4c9!important;
+  border-left:4px solid var(--nr-red)!important;
+  border-radius:0!important;
+  background:#fff!important;
+  background-image:none!important;
+  color:#111214!important;
+  box-shadow:none!important;
+  font:600 13px/1 var(--nr-body)!important;
+}
+.rc-search::placeholder{color:#767c82!important}
+.rc-search:focus{border-color:#8f969d!important;box-shadow:0 0 0 2px rgba(215,25,32,.08)!important}
+.rc-search-icon{right:14px!important;color:#111214!important;font-size:17px!important}
+.rc-search-status{
+  min-width:150px!important;
+  min-height:48px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:0 14px!important;
+  border:1px solid var(--nr-line)!important;
+  border-radius:0!important;
+  background:var(--nr-soft)!important;
+  color:#4e545a!important;
+  box-shadow:none!important;
+  font:800 9px/1.2 var(--nr-body)!important;
+  letter-spacing:.08em!important;
+}
+.rc-search-status strong{color:#111214!important;font-size:13px!important}
+
+/* Section selector: plain NASCAR-like category bar. */
+.tabs{
+  position:relative!important;
+  top:auto!important;
+  z-index:1!important;
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:0!important;
+  margin:0 0 24px!important;
+  padding:0!important;
+  border:1px solid var(--nr-line)!important;
+  background:#fff!important;
+  box-shadow:none!important;
+}
+.tab{
+  min-height:56px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:10px 12px!important;
+  border:0!important;
+  border-right:1px solid var(--nr-line)!important;
+  border-bottom:3px solid transparent!important;
+  border-radius:0!important;
+  background:#fff!important;
+  background-image:none!important;
+  color:#444a50!important;
+  box-shadow:none!important;
+  font:900 13px/1.1 var(--nr-display)!important;
+  font-style:italic!important;
+  letter-spacing:.01em!important;
+  text-transform:uppercase!important;
+  transform:none!important;
+  transition:none!important;
+}
+.tab:nth-child(4n){border-right:0!important}
+.tab:nth-child(n+5){border-top:1px solid var(--nr-line)!important}
+.tab:hover{background:#fafafa!important;color:#111214!important;transform:none!important}
+.tab.active{
+  background:#fff!important;
+  color:var(--nr-red)!important;
+  border-bottom-color:var(--nr-red)!important;
+  box-shadow:none!important;
+}
+
+/* Article rule content */
+.tab-content,
+.tab-content.active{
+  margin:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:#fff!important;
+  background-image:none!important;
+  box-shadow:none!important;
+  overflow:visible!important;
+  animation:none!important;
+}
+.tab-content{display:none!important}
+.tab-content.active{display:block!important}
+.section-header{
+  position:relative!important;
+  padding:0 0 14px!important;
+  border:0!important;
+  border-bottom:2px solid #111214!important;
+  background:#fff!important;
+  background-image:none!important;
+  color:#111214!important;
+  font:900 italic clamp(27px,3.2vw,38px)/1 var(--nr-display)!important;
+  letter-spacing:-.02em!important;
+  text-transform:uppercase!important;
+  overflow:visible!important;
+}
+.section-header:after{display:none!important}
+.section-body{padding:0!important}
+.rule{
+  position:relative!important;
+  margin:0!important;
+  padding:22px 0!important;
+  border:0!important;
+  border-bottom:1px solid var(--nr-line)!important;
+  border-radius:0!important;
+  background:#fff!important;
+  background-image:none!important;
+  box-shadow:none!important;
+  transform:none!important;
+  transition:none!important;
+  overflow:visible!important;
+}
+.rule:before{display:none!important}
+.rule:hover{padding-left:0!important;background:#fff!important;transform:none!important;box-shadow:none!important}
+.rule h3{
+  margin:0 0 8px!important;
+  color:var(--nr-red)!important;
+  font:900 19px/1.2 var(--nr-display)!important;
+  font-style:normal!important;
+  letter-spacing:0!important;
+  text-transform:uppercase!important;
+}
+.rule h3:before{display:none!important}
+.rule p,.rule li{
+  color:#24272a!important;
+  font:500 14px/1.7 var(--nr-body)!important;
+}
+.rule p{margin:5px 0!important}
+.rule ul{margin:8px 0 0 22px!important;color:#24272a!important}
+.rule li{margin:5px 0!important}
+
+.penalty-title{
+  margin:24px 0 8px!important;
+  color:#111214!important;
+  font:900 italic 22px/1.1 var(--nr-display)!important;
+  letter-spacing:0!important;
+  text-transform:uppercase!important;
+}
+.penalties{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:10px!important;
+  margin:12px 0 6px!important;
+}
+.penalty,.penalty.danger{
+  min-height:96px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  padding:16px!important;
+  border:1px solid var(--nr-line)!important;
+  border-top:3px solid var(--nr-red)!important;
+  border-radius:0!important;
+  background:#fff!important;
+  background-image:none!important;
+  box-shadow:none!important;
+  text-align:left!important;
+  transform:none!important;
+}
+.penalty:hover{transform:none!important;border-color:var(--nr-line)!important;border-top-color:var(--nr-red)!important}
+.penalty strong,.penalty.danger strong{
+  color:#111214!important;
+  font:900 italic 26px/1 var(--nr-display)!important;
+  text-shadow:none!important;
+  animation:none!important;
+}
+.penalty span{margin-top:6px!important;color:#656b71!important;font:800 9px/1.3 var(--nr-body)!important}
+.escalation{display:grid!important;gap:0!important;margin:14px 0!important;border-top:1px solid var(--nr-line)!important}
+.escalation div,.escalation .danger{
+  margin:0!important;
+  padding:13px 0!important;
+  border:0!important;
+  border-bottom:1px solid var(--nr-line)!important;
+  border-radius:0!important;
+  background:#fff!important;
+  background-image:none!important;
+  box-shadow:none!important;
+  color:#24272a!important;
+  font:700 13px/1.5 var(--nr-body)!important;
+}
+.escalation .danger{color:var(--nr-red)!important}
+
+.rule mark[data-rc-search]{background:#fff2a8!important;color:#111214!important;border:0!important;border-radius:0!important}
+.rule.rc-match{background:#fff!important;box-shadow:inset 4px 0 0 var(--nr-red)!important;padding-left:14px!important}
+
+.footer{
+  margin-top:34px!important;
+  padding:24px 0!important;
+  border:0!important;
+  border-top:1px solid var(--nr-line)!important;
+  border-radius:0!important;
+  background:#fff!important;
+  background-image:none!important;
+  box-shadow:none!important;
+  text-align:left!important;
+  overflow:visible!important;
+}
+.footer:before{display:none!important}
+.footer-title{color:#111214!important;font:900 italic 22px/1 var(--nr-display)!important;letter-spacing:0!important}
+.footer-sub{margin-top:7px!important;color:#737980!important;font:700 9px/1.4 var(--nr-body)!important;letter-spacing:.12em!important}
+
+/* Disable old reveal/animation hiding. */
+.rules-reveal,.rules-reveal.in-view{opacity:1!important;transform:none!important;transition:none!important}
+
+@media(max-width:850px){
+  .page{width:min(100% - 20px,1180px)!important}
+  .quick{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .quick-card:nth-child(2){border-right:0!important}
+  .quick-card:nth-child(n+3){border-top:1px solid var(--nr-line)!important}
+  .tabs{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .tab:nth-child(2n){border-right:0!important}
+  .tab:nth-child(n+3){border-top:1px solid var(--nr-line)!important}
+  .penalties{grid-template-columns:1fr!important}
+}
+@media(max-width:600px){
+  .page{width:100%!important;padding:16px 12px 36px!important}
+  .hero{padding:24px 0 22px!important}
+  .hero h1{font-size:48px!important}
+  .hero p{font-size:14px!important}
+  .quick{grid-template-columns:1fr 1fr!important}
+  .rc-rule-tools{grid-template-columns:1fr!important}
+  .tabs{grid-template-columns:1fr!important}
+  .tab{border-right:0!important;border-top:1px solid var(--nr-line)!important}
+  .tab:first-child{border-top:0!important}
+  .section-header{font-size:30px!important}
+}
+</style>
+
+
+<style id="HLRN_SEARCH_HIGHLIGHT_ENHANCEMENT">
+.rule mark[data-rc-search]{
+  background:#ffeb3b!important;
+  color:#000!important;
+  padding:1px 3px!important;
+  border-radius:2px!important;
+  box-shadow:inset 0 -2px 0 #e1b800!important;
+  font-weight:900!important;
+}
+.rule.rc-match{
+  box-shadow:inset 4px 0 0 #d71920!important;
+}
+</style>
+
+<link rel="stylesheet" href="../assets/site-shell.css?v=20260921c">
+
+<style id="hlrn-rules-global-nav-guard">
+#hlrn-global-nav,
+#hlrn-global-nav *{
+    box-sizing:border-box;
+}
+#hlrn-global-nav{
+    width:100%;
+    max-width:none;
+    margin:0;
+    padding:0;
+    position:relative;
+    z-index:2147483000;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="page">
+
+<div class="rc-opsbar-redesign" aria-label="HLRN rulebook live status">
+    <div class="rc-ops-brand">HLRN <span>OFFICIAL RULEBOOK</span></div>
+    <div class="rc-ops-pill">8 Sections</div>
+    <div class="rc-ops-pill">48 HR Protest Window</div>
+    <div class="rc-ops-pill">Live Search Active</div>
+    <div class="rc-ops-pill warn">Race Control Design</div>
+</div>
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="hero">
+
+    <div class="logo">
+        High Line Racing Network
+    </div>
+
+    <h1>
+        Official <span>Rules</span>
+    </h1>
+
+    <p>
+        Know the rules. Respect the competition.
+        Race hard. Race clean. Race on the High Line.
+    </p>
+
+    <div class="hero-line"></div>
+
+</section>
+
+<div class="rules-ticker" aria-label="HLRN official rules ticker">
+  <div class="ticker-label"><span>Race Control</span></div>
+  <div class="ticker-window">
+    <div class="ticker-track">
+      <b>HLRN OFFICIAL RULE BOOK</b><em>◆</em>
+      DRIVER CONDUCT • RACE PROCEDURES • INCIDENTS & PENALTIES
+      <em>◆</em>
+      PROTESTS • CHAMPIONSHIP • BROADCAST RULES • LEAGUE OFFICIALS • RULE INTERPRETATION
+      <em>◆</em>
+      RACE HARD • RACE CLEAN • RACE ON THE HIGH LINE
+    </div>
+  </div>
+  <div class="ticker-network">HLRN // OFFICIAL RULES</div>
+</div>
+
+
+
+<!-- =========================
+     QUICK INFO
+========================= -->
+
+<div class="quick">
+
+    <div class="quick-card">
+        <div class="quick-number">8</div>
+        <div class="quick-label">
+            Rule Sections
+        </div>
+    </div>
+
+    <div class="quick-card">
+        <div class="quick-number">48 HR</div>
+        <div class="quick-label">
+            Protest Window
+        </div>
+    </div>
+
+    <div class="quick-card">
+        <div class="quick-number">3</div>
+        <div class="quick-label">
+            Wreck Levels
+        </div>
+    </div>
+
+    <div class="quick-card">
+        <div class="quick-number">2</div>
+        <div class="quick-label">
+            GWC Attempts
+        </div>
+    </div>
+
+</div>
+
+
+<!-- =========================
+     NOTICE
+========================= -->
+
+<div class="notice">
+
+    <strong>
+        Official HLRN Rule Book
+    </strong>
+
+    <p>
+        Select a section below to view the rules.
+    </p>
+
+</div>
+
+
+<div class="notice" style="background:#111;border-color:#333;">
+    <strong style="color:#e6c58a;">HLRN Mission Statement</strong>
+    <p>
+        High Line Racing Network is dedicated to providing competitive, authentic, and
+        entertaining iRacing events through professional race management, respectful
+        competition, premier live broadcasting, and engaging league coverage through The Show.
+    </p>
+</div>
+
+
+
+<!-- =========================
+     RULEBOOK SEARCH
+========================= -->
+<section class="rc-rule-tools" aria-label="Search official HLRN rules">
+    <div class="rc-search-wrap">
+        <input
+            id="rcRuleSearch"
+            class="rc-search"
+            type="search"
+            placeholder="Search the rulebook — caution, yellow line, pit road, protest, restart, suspension..."
+            autocomplete="off"
+            aria-label="Search the HLRN rulebook"
+        >
+        <span class="rc-search-icon" aria-hidden="true">⌕</span>
+    </div>
+
+    <div class="rc-search-status" id="rcSearchStatus">
+        <strong>0</strong> rules indexed
+    </div>
+</section>
+
+<!-- =========================
+     TABS
+========================= -->
+
+<div class="tabs">
+
+    <button
+        class="tab active"
+        onclick="openTab('conduct',this)"
+    >
+        Driver Conduct
+    </button>
+
+    <button
+        class="tab"
+        onclick="openTab('procedures',this)"
+    >
+        Race Procedures
+    </button>
+
+    <button
+        class="tab"
+        onclick="openTab('penalties',this)"
+    >
+        Incident & Penalties
+    </button>
+
+    <button
+        class="tab"
+        onclick="openTab('protests',this)"
+    >
+        Protest Procedures
+    </button>
+
+    <button
+        class="tab"
+        onclick="openTab('championship',this)"
+    >
+        Championship
+    </button>
+
+    <button
+        class="tab"
+        onclick="openTab('broadcast',this)"
+    >
+        Broadcast Rules
+    </button>
+
+    <button
+        class="tab"
+        onclick="openTab('officials',this)"
+    >
+        League Officials
+    </button>
+
+    <button
+        class="tab"
+        onclick="openTab('interpretation',this)"
+    >
+        Rule Interpretation
+    </button>
+
+</div>
+
+
+<!-- =====================================================
+     TAB 1
+===================================================== -->
+
+<section
+    id="conduct"
+    class="tab-content active"
+>
+
+<div class="section-header">
+    Section 1 | Driver Conduct
+</div>
+
+<div class="section-body">
+
+
+<div class="rule">
+
+<h3>
+1.1 Radio Communication
+</h3>
+
+<p>
+• All drivers must be in the designated Discord voice channel during events.
+</p>
+
+<p>
+• Keep communications clear and race-related during green flag runs.
+</p>
+
+<p>
+• Brief reactions and competitive banter are part of racing, but excessive arguing, yelling, or disrupting race communications will not be tolerated.
+</p>
+
+<p>
+• Race Control communications take priority at all times.
+</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>
+1.2 The Beef Channel
+</h3>
+
+<p>• Got a problem with another driver? Take it to the Beef Channel in Discord.</p>
+<p>• Keep it out of the race chat, voice comms, and public channels.</p>
+<p>• The Beef Channel exists so you can air grievances without ruining the broadcast or the race experience for others.</p>
+<p>• Think of it as your post-race therapy session. Use it wisely.</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>
+1.3 Respect for Competitors
+</h3>
+
+<p>• Trash talk is part of racing. Personal attacks, slurs, or harassment are not.</p>
+<p>• If it wouldn't fly in a NASCAR post-race interview, it doesn't fly here.</p>
+<p>• Repeated violations will result in warnings, muting, or removal from the league.</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>
+1.4 Race Control Authority
+</h3>
+
+<p>• Race Control's decisions are final during the event.</p>
+<p>• Arguing with Race Control during a live race will result in a warning. Continued disruption may result in a penalty or disqualification.</p>
+<p>• Post-race protests are available through the proper channels (see Section 4).</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>
+1.5 The Golden Rule
+</h3>
+
+<p>
+Race others the way you would want to be raced...
+unless it's the last lap at Talladega.
+</p>
+
+<p>
+Then at least make it entertaining for the broadcast.
+Just kidding!
+</p>
+
+</div>
+
+
+</div>
+</section>
+
+
+<!-- =====================================================
+     TAB 2
+===================================================== -->
+
+<section
+    id="procedures"
+    class="tab-content"
+>
+
+<div class="section-header">
+    Section 2 | Race Procedures
+</div>
+
+<div class="section-body">
+
+
+<div class="rule">
+
+<h3>2.1 Lobby Opening Times</h3>
+
+<p>• 7:30 EST for League races.</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>2.2 Driver Meeting Expectations</h3>
+
+<p>• All drivers are expected to attend the brief post-qualifying driver meeting in Discord with Race Control and the "Voice of High Line."</p>
+<p>• No cars or trucks are permitted on track or outside of the pit box during the driver meeting.</p>
+<p>• No burnouts or other distractions are allowed during the driver meeting.</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>2.3 Qualifying Format</h3>
+
+<p>
+• You are not required to qualify.
+</p>
+
+<p>
+• 2-lap qualifier.
+</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>2.4 Grid Procedures</h3>
+
+<p>
+• Drivers must line up in the position assigned by iRacing.
+No "Choose rule."
+</p>
+
+<p>
+• Starting from the pit must be approved by Race Control.
+A valid reason is required.
+</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>2.4A Pit Road Entry</h3>
+
+<p>• Drivers must enter pit road on the far right whenever possible, unless avoiding a wreck. Drivers must make every reasonable effort to enter pit road as safely as possible.</p>
+
+<p>• Drivers assigned one of the first five pit boxes as cars enter pit road do not have to move to the far right and may remain to the left for safety.</p>
+
+<p>• Race Control will determine the appropriate penalty based on the severity of the violation and whether other drivers are wrecked or damaged as a result of failing to follow this rule.</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>2.4B Pit Box Entry and Exit</h3>
+
+<p>• Drivers must not enter the pit boxes or pit-box lane any earlier than three pit boxes before their assigned pit box.</p>
+
+<p>• Drivers must not drive through more than three pit boxes when exiting their assigned pit box. And should get to as far right on pit road as possible</p>
+
+<p>• At no time is it okay to speed down pit road for any reason.</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>2.5 Pace Laps</h3>
+
+<p>
+• iRacing standard pace laps. Double File.
+</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>2.6 Starts / Restarts</h3>
+
+<p>
+• Initial start of the race is on the Green Flag.
+</p>
+
+<p>
+• Restarts are on the leader.
+</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>2.7 Caution Procedures</h3>
+
+<p>• iRacing cautions.</p>
+<p>• If a driver suspects foul play, they can request Race Control review during caution.</p>
+<p>• Race Control may issue a manual caution if 3 or more cars are involved in a significant on-track incident.</p>
+<p>• Follow all guidance from iRacing and Race Control.</p>
+<p>• Upon an on-track incident, the driver claiming the caution must either type "C" in the in-game chat or verbally notify Race Control. The driver claiming the caution will be placed at the End of the Longest Line (EOL) for the restart.</p>
+<p>• If no driver claims responsibility, Race Control will either determine a driver at fault and place them at EOL, or rule the incident a racing incident with no further action.</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>2.8 Lucky Dog / Wave Around</h3>
+
+<p>
+Lucky Dog is dictated by iRacing. No exceptions.
+</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>2.9 Disconnect / Connectivity Policy</h3>
+
+<p>• If you disconnect, that is on you. It is not the league's fault. Do your best to return.</p>
+<p>• If you are having blinking issues, you will be required to self-EOL or you will be black flagged.</p>
+<p>• If your issue is excessive or Race Control believes it is a major liability to the race, you will be disqualified if the issue is not rectified.</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>2.10 Voice Chat During Cautions</h3>
+
+<p>• Drivers are expected to keep voice communications clear, respectful, and race-related during events. Brief reactions and competitive banter are part of racing, but excessive arguing, yelling, or disrupting race communications will not be tolerated.</p>
+<p>• Major disputes should be taken to the Beef Channel in Discord following the race.</p>
+<p>• Remember: Race Control, spotters, and drivers need to hear important calls, not a 20-lap podcast about who caused the caution.</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>2.11 Green-White-Checkered</h3>
+
+<p>
+• Maximum of 2 Green-White-Checkered attempts.
+</p>
+
+<p>
+• The race will not end under caution unless Race Control
+determines continuing is not possible due to server or league issues.
+</p>
+
+</div>
+
+
+</div>
+</section>
+
+
+<!-- =====================================================
+     TAB 3
+===================================================== -->
+
+<section
+    id="penalties"
+    class="tab-content"
+>
+
+<div class="section-header">
+    Section 3 | Incident & Penalty System
+</div>
+
+<div class="section-body">
+
+
+<div class="rule">
+
+<h3>3.1 Blocking</h3>
+
+<p>Blocking is legal, but you cannot impede traffic in a dangerous manner.</p>
+<p>Blocking a car or pack going significantly faster is not legal and will result in a penalty if there is a wreck.</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>3.2 Avoidable Contact</h3>
+
+<p>
+• No ARCA Braking.
+</p>
+
+<p>
+• Drivers must safely slow down and do everything possible
+to avoid contact as a result of a caution.
+</p>
+
+<p>
+• The caution will come out. Slow down!
+</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>3.3 Intentional Wrecking</h3>
+
+<p>• Disqualification, potential suspension, or ban from the league.</p>
+<p>• Race Control will make the judgment call. All drivers will accept that this judgment call may not align with their thoughts, but Race Control will do the best they can to make the judgment with all fairness.</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>3.4 Retaliation / Intentional Post-Race Wrecking</h3>
+<p>• Retaliation is not authorized and will be treated the same as intentional wrecking.</p>
+<p>• Intentional post-race wrecking is prohibited.</p>
+<p>• Standard penalty: GFPT at the next race.</p>
+<p>• If no race remains, deduct 20 points from the driver’s season total.</p>
+<p>• If Race Control determines the wreck was retaliatory, issue a 1-race suspension.</p>
+<p>• In the season finale, retaliatory wrecks forfeit all points earned in that race.</p>
+<p>• A committee of at least 3 members may review retaliation.</p>
+</div>
+
+
+<div class="rule">
+
+<h3>3.5 Track Entering</h3>
+
+<p>• The driver entering the track should avoid other cars at all costs while entering the track. Egregiously wrecking the pack due to negligence will be treated as intentional wrecking.</p>
+<p>• The pack should also take the appropriate action to avoid contact. Communicate with the slower cars when possible.</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>3.6 Jumping Starts / Lane Changes</h3>
+
+<p>• Drivers must maintain no more than 1 car length to the car in front during starts and restarts.</p>
+<p>• No lane changes before the start/finish line.</p>
+<p>• If a driver changes lanes early, Race Control may require any positions gained to be given back.</p>
+<p>• Failure to comply results in GFPT.</p>
+<p>• If this happens on the final lap, or is found after the race, score the driver as the last car on the lead lap.</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>3.7 Below the Yellow Line</h3>
+
+<p>Passing or cutting the course below the yellow line is prohibited unless done to avoid an incident.</p>
+<p>A car is considered below the yellow line when both inside tires are completely beneath the yellow line. If there are 2 yellow lines, the second line is the boundary.</p>
+<p>At tracks that utilize a white boundary line instead of a yellow line, drivers may go below the white line; however, no other driver is required to provide room or allow that car to safely re-enter the racing surface. Any contact or incident resulting from re-entering the racing surface may be subject to penalty by Race Control.</p>
+<p>• Return positions gained or receive an EOL penalty if the move was not made in an attempt to avoid a wreck or incident.</p>
+<p>• Final Lap Violations: Any driver determined to have illegally advanced their position below the yellow line on the final lap will be scored at the tail end of the lead-lap finishing order.</p>
+<p>• Race Control reserves the right to issue additional penalties if the violation results in contact, reckless driving, or a significant incident involving other competitors.</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>3.8 Penalty & Penalty Point Report</h3>
+
+<p>• All in-race penalties will be issued and enforced by Race Control. Any penalty occurring on the final lap will result in the driver being scored at the rear of the lead-lap finishing order.</p>
+<p>• The League points system will be in accordance with Sim Racer Hub.</p>
+<p>• Points may be redacted if a driver is found to have committed a significant penalty during or after the race.</p>
+<p>• A brief penalty report will be released within 24 hours of the race if Race Control finds a penalty on the last lap.</p>
+<p>• The Commissioner and Race Control will not actively review incidents following the race, except for those occurring on the final lap. Drivers who believe a significant incident or penalty should be reviewed must submit their request to race officials within 48 hours of the completion of the event.</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>3.9 Penalty Escalation</h3>
+
+<div class="penalties">
+
+<div class="penalty">
+
+<strong>1 WRECK</strong>
+
+<span>
+EOL — End of Longest Line
+</span>
+
+</div>
+
+
+<div class="penalty">
+
+<strong>2 WRECKS</strong>
+
+<span>
+GFPT — Green Flag Pass Through
+</span>
+
+</div>
+
+
+<div class="penalty danger">
+
+<strong>3 WRECKS</strong>
+
+<span>
+DQ — Disqualification
+</span>
+
+</div>
+
+</div>
+
+
+<div class="penalty-title">
+DQ Escalation
+</div>
+
+<div class="escalation">
+
+<div>
+2nd DQ → 1 Race Suspension
+</div>
+
+<div>
+3rd DQ → 3 Race Suspension
+</div>
+
+<div class="danger">
+4th DQ → Removed From League
+</div>
+
+</div>
+
+<p style="margin-top:12px;color:#777;">
+No replacement driver for your team during suspension.
+</p>
+
+</div>
+
+
+</div>
+</section>
+
+
+<!-- =====================================================
+     TAB 4
+===================================================== -->
+
+<section
+    id="protests"
+    class="tab-content"
+>
+
+<div class="section-header">
+    Section 4 | Protest Procedures
+</div>
+
+<div class="section-body">
+
+
+<div class="rule">
+
+<h3>4.1 Filing a Protest</h3>
+
+<p>
+Drivers may file a protest regarding on-track incidents
+by submitting a request and written explanation to Race Control
+within 48 hours of the event.
+</p>
+
+<p>
+• Protests must include details and the lap of the incident.
+</p>
+
+<p>
+• Anonymous protests will not be accepted.
+</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>4.2 Review Process</h3>
+
+<p>• Race Control will review all submitted protests and issue a ruling within 48 hours.</p>
+<p>• Decisions made by Race Control are final unless overturned by the League Commissioner.</p>
+<p>• Repeat offenders may face escalated penalties at the discretion of Race Control.</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>4.3 Frivolous Protests</h3>
+
+<p>• Submitting repeated frivolous or bad-faith protests may result in the protesting driver receiving a warning or penalty.</p>
+<p>• Race Control reserves the right to dismiss any protest deemed to lack merit without further review.</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>4.4 In-Race Protest & Review</h3>
+
+<p>If a significant event occurs during the race or under caution that is not necessarily on Race Control's radar, a driver can request a review by Race Control.</p>
+<p>Race Control will conduct the review and make a judgment. Judgment and penalties will be treated the same as in Section 3.9 (Penalty Escalation).</p>
+
+</div>
+
+
+</div>
+</section>
+
+
+<!-- =====================================================
+     TAB 5
+===================================================== -->
+
+<section
+    id="championship"
+    class="tab-content"
+>
+
+<div class="section-header">
+    Section 5 | Championship Format
+</div>
+
+<div class="section-body">
+
+
+<div class="rule">
+
+<h3>5.1 Season Format</h3>
+
+<p>
+• No Playoffs.
+</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>5.2 Tie Breakers</h3>
+
+<ul>
+
+<li>
+Most Race Wins
+</li>
+
+<li>
+Most 2nd-Place Finishes
+</li>
+
+<li>
+Most 3rd-Place Finishes
+</li>
+
+</ul>
+
+</div>
+
+
+<div class="rule">
+
+<h3>5.3 High Line Pro Series Qualification</h3>
+
+<p>
+Minimum of the Top 10 drivers qualify for the
+High Line Pro Series.
+</p>
+
+</div>
+
+
+<div class="rule">
+<h3>5.4 Fill-In Drivers</h3>
+<p>• Drivers who have paid may use a fill-in driver for team points only.</p>
+<p>• Fill-in drivers do not need to pay, since the seat is already covered by the paid seat holder.</p>
+</div>
+
+
+
+</div>
+</section>
+
+
+<!-- =====================================================
+     TAB 6
+===================================================== -->
+
+<section
+    id="broadcast"
+    class="tab-content"
+>
+
+<div class="section-header">
+    Section 6 | Broadcast Rules
+</div>
+
+<div class="section-body">
+
+
+<div class="rule">
+
+<h3>6.1 The Show & Broadcast</h3>
+
+<p>• Drivers may be featured on The Show or in the Broadcast.</p>
+<p>• By submitting payment to join the league, you acknowledge and accept all High Line Racing Network rules, policies, and procedures. You also understand and agree that you may be featured on High Line Racing Network broadcasts, productions, social media content, and/or "The Show." This applies to our partners' coverage of the league as well.</p>
+<p>• If you choose to provide a photo of yourself, avatar, character image, or other likeness reference, High Line Racing Network may use that material to create graphics, broadcasts, promotional content, or entertainment content intended to reasonably resemble the identity or character you provided. If you do not submit a photo, a character will be created for you.</p>
+<p>• By submitting payment, you grant High Line Racing Network, "The Show," and all affiliated partners, sponsors, broadcasters, and media affiliates permission to use your name, gamertag, voice, submitted images, likeness, and league-related content for promotional, entertainment, broadcast, and commercial purposes related to league operations and media production.</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>6.2 Interviews</h3>
+
+<p>
+If you have a camera setup, inform the Commissioner.
+</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>6.3 Driver Conduct While Live</h3>
+
+<p>
+• Refrain from cursing.
+</p>
+
+<p>
+• Maintain professionalism when on broadcast.
+</p>
+
+</div>
+
+
+</div>
+</section>
+
+
+<!-- =====================================================
+     TAB 7
+===================================================== -->
+
+<section
+    id="officials"
+    class="tab-content"
+>
+
+<div class="section-header">
+    Section 7 | League Officials & Stewarding
+</div>
+
+<div class="section-body">
+
+
+<div class="rule">
+
+<h3>7.1 League Commissioner</h3>
+
+<p>
+The League Commissioner oversees all league operations,
+rules enforcement, and final decisions on disputes.
+</p>
+
+<p>
+The Commissioner has final authority on all matters not
+explicitly covered in the rule book.
+</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>7.2 Race Control</h3>
+
+<p>
+Race Control manages all in-race decisions including cautions,
+penalties, and disqualifications.
+</p>
+
+<p>
+Race Control's decisions are final during the event.
+</p>
+
+<p>
+Post-race reviews may be conducted at the discretion
+of the Commissioner.
+</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>7.3 Stewarding Panel</h3>
+
+<p>
+A panel of stewards may be assembled to review protests
+and significant incidents.
+</p>
+
+<p>
+The panel's recommendations are final.
+</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>7.4 Commissioner</h3>
+
+<p>
+The Commissioner handles administrative duties including
+scheduling, driver registration, and broadcast coordination.
+</p>
+
+<p>
+Contact the Commissioner for camera setup information
+and interview requests.
+</p>
+
+</div>
+
+
+</div>
+</section>
+
+
+<!-- =====================================================
+     TAB 8
+===================================================== -->
+
+<section
+    id="interpretation"
+    class="tab-content"
+>
+
+<div class="section-header">
+    Section 8 | Rule Interpretation & Drivers Meeting Authority
+</div>
+
+<div class="section-body">
+
+
+<div class="rule">
+
+<h3>8.1 Drivers Meeting Authority</h3>
+
+<p>• Instructions, procedures, and rules stated by Race Control or the Voice of High Line during the pre-race Drivers Meeting are binding and enforceable just like the written rulebook.</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>8.2 No Loophole or Technicality Exploitation</h3>
+
+<p>• Drivers may not exploit technicalities, omissions, ambiguities, or loopholes in these rules to gain an unfair advantage or avoid the intended application of a rule.</p>
+
+<p>• At High Line, drivers are expected to seek clarification first rather than rely on an “ask for forgiveness” mentality when a rule or situation is unclear.</p>
+
+</div>
+
+
+<div class="rule">
+
+<h3>8.3 Rare or Unforeseen Conduct</h3>
+
+<p>• Race Control may address rare or unforeseen conduct not specifically listed when reasonably necessary to protect safety, fairness, competitive integrity, and the league.</p>
+
+<p>• In these instances, Race Control may issue the penalty he/she determines best suits the conduct, issue, or violation based on the circumstances.</p>
+
+</div>
+
+
+</div>
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<div class="footer">
+
+<div class="footer-title">
+    Race Hard. Race Clean.
+</div>
+
+<div class="footer-sub">
+    Race On The High Line • High Line Racing Network
+</div>
+
+</div>
+
+
+</div>
+
+
+<script>
+
+function openTab(tabId, button){
+
+    /* Hide every section */
+
+    const contents =
+        document.querySelectorAll(".tab-content");
+
+    contents.forEach(function(content){
+
+        content.classList.remove("active");
+
+    });
+
+
+    /* Remove active from every button */
+
+    const tabs =
+        document.querySelectorAll(".tab");
+
+    tabs.forEach(function(tab){
+
+        tab.classList.remove("active");
+
+    });
+
+
+    /* Open selected section */
+
+    document
+        .getElementById(tabId)
+        .classList.add("active");
+
+
+    /* Highlight selected tab */
+
+    button.classList.add("active");
+
+
+    /* Scroll slightly toward tabs */
+
+    document
+        .querySelector(".tabs")
+        .scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+        });
+
+}
+
+</script>
+
+
+<script>
+(function(){
+
+  function setupRulesReveal(){
+
+    const items =
+      document.querySelectorAll(
+        ".quick-card,.notice,.tabs,.tab-content.active .rule,.penalty,.escalation div,.footer"
+      );
+
+    items.forEach(function(el){
+      el.classList.add("rules-reveal");
+    });
+
+    if("IntersectionObserver" in window){
+
+      const io =
+        new IntersectionObserver(
+          function(entries){
+
+            entries.forEach(function(entry){
+
+              if(entry.isIntersecting){
+                entry.target.classList.add("in-view");
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          {threshold:.08}
+        );
+
+      items.forEach(function(el){
+        io.observe(el);
+      });
+
+    }else{
+
+      items.forEach(function(el){
+        el.classList.add("in-view");
+      });
+    }
+  }
+
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    setupRulesReveal
+  );
+
+
+  /* Re-trigger rule reveals whenever a new rule tab opens. */
+  const originalOpenTab =
+    window.openTab;
+
+  window.openTab =
+    function(tabId,button){
+
+      originalOpenTab(
+        tabId,
+        button
+      );
+
+      const active =
+        document.getElementById(
+          tabId
+        );
+
+      if(!active) return;
+
+      const rules =
+        active.querySelectorAll(
+          ".rule,.penalty,.escalation div"
+        );
+
+      rules.forEach(function(el,index){
+
+        el.classList.remove(
+          "in-view"
+        );
+
+        el.classList.add(
+          "rules-reveal"
+        );
+
+        setTimeout(function(){
+          el.classList.add(
+            "in-view"
+          );
+        },40 + index * 35);
+      });
+    };
+
+})();
+</script>
+
+
+<script>
+/* =========================================================
+   HLRN RULEBOOK LIVE SEARCH
+========================================================= */
+(function(){
+
+    const search =
+        document.getElementById("rcRuleSearch");
+
+    const status =
+        document.getElementById("rcSearchStatus");
+
+    const rules =
+        Array.from(
+            document.querySelectorAll(".rule")
+        );
+
+    const tabs =
+        Array.from(
+            document.querySelectorAll(".tab")
+        );
+
+    if(status){
+        status.innerHTML =
+            "<strong>" +
+            rules.length +
+            "</strong> rules indexed";
+    }
+
+
+    function clearSearchHighlights(){
+
+        rules.forEach(function(rule){
+
+            rule.classList.remove("rc-match");
+
+            rule
+                .querySelectorAll(
+                    "mark[data-rc-search]"
+                )
+                .forEach(function(mark){
+
+                    mark.replaceWith(
+                        document.createTextNode(
+                            mark.textContent
+                        )
+                    );
+
+                });
+
+        });
+
+    }
+
+
+    function highlightText(element, query){
+
+        if(!query) return 0;
+
+        const walker = document.createTreeWalker(
+            element,
+            NodeFilter.SHOW_TEXT,
+            {
+                acceptNode:function(node){
+                    if(!node.nodeValue || !node.nodeValue.trim()){
+                        return NodeFilter.FILTER_REJECT;
+                    }
+                    if(
+                        node.parentElement &&
+                        ["SCRIPT","STYLE","MARK"].includes(node.parentElement.tagName)
+                    ){
+                        return NodeFilter.FILTER_REJECT;
+                    }
+                    return NodeFilter.FILTER_ACCEPT;
+                }
+            }
+        );
+
+        const nodes=[];
+        while(walker.nextNode()) nodes.push(walker.currentNode);
+
+        let highlighted=0;
+
+        nodes.forEach(function(node){
+            const text=node.nodeValue;
+            const lower=text.toLowerCase();
+            let start=0;
+            let index=lower.indexOf(query,start);
+
+            if(index<0) return;
+
+            const fragment=document.createDocumentFragment();
+
+            while(index>=0){
+                if(index>start){
+                    fragment.append(document.createTextNode(text.slice(start,index)));
+                }
+
+                const mark=document.createElement("mark");
+                mark.dataset.rcSearch="1";
+                mark.textContent=text.slice(index,index+query.length);
+                fragment.append(mark);
+                highlighted++;
+
+                start=index+query.length;
+                index=lower.indexOf(query,start);
+            }
+
+            if(start<text.length){
+                fragment.append(document.createTextNode(text.slice(start)));
+            }
+
+            node.parentNode.replaceChild(fragment,node);
+        });
+
+        return highlighted;
+    }
+
+
+    function findTabButton(sectionId){
+
+        return tabs.find(
+            function(button){
+
+                const onclick =
+                    button.getAttribute(
+                        "onclick"
+                    ) || "";
+
+                return onclick.includes(
+                    "'" +
+                    sectionId +
+                    "'"
+                );
+
+            }
+        );
+
+    }
+
+
+    function performRuleSearch(){
+
+        clearSearchHighlights();
+
+        const query =
+            (search.value || "")
+                .trim()
+                .toLowerCase();
+
+        if(!query){
+
+            if(status){
+                status.innerHTML =
+                    "<strong>" +
+                    rules.length +
+                    "</strong> rules indexed";
+            }
+
+            return;
+        }
+
+        const matches =
+            rules.filter(
+                function(rule){
+
+                    return rule
+                        .textContent
+                        .toLowerCase()
+                        .includes(query);
+
+                }
+            );
+
+        matches.forEach(
+            function(rule){
+
+                rule.classList.add(
+                    "rc-match"
+                );
+
+                highlightText(
+                    rule,
+                    query
+                );
+
+            }
+        );
+
+        if(status){
+
+            status.innerHTML =
+                "<strong>" +
+                matches.length +
+                "</strong> " +
+                (
+                    matches.length === 1
+                    ? "match"
+                    : "matches"
+                );
+
+        }
+
+        if(matches.length){
+
+            const firstMatch =
+                matches[0];
+
+            const section =
+                firstMatch.closest(
+                    ".tab-content"
+                );
+
+            if(
+                section &&
+                !section.classList.contains(
+                    "active"
+                )
+            ){
+
+                const button =
+                    findTabButton(
+                        section.id
+                    );
+
+                if(
+                    button &&
+                    typeof window.openTab ===
+                    "function"
+                ){
+
+                    window.openTab(
+                        section.id,
+                        button
+                    );
+
+                }
+
+            }
+
+            setTimeout(
+                function(){
+
+                    firstMatch.scrollIntoView({
+                        behavior:"smooth",
+                        block:"center"
+                    });
+
+                },
+                100
+            );
+
+        }
+
+    }
+
+
+    if(search){
+
+        let searchTimer;
+
+        search.addEventListener(
+            "input",
+            function(){
+
+                clearTimeout(
+                    searchTimer
+                );
+
+                searchTimer =
+                    setTimeout(
+                        performRuleSearch,
+                        180
+                    );
+
+            }
+        );
+
+        search.addEventListener(
+            "search",
+            performRuleSearch
+        );
+
+    }
+
+})();
+</script>
+
+
+<script id="HLRN_NASCAR_RULES_BEHAVIOR">
+(function(){
+  window.openTab=function(tabId,button){
+    document.querySelectorAll('.tab-content').forEach(function(content){
+      content.classList.remove('active');
+    });
+    document.querySelectorAll('.tab').forEach(function(tab){
+      tab.classList.remove('active');
+      tab.setAttribute('aria-selected','false');
+    });
+    var section=document.getElementById(tabId);
+    if(section) section.classList.add('active');
+    if(button){
+      button.classList.add('active');
+      button.setAttribute('aria-selected','true');
+    }
+    // Intentionally no scrollIntoView: prevents Google Sites jump/white-bar behavior.
+  };
+  document.querySelectorAll('.tab').forEach(function(tab){
+    tab.setAttribute('type','button');
+    tab.setAttribute('aria-selected',tab.classList.contains('active')?'true':'false');
+  });
+})();
+</script>
+
+
+<style id="HLRN_SEARCH_FINAL_HIGHLIGHT_STYLE">
+mark[data-hlrn-final-search]{
+  background:#ffeb3b!important;
+  color:#000!important;
+  padding:1px 2px!important;
+  border:0!important;
+  border-radius:2px!important;
+  box-shadow:inset 0 -2px 0 #d6b100!important;
+  font-weight:900!important;
+}
+.rule.hlrn-final-match{box-shadow:inset 4px 0 0 #d71920!important}
+.rule.hlrn-filter-hidden{display:none!important}
+.tab.hlrn-filter-hidden{display:none!important}
+.rc-search-status.hlrn-no-results{border-left-color:#d71920!important}
+</style>
+<script id="HLRN_SEARCH_FINAL_ENGINE">
+(function(){
+  const oldInput=document.getElementById('rcRuleSearch');
+  const status=document.getElementById('rcSearchStatus');
+  if(!oldInput) return;
+
+  // Replace the input node so older search listeners cannot fight this engine.
+  const input=oldInput.cloneNode(true);
+  oldInput.parentNode.replaceChild(input,oldInput);
+
+  const rules=[...document.querySelectorAll('.rule')];
+  const tabs=[...document.querySelectorAll('.tab')];
+  const sections=[...document.querySelectorAll('.tab-content')];
+
+  function restoreMarks(){
+    document.querySelectorAll('mark[data-hlrn-final-search]').forEach(function(mark){
+      mark.replaceWith(document.createTextNode(mark.textContent||''));
+    });
+    rules.forEach(function(rule){
+      rule.classList.remove('hlrn-final-match','rc-match','hlrn-filter-hidden');
+      rule.normalize();
+    });
+    tabs.forEach(function(tab){
+      tab.classList.remove('hlrn-filter-hidden');
+    });
+    if(status) status.classList.remove('hlrn-no-results');
+  }
+
+  function textNodes(root){
+    const out=[];
+    const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:function(node){
+      if(!node.nodeValue || !node.nodeValue.length) return NodeFilter.FILTER_REJECT;
+      const p=node.parentElement;
+      if(!p || ['SCRIPT','STYLE','MARK','INPUT','TEXTAREA','BUTTON'].includes(p.tagName)) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }});
+    while(walker.nextNode()) out.push(walker.currentNode);
+    return out;
+  }
+
+  function highlightRule(rule,query){
+    const nodes=textNodes(rule);
+    let total=0;
+    nodes.forEach(function(node){
+      let current=node;
+      while(current && current.nodeType===Node.TEXT_NODE){
+        const raw=current.nodeValue||'';
+        const idx=raw.toLocaleLowerCase().indexOf(query);
+        if(idx<0) break;
+        const before=current.splitText(idx);
+        const after=before.splitText(query.length);
+        const mark=document.createElement('mark');
+        mark.setAttribute('data-hlrn-final-search','1');
+        mark.textContent=before.nodeValue;
+        before.parentNode.replaceChild(mark,before);
+        total++;
+        current=after;
+      }
+    });
+    return total;
+  }
+
+  function tabForSection(section){
+    if(!section) return null;
+    return tabs.find(function(btn){
+      const onclick=btn.getAttribute('onclick')||'';
+      return onclick.includes("'"+section.id+"'") || onclick.includes('"'+section.id+'"');
+    })||null;
+  }
+
+  function activateSection(section){
+    if(!section) return;
+    const btn=tabForSection(section);
+    sections.forEach(function(el){ el.classList.remove('active'); });
+    tabs.forEach(function(el){
+      el.classList.remove('active');
+      el.setAttribute('aria-selected','false');
+    });
+    section.classList.add('active');
+    if(btn){
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected','true');
+    }
+  }
+
+  function resetFilter(){
+    restoreMarks();
+    rules.forEach(function(rule){ rule.classList.remove('hlrn-filter-hidden'); });
+    tabs.forEach(function(tab){ tab.classList.remove('hlrn-filter-hidden'); });
+    if(status) status.innerHTML='<strong>'+rules.length+'</strong> rules indexed';
+  }
+
+  function runSearch(){
+    restoreMarks();
+    const query=(input.value||'').trim().toLocaleLowerCase();
+
+    if(!query){
+      resetFilter();
+      return;
+    }
+
+    const matching=[];
+    const matchedSections=new Set();
+    let hitCount=0;
+
+    rules.forEach(function(rule){
+      const isMatch=(rule.textContent||'').toLocaleLowerCase().includes(query);
+      rule.classList.toggle('hlrn-filter-hidden',!isMatch);
+      if(isMatch){
+        matching.push(rule);
+        rule.classList.add('hlrn-final-match');
+        hitCount+=highlightRule(rule,query);
+        const section=rule.closest('.tab-content');
+        if(section) matchedSections.add(section);
+      }
+    });
+
+    // Filter the top rule-category tabs too. Only categories containing a match remain.
+    sections.forEach(function(section){
+      const btn=tabForSection(section);
+      if(btn) btn.classList.toggle('hlrn-filter-hidden',!matchedSections.has(section));
+    });
+
+    if(status){
+      if(matching.length){
+        status.innerHTML='<strong>'+matching.length+'</strong> '+(matching.length===1?'rule':'rules')+' shown • '+hitCount+' '+(hitCount===1?'highlight':'highlights');
+      }else{
+        status.classList.add('hlrn-no-results');
+        status.innerHTML='<strong>0</strong> matching rules';
+      }
+    }
+
+    if(matching.length){
+      activateSection(matching[0].closest('.tab-content'));
+    }
+  }
+
+  let timer;
+  input.addEventListener('input',function(){
+    clearTimeout(timer);
+    timer=setTimeout(runSearch,70);
+  });
+  input.addEventListener('search',runSearch);
+  input.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){
+      e.preventDefault();
+      runSearch();
+    }
+  });
+
+  if(status) status.innerHTML='<strong>'+rules.length+'</strong> rules indexed';
+})();
+</script>
+
+<script src="../assets/site-shell.js?v=20260921c"></script>
+</body>
+</html>
