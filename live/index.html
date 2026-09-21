@@ -1,0 +1,2479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HLRN Live Results — Race Center</title>
+<style>
+  :root{
+    --bg:#f3f4f6;
+    --paper:#ffffff;
+    --ink:#10131a;
+    --muted:#68707d;
+    --line:#d9dde3;
+    --dark:#11151c;
+    --dark2:#1a2029;
+    --red:#e31837;
+    --green:#1bbb62;
+    --yellow:#f5c400;
+    --blue:#1268d6;
+    --shadow:0 8px 28px rgba(0,0,0,.09);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif;width:100%;max-width:100%;overflow-x:hidden}
+  button{font:inherit}
+  .page{width:min(1500px,100%);max-width:100%;margin:0 auto;padding:0 18px 30px;overflow-x:clip}
+  .brandbar{background:#090c11;color:#fff;margin:0;padding:15px 22px;border-bottom:4px solid var(--red);width:100%;max-width:100%;overflow:hidden}
+  .brandbar-inner{width:min(1500px,100%);margin:0 auto;display:flex;align-items:center;gap:16px}
+  .brand{font-size:25px;font-weight:1000;letter-spacing:.8px;white-space:nowrap}
+  .brand .red{color:#ff2344}
+  .brand-sub{color:#9fa8b6;font-size:12px;font-weight:800;letter-spacing:1.4px}
+  .live-badge{margin-left:auto;display:flex;align-items:center;gap:8px;border:1px solid #4a5361;border-radius:999px;padding:7px 12px;font-size:11px;font-weight:1000;letter-spacing:1.1px;background:#161b23}
+  .live-badge .dot{width:9px;height:9px;border-radius:50%;background:#6d7480}
+  .live-badge.on{background:#102819;border-color:#22623a;color:#9df2ba}
+  .live-badge.on .dot{background:#36df72;box-shadow:0 0 0 4px rgba(54,223,114,.13),0 0 14px rgba(54,223,114,.65)}
+  .event-shell{background:var(--paper);border:1px solid var(--line);border-top:0;box-shadow:var(--shadow);min-width:0;max-width:100%}
+  .event-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:22px;padding:24px 26px 19px}
+  .series{display:flex;align-items:center;gap:10px;color:#5f6875;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:1.4px}
+  .series-mark{width:5px;height:18px;background:var(--red);display:inline-block}
+  .event-title{margin:7px 0 5px;font-size:clamp(28px,4vw,48px);line-height:.98;text-transform:uppercase;font-weight:1000;font-style:italic;letter-spacing:-1px}
+  .event-meta{display:flex;flex-wrap:wrap;gap:8px 18px;color:#68717d;font-size:12px;font-weight:700}
+  .event-status{min-width:245px;display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);align-self:stretch}
+  .status-box{padding:12px 13px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .status-box:nth-child(2n){border-right:0}
+  .status-box:nth-last-child(-n+2){border-bottom:0}
+  .status-label{display:block;font-size:9px;font-weight:1000;letter-spacing:1.2px;color:#808894;text-transform:uppercase}
+  .status-value{margin-top:7px;display:block;font-size:18px;font-weight:1000}
+  .flag-green{color:var(--green)}
+  .flag-caution,.flag-one-to-green{color:#c89c00}
+  .flag-red{color:var(--red)}
+  .flag-checkered{color:#111}
+  .metric-strip{display:grid;grid-template-columns:repeat(6,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fafbfc}
+  .metric{min-height:74px;padding:12px 15px;border-right:1px solid var(--line)}
+  .metric:last-child{border-right:0}
+  .metric small{display:block;color:#808894;font-size:9px;font-weight:1000;letter-spacing:1.1px;text-transform:uppercase}
+  .metric strong{display:block;margin-top:8px;font-size:17px;font-weight:1000}
+  .tabs{display:flex;gap:0;overflow-x:auto;background:#fff;border-bottom:1px solid var(--line)}
+  .tab{appearance:none;background:transparent;border:0;border-bottom:4px solid transparent;padding:15px 20px 12px;font-size:11px;font-weight:1000;letter-spacing:.8px;text-transform:uppercase;color:#626c79;cursor:pointer;white-space:nowrap}
+  .tab:hover{color:#111}
+  .tab.active{color:#111;border-bottom-color:var(--red)}
+  .section{display:none;padding:18px}
+  .section.active{display:block}
+  .race-layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:18px;min-width:0;max-width:100%}
+  .panel{background:#fff;border:1px solid var(--line);box-shadow:0 5px 18px rgba(0,0,0,.05);min-width:0;max-width:100%}
+  .panel-head{min-height:50px;padding:12px 15px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;justify-content:space-between}
+  .panel-title{font-size:12px;font-weight:1000;letter-spacing:1px;text-transform:uppercase}
+  .segmented{display:flex;background:#eef0f3;border:1px solid #d7dbe1}
+  .segmented button{border:0;background:transparent;padding:7px 11px;font-size:10px;font-weight:1000;text-transform:uppercase;cursor:pointer}
+  .segmented button.active{background:#141922;color:#fff}
+  .table-shell{max-height:none;overflow-x:auto;overflow-y:visible;overscroll-behavior:auto;scroll-behavior:auto}
+  table{width:100%;border-collapse:collapse;min-width:860px}
+  thead th{background:#f1f3f5;color:#6f7783;font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:10px 9px;text-align:left;border-bottom:1px solid #d8dce2;position:sticky;top:0;z-index:3}
+  tbody td{padding:10px 9px;border-bottom:1px solid #e3e6ea;font-size:12px}
+  tbody tr:hover{background:#f8f9fb}
+  tbody tr.leader{background:#fff8f8}
+  tbody tr.leader td:first-child{box-shadow:inset 4px 0 0 var(--red)}
+  .pos-cell{width:52px;font-size:20px;font-weight:1000;text-align:center}
+  .delta{width:56px;font-weight:1000;font-size:11px}
+  .delta.up{color:#118948}
+  .delta.down{color:#d6273e}
+  .delta.same{color:#8a919c}
+  .car-num{display:inline-grid;place-items:center;min-width:38px;height:30px;background:#161b23;color:#fff;padding:0 7px;font-weight:1000;font-size:13px;transform:skew(-7deg)}
+  .car-num span{transform:skew(7deg)}
+  .driver-cell{min-width:205px}
+  .driver-name{font-size:13px;font-weight:1000}
+  .driver-sub{color:#8a919c;font-size:10px;margin-top:3px}
+  .pit-badge{margin-left:6px;display:inline-block;padding:3px 6px;background:#fff1be;border:1px solid #dfc24e;color:#765e00;font-size:8px;font-weight:1000;letter-spacing:.6px}
+  .player-badge{margin-left:6px;display:inline-block;padding:3px 6px;background:#e8f1ff;border:1px solid #99bce8;color:#15579d;font-size:8px;font-weight:1000;letter-spacing:.6px}
+
+  .driver-penalty-reason{margin-top:4px;display:flex;align-items:flex-start;gap:5px;font-size:8px;line-height:1.3;font-weight:850;color:#b10f2c;max-width:620px}
+  .driver-penalty-reason .reason-label{font-weight:1000;letter-spacing:.25px;text-transform:uppercase;white-space:nowrap}
+  .driver-penalty-reason.inferred{color:#9a5b00}
+  .driver-penalty-reason.unavailable{color:#6c7480}
+
+  .penalty-badge{
+    margin-left:6px;
+    display:inline-block;
+    max-width:245px;
+    padding:3px 6px;
+    background:#fff0f2;
+    border:1px solid #e2a0aa;
+    color:#ad102b;
+    font-size:8px;
+    font-weight:1000;
+    letter-spacing:.45px;
+    vertical-align:1px;
+    white-space:normal;
+  }
+  .repair-badge{
+    margin-left:6px;
+    display:inline-block;
+    padding:3px 6px;
+    background:#fff4d7;
+    border:1px solid #ddc36d;
+    color:#806400;
+    font-size:8px;
+    font-weight:1000;
+    letter-spacing:.45px;
+  }
+  .track-status{font-weight:1000;white-space:nowrap}
+  .track-status.dq{color:#d7193f}
+  .track-status.disconnected{color:#737b86}
+  .track-status.out-of-car{color:#737b86}
+  .track-status.pit-road{color:#9a7700}
+  .track-status.off-track{color:#d66b00}
+  .track-status.meatball{color:#d7193f}
+  .track-status.out---disconnected{color:#737b86}
+  .gap-cell{font-weight:900;font-variant-numeric:tabular-nums}
+  .lap-cell{font-variant-numeric:tabular-nums}
+  .side-stack{display:flex;flex-direction:column;gap:18px}
+  .tracker-card{padding:14px 15px}
+  .tracker-row{display:flex;justify-content:space-between;gap:15px;align-items:center;padding:11px 0;border-bottom:1px solid #e2e5e9}
+  .tracker-row:last-child{border-bottom:0}
+  .tracker-row span{color:#6c7480;font-size:11px}
+  .tracker-row strong{text-align:right;font-size:12px}
+  .flag-box{padding:18px;background:#11161e;color:#fff}
+  .flag-box small{display:block;color:#9ca7b5;font-size:9px;font-weight:1000;letter-spacing:1px;text-transform:uppercase}
+  .flag-hero{margin-top:8px;font-size:28px;font-weight:1000;text-transform:uppercase}
+  .offline{padding:70px 20px;text-align:center;color:#79818d}
+  .offline strong{display:block;color:#1a1e25;font-size:23px;margin-bottom:7px}
+  .timeline{max-height:none;overflow:visible;padding:5px 18px 18px;overflow-anchor:auto}
+  .timeline-item{display:grid;grid-template-columns:85px 14px 1fr;gap:12px;padding:13px 0;border-bottom:1px solid #e1e5e9}
+  .timeline-time{color:#7d8591;font-size:10px;font-weight:900}
+  .timeline-dot{width:10px;height:10px;border-radius:50%;background:#c8cdd4;margin-top:1px}
+  .timeline-item.flag .timeline-dot{background:var(--yellow)}
+  .timeline-item.lead .timeline-dot{background:var(--red)}
+  .timeline-item.lap .timeline-dot{background:var(--blue)}
+  .timeline-text{font-size:12px;font-weight:800}
+
+  .timeline-toolbar{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+    padding:12px 16px;
+    border-bottom:1px solid #e1e5e9;
+    background:#fafbfc;
+  }
+  .timeline-filter{
+    border:1px solid #cfd5dc;
+    background:#fff;
+    color:#5f6875;
+    padding:7px 10px;
+    font-size:9px;
+    font-weight:1000;
+    letter-spacing:.7px;
+    text-transform:uppercase;
+    cursor:pointer;
+  }
+  .timeline-filter.active{
+    background:#11161e;
+    border-color:#11161e;
+    color:#fff;
+  }
+  .timeline-item{
+    grid-template-columns:74px 14px minmax(0,1fr) !important;
+    align-items:start;
+  }
+  .timeline-lap{
+    font-size:10px;
+    font-weight:1000;
+    color:#343b45;
+  }
+  .timeline-title{
+    font-size:11px;
+    font-weight:1000;
+    text-transform:uppercase;
+    letter-spacing:.55px;
+    margin-bottom:3px;
+  }
+  .timeline-copy{
+    color:#5e6672;
+    font-size:11px;
+    line-height:1.45;
+    font-weight:700;
+  }
+  .timeline-badge{
+    display:inline-block;
+    margin-left:6px;
+    padding:2px 5px;
+    border:1px solid #d4d9df;
+    color:#7a838e;
+    background:#fff;
+    font-size:7px;
+    font-weight:1000;
+    letter-spacing:.5px;
+    vertical-align:1px;
+  }
+  .timeline-item.incident .timeline-dot,
+  .timeline-item.possible_contact .timeline-dot{
+    background:#d7193f;
+  }
+  .timeline-item.possible_incident .timeline-dot,
+  .timeline-item.offtrack .timeline-dot{
+    background:#ee9b17;
+  }
+  .timeline-item._unused_pit .timeline-dot{
+    background:#4d78c9;
+  }
+  .timeline-item.fastest .timeline-dot{
+    background:#7c4dcc;
+  }
+  .timeline-item.position .timeline-dot{
+    background:#4a8d5c;
+  }
+  .timeline-item.penalty .timeline-dot{
+    background:#d7193f;
+  }
+  .timeline-item.session .timeline-dot{
+    background:#777f8b;
+  }
+  .timeline-item.danger{
+    background:#fff8f8;
+  }
+  .timeline-item.warning{
+    background:#fffdf6;
+  }
+
+  .json-box{margin:0;padding:18px;max-height:620px;overflow:auto;background:#0d1117;color:#d2dae4;font:11px/1.55 Consolas,Monaco,monospace}
+  .scanner-layout{display:grid;grid-template-columns:330px minmax(0,1fr);gap:18px}
+  .driver-list{max-height:none;overflow:visible;overflow-anchor:auto}
+  .driver-pick{width:100%;border:0;border-bottom:1px solid #e0e4e8;background:#fff;padding:11px 13px;cursor:pointer;display:flex;align-items:center;gap:11px;text-align:left}
+  .driver-pick:hover{background:#f6f7f9}
+  .driver-pick.active{background:#11161e;color:#fff}
+  .driver-pick .pick-pos{width:27px;text-align:center;font-weight:1000}
+  .driver-pick .pick-name{font-size:12px;font-weight:1000}
+  .driver-pick .pick-gap{margin-left:auto;font-size:10px;font-weight:900;color:#818a96}
+  .driver-pick.active .pick-gap{color:#b8c3d0}
+  .scanner-main{min-height:520px}
+  .scanner-hero{background:#10151c;color:#fff;padding:24px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:18px;align-items:center}
+  .scanner-number{width:90px;height:72px;display:grid;place-items:center;background:var(--red);font-size:34px;font-weight:1000;transform:skew(-7deg)}
+  .scanner-number span{transform:skew(7deg)}
+  .scanner-name{font-size:28px;font-weight:1000;line-height:1}
+  .scanner-team{margin-top:6px;color:#aeb7c3;font-size:11px}
+  .scanner-grid{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line)}
+  .scanner-stat{padding:15px;border-right:1px solid var(--line);border-top:1px solid var(--line)}
+  .scanner-stat:nth-child(3n){border-right:0}
+  .scanner-stat small{display:block;color:#808894;font-size:9px;font-weight:1000;letter-spacing:1px;text-transform:uppercase}
+  .scanner-stat strong{display:block;margin-top:8px;font-size:18px}
+  .scanner-note{padding:18px;color:#666f7c;font-size:11px;line-height:1.6}
+  .footer{padding:12px 0 0;color:#8a929e;font-size:9px;text-align:center;letter-spacing:1px;text-transform:uppercase}
+  @media(max-width:1050px){
+    .metric-strip{grid-template-columns:repeat(3,1fr)}
+    .metric:nth-child(3n){border-right:0}
+    .metric:nth-child(n+4){border-top:1px solid var(--line)}
+    .race-layout{grid-template-columns:1fr}
+    .side-stack{display:grid;grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:760px){
+    .page{padding:0 8px 20px}
+    .brandbar{margin:0;padding:13px 12px}
+    .event-head{grid-template-columns:1fr;padding:18px 15px}
+    .event-status{min-width:0}
+    .metric-strip{grid-template-columns:repeat(2,1fr)}
+    .metric:nth-child(2n){border-right:0}
+    .metric:nth-child(n+3){border-top:1px solid var(--line)}
+    .section{padding:10px}
+    .side-stack{grid-template-columns:1fr}
+    .scanner-layout{grid-template-columns:1fr}
+    .scanner-grid{grid-template-columns:repeat(2,1fr)}
+    .scanner-stat:nth-child(3n){border-right:1px solid var(--line)}
+    .scanner-stat:nth-child(2n){border-right:0}
+  }
+
+  html,body{
+    overscroll-behavior:auto;
+    scroll-behavior:auto;
+    overflow-x:hidden;
+  }
+  .event-shell,
+  .section,
+  .panel{
+    overflow:visible;
+  }
+  .table-shell{
+    -webkit-overflow-scrolling:touch;
+  }
+
+
+  .phase-badge{
+    display:inline-flex;
+    align-items:center;
+    padding:4px 8px;
+    border:1px solid #cad1da;
+    background:#eef1f5;
+    color:#4a5563;
+    font-size:9px;
+    font-weight:1000;
+    letter-spacing:.9px;
+    text-transform:uppercase;
+  }
+  .phase-badge.practice{background:#eef6ff;border-color:#aac9e9;color:#145b9e}
+  .phase-badge.qualifying{background:#fff5d8;border-color:#e0c270;color:#765800}
+  .phase-badge.race{background:#ffecef;border-color:#e6a5af;color:#b10f2c}
+  .session-summary{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    border-bottom:1px solid var(--line);
+    background:#f8f9fb;
+  }
+  .session-summary>div{padding:12px 14px;border-right:1px solid var(--line)}
+  .session-summary>div:last-child{border-right:0}
+  .session-summary small{display:block;font-size:8px;font-weight:1000;letter-spacing:.8px;color:#7d8692;text-transform:uppercase}
+  .session-summary strong{display:block;margin-top:4px;font-size:13px}
+  .archive-head{
+    padding:14px 16px;
+    border-bottom:1px solid var(--line);
+    background:#fff;
+  }
+  .archive-head h2{margin:0;font-size:20px;letter-spacing:-.5px}
+  .archive-head p{margin:5px 0 0;color:#6f7885;font-size:11px;line-height:1.5}
+  .report-toolbar{
+    display:flex;
+    gap:8px;
+    align-items:center;
+    justify-content:space-between;
+    padding:12px 14px;
+    border-bottom:1px solid var(--line);
+    background:#f8f9fb;
+  }
+  .copy-btn{
+    appearance:none;
+    border:0;
+    background:#111820;
+    color:#fff;
+    padding:10px 14px;
+    font-size:10px;
+    font-weight:1000;
+    letter-spacing:.7px;
+    cursor:pointer;
+  }
+  .copy-btn:hover{background:#252f3a}
+  .report-status{font-size:10px;font-weight:900;color:#68717d}
+  .report-box{
+    margin:0;
+    padding:18px;
+    min-height:420px;
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:11px;
+    line-height:1.65;
+    background:#fff;
+    color:#1a2129;
+  }
+  .archive-empty{
+    padding:38px 20px;
+    text-align:center;
+    color:#747d89;
+    font-size:12px;
+  }
+  .archive-empty strong{display:block;color:#202833;font-size:15px;margin-bottom:6px}
+  @media(max-width:800px){
+    .session-summary{grid-template-columns:repeat(2,1fr)}
+  }
+
+
+  /* ===== HLRN LIVE COMMAND CENTER UPGRADES ===== */
+  .live-ticker-bar{
+    min-height:46px;
+    display:grid;
+    grid-template-columns:auto minmax(0,1fr) auto;
+    align-items:center;
+    gap:0;
+    background:#0f141c;
+    color:#fff;
+    border-bottom:1px solid #252c36;
+    position:relative;
+    overflow:hidden;
+  }
+  .live-ticker-bar::before{
+    content:"";
+    position:absolute;
+    left:0;top:0;bottom:0;
+    width:5px;
+    background:#68717d;
+  }
+  .live-ticker-bar.lead::before{background:#e31837}
+  .live-ticker-bar.flag::before,.live-ticker-bar.caution::before{background:#f5c400}
+  .live-ticker-bar.incident::before,.live-ticker-bar.possible_incident::before,.live-ticker-bar.possible_contact::before,.live-ticker-bar.penalty::before{background:#ff394f}
+  .live-ticker-bar.fastest::before{background:#8a5cff}
+  .live-ticker-bar.session::before,.live-ticker-bar.position::before{background:#20b86a}
+  .live-ticker-kicker{
+    height:100%;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:0 16px 0 18px;
+    border-right:1px solid #303744;
+    color:#dce3ec;
+    font-size:9px;
+    font-weight:1000;
+    letter-spacing:1.15px;
+    white-space:nowrap;
+  }
+  .live-ticker-dot{
+    width:8px;height:8px;border-radius:50%;
+    background:#e31837;
+    box-shadow:0 0 0 4px rgba(227,24,55,.12),0 0 12px rgba(227,24,55,.55);
+  }
+  .live-ticker-bar.standby .live-ticker-dot{background:#737c89;box-shadow:none}
+  .live-ticker-content{
+    min-width:0;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:10px 15px;
+  }
+  .live-ticker-lap{
+    flex:0 0 auto;
+    color:#aab4c1;
+    font-size:9px;
+    font-weight:1000;
+    letter-spacing:.8px;
+    text-transform:uppercase;
+  }
+  .live-ticker-text{
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    font-size:11px;
+    letter-spacing:.15px;
+  }
+  .live-ticker-count{
+    padding:0 15px;
+    color:#84909e;
+    font-size:8px;
+    font-weight:1000;
+    letter-spacing:.8px;
+    white-space:nowrap;
+  }
+  .battle-list{padding:7px 10px 10px}
+  .battle-card{
+    display:grid;
+    grid-template-columns:38px minmax(0,1fr) auto;
+    gap:9px;
+    align-items:center;
+    padding:10px 8px;
+    border-bottom:1px solid #e5e8ec;
+    position:relative;
+  }
+  .battle-card:last-child{border-bottom:0}
+  .battle-card.hot{background:#fff6f7;box-shadow:inset 3px 0 0 var(--red)}
+  .battle-card.close{background:#fffcf2;box-shadow:inset 3px 0 0 #e8b400}
+  .battle-pos{font-size:15px;font-weight:1000;text-align:center}
+  .battle-main{min-width:0}
+  .battle-name{font-size:11px;font-weight:1000;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .battle-vs{margin-top:3px;color:#7d8692;font-size:9px;font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .battle-gap{text-align:right;font-size:13px;font-weight:1000;font-variant-numeric:tabular-nums;color:#313844}
+  .battle-gap small{display:block;margin-top:2px;font-size:7px;letter-spacing:.5px;color:#8a929e;text-transform:uppercase}
+  .battle-empty{padding:20px 14px;text-align:center;color:#7b8490;font-size:10px;line-height:1.5}
+  .panel-mini-meta{font-size:8px;font-weight:1000;letter-spacing:.65px;color:#8a929e;text-transform:uppercase}
+  tbody tr.battle-hot{background:#fff9f1}
+  tbody tr.battle-hot td:first-child{box-shadow:inset 3px 0 0 #e4ad00}
+  .battle-badge{margin-left:6px;display:inline-block;padding:3px 5px;background:#fff6d7;border:1px solid #e3c355;color:#725700;font-size:7px;font-weight:1000;letter-spacing:.5px}
+  .race-pulse-stats{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line);background:#f8f9fb}
+  .race-pulse-stat{padding:10px 8px;text-align:center;border-right:1px solid var(--line)}
+  .race-pulse-stat:last-child{border-right:0}
+  .race-pulse-stat small{display:block;color:#7f8894;font-size:7px;font-weight:1000;letter-spacing:.7px;text-transform:uppercase}
+  .race-pulse-stat strong{display:block;margin-top:4px;font-size:16px;font-weight:1000}
+  .race-pulse-list{padding:5px 12px 9px}
+  .race-pulse-item{display:grid;grid-template-columns:48px 9px minmax(0,1fr);gap:7px;align-items:start;padding:8px 0;border-bottom:1px solid #e8ebef}
+  .race-pulse-item:last-child{border-bottom:0}
+  .race-pulse-lap{font-size:8px;font-weight:1000;color:#737d89;text-transform:uppercase}
+  .race-pulse-dot{width:8px;height:8px;border-radius:50%;background:#9aa3af;margin-top:1px}
+  .race-pulse-item.flag .race-pulse-dot{background:#e0b000}
+  .race-pulse-item.lead .race-pulse-dot{background:#e31837}
+  .race-pulse-item.penalty .race-pulse-dot,.race-pulse-item.incident .race-pulse-dot,.race-pulse-item.possible_incident .race-pulse-dot,.race-pulse-item.possible_contact .race-pulse-dot{background:#e31837}
+  .race-pulse-item.fastest .race-pulse-dot{background:#7c4dcc}
+  .race-pulse-item.position .race-pulse-dot{background:#28935a}
+  .race-pulse-copy{font-size:9px;line-height:1.35;font-weight:800;color:#3f4752}
+  .mini-action{
+    appearance:none;
+    border:1px solid #d2d7de;
+    background:#fff;
+    color:#424b57;
+    padding:5px 7px;
+    font-size:7px;
+    font-weight:1000;
+    letter-spacing:.6px;
+    text-transform:uppercase;
+    cursor:pointer;
+  }
+  .mini-action:hover{background:#11161e;color:#fff;border-color:#11161e}
+  @media(max-width:760px){
+    .live-ticker-bar{grid-template-columns:auto minmax(0,1fr)}
+    .live-ticker-count{display:none}
+    .live-ticker-kicker{padding-left:13px;padding-right:11px}
+    .live-ticker-content{gap:8px;padding:9px 10px}
+    .live-ticker-text{font-size:10px}
+  }
+
+
+  /* Prevent the Google Sites embed/page from ever creating a page-level horizontal scrollbar. */
+  html,body,.page,.event-shell{max-width:100%;}
+  body{overflow-x:hidden !important;}
+  .section,.panel,.race-layout,.side-stack{min-width:0;max-width:100%;}
+
+
+  /* === HLRN RACE STORYLINES v9 === */
+  .storyline-list{padding:7px 10px 10px;background:#fff}
+  .storyline-row{display:grid;grid-template-columns:74px minmax(0,1fr);gap:9px;align-items:center;padding:10px 8px;border-bottom:1px solid #e7eaee;position:relative}
+  .storyline-row:last-child{border-bottom:0}
+  .storyline-row.mover{box-shadow:inset 3px 0 0 #23975a;background:#f7fcf9}
+  .storyline-row.faller{box-shadow:inset 3px 0 0 #d83a4d;background:#fff8f9}
+  .storyline-row.fast{box-shadow:inset 3px 0 0 #7650c7;background:#faf8ff}
+  .storyline-row.battle{box-shadow:inset 3px 0 0 #5a3df0;background:#f7f5ff}
+  .storyline-kicker{font-size:7px;font-weight:1000;letter-spacing:.65px;color:#7d8692;text-transform:uppercase}
+  .storyline-value{margin-top:2px;font-size:13px;font-weight:1000;color:#171b22;line-height:1.1}
+  .storyline-copy{font-size:9px;line-height:1.35;font-weight:800;color:#59626e;min-width:0}
+  .storyline-copy b{display:block;color:#151a21;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .storyline-empty{padding:18px 12px;text-align:center;color:#7b8490;font-size:9px;line-height:1.5;font-weight:800}
+  .storyline-meta.live{color:#23975a}
+
+  /* === HLRN FULL-WIDTH CLEAN RACE CENTER === */
+  .page{width:100%;max-width:none;margin:0;padding:0 0 18px;overflow-x:hidden}
+  .brandbar-inner{width:100%;max-width:none;margin:0}
+  .event-shell{width:100%;max-width:none;border-left:0;border-right:0;box-shadow:none}
+  .section{padding:12px}
+  .race-layout{grid-template-columns:minmax(0,1fr) minmax(350px,24vw);gap:12px}
+  .side-stack{gap:12px}
+  .panel{box-shadow:0 3px 10px rgba(0,0,0,.04)}
+  .table-shell{width:100%;max-width:100%;overflow-x:auto}
+  #leaderboard table{width:100%;min-width:980px}
+  @media(min-width:1450px){
+    .event-head{padding-left:22px;padding-right:22px}
+    .section{padding:12px}
+    .race-layout{grid-template-columns:minmax(0,1fr) 390px}
+  }
+  @media(max-width:1050px){
+    .race-layout{grid-template-columns:1fr}
+  }
+
+  /* ===== HLRN DRIVER CUTOUT PHOTOS ===== */
+  .hlrn-driver-inline{
+    width:42px;height:48px;flex:0 0 42px;object-fit:contain;object-position:center bottom;
+    background:transparent;border:0;filter:drop-shadow(0 3px 4px rgba(0,0,0,.16));
+  }
+  .hlrn-driver-inline.small{width:32px;height:38px;flex-basis:32px}
+  .hlrn-driver-inline.tiny{width:27px;height:32px;flex-basis:27px}
+  .hlrn-driver-inline.hero{width:82px;height:94px;flex-basis:82px;filter:drop-shadow(0 5px 8px rgba(0,0,0,.28))}
+  .driver-cell-layout{display:flex;align-items:center;gap:9px;min-width:0}
+  .driver-cell-copy{min-width:0;flex:1}
+  .driver-name-line{display:flex;align-items:center;gap:7px;min-width:0}
+  .metric-driver-line{display:inline-flex;align-items:center;gap:7px;min-width:0;max-width:100%}
+  .metric-driver-line span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .scanner-driver-head{display:flex;align-items:center;gap:14px;min-width:0}
+  .scanner-driver-copy{min-width:0}
+  .driver-pick .hlrn-driver-inline{margin:-6px 0 -7px}
+  .battle-driver-line{display:flex;align-items:center;gap:7px;min-width:0}
+  .battle-driver-copy{min-width:0}
+  @media(max-width:760px){
+    .hlrn-driver-inline{width:36px;height:42px;flex-basis:36px}
+    .hlrn-driver-inline.hero{width:64px;height:76px;flex-basis:64px}
+  }
+
+
+
+  /* ===== RACE NIGHT AUTO FLOW ===== */
+  .session-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:12px 18px;background:#0d1118;border-top:1px solid #222a35;border-bottom:1px solid #222a35}
+  .flow-step{position:relative;display:flex;align-items:center;gap:10px;min-height:48px;padding:9px 12px;border:1px solid #303844;background:#151a22;color:#8c96a5;overflow:hidden}
+  .flow-step:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:#3b4553}
+  .flow-step .flow-num{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;border:1px solid #4a5564;font-size:11px;font-weight:1000;flex:none}
+  .flow-step small{display:block;font-size:9px;letter-spacing:1.2px;font-weight:900;text-transform:uppercase;color:inherit}
+  .flow-step strong{display:block;margin-top:2px;font-size:12px;letter-spacing:.3px;color:#d7dde5}
+  .flow-step.done{background:#102019;border-color:#26543a;color:#7ee1a0}
+  .flow-step.done:before{background:#27c866}
+  .flow-step.active{background:#251016;border-color:#7e2332;color:#ff8ea0;box-shadow:inset 0 0 0 1px rgba(227,24,55,.22)}
+  .flow-step.active:before{background:var(--red);box-shadow:0 0 18px rgba(227,24,55,.6)}
+  .flow-step.active .flow-num{border-color:#ff6d83;color:#fff;background:#b7142d}
+  .flow-step.final.active{background:#201a08;border-color:#6f5d1a;color:#f6d75d}
+  .flow-step.final.active:before{background:#f5c400}
+  .flow-step.final.active .flow-num{background:#8d7600;border-color:#e4c62d}
+  .rc-capture-strip{margin:12px 0 0;padding:10px 12px;border:1px solid #2d3947;background:#111820;font-size:11px;font-weight:800;line-height:1.45;color:#aeb9c7}
+  .rc-capture-strip strong{color:#fff}
+  .rc-source-badge{display:inline-flex;align-items:center;margin-left:7px;padding:3px 7px;border-radius:999px;border:1px solid #455160;background:#161d26;color:#c9d2de;font-size:8px;font-weight:1000;letter-spacing:.8px;vertical-align:1px}
+  .rc-source-badge.exact{background:#10281a;border-color:#2e7949;color:#9cf0b6}
+  .rc-source-badge.inferred{background:#2a210a;border-color:#7c661d;color:#f1d36b}
+  .rc-source-badge.not_exposed{background:#241419;border-color:#6f3040;color:#ff9aad}
+  .rc-penalty-category{margin-top:5px;font-size:10px;font-weight:1000;letter-spacing:.7px;text-transform:uppercase;color:#8fa1b8}
+  @media(max-width:760px){.session-flow{grid-template-columns:1fr 1fr}.flow-step{min-height:44px;padding:8px 9px}.flow-step strong{font-size:11px}}
+
+</style>
+
+<style id="HLRN_RC_CROWN_V1">
+  .rc-crown{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(360px,.85fr);gap:14px;padding:16px 18px 0;background:linear-gradient(180deg,#0a0d12,#f3f4f6 94%)}
+  .rc-leader-hero,.rc-front-battle{position:relative;overflow:hidden;min-height:250px;border:1px solid #303844;background:#0b0f15;color:#fff;box-shadow:0 18px 40px rgba(0,0,0,.18)}
+  .rc-leader-hero{display:grid;grid-template-columns:minmax(0,1fr) 260px;background:radial-gradient(circle at 80% 40%,rgba(227,24,55,.24),transparent 34%),linear-gradient(135deg,#171d27,#090c11 62%)}
+  .rc-leader-copy{position:relative;z-index:2;padding:26px 16px 24px 26px;display:flex;flex-direction:column;justify-content:center}
+  .rc-kicker{display:flex;align-items:center;gap:9px;font-size:10px;font-weight:1000;letter-spacing:1.6px;text-transform:uppercase;color:#aeb7c4}
+  .rc-kicker-dot{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px rgba(27,187,98,.13),0 0 20px rgba(27,187,98,.5)}
+  .rc-leader-number{margin-top:12px;color:#ff2748;font-size:clamp(36px,6vw,72px);font-weight:1000;font-style:italic;line-height:.84;letter-spacing:-4px}
+  .rc-leader-name{margin-top:8px;font-size:clamp(28px,4vw,52px);font-weight:1000;font-style:italic;line-height:.9;letter-spacing:-2px;text-transform:uppercase}
+  .rc-leader-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .rc-pill{border:1px solid #3b4450;background:#151b23;padding:7px 10px;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.6px;color:#d8dee7}
+  .rc-leader-photo-wrap{position:relative;display:flex;align-items:end;justify-content:center;min-width:0}
+  .rc-leader-photo-wrap:before{content:"";position:absolute;inset:18px 22px;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(227,24,55,.08));clip-path:polygon(20% 0,100% 0,80% 100%,0 100%)}
+  .rc-leader-photo{position:relative;z-index:1;display:block;width:100%;height:240px;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 14px 16px rgba(0,0,0,.55))}
+  .rc-front-battle{padding:20px;background:linear-gradient(160deg,#111720,#080b10)}
+  .rc-front-head{display:flex;align-items:end;justify-content:space-between;gap:10px;border-bottom:1px solid #2a313a;padding-bottom:13px;margin-bottom:8px}
+  .rc-front-head small{display:block;color:#8d97a4;font-size:9px;font-weight:1000;letter-spacing:1.2px;text-transform:uppercase}
+  .rc-front-head strong{display:block;margin-top:4px;font-size:22px;font-weight:1000;font-style:italic;text-transform:uppercase}
+  .rc-front-head span{font-size:10px;font-weight:900;color:#8d97a4}
+  .rc-top3-row{display:grid;grid-template-columns:54px 54px minmax(0,1fr) auto;align-items:center;gap:10px;min-height:61px;border-bottom:1px solid #232a32}
+  .rc-top3-row:last-child{border-bottom:0}
+  .rc-top3-pos{font-size:24px;font-weight:1000;font-style:italic;color:#fff;text-align:center}
+  .rc-top3-photo{width:54px;height:60px;object-fit:contain;object-position:center bottom;align-self:end}
+  .rc-top3-copy{min-width:0}.rc-top3-name{font-size:14px;font-weight:1000;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rc-top3-sub{margin-top:3px;color:#87919d;font-size:9px;font-weight:800;text-transform:uppercase}
+  .rc-top3-gap{font-size:18px;font-weight:1000;font-variant-numeric:tabular-nums}.rc-top3-gap small{display:block;color:#798390;font-size:8px;text-align:right;text-transform:uppercase}
+  .rc-front-empty{padding:38px 12px;text-align:center;color:#909aa6;font-size:12px;font-weight:800}
+  .tabs{scrollbar-width:thin}.tabs.primary-tabs{background:#0d1117;border-top:1px solid #202630;border-bottom:1px solid #2b323c}.tabs.primary-tabs .tab{color:#aab3bf;padding:16px 19px 13px}.tabs.primary-tabs .tab.active{color:#fff;background:#151b23;border-bottom-color:#ff2546}
+  .tabs.session-tools{justify-content:flex-end;background:#eef1f4;border-bottom:1px solid #d6dbe1}.tabs.session-tools:before{content:"SESSION TOOLS";display:flex;align-items:center;padding:0 12px 0 18px;color:#818995;font-size:9px;font-weight:1000;letter-spacing:1.2px}.tabs.session-tools .tab{padding:9px 13px 7px;font-size:9px;border-bottom-width:3px}
+  .rc-section-grid{display:grid;grid-template-columns:minmax(0,1fr) 350px;gap:18px}.rc-fast-list,.rc-flags-list,.rc-radio-feed{min-width:0}
+  .rc-fast-card{display:grid;grid-template-columns:58px 64px minmax(0,1fr) 120px 100px;align-items:center;gap:10px;min-height:72px;border-bottom:1px solid var(--line);padding:0 14px}.rc-fast-card:last-child{border-bottom:0}.rc-fast-rank{font-size:24px;font-weight:1000;font-style:italic;text-align:center}.rc-fast-photo{width:62px;height:68px;object-fit:contain;object-position:center bottom;align-self:end}.rc-fast-name{font-weight:1000;text-transform:uppercase}.rc-fast-sub{margin-top:3px;color:#7b8490;font-size:9px;font-weight:800;text-transform:uppercase}.rc-fast-time{font-size:19px;font-weight:1000;font-variant-numeric:tabular-nums}.rc-fast-delta{font-size:11px;font-weight:900;color:#707986;text-align:right}
+  .rc-battle-stage{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:14px}.rc-battle-stage .battle-card{min-height:122px;display:block;padding:14px}.rc-battle-stage .battle-pos{font-size:11px}.rc-battle-stage .battle-gap{margin-top:12px;text-align:left;font-size:28px}.rc-battle-stage .battle-driver-line{margin-top:10px}
+  .rc-flag-summary{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line)}.rc-flag-stat{padding:14px;border-right:1px solid var(--line)}.rc-flag-stat:last-child{border-right:0}.rc-flag-stat small{display:block;color:#7b8490;font-size:9px;font-weight:1000;text-transform:uppercase;letter-spacing:.8px}.rc-flag-stat strong{display:block;margin-top:6px;font-size:19px;font-weight:1000}
+  .rc-active-penalty{display:grid;grid-template-columns:70px minmax(0,1fr) auto;gap:12px;align-items:center;min-height:78px;padding:8px 14px;border-bottom:1px solid var(--line)}.rc-active-penalty img{width:68px;height:72px;object-fit:contain;object-position:center bottom;align-self:end}.rc-active-penalty strong{display:block;font-size:13px;text-transform:uppercase}.rc-active-penalty p{margin:4px 0 0;color:#66707d;font-size:11px;font-weight:700}.rc-flag-badge{padding:7px 9px;border:1px solid #d9a3aa;background:#fff0f2;color:#b81029;font-size:9px;font-weight:1000;text-transform:uppercase;white-space:nowrap}
+  .rc-radio-grid{display:grid;grid-template-columns:360px minmax(0,1fr);gap:18px}.rc-radio-note{padding:10px 14px;background:#f5f7f9;border-bottom:1px solid var(--line);color:#6d7682;font-size:10px;font-weight:800}.rc-feed-item{display:grid;grid-template-columns:74px 12px minmax(0,1fr);gap:10px;padding:12px 14px;border-bottom:1px solid var(--line)}.rc-feed-item:last-child{border-bottom:0}.rc-feed-lap{font-size:10px;font-weight:1000;color:#68717d;text-transform:uppercase}.rc-feed-dot{width:10px;height:10px;margin-top:2px;border-radius:50%;background:#83909e}.rc-feed-item.caution .rc-feed-dot{background:#f5c400}.rc-feed-item.penalty .rc-feed-dot{background:#e31837}.rc-feed-item.lead .rc-feed-dot{background:#1bbb62}.rc-feed-item.flag .rc-feed-dot{background:#1268d6}.rc-feed-title{font-size:11px;font-weight:1000;text-transform:uppercase}.rc-feed-copy{margin-top:3px;color:#69727e;font-size:11px;line-height:1.35;font-weight:700}
+  @media(max-width:980px){.rc-crown{grid-template-columns:1fr}.rc-leader-hero{grid-template-columns:minmax(0,1fr) 220px}.rc-section-grid,.rc-radio-grid{grid-template-columns:1fr}.rc-battle-stage{grid-template-columns:1fr}.tabs.session-tools{justify-content:flex-start}}
+  @media(max-width:680px){.rc-crown{padding:10px 10px 0}.rc-leader-hero{grid-template-columns:1fr;min-height:0}.rc-leader-copy{padding:20px}.rc-leader-photo-wrap{height:180px}.rc-leader-photo{height:190px}.rc-front-battle{padding:14px}.rc-top3-row{grid-template-columns:44px 46px minmax(0,1fr) auto}.rc-top3-photo{width:46px;height:52px}.rc-fast-card{grid-template-columns:42px 48px minmax(0,1fr) 88px}.rc-fast-photo{width:48px;height:58px}.rc-fast-delta{display:none}.rc-fast-time{font-size:15px}.rc-flag-summary{grid-template-columns:repeat(2,1fr)}.rc-flag-stat:nth-child(2){border-right:0}.rc-radio-grid{grid-template-columns:1fr}.tabs.session-tools:before{display:none}}
+</style>
+<link rel="stylesheet" href="../assets/site-shell.css">
+</head>
+<body>
+
+<div class="brandbar">
+  <div class="brandbar-inner">
+    <div class="brand">HLRN <span class="red">LIVE</span></div>
+    <div class="brand-sub">LIVE RESULTS</div>
+    <div id="liveBadge" class="live-badge"><span class="dot"></span><span id="liveBadgeText">OFFLINE</span></div>
+  </div>
+</div>
+
+<div class="page">
+  <main class="event-shell">
+    <section class="event-head">
+      <div>
+        <div class="series"><span class="series-mark"></span><span id="series">HIGH LINE RACING NETWORK</span></div>
+        <h1 class="event-title" id="track">WAITING FOR IRACING</h1>
+        <div class="event-meta"><span id="phaseBadge" class="phase-badge">WAITING</span><span id="sessionName">No active session</span><span id="connectionText">Website connected</span></div>
+      </div>
+      <div class="event-status">
+        <div class="status-box"><span class="status-label">Status</span><span id="flag" class="status-value">OFFLINE</span></div>
+        <div class="status-box"><span class="status-label">Lap</span><span id="lap" class="status-value">—</span></div>
+        <div class="status-box"><span class="status-label">Time Remaining</span><span id="timeRemaining" class="status-value">—</span></div>
+        <div class="status-box"><span class="status-label">Cars</span><span id="carCount" class="status-value">0</span></div>
+      </div>
+    </section>
+
+
+
+    <section class="session-flow" aria-label="HLRN race night progression">
+      <div id="flowPractice" class="flow-step"><span class="flow-num">1</span><div><small>Session 1</small><strong>Practice</strong></div></div>
+      <div id="flowQualifying" class="flow-step"><span class="flow-num">2</span><div><small>Session 2</small><strong>Qualifying</strong></div></div>
+      <div id="flowRace" class="flow-step"><span class="flow-num">3</span><div><small>Session 3</small><strong>Live Race</strong></div></div>
+      <div id="flowFinal" class="flow-step final"><span class="flow-num">4</span><div><small>Finish</small><strong>Final Results / Summary</strong></div></div>
+    </section>
+
+    <section class="metric-strip">
+      <div class="metric"><small>Best Lap</small><strong id="bestLap">—</strong></div>
+      <div class="metric"><small>Fastest Driver</small><strong id="fastestDriver">—</strong></div>
+      <div class="metric"><small id="leaderMetricLabel">Leader</small><strong id="leaderName">—</strong></div>
+      <div class="metric"><small>Closest Battle</small><strong id="closestBattleMetric">—</strong></div>
+      <div class="metric"><small>Session</small><strong id="sessionState">—</strong></div>
+      <div class="metric"><small>Last Update</small><strong id="lastUpdate">—</strong></div>
+    </section>
+
+    <section class="rc-crown" aria-label="HLRN race leader and front battle">
+      <article class="rc-leader-hero">
+        <div class="rc-leader-copy">
+          <div class="rc-kicker"><span class="rc-kicker-dot"></span><span id="rcLeaderKicker">VERIFIED RACE LEADER</span></div>
+          <div id="rcLeaderNumber" class="rc-leader-number">#—</div>
+          <div id="rcLeaderName" class="rc-leader-name">WAITING FOR RACE</div>
+          <div class="rc-leader-meta">
+            <span id="rcLeaderGap" class="rc-pill">GAP +0.000</span>
+            <span id="rcLeaderLap" class="rc-pill">LAP —</span>
+            <span id="rcLeaderBest" class="rc-pill">BEST —</span>
+          </div>
+        </div>
+        <div class="rc-leader-photo-wrap"><img id="rcLeaderPhoto" class="rc-leader-photo" alt="" style="display:none"></div>
+      </article>
+      <article class="rc-front-battle">
+        <div class="rc-front-head"><div><small>Front of the field</small><strong>BATTLE FOR THE LEAD</strong></div><span id="rcFrontMeta">STANDBY</span></div>
+        <div id="rcTopThree" class="rc-front-list"><div class="rc-front-empty">The top three will appear when live race scoring begins.</div></div>
+      </article>
+    </section>
+
+    <section id="liveTickerBar" class="live-ticker-bar standby">
+      <div class="live-ticker-kicker"><span class="live-ticker-dot"></span><span id="liveTickerLabel">HLRN LIVE</span></div>
+      <div class="live-ticker-content">
+        <span id="liveTickerLap" class="live-ticker-lap">STANDBY</span>
+        <strong id="liveTickerText" class="live-ticker-text">Waiting for the iRacing bridge to go live.</strong>
+      </div>
+      <div id="liveTickerCount" class="live-ticker-count">0 EVENTS</div>
+    </section>
+
+    <nav class="tabs primary-tabs" aria-label="Race Center">
+      <button class="tab active" data-tab="race">Leaderboard</button>
+      <button class="tab" data-tab="timeline">Timeline</button>
+      <button class="tab" data-tab="fastest">Fastest Laps</button>
+      <button class="tab" data-tab="battles">Battles</button>
+      <button class="tab" data-tab="flags">Penalties</button>
+      <button class="tab" data-tab="radio">Radio / Feed</button>
+    </nav>
+    <nav class="tabs session-tools" aria-label="Session tools">
+      <button class="tab" data-tab="practice">Practice Results</button>
+      <button class="tab" data-tab="qualifying">Qualifying Results</button>
+      <button class="tab" data-tab="report">Final Results / Race Summary</button>
+    </nav>
+
+    <section id="tab-race" class="section active">
+      <div class="race-layout">
+        <div class="panel">
+          <div class="panel-head">
+            <div class="panel-title" id="livePanelTitle">Live Leaderboard</div>
+            <div class="segmented">
+              <button id="top10Btn" class="active">Top 10</button>
+              <button id="fullBtn">Full Field</button>
+            </div>
+          </div>
+          <div id="leaderboard"></div>
+        </div>
+
+        <aside class="side-stack">
+          <div class="panel">
+            <div class="panel-head"><div class="panel-title">Race Tracker</div></div>
+            <div class="flag-box"><small>Current Race Status</small><div id="flagHero" class="flag-hero">OFFLINE</div></div>
+            <div class="tracker-card">
+              <div class="tracker-row"><span>Leader</span><strong id="trackerLeader">—</strong></div>
+              <div class="tracker-row"><span>Fastest Lap</span><strong id="trackerFastest">—</strong></div>
+              <div class="tracker-row"><span>Closest Battle</span><strong id="trackerClosestBattle">—</strong></div>
+              <div class="tracker-row"><span>Field Size</span><strong id="trackerField">0</strong></div>
+              <div class="tracker-row"><span>Data Source</span><strong id="trackerSource">—</strong></div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <div class="panel-title">Race Storylines</div>
+              <div id="raceStorylinesMeta" class="panel-mini-meta storyline-meta">LIVE FACTS</div>
+            </div>
+            <div id="raceStorylines" class="storyline-list">
+              <div class="storyline-empty">Race storylines will fill automatically with verified timing and scoring facts.</div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <div class="panel-title">Battle Tracker</div>
+              <div id="battleTrackerMeta" class="panel-mini-meta">TOP 10 • RACE ONLY</div>
+            </div>
+            <div id="battleTracker" class="battle-list">
+              <div class="battle-empty">Battle tracking activates automatically when the race session starts.</div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <div class="panel-title">Race Pulse</div>
+              <button id="openRaceFeedBtn" class="mini-action" type="button">Open Feed</button>
+            </div>
+            <div class="race-pulse-stats" style="grid-template-columns:repeat(4,1fr)">
+              <div class="race-pulse-stat"><small>Cautions</small><strong id="pulseCautions">0</strong></div>
+              <div class="race-pulse-stat"><small>Verified Leads</small><strong id="pulseLeadChanges">0</strong></div>
+              <div class="race-pulse-stat"><small>Close Battles</small><strong id="pulseBattles">0</strong></div>
+              <div class="race-pulse-stat"><small>Penalties</small><strong id="pulsePenalties">0</strong></div>
+            </div>
+            <div id="racePulseList" class="race-pulse-list">
+              <div class="battle-empty">The compact race timeline will populate when race events begin.</div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head"><div class="panel-title">Connection</div></div>
+            <div class="tracker-card">
+              <div class="tracker-row"><span>Website Feed</span><strong id="socketStatus">CONNECTING</strong></div>
+              <div class="tracker-row"><span>Feed Age</span><strong id="feedAge">—</strong></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="tab-fastest" class="section">
+      <div class="panel">
+        <div class="panel-head"><div class="panel-title">Fastest Laps</div><div id="rcFastestMeta" class="panel-mini-meta">LIVE SESSION</div></div>
+        <div id="rcFastestList" class="rc-fast-list"><div class="offline"><strong>No lap times yet</strong>Fastest laps will rank automatically as timed laps are completed.</div></div>
+      </div>
+    </section>
+
+    <section id="tab-battles" class="section">
+      <div class="panel">
+        <div class="panel-head"><div class="panel-title">Live Battle Center</div><div id="rcBattlesMeta" class="panel-mini-meta">TOP 10 • SAME LAP</div></div>
+        <div id="rcBattlesPage" class="rc-battle-stage"><div class="offline"><strong>No battle data yet</strong>Close top-10 battles will appear here during the race.</div></div>
+      </div>
+    </section>
+
+    <section id="tab-flags" class="section">
+      <div class="rc-section-grid">
+        <div class="panel">
+          <div class="panel-head"><div class="panel-title">HLRN Penalty Control</div><div id="rcFlagsMeta" class="panel-mini-meta">AUTO CAPTURE ARMED</div></div>
+          <div class="rc-flag-summary">
+            <div class="rc-flag-stat"><small>Current Flag</small><strong id="rcFlagCurrent">OFFLINE</strong></div>
+            <div class="rc-flag-stat"><small>Black Flags</small><strong id="rcFlagCautions">0</strong></div>
+            <div class="rc-flag-stat"><small>Penalty Events</small><strong id="rcFlagPenalties">0</strong></div>
+            <div class="rc-flag-stat"><small>Active Penalties</small><strong id="rcActiveFlagsCount">0</strong></div>
+          </div>
+          <div id="rcActiveFlags"><div class="offline"><strong>No active penalties</strong>Black flags and disqualifications will appear here. Every new black flag is captured automatically by the bridge.</div></div>
+          <div id="rcPenaltyCaptureStatus" class="rc-capture-strip"><strong>Automatic penalty capture:</strong> waiting for the live bridge.</div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><div class="panel-title">Penalty Timeline</div></div>
+          <div id="rcFlagTimeline" class="rc-radio-feed"><div class="offline"><strong>No penalty events yet</strong>Black flags, clears, and disqualifications will appear here automatically.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-practice" class="section">
+      <div class="panel">
+        <div class="archive-head">
+          <h2>Practice Results</h2>
+          <p>Practice timing is kept separate from qualifying and the race. When practice ends, these results stay frozen for the rest of the night.</p>
+        </div>
+        <div id="practiceResults"></div>
+      </div>
+    </section>
+
+    <section id="tab-qualifying" class="section">
+      <div class="panel">
+        <div class="archive-head">
+          <h2>Qualifying Results</h2>
+          <p>The qualifying order stays available after the race starts and is also used as the starting-position reference in the post-race report.</p>
+        </div>
+        <div id="qualifyingResults"></div>
+      </div>
+    </section>
+
+    <section id="tab-timeline" class="section">
+      <div class="panel">
+        <div class="panel-head">
+          <div class="panel-title">HLRN Race Feed</div>
+          <div id="timelineCount" style="font-size:10px;font-weight:900;color:#7b8490">0 EVENTS</div>
+        </div>
+        <div class="timeline-toolbar">
+          <button class="timeline-filter active" data-filter="all">All</button>
+          <button class="timeline-filter" data-filter="penalty">Penalties</button>
+          <button class="timeline-filter" data-filter="lead">Lead / Laps</button>
+          <button class="timeline-filter" data-filter="position">Moves</button>
+        </div>
+        <div id="timeline" class="timeline"></div>
+      </div>
+    </section>
+
+    <section id="tab-report" class="section">
+      <div class="panel">
+        <div class="archive-head">
+          <h2>Final Results / Race Summary</h2>
+          <p>This combines the night into one copy-ready report: practice, qualifying, full race results, position changes, penalties, cautions, verified lead changes and the full race feed.</p>
+        </div>
+        <div class="report-toolbar">
+          <div id="reportStatus" class="report-status">Waiting for race-night data</div>
+          <button id="copyReportBtn" class="copy-btn">COPY FULL REPORT</button>
+        </div>
+        <pre id="reportText" class="report-box">Waiting for session data…</pre>
+      </div>
+    </section>
+
+    <section id="tab-raw" class="section">
+      <div class="panel">
+        <div class="panel-head"><div class="panel-title">Raw Live Feed</div></div>
+        <pre id="rawFeed" class="json-box">{}</pre>
+      </div>
+    </section>
+
+    <section id="tab-radio" class="section">
+      <div class="rc-radio-grid">
+        <div class="panel">
+          <div class="panel-head"><div class="panel-title">Driver Scanner</div></div>
+          <div class="rc-radio-note">Live telemetry view only. Speed, gear and RPM stay inside the scanner and are not treated as race-control facts.</div>
+          <div id="scannerDrivers" class="driver-list"></div>
+        </div>
+        <div class="panel scanner-main">
+          <div class="panel-head"><div class="panel-title">Radio / Live Feed</div><div id="rcRadioMeta" class="panel-mini-meta">TEXT FEED + SCANNER</div></div>
+          <div id="scannerContent">
+            <div class="offline"><strong>Select a driver</strong>Choose a driver from the field to open the live scanner panel.</div>
+          </div>
+          <div class="panel-head" style="border-top:1px solid var(--line)"><div class="panel-title">Latest Verified Race Updates</div></div>
+          <div id="rcRadioFeed" class="rc-radio-feed"><div class="offline"><strong>No updates yet</strong>The verified race feed will appear here.</div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="footer">High Line Racing Network • Live timing powered by the iRacing SDK</div>
+</div>
+
+<script>
+(() => {
+  const FEED_WS = "wss://hlrn-live-feed.onrender.com/ws?role=viewer";
+  const DEMO_MODE = new URLSearchParams(location.search).get("demo") === "1";
+  const $ = id => document.getElementById(id);
+
+  let state = null;
+  let ws = null;
+  let retryMs = 1000;
+  let showFullField = false;
+  let selectedCarIdx = null;
+  let lastPhase = null;
+  let lastAutoSessionKey = null;
+
+  const firstSeenPosition = new Map();
+  let timelineFilter = "all";
+  let liveTickerItems = [];
+  let liveTickerIndex = 0;
+  let liveTickerSignature = "";
+
+  // Strict race-leader validation. We intentionally do NOT trust raw lead-change
+  // events from the bridge because pit-exit scoring can briefly make several cars P1.
+  let verifiedLeaderKey = null;
+  let verifiedLeaderDriver = null;
+  let leaderCandidateKey = null;
+  let leaderCandidateSince = 0;
+  let leaderCandidateHits = 0;
+  let verifiedLeadEvents = [];
+  let activeRaceKey = null;
+  const previousPitState = new Map();
+  const pitExitHoldUntil = new Map();
+
+  const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  })[c]);
+
+
+  /* ===== HLRN DRIVER PHOTO HELPERS ===== */
+  const HLRN_DRIVER_PHOTO_BASE = "https://hunterwelborn32-creator.github.io/HLRN-App/driver-photos/cutout/";
+  const HLRN_DRIVER_CUTOUT_PHOTOS = {"aarontruebig":"aaron-truebig.webp","alexleebaw":"alex-leebaw.webp","benjaminrichards":"benjamin-richards.webp","billdaniels":"bill-daniels.webp","brandonbeyke":"brandon-beyke.webp","brandonshowers":"brandon-showers.webp","brianhayes":"brian-hayes.webp","brianhebbard":"brian-hebbard.webp","brianhennings":"brian-hennings.webp","brockpiper":"brock-piper.webp","brycehinton":"bryce-hinton.webp","carsonfreeman":"carson-freeman.webp","charlesfletcher":"charles-fletcher.webp","chrisjames":"chris-james.webp","coricooke":"cori-cooke.webp","craigrowe":"craig-rowe.webp","darrelceballos":"darrel-ceballos.webp","daviddurand":"david-durand.webp","derekjacobs":"derek-jacobs.webp","donnybeach":"donny-beach.webp","dylanjones":"dylan-jones.webp","erichayden":"eric-hayden.webp","ethaneckert":"ethan-eckert.webp","ethanmoreno":"ethan-moreno.webp","evanfuqua":"evan-fuqua.webp","evankarlbon":"evan-karlbon.webp","evanparry":"evan-parry.webp","gerrybergeron":"gerry-bergeron.webp","grantwessley":"grant-wessley.webp","hunterwelborn":"hunter-welborn.webp","jaredphilpott":"jared-philpott.webp","jasonbranch":"jason-branch.webp","javonethompson":"javone-thompson.webp","jeremyjeffries":"jeremy-jeffries.webp","jerryfassett":"jerry-fassett.webp","jimsegredo":"jim-segredo.webp","joekonen":"joe-konen.webp","johnmiles":"john-miles.webp","joshmckinney":"josh-mckinney.webp","joshuaspragg":"joshua-spragg.webp","juanescamilla":"juan-escamilla.webp","justincrowe":"justin-crowe.webp","keatoncox":"keaton-cox.webp","kennyreel":"kenny-reel.webp","kenwoodramsey":"kenwood-ramsey.webp","kodyneagles":"kody-neagles.webp","kylekammeron":"kyle-kammeron.webp","larkinboyer":"larkin-boyer.webp","matthewbrown":"matthew-brown.webp","matthewgraham":"matthew-graham.webp","nicholasbaumann":"nicholas-baumann.webp","nicholasmoody":"nicholas-moody.webp","randyschweitzer":"randy-schweitzer.webp","randyshowers":"randy-showers.webp","rickymiles":"ricky-miles.webp","rosscampoli":"ross-campoli.webp","ryanwilson":"ryan-wilson.webp","scottwise":"scott-wise.webp","sebastianmichaels":"sebastian-michaels.webp","shanehatfield":"shane-hatfield.webp","shawnstamper":"shawn-stamper.webp","timothytyler":"timothy-tyler.webp","tjlunn":"tj-lunn.webp","tommyrogers":"tommy-rogers.webp","trevoraswarnauth":"trevor-aswarnauth.webp","trevorhaley":"trevor-haley.webp","vincenteguerrero":"vincente-guerrero.webp","zackharry":"zack-harry.webp"};
+  const HLRN_DRIVER_PHOTO_ALIASES = {"sebastianmicheals":"sebastianmichaels","ericpedleyhayden":"erichayden","randyschweitzerrsi":"randyschweitzer","dyalnjones":"dylanjones","nicholasbaumann2":"nicholasbaumann","dylancjones":"dylanjones","ethanfonsecamoreno":"ethanmoreno","joshuamckinney":"joshmckinney","joshuamckinney2":"joshmckinney","jeremysjeffries":"jeremyjeffries","vicenteguerrero2":"vincenteguerrero","brianhebbard2":"brianhebbard","brianhayes4":"brianhayes","ryanwilson21":"ryanwilson","timothytyler3":"timothytyler","matthewbrown49":"matthewbrown","matthewgraham20":"matthewgraham"};
+
+  function hLrnPhotoKey(name){
+    let s=String(name||"").trim();
+    if(s.includes(",")){
+      const p=s.split(",");
+      const last=(p.shift()||"").trim().replace(/\d+$/,"");
+      const first=p.join(" ").trim();
+      s=(first+" "+last).trim();
+    }else{
+      s=s.replace(/\d+$/,"").trim();
+    }
+    let k=s.toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9]/g,"");
+    if(HLRN_DRIVER_PHOTO_ALIASES[k]) k=HLRN_DRIVER_PHOTO_ALIASES[k];
+    if(!HLRN_DRIVER_CUTOUT_PHOTOS[k]){
+      const stripped=k.replace(/\d+/g,"");
+      if(HLRN_DRIVER_PHOTO_ALIASES[stripped]) k=HLRN_DRIVER_PHOTO_ALIASES[stripped];
+      else if(HLRN_DRIVER_CUTOUT_PHOTOS[stripped]) k=stripped;
+    }
+    return k;
+  }
+
+  function hLrnDriverPhotoUrl(name){
+    const file=HLRN_DRIVER_CUTOUT_PHOTOS[hLrnPhotoKey(name)];
+    return file ? HLRN_DRIVER_PHOTO_BASE+file : "";
+  }
+
+  function hLrnDriverPhotoTag(name,size=""){
+    const url=hLrnDriverPhotoUrl(name);
+    if(!url) return "";
+    const cls=size ? `hlrn-driver-inline ${size}` : "hlrn-driver-inline";
+    return `<img class="${cls}" src="${esc(url)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">`;
+  }
+
+  function hLrnDriverMetric(driver){
+    if(!driver) return "—";
+    return `<span class="metric-driver-line">${hLrnDriverPhotoTag(driver.name,"small")}<span>#${esc(driver.number || "—")} ${esc(driver.name || "Unknown")}</span></span>`;
+  }
+
+  function lapTime(value){
+    const n = Number(value);
+    if(!Number.isFinite(n) || n <= 0) return "—";
+    const minutes = Math.floor(n / 60);
+    const seconds = n - minutes * 60;
+    return minutes > 0 ? `${minutes}:${seconds.toFixed(3).padStart(6,"0")}` : seconds.toFixed(3);
+  }
+
+  function duration(value){
+    const n = Number(value);
+    if(!Number.isFinite(n) || n < 0) return "—";
+    const total = Math.floor(n);
+    const h = Math.floor(total / 3600);
+    const m = Math.floor((total % 3600) / 60);
+    const s = total % 60;
+    return h > 0 ? `${h}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}` : `${m}:${String(s).padStart(2,"0")}`;
+  }
+
+  function gapText(driver){
+    if(driver.position === 1) return "LEADER";
+    const gap = Number(driver.gap);
+    return Number.isFinite(gap) && gap >= 0 ? `+${gap.toFixed(3)}` : "—";
+  }
+
+  function speedText(driver, includeSource=false){
+    const speed = Number(driver?.speedMph);
+    if(!Number.isFinite(speed) || speed < 0) return "—";
+    const base = `${Math.round(speed)} MPH`;
+    return includeSource && driver.speedSource ? `${base} ${driver.speedSource}` : base;
+  }
+
+  function gearText(value){
+    const g = Number(value);
+    if(!Number.isFinite(g)) return "—";
+    if(g === -1) return "R";
+    if(g === 0) return "N";
+    return String(Math.trunc(g));
+  }
+
+  function rpmText(value){
+    const rpm = Number(value);
+    if(!Number.isFinite(rpm) || rpm < 0) return "—";
+    return Math.round(rpm).toLocaleString();
+  }
+
+
+
+  function driverStatus(driver){
+    if(driver && driver.disqualified) return "DQ";
+    if(driver && driver.disconnected) return "DISCONNECTED";
+    const raw = String(driver?.status || "").toUpperCase();
+    if(raw === "DQ") return "DQ";
+    if(raw.includes("DISCONNECTED") || raw.includes("OUT")) return raw;
+    return "ACTIVE";
+  }
+
+  function statusClass(driver){
+    return driverStatus(driver).toLowerCase().replaceAll(" ","-").replaceAll("/","-");
+  }
+
+  function normalizeFlag(flag){
+    return String(flag || "UNKNOWN").trim().toUpperCase();
+  }
+
+  function flagClass(flag){
+    return "flag-" + normalizeFlag(flag).toLowerCase().replaceAll(" ","-");
+  }
+
+  function fastestDriver(drivers){
+    return drivers
+      .filter(d => Number(d.bestLapTime) > 0)
+      .sort((a,b) => Number(a.bestLapTime) - Number(b.bestLapTime))[0] || null;
+  }
+
+  function currentLeader(drivers){
+    return drivers.find(d => Number(d.position) === 1) || drivers[0] || null;
+  }
+
+  function resetVerifiedLeaderTracking(){
+    verifiedLeaderKey = null;
+    verifiedLeaderDriver = null;
+    leaderCandidateKey = null;
+    leaderCandidateSince = 0;
+    leaderCandidateHits = 0;
+    verifiedLeadEvents = [];
+    previousPitState.clear();
+    pitExitHoldUntil.clear();
+  }
+
+  function raceIdentity(){
+    return String(state?.subSessionId ?? state?.sessionId ?? `${state?.series || "HLRN"}|${state?.track || "UNKNOWN"}`);
+  }
+
+  function updatePitTransitions(drivers){
+    const now = Date.now();
+    drivers.forEach(d => {
+      const key = driverKey(d);
+      const nowPit = !!d.onPitRoad;
+      const beforePit = previousPitState.get(key);
+      if(beforePit === true && nowPit === false){
+        // iRacing can momentarily reshuffle scored P1 as cars cross pit-exit timing.
+        // Do not accept that car as a new leader until the scoring settles.
+        pitExitHoldUntil.set(key, now + 6000);
+      }
+      previousPitState.set(key, nowPit);
+      if((pitExitHoldUntil.get(key) || 0) <= now) pitExitHoldUntil.delete(key);
+    });
+  }
+
+  function isTrustworthyLeaderCandidate(driver, drivers){
+    if(!driver || Number(driver.position) !== 1) return false;
+    if(driver.onPitRoad || driver.disqualified) return false;
+    const status = String(driver.status || "").toUpperCase();
+    if(status.includes("DISCONNECTED") || status === "DQ" || status.includes("OUT")) return false;
+    if((pitExitHoldUntil.get(driverKey(driver)) || 0) > Date.now()) return false;
+
+    const completed = Number(driver.lapsCompleted);
+    const maxCompleted = Math.max(-1, ...drivers.map(d => Number(d.lapsCompleted)).filter(Number.isFinite));
+    if(Number.isFinite(completed) && maxCompleted >= 0 && completed < maxCompleted - 1) return false;
+    return true;
+  }
+
+  function updateVerifiedLeader(drivers, online){
+    if(!online || state?.phase !== "race" || !Array.isArray(drivers) || !drivers.length) return;
+
+    const raceKey = raceIdentity();
+    if(activeRaceKey !== raceKey){
+      activeRaceKey = raceKey;
+      resetVerifiedLeaderTracking();
+    }
+
+    updatePitTransitions(drivers);
+
+    const candidate = drivers.find(d => Number(d.position) === 1) || null;
+    if(!isTrustworthyLeaderCandidate(candidate, drivers)){
+      leaderCandidateKey = null;
+      leaderCandidateSince = 0;
+      leaderCandidateHits = 0;
+      return;
+    }
+
+    const key = driverKey(candidate);
+    const now = Date.now();
+    if(key !== leaderCandidateKey){
+      leaderCandidateKey = key;
+      leaderCandidateSince = now;
+      leaderCandidateHits = 1;
+      return;
+    }
+
+    leaderCandidateHits += 1;
+    // Require the same scored P1 for multiple updates AND at least 1.75 seconds.
+    // This removes pit-exit flicker while still recognizing real passes quickly.
+    if(leaderCandidateHits < 3 || now - leaderCandidateSince < 1750) return;
+
+    if(verifiedLeaderKey == null){
+      verifiedLeaderKey = key;
+      verifiedLeaderDriver = {...candidate};
+      return;
+    }
+
+    if(key !== verifiedLeaderKey){
+      const oldLeader = verifiedLeaderDriver;
+      verifiedLeaderKey = key;
+      verifiedLeaderDriver = {...candidate};
+      verifiedLeadEvents.push({
+        type:"lead",
+        title:"VERIFIED LEAD CHANGE",
+        text:`#${candidate.number || "—"} ${candidate.name} takes the lead${oldLeader ? ` from #${oldLeader.number || "—"} ${oldLeader.name}` : ""}`,
+        lap: state?.lap,
+        exact:true,
+        verified:true,
+        capturedAt: now
+      });
+    }else{
+      verifiedLeaderDriver = {...candidate};
+    }
+  }
+
+  function displayLeader(drivers){
+    if(state?.phase !== "race") return currentLeader(drivers);
+    if(verifiedLeaderKey){
+      return drivers.find(d => driverKey(d) === verifiedLeaderKey) || verifiedLeaderDriver || null;
+    }
+    const p1 = drivers.find(d => Number(d.position) === 1) || null;
+    return isTrustworthyLeaderCandidate(p1, drivers) ? p1 : null;
+  }
+
+  function accurateRaceEvents(raceState){
+    const raw = raceState && Array.isArray(raceState.events) ? raceState.events : [];
+    // Raw bridge lead events are intentionally excluded. Only stable, on-track,
+    // client-verified changes are shown/count toward the report. Incident inference
+    // is also excluded from the website because HLRN now uses verified race facts only.
+    const hiddenTypes = new Set(["lead","incident","possible_incident","possible_contact","possible_spin","possible_wreck","offtrack","pit"]);
+    const clean = raw.filter(e => !hiddenTypes.has(String(e?.type || "").toLowerCase()));
+    const merged = [...clean, ...verifiedLeadEvents];
+    return merged
+      .map((e, i) => ({e, i}))
+      .sort((a,b) => {
+        const al = Number(a.e?.lap);
+        const bl = Number(b.e?.lap);
+        const av = Number.isFinite(al) ? al : -1;
+        const bv = Number.isFinite(bl) ? bl : -1;
+        if(av !== bv) return av - bv;
+        const at = Number(a.e?.capturedAt || 0);
+        const bt = Number(b.e?.capturedAt || 0);
+        if(at && bt && at !== bt) return at - bt;
+        return a.i - b.i;
+      })
+      .map(x => x.e);
+  }
+
+  function activateTab(tabName){
+    const btn=document.querySelector(`.tab[data-tab="${tabName}"]`);
+    const section=$(`tab-${tabName}`);
+    if(!btn || !section) return;
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll(".section").forEach(x=>x.classList.remove("active"));
+    btn.classList.add("active");
+    section.classList.add("active");
+  }
+
+  function raceFinished(s){
+    const flag=normalizeFlag(s?.flag);
+    const sessionState=String(s?.sessionState||"").toUpperCase();
+    return flag==="CHECKERED" || sessionState==="CHECKERED" || sessionState==="COOL DOWN";
+  }
+
+  function autoNavigateSession(s){
+    if(!s?.online) return;
+    const phase=s.phase||"other";
+    let target=null;
+    let key=phase;
+    if(phase==="practice") target="practice";
+    else if(phase==="qualifying") target="qualifying";
+    else if(phase==="race"){
+      const finished=raceFinished(s);
+      target=finished?"report":"race";
+      key=finished?"race-finished":"race-live";
+    }
+    if(target && key!==lastAutoSessionKey){
+      lastAutoSessionKey=key;
+      activateTab(target);
+    }
+  }
+
+  function renderSessionFlow(s){
+    const ids=["flowPractice","flowQualifying","flowRace","flowFinal"];
+    ids.forEach(id=>$(id)?.classList.remove("active","done"));
+    if(!s?.online) return;
+    const phase=s.phase||"other";
+    const finished=raceFinished(s);
+    const done=id=>$(id)?.classList.add("done");
+    const active=id=>$(id)?.classList.add("active");
+    if(phase==="practice") active("flowPractice");
+    else if(phase==="qualifying") {done("flowPractice");active("flowQualifying");}
+    else if(phase==="race" && !finished){done("flowPractice");done("flowQualifying");active("flowRace");}
+    else if(phase==="race" && finished){done("flowPractice");done("flowQualifying");done("flowRace");active("flowFinal");}
+  }
+
+  function phaseLabel(phase){
+    if(phase === "practice") return "PRACTICE";
+    if(phase === "qualifying") return "QUALIFYING";
+    if(phase === "race") return "RACE";
+    return "SESSION";
+  }
+
+  function getPhaseState(phase){
+    if(state && state.phase === phase) return state;
+    const archive = state && state.sessionArchive;
+    return archive && archive[phase] ? archive[phase] : null;
+  }
+
+  function findMatchingDriver(snapshot, driver){
+    const list = snapshot && Array.isArray(snapshot.drivers) ? snapshot.drivers : [];
+    return list.find(x => x.carIdx === driver.carIdx)
+      || list.find(x => String(x.number || "") === String(driver.number || "") && x.name === driver.name)
+      || list.find(x => x.name === driver.name)
+      || null;
+  }
+
+  function positionDelta(driver){
+    if(driver.position == null) return {text:"—", cls:"same"};
+
+    let start = null;
+
+    if(state && state.phase === "race"){
+      const qualifying = getPhaseState("qualifying");
+      const qDriver = findMatchingDriver(qualifying, driver);
+      if(qDriver && qDriver.position != null){
+        start = Number(qDriver.position);
+      }
+    }
+
+    if(start == null){
+      if(!firstSeenPosition.has(driver.carIdx)){
+        firstSeenPosition.set(driver.carIdx, driver.position);
+      }
+      start = Number(firstSeenPosition.get(driver.carIdx));
+    }
+
+    const delta = start - Number(driver.position);
+    if(delta > 0) return {text:`▲ ${delta}`, cls:"up"};
+    if(delta < 0) return {text:`▼ ${Math.abs(delta)}`, cls:"down"};
+    return {text:"—", cls:"same"};
+  }
+
+  function eventTone(event){
+    const type = String(event?.type || "session").toLowerCase();
+    const title = String(event?.title || "").toUpperCase();
+    if(title.includes("CAUTION")) return "caution";
+    if(["incident","possible_incident","possible_contact","possible_spin","possible_wreck","offtrack","penalty","flag","lead","fastest","pit","position","session"].includes(type)) return type;
+    return "session";
+  }
+
+  function tickerEventText(event){
+    const title = String(event?.title || "Race Event").trim();
+    const copy = String(event?.text || "").trim();
+    if(copy && copy.toUpperCase() !== title.toUpperCase()) return `${title} — ${copy}`;
+    return title;
+  }
+
+  function renderTickerFrame(){
+    const bar = $("liveTickerBar");
+    if(!bar) return;
+
+    if(!liveTickerItems.length){
+      bar.className = "live-ticker-bar standby";
+      $("liveTickerLap").textContent = "STANDBY";
+      $("liveTickerText").textContent = "Waiting for the iRacing bridge to go live.";
+      $("liveTickerCount").textContent = "0 EVENTS";
+      return;
+    }
+
+    const item = liveTickerItems[liveTickerIndex % liveTickerItems.length];
+    const tone = eventTone(item);
+    bar.className = `live-ticker-bar ${tone}`;
+    $("liveTickerLap").textContent = item.lap != null && Number(item.lap) >= 0 ? `LAP ${item.lap}` : (item.kicker || "LIVE");
+    $("liveTickerText").textContent = tickerEventText(item);
+    $("liveTickerCount").textContent = liveTickerItems.length === 1 ? "LIVE UPDATE" : `${liveTickerIndex + 1} / ${liveTickerItems.length}`;
+  }
+
+  function renderLiveTicker(online, drivers){
+    let items = [];
+    const phase = state?.phase || "other";
+
+    if(online && phase === "race"){
+      const raceEvents = accurateRaceEvents(state);
+      const importantTypes = new Set(["flag","lead","penalty","fastest","session"]);
+      items = raceEvents
+        .filter(e => importantTypes.has(String(e?.type || "").toLowerCase()))
+        .slice(-12)
+        .reverse();
+    }
+
+    if(online && !items.length){
+      const fast = fastestDriver(drivers);
+      const leader = displayLeader(drivers);
+      const phaseName = phaseLabel(phase);
+      let text = `${phaseName} is live`;
+      if(phase === "practice" && fast) text = `PRACTICE LIVE — Fastest: #${fast.number || "—"} ${fast.name} • ${lapTime(fast.bestLapTime)}`;
+      else if(phase === "qualifying" && leader) text = `QUALIFYING LIVE — P1: #${leader.number || "—"} ${leader.name}${Number(leader.bestLapTime) > 0 ? ` • ${lapTime(leader.bestLapTime)}` : ""}`;
+      else if(phase === "race" && leader) text = `RACE LIVE — Leader: #${leader.number || "—"} ${leader.name}`;
+      items = [{type:"session", title:text, text:"", lap:state?.lap, kicker:phaseName}];
+    }
+
+    if(!online){
+      items = [{type:"session", title:"Waiting for the iRacing bridge to go live.", text:"", lap:null, kicker:"STANDBY"}];
+    }
+
+    const signature = items.map(x => `${x.type}|${x.lap}|${x.title}|${x.text}`).join("||");
+    if(signature !== liveTickerSignature){
+      liveTickerSignature = signature;
+      liveTickerItems = items;
+      liveTickerIndex = 0;
+    }else{
+      liveTickerItems = items;
+      if(liveTickerIndex >= liveTickerItems.length) liveTickerIndex = 0;
+    }
+    renderTickerFrame();
+  }
+
+  function driverKey(driver){
+    if(driver?.carIdx != null) return `idx:${driver.carIdx}`;
+    return `n:${driver?.number || ""}|${driver?.name || ""}`;
+  }
+
+  function rawPositionChange(driver){
+    if(!driver || driver.position == null) return null;
+    let start = null;
+    let source = "REFERENCE";
+    const qualifying = getPhaseState("qualifying");
+    const qDriver = findMatchingDriver(qualifying, driver);
+    if(qDriver && qDriver.position != null){
+      start = Number(qDriver.position);
+      source = "QUALIFYING";
+    }
+    if(start == null){
+      if(!firstSeenPosition.has(driver.carIdx)) firstSeenPosition.set(driver.carIdx, driver.position);
+      start = Number(firstSeenPosition.get(driver.carIdx));
+      source = "FIRST SCORED";
+    }
+    const current = Number(driver.position);
+    if(!Number.isFinite(start) || !Number.isFinite(current)) return null;
+    return {change:start-current, start, current, source};
+  }
+
+  function renderRaceStorylines(drivers, online){
+    const el = $("raceStorylines");
+    const meta = $("raceStorylinesMeta");
+    if(!el || !meta) return;
+
+    if(!online){
+      meta.textContent = "STANDBY";
+      meta.classList.remove("live");
+      el.innerHTML = `<div class="storyline-empty">Waiting for live timing and scoring.</div>`;
+      return;
+    }
+
+    if(state?.phase !== "race"){
+      meta.textContent = "RACE ONLY";
+      meta.classList.remove("live");
+      el.innerHTML = `<div class="storyline-empty">Verified race storylines will appear automatically when the race starts.</div>`;
+      return;
+    }
+
+    meta.textContent = "LIVE FACTS";
+    meta.classList.add("live");
+
+    const active = (Array.isArray(drivers) ? drivers : []).filter(d => {
+      const p = Number(d.position);
+      const status = String(d.status || "").toUpperCase();
+      return Number.isFinite(p) && p > 0 && !d.disqualified && !status.includes("DISCONNECTED") && !status.includes("OUT") && status !== "DQ";
+    });
+
+    const changes = active.map(d => ({driver:d, info:rawPositionChange(d)})).filter(x => x.info);
+    const mover = changes.filter(x => x.info.change > 0).sort((a,b) => b.info.change-a.info.change)[0] || null;
+    const faller = changes.filter(x => x.info.change < 0).sort((a,b) => a.info.change-b.info.change)[0] || null;
+    const fastLast = active
+      .filter(d => Number(d.lastLapTime) > 0)
+      .sort((a,b) => Number(a.lastLapTime)-Number(b.lastLapTime))[0] || null;
+    const closestBattle = getBattles(active)[0] || null;
+
+    const row = (cls, kicker, value, name, copy) => `
+      <div class="storyline-row ${cls}">
+        <div><div class="storyline-kicker">${kicker}</div><div class="storyline-value">${value}</div></div>
+        <div class="storyline-copy"><b>${name}</b>${copy}</div>
+      </div>`;
+
+    const rows = [];
+    if(mover){
+      rows.push(row("mover","Biggest Mover",`+${mover.info.change}`,
+        `#${esc(mover.driver.number || "—")} ${esc(mover.driver.name || "Unknown")}`,
+        `${mover.info.source === "QUALIFYING" ? "Qualified" : "First scored"} P${mover.info.start} • Running P${mover.info.current}`));
+    }else{
+      rows.push(row("mover","Biggest Mover","—","No positive movement yet","Position change is measured from qualifying when available, otherwise the first scored race position."));
+    }
+
+    if(faller){
+      rows.push(row("faller","Biggest Faller",`${faller.info.change}`,
+        `#${esc(faller.driver.number || "—")} ${esc(faller.driver.name || "Unknown")}`,
+        `${faller.info.source === "QUALIFYING" ? "Qualified" : "First scored"} P${faller.info.start} • Running P${faller.info.current}`));
+    }else{
+      rows.push(row("faller","Biggest Faller","—","No position loss yet","Position change is measured from qualifying when available, otherwise the first scored race position."));
+    }
+
+    if(fastLast){
+      rows.push(row("fast","Fastest Last Lap",esc(lapTime(fastLast.lastLapTime)),
+        `#${esc(fastLast.number || "—")} ${esc(fastLast.name || "Unknown")}`,
+        `Current P${esc(fastLast.position ?? "—")} • latest completed lap`));
+    }else{
+      rows.push(row("fast","Fastest Last Lap","—","Waiting for completed laps","Updates from live timing."));
+    }
+
+    if(closestBattle){
+      rows.push(row("battle","Closest Top-10 Battle",`${closestBattle.interval.toFixed(3)}s`,
+        `P${esc(closestBattle.ahead.position)} #${esc(closestBattle.ahead.number || "—")} ${esc(closestBattle.ahead.name || "Unknown")}`,
+        `P${esc(closestBattle.behind.position)} #${esc(closestBattle.behind.number || "—")} ${esc(closestBattle.behind.name || "Unknown")} is directly behind.`));
+    }else{
+      rows.push(row("battle","Closest Top-10 Battle","—","No close battle detected","Updates from verified timing gaps between top-10 cars."));
+    }
+
+    el.innerHTML = rows.join("");
+  }
+
+  function getBattles(drivers){
+    if(!Array.isArray(drivers) || drivers.length < 2) return [];
+
+    // Battle Tracker is intentionally focused on contenders only: TOP 10,
+    // on-track, same-lap cars. This keeps the panel useful instead of flagging
+    // random battles throughout the entire field.
+    const sorted = [...drivers]
+      .filter(d => Number(d.position) >= 1 && Number(d.position) <= 10)
+      .filter(d => !d.onPitRoad && !d.disqualified)
+      .filter(d => {
+        const status = String(d.status || "").toUpperCase();
+        return !status.includes("DISCONNECTED") && !status.includes("OUT") && status !== "DQ";
+      })
+      .sort((a,b) => Number(a.position ?? 9999) - Number(b.position ?? 9999));
+
+    const battles = [];
+
+    for(let i = 1; i < sorted.length; i++){
+      const ahead = sorted[i - 1];
+      const behind = sorted[i];
+      if(!ahead || !behind) continue;
+
+      const aheadLaps = Number(ahead.lapsCompleted);
+      const behindLaps = Number(behind.lapsCompleted);
+      if(Number.isFinite(aheadLaps) && Number.isFinite(behindLaps) && aheadLaps !== behindLaps) continue;
+
+      let interval = Number(behind.interval);
+      if(!Number.isFinite(interval) || interval < 0){
+        const behindGap = Number(behind.gap);
+        const aheadGap = Number(ahead.position) === 1 ? 0 : Number(ahead.gap);
+        if(Number.isFinite(behindGap) && Number.isFinite(aheadGap)) interval = behindGap - aheadGap;
+      }
+
+      // Only call it a battle when the interval is genuinely close.
+      if(!Number.isFinite(interval) || interval < 0 || interval > 1.5) continue;
+      battles.push({ahead, behind, interval});
+    }
+
+    return battles.sort((a,b) => a.interval - b.interval);
+  }
+
+  function renderBattleTracker(drivers, online){
+    const el = $("battleTracker");
+    if(!el) return;
+
+    if(!online){
+      $("battleTrackerMeta").textContent = "STANDBY";
+      el.innerHTML = `<div class="battle-empty">Waiting for live race data.</div>`;
+      return;
+    }
+
+    if(state?.phase !== "race"){
+      $("battleTrackerMeta").textContent = "RACE ONLY";
+      el.innerHTML = `<div class="battle-empty">Battle tracking will activate automatically when the race session starts.</div>`;
+      return;
+    }
+
+    const battles = getBattles(drivers).slice(0,3);
+    $("battleTrackerMeta").textContent = battles.length ? `TOP 10 • ${battles.length} CLOSE` : "TOP 10";
+
+    if(!battles.length){
+      el.innerHTML = `<div class="battle-empty">No close battle inside the top 10 right now.</div>`;
+      return;
+    }
+
+    el.innerHTML = battles.map(b => {
+      const cls = b.interval <= .35 ? "hot" : (b.interval <= .75 ? "close" : "");
+      return `
+        <div class="battle-card ${cls}">
+          <div class="battle-pos">P${esc(b.behind.position ?? "—")}</div>
+          <div class="battle-main">
+            <div class="battle-driver-line">
+              ${hLrnDriverPhotoTag(b.behind.name,"tiny")}
+              <div class="battle-driver-copy">
+                <div class="battle-name">#${esc(b.behind.number || "—")} ${esc(b.behind.name || "Unknown")}</div>
+                <div class="battle-vs">chasing #${esc(b.ahead.number || "—")} ${esc(b.ahead.name || "Unknown")}</div>
+              </div>
+            </div>
+          </div>
+          <div class="battle-gap">${b.interval.toFixed(3)}<small>seconds</small></div>
+        </div>`;
+    }).join("");
+  }
+
+  function renderRacePulse(raceState){
+    const events = accurateRaceEvents(raceState);
+    const cautions = events.filter(e => String(e?.title || "").toUpperCase().includes("CAUTION")).length;
+    const leadChanges = events.filter(e => String(e?.type || "").toLowerCase() === "lead").length;
+    const penalties = events.filter(e => String(e?.type || "").toLowerCase() === "penalty").length;
+    const raceDrivers = raceState && Array.isArray(raceState.drivers) ? raceState.drivers : [];
+    const closeBattles = getBattles(raceDrivers).filter(b => b.interval <= 0.75).length;
+
+    $("pulseCautions").textContent = cautions;
+    $("pulseLeadChanges").textContent = leadChanges;
+    $("pulseBattles").textContent = closeBattles;
+    $("pulsePenalties").textContent = penalties;
+
+    const el = $("racePulseList");
+    if(!el) return;
+
+    const important = events
+      .filter(e => ["flag","lead","penalty","fastest"].includes(String(e?.type || "").toLowerCase()))
+      .slice(-5)
+      .reverse();
+
+    if(!important.length){
+      el.innerHTML = `<div class="battle-empty">The compact race timeline will populate when race events begin.</div>`;
+      return;
+    }
+
+    el.innerHTML = important.map(e => `
+      <div class="race-pulse-item ${esc(eventTone(e))}">
+        <div class="race-pulse-lap">${e.lap != null && Number(e.lap) >= 0 ? `Lap ${esc(e.lap)}` : "Session"}</div>
+        <div class="race-pulse-dot"></div>
+        <div class="race-pulse-copy">${esc(tickerEventText(e))}</div>
+      </div>`).join("");
+  }
+
+  function timelineMatches(event){
+    if(timelineFilter === "all") return true;
+
+    if(timelineFilter === "penalty"){
+      return event.type === "penalty";
+    }
+
+    if(timelineFilter === "lead"){
+      return ["lead","lap","flag","fastest","session"].includes(event.type);
+    }
+
+
+    if(timelineFilter === "position"){
+      return event.type === "position";
+    }
+
+    return true;
+  }
+
+  function renderTimeline(events){
+    const el = $("timeline");
+    const source = Array.isArray(events) ? [...events] : [];
+    const filtered = source.filter(timelineMatches).reverse();
+
+    $("timelineCount").textContent = `${source.length} EVENT${source.length === 1 ? "" : "S"}`;
+
+    if(!filtered.length){
+      el.innerHTML = `
+        <div class="offline">
+          <strong>No race-log events yet</strong>
+          When the Race session begins, cautions, verified lead changes, penalties, fastest laps and position moves will appear here.
+        </div>`;
+      return;
+    }
+
+    el.innerHTML = filtered.map(item => {
+      const exactBadge = item.exact === false
+        ? `<span class="timeline-badge">POSSIBLE / INFERRED</span>`
+        : "";
+
+      const lapText = item.lap != null && Number(item.lap) >= 0
+        ? `LAP ${esc(item.lap)}`
+        : "SESSION";
+
+      return `
+        <div class="timeline-item ${esc(item.type || "")} ${esc(item.severity || "")}">
+          <div>
+            <div class="timeline-lap">${lapText}</div>
+          </div>
+          <div class="timeline-dot"></div>
+          <div>
+            <div class="timeline-title">${esc(item.title || "Race Event")}${exactBadge}</div>
+            <div class="timeline-copy">${esc(item.text || "")}</div>
+          </div>
+        </div>`;
+    }).join("");
+  }
+
+  function renderLeaderboard(drivers, online){
+    const el = $("leaderboard");
+
+    const oldTableShell = el.querySelector(".table-shell");
+    const savedTableScrollLeft = oldTableShell ? oldTableShell.scrollLeft : 0;
+
+    if(!online){
+      el.innerHTML = `<div class="offline"><strong>Live timing is offline</strong>Start the HLRN iRacing bridge to populate the leaderboard.</div>`;
+      return;
+    }
+
+    if(!drivers.length){
+      el.innerHTML = `<div class="offline"><strong>Connected to iRacing</strong>Waiting for scored cars to appear in the session.</div>`;
+      return;
+    }
+
+    const shown = showFullField ? drivers : drivers.slice(0,10);
+    const gapHeading = state && state.phase === "race" ? "BEHIND" : "GAP";
+    const hotBattleKeys = new Set();
+    if(state && state.phase === "race"){
+      getBattles(drivers).filter(b => b.interval <= .75).forEach(b => {
+        hotBattleKeys.add(driverKey(b.ahead));
+        hotBattleKeys.add(driverKey(b.behind));
+      });
+    }
+
+    el.innerHTML = `
+      <div class="table-shell">
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align:center">POS</th>
+            <th>POS +/-</th>
+            <th>CAR</th>
+            <th>DRIVER</th>
+            <th>${gapHeading}</th>
+            <th>LAST LAP</th>
+            <th>BEST LAP</th>
+            <th>LAPS</th>
+            <th>TRACK</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${shown.map(driver => {
+            const delta = positionDelta(driver);
+            return `
+              <tr class="${driver.position === 1 ? "leader" : ""} ${hotBattleKeys.has(driverKey(driver)) ? "battle-hot" : ""}">
+                <td class="pos-cell">${esc(driver.position ?? "—")}</td>
+                <td class="delta ${delta.cls}">${esc(delta.text)}</td>
+                <td><span class="car-num"><span>${esc(driver.number || "—")}</span></span></td>
+                <td class="driver-cell">
+                  <div class="driver-cell-layout">
+                    ${hLrnDriverPhotoTag(driver.name)}
+                    <div class="driver-cell-copy">
+                      <div class="driver-name">
+                        ${esc(driver.name || "Unknown")}
+
+                        ${hotBattleKeys.has(driverKey(driver)) && state && state.phase === "race" ? `<span class="battle-badge">BATTLE</span>` : ""}
+                        ${driver.blackFlag ? `<span class="penalty-badge">BLACK FLAG</span>` : ""}
+                        ${driver.repairFlag && !driver.disqualified ? `<span class="repair-badge">MEATBALL</span>` : ""}
+                        ${driver.disqualified ? `<span class="pit-badge" style="background:#ffe9ec;border-color:#e8a4ae;color:#b10f2c">DQ</span>` : ""}
+                        ${driver.status === "DISCONNECTED" ? `<span class="pit-badge" style="background:#eef0f3;border-color:#ccd1d8;color:#5f6875">DISCONNECTED</span>` : ""}
+                        ${driver.status === "OUT / DISCONNECTED" ? `<span class="pit-badge" style="background:#eef0f3;border-color:#ccd1d8;color:#5f6875">OUT</span>` : ""}
+                      </div>
+                      <div class="driver-sub">${esc(driver.team || driver.car || "")}</div>
+                      ${driver.blackFlag ? `<div class="driver-penalty-reason ${driver.penaltyInferred ? "inferred" : (driver.penaltyReasonSource === "UNAVAILABLE" ? "unavailable" : "")}"><span class="reason-label">Reason:</span><span>${esc(driver.penaltyReason || "Not exposed by iRacing")}${driver.penaltyInferred ? " (inferred)" : ""}</span></div>` : ""}
+                    </div>
+                  </div>
+                </td>
+                <td class="gap-cell">${esc(gapText(driver))}</td>
+                <td class="lap-cell">${esc(lapTime(driver.lastLapTime))}</td>
+                <td class="lap-cell">${esc(lapTime(driver.bestLapTime))}</td>
+                <td>${driver.lapsCompleted != null && Number(driver.lapsCompleted) >= 0 ? esc(driver.lapsCompleted) : "—"}</td>
+                <td><span class="track-status ${esc(statusClass(driver))}">${esc(driverStatus(driver))}</span></td>
+              </tr>`;
+          }).join("")}
+        </tbody>
+      </table>
+      </div>`;
+
+    const newTableShell = el.querySelector(".table-shell");
+    if(newTableShell){
+      newTableShell.scrollLeft = savedTableScrollLeft;
+    }
+  }
+
+
+  function renderSessionResults(targetId, snapshot, phase){
+    const el = $(targetId);
+
+    if(!snapshot || !Array.isArray(snapshot.drivers) || !snapshot.drivers.length){
+      el.innerHTML = `<div class="archive-empty"><strong>No ${phaseLabel(phase).toLowerCase()} data yet</strong>This section fills automatically when that session begins.</div>`;
+      return;
+    }
+
+    const drivers = [...snapshot.drivers].sort((a,b) => Number(a.position ?? 9999) - Number(b.position ?? 9999));
+    const fastest = fastestDriver(drivers);
+
+    el.innerHTML = `
+      <div class="session-summary">
+        <div><small>Session</small><strong>${esc(snapshot.sessionName || phaseLabel(phase))}</strong></div>
+        <div><small>Cars</small><strong>${esc(snapshot.driverCount ?? drivers.length)}</strong></div>
+        <div><small>Fastest</small><strong>${fastest ? hLrnDriverMetric(fastest) : "—"}</strong></div>
+        <div><small>Best Lap</small><strong>${fastest ? esc(lapTime(fastest.bestLapTime)) : "—"}</strong></div>
+      </div>
+      <div class="table-shell">
+        <table>
+          <thead>
+            <tr>
+              <th style="text-align:center">POS</th>
+              <th>CAR</th>
+              <th>DRIVER</th>
+              <th>BEST LAP</th>
+              <th>GAP</th>
+              <th>LAPS</th>
+              <th>STATUS</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${drivers.map(d => `
+              <tr class="${Number(d.position) === 1 ? "leader" : ""}">
+                <td class="pos-cell">${esc(d.position ?? "—")}</td>
+                <td><span class="car-num"><span>${esc(d.number || "—")}</span></span></td>
+                <td class="driver-cell">
+                  <div class="driver-cell-layout">
+                    ${hLrnDriverPhotoTag(d.name)}
+                    <div class="driver-cell-copy">
+                      <div class="driver-name">${esc(d.name || "Unknown")}</div>
+                      <div class="driver-sub">${esc(d.team || d.car || "")}</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="lap-cell">${esc(lapTime(d.bestLapTime))}</td>
+                <td class="gap-cell">${Number(d.position) === 1 ? "—" : esc(gapText(d))}</td>
+                <td>${d.lapsCompleted != null ? esc(d.lapsCompleted) : "—"}</td>
+                <td><span class="track-status ${esc(statusClass(d))}">${esc(driverStatus(d))}</span></td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      </div>`;
+  }
+
+  function ordinal(n){
+    const num = Number(n);
+    if(!Number.isFinite(num)) return "—";
+    const mod100 = num % 100;
+    if(mod100 >= 11 && mod100 <= 13) return `${num}th`;
+    const mod10 = num % 10;
+    if(mod10 === 1) return `${num}st`;
+    if(mod10 === 2) return `${num}nd`;
+    if(mod10 === 3) return `${num}rd`;
+    return `${num}th`;
+  }
+
+  function formatEventLine(event){
+    const lap = event.lap != null ? `Lap ${event.lap}` : "Session";
+    const inferred = event.exact === false ? " [POSSIBLE / INFERRED]" : "";
+    return `${lap} — ${event.title || "Event"}: ${event.text || ""}${inferred}`;
+  }
+
+  function buildPostRaceReport(){
+    const practice = getPhaseState("practice");
+    const qualifying = getPhaseState("qualifying");
+    const race = getPhaseState("race");
+
+    if(!practice && !qualifying && !race){
+      return "Waiting for race-night session data…";
+    }
+
+    const base = race || qualifying || practice || state || {};
+    const lines = [];
+    const divider = "============================================================";
+
+    lines.push("HLRN POST-RACE REPORT DATA");
+    lines.push(divider);
+    lines.push(`Event: ${base.series || "High Line Racing Network"}`);
+    lines.push(`Track: ${base.track || "—"}`);
+    if(base.subSessionId != null) lines.push(`iRacing SubSession: ${base.subSessionId}`);
+    lines.push("");
+
+    if(practice && Array.isArray(practice.drivers) && practice.drivers.length){
+      const pDrivers = [...practice.drivers].sort((a,b) => Number(a.position ?? 9999) - Number(b.position ?? 9999));
+      const fast = fastestDriver(pDrivers);
+      lines.push("PRACTICE");
+      lines.push("--------");
+      if(fast){
+        lines.push(`Fastest: #${fast.number || "—"} ${fast.name} — ${lapTime(fast.bestLapTime)}`);
+      }
+      lines.push(`Cars: ${practice.driverCount ?? pDrivers.length}`);
+      lines.push("");
+    }
+
+    if(qualifying && Array.isArray(qualifying.drivers) && qualifying.drivers.length){
+      const qDrivers = [...qualifying.drivers].sort((a,b) => Number(a.position ?? 9999) - Number(b.position ?? 9999));
+      lines.push("QUALIFYING RESULTS");
+      lines.push("------------------");
+      qDrivers.forEach(d => {
+        const time = Number(d.bestLapTime) > 0 ? lapTime(d.bestLapTime) : "NO TIME";
+        lines.push(`${String(d.position ?? "—").padStart(2, " ")}. #${d.number || "—"} ${d.name} — ${time}`);
+      });
+      lines.push("");
+    }
+
+    if(race && Array.isArray(race.drivers) && race.drivers.length){
+      const rDrivers = [...race.drivers].sort((a,b) => Number(a.position ?? 9999) - Number(b.position ?? 9999));
+      const winner = rDrivers[0] || null;
+      const raceFast = fastestDriver(rDrivers);
+      const qDrivers = qualifying && Array.isArray(qualifying.drivers) ? qualifying.drivers : [];
+      const events = accurateRaceEvents(race);
+
+      const cautions = events.filter(e => e.type === "flag" && String(e.title || "").toUpperCase() === "CAUTION").length;
+      const leadChanges = events.filter(e => e.type === "lead").length;
+      const penalties = events.filter(e => e.type === "penalty" && e.title === "Black Flag");
+      const dqs = rDrivers.filter(d => d.disqualified || String(d.status || "").toUpperCase() === "DQ");
+      const disconnects = rDrivers.filter(d => String(d.status || "").includes("DISCONNECTED"));
+
+      lines.push("RACE SUMMARY");
+      lines.push("------------");
+      if(winner) lines.push(`Winner: #${winner.number || "—"} ${winner.name}`);
+      if(raceFast) lines.push(`Fastest Lap: #${raceFast.number || "—"} ${raceFast.name} — ${lapTime(raceFast.bestLapTime)}`);
+      lines.push(`Race Distance: ${race.totalLaps || race.lap || "—"} laps`);
+      lines.push(`Verified Lead Changes: ${leadChanges}`);
+      lines.push(`Cautions Logged: ${cautions}`);
+      lines.push(`Black Flags Logged: ${penalties.length}`);
+      lines.push(`Disqualifications: ${dqs.length}`);
+      lines.push(`Disconnected / Out: ${disconnects.length}`);
+      lines.push("");
+
+      lines.push("FULL RACE RESULTS");
+      lines.push("-----------------");
+      rDrivers.forEach(d => {
+        const q = findMatchingDriver(qualifying, d);
+        const start = q && q.position != null ? Number(q.position) : null;
+        const finish = d.position != null ? Number(d.position) : null;
+        const change = start != null && finish != null ? start - finish : null;
+        const changeText = change == null
+          ? "Start —"
+          : change > 0
+            ? `+${change}`
+            : String(change);
+
+        let status = String(d.status || "").trim();
+        if((race.flag === "CHECKERED" || race.sessionState === "CHECKERED" || race.sessionState === "COOL DOWN")
+            && (!status || status === "ON TRACK")){
+          status = "FINISHED";
+        }
+
+        const best = Number(d.bestLapTime) > 0 ? lapTime(d.bestLapTime) : "—";
+        lines.push(
+          `${String(finish ?? "—").padStart(2, " ")}. #${d.number || "—"} ${d.name}`
+          + ` | Start ${start ?? "—"}`
+          + ` | +/- ${changeText}`
+          + ` | Laps ${d.lapsCompleted ?? "—"}`
+          + ` | Best ${best}`
+          + ` | ${status || "—"}`
+        );
+      });
+      lines.push("");
+
+      if(penalties.length){
+        lines.push("PENALTIES");
+        lines.push("---------");
+        penalties.forEach(e => lines.push(formatEventLine(e)));
+        lines.push("");
+      }
+
+      if(dqs.length || disconnects.length){
+        lines.push("DRIVERS OUT / DQ");
+        lines.push("----------------");
+        [...dqs, ...disconnects]
+          .filter((d, i, arr) => arr.findIndex(x => x.carIdx === d.carIdx) === i)
+          .forEach(d => lines.push(`#${d.number || "—"} ${d.name} — ${d.status || (d.disqualified ? "DQ" : "OUT")}`));
+        lines.push("");
+      }
+
+      lines.push("FULL RACE FEED");
+      lines.push("--------------");
+      if(events.length){
+        events.forEach(event => lines.push(formatEventLine(event)));
+      }else{
+        lines.push("No race-feed events were captured.");
+      }
+      lines.push("");
+    }else{
+      lines.push("RACE");
+      lines.push("----");
+      lines.push("Race data will appear here automatically when the race session begins.");
+      lines.push("");
+    }
+
+    lines.push(divider);
+    lines.push("Generated by HLRN Live Race Night Center");
+
+    return lines.join("\n");
+  }
+
+  function renderReport(){
+    const report = buildPostRaceReport();
+    $("reportText").textContent = report;
+
+    const race = getPhaseState("race");
+    if(race){
+      const complete = String(race.flag || "").toUpperCase() === "CHECKERED"
+        || ["CHECKERED","COOL DOWN"].includes(String(race.sessionState || "").toUpperCase());
+      $("reportStatus").textContent = complete
+        ? "FINAL REPORT READY TO COPY"
+        : "LIVE REPORT — UPDATES THROUGHOUT THE RACE";
+    }else{
+      $("reportStatus").textContent = "BUILDING RACE-NIGHT REPORT";
+    }
+  }
+
+
+  function renderCrownHero(drivers, online){
+    const leader = displayLeader(drivers);
+    const raceMode = state?.phase === "race";
+    const photo = $("rcLeaderPhoto");
+    $("rcLeaderKicker").textContent = raceMode ? "VERIFIED RACE LEADER" : (state?.phase === "qualifying" ? "CURRENT P1" : "SESSION LEADER");
+
+    if(!online || !leader){
+      $("rcLeaderNumber").textContent = "#—";
+      $("rcLeaderName").textContent = online ? "WAITING FOR SCORED CARS" : "WAITING FOR RACE";
+      $("rcLeaderGap").textContent = "GAP +0.000";
+      $("rcLeaderLap").textContent = "LAP —";
+      $("rcLeaderBest").textContent = "BEST —";
+      photo.style.display="none";
+      photo.removeAttribute("src");
+      $("rcFrontMeta").textContent = online ? phaseLabel(state?.phase || "other") : "STANDBY";
+      $("rcTopThree").innerHTML = `<div class="rc-front-empty">The top three will appear when live scoring begins.</div>`;
+      return;
+    }
+
+    $("rcLeaderNumber").textContent = `#${leader.number || "—"}`;
+    $("rcLeaderName").textContent = leader.name || "Unknown Driver";
+    $("rcLeaderGap").textContent = raceMode ? "RACE LEADER • +0.000" : `P${leader.position ?? 1}`;
+    $("rcLeaderLap").textContent = state?.lap != null ? `LAP ${state.lap}${state.totalLaps ? ` / ${state.totalLaps}` : ""}` : `LAPS ${leader.lapsCompleted ?? "—"}`;
+    $("rcLeaderBest").textContent = `BEST ${lapTime(leader.bestLapTime)}`;
+    const leaderPhoto=hLrnDriverPhotoUrl(leader.name);
+    if(leaderPhoto){photo.src=leaderPhoto;photo.style.display="block";}else{photo.style.display="none";photo.removeAttribute("src");}
+
+    const top = [...drivers]
+      .filter(d => Number(d.position) >= 1 && Number(d.position) <= 3)
+      .filter(d => !d.disqualified)
+      .sort((a,b)=>Number(a.position)-Number(b.position));
+    $("rcFrontMeta").textContent = raceMode ? `LAP ${state?.lap ?? "—"}` : phaseLabel(state?.phase || "other");
+    $("rcTopThree").innerHTML = top.length ? top.map(d=>{
+      const url=hLrnDriverPhotoUrl(d.name);
+      const gap=Number(d.position)===1 ? "LEADER" : gapText(d);
+      return `<div class="rc-top3-row">
+        <div class="rc-top3-pos">P${esc(d.position ?? "—")}</div>
+        ${url ? `<img class="rc-top3-photo" src="${esc(url)}" alt="" loading="lazy" onerror="this.remove()">` : `<div></div>`}
+        <div class="rc-top3-copy"><div class="rc-top3-name">#${esc(d.number || "—")} ${esc(d.name || "Unknown")}</div><div class="rc-top3-sub">${esc(d.team || d.car || "HLRN COMPETITOR")}</div></div>
+        <div class="rc-top3-gap">${esc(gap)}<small>${Number(d.position)===1 ? "" : "behind"}</small></div>
+      </div>`;
+    }).join("") : `<div class="rc-front-empty">Waiting for the front of the field.</div>`;
+  }
+
+  function renderFastestPage(drivers, online){
+    const el=$("rcFastestList");
+    if(!el) return;
+    const ranked=[...drivers].filter(d=>Number(d.bestLapTime)>0).sort((a,b)=>Number(a.bestLapTime)-Number(b.bestLapTime)).slice(0,12);
+    $("rcFastestMeta").textContent = online ? `${phaseLabel(state?.phase || "other")} • ${ranked.length} TIMED` : "OFFLINE";
+    if(!online || !ranked.length){
+      el.innerHTML=`<div class="offline"><strong>No lap times yet</strong>Fastest laps will rank automatically as timed laps are completed.</div>`;
+      return;
+    }
+    const best=Number(ranked[0].bestLapTime);
+    el.innerHTML=ranked.map((d,i)=>{
+      const delta=Number(d.bestLapTime)-best;
+      const url=hLrnDriverPhotoUrl(d.name);
+      return `<div class="rc-fast-card">
+        <div class="rc-fast-rank">${i+1}</div>
+        ${url ? `<img class="rc-fast-photo" src="${esc(url)}" alt="" loading="lazy" onerror="this.remove()">` : `<div></div>`}
+        <div><div class="rc-fast-name">#${esc(d.number || "—")} ${esc(d.name || "Unknown")}</div><div class="rc-fast-sub">P${esc(d.position ?? "—")} • ${esc(d.lapsCompleted ?? "—")} LAPS</div></div>
+        <div class="rc-fast-time">${esc(lapTime(d.bestLapTime))}</div>
+        <div class="rc-fast-delta">${i===0 ? "FASTEST" : `+${delta.toFixed(3)}`}</div>
+      </div>`;
+    }).join("");
+  }
+
+  function renderBattlesPage(drivers, online){
+    const el=$("rcBattlesPage");
+    if(!el) return;
+    if(!online || state?.phase!=="race"){
+      $("rcBattlesMeta").textContent=online ? "RACE ONLY" : "OFFLINE";
+      el.innerHTML=`<div class="offline"><strong>Battle Center is standing by</strong>It activates when the race session starts.</div>`;
+      return;
+    }
+    const battles=getBattles(drivers).slice(0,6);
+    $("rcBattlesMeta").textContent=battles.length ? `TOP 10 • ${battles.length} CLOSE` : "TOP 10 • CLEAR";
+    if(!battles.length){el.innerHTML=`<div class="offline"><strong>No close top-10 battle right now</strong>Only genuine same-lap battles within 1.5 seconds are shown.</div>`;return;}
+    el.innerHTML=battles.map(b=>{
+      const cls=b.interval<=.35?"hot":(b.interval<=.75?"close":"");
+      return `<div class="battle-card ${cls}">
+        <div class="battle-pos">P${esc(b.ahead.position)} ↔ P${esc(b.behind.position)}</div>
+        <div class="battle-driver-line">${hLrnDriverPhotoTag(b.behind.name,"small")}<div class="battle-driver-copy"><div class="battle-name">#${esc(b.behind.number||"—")} ${esc(b.behind.name||"Unknown")}</div><div class="battle-vs">chasing #${esc(b.ahead.number||"—")} ${esc(b.ahead.name||"Unknown")}</div></div></div>
+        <div class="battle-gap">${b.interval.toFixed(3)}<small>seconds</small></div>
+      </div>`;
+    }).join("");
+  }
+
+  function raceControlEvents(raceState){
+    return accurateRaceEvents(raceState).filter(e=>{
+      const type=String(e?.type||"").toLowerCase();
+      const title=String(e?.title||"").toUpperCase();
+      return type==="flag" || type==="penalty" || title.includes("CAUTION") || title.includes("RED FLAG") || title.includes("CHECKERED") || title.includes("BLACK FLAG");
+    });
+  }
+
+  function renderFlagsPage(drivers, online){
+    if(!$("rcActiveFlags")) return;
+    const raceState=getPhaseState("race");
+    const events=raceControlEvents(raceState);
+    const penaltyEvents=events.filter(e=>String(e?.type||"").toLowerCase()==="penalty" || String(e?.title||"").toUpperCase().includes("BLACK FLAG"));
+    const blackFlags=penaltyEvents.filter(e=>String(e?.title||"").toUpperCase().includes("BLACK FLAG")).length;
+    const active=drivers.filter(d=>d.blackFlag || d.disqualified || d.dqFlag);
+    const current=online ? normalizeFlag(state?.flag) : "OFFLINE";
+    const captures=Array.isArray(state?.penaltyCaptures) ? state.penaltyCaptures : [];
+
+    $("rcFlagCurrent").textContent=current;
+    $("rcFlagCurrent").className=flagClass(current);
+    $("rcFlagCautions").textContent=blackFlags;
+    $("rcFlagPenalties").textContent=penaltyEvents.length;
+    $("rcActiveFlagsCount").textContent=active.length;
+    $("rcFlagsMeta").textContent=online ? "AUTO CAPTURE ARMED" : "OFFLINE";
+
+    const captureFile=state?.penaltyCaptureFile || "penalty_captures.json";
+    if($("rcPenaltyCaptureStatus")){
+      const completed=captures.filter(c=>c?.complete).length;
+      $("rcPenaltyCaptureStatus").innerHTML=online
+        ? `<strong>Automatic penalty capture armed.</strong> Every new black flag saves roughly 2 seconds before + trigger + 2 seconds after to <b>${esc(captureFile)}</b>. Captures this session/feed: <b>${captures.length}</b>${captures.length?` • complete: <b>${completed}</b>`:""}.`
+        : `<strong>Automatic penalty capture:</strong> waiting for the live bridge.`;
+    }
+
+    $("rcActiveFlags").innerHTML=active.length ? active.map(d=>{
+      const url=hLrnDriverPhotoUrl(d.name);
+      const label=d.disqualified||d.dqFlag?"DISQUALIFIED":"BLACK FLAG";
+      const reason=d.blackFlag ? (d.penaltyReason || "Reason not exposed by iRacing") : "Driver disqualified";
+      const source=String(d.penaltyReasonSource||"NOT_EXPOSED").toUpperCase();
+      const sourceClass=source.toLowerCase();
+      const category=d.penaltyCategory || "Unclassified Black Flag";
+      const detail=d.penaltyReasonDetail || "HLRN will preserve the surrounding SDK data automatically.";
+      const captured=d.penaltyAutoCaptured ? " • SDK SNAPSHOT SAVED" : "";
+      return `<div class="rc-active-penalty">${url?`<img src="${esc(url)}" alt="" loading="lazy" onerror="this.remove()">`:`<div></div>`}<div><strong>#${esc(d.number||"—")} ${esc(d.name||"Unknown")}<span class="rc-source-badge ${esc(sourceClass)}">${esc(source.replace("_"," "))}${esc(captured)}</span></strong><div class="rc-penalty-category">${esc(category)}</div><p><b>${esc(reason)}</b><br>${esc(detail)}</p></div><span class="rc-flag-badge">${esc(label)}</span></div>`;
+    }).join("") : `<div class="offline"><strong>No active penalties</strong>Every new black flag is detected from iRacing's per-car flag state and captured automatically for reason analysis.</div>`;
+
+    const recent=penaltyEvents.slice(-16).reverse();
+    $("rcFlagTimeline").innerHTML=recent.length ? recent.map(e=>`<div class="rc-feed-item ${esc(eventTone(e))}"><div class="rc-feed-lap">${e.lap!=null&&Number(e.lap)>=0?`LAP ${esc(e.lap)}`:"SESSION"}</div><div class="rc-feed-dot"></div><div><div class="rc-feed-title">${esc(e.title||"Penalty")}</div><div class="rc-feed-copy">${esc(e.text||"")}</div></div></div>`).join("") : `<div class="offline"><strong>No penalty events yet</strong>Black flags, clears and disqualifications will appear here automatically.</div>`;
+  }
+
+  function renderRadioFeed(){
+    if(!$("rcRadioFeed")) return;
+    const raceState=getPhaseState("race");
+    const events=accurateRaceEvents(raceState).filter(e=>["flag","lead","penalty","fastest","position","session","lap"].includes(String(e?.type||"").toLowerCase())).slice(-15).reverse();
+    $("rcRadioMeta").textContent=state?.online ? "TEXT FEED + SCANNER" : "STANDBY";
+    $("rcRadioFeed").innerHTML=events.length ? events.map(e=>`<div class="rc-feed-item ${esc(eventTone(e))}"><div class="rc-feed-lap">${e.lap!=null&&Number(e.lap)>=0?`LAP ${esc(e.lap)}`:"SESSION"}</div><div class="rc-feed-dot"></div><div><div class="rc-feed-title">${esc(e.title||"Live Update")}</div><div class="rc-feed-copy">${esc(e.text||"")}</div></div></div>`).join("") : `<div class="offline"><strong>No race updates yet</strong>The verified text feed will populate as race events are recorded.</div>`;
+  }
+
+  function renderScanner(drivers){
+    const list = $("scannerDrivers");
+
+    if(!drivers.length){
+      list.innerHTML = `<div class="offline"><strong>No drivers yet</strong>Waiting for the field.</div>`;
+      $("scannerContent").innerHTML = `<div class="offline"><strong>Scanner unavailable</strong>Waiting for live iRacing data.</div>`;
+      return;
+    }
+
+    if(selectedCarIdx == null || !drivers.some(d => d.carIdx === selectedCarIdx)){
+      selectedCarIdx = drivers[0].carIdx;
+    }
+
+    list.innerHTML = drivers.map(driver => `
+      <button class="driver-pick ${driver.carIdx === selectedCarIdx ? "active" : ""}" data-car="${driver.carIdx}">
+        <span class="pick-pos">${esc(driver.position ?? "—")}</span>
+        <span class="car-num"><span>${esc(driver.number || "—")}</span></span>
+        ${hLrnDriverPhotoTag(driver.name,"small")}
+        <span class="pick-name">${esc(driver.name)}</span>
+        <span class="pick-gap">${esc(speedText(driver))}</span>
+      </button>
+    `).join("");
+
+    list.querySelectorAll(".driver-pick").forEach(btn => {
+      btn.addEventListener("click", () => {
+        selectedCarIdx = Number(btn.dataset.car);
+        renderScanner(drivers);
+      });
+    });
+
+    const d = drivers.find(x => x.carIdx === selectedCarIdx) || drivers[0];
+    const delta = positionDelta(d);
+    const speedLabel = d.speedSource === "EST" ? "Estimated Speed" : "Speed";
+
+    $("scannerContent").innerHTML = `
+      <div class="scanner-hero">
+        <div class="scanner-number"><span>${esc(d.number || "—")}</span></div>
+        <div class="scanner-driver-head">
+          ${hLrnDriverPhotoTag(d.name,"hero")}
+          <div class="scanner-driver-copy">
+            <div class="scanner-name">${esc(d.name || "Unknown Driver")}</div>
+            <div class="scanner-team">${esc(d.team || d.car || "HLRN Competitor")}${d.isPlayerCar ? " • PLAYER CAR" : ""}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scanner-grid">
+        <div class="scanner-stat"><small>Position</small><strong>${esc(d.position ?? "—")}</strong></div>
+        <div class="scanner-stat"><small>${esc(speedLabel)}</small><strong>${esc(speedText(d))}</strong></div>
+        <div class="scanner-stat"><small>Gear</small><strong>${esc(gearText(d.gear))}</strong></div>
+
+        <div class="scanner-stat"><small>RPM</small><strong>${esc(rpmText(d.rpm))}</strong></div>
+        <div class="scanner-stat"><small>Behind</small><strong>${esc(gapText(d))}</strong></div>
+        <div class="scanner-stat"><small>Pos +/-</small><strong>${esc(delta.text)}</strong></div>
+
+        <div class="scanner-stat"><small>Last Lap</small><strong>${esc(lapTime(d.lastLapTime))}</strong></div>
+        <div class="scanner-stat"><small>Best Lap</small><strong>${esc(lapTime(d.bestLapTime))}</strong></div>
+        <div class="scanner-stat"><small>Laps Completed</small><strong>${d.lapsCompleted != null && Number(d.lapsCompleted) >= 0 ? esc(d.lapsCompleted) : "—"}</strong></div>
+
+        <div class="scanner-stat"><small>Track Status</small><strong class="track-status ${esc(statusClass(d))}">${esc(driverStatus(d))}</strong></div>
+        <div class="scanner-stat"><small>iRating</small><strong>${esc(d.irating ?? "—")}</strong></div>
+        <div class="scanner-stat"><small>Car</small><strong>${esc(d.car || "—")}</strong></div>
+
+      </div>
+`;
+
+  }
+
+  function render(s){
+    state = s || {};
+    const online = !!state.online;
+
+    if(state.phase !== lastPhase){
+      firstSeenPosition.clear();
+      lastPhase = state.phase || null;
+    }
+    const drivers = Array.isArray(state.drivers) ? [...state.drivers] : [];
+
+    drivers.sort((a,b) => {
+      const ap = a.position == null ? 9999 : Number(a.position);
+      const bp = b.position == null ? 9999 : Number(b.position);
+      return ap - bp;
+    });
+
+    $("liveBadge").classList.toggle("on", online);
+    $("liveBadgeText").textContent = online ? "LIVE NOW" : "OFFLINE";
+    $("series").textContent = state.series || "HIGH LINE RACING NETWORK";
+    $("track").textContent = online ? (state.track || "IRACING LIVE") : "WAITING FOR IRACING";
+
+    const phase = state.phase || "other";
+    renderSessionFlow(state);
+    autoNavigateSession(state);
+    $("phaseBadge").textContent = online ? phaseLabel(phase) : "WAITING";
+    $("phaseBadge").className = `phase-badge ${online ? phase : ""}`;
+
+    const liveTitles = {
+      practice: "Practice Timing",
+      qualifying: "Qualifying Timing",
+      race: "Live Race Leaderboard",
+      other: "Live Session"
+    };
+    const leaderLabels = {
+      practice: "Fastest",
+      qualifying: "P1",
+      race: "Leader",
+      other: "Leader"
+    };
+    $("livePanelTitle").textContent = liveTitles[phase] || "Live Session";
+    $("leaderMetricLabel").textContent = leaderLabels[phase] || "Leader";
+
+    const sessionBits = [];
+    if(state.sessionName) sessionBits.push(state.sessionName);
+    if(state.sessionState) sessionBits.push(state.sessionState);
+    $("sessionName").textContent = online ? sessionBits.join(" • ") : "No active session";
+
+    const flag = online ? normalizeFlag(state.flag) : "OFFLINE";
+    $("flag").textContent = flag;
+    $("flag").className = "status-value " + flagClass(flag);
+    $("flagHero").textContent = flag;
+    $("flagHero").className = "flag-hero " + flagClass(flag);
+
+    $("lap").textContent = state.lap != null
+      ? (state.totalLaps ? `${state.lap} / ${state.totalLaps}` : String(state.lap))
+      : "—";
+
+    $("timeRemaining").textContent = duration(state.timeRemaining);
+    $("carCount").textContent = state.driverCount ?? drivers.length;
+    $("sessionState").textContent = state.sessionState || "—";
+
+    updateVerifiedLeader(drivers, online);
+
+    const leader = displayLeader(drivers);
+    const fast = fastestDriver(drivers);
+    const closestBattle = phase === "race" ? (getBattles(drivers)[0] || null) : null;
+
+    $("leaderName").innerHTML = leader ? hLrnDriverMetric(leader) : "—";
+    $("bestLap").textContent = fast ? lapTime(fast.bestLapTime) : "—";
+    $("fastestDriver").innerHTML = fast ? hLrnDriverMetric(fast) : "—";
+    $("closestBattleMetric").textContent = closestBattle ? `P${closestBattle.ahead.position}-P${closestBattle.behind.position} • ${closestBattle.interval.toFixed(3)}s` : "—";
+
+    $("trackerLeader").innerHTML = leader ? `<span class="metric-driver-line">${hLrnDriverPhotoTag(leader.name,"tiny")}<span>#${esc(leader.number || "—")} ${esc(leader.name)}</span></span>` : "—";
+    $("trackerFastest").innerHTML = fast ? `<span class="metric-driver-line">${hLrnDriverPhotoTag(fast.name,"tiny")}<span>${esc(fast.name)} • ${esc(lapTime(fast.bestLapTime))}</span></span>` : "—";
+    $("trackerClosestBattle").textContent = closestBattle ? `P${closestBattle.ahead.position} / P${closestBattle.behind.position} • ${closestBattle.interval.toFixed(3)}s` : "—";
+    $("trackerField").textContent = state.driverCount ?? drivers.length;
+    $("trackerSource").textContent = state.source || "—";
+
+    if(state.updatedAt){
+      const updated = new Date(state.updatedAt);
+      $("lastUpdate").textContent = updated.toLocaleTimeString([], {hour:"numeric",minute:"2-digit",second:"2-digit"});
+      const age = Math.max(0, Date.now() - updated.getTime());
+      $("feedAge").textContent = `${(age/1000).toFixed(1)}s`;
+    }else{
+      $("lastUpdate").textContent = "—";
+      $("feedAge").textContent = "—";
+    }
+
+    renderLeaderboard(drivers, online);
+    renderScanner(drivers);
+    renderLiveTicker(online, drivers);
+    renderBattleTracker(drivers, online);
+    renderCrownHero(drivers, online);
+    renderFastestPage(drivers, online);
+    renderBattlesPage(drivers, online);
+    renderFlagsPage(drivers, online);
+    renderRadioFeed();
+
+    renderSessionResults("practiceResults", getPhaseState("practice"), "practice");
+    renderSessionResults("qualifyingResults", getPhaseState("qualifying"), "qualifying");
+
+    const raceState = getPhaseState("race");
+    renderTimeline(accurateRaceEvents(raceState));
+    renderRacePulse(raceState);
+    renderRaceStorylines(drivers, online);
+
+    renderReport();
+    $("rawFeed").textContent = JSON.stringify(state, null, 2);
+  }
+
+  function buildPhotoDemoState(){
+    const rows = [
+      [0,"82","Chris James",1,0,0.000,29.842,29.612],
+      [1,"12","Trevor Haley",2,0,0.324,29.911,29.701],
+      [2,"66","Hunter Welborn",3,0,0.781,30.022,29.840],
+      [3,"23","Ryan Wilson21",4,0,1.126,30.118,29.955],
+      [4,"21","Jim Segredo",5,0,1.905,30.201,30.002],
+      [5,"34","Tommy Rogers",6,0,2.514,30.310,30.109],
+      [6,"67","Ethan Eckert",7,0,3.142,30.402,30.187],
+      [7,"28","Nicholas Baumann",8,0,3.906,30.511,30.246],
+      [8,"78","Randy Schweitzer RSI",9,0,4.782,30.609,30.351],
+      [9,"99","NO PHOTO TEST",10,0,5.640,30.744,30.498]
+    ];
+
+    const drivers = rows.map(([carIdx,number,name,position,onPitRoad,gap,lastLapTime,bestLapTime],i) => ({
+      carIdx, number, name, position, onPitRoad:!!onPitRoad, gap,
+      interval: position === 1 ? 0 : Math.max(.18, gap - (rows[i-1]?.[5] || 0)),
+      lastLapTime, bestLapTime, lapsCompleted:42,
+      status:"ACTIVE", team:"HLRN Demo Team", car:"NASCAR Cup Car",
+      speedMph: Math.max(154, 181-i*2), speedSource:"LIVE", gear:4,
+      rpm: Math.max(6900, 8350-i*105), irating: 2200+i*125,
+      isPlayerCar:name === "Hunter Welborn"
+    }));
+
+    const practiceDrivers = drivers.map((d,i)=>({
+      ...d, position:i+1, bestLapTime:d.bestLapTime+.55, lastLapTime:d.lastLapTime+.6,
+      lapsCompleted:18, gap:i===0?0:(i*.21)
+    }));
+    const qualifyingDrivers = drivers.map((d,i)=>({
+      ...d, position:((i+2)%drivers.length)+1, bestLapTime:d.bestLapTime+.20,
+      lastLapTime:d.bestLapTime+.20, lapsCompleted:2, gap:i===0?0:(i*.16)
+    })).sort((a,b)=>a.position-b.position);
+
+    return {
+      online:true,
+      series:"HIGH LINE RACING NETWORK — DEMO",
+      track:"DRIVER PHOTO TEST",
+      phase:"race",
+      sessionName:"HLRN Live Page Demo",
+      sessionState:"RACING",
+      flag:"GREEN",
+      lap:42,
+      totalLaps:100,
+      timeRemaining:3480,
+      driverCount:drivers.length,
+      source:"DEMO DATA",
+      updatedAt:new Date().toISOString(),
+      drivers,
+      events:[
+        {type:"session",title:"DEMO MODE",text:"Photo test data is active — no iRacing computer is required.",lap:42,capturedAt:Date.now()-3000},
+        {type:"fastest",title:"FASTEST LAP",text:"Chris James posts the fastest lap in the demo field.",lap:41,capturedAt:Date.now()-2000},
+        {type:"flag",title:"GREEN FLAG",text:"Demo field is under green for layout testing.",lap:42,capturedAt:Date.now()-1000}
+      ],
+      sessionArchive:{
+        practice:{online:true,phase:"practice",sessionName:"Practice Demo",driverCount:practiceDrivers.length,drivers:practiceDrivers},
+        qualifying:{online:true,phase:"qualifying",sessionName:"Qualifying Demo",driverCount:qualifyingDrivers.length,drivers:qualifyingDrivers}
+      }
+    };
+  }
+
+  function startDemoMode(){
+    const demoState = buildPhotoDemoState();
+    render(demoState);
+    $("socketStatus").textContent = "DEMO";
+    $("connectionText").textContent = "Demo data — no iRacing bridge required";
+    $("liveBadgeText").textContent = "DEMO MODE";
+    document.title = "HLRN Live Results — DEMO MODE";
+  }
+
+  function connect(){
+    $("socketStatus").textContent = "CONNECTING";
+    ws = new WebSocket(FEED_WS);
+
+    ws.onopen = () => {
+      $("socketStatus").textContent = "CONNECTED";
+      $("connectionText").textContent = "Live website feed connected";
+      retryMs = 1000;
+    };
+
+    ws.onmessage = event => {
+      try{
+        const msg = JSON.parse(event.data);
+        if(msg.type === "state") render(msg.data);
+      }catch(err){
+        console.error("Bad feed message", err);
+      }
+    };
+
+    ws.onclose = () => {
+      $("socketStatus").textContent = "RECONNECTING";
+      $("connectionText").textContent = "Reconnecting to live feed";
+      setTimeout(connect, retryMs);
+      retryMs = Math.min(retryMs * 1.6, 15000);
+    };
+
+    ws.onerror = () => {
+      try{ ws.close(); }catch{}
+    };
+  }
+
+  document.querySelectorAll(".tab").forEach(btn => {
+    btn.addEventListener("click", () => activateTab(btn.dataset.tab));
+  });
+
+  $("top10Btn").addEventListener("click", () => {
+    showFullField = false;
+    $("top10Btn").classList.add("active");
+    $("fullBtn").classList.remove("active");
+    render(state || {});
+  });
+
+  $("fullBtn").addEventListener("click", () => {
+    showFullField = true;
+    $("fullBtn").classList.add("active");
+    $("top10Btn").classList.remove("active");
+    render(state || {});
+  });
+
+  $("openRaceFeedBtn")?.addEventListener("click", () => {
+    activateTab("timeline");
+    document.getElementById("tab-timeline")?.scrollIntoView({behavior:"smooth",block:"start"});
+  });
+
+  const requestedTab = new URLSearchParams(location.search).get("section");
+  if(["race","timeline","fastest","battles","flags","radio","practice","qualifying","report"].includes(requestedTab)){
+    activateTab(requestedTab);
+  }
+
+  document.querySelectorAll(".timeline-filter").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".timeline-filter").forEach(x => x.classList.remove("active"));
+      btn.classList.add("active");
+      timelineFilter = btn.dataset.filter || "all";
+      const raceState = getPhaseState("race");
+      renderTimeline((raceState && raceState.events) || []);
+    });
+  });
+
+  $("copyReportBtn").addEventListener("click", async () => {
+    const text = $("reportText").textContent || "";
+    const btn = $("copyReportBtn");
+
+    try{
+      await navigator.clipboard.writeText(text);
+      btn.textContent = "COPIED!";
+    }catch{
+      const temp = document.createElement("textarea");
+      temp.value = text;
+      temp.style.position = "fixed";
+      temp.style.opacity = "0";
+      document.body.appendChild(temp);
+      temp.select();
+      try{ document.execCommand("copy"); }catch{}
+      temp.remove();
+      btn.textContent = "COPIED!";
+    }
+
+    setTimeout(() => { btn.textContent = "COPY FULL REPORT"; }, 1800);
+  });
+
+  if(DEMO_MODE){
+    startDemoMode();
+  }else{
+    render({online:false,drivers:[],events:[]});
+    connect();
+  }
+
+  setInterval(() => {
+    if(liveTickerItems.length > 1){
+      liveTickerIndex = (liveTickerIndex + 1) % liveTickerItems.length;
+      renderTickerFrame();
+    }
+  }, 4500);
+
+  setInterval(() => {
+    if(state && state.updatedAt){
+      const updated = new Date(state.updatedAt);
+      const age = Math.max(0, Date.now() - updated.getTime());
+      $("feedAge").textContent = `${(age/1000).toFixed(1)}s`;
+    }
+  }, 1000);
+})();
+</script>
+
+<script src="../assets/site-shell.js"></script>
+</body>
+</html>

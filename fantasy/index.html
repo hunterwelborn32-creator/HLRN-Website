@@ -1,0 +1,1355 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>HLRN Fantasy Live</title>
+<style>
+:root{
+  --league:#ed1c24;
+  --blue:#0077b9;
+  --blue2:#0096d8;
+  --yellow:#ffd400;
+  --black:#0a0a0a;
+  --ink:#161616;
+  --muted:#6f7780;
+  --line:#d7dbe0;
+  --soft:#f1f3f5;
+  --white:#fff;
+  --green:#00a650;
+  --shadow:0 12px 34px rgba(0,0,0,.13);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:#e9edf1;color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+body{min-height:100vh}
+.shell{max-width:1460px;margin:0 auto;background:#fff;min-height:100vh;box-shadow:0 0 40px rgba(0,0,0,.13)}
+/* TOP */
+.brandbar{
+  height:68px;background:#11151a;color:#fff;display:flex;align-items:center;justify-content:space-between;
+  padding:0 22px;border-bottom:4px solid var(--league);gap:15px
+}
+.logo{display:flex;align-items:center;gap:11px;min-width:0}
+.speedmarks{display:flex;gap:3px;transform:skewX(-18deg)}
+.speedmarks i{display:block;width:7px;height:28px;background:#ffd400}
+.speedmarks i:nth-child(2){background:#ed1c24}
+.speedmarks i:nth-child(3){background:#1e92d0}
+.speedmarks i:nth-child(4){background:#fff}
+.logo-text{font-size:26px;font-weight:1000;font-style:italic;letter-spacing:-1.5px;white-space:nowrap}
+.logo-text span{font-weight:800;color:#cbd1d7;font-size:16px;letter-spacing:0}
+.brand-actions{display:flex;align-items:center;gap:8px}
+.smallbtn{border:1px solid #3a424b;background:#1c2228;color:#fff;border-radius:4px;padding:9px 11px;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.5px}
+.smallbtn:hover{background:#272f37}
+/* NAV */
+.topnav{
+  height:48px;background:#fff;border-bottom:1px solid #d5d9dd;display:flex;align-items:stretch;overflow:auto
+}
+.topnav button{
+  border:0;background:#fff;color:#31363b;padding:0 20px;font-size:10px;font-weight:1000;text-transform:uppercase;letter-spacing:.5px;
+  border-right:1px solid #eceff1;white-space:nowrap;position:relative
+}
+.topnav button.active{color:#0075b5}
+.topnav button.active:after{content:"";height:3px;background:#007fc3;position:absolute;left:12px;right:12px;bottom:0}
+/* WEEK STRIP */
+.weekstrip{background:#070707;color:#fff;padding:11px 18px 12px;overflow:hidden}
+.weeknums{display:flex;align-items:center;gap:11px;overflow:auto;padding-bottom:6px;scrollbar-width:none}
+.weeknums::-webkit-scrollbar{display:none}
+.weeknum{font-size:9px;color:#6f7479;font-weight:900;min-width:14px;text-align:center}
+.weeknum.done{color:#b1b6bb}
+.weeknum.active{color:#fff;position:relative}
+.weeknum.active:after{content:"";position:absolute;height:3px;background:#00a2e8;left:-3px;right:-3px;bottom:-7px}
+.racebar{
+  display:grid;grid-template-columns:1.45fr .9fr .9fr .9fr .9fr;gap:0;margin-top:11px;border-top:1px solid #242424
+}
+.racecell{padding:10px 13px 2px;border-right:1px solid #2a2a2a;min-height:52px}
+.racecell:last-child{border-right:0}
+.racecell small{display:block;color:#888f96;font-size:8px;font-weight:900;text-transform:uppercase;letter-spacing:.8px}
+.racecell strong{display:block;color:#fff;font-size:12px;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.racecell.track strong{font-size:15px}
+/* SUMMARY */
+.entrybar{
+  background:#fff;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1.5fr repeat(5,.7fr);min-height:83px
+}
+.entryname{padding:13px 18px;display:flex;align-items:center;gap:12px;border-right:1px solid var(--line);min-width:0}
+.avatar{
+  width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#20262c,#080808);color:#fff;display:flex;align-items:center;justify-content:center;
+  font-size:17px;font-weight:1000;border:3px solid #e7eaed
+}
+.entryname input{
+  display:block;width:100%;border:0;border-bottom:1px solid #cfd4d9;font-size:16px;font-weight:1000;padding:3px 0 4px;outline:none;background:transparent
+}
+.entryname .hint{font-size:8px;color:#8a929a;font-weight:800;margin-top:4px;text-transform:uppercase}
+.metric{padding:14px 10px;text-align:center;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:center}
+.metric small{font-size:8px;color:#777f87;font-weight:1000;text-transform:uppercase}
+.metric b{font-size:17px;margin-top:7px}
+/* LEAGUE SWITCH */
+.controls{display:flex;justify-content:space-between;align-items:center;padding:11px 18px;border-bottom:1px solid var(--line);gap:10px;flex-wrap:wrap}
+.leagues{display:flex;border:1px solid #bdc4ca;border-radius:4px;overflow:hidden}
+.leagues button{border:0;background:#fff;color:#575f67;font-size:10px;font-weight:1000;text-transform:uppercase;padding:9px 16px}
+.leagues button.active{background:var(--league);color:#fff}
+.sync{font-size:9px;color:#737b83;font-weight:900;text-transform:uppercase;display:flex;align-items:center;gap:7px}
+.sync i{width:7px;height:7px;border-radius:50%;background:#28c86f}
+/* CONTENT */
+.content{padding:18px}
+.section{margin-bottom:20px}
+.sectionline{height:4px;background:var(--blue);margin-bottom:0}
+.sectiontitle{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 11px;background:#fff;border:1px solid var(--line);border-top:0
+}
+.sectiontitle h2{margin:0;font-size:14px;font-weight:1000;text-transform:uppercase}
+.sectiontitle span{font-size:8px;color:#7c848c;font-weight:900;text-transform:uppercase}
+.yellowbar{background:var(--yellow);height:24px;border-left:1px solid #d5bd00;border-right:1px solid #d5bd00}
+.yellowbar span{font-size:10px;font-weight:1000;line-height:24px;padding-left:10px;text-transform:uppercase}
+/* ROSTER */
+.roster-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:14px}
+.rosterbox{border:1px solid var(--line);background:#fff}
+.starters{padding:10px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.driver-card{
+  border:1px solid #cfd5da;background:#fff;min-height:205px;position:relative;overflow:hidden;box-shadow:0 4px 10px rgba(0,0,0,.05)
+}
+.driver-art{
+  height:109px;background:
+    linear-gradient(150deg,transparent 0 42%,rgba(255,255,255,.05) 42.5% 44%,transparent 44.5%),
+    linear-gradient(135deg,#252a30,#050505 70%);
+  position:relative;overflow:hidden;display:flex;align-items:flex-end;justify-content:flex-end
+}
+.driver-art:after{
+  content:"";position:absolute;inset:0;background:repeating-linear-gradient(120deg,transparent 0 22px,rgba(255,255,255,.02) 23px 24px)
+}
+.driver-art img{width:100%;height:100%;object-fit:cover;object-position:center 18%;position:relative;z-index:2}
+.big-rank{font-size:80px;line-height:.75;color:rgba(255,255,255,.13);font-weight:1000;font-style:italic;padding-right:8px;position:relative;z-index:1}
+.card-chip{position:absolute;left:7px;top:7px;background:#007fbd;color:#fff;padding:4px 6px;font-size:8px;font-weight:1000;z-index:4}
+.swap{
+  position:absolute;right:7px;top:7px;z-index:5;width:29px;height:29px;border-radius:50%;border:0;background:#007bb7;color:#fff;font-size:17px;font-weight:1000
+}
+.driver-info{padding:8px 9px}
+.carline{font-size:9px;color:#767e85;font-weight:900}
+.driver-name{font-size:14px;line-height:1.06;font-weight:1000;text-transform:uppercase;margin:3px 0 8px;min-height:29px}
+.cardstats{display:grid;grid-template-columns:repeat(3,1fr);gap:3px}
+.cardstat{font-size:8px;color:#777;text-align:center;border-right:1px solid #e0e3e6}
+.cardstat:last-child{border-right:0}
+.cardstat b{display:block;color:#181818;font-size:10px;margin-bottom:2px}
+.captainmark{background:#ffd400;color:#111;padding:3px 5px;font-size:7px;font-weight:1000;margin-left:4px}
+.placeholder{display:flex;align-items:center;justify-content:center;min-height:205px;color:#8d959c;font-size:10px;font-weight:900;text-transform:uppercase;background:#f7f8f9}
+.garagebox{border:1px solid var(--line);background:#fff}
+.garagebox .driver-card{margin:10px}
+/* ACTION BAR */
+.rosteractions{border-top:1px solid var(--line);padding:10px;display:flex;gap:8px;justify-content:flex-end;align-items:center;flex-wrap:wrap}
+.primary{border:0;background:#007dbc;color:#fff;padding:10px 17px;font-size:10px;font-weight:1000;text-transform:uppercase;border-radius:3px}
+.primary:hover{background:#006da5}
+.primary.league{background:var(--league)}
+.ghost{border:1px solid #bfc6cc;background:#fff;color:#40474e;padding:9px 14px;font-size:9px;font-weight:1000;text-transform:uppercase;border-radius:3px}
+/* POOL */
+.pooltools{display:grid;grid-template-columns:1fr 170px;gap:8px;padding:10px;border:1px solid var(--line);border-top:0;background:#f7f8f9}
+.search,.select{
+  width:100%;border:1px solid #c8ced4;background:#fff;color:#20252a;padding:9px 10px;outline:none;font-size:11px
+}
+.pool{border:1px solid var(--line);border-top:0;max-height:370px;overflow:auto}
+.poolrow{
+  display:grid;grid-template-columns:44px minmax(170px,1.5fr) repeat(6,.62fr) 80px;align-items:center;
+  min-height:50px;border-bottom:1px solid #e0e3e6;background:#fff;font-size:10px
+}
+.poolrow:hover{background:#f3f8fb}
+.poolrow > div{padding:7px 8px}
+.poolrank{font-size:15px;font-weight:1000;color:#007cb8;text-align:center}
+.poolname{font-weight:1000;text-transform:uppercase}
+.poolname small{display:block;color:#8a9198;font-size:7px;margin-top:3px}
+.center{text-align:center}
+.addbtn{border:1px solid #007cb8;background:#fff;color:#007cb8;font-size:8px;font-weight:1000;padding:7px 8px;text-transform:uppercase}
+.addbtn.selected{background:#007cb8;color:#fff}
+/* MATCHUPS */
+.matchups{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:10px;border:1px solid var(--line);border-top:0}
+.matchup{border:1px solid #d5d9dd;background:#fff;overflow:hidden}
+.matchdriver{min-height:74px;padding:9px;display:grid;grid-template-columns:1fr auto;gap:7px;align-items:center}
+.matchdriver + .matchdriver{border-top:0}
+.matchdriver.selected{background:#f0f9ff;box-shadow:inset 4px 0 #0087c7}
+.matchname{font-size:10px;font-weight:1000;text-transform:uppercase}
+.matchmeta{font-size:7px;color:#818991;margin-top:3px;text-transform:uppercase;font-weight:800}
+.pickdot{width:24px;height:24px;border-radius:50%;border:2px solid #c9cfd4;background:#fff;color:transparent}
+.matchdriver.selected .pickdot{background:#ffd400;border-color:#ffd400;color:#111}
+.vs{height:24px;background:#050505;color:#fff;text-align:center;font-size:11px;font-weight:1000;font-style:italic;line-height:24px}
+/* TABLES / TABS */
+.panel{border:1px solid var(--line);background:#fff}
+.tabbar{display:flex;border-bottom:1px solid var(--line);overflow:auto}
+.tabbar button{border:0;background:#fff;color:#6f7780;padding:12px 16px;font-size:9px;font-weight:1000;text-transform:uppercase;white-space:nowrap}
+.tabbar button.active{color:#007dbb;border-bottom:3px solid #007dbb}
+.tablewrap{overflow:auto;max-height:620px}
+table{width:100%;border-collapse:collapse;min-width:700px}
+th{position:sticky;top:0;background:#13171b;color:#fff;padding:10px 10px;text-align:left;font-size:8px;text-transform:uppercase;letter-spacing:.7px}
+td{padding:10px;border-bottom:1px solid #e0e3e6;font-size:10px}
+tbody tr:hover{background:#f5f8fa}
+.rankcell{font-size:15px;font-weight:1000;color:#007dbb}
+.teamcell{font-size:11px;font-weight:1000;text-transform:uppercase}
+.teamcell small{display:block;font-size:7px;color:#8b9298;margin-top:3px}
+.points{font-weight:1000;font-size:13px}
+.racepts{color:#007dbb;font-weight:1000}
+.selfrow{background:#fff8d0}
+.empty{padding:60px 20px;text-align:center;color:#7b838a}
+.empty b{display:block;color:#222;font-size:17px;margin-bottom:8px}
+/* STATS */
+.statgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.statbox{border:1px solid var(--line);background:#fff;padding:14px}
+.statbox span{display:block;font-size:8px;color:#7d858c;font-weight:1000;text-transform:uppercase}
+.statbox b{display:block;font-size:25px;margin-top:6px}
+/* MODAL */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:9999;align-items:center;justify-content:center;padding:18px}
+.modal.show{display:flex}
+.modalbox{width:min(650px,100%);max-height:88vh;overflow:auto;background:#fff;border-top:5px solid var(--blue);box-shadow:0 20px 65px rgba(0,0,0,.42)}
+.modalhead{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.modalhead h3{margin:0;font-size:19px;text-transform:uppercase;font-style:italic}
+.close{border:0;background:#111;color:#fff;width:31px;height:31px;font-size:19px}
+.modalbody{padding:16px}
+.formrow{margin-bottom:10px}
+.formrow label{display:block;font-size:8px;color:#777f87;font-weight:1000;text-transform:uppercase;margin-bottom:5px}
+.formrow input{width:100%;border:1px solid #c6ccd2;padding:10px}
+.notice{background:#fff7cf;border:1px solid #ead45f;padding:10px;font-size:9px;line-height:1.45;margin-bottom:10px}
+.loading{padding:80px 20px;text-align:center;color:#6f7780}
+.spinner{width:28px;height:28px;border:3px solid #d9dde1;border-top-color:#0080bd;border-radius:50%;margin:0 auto 12px;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.toast{position:fixed;right:18px;bottom:18px;background:#12161a;color:#fff;padding:12px 14px;border-left:4px solid #0086c8;z-index:10000;font-size:10px;font-weight:900;box-shadow:0 12px 30px rgba(0,0,0,.35);transform:translateY(90px);opacity:0;transition:.2s}
+.toast.show{transform:none;opacity:1}
+/* SETUP WARNING */
+.setupbar{background:#fff7cf;border-bottom:1px solid #ead45f;padding:8px 18px;color:#5a4c00;font-size:9px;font-weight:800;display:none}
+.setupbar.show{display:block}
+/* MOBILE */
+@media(max-width:1100px){
+  .entrybar{grid-template-columns:1.2fr repeat(3,.7fr)}
+  .metric.hide-mid{display:none}
+  .roster-layout{grid-template-columns:1fr}
+  .starters{grid-template-columns:repeat(4,1fr)}
+  .matchups{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:790px){
+  .brandbar{padding:0 12px;height:58px}
+  .logo-text{font-size:21px}
+  .logo-text span{display:none}
+  .brand-actions .smallbtn:first-child{display:none}
+  .racebar{grid-template-columns:1.5fr 1fr 1fr}
+  .racecell:nth-child(4),.racecell:nth-child(5){display:none}
+  .entrybar{grid-template-columns:1fr repeat(2,.7fr)}
+  .metric:nth-of-type(n+4){display:none}
+  .content{padding:10px}
+  .starters{grid-template-columns:repeat(2,1fr)}
+  .poolrow{grid-template-columns:38px 1fr 60px 60px 65px}
+  .poolrow .desktop{display:none}
+  .statgrid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:520px){
+  .weeknums{gap:8px}
+  .racebar{grid-template-columns:1fr 1fr}
+  .racecell:nth-child(3){display:none}
+  .entrybar{grid-template-columns:1fr 1fr}
+  .metric:nth-of-type(n+3){display:none}
+  .entryname{padding:10px}
+  .avatar{width:40px;height:40px}
+  .starters{grid-template-columns:1fr}
+  .driver-card{min-height:183px}
+  .matchups{grid-template-columns:1fr}
+  .pooltools{grid-template-columns:1fr}
+}
+
+/* DRIVER PHOTOS — EVERY DRIVER NAME */
+.driver-with-photo{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  min-width:0;
+  vertical-align:middle;
+}
+.driver-inline-photo{
+  width:34px;
+  height:40px;
+  flex:0 0 34px;
+  object-fit:contain;
+  object-position:center bottom;
+  background:transparent;
+  border:0;
+  filter:drop-shadow(0 3px 3px rgba(0,0,0,.14));
+}
+.driver-with-photo.compact .driver-inline-photo{width:28px;height:32px;flex-basis:28px}
+.driver-with-photo.small .driver-inline-photo{width:24px;height:28px;flex-basis:24px}
+.driver-with-photo.winner .driver-inline-photo{width:38px;height:44px;flex-basis:38px}
+.poolname .driver-with-photo{display:flex}
+.poolname small{margin-left:42px}
+.matchname .driver-with-photo{display:flex}
+.teamcell .driver-with-photo{display:inline-flex}
+.driver-name .driver-with-photo{display:flex}
+.driver-name .driver-inline-photo{width:42px;height:48px;flex-basis:42px}
+.driver-art img.hlrn-card-cutout{
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  padding:4px 8px 0!important;
+  background:linear-gradient(135deg,#252a30,#050505 70%)!important;
+}
+.modal-driver-head{
+  display:flex;
+  align-items:flex-end;
+  gap:14px;
+  min-width:0;
+}
+.modal-driver-head img{
+  width:82px;
+  height:92px;
+  object-fit:contain;
+  object-position:center bottom;
+  margin:-12px 0 -16px;
+  filter:drop-shadow(0 5px 6px rgba(0,0,0,.18));
+}
+.modal-driver-head h3{min-width:0}
+@media(max-width:520px){
+  .driver-inline-photo{width:30px;height:35px;flex-basis:30px}
+  .driver-with-photo.compact .driver-inline-photo{width:24px;height:28px;flex-basis:24px}
+  .poolname small{margin-left:38px}
+}
+
+
+
+/* =========================================================
+   BIGGER DRIVER PHOTOS — HLRN FANTASY
+   Enlarges driver cutouts throughout the page while keeping
+   the existing layout and responsive behavior intact.
+   ========================================================= */
+
+/* Driver names in lists, tables, matchup cards, etc. */
+.driver-inline-photo{
+  width:46px !important;
+  height:54px !important;
+  flex:0 0 46px !important;
+}
+.driver-with-photo{gap:10px !important}
+
+.driver-with-photo.compact .driver-inline-photo{
+  width:38px !important;
+  height:44px !important;
+  flex-basis:38px !important;
+}
+
+.driver-with-photo.small .driver-inline-photo{
+  width:34px !important;
+  height:40px !important;
+  flex-basis:34px !important;
+}
+
+.driver-with-photo.winner .driver-inline-photo{
+  width:54px !important;
+  height:62px !important;
+  flex-basis:54px !important;
+}
+
+/* Selected starter / garage cards */
+.driver-card{
+  min-height:245px;
+}
+.driver-art{
+  height:148px;
+}
+.driver-art img.hlrn-card-cutout{
+  padding:2px 5px 0 !important;
+  transform:scale(1.08);
+  transform-origin:center bottom;
+}
+.driver-name .driver-inline-photo{
+  width:56px !important;
+  height:64px !important;
+  flex-basis:56px !important;
+}
+
+/* Give list rows enough room for the larger cutouts */
+.poolrow{min-height:66px}
+.matchdriver{min-height:88px}
+.poolname small{margin-left:56px}
+
+/* Driver modal/header photo */
+.modal-driver-head img{
+  width:110px;
+  height:124px;
+  margin:-18px 0 -20px;
+}
+
+@media(max-width:790px){
+  .driver-inline-photo{
+    width:40px !important;
+    height:47px !important;
+    flex-basis:40px !important;
+  }
+  .driver-name .driver-inline-photo{
+    width:50px !important;
+    height:58px !important;
+    flex-basis:50px !important;
+  }
+  .driver-art{height:136px}
+  .driver-card{min-height:225px}
+}
+
+@media(max-width:520px){
+  .driver-inline-photo{
+    width:38px !important;
+    height:44px !important;
+    flex-basis:38px !important;
+  }
+  .driver-with-photo.compact .driver-inline-photo{
+    width:32px !important;
+    height:38px !important;
+    flex-basis:32px !important;
+  }
+  .driver-name .driver-inline-photo{
+    width:48px !important;
+    height:56px !important;
+    flex-basis:48px !important;
+  }
+  .driver-art{height:155px}
+  .driver-card{min-height:245px}
+  .poolname small{margin-left:48px}
+  .modal-driver-head img{
+    width:92px;
+    height:104px;
+  }
+}
+
+</style>
+<link rel="stylesheet" href="../assets/site-shell.css">
+</head>
+<body>
+<div class="shell" id="app">
+  <div class="loading"><div class="spinner"></div><b>Loading HLRN Fantasy Live…</b></div>
+</div>
+
+<div class="modal" id="entryModal">
+  <div class="modalbox">
+    <div class="modalhead"><h3>Fantasy Entry</h3><button class="close" onclick="closeEntryModal()">×</button></div>
+    <div class="modalbody">
+      <div id="sharedNotice" class="notice"></div>
+      <div class="formrow"><label>Team / Entry Name</label><input id="modalTeamName" maxlength="45" placeholder="Checkers or Wreckers"></div>
+      <div class="formrow"><label>Owner Name</label><input id="modalOwnerName" maxlength="45" placeholder="Hunter"></div>
+      <button class="primary league" onclick="saveEntry()">Save Entry & Lineup</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ========================================================================
+   HLRN FANTASY LIVE — STANDALONE GOOGLE SITES HTML
+   ------------------------------------------------------------------------
+   LIVE HLRN DATA:
+   - Sunday Drivers
+   - Monday Drivers
+   - Sunday Results
+   - Monday Results
+   - Schedule
+
+   SHARED LEADERBOARD WITHOUT APPS SCRIPT:
+   This page is ALREADY built for a Google Form as the write-back layer.
+   Lineups can save locally immediately. The leaderboard also reads the
+   shared FANTASY_PICKS / FANTASY_PLAYERS tabs already in the HLRN sheet.
+
+   To make the leaderboard shared, connect a Google Form with these fields:
+   Team Name, Owner Name, League, Race #, Starters, Garage, Captain,
+   Matchup 1, Matchup 2, Matchup 3, Matchup 4
+
+   Link the Form responses to the EXISTING HLRN data spreadsheet.
+   Then paste the Google Form action URL + entry IDs into FORM below.
+   ======================================================================== */
+
+const CONFIG = {
+  dataSheetId: '1yWa2-nHM4VnUXDS8EQwB0G2k0ockpAU55Xuj9MPccJo',
+  configSheetId: '1dbootrGi_ppHA90xF0OXv5XW2oOGfMNOwlPbsYdMEvw',
+  refreshMs: 60000,
+  starters: 4,
+  matchupBonus: 10,
+  captainMultiplier: 1.5,
+  maxUses: 10
+};
+
+/* Optional hidden Google Form write-back.
+   The page always READS shared fantasy data from FANTASY_PICKS.
+   Turn this on only after a Form is created to write entries there (or to a response tab).
+*/
+const FORM = {
+  enabled: false,
+  action: '',
+  responseTab: '',
+  fields: {
+    teamName: '',
+    ownerName: '',
+    league: '',
+    raceNo: '',
+    starters: '',
+    garage: '',
+    captain: '',
+    matchup1: '',
+    matchup2: '',
+    matchup3: '',
+    matchup4: ''
+  }
+};
+
+const S = {
+  view:'roster',
+  league:localStorage.getItem('hlrnFL_league') || 'sunday',
+  teamName:localStorage.getItem('hlrnFL_team') || 'My HLRN Entry',
+  ownerName:localStorage.getItem('hlrnFL_owner') || '',
+  drivers:{sunday:[],monday:[]},
+  results:{sunday:[],monday:[]},
+  races:{sunday:{},monday:{}},
+  latest:{sunday:null,monday:null},
+  next:{sunday:null,monday:null},
+  entries:[],
+  lineup:{sunday:[],monday:[]},
+  garage:{sunday:'',monday:''},
+  captain:{sunday:'',monday:''},
+  matchupPicks:{sunday:{},monday:{}},
+  matchups:{sunday:[],monday:[]},
+  search:'',
+  sort:'rank',
+  leaderboardMode:'overall',
+  updated:null,
+  loading:true,
+  error:''
+};
+loadLocal();
+
+function esc(v=''){
+  return String(v).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[c]));
+}
+
+/* ---------------- HLRN DRIVER PHOTO HELPERS ---------------- */
+const HLRN_DRIVER_PHOTO_BASE="https://hunterwelborn32-creator.github.io/HLRN-App/driver-photos/cutout/";
+const HLRN_DRIVER_CUTOUT_PHOTOS={"aarontruebig":"aaron-truebig.webp","alexleebaw":"alex-leebaw.webp","benjaminrichards":"benjamin-richards.webp","billdaniels":"bill-daniels.webp","brandonbeyke":"brandon-beyke.webp","brandonshowers":"brandon-showers.webp","brianhayes":"brian-hayes.webp","brianhebbard":"brian-hebbard.webp","brianhennings":"brian-hennings.webp","brockpiper":"brock-piper.webp","brycehinton":"bryce-hinton.webp","carsonfreeman":"carson-freeman.webp","charlesfletcher":"charles-fletcher.webp","chrisjames":"chris-james.webp","coricooke":"cori-cooke.webp","craigrowe":"craig-rowe.webp","darrelceballos":"darrel-ceballos.webp","daviddurand":"david-durand.webp","derekjacobs":"derek-jacobs.webp","donnybeach":"donny-beach.webp","dylanjones":"dylan-jones.webp","erichayden":"eric-hayden.webp","ethaneckert":"ethan-eckert.webp","ethanmoreno":"ethan-moreno.webp","evanfuqua":"evan-fuqua.webp","evankarlbon":"evan-karlbon.webp","evanparry":"evan-parry.webp","gerrybergeron":"gerry-bergeron.webp","grantwessley":"grant-wessley.webp","hunterwelborn":"hunter-welborn.webp","jaredphilpott":"jared-philpott.webp","jasonbranch":"jason-branch.webp","javonethompson":"javone-thompson.webp","jeremyjeffries":"jeremy-jeffries.webp","jerryfassett":"jerry-fassett.webp","jimsegredo":"jim-segredo.webp","joekonen":"joe-konen.webp","johnmiles":"john-miles.webp","joshmckinney":"josh-mckinney.webp","joshuaspragg":"joshua-spragg.webp","juanescamilla":"juan-escamilla.webp","justincrowe":"justin-crowe.webp","keatoncox":"keaton-cox.webp","kennyreel":"kenny-reel.webp","kenwoodramsey":"kenwood-ramsey.webp","kodyneagles":"kody-neagles.webp","kylekammeron":"kyle-kammeron.webp","larkinboyer":"larkin-boyer.webp","matthewbrown":"matthew-brown.webp","matthewgraham":"matthew-graham.webp","nicholasbaumann":"nicholas-baumann.webp","nicholasmoody":"nicholas-moody.webp","randyschweitzer":"randy-schweitzer.webp","randyshowers":"randy-showers.webp","rickymiles":"ricky-miles.webp","rosscampoli":"ross-campoli.webp","ryanwilson":"ryan-wilson.webp","scottwise":"scott-wise.webp","sebastianmichaels":"sebastian-michaels.webp","shanehatfield":"shane-hatfield.webp","shawnstamper":"shawn-stamper.webp","timothytyler":"timothy-tyler.webp","tjlunn":"tj-lunn.webp","tommyrogers":"tommy-rogers.webp","trevoraswarnauth":"trevor-aswarnauth.webp","trevorhaley":"trevor-haley.webp","vincenteguerrero":"vincente-guerrero.webp","zackharry":"zack-harry.webp"};
+const HLRN_DRIVER_PHOTO_ALIASES={"sebastianmicheals":"sebastianmichaels","ericpedleyhayden":"erichayden","randyschweitzerrsi":"randyschweitzer","dyalnjones":"dylanjones","nicholasbaumann2":"nicholasbaumann","dylancjones":"dylanjones","ethanfonsecamoreno":"ethanmoreno","joshuamckinney":"joshmckinney","joshuamckinney2":"joshmckinney","jeremysjeffries":"jeremyjeffries","vicenteguerrero2":"vincenteguerrero","brianhebbard2":"brianhebbard","brianhayes4":"brianhayes","ryanwilson21":"ryanwilson","timothytyler3":"timothytyler","matthewbrown49":"matthewbrown","matthewgraham20":"matthewgraham"};
+
+function hLrnPhotoKey(name){
+  let s=String(name||"").trim();
+
+  /* Support LAST, FIRST names and strip iRacing suffix numbers from last names. */
+  if(s.includes(",")){
+    const p=s.split(",");
+    const last=(p.shift()||"").trim().replace(/\d+$/,"");
+    const first=p.join(" ").trim();
+    s=(first+" "+last).trim();
+  }else{
+    s=s.replace(/\d+$/,"").trim();
+  }
+
+  let k=s.toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9]/g,"");
+  if(HLRN_DRIVER_PHOTO_ALIASES[k]) k=HLRN_DRIVER_PHOTO_ALIASES[k];
+
+  if(!HLRN_DRIVER_CUTOUT_PHOTOS[k]){
+    const stripped=k.replace(/\d+/g,"");
+    if(HLRN_DRIVER_PHOTO_ALIASES[stripped]) k=HLRN_DRIVER_PHOTO_ALIASES[stripped];
+    else if(HLRN_DRIVER_CUTOUT_PHOTOS[stripped]) k=stripped;
+  }
+  return k;
+}
+
+function hLrnDriverPhoto(name){
+  const file=HLRN_DRIVER_CUTOUT_PHOTOS[hLrnPhotoKey(name)];
+  return file ? HLRN_DRIVER_PHOTO_BASE+file : "";
+}
+
+function hLrnDriverName(name,size=""){
+  const safe=esc(name);
+  const url=hLrnDriverPhoto(name);
+  if(!url) return safe;
+  const cls=size ? "driver-with-photo "+size : "driver-with-photo";
+  return `<span class="${cls}"><img class="driver-inline-photo" src="${esc(url)}" alt="" loading="lazy" decoding="async" onerror="this.remove()"><span>${safe}</span></span>`;
+}
+
+function hLrnDriverCardPhoto(name){
+  const url=hLrnDriverPhoto(name);
+  return url ? `<img class="hlrn-card-cutout" src="${esc(url)}" alt="${esc(name)}" loading="lazy" decoding="async" onerror="this.remove()">` : "";
+}
+
+function prettyName(name=''){
+  const s=String(name||'').trim();
+  if(!s.includes(','))return s.replace(/\d+$/,'').trim();
+  const p=s.split(',');
+  const first=(p[1]||'').trim();
+  const last=(p[0]||'').trim().replace(/\d+$/,'');
+  return `${first} ${last}`.trim();
+}
+function n(v){
+  if(typeof v==='number')return Number.isFinite(v)?v:0;
+  const x=Number(String(v??'').replace(/[^0-9.\-]/g,''));
+  return Number.isFinite(x)?x:0;
+}
+function key(v){return String(v||'').trim().toLowerCase().replace(/\s+/g,' ')}
+function saveLocal(){
+  localStorage.setItem('hlrnFL_league',S.league);
+  localStorage.setItem('hlrnFL_team',S.teamName);
+  localStorage.setItem('hlrnFL_owner',S.ownerName);
+  localStorage.setItem('hlrnFL_lineup',JSON.stringify(S.lineup));
+  localStorage.setItem('hlrnFL_garage',JSON.stringify(S.garage));
+  localStorage.setItem('hlrnFL_captain',JSON.stringify(S.captain));
+  localStorage.setItem('hlrnFL_matchups',JSON.stringify(S.matchupPicks));
+}
+function loadLocal(){
+  try{S.lineup=Object.assign(S.lineup,JSON.parse(localStorage.getItem('hlrnFL_lineup')||'{}'))}catch(e){}
+  try{S.garage=Object.assign(S.garage,JSON.parse(localStorage.getItem('hlrnFL_garage')||'{}'))}catch(e){}
+  try{S.captain=Object.assign(S.captain,JSON.parse(localStorage.getItem('hlrnFL_captain')||'{}'))}catch(e){}
+  try{S.matchupPicks=Object.assign(S.matchupPicks,JSON.parse(localStorage.getItem('hlrnFL_matchups')||'{}'))}catch(e){}
+}
+function theme(){
+  document.documentElement.style.setProperty('--league',S.league==='monday'?'#00a650':'#ed1c24');
+}
+function toast(msg){
+  const el=document.getElementById('toast');
+  if(!el)return;
+  el.textContent=msg;el.classList.add('show');
+  clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),2500);
+}
+
+/* ---------------- DIRECT GOOGLE SHEET READER ---------------- */
+function gviz(sheetId,sheetName,range='A1:Z3000'){
+  return new Promise((resolve,reject)=>{
+    const cb='__hlrnFL_'+Date.now()+'_'+Math.random().toString(36).slice(2);
+    const script=document.createElement('script');
+    const timer=setTimeout(()=>{cleanup();reject(new Error('Timed out: '+sheetName))},13000);
+    function cleanup(){
+      clearTimeout(timer);
+      try{delete window[cb]}catch(e){window[cb]=undefined}
+      if(script.parentNode)script.parentNode.removeChild(script);
+    }
+    window[cb]=(payload)=>{
+      if(!payload||payload.status==='error'||!payload.table){cleanup();reject(new Error('Could not read '+sheetName));return}
+      const headers=(payload.table.cols||[]).map(c=>String(c.label||c.id||'').trim());
+      const rows=(payload.table.rows||[]).map(r=>{
+        const o={};
+        headers.forEach((h,i)=>{
+          if(!h)return;
+          const cell=r.c&&r.c[i];
+          o[h]=cell?(cell.f??cell.v??''):'';
+        });
+        return o;
+      });
+      cleanup();resolve(rows);
+    };
+    const tqx=encodeURIComponent('out:json;responseHandler:'+cb);
+    script.src=`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?sheet=${encodeURIComponent(sheetName)}&range=${encodeURIComponent(range)}&headers=1&tqx=${tqx}&_=${Date.now()}`;
+    script.onerror=()=>{cleanup();reject(new Error('Load failed: '+sheetName))};
+    document.head.appendChild(script);
+  });
+}
+function normDrivers(rows){
+  return rows.filter(r=>r.Driver).map(r=>({
+    id:String(r['Driver ID']||r.Driver),
+    name:prettyName(r.Driver),
+    rank:n(r.Rank),change:n(r.Change),points:n(r.Points),races:n(r.Races),wins:n(r.Wins),
+    top5:n(r['Top 5']),top10:n(r['Top 10']),avgFinish:n(r['Avg Finish']),
+    photo:String(r['Photo URL']||r.Photo||r.Image||'')
+  })).sort((a,b)=>(a.rank||999)-(b.rank||999));
+}
+function normResults(rows,drivers){
+  const names={};drivers.forEach(d=>names[String(d.id)]=d.name);
+  return rows.filter(r=>r['Race #']!==''&&r['Driver ID']!=='').map(r=>({
+    raceNo:n(r['Race #']),id:String(r['Driver ID']),
+    name:names[String(r['Driver ID'])]||prettyName(r.Driver||'Driver '+r['Driver ID']),
+    track:String(r.Track||''),date:String(r.Date||''),finish:n(r.Finish),start:n(r.Start||r['Start Pos']||r['Qualifying Pos']||r['Qualify Pos']),
+    points:n(r.Points),lapsLed:n(r['Laps Led']),incidents:n(r.Incidents)
+  }));
+}
+function groupRaces(rows){
+  const out={};
+  rows.forEach(r=>{if(!out[r.raceNo])out[r.raceNo]=[];out[r.raceNo].push(r)});
+  Object.keys(out).forEach(k=>out[k].sort((a,b)=>a.finish-b.finish));
+  return out;
+}
+function latestRace(rows){
+  if(!rows.length)return null;
+  const raceNo=Math.max(...rows.map(r=>r.raceNo||0));
+  const rr=rows.filter(r=>r.raceNo===raceNo).sort((a,b)=>a.finish-b.finish);
+  return {raceNo,track:rr[0]?.track||'',date:rr[0]?.date||'',rows:rr};
+}
+function parseSchedule(rows,league){
+  const latestNo=S.latest[league]?.raceNo||0;
+  let candidates=rows.filter(r=>String(r.League||'').toLowerCase().startsWith(league.slice(0,3))&&String(r.Status||'').toUpperCase()!=='COMPLETED');
+  const x=candidates[0];
+  return {
+    raceNo:latestNo+1,
+    track:String(x?.Track||'Next HLRN Race'),
+    date:String(x?.Date||'TBD'),
+    time:String(x?.Time||'8:30 PM EST')
+  };
+}
+function normalizePlayers(rows){
+  const map={};
+  rows.forEach(r=>{
+    const id=String(r['Player ID']||'').trim();
+    if(!id)return;
+    map[id]={
+      displayName:String(r['Display Name']||'').trim(),
+      teamName:String(r['Team Name']||'').trim()
+    };
+  });
+  return map;
+}
+function normalizeSharedPicks(rows,players){
+  return rows.map(r=>{
+    const starters=[r['Starter 1'],r['Starter 2'],r['Starter 3'],r['Starter 4']].map(x=>String(x||'').trim()).filter(Boolean);
+    const pid=String(r['Player ID']||'').trim();
+    const p=players[pid]||{};
+    const team=String(r['Team Name']||p.teamName||'').trim();
+    const owner=String(p.displayName||'').trim();
+    return {
+      timestamp:String(r['Submitted At']||''),
+      teamName:team,
+      ownerName:owner,
+      league:String(r.League||'').toLowerCase().includes('mon')?'monday':'sunday',
+      raceNo:n(r['Race #']),
+      starters,
+      garage:String(r.Garage||'').trim(),
+      captain:String(r.Captain||'').trim(),
+      picks:{
+        1:String(r['Matchup 1 Pick']||'').trim(),
+        2:String(r['Matchup 2 Pick']||'').trim(),
+        3:String(r['Matchup 3 Pick']||'').trim(),
+        4:String(r['Matchup 4 Pick']||'').trim()
+      }
+    };
+  }).filter(r=>r.teamName&&r.raceNo);
+}
+function applyFantasySettings(rows){
+  rows.forEach(r=>{
+    const k=String(r.Key||'').trim().toUpperCase();
+    const v=n(r.Value);
+    if(k==='STARTERS'&&v)CONFIG.starters=v;
+    if(k==='MATCHUP_BONUS'&&v)CONFIG.matchupBonus=v;
+    if(k==='CAPTAIN_MULTIPLIER'&&v)CONFIG.captainMultiplier=v;
+    if(k==='MAX_DRIVER_USES'&&v)CONFIG.maxUses=v;
+  });
+}
+async function refresh(){
+  S.loading=true;S.error='';render();
+  try{
+    const req=[
+      gviz(CONFIG.dataSheetId,'Sunday Drivers','A1:Z300'),
+      gviz(CONFIG.dataSheetId,'Monday Drivers','A1:Z300'),
+      gviz(CONFIG.dataSheetId,'Sunday Results','A1:Z4000'),
+      gviz(CONFIG.dataSheetId,'Monday Results','A1:Z4000'),
+      gviz(CONFIG.configSheetId,'Schedule','A1:H300'),
+      gviz(CONFIG.dataSheetId,'FANTASY_PLAYERS','A1:I2000'),
+      gviz(CONFIG.dataSheetId,'FANTASY_PICKS','A1:Z5000'),
+      gviz(CONFIG.dataSheetId,'FANTASY_SETTINGS','A1:B100')
+    ];
+    if(FORM.enabled&&FORM.responseTab)req.push(gviz(CONFIG.dataSheetId,FORM.responseTab,'A1:Z5000'));
+
+    const data=await Promise.all(req);
+    S.drivers.sunday=normDrivers(data[0]);
+    S.drivers.monday=normDrivers(data[1]);
+    S.results.sunday=normResults(data[2],S.drivers.sunday);
+    S.results.monday=normResults(data[3],S.drivers.monday);
+    S.races.sunday=groupRaces(S.results.sunday);
+    S.races.monday=groupRaces(S.results.monday);
+    S.latest.sunday=latestRace(S.results.sunday);
+    S.latest.monday=latestRace(S.results.monday);
+    S.next.sunday=parseSchedule(data[4],'sunday');
+    S.next.monday=parseSchedule(data[4],'monday');
+
+    const players=normalizePlayers(data[5]||[]);
+    let shared=normalizeSharedPicks(data[6]||[],players);
+    applyFantasySettings(data[7]||[]);
+
+    if(FORM.enabled&&FORM.responseTab){
+      shared=shared.concat(normalizeEntries(data[8]||[]));
+    }
+
+    /* Always include this browser's not-yet-shared lineup so the user can preview scoring. */
+    const local=localEntries();
+    const merged=[...shared];
+    local.forEach(e=>{
+      const i=merged.findIndex(x=>key(x.teamName)===key(e.teamName)&&x.league===e.league&&x.raceNo===e.raceNo);
+      if(i>=0)merged[i]=e;else merged.push(e);
+    });
+    S.entries=merged;
+
+    buildMatchups();
+    cleanLocal();
+    S.updated=new Date();
+  }catch(err){S.error=err.message||String(err)}
+  S.loading=false;render();
+}
+function normalizeEntries(rows){
+  return rows.map(r=>({
+    timestamp:String(r.Timestamp||''),
+    teamName:String(r['Team Name']||''),
+    ownerName:String(r['Owner Name']||''),
+    league:String(r.League||'').toLowerCase().includes('mon')?'monday':'sunday',
+    raceNo:n(r['Race #']),
+    starters:String(r.Starters||'').split(',').map(x=>x.trim()).filter(Boolean),
+    garage:String(r.Garage||'').trim(),
+    captain:String(r.Captain||'').trim(),
+    picks:{
+      1:String(r['Matchup 1']||'').trim(),
+      2:String(r['Matchup 2']||'').trim(),
+      3:String(r['Matchup 3']||'').trim(),
+      4:String(r['Matchup 4']||'').trim()
+    }
+  })).filter(r=>r.teamName&&r.raceNo);
+}
+function localEntries(){
+  const list=[];
+  ['sunday','monday'].forEach(l=>{
+    const raceNo=S.next[l]?.raceNo || ((S.latest[l]?.raceNo||0)+1);
+    if((S.lineup[l]||[]).length){
+      list.push({
+        timestamp:new Date().toISOString(),teamName:S.teamName||'My HLRN Entry',ownerName:S.ownerName||'This Browser',
+        league:l,raceNo,starters:[...(S.lineup[l]||[])],garage:S.garage[l]||'',captain:S.captain[l]||'',picks:{...(S.matchupPicks[l]||{})}
+      });
+    }
+  });
+  return list;
+}
+function cleanLocal(){
+  ['sunday','monday'].forEach(l=>{
+    const valid=new Set(S.drivers[l].map(d=>String(d.id)));
+    S.lineup[l]=(S.lineup[l]||[]).map(String).filter(id=>valid.has(id)).slice(0,CONFIG.starters);
+    if(S.garage[l]&&!valid.has(String(S.garage[l])))S.garage[l]='';
+    if(S.garage[l]&&S.lineup[l].includes(String(S.garage[l])))S.garage[l]='';
+    if(S.captain[l]&&!S.lineup[l].includes(String(S.captain[l])))S.captain[l]='';
+  });
+  saveLocal();
+}
+function buildMatchups(){
+  ['sunday','monday'].forEach(l=>{
+    const d=[...S.drivers[l]].sort((a,b)=>(a.rank||999)-(b.rank||999));
+    S.matchups[l]=[];
+    for(let i=0;i<4;i++){
+      if(d[i*2]&&d[i*2+1])S.matchups[l].push({id:i+1,a:d[i*2],b:d[i*2+1]});
+    }
+  });
+}
+
+/* ---------------- FANTASY SCORING ---------------- */
+function entryLatestByTeam(entries,league,raceNo){
+  const map={};
+  entries.filter(e=>e.league===league&&e.raceNo===raceNo).forEach(e=>{
+    const k=key(e.teamName);
+    if(!map[k]||String(e.timestamp)>String(map[k].timestamp))map[k]=e;
+  });
+  return Object.values(map);
+}
+function scoreRaceEntry(entry){
+  const rr=S.races[entry.league]?.[entry.raceNo]||[];
+  if(!rr.length)return {base:0,captainBonus:0,matchupBonus:0,total:0,scored:false};
+  const map={};rr.forEach(r=>map[String(r.id)]=r);
+  let base=0;
+  (entry.starters||[]).forEach(id=>base+=(map[String(id)]?.points||0));
+  const cp=map[String(entry.captain)];
+  const captainBonus=cp&&entry.starters.includes(String(entry.captain))?Math.round(cp.points*(CONFIG.captainMultiplier-1)):0;
+  let matchupBonus=0;
+  (S.matchups[entry.league]||[]).forEach(m=>{
+    const a=map[String(m.a.id)],b=map[String(m.b.id)];
+    if(!a||!b)return;
+    const winner=a.finish<b.finish?String(m.a.id):String(m.b.id);
+    if(String(entry.picks?.[m.id]||'')===winner)matchupBonus+=CONFIG.matchupBonus;
+  });
+  return {base,captainBonus,matchupBonus,total:base+captainBonus+matchupBonus,scored:true};
+}
+function leaderboard(){
+  const league=S.league;
+  const all=S.entries.filter(e=>e.league===league);
+  const teamMeta={};
+  const scores={};
+  const races=[...new Set(all.map(e=>e.raceNo))].sort((a,b)=>a-b);
+
+  races.forEach(raceNo=>{
+    entryLatestByTeam(all,league,raceNo).forEach(e=>{
+      const k=key(e.teamName);
+      teamMeta[k]={teamName:e.teamName,ownerName:e.ownerName};
+      if(!scores[k])scores[k]={total:0,weeks:0,latest:0};
+      const sc=scoreRaceEntry(e);
+      if(sc.scored){scores[k].total+=sc.total;scores[k].weeks++;scores[k].latest=sc.total}
+    });
+  });
+
+  /* Current/local upcoming entry appears even before it scores. */
+  all.forEach(e=>{
+    const k=key(e.teamName);
+    teamMeta[k]=teamMeta[k]||{teamName:e.teamName,ownerName:e.ownerName};
+    scores[k]=scores[k]||{total:0,weeks:0,latest:0};
+  });
+
+  return Object.keys(teamMeta).map(k=>({
+    ...teamMeta[k],...(scores[k]||{total:0,weeks:0,latest:0})
+  })).sort((a,b)=>b.total-a.total||b.latest-a.latest||a.teamName.localeCompare(b.teamName))
+    .map((x,i)=>({...x,rank:i+1}));
+}
+function currentRaceScore(){
+  const raceNo=S.latest[S.league]?.raceNo||0;
+  const entry=(entryLatestByTeam(S.entries,S.league,raceNo).find(e=>key(e.teamName)===key(S.teamName)));
+  return entry?scoreRaceEntry(entry).total:0;
+}
+function overallRank(){
+  const lb=leaderboard();
+  const row=lb.find(x=>key(x.teamName)===key(S.teamName));
+  return row?.rank||'—';
+}
+function overallPoints(){
+  const row=leaderboard().find(x=>key(x.teamName)===key(S.teamName));
+  return row?.total||0;
+}
+function weeklyRank(){
+  const raceNo=S.latest[S.league]?.raceNo||0;
+  const rows=entryLatestByTeam(S.entries,S.league,raceNo).map(e=>({e,sc:scoreRaceEntry(e)})).filter(x=>x.sc.scored)
+    .sort((a,b)=>b.sc.total-a.sc.total);
+  const i=rows.findIndex(x=>key(x.e.teamName)===key(S.teamName));
+  return i>=0?i+1:'—';
+}
+function usageCount(driverId){
+  const id=String(driverId);
+  const teamEntries=S.entries.filter(e=>e.league===S.league&&key(e.teamName)===key(S.teamName));
+  const byRace={};
+  teamEntries.forEach(e=>byRace[e.raceNo]=e);
+  return Object.values(byRace).filter(e=>(e.starters||[]).includes(id)&&S.races[S.league]?.[e.raceNo]).length;
+}
+
+/* ---------------- LINEUP ACTIONS ---------------- */
+function selectStarter(id){
+  id=String(id);
+  let arr=S.lineup[S.league]||[];
+  if(arr.includes(id)){
+    arr=arr.filter(x=>x!==id);
+    if(S.captain[S.league]===id)S.captain[S.league]='';
+  }else{
+    if(arr.length>=CONFIG.starters){toast('Your starter lineup is full.');return}
+    if(S.garage[S.league]===id)S.garage[S.league]='';
+    arr.push(id);
+  }
+  S.lineup[S.league]=arr;saveLocal();render();
+}
+function setGarage(id){
+  id=String(id||'');
+  if(id&&S.lineup[S.league].includes(id)){toast('A starter cannot also be in the garage.');return}
+  S.garage[S.league]=id;saveLocal();render();
+}
+function setCaptain(id){
+  id=String(id);
+  if(!S.lineup[S.league].includes(id))return;
+  S.captain[S.league]=S.captain[S.league]===id?'':id;saveLocal();render();
+}
+function pickMatchup(mid,id){
+  S.matchupPicks[S.league][String(mid)]=String(id);saveLocal();render();
+}
+function switchLeague(l){S.league=l;S.search='';saveLocal();theme();render()}
+function setView(v){S.view=v;render();window.scrollTo({top:0,behavior:'smooth'})}
+
+/* ---------------- ENTRY SAVE / GOOGLE FORM ---------------- */
+function openEntryModal(){
+  document.getElementById('modalTeamName').value=S.teamName||'';
+  document.getElementById('modalOwnerName').value=S.ownerName||'';
+  document.getElementById('sharedNotice').innerHTML=FORM.enabled
+    ? '<b>Shared write-back is connected.</b> Saving will submit this lineup and the shared leaderboard will read it back from the HLRN sheet.'
+    : '<b>The shared HLRN fantasy sheet is ready.</b> New picks currently save on this browser until the hidden Google Form write-back is connected. Any rows already in FANTASY_PICKS will appear on the shared leaderboard automatically.';
+  document.getElementById('entryModal').classList.add('show');
+}
+function closeEntryModal(){document.getElementById('entryModal').classList.remove('show')}
+async function saveEntry(){
+  const team=document.getElementById('modalTeamName').value.trim();
+  const owner=document.getElementById('modalOwnerName').value.trim();
+  if(team.length<2){toast('Enter a fantasy team name.');return}
+  if(S.lineup[S.league].length!==CONFIG.starters){toast('Select all 4 starters first.');return}
+  if(!S.garage[S.league]){toast('Select a garage driver first.');return}
+  if(!S.captain[S.league]){toast('Choose a captain first.');return}
+  if(S.matchups[S.league].some(m=>!S.matchupPicks[S.league][String(m.id)])){toast('Make all four matchup picks.');return}
+
+  S.teamName=team;S.ownerName=owner;saveLocal();
+
+  if(FORM.enabled){
+    try{
+      await submitGoogleForm();
+      toast('Shared lineup submitted!');
+      closeEntryModal();
+      setTimeout(()=>refresh(),1200);
+      return;
+    }catch(err){
+      toast('Saved locally. Shared submit failed.');
+    }
+  }
+  S.entries=localEntries();
+  closeEntryModal();render();toast('Lineup saved on this device.');
+}
+function submitGoogleForm(){
+  return new Promise((resolve,reject)=>{
+    if(!FORM.action) return reject(new Error('No form action.'));
+    const f=document.createElement('form');
+    const iframe=document.createElement('iframe');
+    const frameName='hlrnSubmit_'+Date.now();
+    iframe.name=frameName;iframe.style.display='none';
+    f.method='POST';f.action=FORM.action;f.target=frameName;f.style.display='none';
+
+    const raceNo=S.next[S.league]?.raceNo||((S.latest[S.league]?.raceNo||0)+1);
+    const values={
+      teamName:S.teamName,ownerName:S.ownerName,
+      league:S.league==='monday'?'Monday':'Sunday',
+      raceNo:String(raceNo),
+      starters:S.lineup[S.league].join(','),
+      garage:S.garage[S.league],
+      captain:S.captain[S.league],
+      matchup1:S.matchupPicks[S.league]['1']||'',
+      matchup2:S.matchupPicks[S.league]['2']||'',
+      matchup3:S.matchupPicks[S.league]['3']||'',
+      matchup4:S.matchupPicks[S.league]['4']||''
+    };
+
+    Object.keys(values).forEach(k=>{
+      const field=FORM.fields[k];
+      if(!field)return;
+      const input=document.createElement('input');
+      input.type='hidden';input.name=field;input.value=values[k];
+      f.appendChild(input);
+    });
+
+    document.body.appendChild(iframe);document.body.appendChild(f);
+    let done=false;
+    iframe.onload=()=>{
+      if(done)return;done=true;
+      setTimeout(()=>{f.remove();iframe.remove()},200);
+      resolve();
+    };
+    setTimeout(()=>{
+      if(done)return;done=true;f.remove();iframe.remove();resolve();
+    },2500);
+    try{f.submit()}catch(e){reject(e)}
+  });
+}
+
+/* ---------------- DISPLAY HELPERS ---------------- */
+function dmap(){
+  const m={};S.drivers[S.league].forEach(d=>m[String(d.id)]=d);return m;
+}
+function resultMap(raceNo){
+  const m={};(S.races[S.league]?.[raceNo]||[]).forEach(r=>m[String(r.id)]=r);return m;
+}
+function filteredDrivers(){
+  let a=[...S.drivers[S.league]];
+  const q=S.search.toLowerCase().trim();
+  if(q)a=a.filter(d=>d.name.toLowerCase().includes(q));
+  if(S.sort==='points')a.sort((a,b)=>b.points-a.points);
+  else if(S.sort==='wins')a.sort((a,b)=>b.wins-a.wins||a.rank-b.rank);
+  else if(S.sort==='avg')a.sort((a,b)=>(a.avgFinish||999)-(b.avgFinish||999));
+  else if(S.sort==='name')a.sort((a,b)=>a.name.localeCompare(b.name));
+  else a.sort((a,b)=>(a.rank||999)-(b.rank||999));
+  return a;
+}
+function initials(){
+  return (S.teamName||'HLRN').split(/\s+/).slice(0,2).map(x=>x[0]||'').join('').toUpperCase();
+}
+function nextRace(){return S.next[S.league]||{raceNo:(S.latest[S.league]?.raceNo||0)+1,track:'Next HLRN Race',date:'TBD',time:'8:30 PM EST'}}
+function navButton(v,label){return `<button class="${S.view===v?'active':''}" onclick="setView('${v}')">${label}</button>`}
+function weekStrip(){
+  const active=Math.max(1,nextRace().raceNo);
+  let nums='';
+  for(let i=1;i<=Math.max(16,active+3);i++)nums+=`<span class="weeknum ${i<active?'done':''} ${i===active?'active':''}">${i}</span>`;
+  return nums;
+}
+
+/* ---------------- RENDER: DRIVER CARD ---------------- */
+function art(d,chip=''){
+  const fallback=hLrnDriverCardPhoto(d.name);
+  return `<div class="driver-art">
+    ${d.photo?`<img src="${esc(d.photo)}" alt="${esc(d.name)}" onerror="this.remove()">`:(fallback||`<div class="big-rank">${d.rank||'—'}</div>`)}
+    ${chip?`<span class="card-chip">${esc(chip)}</span>`:''}
+  </div>`;
+}
+function rosterDriverCard(id,role){
+  const d=dmap()[String(id)];
+  if(!d)return `<div class="placeholder">Select ${role}</div>`;
+  const captain=S.captain[S.league]===String(id);
+  return `<div class="driver-card">
+    ${art(d,role)}
+    <button class="swap" onclick="${role==='GARAGE'?`setGarage('')`:`selectStarter('${esc(id)}')`}" title="Remove">↔</button>
+    <div class="driver-info">
+      <div class="carline">P${d.rank||'—'} • ${d.points} PTS</div>
+      <div class="driver-name">${hLrnDriverName(d.name)} ${captain?'<span class="captainmark">CAPTAIN</span>':''}</div>
+      <div class="cardstats">
+        <div class="cardstat"><b>${usageCount(id)}/${CONFIG.maxUses}</b>Usage</div>
+        <div class="cardstat"><b>${d.wins}</b>Wins</div>
+        <div class="cardstat"><b>${d.avgFinish||'—'}</b>Avg Fin</div>
+      </div>
+    </div>
+    ${role!=='GARAGE'?`<button class="ghost" style="width:calc(100% - 16px);margin:0 8px 8px" onclick="setCaptain('${esc(id)}')">${captain?'★ Captain 1.5×':'☆ Make Captain'}</button>`:''}
+  </div>`;
+}
+function poolRow(d){
+  const id=String(d.id);
+  const sel=S.lineup[S.league].includes(id);
+  const gar=S.garage[S.league]===id;
+  return `<div class="poolrow">
+    <div class="poolrank">${d.rank||'—'}</div>
+    <div class="poolname" onclick="showDriver('${esc(id)}')" style="cursor:pointer">${hLrnDriverName(d.name)}<small>${d.points} season points</small></div>
+    <div class="center">${d.wins}</div>
+    <div class="center">${d.top5}</div>
+    <div class="center desktop">${d.top10}</div>
+    <div class="center desktop">${d.avgFinish||'—'}</div>
+    <div class="center desktop">${usageCount(id)}/${CONFIG.maxUses}</div>
+    <div class="center">
+      <button class="addbtn ${sel?'selected':''}" onclick="selectStarter('${esc(id)}')">${sel?'Starter ✓':'Starter'}</button>
+      <button class="addbtn ${gar?'selected':''}" style="margin-top:3px" onclick="setGarage('${gar?'':esc(id)}')">${gar?'Garage ✓':'Garage'}</button>
+    </div>
+  </div>`;
+}
+function matchupCard(m){
+  const pick=String(S.matchupPicks[S.league][String(m.id)]||'');
+  return `<div class="matchup">
+    <div class="matchdriver ${pick===String(m.a.id)?'selected':''}" onclick="pickMatchup(${m.id},'${esc(m.a.id)}')">
+      <div><div class="matchname">${hLrnDriverName(m.a.name,"compact")}</div><div class="matchmeta">Rank ${m.a.rank} • ${m.a.points} pts</div></div><button class="pickdot">✓</button>
+    </div>
+    <div class="vs">VS</div>
+    <div class="matchdriver ${pick===String(m.b.id)?'selected':''}" onclick="pickMatchup(${m.id},'${esc(m.b.id)}')">
+      <div><div class="matchname">${hLrnDriverName(m.b.name,"compact")}</div><div class="matchmeta">Rank ${m.b.rank} • ${m.b.points} pts</div></div><button class="pickdot">✓</button>
+    </div>
+  </div>`;
+}
+
+/* ---------------- RENDER VIEWS ---------------- */
+function renderRoster(){
+  const nr=nextRace();
+  const drivers=filteredDrivers();
+  return `
+  <div class="section">
+    <div class="sectionline"></div>
+    <div class="sectiontitle"><h2>Roster</h2><span>Race ${nr.raceNo} • ${esc(nr.track)}</span></div>
+    <div class="roster-layout">
+      <div class="rosterbox">
+        <div class="yellowbar"><span>Starters</span></div>
+        <div class="starters">${Array.from({length:CONFIG.starters},(_,i)=>rosterDriverCard(S.lineup[S.league][i],`STARTER ${i+1}`)).join('')}</div>
+      </div>
+      <div class="garagebox">
+        <div class="yellowbar"><span>Garage</span></div>
+        ${rosterDriverCard(S.garage[S.league],'GARAGE')}
+      </div>
+    </div>
+    <div class="rosteractions">
+      <span style="font-size:8px;color:#7b838a;font-weight:900;margin-right:auto;text-transform:uppercase">Captain scores ${CONFIG.captainMultiplier}× HLRN race points</span>
+      <button class="ghost" onclick="clearLineup()">Clear</button>
+      <button class="primary league" onclick="openEntryModal()">Save My Picks</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sectionline"></div>
+    <div class="sectiontitle"><h2>Featured Matchups</h2><span>+${CONFIG.matchupBonus} points each</span></div>
+    <div class="matchups">${S.matchups[S.league].map(matchupCard).join('')}</div>
+  </div>
+
+  <div class="section">
+    <div class="sectionline"></div>
+    <div class="sectiontitle"><h2>All Drivers</h2><span>${S.drivers[S.league].length} eligible</span></div>
+    <div class="pooltools">
+      <input class="search" value="${esc(S.search)}" oninput="S.search=this.value;renderContentOnly()" placeholder="Search drivers">
+      <select class="select" onchange="S.sort=this.value;renderContentOnly()">
+        <option value="rank" ${S.sort==='rank'?'selected':''}>Points Rank</option>
+        <option value="points" ${S.sort==='points'?'selected':''}>Season Points</option>
+        <option value="wins" ${S.sort==='wins'?'selected':''}>Wins</option>
+        <option value="avg" ${S.sort==='avg'?'selected':''}>Average Finish</option>
+        <option value="name" ${S.sort==='name'?'selected':''}>Driver Name</option>
+      </select>
+    </div>
+    <div class="pool">
+      <div class="poolrow" style="min-height:34px;background:#f1f3f5;font-size:8px;font-weight:1000;text-transform:uppercase;color:#707880">
+        <div class="center">Rank</div><div>Driver</div><div class="center">Wins</div><div class="center">Top 5</div>
+        <div class="center desktop">Top 10</div><div class="center desktop">Avg Fin</div><div class="center desktop">Usage</div><div></div>
+      </div>
+      ${drivers.map(poolRow).join('')}
+    </div>
+  </div>`;
+}
+function renderLeaderboard(){
+  const lb=leaderboard();
+  return `<div class="section">
+    <div class="sectionline"></div>
+    <div class="sectiontitle"><h2>HLRN Fantasy League</h2><span>${FORM.enabled?'Shared League':'This Browser — Shared Mode Ready'}</span></div>
+    <div class="panel">
+      <div class="tabbar">
+        <button class="${S.leaderboardMode==='overall'?'active':''}" onclick="S.leaderboardMode='overall';renderContentOnly()">Overall Standings</button>
+        <button class="${S.leaderboardMode==='week'?'active':''}" onclick="S.leaderboardMode='week';renderContentOnly()">Latest Race</button>
+      </div>
+      ${leaderboardTable(lb)}
+    </div>
+  </div>
+  <div class="section">
+    <div class="statgrid">
+      <div class="statbox"><span>Your Overall Rank</span><b>${overallRank()}</b></div>
+      <div class="statbox"><span>Your Total Points</span><b>${overallPoints()}</b></div>
+      <div class="statbox"><span>Latest Race Rank</span><b>${weeklyRank()}</b></div>
+      <div class="statbox"><span>Fantasy Entries</span><b>${lb.length}</b></div>
+    </div>
+  </div>`;
+}
+function leaderboardTable(lb){
+  if(!lb.length)return `<div class="empty"><b>No fantasy entries yet</b>Save your first lineup to create the first leaderboard entry.</div>`;
+  if(S.leaderboardMode==='week'){
+    const raceNo=S.latest[S.league]?.raceNo||0;
+    const rows=entryLatestByTeam(S.entries,S.league,raceNo).map(e=>({e,sc:scoreRaceEntry(e)})).filter(x=>x.sc.scored)
+      .sort((a,b)=>b.sc.total-a.sc.total);
+    if(!rows.length)return `<div class="empty"><b>No scored race entries yet</b>Latest race lineups will appear here after official results are available.</div>`;
+    return `<div class="tablewrap"><table><thead><tr><th>Rank</th><th>Entry</th><th>Starter Pts</th><th>Captain</th><th>Matchups</th><th>Race Points</th></tr></thead><tbody>
+      ${rows.map((x,i)=>`<tr class="${key(x.e.teamName)===key(S.teamName)?'selfrow':''}"><td class="rankcell">${i+1}</td><td class="teamcell">${esc(x.e.teamName)}<small>${esc(x.e.ownerName||'')}</small></td><td>${x.sc.base}</td><td>+${x.sc.captainBonus}</td><td>+${x.sc.matchupBonus}</td><td class="points">${x.sc.total}</td></tr>`).join('')}
+    </tbody></table></div>`;
+  }
+  return `<div class="tablewrap"><table><thead><tr><th>Rank</th><th>Entry</th><th>Latest Race</th><th>Scored Races</th><th>Total Points</th></tr></thead><tbody>
+    ${lb.map(r=>`<tr class="${key(r.teamName)===key(S.teamName)?'selfrow':''}"><td class="rankcell">${r.rank}</td><td class="teamcell">${esc(r.teamName)}<small>${esc(r.ownerName||'')}</small></td><td class="racepts">${r.latest}</td><td>${r.weeks}</td><td class="points">${r.total}</td></tr>`).join('')}
+  </tbody></table></div>`;
+}
+function renderStats(){
+  const drivers=[...S.drivers[S.league]];
+  return `<div class="section">
+    <div class="sectionline"></div><div class="sectiontitle"><h2>Driver Stats</h2><span>Fantasy research</span></div>
+    <div class="panel"><div class="tablewrap"><table><thead><tr><th>Rank</th><th>Driver</th><th>Points</th><th>Starts</th><th>Wins</th><th>Top 5</th><th>Top 10</th><th>Avg Finish</th></tr></thead><tbody>
+      ${drivers.map(d=>`<tr onclick="showDriver('${esc(d.id)}')" style="cursor:pointer"><td class="rankcell">${d.rank||'—'}</td><td class="teamcell">${hLrnDriverName(d.name,"compact")}</td><td class="points">${d.points}</td><td>${d.races}</td><td>${d.wins}</td><td>${d.top5}</td><td>${d.top10}</td><td>${d.avgFinish||'—'}</td></tr>`).join('')}
+    </tbody></table></div></div>
+  </div>`;
+}
+function renderRaceResults(){
+  const latest=S.latest[S.league];
+  if(!latest)return `<div class="empty"><b>No results loaded</b></div>`;
+  return `<div class="section">
+    <div class="sectionline"></div><div class="sectiontitle"><h2>Race Results</h2><span>Race ${latest.raceNo} • ${esc(latest.track)}</span></div>
+    <div class="panel"><div class="tablewrap"><table><thead><tr><th>Finish</th><th>Driver</th><th>Start</th><th>HLRN Pts</th><th>Laps Led</th><th>Incidents</th></tr></thead><tbody>
+      ${latest.rows.map(r=>`<tr><td class="rankcell">${r.finish}</td><td class="teamcell">${hLrnDriverName(r.name,"compact")}</td><td>${r.start||'—'}</td><td class="points">${r.points}</td><td>${r.lapsLed}</td><td>${r.incidents}</td></tr>`).join('')}
+    </tbody></table></div></div>
+  </div>`;
+}
+function renderHow(){
+  return `<div class="section">
+    <div class="sectionline"></div><div class="sectiontitle"><h2>How To Play</h2><span>HLRN Fantasy Live</span></div>
+    <div class="panel" style="padding:18px;line-height:1.6;font-size:11px">
+      <p><b>1. Pick 4 starters.</b> Their official HLRN race points make up the base fantasy score.</p>
+      <p><b>2. Pick 1 garage driver.</b> The garage driver is your reserve and does not score unless moved into the starting lineup before picks are saved/locked.</p>
+      <p><b>3. Pick a captain.</b> Your captain earns a 1.5× multiplier on their official HLRN race points.</p>
+      <p><b>4. Make all 4 featured matchup picks.</b> Pick the driver you think will finish higher. Each correct choice is worth +10 fantasy points.</p>
+      <p><b>5. Leaderboard.</b> Fantasy scores are calculated from the Sunday Results and Monday Results tabs already used by HLRN. Sunday and Monday have separate fantasy standings.</p>
+      <p><b>Driver usage.</b> The display supports a 10-use regular-season limit once the shared Google Form response sheet is connected.</p>
+    </div>
+  </div>`;
+}
+function viewHtml(){
+  if(S.view==='leaderboard')return renderLeaderboard();
+  if(S.view==='stats')return renderStats();
+  if(S.view==='results')return renderRaceResults();
+  if(S.view==='how')return renderHow();
+  return renderRoster();
+}
+
+/* DRIVER MODAL */
+function showDriver(id){
+  const d=dmap()[String(id)];if(!d)return;
+  const recent=Object.keys(S.races[S.league]).map(Number).sort((a,b)=>b-a).slice(0,5).map(r=>S.races[S.league][r].find(x=>String(x.id)===String(id))).filter(Boolean);
+  document.getElementById('entryModal').innerHTML=`
+    <div class="modalbox">
+      <div class="modalhead">
+        <div class="modal-driver-head">
+          ${hLrnDriverPhoto(d.name)?`<img src="${esc(hLrnDriverPhoto(d.name))}" alt="" loading="lazy" decoding="async" onerror="this.remove()">`:''}
+          <h3>${esc(d.name)}</h3>
+        </div>
+        <button class="close" onclick="closeEntryModal()">×</button>
+      </div>
+      <div class="modalbody">
+        <div class="statgrid">
+          <div class="statbox"><span>Points Rank</span><b>${d.rank||'—'}</b></div>
+          <div class="statbox"><span>Points</span><b>${d.points}</b></div>
+          <div class="statbox"><span>Wins</span><b>${d.wins}</b></div>
+          <div class="statbox"><span>Avg Finish</span><b>${d.avgFinish||'—'}</b></div>
+        </div>
+        <h4 style="text-transform:uppercase;margin:18px 0 8px">Last 5 HLRN Races</h4>
+        <table><thead><tr><th>Track</th><th>Finish</th><th>Points</th><th>Led</th><th>Inc</th></tr></thead><tbody>
+          ${recent.map(r=>`<tr><td>${esc(r.track)}</td><td>${r.finish}</td><td class="points">${r.points}</td><td>${r.lapsLed}</td><td>${r.incidents}</td></tr>`).join('')||'<tr><td colspan="5">No race history available.</td></tr>'}
+        </tbody></table>
+      </div>
+    </div>`;
+  document.getElementById('entryModal').classList.add('show');
+}
+function restoreEntryModal(){
+  document.getElementById('entryModal').innerHTML=`
+  <div class="modalbox">
+    <div class="modalhead"><h3>Fantasy Entry</h3><button class="close" onclick="closeEntryModal()">×</button></div>
+    <div class="modalbody">
+      <div id="sharedNotice" class="notice"></div>
+      <div class="formrow"><label>Team / Entry Name</label><input id="modalTeamName" maxlength="45" placeholder="Checkers or Wreckers"></div>
+      <div class="formrow"><label>Owner Name</label><input id="modalOwnerName" maxlength="45" placeholder="Hunter"></div>
+      <button class="primary league" onclick="saveEntry()">Save Entry & Lineup</button>
+    </div>
+  </div>`;
+}
+function closeEntryModal(){document.getElementById('entryModal').classList.remove('show');setTimeout(restoreEntryModal,100)}
+function clearLineup(){
+  S.lineup[S.league]=[];S.garage[S.league]='';S.captain[S.league]='';S.matchupPicks[S.league]={};saveLocal();render();toast('Lineup cleared.');
+}
+
+/* ---------------- MAIN RENDER ---------------- */
+function renderContentOnly(){
+  const c=document.getElementById('mainContent');if(c)c.innerHTML=viewHtml();
+}
+function render(){
+  theme();
+  const app=document.getElementById('app');
+  if(S.loading){
+    app.innerHTML='<div class="loading"><div class="spinner"></div><b>Loading HLRN Fantasy Live…</b></div>';
+    return;
+  }
+  if(S.error){
+    app.innerHTML=`<div class="empty"><b>Fantasy Live could not load</b>${esc(S.error)}<br><br><button class="primary" onclick="refresh()">Try Again</button></div>`;
+    return;
+  }
+  const nr=nextRace(),latest=S.latest[S.league];
+  app.innerHTML=`
+    <header class="brandbar">
+      <div class="logo"><div class="speedmarks"><i></i><i></i><i></i><i></i></div><div class="logo-text">HLRN FANTASY <span>LIVE</span></div></div>
+      <div class="brand-actions"><button class="smallbtn" onclick="setView('how')">How To Play</button><button class="smallbtn" onclick="openEntryModal()">My Entry</button></div>
+    </header>
+
+    <nav class="topnav">
+      ${navButton('roster','Roster')}
+      ${navButton('leaderboard','League')}
+      ${navButton('stats','Stats')}
+      ${navButton('results','Race Results')}
+      ${navButton('how','More')}
+    </nav>
+
+    <div class="setupbar ${FORM.enabled?'':'show'}">
+      Shared leaderboard is wired to the FANTASY_PICKS tab in your HLRN sheet. Live shared entries will appear automatically. This browser still needs a write-back endpoint (Google Form or similar) to submit new picks from visitors without Apps Script.
+    </div>
+
+    <section class="weekstrip">
+      <div class="weeknums">${weekStrip()}</div>
+      <div class="racebar">
+        <div class="racecell track"><small>Next Race</small><strong>${esc(nr.track)}</strong></div>
+        <div class="racecell"><small>Race</small><strong>Week ${nr.raceNo}</strong></div>
+        <div class="racecell"><small>Race Time</small><strong>${esc(nr.time)}</strong></div>
+        <div class="racecell"><small>Last Winner</small><strong>${hLrnDriverName(latest?.rows?.[0]?.name||'—',"small")}</strong></div>
+        <div class="racecell"><small>Last Race</small><strong>${esc(latest?.track||'—')}</strong></div>
+      </div>
+    </section>
+
+    <section class="entrybar">
+      <div class="entryname">
+        <div class="avatar">${esc(initials())}</div>
+        <div style="min-width:0;flex:1"><input value="${esc(S.teamName)}" onchange="S.teamName=this.value.trim()||'My HLRN Entry';saveLocal();render()" aria-label="Fantasy team name"><div class="hint">${esc(S.ownerName||'Set owner in My Entry')}</div></div>
+      </div>
+      <div class="metric"><small>Total Pts</small><b>${overallPoints()}</b></div>
+      <div class="metric"><small>Race Pts</small><b>${currentRaceScore()}</b></div>
+      <div class="metric hide-mid"><small>Race Rank</small><b>${weeklyRank()}</b></div>
+      <div class="metric hide-mid"><small>League Rank</small><b>${overallRank()}</b></div>
+      <div class="metric hide-mid"><small>Entries</small><b>${leaderboard().length}</b></div>
+    </section>
+
+    <div class="controls">
+      <div class="leagues"><button class="${S.league==='sunday'?'active':''}" onclick="switchLeague('sunday')">Sunday Fantasy</button><button class="${S.league==='monday'?'active':''}" onclick="switchLeague('monday')">Monday Fantasy</button></div>
+      <div class="sync"><i></i> Live HLRN data • updated ${S.updated?S.updated.toLocaleTimeString():'—'} <button class="ghost" onclick="refresh()">Refresh</button></div>
+    </div>
+
+    <main class="content" id="mainContent">${viewHtml()}</main>
+  `;
+}
+
+/* Start */
+refresh();
+setInterval(()=>refresh(),CONFIG.refreshMs);
+</script>
+<script src="../assets/site-shell.js"></script>
+</body>
+</html>
