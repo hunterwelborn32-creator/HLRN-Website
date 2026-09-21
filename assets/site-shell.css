@@ -172,3 +172,29 @@
     grid-template-columns:1fr;
   }
 }
+
+
+/* =========================================================
+   HLRN NAV FAIL-SAFE
+   Prevent page CSS from hiding the global site navigation.
+========================================================= */
+#hlrn-global-nav{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  height:auto!important;
+  min-height:68px!important;
+  overflow:visible!important;
+}
+#hlrn-global-nav .hgn-inner{
+  display:flex!important;
+}
+@media(max-width:1120px){
+  #hlrn-global-nav .hgn-links,
+  #hlrn-global-nav .hgn-live{
+    display:none!important;
+  }
+  #hlrn-global-nav .hgn-menu{
+    display:block!important;
+  }
+}
