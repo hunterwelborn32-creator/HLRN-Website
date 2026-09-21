@@ -132,10 +132,65 @@ function lastName(name){const a=String(name||"").trim().split(/\s+/);return (a[a
 function normalizeDriver(d){return { ...d, driver:d.driver||d.name||"Unknown Driver", carNumber:d.carNumber||d.number||"—", starts:d.starts??0,wins:d.wins??0,top5:d.top5??0,top10:d.top10??0,averageFinish:d.averageFinish??d.avgFinish??"—"}}
 
 function loadDrivers(){
-  const cb="hlrnDrivers_"+Date.now();
-  window[cb]=data=>{try{if(!Array.isArray(data))throw new Error((data&&data.error)||"Driver list was not returned.");drivers=data.map(normalizeDriver).sort((a,b)=>lastName(a.driver).localeCompare(lastName(b.driver))||a.driver.localeCompare(b.driver));renderDrivers(drivers)}catch(e){showError(e.message)}finally{try{delete window[cb]}catch{}}};
-  const s=document.createElement("script");s.src=HLRN_API_URL+"?action=drivers&callback="+encodeURIComponent(cb)+"&t="+Date.now();s.onerror=()=>showError("Could not connect to the HLRN driver database.");document.body.appendChild(s)
+  const cb="hlrnData_"+Date.now();
+  window[cb]=data=>{
+    try{
+      if(!data || typeof data!=="object") throw new Error("The HLRN database returned an invalid response.");
+      if(data.ok===false) throw new Error(data.error || "HLRN database error.");
+      const sessions=Array.isArray(data.sessions)?data.sessions:[];
+      if(!sessions.length) throw new Error("No race-session data was returned from the HLRN database.");
+      drivers=buildDriverDirectory(sessions).map(normalizeDriver).sort((a,b)=>lastName(a.driver).localeCompare(lastName(b.driver))||a.driver.localeCompare(b.driver));
+      renderDrivers(drivers);
+    }catch(e){
+      showError(e && e.message ? e.message : String(e));
+    }finally{
+      try{delete window[cb]}catch{}
+    }
+  };
+  const script=document.createElement("script");
+  script.src=HLRN_API_URL+"?action=data&callback="+encodeURIComponent(cb)+"&t="+Date.now();
+  script.onerror=()=>showError("Could not connect to the HLRN driver database.");
+  document.body.appendChild(script);
 }
+
+function buildDriverDirectory(sessions){
+  const map={};
+  sessions.forEach(race=>{
+    const name=String(race.driver||"").trim();
+    if(!name) return;
+    const key=name.toLowerCase();
+    if(!map[key]) map[key]={driver:name,starts:0,wins:0,top5:0,top10:0,finishTotal:0,finishCount:0,incidentsTotal:0,incidentsCount:0,lapsLed:0,bestFinish:null,carNumber:String(race.carNumber||"").trim()};
+    const d=map[key];
+    d.starts++;
+    if(race.carNumber!==undefined && race.carNumber!==null && String(race.carNumber).trim()!=="") d.carNumber=String(race.carNumber).trim();
+    const finish=Number(race.finish);
+    if(Number.isFinite(finish) && finish>0){
+      d.finishTotal+=finish; d.finishCount++;
+      if(finish===1) d.wins++;
+      if(finish<=5) d.top5++;
+      if(finish<=10) d.top10++;
+      if(d.bestFinish===null || finish<d.bestFinish) d.bestFinish=finish;
+    }
+    const incidents=Number(race.incidents);
+    if(Number.isFinite(incidents)){d.incidentsTotal+=incidents;d.incidentsCount++;}
+    const lapsLed=Number(race.lapsLed);
+    if(Number.isFinite(lapsLed)) d.lapsLed+=lapsLed;
+  });
+  return Object.values(map).map(d=>({
+    driver:d.driver,
+    starts:d.starts,
+    wins:d.wins,
+    top5:d.top5,
+    top10:d.top10,
+    averageFinish:d.finishCount?(d.finishTotal/d.finishCount).toFixed(2):"—",
+    averageIncidents:d.incidentsCount?(d.incidentsTotal/d.incidentsCount).toFixed(2):"—",
+    incidents:d.incidentsTotal,
+    lapsLed:d.lapsLed,
+    bestFinish:d.bestFinish===null?"—":d.bestFinish,
+    carNumber:d.carNumber||"—"
+  }));
+}
+
 function card(d){
  const name=d.driver, n=d.carNumber||"—", photo=photoUrl(name), wins=num(d.wins);
  return `<button class="driver-card" type="button" data-driver="${esc(name)}" aria-label="Open ${esc(name)} profile">
