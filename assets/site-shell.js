@@ -64,6 +64,7 @@
     var active =
       pagePath.indexOf("/live/") !== -1 ? "live" :
       pagePath.indexOf("/standings/") !== -1 ? "standings" :
+      pagePath.indexOf("/race-intelligence/") !== -1 ? "intelligence" :
       pagePath.indexOf("/schedule/") !== -1 ? "results" :
       pagePath.indexOf("/results/") !== -1 ? "results" :
       pagePath.indexOf("/drivers/") !== -1 ? "drivers" :
@@ -78,6 +79,7 @@
       ["home", "Home", ""],
       ["live", "Live", "live/"],
       ["standings", "Standings", "standings/"],
+      ["intelligence", "Intelligence", "race-intelligence/"],
       ["results", "Results", "results/"],
       ["drivers", "Drivers", "drivers/"],
       ["fantasy", "Fantasy", "fantasy/"],
@@ -293,7 +295,8 @@
         host === "sites.google.com" &&
         p.indexOf("/view/highlineracingnetwork") !== -1
       ) {
-        if (p.indexOf("/standings") !== -1) dest = "standings/";
+        if (p.indexOf("/race-intelligence") !== -1 || p.indexOf("/race intelligence") !== -1) dest = "race-intelligence/";
+        else if (p.indexOf("/standings") !== -1) dest = "standings/";
         else if (p.indexOf("/schedule") !== -1) dest = "results/";
         else if (
           p.indexOf("/meet-our-team") !== -1 ||
