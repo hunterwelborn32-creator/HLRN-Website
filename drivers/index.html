@@ -1,3 +1,172 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Drivers | HLRN</title><link rel="stylesheet" href="../assets/site-shell.css"><style>
-    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#050608;color:#fff;font-family:Arial,Helvetica,sans-serif}body{min-height:100vh;background:radial-gradient(circle at 75% 8%,rgba(227,24,55,.13),transparent 29%),linear-gradient(180deg,#0b0d11,#040506 56%)}.stage{max-width:1350px;margin:auto;padding:64px 22px 110px}.eyebrow{display:flex;align-items:center;gap:10px;color:#ff3150;font-size:10px;font-weight:1000;letter-spacing:.2em;text-transform:uppercase}.eyebrow:before{content:"";width:45px;height:3px;background:#e31837;transform:skewX(-20deg)}h1{margin:14px 0 12px;font:1000 italic clamp(48px,8vw,105px)/.84 Impact,'Arial Narrow',Arial,sans-serif;text-transform:uppercase;letter-spacing:-.035em}p{max-width:790px;margin:0;color:#a9b0bb;font-size:17px;line-height:1.65}.grid{margin-top:38px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.card{min-height:180px;padding:22px;background:linear-gradient(180deg,#11141a,#090b0f);border:1px solid #292d35;border-top:3px solid #e31837}.num{font:1000 italic 42px/1 Impact,Arial;color:#343943}.card h2{margin:20px 0 7px;font-size:15px;text-transform:uppercase;letter-spacing:.08em}.card span{color:#858e9b;font-size:12px;line-height:1.5}.next{margin-top:25px;padding:16px 18px;border:1px solid #57202a;background:#19090d;color:#ff8293;font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase}@media(max-width:800px){.grid{grid-template-columns:1fr}.stage{padding-top:44px}}
-    </style></head><body><main class="stage"><div class="eyebrow">HLRN Website 2.0</div><h1>Driver Center</h1><p>The new HLRN Driver Center will bring every driver photo, profile, career stat, recent result and head-to-head tool into one dedicated experience.</p><div class="grid"><div class="card"><div class="num">01</div><h2>Unified HLRN Design</h2><span>Same navigation, driver imagery, typography and racing identity as the rest of the network.</span></div><div class="card"><div class="num">02</div><h2>Real HLRN Data</h2><span>This route is ready for the existing HLRN data source instead of becoming another disconnected page.</span></div><div class="card"><div class="num">03</div><h2>Mobile + Desktop</h2><span>Built as part of the standalone site rather than inside a Google Sites embed.</span></div></div><div class="next">NEXT MIGRATION: connect the driver cutouts and profile data</div></main><script src="../assets/site-shell.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HLRN Drivers | High Line Racing Network</title>
+<link rel="stylesheet" href="../assets/site-shell.css">
+<style>
+:root{
+  --hlrn-red:#d71920;
+  --hlrn-black:#111111;
+  --hlrn-ink:#171717;
+  --hlrn-muted:#6f747b;
+  --hlrn-bg:#f4f4f4;
+  --hlrn-card:#fff;
+  --hlrn-line:#dedede;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--hlrn-bg);color:var(--hlrn-ink);font-family:Arial,Helvetica,sans-serif}
+button,input{font:inherit}
+img{max-width:100%}
+
+.driver-page{min-height:100vh;background:#f4f4f4;padding-bottom:72px}
+.driver-heading{background:#fff;border-bottom:1px solid #d8d8d8}
+.driver-heading-inner{width:min(1450px,calc(100% - 36px));margin:auto;padding:34px 0 29px}
+.eyebrow{display:flex;align-items:center;gap:9px;color:#6a6f76;font-size:11px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;margin-bottom:7px}
+.eyebrow:before{content:"";width:28px;height:4px;background:var(--hlrn-red);transform:skewX(-16deg)}
+.driver-heading h1{margin:0;font-size:clamp(34px,4.8vw,61px);line-height:.98;font-weight:1000;letter-spacing:-.045em;text-transform:uppercase;color:#111}
+.driver-heading h1 span{color:var(--hlrn-red)}
+.driver-heading p{margin:11px 0 0;color:#686d73;font-size:14px;font-weight:700}
+
+.roster-tools{width:min(1450px,calc(100% - 36px));margin:24px auto 18px;display:flex;align-items:center;gap:14px;justify-content:space-between}
+.roster-title{font-size:18px;font-weight:1000;letter-spacing:-.01em;text-transform:uppercase}
+.roster-count{color:#777;font-size:12px;font-weight:800;letter-spacing:.07em;text-transform:uppercase}
+.search-wrap{position:relative;width:min(360px,100%)}
+.search-wrap input{width:100%;height:42px;border:1px solid #cfd2d5;background:#fff;padding:0 42px 0 14px;color:#111;font-size:13px;font-weight:700;outline:none}
+.search-wrap input:focus{border-color:#8b8f94;box-shadow:0 0 0 2px rgba(0,0,0,.05)}
+.search-wrap:after{content:"⌕";position:absolute;right:14px;top:50%;transform:translateY(-54%);font-size:22px;color:#777}
+
+.driver-grid{width:min(1450px,calc(100% - 36px));margin:auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.driver-card{position:relative;display:block;border:1px solid #d6d6d6;background:#fff;min-width:0;text-decoration:none;color:#111;overflow:hidden;cursor:pointer;transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease}
+.driver-card:hover{transform:translateY(-3px);box-shadow:0 9px 24px rgba(0,0,0,.13);border-color:#bbb}
+.driver-card:focus-visible{outline:3px solid #111;outline-offset:2px}
+.driver-media{position:relative;height:300px;background:linear-gradient(180deg,#ececec 0%,#f8f8f8 54%,#e7e7e7 100%);overflow:hidden}
+.driver-media:after{content:"";position:absolute;left:0;right:0;bottom:0;height:32%;background:linear-gradient(180deg,transparent,rgba(0,0,0,.08));pointer-events:none}
+.driver-cutout{position:absolute;left:50%;bottom:-2px;transform:translateX(-50%);height:95%;width:auto;max-width:90%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 8px 8px rgba(0,0,0,.18));z-index:2}
+.driver-fallback{position:absolute;inset:0;display:grid;place-items:center;color:#c2c2c2;font-size:74px;font-weight:1000;font-style:italic;letter-spacing:-.06em}
+.number-badge{position:absolute;top:0;left:0;z-index:4;min-width:78px;height:64px;padding:0 14px 0 12px;display:flex;align-items:center;justify-content:center;background:#111;color:#fff;font-size:34px;font-weight:1000;font-style:italic;letter-spacing:-.07em;clip-path:polygon(0 0,100% 0,87% 100%,0 100%)}
+.number-badge:after{content:"";position:absolute;left:0;bottom:0;width:100%;height:5px;background:var(--hlrn-red)}
+.status-chip{position:absolute;right:11px;top:11px;z-index:5;background:rgba(255,255,255,.94);border:1px solid #d5d5d5;padding:7px 9px;color:#353535;font-size:8px;font-weight:1000;letter-spacing:.13em;text-transform:uppercase}
+
+.driver-info{padding:17px 17px 14px;background:#fff;border-top:1px solid #d9d9d9;min-height:116px}
+.driver-name{font-size:20px;line-height:1.02;font-weight:1000;letter-spacing:-.028em;text-transform:uppercase;color:#171717;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.driver-sub{margin-top:6px;display:flex;align-items:center;justify-content:space-between;gap:10px;color:#74787d;font-size:10px;font-weight:900;letter-spacing:.07em;text-transform:uppercase}
+.driver-sub strong{color:#111}
+.driver-stats{margin-top:14px;padding-top:12px;border-top:1px solid #e2e2e2;display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.mini-stat{min-width:0}
+.mini-stat b{display:block;font-size:14px;color:#111;line-height:1}
+.mini-stat span{display:block;margin-top:4px;font-size:7px;color:#8a8e93;font-weight:900;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.win-mark{display:inline-flex;align-items:center;gap:5px}
+.win-mark:before{content:"▰";color:#111;transform:skewX(-15deg);font-size:10px}
+
+.loading-card,.error-card,.no-card{grid-column:1/-1;padding:55px 20px;background:#fff;border:1px solid #ddd;text-align:center;color:#73777d;font-size:13px;font-weight:800}
+.spinner{width:28px;height:28px;border:3px solid #ddd;border-top-color:#111;border-radius:50%;margin:0 auto 12px;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+
+.profile-view{display:none;background:#fff;min-height:calc(100vh - 68px)}
+.profile-shell{width:min(1450px,calc(100% - 36px));margin:auto;padding:26px 0 70px}
+.profile-back{border:0;background:#111;color:#fff;padding:12px 18px;font-size:10px;font-weight:1000;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.profile-back:hover{background:var(--hlrn-red)}
+.profile-hero{margin-top:22px;display:grid;grid-template-columns:minmax(300px,460px) 1fr;background:#f1f1f1;border:1px solid #ddd;min-height:440px;overflow:hidden}
+.profile-photo{position:relative;overflow:hidden;background:linear-gradient(180deg,#dedede,#f5f5f5)}
+.profile-photo img{position:absolute;height:96%;max-width:96%;width:auto;left:50%;bottom:-3px;transform:translateX(-50%);object-fit:contain;filter:drop-shadow(0 12px 12px rgba(0,0,0,.2))}
+.profile-number{position:absolute;z-index:3;left:0;top:0;background:#111;color:#fff;min-width:106px;height:82px;display:flex;align-items:center;justify-content:center;font-size:45px;font-weight:1000;font-style:italic;clip-path:polygon(0 0,100% 0,87% 100%,0 100%);border-bottom:6px solid var(--hlrn-red)}
+.profile-copy{padding:46px 42px;background:#fff;display:flex;flex-direction:column;justify-content:center}
+.profile-kicker{font-size:10px;font-weight:1000;letter-spacing:.16em;color:var(--hlrn-red);text-transform:uppercase}
+.profile-copy h2{margin:7px 0 4px;font-size:clamp(35px,5vw,70px);line-height:.91;font-weight:1000;letter-spacing:-.055em;text-transform:uppercase}
+.profile-copy p{margin:5px 0 0;color:#7b7f84;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.profile-stats{margin-top:28px;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border:1px solid #ddd;background:#fff}
+.profile-stat{padding:21px 16px;border-right:1px solid #ddd}.profile-stat:last-child{border-right:0}
+.profile-stat b{display:block;font-size:29px;line-height:1;font-weight:1000}.profile-stat span{display:block;margin-top:6px;font-size:8px;color:#888;font-weight:1000;text-transform:uppercase;letter-spacing:.1em}
+.history-wrap{margin-top:28px;border:1px solid #ddd;background:#fff;overflow:auto}
+.history-head{padding:17px 18px;border-bottom:1px solid #ddd;font-size:13px;font-weight:1000;text-transform:uppercase}
+table{width:100%;border-collapse:collapse;min-width:840px}th,td{padding:13px 14px;border-bottom:1px solid #e5e5e5;text-align:left;font-size:11px}th{background:#f3f3f3;color:#666;font-size:8px;text-transform:uppercase;letter-spacing:.08em}td{font-weight:700}.win{color:var(--hlrn-red);font-weight:1000}.top5{font-weight:1000}
+
+@media(max-width:1180px){.driver-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.driver-media{height:285px}.profile-stats{grid-template-columns:repeat(3,1fr)}.profile-stat:nth-child(3){border-right:0}.profile-stat{border-bottom:1px solid #ddd}.profile-stat:nth-child(n+4){border-bottom:0}}
+@media(max-width:850px){.driver-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.roster-tools{align-items:flex-start;flex-direction:column}.search-wrap{width:100%}.profile-hero{grid-template-columns:1fr}.profile-photo{height:390px}.profile-copy{padding:30px 24px}.profile-stats{grid-template-columns:repeat(2,1fr)}.profile-stat:nth-child(odd){border-right:1px solid #ddd}.profile-stat:nth-child(even){border-right:0}.profile-stat{border-bottom:1px solid #ddd}.profile-stat:nth-last-child(-n+2){border-bottom:0}}
+@media(max-width:520px){.driver-heading-inner,.roster-tools,.driver-grid,.profile-shell{width:min(100% - 22px,1450px)}.driver-heading-inner{padding:26px 0 22px}.driver-grid{grid-template-columns:1fr;gap:13px}.driver-media{height:330px}.driver-info{min-height:0}.driver-name{font-size:22px}.number-badge{min-width:82px;height:66px;font-size:35px}.profile-photo{height:350px}.profile-stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div id="directoryView" class="driver-page">
+  <header class="driver-heading">
+    <div class="driver-heading-inner">
+      <div class="eyebrow">High Line Racing Network</div>
+      <h1>HLRN <span>Drivers</span></h1>
+      <p>Official HLRN driver roster, statistics and race history.</p>
+    </div>
+  </header>
+
+  <div class="roster-tools">
+    <div>
+      <div class="roster-title">HLRN Drivers</div>
+      <div id="driverCount" class="roster-count">Loading drivers…</div>
+    </div>
+    <label class="search-wrap" aria-label="Search drivers"><input id="search" type="search" placeholder="Search driver or car number" autocomplete="off"></label>
+  </div>
+
+  <main id="driverGrid" class="driver-grid">
+    <div class="loading-card"><div class="spinner"></div>Loading HLRN driver roster…</div>
+  </main>
+</div>
+
+<section id="profileView" class="profile-view">
+  <div class="profile-shell">
+    <button id="backToDirectory" class="profile-back" type="button">← All Drivers</button>
+    <div id="profileContent"></div>
+  </div>
+</section>
+
+<script>
+const HLRN_API_URL="https://script.google.com/macros/s/AKfycbzlheXb7obxCKXtQZKFRvo9FMvKU0qDiuEbnCV3KLM4GDP2-VcM10BOu_j1_dNwO1gPNw/exec";
+const HLRN_DRIVER_PHOTO_BASE="https://hunterwelborn32-creator.github.io/HLRN-App/driver-photos/cutout/";
+const HLRN_DRIVER_CUTOUT_PHOTOS={"aarontruebig":"aaron-truebig.webp","alexleebaw":"alex-leebaw.webp","benjaminrichards":"benjamin-richards.webp","billdaniels":"bill-daniels.webp","brandonbeyke":"brandon-beyke.webp","brandonshowers":"brandon-showers.webp","brianhayes":"brian-hayes.webp","brianhebbard":"brian-hebbard.webp","brianhennings":"brian-hennings.webp","brockpiper":"brock-piper.webp","brycehinton":"bryce-hinton.webp","carsonfreeman":"carson-freeman.webp","charlesfletcher":"charles-fletcher.webp","chrisjames":"chris-james.webp","coricooke":"cori-cooke.webp","craigrowe":"craig-rowe.webp","darrelceballos":"darrel-ceballos.webp","daviddurand":"david-durand.webp","derekjacobs":"derek-jacobs.webp","donnybeach":"donny-beach.webp","dylanjones":"dylan-jones.webp","erichayden":"eric-hayden.webp","ethaneckert":"ethan-eckert.webp","ethanmoreno":"ethan-moreno.webp","evanfuqua":"evan-fuqua.webp","evankarlbon":"evan-karlbon.webp","evanparry":"evan-parry.webp","gerrybergeron":"gerry-bergeron.webp","grantwessley":"grant-wessley.webp","hunterwelborn":"hunter-welborn.webp","jaredphilpott":"jared-philpott.webp","jasonbranch":"jason-branch.webp","javonethompson":"javone-thompson.webp","jeremyjeffries":"jeremy-jeffries.webp","jerryfassett":"jerry-fassett.webp","jimsegredo":"jim-segredo.webp","joekonen":"joe-konen.webp","johnmiles":"john-miles.webp","joshmckinney":"josh-mckinney.webp","joshuaspragg":"joshua-spragg.webp","juanescamilla":"juan-escamilla.webp","justincrowe":"justin-crowe.webp","keatoncox":"keaton-cox.webp","kennyreel":"kenny-reel.webp","kenwoodramsey":"kenwood-ramsey.webp","kodyneagles":"kody-neagles.webp","kylekammeron":"kyle-kammeron.webp","larkinboyer":"larkin-boyer.webp","matthewbrown":"matthew-brown.webp","matthewgraham":"matthew-graham.webp","nicholasbaumann":"nicholas-baumann.webp","nicholasmoody":"nicholas-moody.webp","randyschweitzer":"randy-schweitzer.webp","randyshowers":"randy-showers.webp","rickymiles":"ricky-miles.webp","rosscampoli":"ross-campoli.webp","ryanwilson":"ryan-wilson.webp","scottwise":"scott-wise.webp","sebastianmichaels":"sebastian-michaels.webp","shanehatfield":"shane-hatfield.webp","shawnstamper":"shawn-stamper.webp","timothytyler":"timothy-tyler.webp","tjlunn":"tj-lunn.webp","tommyrogers":"tommy-rogers.webp","trevoraswarnauth":"trevor-aswarnauth.webp","trevorhaley":"trevor-haley.webp","vincenteguerrero":"vincente-guerrero.webp","zackharry":"zack-harry.webp"};
+const HLRN_DRIVER_PHOTO_ALIASES={"sebastianmicheals":"sebastianmichaels","ericpedleyhayden":"erichayden","randyschweitzerrsi":"randyschweitzer","dyalnjones":"dylanjones","nicholasbaumann2":"nicholasbaumann","dylancjones":"dylanjones","ethanfonsecamoreno":"ethanmoreno","joshuamckinney":"joshmckinney","joshuamckinney2":"joshmckinney","jeremysjeffries":"jeremyjeffries","vicenteguerrero2":"vincenteguerrero","brianhebbard2":"brianhebbard","brianhayes4":"brianhayes","ryanwilson21":"ryanwilson","timothytyler3":"timothytyler","matthewbrown49":"matthewbrown","matthewgraham20":"matthewgraham"};
+let drivers=[];
+
+const esc=v=>String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+const num=v=>{const n=Number(v);return Number.isFinite(n)?n:0};
+function hLrnPhotoKey(name){let s=String(name||"").trim();if(s.includes(",")){const p=s.split(",");const last=(p.shift()||"").trim().replace(/\d+$/,"");const first=p.join(" ").trim();s=(first+" "+last).trim()}else{s=s.replace(/\d+$/,"").trim()}let k=s.toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9]/g,"");if(HLRN_DRIVER_PHOTO_ALIASES[k])k=HLRN_DRIVER_PHOTO_ALIASES[k];if(!HLRN_DRIVER_CUTOUT_PHOTOS[k]){const stripped=k.replace(/\d+/g,"");if(HLRN_DRIVER_PHOTO_ALIASES[stripped])k=HLRN_DRIVER_PHOTO_ALIASES[stripped];else if(HLRN_DRIVER_CUTOUT_PHOTOS[stripped])k=stripped}return k}
+function photoUrl(name){const f=HLRN_DRIVER_CUTOUT_PHOTOS[hLrnPhotoKey(name)];return f?HLRN_DRIVER_PHOTO_BASE+f:""}
+function lastName(name){const a=String(name||"").trim().split(/\s+/);return (a[a.length-1]||"").toLowerCase()}
+function normalizeDriver(d){return { ...d, driver:d.driver||d.name||"Unknown Driver", carNumber:d.carNumber||d.number||"—", starts:d.starts??0,wins:d.wins??0,top5:d.top5??0,top10:d.top10??0,averageFinish:d.averageFinish??d.avgFinish??"—"}}
+
+function loadDrivers(){
+  const cb="hlrnDrivers_"+Date.now();
+  window[cb]=data=>{try{if(!Array.isArray(data))throw new Error((data&&data.error)||"Driver list was not returned.");drivers=data.map(normalizeDriver).sort((a,b)=>lastName(a.driver).localeCompare(lastName(b.driver))||a.driver.localeCompare(b.driver));renderDrivers(drivers)}catch(e){showError(e.message)}finally{try{delete window[cb]}catch{}}};
+  const s=document.createElement("script");s.src=HLRN_API_URL+"?action=drivers&callback="+encodeURIComponent(cb)+"&t="+Date.now();s.onerror=()=>showError("Could not connect to the HLRN driver database.");document.body.appendChild(s)
+}
+function card(d){
+ const name=d.driver, n=d.carNumber||"—", photo=photoUrl(name), wins=num(d.wins);
+ return `<button class="driver-card" type="button" data-driver="${esc(name)}" aria-label="Open ${esc(name)} profile">
+   <div class="driver-media">
+     <div class="number-badge">${esc(n)}</div><div class="status-chip">HLRN DRIVER</div>
+     ${photo?`<img class="driver-cutout" src="${esc(photo)}" alt="${esc(name)}" loading="lazy" decoding="async" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">`:``}
+     <div class="driver-fallback" style="${photo?'display:none':''}">#${esc(n)}</div>
+   </div>
+   <div class="driver-info">
+     <div class="driver-name">${esc(name)}</div>
+     <div class="driver-sub"><span>Car <strong>#${esc(n)}</strong></span><span class="win-mark">${wins} ${wins===1?'Win':'Wins'}</span></div>
+     <div class="driver-stats">
+       <div class="mini-stat"><b>${esc(d.starts)}</b><span>Starts</span></div>
+       <div class="mini-stat"><b>${esc(d.wins)}</b><span>Wins</span></div>
+       <div class="mini-stat"><b>${esc(d.top5)}</b><span>Top 5</span></div>
+       <div class="mini-stat"><b>${esc(d.top10)}</b><span>Top 10</span></div>
+     </div>
+   </div>
+ </button>`
+}
+function renderDrivers(list){document.getElementById("driverCount").textContent=`${list.length} ${list.length===1?'driver':'drivers'}`;document.getElementById("driverGrid").innerHTML=list.length?list.map(card).join(""):`<div class="no-card">No drivers found.</div>`}
+function showError(msg){document.getElementById("driverGrid").innerHTML=`<div class="error-card"><strong>DRIVER DATABASE CONNECTION ERROR</strong><br><br>${esc(msg)}</div>`}
+function searchDrivers(){const q=document.getElementById("search").value.toLowerCase().trim();renderDrivers(drivers.filter(d=>String(d.driver).toLowerCase().includes(q)||String(d.carNumber).toLowerCase().includes(q)))}
+function openProfile(name){document.getElementById("directoryView").style.display="none";document.getElementById("profileView").style.display="block";document.getElementById("profileContent").innerHTML=`<div class="loading-card"><div class="spinner"></div>Loading ${esc(name)}…</div>`;window.scrollTo({top:0,behavior:"smooth"});loadProfile(name)}
+function loadProfile(name){const cb="hlrnProfile_"+Date.now();window[cb]=data=>{try{if(!data||typeof data!=="object"||data.ok===false)throw new Error((data&&data.error)||"Profile could not be loaded.");renderProfile(normalizeDriver(data))}catch(e){document.getElementById("profileContent").innerHTML=`<div class="error-card">${esc(e.message)}</div>`}finally{try{delete window[cb]}catch{}}};const s=document.createElement("script");s.src=HLRN_API_URL+"?action=profile&driver="+encodeURIComponent(name)+"&callback="+encodeURIComponent(cb)+"&t="+Date.now();s.onerror=()=>document.getElementById("profileContent").innerHTML=`<div class="error-card">Could not connect to this driver profile.</div>`;document.body.appendChild(s)}
+function renderProfile(d){const hist=Array.isArray(d.history)?d.history:[];const photo=photoUrl(d.driver);const rows=hist.length?hist.map(r=>{const f=num(r.finish);return `<tr><td>${esc(r.date||'—')}</td><td>${esc(r.track||'—')}</td><td>#${esc(r.carNumber||d.carNumber||'—')}</td><td>${esc(r.start||'—')}</td><td class="${f===1?'win':f>1&&f<=5?'top5':''}">${esc(r.finish||'—')}</td><td>${esc(r.laps||'—')}</td><td>${esc(r.lapsLed||0)}</td><td>${esc(r.incidents||0)}</td><td>${esc(r.averageLap||'—')}</td></tr>`}).join(""):`<tr><td colspan="9">No race history available.</td></tr>`;
+ document.getElementById("profileContent").innerHTML=`<div class="profile-hero"><div class="profile-photo"><div class="profile-number">${esc(d.carNumber)}</div>${photo?`<img src="${esc(photo)}" alt="${esc(d.driver)}">`:``}</div><div class="profile-copy"><div class="profile-kicker">HLRN Driver Profile</div><h2>${esc(d.driver)}</h2><p>Car #${esc(d.carNumber)} • High Line Racing Network</p></div></div><div class="profile-stats"><div class="profile-stat"><b>${esc(d.starts)}</b><span>Starts</span></div><div class="profile-stat"><b>${esc(d.wins)}</b><span>Wins</span></div><div class="profile-stat"><b>${esc(d.top5)}</b><span>Top 5</span></div><div class="profile-stat"><b>${esc(d.top10)}</b><span>Top 10</span></div><div class="profile-stat"><b>${esc(d.averageFinish||'—')}</b><span>Avg Finish</span></div><div class="profile-stat"><b>${esc(d.bestFinish||'—')}</b><span>Best Finish</span></div></div><div class="history-wrap"><div class="history-head">Race History</div><table><thead><tr><th>Date</th><th>Track</th><th>Car #</th><th>Start</th><th>Finish</th><th>Laps</th><th>Laps Led</th><th>Incidents</th><th>Avg Lap</th></tr></thead><tbody>${rows}</tbody></table></div>`}
+function showDirectory(){document.getElementById("profileView").style.display="none";document.getElementById("directoryView").style.display="block";window.scrollTo({top:0,behavior:"smooth"})}
+
+document.addEventListener("DOMContentLoaded",()=>{document.getElementById("search").addEventListener("input",searchDrivers);document.getElementById("driverGrid").addEventListener("click",e=>{const c=e.target.closest(".driver-card");if(c)openProfile(c.dataset.driver)});document.getElementById("backToDirectory").addEventListener("click",showDirectory);loadDrivers()});
+</script>
+<script src="../assets/site-shell.js"></script>
+</body>
+</html>
