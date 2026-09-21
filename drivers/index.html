@@ -123,6 +123,8 @@ const HLRN_DRIVER_PHOTO_BASE="https://hunterwelborn32-creator.github.io/HLRN-App
 const HLRN_DRIVER_CUTOUT_PHOTOS={"aarontruebig":"aaron-truebig.webp","alexleebaw":"alex-leebaw.webp","benjaminrichards":"benjamin-richards.webp","billdaniels":"bill-daniels.webp","brandonbeyke":"brandon-beyke.webp","brandonshowers":"brandon-showers.webp","brianhayes":"brian-hayes.webp","brianhebbard":"brian-hebbard.webp","brianhennings":"brian-hennings.webp","brockpiper":"brock-piper.webp","brycehinton":"bryce-hinton.webp","carsonfreeman":"carson-freeman.webp","charlesfletcher":"charles-fletcher.webp","chrisjames":"chris-james.webp","coricooke":"cori-cooke.webp","craigrowe":"craig-rowe.webp","darrelceballos":"darrel-ceballos.webp","daviddurand":"david-durand.webp","derekjacobs":"derek-jacobs.webp","donnybeach":"donny-beach.webp","dylanjones":"dylan-jones.webp","erichayden":"eric-hayden.webp","ethaneckert":"ethan-eckert.webp","ethanmoreno":"ethan-moreno.webp","evanfuqua":"evan-fuqua.webp","evankarlbon":"evan-karlbon.webp","evanparry":"evan-parry.webp","gerrybergeron":"gerry-bergeron.webp","grantwessley":"grant-wessley.webp","hunterwelborn":"hunter-welborn.webp","jaredphilpott":"jared-philpott.webp","jasonbranch":"jason-branch.webp","javonethompson":"javone-thompson.webp","jeremyjeffries":"jeremy-jeffries.webp","jerryfassett":"jerry-fassett.webp","jimsegredo":"jim-segredo.webp","joekonen":"joe-konen.webp","johnmiles":"john-miles.webp","joshmckinney":"josh-mckinney.webp","joshuaspragg":"joshua-spragg.webp","juanescamilla":"juan-escamilla.webp","justincrowe":"justin-crowe.webp","keatoncox":"keaton-cox.webp","kennyreel":"kenny-reel.webp","kenwoodramsey":"kenwood-ramsey.webp","kodyneagles":"kody-neagles.webp","kylekammeron":"kyle-kammeron.webp","larkinboyer":"larkin-boyer.webp","matthewbrown":"matthew-brown.webp","matthewgraham":"matthew-graham.webp","nicholasbaumann":"nicholas-baumann.webp","nicholasmoody":"nicholas-moody.webp","randyschweitzer":"randy-schweitzer.webp","randyshowers":"randy-showers.webp","rickymiles":"ricky-miles.webp","rosscampoli":"ross-campoli.webp","ryanwilson":"ryan-wilson.webp","scottwise":"scott-wise.webp","sebastianmichaels":"sebastian-michaels.webp","shanehatfield":"shane-hatfield.webp","shawnstamper":"shawn-stamper.webp","timothytyler":"timothy-tyler.webp","tjlunn":"tj-lunn.webp","tommyrogers":"tommy-rogers.webp","trevoraswarnauth":"trevor-aswarnauth.webp","trevorhaley":"trevor-haley.webp","vincenteguerrero":"vincente-guerrero.webp","zackharry":"zack-harry.webp"};
 const HLRN_DRIVER_PHOTO_ALIASES={"sebastianmicheals":"sebastianmichaels","ericpedleyhayden":"erichayden","randyschweitzerrsi":"randyschweitzer","dyalnjones":"dylanjones","nicholasbaumann2":"nicholasbaumann","dylancjones":"dylanjones","ethanfonsecamoreno":"ethanmoreno","joshuamckinney":"joshmckinney","joshuamckinney2":"joshmckinney","jeremysjeffries":"jeremyjeffries","vicenteguerrero2":"vincenteguerrero","brianhebbard2":"brianhebbard","brianhayes4":"brianhayes","ryanwilson21":"ryanwilson","timothytyler3":"timothytyler","matthewbrown49":"matthewbrown","matthewgraham20":"matthewgraham"};
 let drivers=[];
+let liveDataAvailable=false;
+let driverLoadTimer=null;
 
 const esc=v=>String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
 const num=v=>{const n=Number(v);return Number.isFinite(n)?n:0};
@@ -131,26 +133,52 @@ function photoUrl(name){const f=HLRN_DRIVER_CUTOUT_PHOTOS[hLrnPhotoKey(name)];re
 function lastName(name){const a=String(name||"").trim().split(/\s+/);return (a[a.length-1]||"").toLowerCase()}
 function normalizeDriver(d){return { ...d, driver:d.driver||d.name||"Unknown Driver", carNumber:d.carNumber||d.number||"—", starts:d.starts??0,wins:d.wins??0,top5:d.top5??0,top10:d.top10??0,averageFinish:d.averageFinish??d.avgFinish??"—"}}
 
+const KNOWN_DRIVER_NUMBERS={
+  hunterwelborn:"66",trevorhaley:"12",ryanwilson:"23",chrisjames:"82",kylekammeron:"55",
+  brycehinton:"28",brianhebbard:"87",evanparry:"72",jerryfassett:"71",randyschweitzer:"78",
+  jimsegredo:"21",tommyrogers:"34",erichayden:"100"
+};
+function displayNameFromFile(file){
+  return String(file||"").replace(/\.webp$/i,"").split("-").map(w=>w? w[0].toUpperCase()+w.slice(1):w).join(" ")
+    .replace(/^Tj /,"TJ ");
+}
+function staticRoster(){
+  return Object.entries(HLRN_DRIVER_CUTOUT_PHOTOS).map(([key,file])=>({
+    driver:displayNameFromFile(file),carNumber:KNOWN_DRIVER_NUMBERS[key]||"—",starts:"—",wins:"—",top5:"—",top10:"—",
+    averageFinish:"—",bestFinish:"—",lapsLed:"—",_fallback:true
+  })).sort((a,b)=>lastName(a.driver).localeCompare(lastName(b.driver))||a.driver.localeCompare(b.driver));
+}
+function useStaticRoster(){
+  liveDataAvailable=false;
+  drivers=staticRoster();
+  renderDrivers(drivers);
+  const count=document.getElementById("driverCount");
+  if(count) count.textContent=`${drivers.length} drivers • roster loaded`;
+}
 function loadDrivers(){
+  useStaticRoster();
   const cb="hlrnData_"+Date.now();
+  let completed=false;
+  const finish=()=>{completed=true;if(driverLoadTimer)clearTimeout(driverLoadTimer);try{delete window[cb]}catch{}};
   window[cb]=data=>{
     try{
-      if(!data || typeof data!=="object") throw new Error("The HLRN database returned an invalid response.");
-      if(data.ok===false) throw new Error(data.error || "HLRN database error.");
+      if(!data || typeof data!=="object") throw new Error("invalid response");
+      if(data.ok===false) throw new Error(data.error || "HLRN database error");
       const sessions=Array.isArray(data.sessions)?data.sessions:[];
-      if(!sessions.length) throw new Error("No race-session data was returned from the HLRN database.");
+      if(!sessions.length) throw new Error("no sessions");
       drivers=buildDriverDirectory(sessions).map(normalizeDriver).sort((a,b)=>lastName(a.driver).localeCompare(lastName(b.driver))||a.driver.localeCompare(b.driver));
+      liveDataAvailable=true;
       renderDrivers(drivers);
     }catch(e){
-      showError(e && e.message ? e.message : String(e));
-    }finally{
-      try{delete window[cb]}catch{}
-    }
+      useStaticRoster();
+    }finally{finish()}
   };
   const script=document.createElement("script");
   script.src=HLRN_API_URL+"?action=data&callback="+encodeURIComponent(cb)+"&t="+Date.now();
-  script.onerror=()=>showError("Could not connect to the HLRN driver database.");
+  script.async=true;
+  script.onerror=()=>{if(!completed){useStaticRoster();finish()}};
   document.body.appendChild(script);
+  driverLoadTimer=setTimeout(()=>{if(!completed){useStaticRoster();finish()}},8000);
 }
 
 function buildDriverDirectory(sessions){
@@ -193,15 +221,17 @@ function buildDriverDirectory(sessions){
 
 function card(d){
  const name=d.driver, n=d.carNumber||"—", photo=photoUrl(name), wins=num(d.wins);
+ const right=d._fallback?"STATS SYNCING":`${wins} ${wins===1?'Win':'Wins'}`;
+ const car=n==="—"?"HLRN DRIVER":`Car <strong>#${esc(n)}</strong>`;
  return `<button class="driver-card" type="button" data-driver="${esc(name)}" aria-label="Open ${esc(name)} profile">
    <div class="driver-media">
      <div class="number-badge">${esc(n)}</div><div class="status-chip">HLRN DRIVER</div>
      ${photo?`<img class="driver-cutout" src="${esc(photo)}" alt="${esc(name)}" loading="lazy" decoding="async" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">`:``}
-     <div class="driver-fallback" style="${photo?'display:none':''}">#${esc(n)}</div>
+     <div class="driver-fallback" style="${photo?'display:none':''}">${n==='—'?'HLRN':'#'+esc(n)}</div>
    </div>
    <div class="driver-info">
      <div class="driver-name">${esc(name)}</div>
-     <div class="driver-sub"><span>Car <strong>#${esc(n)}</strong></span><span class="win-mark">${wins} ${wins===1?'Win':'Wins'}</span></div>
+     <div class="driver-sub"><span>${car}</span><span class="win-mark">${right}</span></div>
      <div class="driver-stats">
        <div class="mini-stat"><b>${esc(d.starts)}</b><span>Starts</span></div>
        <div class="mini-stat"><b>${esc(d.wins)}</b><span>Wins</span></div>
@@ -214,10 +244,10 @@ function card(d){
 function renderDrivers(list){document.getElementById("driverCount").textContent=`${list.length} ${list.length===1?'driver':'drivers'}`;document.getElementById("driverGrid").innerHTML=list.length?list.map(card).join(""):`<div class="no-card">No drivers found.</div>`}
 function showError(msg){document.getElementById("driverGrid").innerHTML=`<div class="error-card"><strong>DRIVER DATABASE CONNECTION ERROR</strong><br><br>${esc(msg)}</div>`}
 function searchDrivers(){const q=document.getElementById("search").value.toLowerCase().trim();renderDrivers(drivers.filter(d=>String(d.driver).toLowerCase().includes(q)||String(d.carNumber).toLowerCase().includes(q)))}
-function openProfile(name){document.getElementById("directoryView").style.display="none";document.getElementById("profileView").style.display="block";document.getElementById("profileContent").innerHTML=`<div class="loading-card"><div class="spinner"></div>Loading ${esc(name)}…</div>`;window.scrollTo({top:0,behavior:"smooth"});loadProfile(name)}
+function openProfile(name){document.getElementById("directoryView").style.display="none";document.getElementById("profileView").style.display="block";window.scrollTo({top:0,behavior:"smooth"});const local=drivers.find(d=>d.driver===name);if(!liveDataAvailable){renderProfile(local||{driver:name,carNumber:"—",starts:"—",wins:"—",top5:"—",top10:"—",averageFinish:"—",bestFinish:"—",history:[],_fallback:true});return}document.getElementById("profileContent").innerHTML=`<div class="loading-card"><div class="spinner"></div>Loading ${esc(name)}…</div>`;loadProfile(name)}
 function loadProfile(name){const cb="hlrnProfile_"+Date.now();window[cb]=data=>{try{if(!data||typeof data!=="object"||data.ok===false)throw new Error((data&&data.error)||"Profile could not be loaded.");renderProfile(normalizeDriver(data))}catch(e){document.getElementById("profileContent").innerHTML=`<div class="error-card">${esc(e.message)}</div>`}finally{try{delete window[cb]}catch{}}};const s=document.createElement("script");s.src=HLRN_API_URL+"?action=profile&driver="+encodeURIComponent(name)+"&callback="+encodeURIComponent(cb)+"&t="+Date.now();s.onerror=()=>document.getElementById("profileContent").innerHTML=`<div class="error-card">Could not connect to this driver profile.</div>`;document.body.appendChild(s)}
 function renderProfile(d){const hist=Array.isArray(d.history)?d.history:[];const photo=photoUrl(d.driver);const rows=hist.length?hist.map(r=>{const f=num(r.finish);return `<tr><td>${esc(r.date||'—')}</td><td>${esc(r.track||'—')}</td><td>#${esc(r.carNumber||d.carNumber||'—')}</td><td>${esc(r.start||'—')}</td><td class="${f===1?'win':f>1&&f<=5?'top5':''}">${esc(r.finish||'—')}</td><td>${esc(r.laps||'—')}</td><td>${esc(r.lapsLed||0)}</td><td>${esc(r.incidents||0)}</td><td>${esc(r.averageLap||'—')}</td></tr>`}).join(""):`<tr><td colspan="9">No race history available.</td></tr>`;
- document.getElementById("profileContent").innerHTML=`<div class="profile-hero"><div class="profile-photo"><div class="profile-number">${esc(d.carNumber)}</div>${photo?`<img src="${esc(photo)}" alt="${esc(d.driver)}">`:``}</div><div class="profile-copy"><div class="profile-kicker">HLRN Driver Profile</div><h2>${esc(d.driver)}</h2><p>Car #${esc(d.carNumber)} • High Line Racing Network</p></div></div><div class="profile-stats"><div class="profile-stat"><b>${esc(d.starts)}</b><span>Starts</span></div><div class="profile-stat"><b>${esc(d.wins)}</b><span>Wins</span></div><div class="profile-stat"><b>${esc(d.top5)}</b><span>Top 5</span></div><div class="profile-stat"><b>${esc(d.top10)}</b><span>Top 10</span></div><div class="profile-stat"><b>${esc(d.averageFinish||'—')}</b><span>Avg Finish</span></div><div class="profile-stat"><b>${esc(d.bestFinish||'—')}</b><span>Best Finish</span></div></div><div class="history-wrap"><div class="history-head">Race History</div><table><thead><tr><th>Date</th><th>Track</th><th>Car #</th><th>Start</th><th>Finish</th><th>Laps</th><th>Laps Led</th><th>Incidents</th><th>Avg Lap</th></tr></thead><tbody>${rows}</tbody></table></div>`}
+ document.getElementById("profileContent").innerHTML=`<div class="profile-hero"><div class="profile-photo"><div class="profile-number">${esc(d.carNumber)}</div>${photo?`<img src="${esc(photo)}" alt="${esc(d.driver)}">`:``}</div><div class="profile-copy"><div class="profile-kicker">HLRN Driver Profile</div><h2>${esc(d.driver)}</h2><p>${d._fallback?'High Line Racing Network • Live statistics are syncing':`Car #${esc(d.carNumber)} • High Line Racing Network`}</p></div></div><div class="profile-stats"><div class="profile-stat"><b>${esc(d.starts)}</b><span>Starts</span></div><div class="profile-stat"><b>${esc(d.wins)}</b><span>Wins</span></div><div class="profile-stat"><b>${esc(d.top5)}</b><span>Top 5</span></div><div class="profile-stat"><b>${esc(d.top10)}</b><span>Top 10</span></div><div class="profile-stat"><b>${esc(d.averageFinish||'—')}</b><span>Avg Finish</span></div><div class="profile-stat"><b>${esc(d.bestFinish||'—')}</b><span>Best Finish</span></div></div><div class="history-wrap"><div class="history-head">Race History</div><table><thead><tr><th>Date</th><th>Track</th><th>Car #</th><th>Start</th><th>Finish</th><th>Laps</th><th>Laps Led</th><th>Incidents</th><th>Avg Lap</th></tr></thead><tbody>${rows}</tbody></table></div>`}
 function showDirectory(){document.getElementById("profileView").style.display="none";document.getElementById("directoryView").style.display="block";window.scrollTo({top:0,behavior:"smooth"})}
 
 document.addEventListener("DOMContentLoaded",()=>{document.getElementById("search").addEventListener("input",searchDrivers);document.getElementById("driverGrid").addEventListener("click",e=>{const c=e.target.closest(".driver-card");if(c)openProfile(c.dataset.driver)});document.getElementById("backToDirectory").addEventListener("click",showDirectory);loadDrivers()});
