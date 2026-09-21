@@ -9,7 +9,7 @@
   const active =
     path.includes('/live/') ? 'live' :
     path.includes('/standings/') ? 'standings' :
-    path.includes('/schedule/') ? 'schedule' :
+    path.includes('/schedule/') ? 'results' :
     path.includes('/results/') ? 'results' :
     path.includes('/drivers/') ? 'drivers' :
     path.includes('/fantasy/') ? 'fantasy' :
@@ -23,7 +23,6 @@
     ['home','Home',''],
     ['live','Live','live/'],
     ['standings','Standings','standings/'],
-    ['schedule','Schedule','schedule/'],
     ['results','Results','results/'],
     ['drivers','Drivers','drivers/'],
     ['fantasy','Fantasy','fantasy/'],
@@ -196,7 +195,7 @@
 
     if (host === 'sites.google.com' && p.includes('/view/highlineracingnetwork')) {
       if (p.includes('/standings')) dest = 'standings/';
-      else if (p.includes('/schedule')) dest = 'schedule/';
+      else if (p.includes('/schedule')) dest = 'results/';
       else if (p.includes('/meet-our-team') || p.includes('/driver')) dest = 'drivers/';
       else if (p.includes('/news')) dest = 'news/';
       else if (p.includes('/rules')) dest = 'rules/';
@@ -205,6 +204,10 @@
       else dest = '';
     } else if (host === 'hlrn-live-feed.onrender.com') {
       dest = 'live/';
+    }
+
+    if (dest === null && host === location.hostname && p.includes('/hlrn-website/schedule/')) {
+      dest = 'results/';
     }
 
     if (dest !== null) {
