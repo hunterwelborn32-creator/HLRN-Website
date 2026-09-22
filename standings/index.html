@@ -575,7 +575,7 @@ switchHostedTab(&quot;racing&quot;);
 &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;"></iframe>
-    <iframe class="page" id="page-sunday" title="HLRN Sunday Championship" scrolling="auto" srcdoc="&lt;!DOCTYPE html&gt;
+    <iframe class="page" id="page-sunday" title="HLRN Sunday Championship" scrolling="auto" data-srcdoc="&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;UTF-8&quot;&gt;
@@ -3850,7 +3850,7 @@ document.addEventListener(&quot;DOMContentLoaded&quot;,function(){
 &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;"></iframe>
-    <iframe class="page" id="page-monday" title="HLRN Monday Championship" scrolling="auto" srcdoc="&lt;!DOCTYPE html&gt;
+    <iframe class="page" id="page-monday" title="HLRN Monday Championship" scrolling="auto" data-srcdoc="&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;UTF-8&quot;&gt;
@@ -7689,8 +7689,17 @@ document.addEventListener(&quot;DOMContentLoaded&quot;,function(){
 const buttons=[...document.querySelectorAll('.tab')];
 const pages=[...document.querySelectorAll('.page')];
 function openPage(name){
+  const selected=document.getElementById('page-'+name);
+  if(!selected)return;
+  // The inactive championship documents are stored in data-srcdoc so they
+  // don't run their API calls and timers until a visitor opens that tab.
+  // Assign srcdoc only once: switching tabs preserves the loaded document.
+  if(selected.hasAttribute('data-srcdoc')){
+    selected.srcdoc=selected.getAttribute('data-srcdoc');
+    selected.removeAttribute('data-srcdoc');
+  }
   buttons.forEach(btn=>btn.classList.toggle('active',btn.dataset.page===name));
-  pages.forEach(frame=>frame.classList.toggle('active',frame.id==='page-'+name));
+  pages.forEach(frame=>frame.classList.toggle('active',frame===selected));
 }
 buttons.forEach(btn=>btn.addEventListener('click',()=>openPage(btn.dataset.page)));
 openPage('hosted');
