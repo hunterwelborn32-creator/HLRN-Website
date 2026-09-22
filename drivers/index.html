@@ -472,36 +472,65 @@ function restoreDriverSnapshot(){
 function saveDriverSnapshot(){
   try{localStorage.setItem(HLRN_DRIVER_CACHE_KEY,JSON.stringify({savedAt:Date.now(),drivers}));}catch(e){}
 }
+// Keep successful league responses independently so one slow feed cannot erase the other.
+const HLRN_LEAGUE_CACHE_KEY="hlrn-driver-leagues-v1";
+function readLeagueCache(){
+  try{return JSON.parse(localStorage.getItem(HLRN_LEAGUE_CACHE_KEY)||"{}")||{};}catch{return {};}
+}
+function saveLeagueCache(cache){
+  try{localStorage.setItem(HLRN_LEAGUE_CACHE_KEY,JSON.stringify(cache));}catch{}
+}
+async function getLeagueFeed(action,league){
+  try{
+    const response=await jsonp(action,league);
+    if(!response || response.success===false || !Array.isArray(response[action])) throw new Error("Invalid "+action+" feed");
+    return response;
+  }catch(error){
+    // Retry a transient Google Apps Script timeout once.
+    return await jsonp(action,league);
+  }
+}
 async function loadDrivers(){
   if(driverRefreshPromise) return driverRefreshPromise;
   const count=document.getElementById("driverCount");
   driverRefreshPromise=(async()=>{
-    try{
-      // Each feed is independent: a slow race-history feed must not hide standings.
-      const settled=await Promise.allSettled([
-        jsonp("drivers","sunday"),jsonp("drivers","monday"),
-        jsonp("results","sunday"),jsonp("results","monday")
-      ]);
-      const valid=(item)=>item.status==="fulfilled" && item.value && item.value.success!==false;
-      const driverFeeds=settled.slice(0,2).filter(valid).map(item=>item.value);
-      const resultFeeds=settled.slice(2).filter(valid).map(item=>item.value);
-      if(!driverFeeds.length) throw new Error("Both driver feeds unavailable");
-      const merged=combineDriverFeeds(driverFeeds,resultFeeds);
-      if(!merged.length) throw new Error("No drivers returned");
-      drivers=merged;
-      liveDataAvailable=true;
-      lastDriverRefresh=Date.now();
-      saveDriverSnapshot();
-      if(document.getElementById("directoryView").style.display!=="none") searchDrivers();
-      else {
-        const title=document.querySelector("#profileContent h2");
-        if(title){const current=drivers.find(d=>prettyName(d.driver).toLowerCase()===title.textContent.trim().toLowerCase());if(current)renderProfile(current);}
-      }
-      if(count) count.textContent=`${drivers.length} drivers • ${driverFeeds.length===2?"live Sunday + Monday":"partial live"} stats${resultFeeds.length<2?" • race history updating":""}`;
-    }catch(e){
-      if(!liveDataAvailable){useStaticRoster();if(count)count.textContent=`${drivers.length} drivers • roster loaded • live stats unavailable`;}
-      else if(count)count.textContent=`${drivers.length} drivers • saved stats • update unavailable`;
+    const cached=readLeagueCache();
+    const requests=[
+      ["drivers","sunday"],["drivers","monday"],
+      ["results","sunday"],["results","monday"]
+    ];
+    const settled=await Promise.allSettled(requests.map(([action,league])=>getLeagueFeed(action,league)));
+    let freshDriverCount=0;
+    settled.forEach((item,i)=>{
+      if(item.status!=="fulfilled" || !item.value || item.value.success===false) return;
+      const [action,league]=requests[i];
+      if(!Array.isArray(item.value[action])) return;
+      cached[action+"_"+league]=item.value;
+      if(action==="drivers") freshDriverCount++;
+    });
+    saveLeagueCache(cached);
+    const driverFeeds=["sunday","monday"].map(league=>cached["drivers_"+league]).filter(feed=>feed&&Array.isArray(feed.drivers));
+    const resultFeeds=["sunday","monday"].map(league=>cached["results_"+league]).filter(feed=>feed&&Array.isArray(feed.results));
+    if(!driverFeeds.length){
+      if(!liveDataAvailable) useStaticRoster();
+      if(count)count.textContent=`${drivers.length} drivers • live stats temporarily unavailable`;
+      return;
     }
+    const merged=combineDriverFeeds(driverFeeds,resultFeeds);
+    // Preserve the complete original photo roster even when only one league responds.
+    const byKey=new Map(staticRoster().map(d=>[mergeKey(d.driver),d]));
+    merged.forEach(d=>byKey.set(mergeKey(d.driver),d));
+    drivers=[...byKey.values()].sort((a,b)=>lastName(a.driver).localeCompare(lastName(b.driver))||a.driver.localeCompare(b.driver));
+    liveDataAvailable=true;
+    // A partial response must never replace a previously complete saved snapshot.
+    if(driverFeeds.length===2){lastDriverRefresh=Date.now();saveDriverSnapshot();}
+    else lastDriverRefresh=Date.now()-HLRN_DRIVER_REFRESH_MS+60000;
+    if(document.getElementById("directoryView").style.display!=="none") searchDrivers();
+    else {
+      const title=document.querySelector("#profileContent h2");
+      if(title){const current=drivers.find(d=>prettyName(d.driver).toLowerCase()===title.textContent.trim().toLowerCase());if(current)renderProfile(current);}
+    }
+    if(count)count.textContent=`${drivers.length} drivers • ${driverFeeds.length===2?"Sunday + Monday stats":"partial stats • retrying missing league"}${resultFeeds.length<2?" • race history updating":""}`;
   })();
   try{return await driverRefreshPromise;}finally{driverRefreshPromise=null;}
 }
