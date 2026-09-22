@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>HLRN Team Members</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#f4f4f4;color:#111}
+body{font-family:Inter,Arial,Helvetica,sans-serif;overflow-x:hidden}
+button,input{font:inherit}
+
+:root{
+  --red:#e10600;
+  --yellow:#ffd100;
+  --blue:#2a6bff;
+  --ink:#111214;
+  --muted:#6d7178;
+  --line:#d7d9dd;
+  --paper:#fff;
+  --soft:#f2f3f4;
+  --green:#25a65a;
+  --headline:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+}
+
+/* ===== NASCAR-inspired HLRN masthead ===== */
+.hlrn-topbar{
+  height:66px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  padding:0 clamp(16px,4vw,58px);
+  background:#08090a;
+  color:#fff;
+  border-bottom:1px solid #24272b;
+}
+.hlrn-brand{display:flex;align-items:center;gap:13px;min-width:0}
+.brand-slashes{display:flex;gap:3px;transform:skewX(-20deg)}
+.brand-slashes i{display:block;width:6px;height:25px}
+.brand-slashes i:nth-child(1){background:var(--yellow)}
+.brand-slashes i:nth-child(2){background:var(--red)}
+.brand-slashes i:nth-child(3){background:var(--blue)}
+.brand-copy strong{
+  display:block;
+  font-family:var(--headline);
+  font-size:24px;
+  font-weight:900;
+  letter-spacing:.035em;
+  line-height:.9;
+}
+.brand-copy span{
+  display:block;margin-top:5px;color:#92979f;font-size:8px;font-weight:800;letter-spacing:.17em;text-transform:uppercase
+}
+.topbar-right{color:#a3a8b0;font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.topbar-right b{color:#fff}
+
+/* ===== page title ===== */
+.page-shell{width:min(1500px,calc(100% - 32px));margin:0 auto;padding:44px 0 74px}
+.page-heading{
+  display:flex;
+  justify-content:space-between;
+  gap:24px;
+  align-items:end;
+  padding-bottom:22px;
+  border-bottom:3px solid #17191c;
+}
+.heading-kicker{
+  color:#6a6e75;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.17em;
+  text-transform:uppercase;
+}
+.page-heading h1{
+  margin:5px 0 0;
+  font-family:var(--headline);
+  font-size:clamp(42px,5.2vw,74px);
+  font-weight:900;
+  line-height:.92;
+  text-transform:uppercase;
+  letter-spacing:-.025em;
+}
+.page-heading h1 span{color:var(--red)}
+.heading-count{
+  flex:0 0 auto;
+  font-family:var(--headline);
+  font-size:18px;
+  font-weight:800;
+  text-transform:uppercase;
+  color:#5e6268;
+}
+.heading-count strong{font-size:32px;color:#111;margin-right:6px}
+
+/* ===== controls ===== */
+.team-controls{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  margin:24px 0 30px;
+}
+.filter-row{display:flex;gap:8px;flex-wrap:wrap}
+.filter-btn{
+  appearance:none;border:1px solid #cfd2d7;background:#fff;color:#272a2f;
+  padding:11px 15px;border-radius:2px;
+  font-family:var(--headline);font-size:13px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;
+  cursor:pointer;transition:.18s ease
+}
+.filter-btn:hover{border-color:#777}
+.filter-btn.active{background:#111214;border-color:#111214;color:#fff;box-shadow:inset 0 -4px 0 var(--red)}
+.search-wrap{position:relative;width:min(300px,100%)}
+.search-wrap input{
+  width:100%;height:42px;border:1px solid #cfd2d7;background:#fff;color:#111;padding:0 40px 0 13px;outline:none;border-radius:2px;
+}
+.search-wrap input:focus{border-color:#777;box-shadow:0 0 0 2px rgba(0,0,0,.06)}
+.search-wrap:after{content:"⌕";position:absolute;right:13px;top:50%;transform:translateY(-52%);font-size:21px;color:#70757d}
+
+/* ===== driver grid ===== */
+.driver-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:18px;
+}
+.driver-card{
+  appearance:none;
+  width:100%;
+  min-width:0;
+  padding:0;
+  border:1px solid #d6d8dc;
+  background:#fff;
+  color:#111;
+  text-align:left;
+  cursor:pointer;
+  overflow:hidden;
+  border-radius:2px;
+  box-shadow:0 2px 7px rgba(0,0,0,.035);
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
+}
+.driver-card:hover{
+  transform:translateY(-4px);
+  border-color:#aeb2b8;
+  box-shadow:0 14px 34px rgba(0,0,0,.13);
+}
+.driver-card.hidden{display:none}
+.driver-status{
+  min-height:31px;
+  display:flex;align-items:center;gap:7px;
+  padding:0 12px;
+  background:#f5f5f5;
+  border-bottom:1px solid #dedfe2;
+  color:#4e535b;
+  font-family:var(--headline);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.075em;
+  text-transform:uppercase;
+}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(37,166,90,.11)}
+.driver-photo{
+  position:relative;
+  position:relative;
+  aspect-ratio:16/10;
+  overflow:hidden;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.03),transparent 30%),
+    #101113;
+  border-bottom:1px solid #d8dade;
+}
+.driver-photo:after{
+  content:"";
+  position:absolute;inset:0;pointer-events:none;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.03);
+}
+.driver-photo img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center center;
+  background:#fff;
+  filter:brightness(1.30) saturate(1.06);
+  transition:transform .28s ease,filter .28s ease;
+}
+.driver-card:hover .driver-photo img{transform:scale(1.018);filter:brightness(1.36) saturate(1.08)}
+.driver-photo:after{display:none!important}
+.number-badge{
+  position:absolute;
+  left:12px;bottom:11px;
+  min-width:62px;height:48px;
+  display:flex;align-items:center;justify-content:center;
+  padding:0 11px 0 20px;
+  background:#fff;
+  border:1px solid #cfd1d5;
+  box-shadow:0 5px 16px rgba(0,0,0,.19);
+}
+.number-badge strong{
+  font-family:var(--headline);
+  font-style:italic;
+  font-size:28px;
+  line-height:1;
+  color:#101114;
+}
+.number-slashes{
+  position:absolute;left:6px;top:9px;bottom:9px;
+  display:flex;gap:1px;transform:skewX(-17deg)
+}
+.number-slashes i{width:3px}
+.number-slashes i:nth-child(1){background:var(--yellow)}
+.number-slashes i:nth-child(2){background:var(--red)}
+.number-slashes i:nth-child(3){background:var(--blue)}
+.driver-body{padding:17px 16px 14px}
+.driver-name{
+  min-height:48px;
+  font-family:var(--headline);
+  font-size:27px;
+  font-weight:900;
+  line-height:.94;
+  text-transform:uppercase;
+  letter-spacing:-.012em;
+}
+.driver-role{
+  min-height:37px;
+  margin-top:7px;
+  color:#6a6f77;
+  font-size:10px;
+  line-height:1.45;
+  font-weight:750;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+.driver-meta{
+  min-height:29px;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  margin-top:13px;
+  padding-top:12px;
+  border-top:1px solid #e0e1e4;
+}
+.hlrn-mark{display:flex;align-items:center;gap:7px;color:#3e4248;font-family:var(--headline);font-size:12px;letter-spacing:.08em}
+.hlrn-mark i{width:19px;height:7px;background:linear-gradient(90deg,var(--yellow) 0 23%,var(--red) 23% 65%,var(--blue) 65%);transform:skewX(-22deg)}
+.card-achievement{display:flex;align-items:center;gap:5px;color:#555a61;font-family:var(--headline);font-size:9px;font-weight:800;letter-spacing:.08em}
+.flag-icon{color:var(--red);font-size:11px;transform:skewX(-12deg)}
+
+/* ===== empty state ===== */
+.empty-state{display:none;padding:70px 20px;text-align:center;background:#fff;border:1px solid #d6d8dc}
+.empty-state.show{display:block}
+.empty-state strong{display:block;font-family:var(--headline);font-size:30px;text-transform:uppercase}
+.empty-state span{display:block;margin-top:6px;color:#777}
+
+/* ===== profile modal ===== */
+.profile-modal{
+  position:fixed;inset:0;z-index:9999;
+  display:none;align-items:center;justify-content:center;
+  padding:24px;
+  background:rgba(0,0,0,.76);
+  backdrop-filter:blur(7px);
+}
+.profile-modal.open{display:flex}
+.profile-panel{
+  position:relative;
+  width:min(1280px,100%);
+  max-height:min(900px,calc(100vh - 32px));
+  overflow:auto;
+  display:grid;
+  grid-template-columns:minmax(0,1.45fr) minmax(320px,.55fr);
+  background:#fff;
+  color:#111;
+  box-shadow:0 28px 90px rgba(0,0,0,.48);
+}
+.profile-media{position:relative;min-height:520px;background:#fff;display:flex;align-items:center;justify-content:center;cursor:zoom-in}
+.profile-media:after{content:"CLICK PHOTO TO ENLARGE";position:absolute;left:18px;bottom:18px;padding:8px 10px;background:rgba(0,0,0,.68);color:#fff;font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;pointer-events:none}
+.profile-media img{width:100%;height:100%;max-height:78vh;object-fit:contain;display:block;filter:brightness(1.30) saturate(1.06)}
+.profile-copy{position:relative;padding:42px 34px 34px}
+.profile-copy:before{content:"";position:absolute;top:0;left:0;right:0;height:7px;background:linear-gradient(90deg,var(--yellow) 0 18%,var(--red) 18% 63%,var(--blue) 63% 100%)}
+.profile-kicker{color:#737880;font-size:9px;font-weight:900;letter-spacing:.18em;text-transform:uppercase}
+.profile-number{margin-top:13px;font-family:var(--headline);font-size:72px;line-height:.8;font-weight:900;font-style:italic;color:#15171a}
+.profile-name{margin-top:17px;font-family:var(--headline);font-size:42px;line-height:.9;font-weight:900;text-transform:uppercase}
+.profile-role{margin-top:13px;color:#61666e;font-size:12px;line-height:1.6;font-weight:700;text-transform:uppercase}
+.profile-divider{height:1px;background:#ddd;margin:25px 0}
+.profile-label{color:#777b82;font-size:9px;font-weight:900;letter-spacing:.15em;text-transform:uppercase}
+.profile-value{margin-top:6px;font-family:var(--headline);font-size:19px;font-weight:800;text-transform:uppercase}
+.profile-active{display:inline-flex;align-items:center;gap:7px;margin-top:22px;padding:9px 11px;border:1px solid #d7d9dc;background:#f6f6f6;color:#2c3035;font-size:9px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+.close-profile{
+  position:absolute;right:12px;top:12px;z-index:3;
+  width:38px;height:38px;border:0;background:#111;color:#fff;cursor:pointer;font-size:23px;line-height:1;
+}
+.close-profile:hover{background:var(--red)}
+
+
+/* full image viewer */
+.image-lightbox{
+  position:fixed;inset:0;z-index:10001;
+  display:none;align-items:center;justify-content:center;
+  padding:20px;
+  background:rgba(0,0,0,.92);
+  backdrop-filter:blur(5px);
+}
+.image-lightbox.open{display:flex}
+.image-lightbox img{
+  display:block;
+  max-width:min(94vw,1800px);
+  max-height:88vh;
+  width:auto;height:auto;
+  object-fit:contain;
+  filter:brightness(1.30) saturate(1.06);
+  background:#fff;
+  box-shadow:0 20px 70px rgba(0,0,0,.45);
+}
+.image-lightbox-hint{
+  position:absolute;left:50%;bottom:18px;transform:translateX(-50%);
+  color:#d9dde2;font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;
+}
+.close-image-lightbox{
+  position:absolute;right:14px;top:14px;z-index:2;
+  width:42px;height:42px;border:0;background:#fff;color:#111;cursor:pointer;font-size:26px;line-height:1;
+}
+.close-image-lightbox:hover{background:var(--red);color:#fff}
+
+/* footer */
+.team-footer{margin-top:46px;padding-top:24px;border-top:1px solid #cfd2d5;display:flex;justify-content:space-between;gap:16px;color:#747980;font-size:9px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+.team-footer b{color:#111}
+
+@media(max-width:1180px){
+  .driver-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:840px){
+  .driver-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .page-shell{width:min(100% - 20px,1500px);padding-top:30px}
+  .page-heading{align-items:flex-start;flex-direction:column}
+  .team-controls{align-items:stretch;flex-direction:column}
+  .search-wrap{width:100%}
+  .profile-panel{grid-template-columns:1fr}
+  .profile-media{min-height:280px}
+}
+@media(max-width:520px){
+  .hlrn-topbar{height:58px;padding:0 12px}
+  .topbar-right{display:none}
+  .brand-copy strong{font-size:20px}
+  .brand-slashes i{height:21px}
+  .page-shell{width:calc(100% - 14px);padding:24px 0 46px}
+  .page-heading h1{font-size:44px}
+  .heading-count{display:none}
+  .filter-row{display:grid;grid-template-columns:1fr 1fr}
+  .filter-btn{padding:10px 8px;font-size:11px}
+  .driver-grid{grid-template-columns:1fr;gap:13px}
+  .driver-photo{
+  position:relative;aspect-ratio:16/9}
+  .driver-name{min-height:0;font-size:30px}
+  .driver-role{min-height:0}
+  .profile-modal{padding:8px}
+  .profile-copy{padding:36px 22px 25px}
+  .profile-name{font-size:36px}
+  .profile-number{font-size:62px}
+  .team-footer{display:block;line-height:1.7}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{scroll-behavior:auto!important;transition:none!important}
+}
+</style>
+<style id="HLRN_SITE_NAV">
+
+/* HLRN SITE NAVIGATION — independent of live telemetry */
+.hlrn-site-nav{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 18px;background:#090c11;border-bottom:1px solid #303744;color:#fff}
+.hlrn-site-nav .nav-title{font-size:11px;font-weight:1000;letter-spacing:1.5px;margin-right:16px;white-space:nowrap}
+.hlrn-site-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:37px;padding:9px 15px;border:1px solid #303744;color:#d4dae3;background:#141922;text-decoration:none;font-size:10px;font-weight:900;letter-spacing:1px;text-transform:uppercase;transition:background .15s,border-color .15s}
+.hlrn-site-nav a:hover,.hlrn-site-nav a:focus-visible{background:#2a313d;border-color:#e31837;color:#fff}
+.hlrn-site-nav a[aria-current="page"]{background:#e31837;border-color:#e31837;color:#fff}
+.hlrn-site-nav .nav-portal{margin-left:auto;border-color:#5865f2}
+@media(max-width:650px){.hlrn-site-nav{padding:9px;gap:6px}.hlrn-site-nav .nav-title{width:100%;margin:0 0 3px}.hlrn-site-nav a{flex:1 1 auto;padding:9px 8px;font-size:9px}.hlrn-site-nav .nav-portal{margin-left:0}}
+</style>
+</head>
+<body>
+<nav class="hlrn-site-nav" aria-label="HLRN website navigation">
+  <span class="nav-title">HLRN / HIGH LINE RACING NETWORK</span>
+  <a href="https://sites.google.com/view/highlineracingnetwork/home">Home</a>
+  <a href="https://sites.google.com/view/highlineracingnetwork/standings">Standings</a>
+  <a href="./">Live Race Center</a>
+  <a href="meet-the-admin.html" aria-current="page">Meet the Admins</a>
+  <a class="nav-portal" href="https://sites.google.com/view/highlineracingnetwork/home" title="Open the HLRN homepage to access Discord Driver Login">Driver Login ↗</a>
+</nav>
+
+<header class="hlrn-topbar">
+  <div class="hlrn-brand">
+    <span class="brand-slashes" aria-hidden="true"><i></i><i></i><i></i></span>
+    <div class="brand-copy">
+      <strong>HIGH LINE RACING NETWORK</strong>
+      <span>Official Team Directory</span>
+    </div>
+  </div>
+  <div class="topbar-right"><b>HLRN</b> • TEAM MEMBERS</div>
+</header>
+
+<main class="page-shell">
+  <section class="page-heading">
+    <div>
+      <div class="heading-kicker">High Line Racing Network</div>
+      <h1>HLRN <span>Team Members</span></h1>
+    </div>
+    <div class="heading-count"><strong id="visibleCount">12</strong> Active Team Members</div>
+  </section>
+
+  <section class="team-controls" aria-label="Team directory controls">
+    <div class="filter-row">
+      <button class="filter-btn active" type="button" data-filter="all">All Team</button>
+      <button class="filter-btn" type="button" data-filter="race-control">Race Control</button>
+      <button class="filter-btn" type="button" data-filter="broadcasting">Broadcasting</button>
+    </div>
+    <label class="search-wrap">
+      <input id="teamSearch" type="search" placeholder="Search team members" aria-label="Search team members">
+    </label>
+  </section>
+
+  <section class="driver-grid" id="driverGrid" aria-live="polite">
+    
+      <button class="driver-card" type="button"
+              data-index="0"
+              data-categories="all administration race-control"
+              data-name="jerry fassett"
+              aria-label="Open profile for Jerry Fassett">
+        <div class="driver-status"><span class="status-dot"></span> HLRN TEAM</div>
+        <div class="driver-photo">
+          <img src="https://drive.google.com/thumbnail?id=1wBGyLWETOhW3j4LfQC7FkwbnqWBO27Wc&amp;sz=w2000" alt="Jerry Fassett #71" loading="lazy">
+          <div class="number-badge">
+            <span class="number-slashes"><i></i><i></i><i></i></span>
+            <strong>71</strong>
+          </div>
+        </div>
+        <div class="driver-body">
+          <div class="driver-name">Jerry Fassett</div>
+          <div class="driver-role">Race Control • Administration</div>
+          <div class="driver-meta">
+            <span class="hlrn-mark"><i></i><b>HLRN</b></span>
+            
+          </div>
+        </div>
+      </button>
+      <button class="driver-card" type="button"
+              data-index="1"
+              data-categories="all administration"
+              data-name="trevor haley"
+              aria-label="Open profile for Trevor Haley">
+        <div class="driver-status"><span class="status-dot"></span> HLRN TEAM</div>
+        <div class="driver-photo">
+          <img src="https://drive.google.com/thumbnail?id=1MPyB6hjpjMofIqGyCWLXUssapBPrW6Ah&amp;sz=w2000" alt="Trevor Haley #12" loading="lazy">
+          <div class="number-badge">
+            <span class="number-slashes"><i></i><i></i><i></i></span>
+            <strong>12</strong>
+          </div>
+        </div>
+        <div class="driver-body">
+          <div class="driver-name">Trevor Haley</div>
+          <div class="driver-role">HLRN Administration</div>
+          <div class="driver-meta">
+            <span class="hlrn-mark"><i></i><b>HLRN</b></span>
+            
+          </div>
+        </div>
+      </button>
+      <button class="driver-card" type="button"
+              data-index="2"
+              data-categories="all administration"
+              data-name="eric pedley hayden"
+              aria-label="Open profile for Eric Pedley Hayden">
+        <div class="driver-status"><span class="status-dot"></span> HLRN TEAM</div>
+        <div class="driver-photo">
+          <img src="https://drive.google.com/thumbnail?id=1Xdy5f9iZpUWaP4PFK6rrzgi_5V_Czw5Y&amp;sz=w2000" alt="Eric Pedley Hayden #100" loading="lazy">
+          <div class="number-badge">
+            <span class="number-slashes"><i></i><i></i><i></i></span>
+            <strong>100</strong>
+          </div>
+        </div>
+        <div class="driver-body">
+          <div class="driver-name">Eric Pedley Hayden</div>
+          <div class="driver-role">HLRN Administration</div>
+          <div class="driver-meta">
+            <span class="hlrn-mark"><i></i><b>HLRN</b></span>
+            
+          </div>
+        </div>
+      </button>
+      <button class="driver-card" type="button"
+              data-index="3"
+              data-categories="all administration"
+              data-name="brian hebbard2"
+              aria-label="Open profile for Brian Hebbard2">
+        <div class="driver-status"><span class="status-dot"></span> HLRN TEAM</div>
+        <div class="driver-photo">
+          <img src="https://drive.google.com/thumbnail?id=1nx4rx2UyF4H0l2cMClG7tshVYs12FVwE&amp;sz=w2000" alt="Brian Hebbard2 #87" loading="lazy">
+          <div class="number-badge">
+            <span class="number-slashes"><i></i><i></i><i></i></span>
+            <strong>87</strong>
+          </div>
+        </div>
+        <div class="driver-body">
+          <div class="driver-name">Brian Hebbard2</div>
+          <div class="driver-role">HLRN Administration</div>
+          <div class="driver-meta">
+            <span class="hlrn-mark"><i></i><b>HLRN</b></span>
+            
+          </div>
+        </div>
+      </button>
+      <button class="driver-card" type="button"
+              data-index="4"
+              data-categories="all leadership administration"
+              data-name="chris james"
+              aria-label="Open profile for Chris James">
+        <div class="driver-status"><span class="status-dot"></span> HLRN TEAM</div>
+        <div class="driver-photo">
+          <img src="https://drive.google.com/thumbnail?id=1-Q-XU7NL-Ds-7Xa0QoKAuC41fmmcv0ax&amp;sz=w2000" alt="Chris James #82" loading="lazy">
+          <div class="number-badge">
+            <span class="number-slashes"><i></i><i></i><i></i></span>
+            <strong>82</strong>
+          </div>
+        </div>
+        <div class="driver-body">
+          <div class="driver-name">Chris James</div>
+          <div class="driver-role">General Admin</div>
+          <div class="driver-meta">
+            <span class="hlrn-mark"><i></i><b>HLRN</b></span>
+            <span class="card-achievement"><span class="flag-icon">▰</span> LEADERSHIP</span>
+          </div>
+        </div>
+      </button>
+      <button class="driver-card" type="button"
+              data-index="5"
+              data-categories="all administration"
+              data-name="kyle kammeron"
+              aria-label="Open profile for Kyle Kammeron">
+        <div class="driver-status"><span class="status-dot"></span> HLRN TEAM</div>
+        <div class="driver-photo">
+          <img src="https://drive.google.com/thumbnail?id=1xpS7Ak_INl3VajR_xWMjgML80-yJmkK3&amp;sz=w2000" alt="Kyle Kammeron #55" loading="lazy">
+          <div class="number-badge">
+            <span class="number-slashes"><i></i><i></i><i></i></span>
+            <strong>55</strong>
+          </div>
+        </div>
+        <div class="driver-body">
+          <div class="driver-name">Kyle Kammeron</div>
+          <div class="driver-role">HLRN Administration</div>
+          <div class="driver-meta">
+            <span class="hlrn-mark"><i></i><b>HLRN</b></span>
+            
+          </div>
+        </div>
+      </button>
+      <button class="driver-card" type="button"
+              data-index="6"
+              data-categories="all administration"
+              data-name="evan parry"
+              aria-label="Open profile for Evan Parry">
+        <div class="driver-status"><span class="status-dot"></span> HLRN TEAM</div>
+        <div class="driver-photo">
+          <img src="https://drive.google.com/thumbnail?id=1lpW9d9GTwPsjF52D-ZgqgAdFx41gblsY&amp;sz=w2000" alt="Evan Parry #72" loading="lazy">
+          <div class="number-badge">
+            <span class="number-slashes"><i></i><i></i><i></i></span>
+            <strong>72</strong>
+          </div>
+        </div>
+        <div class="driver-body">
+          <div class="driver-name">Evan Parry</div>
+          <div class="driver-role">HLRN Administration</div>
+          <div class="driver-meta">
+            <span class="hlrn-mark"><i></i><b>HLRN</b></span>
+            
+          </div>
+        </div>
+      </button>
+      <button class="driver-card" type="button"
+              data-index="7"
+              data-categories="all leadership broadcasting"
+              data-name="tommy rogers “fresh”"
+              aria-label="Open profile for Tommy Rogers “Fresh”">
+        <div class="driver-status"><span class="status-dot"></span> HLRN TEAM</div>
+        <div class="driver-photo">
+          <img src="https://drive.google.com/thumbnail?id=1eouxnFbS8XHFPZLsUzHuwpAx-tsffa4a&amp;sz=w2000" alt="Tommy Rogers “Fresh” #34" loading="lazy">
+          <div class="number-badge">
+            <span class="number-slashes"><i></i><i></i><i></i></span>
+            <strong>34</strong>
+          </div>
+        </div>
+        <div class="driver-body">
+          <div class="driver-name">Tommy Rogers “Fresh”</div>
+          <div class="driver-role">Owner • Broadcaster</div>
+          <div class="driver-meta">
+            <span class="hlrn-mark"><i></i><b>HLRN</b></span>
+            <span class="card-achievement"><span class="flag-icon">▰</span> LEADERSHIP</span>
+          </div>
+        </div>
+      </button>
+      <button class="driver-card" type="button"
+              data-index="8"
+              data-categories="all broadcasting"
+              data-name="randy schweitzer"
+              aria-label="Open profile for Randy Schweitzer">
+        <div class="driver-status"><span class="status-dot"></span> HLRN TEAM</div>
+        <div class="driver-photo">
+          <img src="https://drive.google.com/thumbnail?id=1xZyupUg2ESB9XOwz6moUk630ABOl8iry&amp;sz=w2000" alt="Randy Schweitzer #78" loading="lazy">
+          <div class="number-badge">
+            <span class="number-slashes"><i></i><i></i><i></i></span>
+            <strong>78</strong>
+          </div>
+        </div>
+        <div class="driver-body">
+          <div class="driver-name">Randy Schweitzer</div>
+          <div class="driver-role">RSI Broadcasting</div>
+          <div class="driver-meta">
+            <span class="hlrn-mark"><i></i><b>HLRN</b></span>
+            
+          </div>
+        </div>
+      </button>
+      <button class="driver-card" type="button"
+              data-index="9"
+              data-categories="all administration race-control"
+              data-name="jim segredo"
+              aria-label="Open profile for Jim Segredo">
+        <div class="driver-status"><span class="status-dot"></span> HLRN TEAM</div>
+        <div class="driver-photo">
+          <img src="https://drive.google.com/thumbnail?id=1nND4p4Re7c2acTeuUdrxGrLjugNcBjNM&amp;sz=w2000" alt="Jim Segredo #21" loading="lazy">
+          <div class="number-badge">
+            <span class="number-slashes"><i></i><i></i><i></i></span>
+            <strong>21</strong>
+          </div>
+        </div>
+        <div class="driver-body">
+          <div class="driver-name">Jim Segredo</div>
+          <div class="driver-role">Race Control • Lead Admin • Voice of HLRN</div>
+          <div class="driver-meta">
+            <span class="hlrn-mark"><i></i><b>HLRN</b></span>
+          </div>
+        </div>
+      </button>
+      <button class="driver-card" type="button"
+              data-index="10"
+              data-categories="all leadership administration"
+              data-name="hunter welborn"
+              aria-label="Open profile for Hunter Welborn">
+        <div class="driver-status"><span class="status-dot"></span> HLRN TEAM</div>
+        <div class="driver-photo">
+          <img src="https://drive.google.com/thumbnail?id=1vBeNe2RwT57Cjtb7rt6m1kj4n9tB5E9I&amp;sz=w2000" alt="Hunter Welborn #66" loading="lazy">
+          <div class="number-badge">
+            <span class="number-slashes"><i></i><i></i><i></i></span>
+            <strong>66</strong>
+          </div>
+        </div>
+        <div class="driver-body">
+          <div class="driver-name">Hunter Welborn</div>
+          <div class="driver-role">General Admin • Race Administration</div>
+          <div class="driver-meta">
+            <span class="hlrn-mark"><i></i><b>HLRN</b></span>
+            <span class="card-achievement"><span class="flag-icon">▰</span> LEADERSHIP</span>
+          </div>
+        </div>
+      </button>
+      <button class="driver-card" type="button"
+              data-index="11"
+              data-categories="all administration"
+              data-name="ryan wilson21"
+              aria-label="Open profile for Ryan Wilson21">
+        <div class="driver-status"><span class="status-dot"></span> HLRN TEAM</div>
+        <div class="driver-photo">
+          <img src="https://drive.google.com/thumbnail?id=1Typ9dWuFvQ6kHU9GDc1wrEh22Jn1jlip&amp;sz=w2000" alt="Ryan Wilson21 #23" loading="lazy">
+          <div class="number-badge">
+            <span class="number-slashes"><i></i><i></i><i></i></span>
+            <strong>23</strong>
+          </div>
+        </div>
+        <div class="driver-body">
+          <div class="driver-name">Ryan Wilson21</div>
+          <div class="driver-role">HLRN Administration</div>
+          <div class="driver-meta">
+            <span class="hlrn-mark"><i></i><b>HLRN</b></span>
+            
+          </div>
+        </div>
+      </button>
+  </section>
+
+  <div class="empty-state" id="emptyState">
+    <strong>No team members found</strong>
+    <span>Try another filter or search term.</span>
+  </div>
+
+  <footer class="team-footer">
+    <span><b>HIGH LINE RACING NETWORK</b> • TEAM DIRECTORY</span>
+    <span>RACE ADMINISTRATION • RACE CONTROL • BROADCASTING • COMMUNITY</span>
+  </footer>
+</main>
+
+<div class="profile-modal" id="profileModal" role="dialog" aria-modal="true" aria-labelledby="profileName">
+  <div class="profile-panel">
+    <button class="close-profile" id="closeProfile" type="button" aria-label="Close profile">×</button>
+    <div class="profile-media"><img id="profileImage" src="" alt=""></div>
+    <div class="profile-copy">
+      <div class="profile-kicker">HLRN Team Profile</div>
+      <div class="profile-number" id="profileNumber">#00</div>
+      <div class="profile-name" id="profileName">Team Member</div>
+      <div class="profile-role" id="profileRole">HLRN</div>
+      <div class="profile-divider"></div>
+      <div class="profile-label">Network</div>
+      <div class="profile-value">High Line Racing Network</div>
+      <div class="profile-divider"></div>
+      <div class="profile-label">Primary Role</div>
+      <div class="profile-value" id="profileRoleRepeat">HLRN Team</div>
+      <div class="profile-active"><span class="status-dot"></span> Active HLRN Team</div>
+    </div>
+  </div>
+</div>
+
+<div class="image-lightbox" id="imageLightbox" aria-hidden="true">
+  <button class="close-image-lightbox" id="closeImageLightbox" type="button" aria-label="Close image viewer">×</button>
+  <img id="lightboxImage" src="" alt="">
+  <div class="image-lightbox-hint">Press ESC or click outside the image to close</div>
+</div>
+
+<script>
+const teamMembers=[{"name": "Jerry Fassett", "role": "Race Control • Administration", "car": "#71", "image": "https://drive.google.com/thumbnail?id=1wBGyLWETOhW3j4LfQC7FkwbnqWBO27Wc&sz=w2000", "categories": ["all", "administration", "race-control"], "lead": false}, {"name": "Trevor Haley", "role": "HLRN Administration", "car": "#12", "image": "https://drive.google.com/thumbnail?id=1MPyB6hjpjMofIqGyCWLXUssapBPrW6Ah&sz=w2000", "categories": ["all", "administration"], "lead": false}, {"name": "Eric Pedley Hayden", "role": "HLRN Administration", "car": "#100", "image": "https://drive.google.com/thumbnail?id=1Xdy5f9iZpUWaP4PFK6rrzgi_5V_Czw5Y&sz=w2000", "categories": ["all", "administration"], "lead": false}, {"name": "Brian Hebbard2", "role": "HLRN Administration", "car": "#87", "image": "https://drive.google.com/thumbnail?id=1nx4rx2UyF4H0l2cMClG7tshVYs12FVwE&sz=w2000", "categories": ["all", "administration"], "lead": false}, {"name": "Chris James", "role": "General Admin", "car": "#82", "image": "https://drive.google.com/thumbnail?id=1-Q-XU7NL-Ds-7Xa0QoKAuC41fmmcv0ax&sz=w2000", "categories": ["all", "leadership", "administration"], "lead": true}, {"name": "Kyle Kammeron", "role": "HLRN Administration", "car": "#55", "image": "https://drive.google.com/thumbnail?id=1xpS7Ak_INl3VajR_xWMjgML80-yJmkK3&sz=w2000", "categories": ["all", "administration"], "lead": false}, {"name": "Evan Parry", "role": "HLRN Administration", "car": "#72", "image": "https://drive.google.com/thumbnail?id=1lpW9d9GTwPsjF52D-ZgqgAdFx41gblsY&sz=w2000", "categories": ["all", "administration"], "lead": false}, {"name": "Tommy Rogers “Fresh”", "role": "Owner • Broadcaster", "car": "#34", "image": "https://drive.google.com/thumbnail?id=1eouxnFbS8XHFPZLsUzHuwpAx-tsffa4a&sz=w2000", "categories": ["all", "leadership", "broadcasting"], "lead": true}, {"name": "Randy Schweitzer", "role": "RSI Broadcasting", "car": "#78", "image": "https://drive.google.com/thumbnail?id=1xZyupUg2ESB9XOwz6moUk630ABOl8iry&sz=w2000", "categories": ["all", "broadcasting"], "lead": false}, {"name": "Jim Segredo", "role": "Race Control • Lead Admin • Voice of HLRN", "car": "#21", "image": "https://drive.google.com/thumbnail?id=1nND4p4Re7c2acTeuUdrxGrLjugNcBjNM&sz=w2000", "categories": ["all", "administration", "race-control"], "lead": false}, {"name": "Hunter Welborn", "role": "General Admin • Race Administration", "car": "#66", "image": "https://drive.google.com/thumbnail?id=1vBeNe2RwT57Cjtb7rt6m1kj4n9tB5E9I&sz=w2000", "categories": ["all", "leadership", "administration"], "lead": true}, {"name": "Ryan Wilson21", "role": "HLRN Administration", "car": "#23", "image": "https://drive.google.com/thumbnail?id=1Typ9dWuFvQ6kHU9GDc1wrEh22Jn1jlip&sz=w2000", "categories": ["all", "administration"], "lead": false}];
+const cards=[...document.querySelectorAll('.driver-card')];
+const filterButtons=[...document.querySelectorAll('.filter-btn')];
+const search=document.getElementById('teamSearch');
+const visibleCount=document.getElementById('visibleCount');
+const emptyState=document.getElementById('emptyState');
+let activeFilter='all';
+
+function applyFilters(){
+  const q=(search.value||'').trim().toLowerCase();
+  let shown=0;
+  cards.forEach(card=>{
+    const categories=(card.dataset.categories||'').split(/\s+/);
+    const categoryMatch=activeFilter==='all'||categories.includes(activeFilter);
+    const searchMatch=!q||(card.dataset.name||'').includes(q)||(card.textContent||'').toLowerCase().includes(q);
+    const show=categoryMatch&&searchMatch;
+    card.classList.toggle('hidden',!show);
+    if(show) shown++;
+  });
+  visibleCount.textContent=shown;
+  emptyState.classList.toggle('show',shown===0);
+}
+
+filterButtons.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    activeFilter=btn.dataset.filter||'all';
+    filterButtons.forEach(b=>b.classList.toggle('active',b===btn));
+    applyFilters();
+  });
+});
+search.addEventListener('input',applyFilters);
+
+const modal=document.getElementById('profileModal');
+const closeProfile=document.getElementById('closeProfile');
+const profileImage=document.getElementById('profileImage');
+const profileNumber=document.getElementById('profileNumber');
+const profileName=document.getElementById('profileName');
+const profileRole=document.getElementById('profileRole');
+const profileRoleRepeat=document.getElementById('profileRoleRepeat');
+
+function openProfile(index){
+  const member=teamMembers[index];
+  if(!member) return;
+  profileImage.src=member.image;
+  profileImage.alt=member.name+' '+member.car;
+  profileNumber.textContent=member.car;
+  profileName.textContent=member.name;
+  profileRole.textContent=member.role;
+  profileRoleRepeat.textContent=member.role;
+  modal.classList.add('open');
+  document.body.style.overflow='hidden';
+  closeProfile.focus();
+}
+function closeModal(){
+  modal.classList.remove('open');
+  document.body.style.overflow='';
+}
+cards.forEach(card=>card.addEventListener('click',()=>openProfile(Number(card.dataset.index))));
+closeProfile.addEventListener('click',closeModal);
+modal.addEventListener('click',e=>{if(e.target===modal) closeModal()});
+const imageLightbox=document.getElementById('imageLightbox');
+const lightboxImage=document.getElementById('lightboxImage');
+const closeImageLightbox=document.getElementById('closeImageLightbox');
+
+function openImageLightbox(src,alt){
+  lightboxImage.src=src;
+  lightboxImage.alt=alt||'';
+  imageLightbox.classList.add('open');
+  imageLightbox.setAttribute('aria-hidden','false');
+}
+function closeImageViewer(){
+  imageLightbox.classList.remove('open');
+  imageLightbox.setAttribute('aria-hidden','true');
+}
+
+profileImage.addEventListener('click',()=>openImageLightbox(profileImage.src,profileImage.alt));
+closeImageLightbox.addEventListener('click',closeImageViewer);
+imageLightbox.addEventListener('click',e=>{if(e.target===imageLightbox) closeImageViewer()});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&imageLightbox.classList.contains('open')){
+    closeImageViewer();
+    return;
+  }
+  if(e.key==='Escape'&&modal.classList.contains('open')) closeModal();
+});
+
+applyFilters();
+</script>
+</body>
+</html>
