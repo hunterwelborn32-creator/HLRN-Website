@@ -1717,6 +1717,8 @@ body::after{
 const API_BASE = "https://script.google.com/macros/s/AKfycbwo4C9RyV-H-F4ekKFcgmrYVpyOUsh9dmFf2jVhJwvieCTKpKzAR_k6lNcppBuehj58/exec";
 
 let currentLeague = "sunday";
+let hLrnRequestSerial = 0;
+const HLRN_RI_CACHE_PREFIX = "hlrn-race-intelligence-v2-";
 let drivers = [];
 let results = [];
 let analytics = [];
@@ -1881,41 +1883,50 @@ function jsonp(action,league){
 
 async function loadLeague(league){
   currentLeague = league;
+  const requestSerial = ++hLrnRequestSerial;
   setLoading(true);
   hideError();
 
   document.querySelectorAll(".league-btn").forEach(btn=>{
     btn.classList.toggle("active",btn.dataset.league===league);
   });
-
   document.getElementById("leagueBadge").textContent =
     league === "monday" ? "Monday League" : "Sunday League";
 
   try{
-    const [driverData,resultData] = await Promise.all([
+    // Load both feeds independently. A transient failure may use the last
+    // successful response for THIS league, never data from the other league.
+    const settled = await Promise.allSettled([
       jsonp("drivers",league),
       jsonp("results",league)
     ]);
-
-    if(!driverData || driverData.success === false){
-      throw new Error(driverData?.error || "Driver data was not returned.");
+    if(requestSerial !== hLrnRequestSerial) return;
+    function getFeed(index,action){
+      const key=HLRN_RI_CACHE_PREFIX+league+"-"+action;
+      const outcome=settled[index];
+      if(outcome.status==="fulfilled" && outcome.value && outcome.value.success!==false && Array.isArray(outcome.value[action])){
+        try{sessionStorage.setItem(key,JSON.stringify(outcome.value));}catch(e){}
+        return {data:outcome.value,cached:false};
+      }
+      try{
+        const previous=JSON.parse(sessionStorage.getItem(key)||"null");
+        if(previous && Array.isArray(previous[action])) return {data:previous,cached:true};
+      }catch(e){}
+      throw new Error(action==="drivers" ? "Sunday/Monday driver feed unavailable. Press Refresh to retry." : "Race results feed unavailable. Press Refresh to retry.");
     }
+    const driverFeed=getFeed(0,"drivers");
+    const resultFeed=getFeed(1,"results");
+    const driverData=driverFeed.data;
+    const resultData=resultFeed.data;
+    const rawDrivers=driverData.drivers;
+    const rawResults=resultData.results;
 
-    if(!resultData || resultData.success === false){
-      throw new Error(resultData?.error || "Results data was not returned.");
-    }
-
-    const rawDrivers = Array.isArray(driverData.drivers) ? driverData.drivers : [];
-    const rawResults = Array.isArray(resultData.results) ? resultData.results : [];
-
-    /* Remove banned / excluded drivers from the intelligence model itself. */
     const excludedDriverIds = new Set(
       rawDrivers
         .filter(d => isExcludedDriverName(d?.driver ?? d?.name ?? d?.displayName ?? d?.display_name ?? ""))
         .map(d => String(d?.driverId ?? d?.id ?? ""))
         .filter(Boolean)
     );
-
     drivers = rawDrivers.filter(d => !isExcludedDriverName(d?.driver ?? d?.name ?? d?.displayName ?? d?.display_name ?? ""));
     results = rawResults.filter(r => !excludedDriverIds.has(String(r?.driverId ?? r?.id ?? "")));
 
@@ -1925,27 +1936,25 @@ async function loadLeague(league){
     renderStorylines();
     if(window.HLRN_V3_SYNC) window.HLRN_V3_SYNC();
 
-    const maxRace = results.reduce((m,r)=>Math.max(m,number(r.raceNumber)),0);
-    document.getElementById("raceBadge").textContent =
-      maxRace ? "Through Race " + maxRace : "Waiting For Results";
-
-    document.getElementById("liveText").textContent =
-      driverData.lastUpdated ? "Updated " + driverData.lastUpdated : "Live Data";
-
-    const favorite = categories.find(c=>c.key==="favorite");
+    const maxRace=results.reduce((m,r)=>Math.max(m,number(r.raceNumber)),0);
+    document.getElementById("raceBadge").textContent=maxRace ? "Through Race "+maxRace : "Waiting For Results";
+    document.getElementById("liveText").textContent=(driverFeed.cached||resultFeed.cached)
+      ? "Saved data • press Refresh to retry"
+      : (driverData.lastUpdated ? "Updated "+driverData.lastUpdated : "Live Data");
+    const favorite=categories.find(c=>c.key==="favorite");
     if(favorite){
       showDriver(favorite);
       showCategoryDeepDive(favorite);
       const favCard=document.querySelector('.intel-card[data-key="favorite"]');
       if(favCard) favCard.classList.add("selected");
     }
-
   }catch(err){
+    if(requestSerial !== hLrnRequestSerial) return;
     showError(err.message || "Unable to load HLRN data.");
-    document.getElementById("intelGrid").innerHTML = "";
-    document.getElementById("detailWrap").style.display = "none";
+    document.getElementById("intelGrid").innerHTML="";
+    document.getElementById("detailWrap").style.display="none";
   }finally{
-    setLoading(false);
+    if(requestSerial===hLrnRequestSerial) setLoading(false);
   }
 }
 
@@ -3650,9 +3659,13 @@ body:after{
     try{el.textContent=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true}).format(new Date())+' ET'}catch(e){}
   }
 
+  let modelSyncPending=false;
   window.HLRN_V3_SYNC=function(){
-    ensurePanels();
+    if(modelSyncPending)return;
+    modelSyncPending=true;
     requestAnimationFrame(()=>{
+      modelSyncPending=false;
+      ensurePanels();
       decorateCards();
       renderContenders();
       renderVerification();
@@ -3958,7 +3971,7 @@ body{overflow-x:hidden!important}
     // Do not observe the entire document; that created a feedback loop on dynamic UI updates.
     const intel=document.getElementById('intelGrid');
     if(intel){
-      const mo=new MutationObserver(()=>requestAnimationFrame(()=>{updateOverview(); if(window.HLRN_V3_SYNC) window.HLRN_V3_SYNC();}));
+      const mo=new MutationObserver(()=>requestAnimationFrame(()=>{updateOverview();}));
       mo.observe(intel,{childList:true,subtree:true});
     }
     updateOverview();
