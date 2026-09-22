@@ -3779,7 +3779,7 @@ body.rd-v5>#incidentTab{display:none!important}
 
       <div class="v6-header-actions">
         <a class="v6-live-link" href="https://hlrn-live-feed.onrender.com/" target="_blank" rel="noopener noreferrer"><span></span> LIVE CENTER</a>
-        <a class="v6-login" href="https://script.google.com/macros/s/AKfycbyX5H27GP1LS7lFvCw_m9PirJlCCpMYRQkU8ovkYJOlmhyWcCy8qFvSKeBL_-SXiNT8/exec?action=login">DRIVER LOGIN</a>
+        <a class="v6-login" id="hlrnHeaderDriverLogin" href="#hlrnDriverSignIn" aria-label="HLRN Driver Login">DRIVER LOGIN</a>
       </div>
     </div>
   </header>
@@ -5953,6 +5953,7 @@ setInterval(
     const DEVICE_KEY_STORAGE = "hlrn_driver_permanent_device_key_v2";
 
     const signIn = document.getElementById("hlrnDriverSignIn");
+    const headerLogin = document.getElementById("hlrnHeaderDriverLogin");
     const account = document.getElementById("hlrnDriverAccount");
     const accountButton = document.getElementById("hlrnDriverAccountButton");
     const accountMenu = document.getElementById("hlrnDriverAccountMenu");
@@ -6079,6 +6080,10 @@ setInterval(
         activeLogin = safe;
 
         if (!safe) {
+            if (headerLogin) {
+                headerLogin.textContent = "DRIVER LOGIN";
+                headerLogin.setAttribute("aria-label", "HLRN Driver Login");
+            }
             if (signIn) signIn.hidden = false;
             if (account) account.hidden = true;
             if (accountMenu) accountMenu.hidden = true;
@@ -6088,6 +6093,10 @@ setInterval(
 
         if (signIn) signIn.hidden = true;
         if (account) account.hidden = false;
+        if (headerLogin) {
+            headerLogin.textContent = safe.driver.toUpperCase();
+            headerLogin.setAttribute("aria-label", "Open HLRN driver account for " + safe.driver);
+        }
         if (accountName) accountName.textContent = safe.driver;
         if (menuName) menuName.textContent = safe.driver;
 
@@ -6325,6 +6334,23 @@ setInterval(
 
             const loginWindow = window.open(loginUrl,"_blank");
             if (!loginWindow) window.location.href = loginUrl;
+        });
+    }
+
+    /* The navigation login must use the SAME request token/device flow
+       as the hero login, otherwise Discord can succeed without this page
+       receiving its completed session. */
+    if (headerLogin) {
+        headerLogin.addEventListener("click", function(event) {
+            event.preventDefault();
+            if (activeLogin && accountButton) {
+                accountButton.click();
+                if (accountMenu && !accountMenu.hidden) {
+                    accountButton.scrollIntoView({block:"nearest",behavior:"smooth"});
+                }
+            } else if (signIn) {
+                signIn.click();
+            }
         });
     }
 
