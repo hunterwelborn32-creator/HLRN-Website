@@ -46,11 +46,40 @@ function start(){
           <div class="hgn-more-menu">${moreLinks}</div>
         </div>
       </div>
+      <button class="hgn-login" type="button" aria-label="HLRN Driver Login">DRIVER LOGIN</button>
       <a class="hgn-live" href="${url("live/")}"><i></i> RACE CENTER</a>
       <button class="hgn-menu" type="button" aria-expanded="false" aria-label="Open navigation">☰</button>
     </div>
-    <div class="hgn-mobile">${mobilePrimary}<button class="hgn-mobile-more" type="button" aria-expanded="false">MORE <span>▾</span></button><div class="hgn-mobile-more-menu">${mobileMore}</div></div>`;
+    <div class="hgn-mobile">${mobilePrimary}<button class="hgn-mobile-login" type="button">DRIVER LOGIN</button><button class="hgn-mobile-more" type="button" aria-expanded="false">MORE <span>▾</span></button><div class="hgn-mobile-more-menu">${mobileMore}</div></div>`;
   document.body.insertBefore(nav,document.body.firstChild);
+  // Login remains owned by the homepage's existing Discord/device session code.
+  // This shared-nav button delegates to that existing control, never to a new login URL.
+  const loginStyle=document.createElement("style");
+  loginStyle.textContent=`
+    #hlrn-global-nav .hgn-login{flex:0 0 auto!important;min-height:36px!important;padding:0 12px!important;border:1px solid #46515e!important;border-left:3px solid #e31837!important;background:#151a21!important;color:#fff!important;font:900 9px Arial,sans-serif!important;letter-spacing:.06em!important;white-space:nowrap!important;cursor:pointer!important}
+    #hlrn-global-nav .hgn-login:hover{background:#e31837!important}
+    #hlrn-global-nav .hgn-mobile-login{min-height:42px!important;border:1px solid #46515e!important;background:#151a21!important;color:#fff!important;font:900 9px Arial,sans-serif!important;cursor:pointer!important}
+    @media(max-width:1180px){#hlrn-global-nav .hgn-login{display:none!important}}
+  `;
+  nav.appendChild(loginStyle);
+  function syncDriverLogin(){
+    const old=document.getElementById("hlrnHeaderDriverLogin");
+    const label=old?.textContent?.trim()||"DRIVER LOGIN";
+    nav.querySelectorAll(".hgn-login,.hgn-mobile-login").forEach(btn=>{
+      btn.textContent=label;
+      btn.setAttribute("aria-label",old?.getAttribute("aria-label")||"HLRN Driver Login");
+    });
+  }
+  nav.querySelectorAll(".hgn-login,.hgn-mobile-login").forEach(btn=>btn.addEventListener("click",()=>{
+    const old=document.getElementById("hlrnHeaderDriverLogin");
+    if(old){old.click();return;}
+    // Other pages return to the homepage for its existing login flow.
+    location.href=url("")+"#hlrnDriverSignIn";
+  }));
+  syncDriverLogin();
+  const originalLogin=document.getElementById("hlrnHeaderDriverLogin");
+  if(originalLogin)new MutationObserver(syncDriverLogin).observe(originalLogin,{childList:true,characterData:true,subtree:true,attributes:true,attributeFilter:["aria-label"]});
+
   const moreWrap=nav.querySelector(".hgn-more-wrap"),moreBtn=nav.querySelector(".hgn-more-btn"),menuBtn=nav.querySelector(".hgn-menu"),mobile=nav.querySelector(".hgn-mobile"),mobileMoreBtn=nav.querySelector(".hgn-mobile-more"),mobileMoreMenu=nav.querySelector(".hgn-mobile-more-menu");
   function closeMore(){moreWrap?.classList.remove("open");moreBtn?.setAttribute("aria-expanded","false");}
   moreBtn?.addEventListener("click",e=>{e.stopPropagation();const open=!moreWrap.classList.contains("open");moreWrap.classList.toggle("open",open);moreBtn.setAttribute("aria-expanded",String(open));});
