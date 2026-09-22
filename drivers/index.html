@@ -85,6 +85,7 @@ table{width:100%;border-collapse:collapse;min-width:840px}th,td{padding:13px 14p
 @media(max-width:1180px){.driver-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.driver-media{height:285px}.profile-stats{grid-template-columns:repeat(3,1fr)}.profile-stat:nth-child(3){border-right:0}.profile-stat{border-bottom:1px solid #ddd}.profile-stat:nth-child(n+4){border-bottom:0}}
 @media(max-width:850px){.driver-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.roster-tools{align-items:flex-start;flex-direction:column}.search-wrap{width:100%}.profile-hero{grid-template-columns:1fr}.profile-photo{height:390px}.profile-copy{padding:30px 24px}.profile-stats{grid-template-columns:repeat(2,1fr)}.profile-stat:nth-child(odd){border-right:1px solid #ddd}.profile-stat:nth-child(even){border-right:0}.profile-stat{border-bottom:1px solid #ddd}.profile-stat:nth-last-child(-n+2){border-bottom:0}}
 @media(max-width:520px){.driver-heading-inner,.roster-tools,.driver-grid,.profile-shell{width:min(100% - 22px,1450px)}.driver-heading-inner{padding:26px 0 22px}.driver-grid{grid-template-columns:1fr;gap:13px}.driver-media{height:330px}.driver-info{min-height:0}.driver-name{font-size:22px}.number-badge{min-width:82px;height:66px;font-size:35px}.profile-photo{height:350px}.profile-stats{grid-template-columns:repeat(2,1fr)}}
+.league-tabs{width:min(1450px,calc(100% - 36px));margin:24px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:10px}.league-tab{padding:17px 10px;border:2px solid #ddd;background:#fff;color:#333;font-weight:1000;letter-spacing:.08em;cursor:pointer}.league-tab[data-league="sunday"].active{background:#b71920;color:white;border-color:#b71920}.league-tab[data-league="monday"].active{background:#176d38;color:white;border-color:#176d38}.league-tab:focus-visible{outline:3px solid #111;outline-offset:2px}body.monday-league .eyebrow:before,body.monday-league .number-badge:after{background:#176d38}body.monday-league .driver-heading h1 span,body.monday-league .profile-kicker,body.monday-league .win{color:#176d38}body.monday-league .profile-number{border-bottom-color:#176d38}body.monday-league .profile-back:hover{background:#176d38}@media(max-width:520px){.league-tabs{width:calc(100% - 22px)}.league-tab{font-size:11px;padding:14px 5px}}
 </style>
 </head>
 <body>
@@ -97,6 +98,7 @@ table{width:100%;border-collapse:collapse;min-width:840px}th,td{padding:13px 14p
     </div>
   </header>
 
+  <div class="league-tabs" role="tablist" aria-label="Choose league"><button id="sundayTab" class="league-tab active" data-league="sunday" role="tab" aria-selected="true">SUNDAY LEAGUE</button><button id="mondayTab" class="league-tab" data-league="monday" role="tab" aria-selected="false">MONDAY LEAGUE</button></div>
   <div class="roster-tools">
     <div>
       <div class="roster-title">HLRN Drivers</div>
@@ -452,100 +454,76 @@ function combineDriverFeeds(feeds, resultFeeds){
   }).sort((a,b)=>lastName(a.driver).localeCompare(lastName(b.driver))||a.driver.localeCompare(b.driver));
 }
 
-// Show the last successful snapshot immediately; refresh from the original API in the background.
-const HLRN_DRIVER_CACHE_KEY="hlrn-drivers-v2";
+// Each league loads and caches independently; a failed feed never blocks the other tab.
 const HLRN_DRIVER_REFRESH_MS=5*60*1000;
-let driverRefreshPromise=null;
-let lastDriverRefresh=0;
-function restoreDriverSnapshot(){
-  try{
-    const saved=JSON.parse(localStorage.getItem(HLRN_DRIVER_CACHE_KEY)||"null");
-    if(!saved || !Array.isArray(saved.drivers) || !saved.drivers.length) return false;
-    drivers=saved.drivers;
-    liveDataAvailable=true;
-    lastDriverRefresh=Number(saved.savedAt)||0;
-    searchDrivers();
-    document.getElementById("driverCount").textContent=`${drivers.length} drivers • saved stats • checking updates…`;
-    return true;
-  }catch(e){return false;}
+const HLRN_LEAGUE_CACHE_KEY="hlrn-driver-tabs-v1";
+let activeLeague="sunday";
+const leagueData={sunday:{drivers:[],updated:0,loading:false,results:[]},monday:{drivers:[],updated:0,loading:false,results:[]}};
+function readLeagueCache(){try{return JSON.parse(localStorage.getItem(HLRN_LEAGUE_CACHE_KEY)||"{}")||{};}catch{return {};}}
+function saveLeagueCache(){try{localStorage.setItem(HLRN_LEAGUE_CACHE_KEY,JSON.stringify(leagueData));}catch{}}
+function leagueLabel(league){return league==="sunday"?"Sunday":"Monday";}
+function makeLeagueDrivers(league,driverFeed,resultFeed){
+  const result=combineDriverFeeds([driverFeed],resultFeed?[resultFeed]:[]);
+  return result.map(d=>({...d,history:(d.history||[]).filter(r=>r.league===league),leagueStats:{[league]:d.leagueStats?.[league]}}));
 }
-function saveDriverSnapshot(){
-  try{localStorage.setItem(HLRN_DRIVER_CACHE_KEY,JSON.stringify({savedAt:Date.now(),drivers}));}catch(e){}
-}
-// Keep successful league responses independently so one slow feed cannot erase the other.
-const HLRN_LEAGUE_CACHE_KEY="hlrn-driver-leagues-v1";
-function readLeagueCache(){
-  try{return JSON.parse(localStorage.getItem(HLRN_LEAGUE_CACHE_KEY)||"{}")||{};}catch{return {};}
-}
-function saveLeagueCache(cache){
-  try{localStorage.setItem(HLRN_LEAGUE_CACHE_KEY,JSON.stringify(cache));}catch{}
-}
-async function getLeagueFeed(action,league){
-  try{
-    const response=await jsonp(action,league);
-    if(!response || response.success===false || !Array.isArray(response[action])) throw new Error("Invalid "+action+" feed");
-    return response;
-  }catch(error){
-    // Retry a transient Google Apps Script timeout once.
-    return await jsonp(action,league);
-  }
-}
-async function loadDrivers(){
-  if(driverRefreshPromise) return driverRefreshPromise;
+function renderActiveLeague(){
+  const data=leagueData[activeLeague];drivers=data.drivers;
+  liveDataAvailable=!!data.updated;
+  searchDrivers();
   const count=document.getElementById("driverCount");
-  driverRefreshPromise=(async()=>{
-    const cached=readLeagueCache();
-    const requests=[
-      ["drivers","sunday"],["drivers","monday"],
-      ["results","sunday"],["results","monday"]
-    ];
-    const settled=await Promise.allSettled(requests.map(([action,league])=>getLeagueFeed(action,league)));
-    let freshDriverCount=0;
-    settled.forEach((item,i)=>{
-      if(item.status!=="fulfilled" || !item.value || item.value.success===false) return;
-      const [action,league]=requests[i];
-      if(!Array.isArray(item.value[action])) return;
-      cached[action+"_"+league]=item.value;
-      if(action==="drivers") freshDriverCount++;
-    });
-    saveLeagueCache(cached);
-    const driverFeeds=["sunday","monday"].map(league=>cached["drivers_"+league]).filter(feed=>feed&&Array.isArray(feed.drivers));
-    const resultFeeds=["sunday","monday"].map(league=>cached["results_"+league]).filter(feed=>feed&&Array.isArray(feed.results));
-    if(!driverFeeds.length){
-      if(!liveDataAvailable) useStaticRoster();
-      if(count)count.textContent=`${drivers.length} drivers • live stats temporarily unavailable`;
-      return;
-    }
-    const merged=combineDriverFeeds(driverFeeds,resultFeeds);
-    // Preserve the complete original photo roster even when only one league responds.
-    const byKey=new Map(staticRoster().map(d=>[mergeKey(d.driver),d]));
-    merged.forEach(d=>byKey.set(mergeKey(d.driver),d));
-    drivers=[...byKey.values()].sort((a,b)=>lastName(a.driver).localeCompare(lastName(b.driver))||a.driver.localeCompare(b.driver));
-    liveDataAvailable=true;
-    // A partial response must never replace a previously complete saved snapshot.
-    if(driverFeeds.length===2){lastDriverRefresh=Date.now();saveDriverSnapshot();}
-    else lastDriverRefresh=Date.now()-HLRN_DRIVER_REFRESH_MS+60000;
-    if(document.getElementById("directoryView").style.display!=="none") searchDrivers();
-    else {
-      const title=document.querySelector("#profileContent h2");
-      if(title){const current=drivers.find(d=>prettyName(d.driver).toLowerCase()===title.textContent.trim().toLowerCase());if(current)renderProfile(current);}
-    }
-    if(count)count.textContent=`${drivers.length} drivers • ${driverFeeds.length===2?"Sunday + Monday stats":"partial stats • retrying missing league"}${resultFeeds.length<2?" • race history updating":""}`;
-  })();
-  try{return await driverRefreshPromise;}finally{driverRefreshPromise=null;}
+  count.textContent=`${drivers.length} ${leagueLabel(activeLeague)} drivers • ${data.loading?"checking updates…":data.updated?"league stats loaded":"waiting for league data…"}`;
 }
-function refreshDriversIfDue(){
-  if(document.visibilityState!=="visible")return;
-  if(!driverRefreshPromise && Date.now()-lastDriverRefresh>=HLRN_DRIVER_REFRESH_MS)loadDrivers();
+function setLeague(league){
+  if(!leagueData[league])return;
+  activeLeague=league;
+  document.body.classList.toggle("monday-league",league==="monday");
+  document.querySelectorAll(".league-tab").forEach(btn=>{const on=btn.dataset.league===league;btn.classList.toggle("active",on);btn.setAttribute("aria-selected",String(on));});
+  document.getElementById("search").value="";
+  document.getElementById("profileView").style.display="none";
+  document.getElementById("directoryView").style.display="block";
+  renderActiveLeague();
+  refreshLeague(league);
+}
+async function refreshLeague(league){
+  const state=leagueData[league];
+  if(state.loading||Date.now()-state.updated<HLRN_DRIVER_REFRESH_MS)return;
+  state.loading=true;
+  if(activeLeague===league)renderActiveLeague();
+  try{
+    const feed=await jsonp("drivers",league);
+    if(!feed||feed.success===false||!Array.isArray(feed.drivers))throw new Error("Invalid driver feed");
+    // Show the league roster immediately; race history must not hold up the cards.
+    state.drivers=makeLeagueDrivers(league,feed,null);
+    state.updated=Date.now();saveLeagueCache();
+    if(activeLeague===league)renderActiveLeague();
+    try{
+      const results=await jsonp("results",league);
+      if(results&&results.success!==false&&Array.isArray(results.results)){
+        state.drivers=makeLeagueDrivers(league,feed,results);
+        saveLeagueCache();
+        if(activeLeague===league){
+          const open=document.getElementById("profileView").style.display==="block";
+          if(open){const name=document.querySelector("#profileContent h2")?.textContent;const d=state.drivers.find(x=>x.driver===name);if(d)renderProfile(d);}
+          else renderActiveLeague();
+        }
+      }
+    }catch(e){console.warn("HLRN "+league+" race history unavailable",e);}
+  }catch(e){console.warn("HLRN "+league+" driver feed unavailable",e);}
+  finally{state.loading=false;if(activeLeague===league&&document.getElementById("profileView").style.display!=="block")renderActiveLeague();}
 }
 function initializeDrivers(){
-  if(!restoreDriverSnapshot()){
-    useStaticRoster();
-    document.getElementById("driverCount").textContent="Loading live HLRN stats…";
+  const cached=readLeagueCache();
+  for(const league of ["sunday","monday"]){
+    if(cached[league]&&Array.isArray(cached[league].drivers)){
+      leagueData[league].drivers=cached[league].drivers;
+      leagueData[league].updated=Number(cached[league].updated)||0;
+    }
   }
-  refreshDriversIfDue();
-  setInterval(refreshDriversIfDue,60000);
-  document.addEventListener("visibilitychange",refreshDriversIfDue);
+  setLeague("sunday");
+  // Start Monday independently, so switching tabs is fast.
+  refreshLeague("monday");
+  setInterval(()=>{if(document.visibilityState==="visible"){refreshLeague("sunday");refreshLeague("monday");}},60000);
+  document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){refreshLeague("sunday");refreshLeague("monday");}});
 }
 
 function card(d){
@@ -582,7 +560,7 @@ function openProfile(name){
   renderProfile(local||{driver:name,carNumber:"—",starts:"—",wins:"—",top5:"—",top10:"—",averageFinish:"—",bestFinish:"—",history:[],_fallback:true,leagueStats:{}});
 }
 function leagueStatCards(d){
-  const leagues=["sunday","monday"];
+  const leagues=[activeLeague];
   return leagues.map(k=>{
     const s=d.leagueStats&&d.leagueStats[k];
     if(!s) return "";
@@ -596,7 +574,7 @@ function renderProfile(d){
   const photo=photoUrl(d.driver);
   const rows=hist.length?hist.slice(0,30).map(r=>{
     const f=num(r.finish);
-    const league=String(r.league||"").toLowerCase()==="monday"?"Monday":"Sunday";
+    const league=leagueLabel(activeLeague);
     return `<tr>
       <td>${esc(league)}</td>
       <td>${esc(r.raceNumber||"—")}</td>
@@ -610,7 +588,7 @@ function renderProfile(d){
     </tr>`;
   }).join(""):`<tr><td colspan="9">${d._fallback?"Live race history is syncing.":"No race history available."}</td></tr>`;
 
-  const leagueSummary = Object.entries(d.leagueStats||{}).map(([k,s])=>{
+  const leagueSummary = Object.entries(d.leagueStats||{}).filter(([k])=>k===activeLeague).map(([k,s])=>{
     const label=k==="monday"?"Monday":"Sunday";
     const avg=Number.isFinite(Number(s.averageFinish))?Number(s.averageFinish).toFixed(2):"—";
     return `${label}: #${s.rank} • ${s.points} pts • ${s.wins} wins • ${avg} avg finish`;
@@ -625,7 +603,7 @@ function renderProfile(d){
       <div class="profile-copy">
         <div class="profile-kicker">HLRN Driver Profile</div>
         <h2>${esc(d.driver)}</h2>
-        <p>${d._fallback?'High Line Racing Network • Live statistics are syncing':esc(leagueSummary||"Sunday + Monday League")}</p>
+        <p>${d._fallback?'High Line Racing Network • Live statistics are syncing':esc(leagueSummary||leagueLabel(activeLeague)+" League")}</p>
       </div>
     </div>
     <div class="profile-stats">
@@ -636,11 +614,11 @@ function renderProfile(d){
       <div class="profile-stat"><b>${esc(d.averageFinish||'—')}</b><span>Avg Finish</span></div>
       <div class="profile-stat"><b>${esc(d.bestFinish||'—')}</b><span>Best Finish</span></div>
       <div class="profile-stat"><b>${esc(d.lapsLed||0)}</b><span>Laps Led</span></div>
-      <div class="profile-stat"><b>${esc(d.points||0)}</b><span>Combined Points</span></div>
+      <div class="profile-stat"><b>${esc(d.points||0)}</b><span>League Points</span></div>
       ${leagueStatCards(d)}
     </div>
     <div class="history-wrap">
-      <div class="history-head">Recent League Results</div>
+      <div class="history-head">Recent ${leagueLabel(activeLeague)} Results</div>
       <table>
         <thead><tr><th>League</th><th>Race</th><th>Date</th><th>Track</th><th>Finish</th><th>Points</th><th>Laps Led</th><th>Incidents</th><th>Status</th></tr></thead>
         <tbody>${rows}</tbody>
@@ -650,7 +628,7 @@ function renderProfile(d){
 
 function showDirectory(){document.getElementById("profileView").style.display="none";document.getElementById("directoryView").style.display="block";window.scrollTo({top:0,behavior:"smooth"})}
 
-document.addEventListener("DOMContentLoaded",()=>{document.getElementById("search").addEventListener("input",searchDrivers);document.getElementById("driverGrid").addEventListener("click",e=>{const c=e.target.closest(".driver-card");if(c)openProfile(c.dataset.driver)});document.getElementById("backToDirectory").addEventListener("click",showDirectory);initializeDrivers()});
+document.addEventListener("DOMContentLoaded",()=>{document.getElementById("search").addEventListener("input",searchDrivers);document.getElementById("driverGrid").addEventListener("click",e=>{const c=e.target.closest(".driver-card");if(c)openProfile(c.dataset.driver)});document.getElementById("backToDirectory").addEventListener("click",showDirectory);document.querySelectorAll(".league-tab").forEach(btn=>btn.addEventListener("click",()=>setLeague(btn.dataset.league)));initializeDrivers()});
 </script>
 <script src="../assets/site-shell.js"></script>
 </body>
