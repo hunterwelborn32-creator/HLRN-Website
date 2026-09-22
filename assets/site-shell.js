@@ -62,24 +62,83 @@ function start(){
     @media(max-width:1180px){#hlrn-global-nav .hgn-login{display:none!important}}
   `;
   nav.appendChild(loginStyle);
-  function syncDriverLogin(){
-    const old=document.getElementById("hlrnHeaderDriverLogin");
-    const label=old?.textContent?.trim()||"DRIVER LOGIN";
-    nav.querySelectorAll(".hgn-login,.hgn-mobile-login").forEach(btn=>{
-      btn.textContent=label;
-      btn.setAttribute("aria-label",old?.getAttribute("aria-label")||"HLRN Driver Login");
-    });
+  // Share the homepage's existing saved Discord identity across all GitHub pages.
+  // The homepage remains responsible for authenticating and verifying the device session.
+  const LOGIN_KEY="hlrn_driver_login_device_v1";
+  let accountMenuOpen=false;
+  const loginButtons=[...nav.querySelectorAll(".hgn-login,.hgn-mobile-login")];
+  const accountPanel=document.createElement("div");
+  accountPanel.className="hgn-account-panel";
+  accountPanel.hidden=true;
+  accountPanel.innerHTML=`<div class="hgn-account-title">DRIVER ACCOUNT</div><div class="hgn-account-name"></div><div class="hgn-account-discord"></div><button type="button" class="hgn-account-profile">MY PROFILE</button><button type="button" class="hgn-account-signout">SIGN OUT</button>`;
+  nav.querySelector(".hgn-inner").appendChild(accountPanel);
+  loginStyle.textContent+=`
+    #hlrn-global-nav .hgn-account-panel{position:absolute!important;right:120px!important;top:calc(100% - 1px)!important;width:245px!important;padding:15px!important;background:#101318!important;border:1px solid #343b45!important;border-top:3px solid #e31837!important;box-shadow:0 16px 40px #0009!important;z-index:2147483640!important;color:#fff!important}
+    #hlrn-global-nav .hgn-account-panel[hidden]{display:none!important}
+    #hlrn-global-nav .hgn-account-title{font:900 9px Arial,sans-serif!important;color:#8b95a3!important;letter-spacing:.1em!important}
+    #hlrn-global-nav .hgn-account-name{font:900 14px Arial,sans-serif!important;margin:8px 0 4px!important;overflow-wrap:anywhere!important}
+    #hlrn-global-nav .hgn-account-discord{font:11px Arial,sans-serif!important;color:#aeb8c5!important;overflow-wrap:anywhere!important;margin-bottom:12px!important}
+    #hlrn-global-nav .hgn-account-panel button{display:block!important;width:100%!important;padding:11px!important;margin-top:7px!important;background:#1c232c!important;border:1px solid #3a4653!important;color:#fff!important;font:900 10px Arial,sans-serif!important;cursor:pointer!important}
+    #hlrn-global-nav .hgn-account-panel .hgn-account-signout:hover{background:#e31837!important}
+    @media(max-width:1180px){#hlrn-global-nav .hgn-account-panel{right:10px!important;top:100%!important}}
+  `;
+  function readLogin(){
+    try{const d=JSON.parse(localStorage.getItem(LOGIN_KEY)||"null");return d&&typeof d.driver==="string"&&d.driver.trim()?d:null;}catch(e){return null;}
   }
-  nav.querySelectorAll(".hgn-login,.hgn-mobile-login").forEach(btn=>btn.addEventListener("click",()=>{
+  function syncDriverLogin(){
+    const data=readLogin();
+    const old=document.getElementById("hlrnHeaderDriverLogin");
+    const label=data?.driver?.trim()||old?.textContent?.trim()||"DRIVER LOGIN";
+    loginButtons.forEach(btn=>{
+      btn.textContent=label.toUpperCase();
+      btn.setAttribute("aria-label",data?"Open HLRN driver account for "+label:"HLRN Driver Login");
+      btn.setAttribute("aria-expanded",String(accountMenuOpen&&!!data));
+    });
+    if(!data){accountMenuOpen=false;accountPanel.hidden=true;return;}
+    accountPanel.querySelector(".hgn-account-name").textContent=data.driver;
+    accountPanel.querySelector(".hgn-account-discord").textContent=data.discordUsername?"Discord: @"+data.discordUsername:data.discordDisplayName?"Discord: "+data.discordDisplayName:"Discord account connected";
+  }
+  function closeAccount(){accountMenuOpen=false;accountPanel.hidden=true;loginButtons.forEach(b=>b.setAttribute("aria-expanded","false"));}
+  loginButtons.forEach(btn=>btn.addEventListener("click",e=>{
+    e.stopPropagation();
+    const data=readLogin();
+    if(data){accountMenuOpen=!accountMenuOpen;accountPanel.hidden=!accountMenuOpen;syncDriverLogin();return;}
     const old=document.getElementById("hlrnHeaderDriverLogin");
     if(old){old.click();return;}
-    // Other pages return to the homepage for its existing login flow.
     location.href=url("")+"#hlrnDriverSignIn";
   }));
+  accountPanel.addEventListener("click",e=>e.stopPropagation());
+  accountPanel.querySelector(".hgn-account-profile").addEventListener("click",()=>{
+    closeAccount();
+    if(typeof window.openHomeDriverProfile==="function"){
+      const d=readLogin();if(d)window.openHomeDriverProfile(d.driver);
+    }else location.href=url("drivers/");
+  });
+  accountPanel.querySelector(".hgn-account-signout").addEventListener("click",()=>{
+    closeAccount();
+    // Use the homepage's existing logout handler, which also revokes the server device session.
+    const homeSignout=document.getElementById("hlrnDriverSignOut");
+    if(homeSignout){homeSignout.click();syncDriverLogin();return;}
+    sessionStorage.setItem("hlrn_pending_signout","1");
+    location.href=url("");
+  });
+  document.addEventListener("click",e=>{if(!accountPanel.contains(e.target)&&!loginButtons.includes(e.target))closeAccount();});
+  window.addEventListener("storage",e=>{if(e.key===LOGIN_KEY)syncDriverLogin();});
+  window.addEventListener("pageshow",syncDriverLogin);
   syncDriverLogin();
   const originalLogin=document.getElementById("hlrnHeaderDriverLogin");
   if(originalLogin)new MutationObserver(syncDriverLogin).observe(originalLogin,{childList:true,characterData:true,subtree:true,attributes:true,attributeFilter:["aria-label"]});
-
+  // Complete a sign-out requested from another page once homepage login code is initialized.
+  if(sessionStorage.getItem("hlrn_pending_signout")==="1"){
+    let attempts=0;
+    const finishSignout=setInterval(()=>{
+      const button=document.getElementById("hlrnDriverSignOut");
+      if(button&&typeof button.onclick!=="undefined"&&attempts>=2){
+        clearInterval(finishSignout);sessionStorage.removeItem("hlrn_pending_signout");
+        button.click();syncDriverLogin();
+      }else if(++attempts>50)clearInterval(finishSignout);
+    },100);
+  }
   const moreWrap=nav.querySelector(".hgn-more-wrap"),moreBtn=nav.querySelector(".hgn-more-btn"),menuBtn=nav.querySelector(".hgn-menu"),mobile=nav.querySelector(".hgn-mobile"),mobileMoreBtn=nav.querySelector(".hgn-mobile-more"),mobileMoreMenu=nav.querySelector(".hgn-mobile-more-menu");
   function closeMore(){moreWrap?.classList.remove("open");moreBtn?.setAttribute("aria-expanded","false");}
   moreBtn?.addEventListener("click",e=>{e.stopPropagation();const open=!moreWrap.classList.contains("open");moreWrap.classList.toggle("open",open);moreBtn.setAttribute("aria-expanded",String(open));});
