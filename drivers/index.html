@@ -369,7 +369,7 @@ function jsonp(action, league){
     script.src=HLRN_API_URL+"?action="+encodeURIComponent(action)+"&league="+encodeURIComponent(league)+"&callback="+encodeURIComponent(cb)+"&t="+Date.now();
     script.onerror=()=>{cleanup();reject(new Error(action+" "+league+" failed"))};
     document.body.appendChild(script);
-    const timer=setTimeout(()=>{cleanup();reject(new Error(action+" "+league+" timed out"))},12000);
+    const timer=setTimeout(()=>{cleanup();reject(new Error(action+" "+league+" timed out"))},25000);
   });
 }
 
@@ -477,13 +477,15 @@ async function loadDrivers(){
   const count=document.getElementById("driverCount");
   driverRefreshPromise=(async()=>{
     try{
-      const [sunDrivers,monDrivers,sunResults,monResults]=await Promise.all([
+      // Each feed is independent: a slow race-history feed must not hide standings.
+      const settled=await Promise.allSettled([
         jsonp("drivers","sunday"),jsonp("drivers","monday"),
         jsonp("results","sunday"),jsonp("results","monday")
       ]);
-      const driverFeeds=[sunDrivers,monDrivers].filter(x=>x&&x.success!==false);
-      const resultFeeds=[sunResults,monResults].filter(x=>x&&x.success!==false);
-      if(driverFeeds.length!==2 || resultFeeds.length!==2) throw new Error("Incomplete league feed");
+      const valid=(item)=>item.status==="fulfilled" && item.value && item.value.success!==false;
+      const driverFeeds=settled.slice(0,2).filter(valid).map(item=>item.value);
+      const resultFeeds=settled.slice(2).filter(valid).map(item=>item.value);
+      if(!driverFeeds.length) throw new Error("Both driver feeds unavailable");
       const merged=combineDriverFeeds(driverFeeds,resultFeeds);
       if(!merged.length) throw new Error("No drivers returned");
       drivers=merged;
@@ -495,7 +497,7 @@ async function loadDrivers(){
         const title=document.querySelector("#profileContent h2");
         if(title){const current=drivers.find(d=>prettyName(d.driver).toLowerCase()===title.textContent.trim().toLowerCase());if(current)renderProfile(current);}
       }
-      if(count) count.textContent=`${drivers.length} drivers • live Sunday + Monday stats`;
+      if(count) count.textContent=`${drivers.length} drivers • ${driverFeeds.length===2?"live Sunday + Monday":"partial live"} stats${resultFeeds.length<2?" • race history updating":""}`;
     }catch(e){
       if(!liveDataAvailable){useStaticRoster();if(count)count.textContent=`${drivers.length} drivers • roster loaded • live stats unavailable`;}
       else if(count)count.textContent=`${drivers.length} drivers • saved stats • update unavailable`;
