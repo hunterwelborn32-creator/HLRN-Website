@@ -52,6 +52,55 @@ function start(){
     </div>
     <div class="hgn-mobile">${mobilePrimary}<button class="hgn-mobile-login" type="button">DRIVER LOGIN</button><button class="hgn-mobile-more" type="button" aria-expanded="false">MORE <span>▾</span></button><div class="hgn-mobile-more-menu">${mobileMore}</div></div>`;
   document.body.insertBefore(nav,document.body.firstChild);
+
+  // HLRN shared appearance setting. Default remains the existing light design.
+  const THEME_KEY="hlrn_site_theme_v1";
+  const themeLink=document.createElement("link");
+  themeLink.rel="stylesheet";themeLink.href=url("assets/hlrn-theme.css");themeLink.id="hlrn-main-theme-css";
+  if(!document.getElementById(themeLink.id))document.head.appendChild(themeLink);
+  const themeButton=document.createElement("button");
+  themeButton.type="button";
+  themeButton.className="hgn-theme-toggle";
+  themeButton.setAttribute("aria-label","Switch website appearance");
+  themeButton.title="Switch light / dark mode";
+  const themeStyle=document.createElement("style");
+  themeStyle.id="hlrn-theme-shared-style";
+  themeStyle.textContent=`
+    #hlrn-global-nav .hgn-theme-toggle{flex:0 0 auto!important;min-width:74px!important;min-height:36px!important;padding:0 10px!important;border:1px solid #46515e!important;border-radius:5px!important;background:#151a21!important;color:#fff!important;font:900 10px Arial,sans-serif!important;cursor:pointer!important;white-space:nowrap!important}
+    #hlrn-global-nav .hgn-theme-toggle:hover{border-color:#e31837!important}
+    @media(max-width:1180px){#hlrn-global-nav .hgn-theme-toggle{margin-left:auto!important}#hlrn-global-nav .hgn-menu{margin-left:0!important}}
+    @media(max-width:600px){#hlrn-global-nav .hgn-theme-toggle{min-width:64px!important;padding:0 6px!important;font-size:9px!important}}
+  `;
+  nav.appendChild(themeStyle);
+  nav.querySelector(".hgn-inner").insertBefore(themeButton,nav.querySelector(".hgn-menu"));
+  function storedTheme(){try{return localStorage.getItem(THEME_KEY)==="dark"?"dark":"light"}catch(e){return "light"}}
+  function themeInDocument(doc,theme){
+    try{
+      doc.documentElement.setAttribute("data-hlrn-theme",theme);
+      // srcdoc frames have their own document and do not inherit the parent's CSS.
+      if(doc!==document){
+        let link=doc.getElementById("hlrn-frame-theme-css");
+        if(!link){link=doc.createElement("link");link.id="hlrn-frame-theme-css";link.rel="stylesheet";link.href=url("assets/hlrn-theme.css");(doc.head||doc.documentElement).appendChild(link)}
+      }
+      doc.querySelectorAll("iframe").forEach(frame=>{
+        try{if(frame.contentDocument)themeInDocument(frame.contentDocument,theme)}catch(e){} // External frames cannot be restyled.
+      });
+    }catch(e){}
+  }
+  function applyTheme(theme){
+    theme=theme==="dark"?"dark":"light";
+    themeInDocument(document,theme);
+    themeButton.textContent=theme==="dark"?"☀ LIGHT":"☾ DARK";
+    themeButton.setAttribute("aria-pressed",String(theme==="dark"));
+    themeButton.setAttribute("aria-label",theme==="dark"?"Switch to light mode":"Switch to dark mode");
+  }
+  themeButton.addEventListener("click",()=>{const next=storedTheme()==="dark"?"light":"dark";try{localStorage.setItem(THEME_KEY,next)}catch(e){}applyTheme(next)});
+  document.addEventListener("load",e=>{if(e.target?.tagName==="IFRAME")applyTheme(storedTheme())},true);
+  const themeObserver=new MutationObserver(records=>{if(records.some(r=>[...r.addedNodes].some(n=>n.nodeType===1&&(n.tagName==="IFRAME"||n.querySelector?.("iframe")))))applyTheme(storedTheme())});
+  themeObserver.observe(document.body,{childList:true,subtree:true});
+  window.addEventListener("storage",e=>{if(e.key===THEME_KEY)applyTheme(storedTheme())});
+  applyTheme(storedTheme());
+
   // Login remains owned by the homepage's existing Discord/device session code.
   // This shared-nav button delegates to that existing control, never to a new login URL.
   const loginStyle=document.createElement("style");
