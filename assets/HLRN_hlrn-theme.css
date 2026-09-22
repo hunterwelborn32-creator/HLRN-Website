@@ -1,0 +1,22 @@
+/* HLRN shared theme overrides. Add this as assets/hlrn-theme.css. */
+:root{color-scheme:light}
+html[data-hlrn-theme="dark"]{color-scheme:dark!important;--ns-ink:#f4f6f8;--ns-muted:#aab2bc;--ns-line:#353d46;--ns-soft:#151a20;--reader-bg:#0b0e12;--reader-panel:#151a20;--reader-line:#353d46;--reader-muted:#aab2bc;--hlrn-light-bg:#0b0e12;--hlrn-light-ink:#f4f6f8;--hlrn-light-line:#353d46}
+html[data-hlrn-theme="dark"],html[data-hlrn-theme="dark"] body{background:#0b0e12!important;color:#f4f6f8!important}
+html[data-hlrn-theme="dark"] :is(.hlrn,.viewport,.titlebar,.tabs,.tab,.tab.active,.hosted-hub,.hosted-hub-tabs,.hosted-hub-tab,.hosted-hub-stage,.container,.wrapper,.content-wrap,.main,.main-content,.section,.panel,.card,.box,.tile,.stat,.stat-card,.metric-card,.summary-card,.record-card,.record-box,.leader-card,.driver-card,.comparison-card,.edge-card,.cc-card,.cc-battle-item,.cc-spotlight-card,.table-wrap,.table-shell,.stage,.hub,.race-center,.records-page,.driver-page,.h2h-page,.loading,.message,.empty,.placeholder){background-color:#12171d!important;color:#f4f6f8!important;border-color:#343d47!important}
+html[data-hlrn-theme="dark"] :is(h1,h2,h3,h4,h5,h6,.title,.heading,.name,.driver-name,.record-title,.section-title,.tab strong,.hosted-hub-tab strong){color:#f4f6f8!important;text-shadow:none!important}
+html[data-hlrn-theme="dark"] :is(p,.sub,.subtitle,.meta,.muted,.label,.copy,.description,small,.titlecopy){color:#aab2bc!important}
+html[data-hlrn-theme="dark"] :is(table,thead,tbody,tr,th,td){background-color:#12171d!important;color:#f4f6f8!important;border-color:#343d47!important}
+html[data-hlrn-theme="dark"] :is(thead th,th){background-color:#202832!important;color:#f4f6f8!important}
+html[data-hlrn-theme="dark"] tbody tr:nth-child(even) td{background-color:#182029!important}
+html[data-hlrn-theme="dark"] :is(input,select,textarea,button){color:#f4f6f8!important;background-color:#1b232c!important;border-color:#404a55!important}
+html[data-hlrn-theme="dark"] :is(a){color:#ff666d}
+html[data-hlrn-theme="dark"] :is(.tab.active,.hosted-hub-tab.active){background-color:#25303a!important}
+/* Preserve HLRN series identity. */
+html[data-hlrn-theme="dark"] .tab[data-page="sunday"] strong{color:#ff555c!important}
+html[data-hlrn-theme="dark"] .tab[data-page="monday"] strong{color:#8be83a!important}
+html[data-hlrn-theme="dark"] .tab[data-page="hosted"] strong{color:#ffd400!important}
+/* Keep the global navigation's established dark racing appearance in either mode. */
+html[data-hlrn-theme="dark"] #hlrn-global-nav{background:#090b0f!important;color:#fff!important}
+html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-link{background:transparent!important;color:#b8c0ca!important}
+html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-link.active{background:#11151b!important;color:#fff!important}
+html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-theme-toggle{background:#151a21!important;color:#fff!important}
