@@ -1,0 +1,237 @@
+{
+  "id": "episode-07",
+  "title": "The Return",
+  "kind": "main",
+  "number": 7,
+  "discord_open_id": "1548649083290521661",
+  "discord_close_id": "1549062892094095392",
+  "date": "2026-09-13T10:58:33.965000+00:00",
+  "cover": "episode-07/images/001.png",
+  "blocks": [
+    {
+      "type": "text",
+      "text": "<@228327672692867073>",
+      "message_id": "1548649083290521661"
+    },
+    {
+      "type": "image",
+      "src": "images/001.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@1078506766473625600> <@228327672692867073>",
+      "message_id": "1548654736301883562"
+    },
+    {
+      "type": "image",
+      "src": "images/002.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@897239790188109874>",
+      "message_id": "1548664953081176104"
+    },
+    {
+      "type": "image",
+      "src": "images/003.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@771760806739181620> <@1078506766473625600> <@810534889610674196>",
+      "message_id": "1548676649707642912"
+    },
+    {
+      "type": "image",
+      "src": "images/004.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@548734335482855435>",
+      "message_id": "1548693911076077658"
+    },
+    {
+      "type": "image",
+      "src": "images/005.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@155145097267118081> <@603009327044755487> <@606195560830992392>",
+      "message_id": "1548708562182865082"
+    },
+    {
+      "type": "image",
+      "src": "images/006.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@897239790188109874> <@1085485933295575151> <@492852061608738847>",
+      "message_id": "1548709050265505996"
+    },
+    {
+      "type": "image",
+      "src": "images/007.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@1078506766473625600> <@810534889610674196> <@771760806739181620> <@548734335482855435> <@228327672692867073>",
+      "message_id": "1548729139983556658"
+    },
+    {
+      "type": "image",
+      "src": "images/008.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "image",
+      "src": "images/009.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@699448290072199189>",
+      "message_id": "1548752782058586134"
+    },
+    {
+      "type": "image",
+      "src": "images/010.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@1078506766473625600> <@606195560830992392> <@771760806739181620> <@228327672692867073>",
+      "message_id": "1548752974493257768"
+    },
+    {
+      "type": "image",
+      "src": "images/011.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@810534889610674196> <@228327672692867073>",
+      "message_id": "1548769683740827709"
+    },
+    {
+      "type": "image",
+      "src": "images/012.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@1092058622177054812> <@548734335482855435> <@771760806739181620> <@1078506766473625600> <@228327672692867073> <@155145097267118081>",
+      "message_id": "1548778982013407392"
+    },
+    {
+      "type": "image",
+      "src": "images/013.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "image",
+      "src": "images/014.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@1092058622177054812> <@771760806739181620> <@1078506766473625600> <@228327672692867073>",
+      "message_id": "1548785586461081751"
+    },
+    {
+      "type": "image",
+      "src": "images/015.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@810534889610674196> <@771760806739181620> <@548734335482855435> <@1092058622177054812>",
+      "message_id": "1548799157756502036"
+    },
+    {
+      "type": "image",
+      "src": "images/016.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@1078506766473625600> <@548734335482855435> <@1092058622177054812>",
+      "message_id": "1548809929773555866"
+    },
+    {
+      "type": "image",
+      "src": "images/017.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@810534889610674196> <@1078506766473625600> <@771760806739181620>",
+      "message_id": "1548818492831170717"
+    },
+    {
+      "type": "image",
+      "src": "images/018.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@1078506766473625600> <@771760806739181620> <@810534889610674196>",
+      "message_id": "1548830507528228934"
+    },
+    {
+      "type": "image",
+      "src": "images/019.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@228327672692867073> <@810534889610674196> <@1078506766473625600> <@771760806739181620>",
+      "message_id": "1548837360425369612"
+    },
+    {
+      "type": "image",
+      "src": "images/020.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@478401358052065301> <@486675711286050826>",
+      "message_id": "1548914357809844365"
+    },
+    {
+      "type": "image",
+      "src": "images/021.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@854413849716326431> <@606195560830992392> <@448167380829601802> <@603009327044755487> <@742547694261633104> <@636696157590126613> <@1078506766473625600> <@897239790188109874>",
+      "message_id": "1548914597828894803"
+    },
+    {
+      "type": "image",
+      "src": "images/022.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@810534889610674196> <@699448290072199189> <@771760806739181620>",
+      "message_id": "1548914688300032072"
+    },
+    {
+      "type": "image",
+      "src": "images/023.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "image",
+      "src": "images/024.png",
+      "alt": "Adventure illustration"
+    }
+  ]
+}

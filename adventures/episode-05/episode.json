@@ -1,0 +1,242 @@
+{
+  "id": "episode-05",
+  "title": "The Curse of Talladega",
+  "kind": "main",
+  "number": 5,
+  "discord_open_id": "1543594496900464640",
+  "discord_close_id": "1543840375888941067",
+  "date": "2026-08-30T12:13:26.660000+00:00",
+  "cover": "episode-05/images/001.png",
+  "blocks": [
+    {
+      "type": "text",
+      "text": "<@771760806739181620> <@810534889610674196>",
+      "message_id": "1543594496900464640"
+    },
+    {
+      "type": "image",
+      "src": "images/001.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@810534889610674196> <@771760806739181620> <@1078506766473625600> <@741747158629220392>",
+      "message_id": "1543605286848303104"
+    },
+    {
+      "type": "image",
+      "src": "images/002.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@1092058622177054812> <@810534889610674196> <@771760806739181620> <@1078506766473625600> <@741747158629220392>",
+      "message_id": "1543615063720464395"
+    },
+    {
+      "type": "image",
+      "src": "images/003.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@1092058622177054812> <@810534889610674196> <@897239790188109874> <@1317699525766414439>",
+      "message_id": "1543620525811572826"
+    },
+    {
+      "type": "image",
+      "src": "images/004.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "image",
+      "src": "images/005.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@771760806739181620> <@810534889610674196> <@1092058622177054812> <@155145097267118081> <@920731107257876501>",
+      "message_id": "1543634143810818131"
+    },
+    {
+      "type": "image",
+      "src": "images/006.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "image",
+      "src": "images/007.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@1092058622177054812> <@810534889610674196> <@771760806739181620> <@1078506766473625600> <@741747158629220392>",
+      "message_id": "1543652568159363232"
+    },
+    {
+      "type": "image",
+      "src": "images/008.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@797212859657355274> <@603009327044755487>",
+      "message_id": "1543653882234933279"
+    },
+    {
+      "type": "image",
+      "src": "images/009.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@706685031317241878> <@492852061608738847> <@603009327044755487> <@1092058622177054812> <@1078506766473625600> <@948440310516695091>",
+      "message_id": "1543666575494619206"
+    },
+    {
+      "type": "image",
+      "src": "images/010.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@1092058622177054812> <@1138180488004108369> <@810534889610674196> <@606195560830992392> <@771760806739181620>",
+      "message_id": "1543678345017823324"
+    },
+    {
+      "type": "image",
+      "src": "images/011.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "image",
+      "src": "images/012.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@1138180488004108369> <@1092058622177054812> <@810534889610674196> <@771760806739181620> <@532740428005507073>",
+      "message_id": "1543697262914568333"
+    },
+    {
+      "type": "image",
+      "src": "images/013.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "image",
+      "src": "images/014.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@810534889610674196> <@771760806739181620> <@1138180488004108369> <@1092058622177054812> <@1470973699707633774>",
+      "message_id": "1543712211011117096"
+    },
+    {
+      "type": "image",
+      "src": "images/015.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "image",
+      "src": "images/016.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@1138180488004108369> <@1092058622177054812> <@771760806739181620> <@810534889610674196>",
+      "message_id": "1543726646933061714"
+    },
+    {
+      "type": "image",
+      "src": "images/017.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@1092058622177054812> <@771760806739181620> <@810534889610674196> <@1138180488004108369>",
+      "message_id": "1543741153512267866"
+    },
+    {
+      "type": "image",
+      "src": "images/018.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@797212859657355274> <@810534889610674196> <@1092058622177054812> <@1138180488004108369>",
+      "message_id": "1543753985750732820"
+    },
+    {
+      "type": "image",
+      "src": "images/019.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@771760806739181620> <@810534889610674196> <@1092058622177054812> <@1138180488004108369>",
+      "message_id": "1543768429721427988"
+    },
+    {
+      "type": "image",
+      "src": "images/020.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@771760806739181620>",
+      "message_id": "1543772746822193158"
+    },
+    {
+      "type": "image",
+      "src": "images/021.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@415334667370364928>",
+      "message_id": "1543772889453695116"
+    },
+    {
+      "type": "image",
+      "src": "images/022.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "image",
+      "src": "images/023.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@699448290072199189>",
+      "message_id": "1543840100079767673"
+    },
+    {
+      "type": "image",
+      "src": "images/024.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@771760806739181620>",
+      "message_id": "1543840212709539880"
+    },
+    {
+      "type": "image",
+      "src": "images/025.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@228327672692867073>",
+      "message_id": "1543840375888941067"
+    },
+    {
+      "type": "image",
+      "src": "images/026.png",
+      "alt": "Adventure illustration"
+    }
+  ]
+}

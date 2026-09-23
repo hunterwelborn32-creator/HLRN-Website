@@ -1,0 +1,102 @@
+{
+  "id": "episode-06",
+  "title": "The Pedleys Garage Transformation",
+  "kind": "main",
+  "number": 6,
+  "discord_open_id": "1545766880097083392",
+  "discord_close_id": "1545815976984191017",
+  "date": "2026-09-05T12:05:43.175000+00:00",
+  "cover": "episode-06/images/001.png",
+  "blocks": [
+    {
+      "type": "text",
+      "text": "<@1078506766473625600> <@228327672692867073>",
+      "message_id": "1545766880097083392"
+    },
+    {
+      "type": "image",
+      "src": "images/001.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@1078506766473625600> <@228327672692867073>",
+      "message_id": "1545769106764988537"
+    },
+    {
+      "type": "image",
+      "src": "images/002.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@1078506766473625600> <@228327672692867073>",
+      "message_id": "1545781076486660286"
+    },
+    {
+      "type": "image",
+      "src": "images/003.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@228327672692867073> <@1078506766473625600>",
+      "message_id": "1545785869804507257"
+    },
+    {
+      "type": "image",
+      "src": "images/004.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@1078506766473625600> <@228327672692867073>",
+      "message_id": "1545799373072506912"
+    },
+    {
+      "type": "image",
+      "src": "images/005.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@1078506766473625600> <@228327672692867073>",
+      "message_id": "1545803949326475334"
+    },
+    {
+      "type": "image",
+      "src": "images/006.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@228327672692867073> <@1078506766473625600>",
+      "message_id": "1545809011130114152"
+    },
+    {
+      "type": "image",
+      "src": "images/007.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@1275835621109268550>",
+      "message_id": "1545813727356395621"
+    },
+    {
+      "type": "image",
+      "src": "images/008.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "<@228327672692867073>",
+      "message_id": "1545815976984191017"
+    },
+    {
+      "type": "image",
+      "src": "images/009.png",
+      "alt": "Adventure illustration"
+    }
+  ]
+}
