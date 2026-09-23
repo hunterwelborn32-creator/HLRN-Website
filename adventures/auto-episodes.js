@@ -9,6 +9,13 @@
     return Array.isArray(x) ? x : [];
   };
   const clean = e => e && typeof e.id === 'string' && /^[-a-z0-9]+$/.test(e.id) && typeof e.title === 'string';
+  // Permanent custom cover assets. These stay in the repo when Discord sync runs again.
+  const customCovers = Object.fromEntries(
+    [3, 4, 5, 6, 7, 8].map(n => {
+      const id = `episode-${String(n).padStart(2, '0')}`;
+      return [id, `${id}-cover.webp`];
+    })
+  );
   try {
     const [published, progress] = await Promise.all([get('episodes.json'), get('episode-status.json')]);
     const ready = published.filter(clean);
@@ -27,7 +34,7 @@
       if (inProgress) {
         const numeral = document.createElement('span'); numeral.className = 'ghost-number'; numeral.textContent = e.kind === 'special' ? '★' : String(e.number ?? '?').padStart(2, '0'); art.append(numeral);
       } else {
-        const img = document.createElement('img'); img.loading = 'lazy'; img.alt = e.title + ' artwork'; img.src = e.cover || e.id + '/images/001.webp'; art.append(img);
+        const img = document.createElement('img'); img.loading = 'lazy'; img.alt = e.title + ' artwork'; img.src = customCovers[e.id] || e.cover || e.id + '/images/001.webp'; art.append(img);
         const play = document.createElement('div'); play.className = 'play-symbol'; play.textContent = '▶'; art.append(play);
       }
       const badge = document.createElement('span'); badge.className = 'episode-numeral'; badge.textContent = e.kind === 'special' ? 'SPECIAL' : String(e.number ?? '').padStart(2,'0'); art.append(badge);
