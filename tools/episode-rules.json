@@ -1,4 +1,3 @@
-
 {
   "known_episodes": [
     {
@@ -13,14 +12,56 @@
       "title": "Welcome to VRX Land",
       "kind": "special",
       "number": null,
-      "opening_regex": "^\\s*Welcome to VRX Land"
+      "opening_message_id": "1533100633115066438"
     },
     {
       "slug": "episode-02",
       "title": "The DHR Tryout",
       "kind": "main",
       "number": 2,
-      "opening_regex": "^\\s*7\\s*(?:am|est)?\\s+[\\s\\S]*?has grown frustrated with both his results"
+      "opening_message_id": "1535966475893088256"
+    },
+    {
+      "slug": "episode-03",
+      "title": "The Inauguration",
+      "kind": "main",
+      "number": 3,
+      "opening_message_id": "1538503475002871859"
+    },
+    {
+      "slug": "episode-04",
+      "title": "The Hollywood Showdown",
+      "kind": "main",
+      "number": 4,
+      "opening_message_id": "1541040274141225031"
+    },
+    {
+      "slug": "episode-05",
+      "title": "The Curse of Talladega",
+      "kind": "main",
+      "number": 5,
+      "opening_message_id": "1543594496900464640"
+    },
+    {
+      "slug": "episode-06",
+      "title": "The Pedleys Garage Transformation",
+      "kind": "main",
+      "number": 6,
+      "opening_message_id": "1545766880097083392"
+    },
+    {
+      "slug": "episode-07",
+      "title": "The Return",
+      "kind": "main",
+      "number": 7,
+      "opening_message_id": "1548649083290521661"
+    },
+    {
+      "slug": "episode-08",
+      "title": "The Long Road to Pit Road",
+      "kind": "main",
+      "number": 8,
+      "opening_message_id": "1551187746180169820"
     }
   ]
 }

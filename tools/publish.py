@@ -61,8 +61,18 @@ def history():
 
 def opening(m):
     body=(m.get('content') or '').strip()
+    # Historical stories use exact Discord opening message IDs. This avoids
+    # fragile text matching when Discord resolves mentions as <@user_id>.
+    # For ID-configured stories, do not fall back to regex on other posts.
     for spec in CONFIG['known_episodes']:
-        if re.search(spec['opening_regex'],body,re.I):return spec
+        if spec.get('opening_message_id') == m.get('id'):
+            return spec
+    for spec in CONFIG['known_episodes']:
+        if spec.get('opening_message_id'):
+            continue
+        pattern = spec.get('opening_regex')
+        if pattern and re.search(pattern,body,re.I):
+            return spec
     match=re.match(r'^\s*(EPISODE|SPECIAL)\s*(?:#?\s*(\d+))?\s*[:\-–—]\s*(.+)',body,re.I)
     if match:
         kind='special' if match[1].lower()=='special' else 'main'
