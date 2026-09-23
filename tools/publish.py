@@ -20,6 +20,7 @@ HEADERS={'Authorization':'Bot '+TOKEN,'User-Agent':'HLRN-Adventures-Collector/1.
 CONFIG=json.loads((BASE/'tools'/'episode-rules.json').read_text(encoding='utf8'))
 STATE=DEST/'discord-state.json'
 MANIFEST=DEST/'episodes.json'
+PROGRESS=DEST/'episode-status.json'
 
 def request(url, auth=True):
     for attempt in range(7):
@@ -73,20 +74,30 @@ def opening(m):
         return dict(slug=slug,title=title,kind=kind,number=number)
     return None
 
+def approved_reaction(m, emoji):
+    """Only Hunter's reaction counts; check paginated Discord reaction users."""
+    import urllib.parse
+    if not any(r.get('emoji', {}).get('name') == emoji for r in m.get('reactions', [])):
+        return False
+    after = None
+    while True:
+        url = f'/channels/{CHANNEL}/messages/{m["id"]}/reactions/{urllib.parse.quote(emoji, safe="")}?limit=100'
+        if after:
+            url += f'&after={after}'
+        users = api(url)
+        if any(u.get('id') == APPROVER for u in users):
+            return True
+        if len(users) < 100:
+            return False
+        after = users[-1]['id']
+
+
 def complete(m):
-    # Only the designated publisher can approve a completed episode.
-    for reaction in m.get('reactions',[]):
-        if reaction.get('emoji',{}).get('name')=='✅':
-            # Discord paginates reaction users; do not miss approval in busy threads.
-            after=None
-            while True:
-                url=f'/channels/{CHANNEL}/messages/{m["id"]}/reactions/%E2%9C%85?limit=100'
-                if after:url+=f'&after={after}'
-                users=api(url)
-                if any(u.get('id')==APPROVER for u in users):return True
-                if len(users)<100:break
-                after=users[-1]['id']
-    return False
+    return approved_reaction(m, '✅')
+
+
+def begun(m):
+    return approved_reaction(m, '🟢')
 
 def image_attachment(a):
     ct=(a.get('content_type') or '').lower()
@@ -137,38 +148,61 @@ def inject_home_script():
         page.write_text(content,encoding='utf8')
 
 def main():
+    # Never publish any partial episode. Start marker only adds a status card.
     inject_home_script()
-    msgs=history(); print('Jim messages found:',len(msgs))
-    entries=load(MANIFEST,[]); state=load(STATE,{'published_ids':[]})
-    by_id={entry['id']:entry for entry in entries}
-    starts=[(i,opening(m)) for i,m in enumerate(msgs)]
-    starts=[(i,sp) for i,sp in starts if sp]
-    print('Episode openings:',[(sp['slug'],msgs[i]['id']) for i,sp in starts])
-    for x,(start,spec) in enumerate(starts):
-        slug=spec['slug']
-        # Episode 1 is already published and approved: never regenerate/overwrite.
-        if slug=='episode-01' and (DEST/'episode-01'/'index.html').exists():
-            state['published_ids']=sorted(set(state['published_ids']+[slug]));continue
-        if slug in state['published_ids'] or slug in by_id:continue
-        next_start=starts[x+1][0] if x+1<len(starts) else len(msgs)
-        group=msgs[start:next_start]
-        end=None
-        for i,m in enumerate(group):
-            if complete(m):end=i
-        if end is None:
-            print('SKIP unfinished (publisher must react ✅ to final message):',slug)
+    msgs = history()
+    print('Jim messages found:', len(msgs))
+    entries = load(MANIFEST, [])
+    state = load(STATE, {'published_ids': []})
+    by_id = {entry['id']: entry for entry in entries}
+    starts = []
+    for i, m in enumerate(msgs):
+        spec = opening(m)
+        if spec:
+            # Existing, explicitly configured historical openings remain supported.
+            # New episodes require both a valid heading and Hunter's 🟢 reaction.
+            known = any(spec['slug'] == x['slug'] for x in CONFIG['known_episodes'])
+            if known or begun(m):
+                starts.append((i, spec))
+    print('Recognized episode openings:', [(sp['slug'], msgs[i]['id']) for i, sp in starts])
+    in_progress = []
+    for x, (start, spec) in enumerate(starts):
+        slug = spec['slug']
+        if slug == 'episode-01' and (DEST/'episode-01'/'index.html').exists():
+            if slug not in state['published_ids']:
+                state['published_ids'].append(slug)
             continue
-        group=group[:end+1]
-        # Avoid accidental publication of a one-message title without body.
-        if len(group)<2 and not group[0].get('attachments'):print('SKIP empty episode:',slug);continue
-        record=build_episode(spec,group)
-        by_id[slug]=record
+        if slug in state['published_ids'] or slug in by_id:
+            continue
+        next_start = starts[x+1][0] if x+1 < len(starts) else len(msgs)
+        group = msgs[start:next_start]
+        approved_end = next((i for i, m in enumerate(group) if complete(m)), None)
+        if approved_end is None:
+            if begun(group[0]):
+                in_progress.append({
+                    'id': slug, 'title': spec['title'], 'kind': spec['kind'],
+                    'number': spec.get('number'), 'status': 'in_progress',
+                    'date': group[0]['timestamp'], 'discord_open_id': group[0]['id']
+                })
+                print('In progress:', slug, 'messages:', len(group))
+            else:
+                print('Awaiting start 🟢 or finish ✅:', slug)
+            continue
+        group = group[:approved_end+1]
+        if len(group) < 2 and not group[0].get('attachments'):
+            print('SKIP empty episode:', slug)
+            continue
+        record = build_episode(spec, group)
+        by_id[slug] = record
         entries.append(record)
         state['published_ids'].append(slug)
-        print('Published:',slug,'messages:',len(group))
-    # Latest published main episodes in number order, specials separately in site UI.
-    entries.sort(key=lambda e:(0 if e.get('kind')=='main' else 1,e.get('number') or 999,e.get('date') or ''))
-    save(MANIFEST,entries);save(STATE,state)
-    print('Manifest entries:',len(entries))
+        print('Published:', slug, 'messages:', len(group))
+    entries.sort(key=lambda e: (0 if e.get('kind') == 'main' else 1, e.get('number') or 999, e.get('date') or ''))
+    # Write status separately so an unfinished episode never appears as published.
+    save(MANIFEST, entries)
+    save(PROGRESS, in_progress)
+    state['published_ids'] = sorted(set(state['published_ids']))
+    save(STATE, state)
+    print('Published manifest:', len(entries), '| In-progress cards:', len(in_progress))
 
 if __name__=='__main__':main()
