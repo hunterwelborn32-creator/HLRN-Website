@@ -2,7 +2,7 @@
 """HLRN Adventures Discord -> GitHub Pages collector. Python stdlib only.
 
 Runs inside GitHub Actions. Reads channel history oldest to newest, only Jim's posts.
-A confirmed END reaction from Jim closes an episode. Historical opening markers
+A confirmed END reaction from the designated publisher closes an episode. Historical opening markers
 are specific and configurable; unknown openings are skipped, never guessed.
 """
 import os, json, re, sys, time, pathlib, urllib.request, urllib.error, mimetypes, html
@@ -12,6 +12,7 @@ BASE=pathlib.Path(__file__).resolve().parents[1]
 DEST=BASE/'adventures'
 CHANNEL=os.getenv('DISCORD_CHANNEL_ID','1528189461656244364')
 AUTHOR=os.getenv('JIM_USER_ID','1051673096463077386')
+APPROVER=os.getenv('PUBLISH_APPROVER_USER_ID','897239790188109874')
 TOKEN=os.getenv('DISCORD_BOT_TOKEN')
 if not TOKEN: sys.exit('Missing DISCORD_BOT_TOKEN repository secret; no changes made.')
 API='https://discord.com/api/v10'
@@ -73,11 +74,18 @@ def opening(m):
     return None
 
 def complete(m):
-    # A specific reaction from Jim, not merely anybody's checkmark.
+    # Only the designated publisher can approve a completed episode.
     for reaction in m.get('reactions',[]):
         if reaction.get('emoji',{}).get('name')=='✅':
-            users=api(f'/channels/{CHANNEL}/messages/{m["id"]}/reactions/%E2%9C%85?limit=100')
-            if any(u.get('id')==AUTHOR for u in users):return True
+            # Discord paginates reaction users; do not miss approval in busy threads.
+            after=None
+            while True:
+                url=f'/channels/{CHANNEL}/messages/{m["id"]}/reactions/%E2%9C%85?limit=100'
+                if after:url+=f'&after={after}'
+                users=api(url)
+                if any(u.get('id')==APPROVER for u in users):return True
+                if len(users)<100:break
+                after=users[-1]['id']
     return False
 
 def image_attachment(a):
@@ -148,7 +156,7 @@ def main():
         for i,m in enumerate(group):
             if complete(m):end=i
         if end is None:
-            print('SKIP unfinished (Jim must react ✅ to final message):',slug)
+            print('SKIP unfinished (publisher must react ✅ to final message):',slug)
             continue
         group=group[:end+1]
         # Avoid accidental publication of a one-message title without body.
