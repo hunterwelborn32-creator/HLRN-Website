@@ -1,0 +1,35 @@
+/* HLRN foundation: opt-in styles; does not override existing page layout or navigation. */
+:root {
+  --hlrn-bg: #090b0f;
+  --hlrn-surface: #11151b;
+  --hlrn-line: #2a313a;
+  --hlrn-text: #f4f6f9;
+  --hlrn-muted: #aeb9c8;
+  --hlrn-red: #e31837;
+  --hlrn-green: #20b968;
+}
+.hlrn-series-sunday { --hlrn-series: var(--hlrn-red); }
+.hlrn-series-monday { --hlrn-series: var(--hlrn-green); }
+.hlrn-series-hosted { --hlrn-series: var(--hlrn-hosted-original, #697480); }
+.hlrn-foundation-panel {
+  background: var(--hlrn-surface); color: var(--hlrn-text);
+  border: 1px solid var(--hlrn-line); border-top: 3px solid var(--hlrn-series, var(--hlrn-red));
+  border-radius: 12px; padding: clamp(12px,2vw,22px); min-width: 0;
+}
+.hlrn-data-status { display: inline-flex; align-items: center; gap: 8px; font: 700 12px/1.4 Arial,sans-serif; color: var(--hlrn-muted); }
+.hlrn-data-status::before { content: ''; width: 8px; height: 8px; flex: 0 0 8px; border-radius: 50%; background: #697480; }
+.hlrn-data-status[data-status='current']::before { background: var(--hlrn-green); }
+.hlrn-data-status[data-status='cached']::before { background: #efb645; }
+.hlrn-data-status[data-status='unavailable']::before { background: var(--hlrn-red); }
+.hlrn-scroll-table { max-width: 100%; overflow-x: auto; overscroll-behavior-inline: contain; -webkit-overflow-scrolling: touch; }
+.hlrn-scroll-table > table { min-width: 620px; width: 100%; border-collapse: collapse; }
+.hlrn-scroll-table th, .hlrn-scroll-table td { padding: 10px 12px; text-align: left; }
+.hlrn-scroll-table th { background: #202832; color: #fff; }
+.hlrn-scroll-table td { border-bottom: 1px solid var(--hlrn-line); }
+.hlrn-responsive-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,260px),1fr)); gap: 14px; }
+.hlrn-responsive-grid > * { min-width: 0; }
+.hlrn-responsive-img { width: 100%; max-width: 100%; height: auto; object-fit: cover; }
+@media (max-width: 640px) {
+  .hlrn-foundation-panel { border-radius: 9px; padding: 12px; }
+  .hlrn-mobile-action { min-height: 44px; min-width: 44px; }
+}

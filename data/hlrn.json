@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": null,
+  "leagues": {
+    "sunday": {"drivers": [], "teams": [], "results": []},
+    "monday": {"drivers": [], "teams": [], "results": []}
+  },
+  "hosted": null
+}

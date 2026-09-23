@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HLRN Foundation Health Check</title>
+<link rel="stylesheet" href="assets/hlrn-core.css">
+<style>body{margin:0;background:#090b0f;color:#f4f6f9;font:16px/1.5 Arial,sans-serif}main{width:min(100% - 32px,1100px);margin:40px auto}h1{font-size:clamp(26px,4vw,42px)}.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px}.num{font-size:35px;font-weight:900;margin:8px 0}button{background:#222c37;color:#fff;border:1px solid #485462;border-radius:7px;padding:12px;cursor:pointer}button:focus-visible{outline:3px solid #efb645}p{color:#b2becc}</style>
+<script src="assets/hlrn-core.js" defer></script></head><body><main>
+<h1>HLRN / FOUNDATION HEALTH CHECK</h1><p>This is a diagnostic preview, not a replacement for your homepage.</p><div data-hlrn-data-status role="status">Checking data…</div>
+<div class="metrics" style="margin-top:24px"><section class="hlrn-foundation-panel hlrn-series-sunday"><h2>Sunday</h2><div class="num" id="sun">—</div><p>Drivers in shared snapshot</p></section><section class="hlrn-foundation-panel hlrn-series-monday"><h2>Monday</h2><div class="num" id="mon">—</div><p>Drivers in shared snapshot</p></section><section class="hlrn-foundation-panel hlrn-series-hosted"><h2>Hosted</h2><div class="num" id="hosted">Not connected</div><p>Original Hosted identity retained</p></section></div>
+<p id="updated">Snapshot has not been published yet.</p><button type="button" id="refresh">Check now</button>
+</main><script>
+window.addEventListener('DOMContentLoaded',()=>{
+ HLRNData.subscribe(({snapshot})=>{
+  if(!snapshot)return;
+  document.getElementById('sun').textContent=snapshot.leagues.sunday.drivers.length;
+  document.getElementById('mon').textContent=snapshot.leagues.monday.drivers.length;
+  document.getElementById('hosted').textContent=snapshot.hosted?'Connected':'Not connected';
+  document.getElementById('updated').textContent=snapshot.generatedAt?'Snapshot published: '+new Date(snapshot.generatedAt).toLocaleString():'No published snapshot yet.';
+ });
+ HLRNData.load().catch(()=>{});
+ document.getElementById('refresh').addEventListener('click',()=>HLRNData.refresh().catch(()=>{}));
+});</script></body></html>

@@ -1,0 +1,5 @@
+{
+  "schemaVersion": 1,
+  "description": "Add confirmed driver ID, name and photo mappings here; do not guess Discord IDs from display names.",
+  "drivers": []
+}
