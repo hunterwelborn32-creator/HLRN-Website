@@ -1,0 +1,26 @@
+
+{
+  "known_episodes": [
+    {
+      "slug": "episode-01",
+      "title": "EchoPark Speedway",
+      "kind": "main",
+      "number": 1,
+      "opening_regex": "^\\s*8\\s*(?:am|est)?\\s+.*\\bLark\\b"
+    },
+    {
+      "slug": "special-vrx-land",
+      "title": "Welcome to VRX Land",
+      "kind": "special",
+      "number": null,
+      "opening_regex": "^\\s*Welcome to VRX Land"
+    },
+    {
+      "slug": "episode-02",
+      "title": "The DHR Tryout",
+      "kind": "main",
+      "number": 2,
+      "opening_regex": "^\\s*7\\s*(?:am|est)?\\s+.*Hunter Welborn"
+    }
+  ]
+}
