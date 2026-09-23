@@ -27,7 +27,45 @@ a.episode-tile:hover .episode-art img{transform:scale(1.035)}
 .about-show img{width:100%;height:100%;max-height:380px;object-fit:cover;object-position:center}
 @media(max-width:850px){.episode-shelf{grid-template-columns:repeat(2,minmax(0,1fr))}.about-show{grid-template-columns:1fr}.about-show img{max-height:250px}.episode-details{min-height:255px}}
 @media(max-width:560px){.episode-shelf{grid-template-columns:1fr}.episode-details{min-height:0}.episode-total{display:none}.about-show>div{padding:24px}.hero{min-height:650px}.hero>img{object-position:57% center}}
-</style></head><body><main id="series"><section class="hero"><img alt="The Adventures of High Line official series cover artwork" src="series-cover.webp"/><div class="hero-content"><div class="overline">HLRN Original Illustrated Series</div><h1>The Adventures <span>of High Line</span></h1><div class="hero-meta"><span>HLRN Original Series</span><span>Episode 01 Available</span><span>Illustrated Stories</span></div><p class="hero-desc">One racing league. Endless adventures. Follow the drivers, strange rivalries, paddock chaos, and unforgettable moments in an illustrated HLRN original series.</p><div class="actions"><a class="btn" href="episode-01/index.html">▶ START EPISODE 01</a><a class="btn secondary" href="#episodes">EXPLORE THE EPISODES ↓</a></div><div class="cover-note">New episodes will be added here as the season continues.</div></div></section><div class="wrap"><section id="episodes"><div class="section-top"><div><p class="section-kicker">THE SERIES LIBRARY</p><h2>Episodes</h2><p>Every complete race-day adventure gets its own episode. Start with EchoPark Speedway.</p></div><span class="episode-total">01 EPISODE AVAILABLE</span></div><div class="episode-shelf">
+
+/* Adventures 2.0: showcase the supplied logo illustration without covering it. */
+.hero{display:block;min-height:0;height:auto;aspect-ratio:1536/865;max-height:none;position:relative;background:#0574ba;overflow:hidden;border-bottom:4px solid #f34358}
+.hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,12,24,.42) 0%,transparent 19%,transparent 72%,rgba(4,12,24,.55) 100%);pointer-events:none}
+.hero-topline,.hero-bottomline{position:absolute;z-index:1;left:max(25px,calc((100vw - 1490px)/2));right:max(25px,calc((100vw - 1490px)/2));color:#fff;font-size:11px;letter-spacing:2px;font-weight:1000;text-shadow:0 2px 14px #081322ad}
+.hero-topline{top:22px;display:flex;align-items:center;gap:10px}
+.hero-live-dot{width:7px;height:7px;border-radius:50%;background:#ff4455;box-shadow:0 0 0 4px #ff44552e}
+.hero-topline-sep{color:#ffffff85}
+.hero-bottomline{bottom:21px;display:flex;justify-content:space-between;align-items:center;gap:15px}
+.hero-bottomline-right b{display:inline-block;margin-left:7px;color:#ff5262;font-size:17px}
+.series-intro{background:linear-gradient(120deg,#16191f,#0a0b0e 58%,#1b1015);border-bottom:1px solid #35373d}
+.series-intro-inner{max-width:1500px;margin:auto;padding:38px 32px 42px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:55px}
+.series-intro h1{font-size:clamp(28px,4.1vw,61px);line-height:1.03;letter-spacing:-.048em;max-width:none;margin:10px 0 14px;text-shadow:none}
+.series-intro h1 span{color:#f14b60}
+.series-intro p{font-size:14px;color:#d0d4dc;max-width:740px;margin:0 0 17px;line-height:1.62}
+.series-intro .hero-meta{gap:7px}.series-intro .hero-meta span{font-size:9px;color:#d5d7df;padding:5px 8px;border-color:#565964}
+.intro-actions{display:flex;flex-direction:column;gap:9px;min-width:228px}
+.intro-actions .btn{padding:15px 18px;display:flex;justify-content:space-between;font-size:11px}
+.intro-start{background:#f4f4f4;color:#101014}.intro-browse{background:#23262f;border-color:#555963;color:#fff}.start-triangle{font-size:12px}.button-arrow{font-size:16px;margin-left:10px}
+.intro-footnote{color:#949ba8;font-size:10px;margin-top:5px;line-height:1.45}
+.section-top{margin-top:40px}.episode-shelf{gap:18px}.episode-tile{border-radius:5px}.episode-art img{object-position:center}.episode-details{min-height:225px}
+@media(max-width:850px){.series-intro-inner{grid-template-columns:1fr;gap:22px;padding:30px 20px}.intro-actions{width:100%;max-width:400px}.hero-topline{top:12px}.hero-bottomline{bottom:12px}.hero-topline,.hero-bottomline{left:15px;right:15px;font-size:8px;letter-spacing:1px}.hero-bottomline-right{font-size:8px}}
+@media(max-width:560px){.hero{aspect-ratio:1536/865}.hero-topline-sep,.hero-topline-sep~span{display:none}.hero-bottomline{align-items:end}.hero-bottomline-right{max-width:135px;text-align:right}.series-intro h1{font-size:34px}.intro-actions{max-width:none}}
+</style></head><body><main id="series"><section class="hero" aria-label="The Adventures of High Line official series artwork">
+  <img alt="The Adventures of High Line — official illustrated series artwork" src="series-cover.webp" fetchpriority="high"/>
+  <div class="hero-topline"><span class="hero-live-dot"></span> HLRN ORIGINAL SERIES <span class="hero-topline-sep">/</span> RACE · LAUGH · EXPLORE · REPEAT</div>
+  <div class="hero-bottomline"><span>THE ADVENTURE STARTS HERE</span><span class="hero-bottomline-right">EPISODE 01 NOW AVAILABLE <b>↘</b></span></div>
+</section>
+<section class="series-intro">
+  <div class="series-intro-inner">
+    <div class="intro-copy"><div class="section-kicker">WELCOME TO THE SHOW</div>
+      <h1>THE ADVENTURES <span>OF HIGH LINE</span></h1>
+      <p>One racing league. Endless adventures. Follow the drivers, the paddock chaos, the strange rivalries, and the unforgettable moments in HLRN's original illustrated series.</p>
+      <div class="hero-meta"><span>HLRN ORIGINAL</span><span>ILLUSTRATED SERIES</span><span>EPISODE 01 AVAILABLE</span></div>
+    </div>
+    <div class="intro-actions"><a class="btn intro-start" href="episode-01/index.html"><span class="start-triangle">▶</span> READ EPISODE 01 <span class="button-arrow">↗</span></a><a class="btn intro-browse" href="#episodes">BROWSE EPISODES <span class="button-arrow">↓</span></a><span class="intro-footnote">New episodes join the collection as they're released.</span></div>
+  </div>
+</section><div class="wrap"><section id="episodes"><div class="section-top"><div><p class="section-kicker">THE SERIES LIBRARY</p><h2>Episodes</h2><p>Every complete race-day adventure gets its own episode. Start with EchoPark Speedway.</p></div><span class="episode-total">01 EPISODE AVAILABLE</span></div><div class="episode-shelf">
 <a aria-label="Read Episode 1: EchoPark Speedway" class="episode-tile ready" href="episode-01/index.html">
 <div class="episode-art"><img alt="Episode 1 artwork: Lark at EchoPark Speedway" loading="lazy" src="episode-01/images/01-01.webp"/><div class="play-symbol">▶</div><span class="episode-numeral">01</span></div>
 <div class="episode-details"><span class="episode-status available">AVAILABLE NOW</span><h3>EchoPark Speedway</h3><p>A missing phone, Nark the seal, the blind squirrel, paddock pranks, a tribute to David Boyer, and the race-night finale.</p><div class="episode-bottom"><span>15 ILLUSTRATED CHAPTERS</span><b>READ EPISODE ↗</b></div></div>
