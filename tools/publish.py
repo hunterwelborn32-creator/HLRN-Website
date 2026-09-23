@@ -30,8 +30,10 @@ def request(url, auth=True, expected_size=None):
             req = urllib.request.Request(url, headers=headers)
             with urllib.request.urlopen(req, timeout=45) as r:
                 content = r.read()
-                if expected_size is not None and len(content) != expected_size:
-                    raise http.client.IncompleteRead(content, expected_size - len(content))
+                # Discord attachment metadata size is not necessarily the size of
+                # the bytes served by CDN/proxy (which may transcode an image).
+                # urlopen().read() validates the actual HTTP Content-Length and
+                # raises IncompleteRead if the connection cuts out early.
                 return content
         except urllib.error.HTTPError as exc:
             if exc.code == 429:
@@ -148,7 +150,27 @@ def build_episode(spec,messages):
             name=f'{image_count:03d}{ext}'
             image_dir.mkdir(parents=True,exist_ok=True)
             target=image_dir/name
-            if not target.exists():target.write_bytes(request(a['url'],auth=False,expected_size=a.get('size') or None))
+            if not target.exists():
+                # Try the original attachment, then Discord's media proxy if the
+                # CDN repeatedly cuts the transfer short. Never write partial bytes.
+                urls = [a.get('url'), a.get('proxy_url')]
+                failures = []
+                content = None
+                for candidate in dict.fromkeys(u for u in urls if u):
+                    try:
+                        content = request(candidate, auth=False)
+                        break
+                    except (RuntimeError, urllib.error.HTTPError, urllib.error.URLError) as exc:
+                        failures.append(str(exc))
+                        print(f'Image source failed; trying fallback for {slug} message {m["id"]}: {type(exc).__name__}', flush=True)
+                if content is None:
+                    raise RuntimeError(f'{slug}: could not download image in message {m["id"]}; ' + ' | '.join(failures))
+                temp = target.with_suffix(target.suffix + '.tmp')
+                try:
+                    temp.write_bytes(content)
+                    temp.replace(target)
+                finally:
+                    temp.unlink(missing_ok=True)
             blocks.append(dict(type='image',src='images/'+name,alt=a.get('description') or 'Adventure illustration'))
     if not blocks or not image_count:raise RuntimeError(f'{slug}: no images and/or content found; not publishing')
     cover=next((b['src'] for b in blocks if b['type']=='image'),None)
