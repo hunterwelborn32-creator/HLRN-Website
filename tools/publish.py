@@ -130,6 +130,119 @@ def complete(m):
 def begun(m):
     return approved_reaction(m, '🟢')
 
+# Resolve Discord mention IDs to human-readable names in story paragraphs.
+# We use Discord's message mention metadata and guild nicknames instead of
+# hard-coding IDs. The first known nickname also covers an older archived post.
+KNOWN_NAMES = {'1275835621109268550': '#72 Evan Parry - SMT Racing'}
+MEMBER_NAMES = {}
+ROLE_NAMES = None
+CHANNEL_NAMES = {}
+GUILD_ID = None
+
+def guild_id():
+    global GUILD_ID
+    if GUILD_ID is None:
+        try:
+            GUILD_ID = api(f'/channels/{CHANNEL}').get('guild_id') or ''
+        except (urllib.error.HTTPError, RuntimeError) as exc:
+            print('Guild lookup unavailable; falling back to message mention names:', type(exc).__name__, flush=True)
+            GUILD_ID = ''
+    return GUILD_ID
+
+def human_user(user_id, message):
+    if user_id in MEMBER_NAMES:
+        return MEMBER_NAMES[user_id]
+    name = None
+    # Fetch the actual current server nickname when available.
+    guild = guild_id()
+    if guild:
+        try:
+            member = api(f'/guilds/{guild}/members/{user_id}')
+            user = member.get('user') or {}
+            name = member.get('nick') or user.get('global_name') or user.get('username')
+        except (urllib.error.HTTPError, RuntimeError):
+            pass
+    if not name:
+        for user in message.get('mentions', []):
+            if user.get('id') == user_id:
+                name = (user.get('member') or {}).get('nick') or user.get('global_name') or user.get('username')
+                break
+    name = name or KNOWN_NAMES.get(user_id) or 'Discord member'
+    MEMBER_NAMES[user_id] = name
+    return name
+
+def human_role(role_id):
+    global ROLE_NAMES
+    if ROLE_NAMES is None:
+        ROLE_NAMES = {}
+        guild = guild_id()
+        if guild:
+            try:
+                ROLE_NAMES = {r['id']: r['name'] for r in api(f'/guilds/{guild}/roles')}
+            except (urllib.error.HTTPError, RuntimeError):
+                pass
+    return ROLE_NAMES.get(role_id, 'Discord role')
+
+def human_channel(channel_id):
+    if channel_id not in CHANNEL_NAMES:
+        try:
+            CHANNEL_NAMES[channel_id] = api(f'/channels/{channel_id}').get('name') or 'channel'
+        except (urllib.error.HTTPError, RuntimeError):
+            CHANNEL_NAMES[channel_id] = 'channel'
+    return CHANNEL_NAMES[channel_id]
+
+def display_mentions(body, message):
+    # Only replace actual Discord mention syntax; plain numbers are unchanged.
+    body = re.sub(r'<@!?(\d+)>', lambda x: '@' + human_user(x.group(1), message), body)
+    body = re.sub(r'<@&(\d+)>', lambda x: '@' + human_role(x.group(1)), body)
+    body = re.sub(r'<#(\d+)>', lambda x: '#' + human_channel(x.group(1)), body)
+    return body
+
+def repair_existing_pages(msgs):
+    """Fix already-published episodes without touching Episode 1 or their pictures.
+
+    Existing generated readers contain precisely escaped raw message paragraphs.
+    Replace only matching paragraph HTML, preserving any other HTML edits.
+    """
+    source = {m['id']: m for m in msgs}
+    repaired = 0
+    for directory in sorted(DEST.glob('*')):
+        if directory.name == 'episode-01' or not directory.is_dir():
+            continue
+        jsonfile, pagefile = directory / 'episode.json', directory / 'index.html'
+        if not jsonfile.exists() or not pagefile.exists():
+            continue
+        data = load(jsonfile, {})
+        page = pagefile.read_text(encoding='utf8')
+        changed = False
+        for block in data.get('blocks', []):
+            if block.get('type') != 'text' or not block.get('message_id'):
+                continue
+            original = block.get('text', '')
+            if not re.search(r'<@!?\d+>|<@&\d+>|<#\d+>', original):
+                continue
+            message = source.get(block['message_id'])
+            if not message:
+                continue
+            updated = display_mentions(original, message)
+            if updated == original:
+                continue
+            old_html = html.escape(original).replace('\n', '<br>')
+            new_html = html.escape(updated).replace('\n', '<br>')
+            # Do not update JSON unless its displayed HTML was updated too.
+            if old_html not in page:
+                print(f'Skipping nonmatching edited paragraph in {directory.name}, message {block["message_id"]}', flush=True)
+                continue
+            page = page.replace(old_html, new_html, 1)
+            block['text'] = updated
+            changed = True
+        if changed:
+            pagefile.write_text(page, encoding='utf8')
+            save(jsonfile, data)
+            repaired += 1
+            print('Resolved names in:', directory.name, flush=True)
+    print('Existing episode pages updated:', repaired, flush=True)
+
 def image_attachment(a):
     ct=(a.get('content_type') or '').lower()
     ext=pathlib.Path(a.get('filename','')).suffix.lower()
@@ -139,7 +252,7 @@ def build_episode(spec,messages):
     slug=spec['slug']; directory=DEST/slug; image_dir=directory/'images'
     blocks=[]; image_count=0
     for m in messages:
-        body=(m.get('content') or '').strip()
+        body=display_mentions((m.get('content') or '').strip(), m)
         if body:blocks.append(dict(type='text',text=body,message_id=m['id']))
         for a in m.get('attachments',[]):
             if not image_attachment(a):continue
@@ -203,6 +316,7 @@ def main():
     inject_home_script()
     msgs = history()
     print('Jim messages found:', len(msgs))
+    repair_existing_pages(msgs)
     entries = load(MANIFEST, [])
     state = load(STATE, {'published_ids': []})
     by_id = {entry['id']: entry for entry in entries}
