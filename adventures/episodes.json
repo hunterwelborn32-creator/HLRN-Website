@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "id": "special-vrx-land",
+    "title": "Welcome to VRX Land",
+    "kind": "special",
+    "number": null,
+    "cover": "special-vrx-land/images/001.png",
+    "date": "2026-08-01T13:14:34.567000+00:00"
+  }
+]
