@@ -86,6 +86,46 @@ table{width:100%;border-collapse:collapse;min-width:840px}th,td{padding:13px 14p
 @media(max-width:850px){.driver-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.roster-tools{align-items:flex-start;flex-direction:column}.search-wrap{width:100%}.profile-hero{grid-template-columns:1fr}.profile-photo{height:390px}.profile-copy{padding:30px 24px}.profile-stats{grid-template-columns:repeat(2,1fr)}.profile-stat:nth-child(odd){border-right:1px solid #ddd}.profile-stat:nth-child(even){border-right:0}.profile-stat{border-bottom:1px solid #ddd}.profile-stat:nth-last-child(-n+2){border-bottom:0}}
 @media(max-width:520px){.driver-heading-inner,.roster-tools,.driver-grid,.profile-shell{width:min(100% - 22px,1450px)}.driver-heading-inner{padding:26px 0 22px}.driver-grid{grid-template-columns:1fr;gap:13px}.driver-media{height:330px}.driver-info{min-height:0}.driver-name{font-size:22px}.number-badge{min-width:82px;height:66px;font-size:35px}.profile-photo{height:350px}.profile-stats{grid-template-columns:repeat(2,1fr)}}
 .league-tabs{width:min(1450px,calc(100% - 36px));margin:24px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:10px}.league-tab{padding:17px 10px;border:2px solid #ddd;background:#fff;color:#333;font-weight:1000;letter-spacing:.08em;cursor:pointer}.league-tab[data-league="sunday"].active{background:#b71920;color:white;border-color:#b71920}.league-tab[data-league="monday"].active{background:#176d38;color:white;border-color:#176d38}.league-tab:focus-visible{outline:3px solid #111;outline-offset:2px}body.monday-league .eyebrow:before,body.monday-league .number-badge:after{background:#176d38}body.monday-league .driver-heading h1 span,body.monday-league .profile-kicker,body.monday-league .win{color:#176d38}body.monday-league .profile-number{border-bottom-color:#176d38}body.monday-league .profile-back:hover{background:#176d38}@media(max-width:520px){.league-tabs{width:calc(100% - 22px)}.league-tab{font-size:11px;padding:14px 5px}}
+
+/* F1-inspired HLRN driver profile — suit-specific color, directory unchanged */
+.profile-view{background:#0e1015;color:#fff;min-height:100vh}
+.profile-shell{width:min(1510px,calc(100% - 32px));padding:18px 0 65px}
+.profile-back{background:#232732;border:1px solid #414550;border-radius:3px;position:relative;z-index:4}
+.profile-hero{--suit:#292d35;--suit-dark:#15181e;--suit-accent:#e6343b;position:relative;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(270px,.88fr) minmax(235px,.55fr);min-height:610px;margin-top:15px;border:0;background:linear-gradient(125deg,var(--suit-dark),var(--suit) 52%,var(--suit-dark));overflow:hidden;isolation:isolate}
+.profile-hero:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 56% 42%,rgba(255,255,255,.13),transparent 48%),repeating-linear-gradient(150deg,transparent 0 125px,rgba(255,255,255,.025) 126px 127px);pointer-events:none;z-index:-1}
+.profile-copy{grid-column:1;grid-row:1;z-index:3;background:none;padding:55px 10px 110px 54px;justify-content:flex-start;align-items:flex-start;min-width:0}
+.profile-kicker{color:#fff;opacity:.76;letter-spacing:.23em;font-size:11px}
+.profile-copy h2{color:#fff;font-size:clamp(43px,5.8vw,90px);line-height:.91;margin:34px 0 20px;overflow-wrap:anywhere;text-shadow:0 2px 18px rgba(0,0,0,.15)}
+.profile-copy p{color:#fff;opacity:.88;font-size:12px;line-height:1.65}
+.profile-identity-number{font-size:clamp(70px,10vw,145px);line-height:1;font-weight:1000;font-style:italic;letter-spacing:-.12em;color:rgba(255,255,255,.19);margin-top:22px}
+.profile-label{display:inline-block;margin-top:17px;padding:8px 12px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.28);color:#fff;font-size:10px;font-weight:900;letter-spacing:.13em;text-transform:uppercase}
+.profile-photo{grid-column:2;grid-row:1;min-height:610px;z-index:2;background:none;overflow:visible;pointer-events:none}
+.profile-photo .profile-cutout{height:95%;max-width:none;width:auto;max-height:650px;bottom:0;left:50%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 15px 23px rgba(0,0,0,.28))}
+.profile-number{display:none}
+.profile-hero-stats{grid-column:3;grid-row:1;align-self:stretch;z-index:3;background:linear-gradient(90deg,rgba(0,0,0,.10),rgba(0,0,0,.32));padding:28px 27px;display:flex;flex-direction:column;justify-content:center;border-left:1px solid rgba(255,255,255,.12)}
+.profile-hero-stats h3{font-size:15px;letter-spacing:.09em;text-transform:uppercase;margin:0 0 20px;color:#fff}
+.profile-hero-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px 13px}
+.profile-hero-stat{border-top:1px solid rgba(255,255,255,.3);padding-top:11px;min-width:0}
+.profile-hero-stat span{font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.75);display:block;line-height:1.4}
+.profile-hero-stat b{font-size:clamp(19px,2.4vw,31px);line-height:1.25;color:#fff;display:block;margin-top:8px;overflow-wrap:anywhere}
+.profile-section-heading{margin:31px 0 14px;display:flex;align-items:center;gap:11px;color:#fff;font-size:20px;text-transform:uppercase;font-weight:1000;letter-spacing:.03em}
+.profile-section-heading:before{content:"";width:5px;height:23px;background:var(--driver-accent,#d71920);display:block}
+.profile-stats{margin:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border:0;gap:9px;background:transparent}
+.profile-stat{min-width:0;border:1px solid #313745!important;background:#191e28;padding:23px 18px!important}
+.profile-stat b{font-size:clamp(23px,3vw,36px);color:#fff}.profile-stat span{font-size:10px;line-height:1.3;color:#abb3c0}
+.profile-insights{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.profile-insight{padding:22px;background:#191e28;border:1px solid #313745}
+.profile-insight span{display:block;font-size:10px;color:#aeb5c1;letter-spacing:.1em;text-transform:uppercase}
+.profile-insight strong{display:block;margin-top:9px;font-size:28px;color:#fff}
+.profile-insight small{display:block;margin-top:7px;font-size:11px;color:#aeb5c1}
+.profile-form{display:flex;flex-wrap:wrap;gap:8px;padding:15px 0}
+.profile-form span{display:inline-flex;justify-content:center;align-items:center;min-width:49px;height:49px;background:#202633;border:1px solid #3c4554;color:#fff;font-weight:1000}
+.profile-form .form-win{background:#246a39;border-color:#37834c}.profile-form .form-top5{background:#314966;border-color:#446c9d}
+.history-wrap{background:#171c25;border-color:#343b47;margin-top:18px}.history-head{color:#fff;border-color:#343b47} .profile-view th{background:#222936;color:#c4cbd5;border-color:#343b47}.profile-view td{background:#171c25;color:#f0f1f3;border-color:#343b47}.profile-view .win{color:#77dd91}
+.profile-missing{display:flex;align-items:center;justify-content:center;height:100%;min-height:400px;font-size:clamp(80px,13vw,180px);color:rgba(255,255,255,.2);font-weight:1000;font-style:italic}
+@media(max-width:1050px){.profile-hero{grid-template-columns:1fr 1fr;min-height:580px}.profile-photo{grid-column:2;min-height:580px}.profile-copy{padding:45px 12px 40px 34px}.profile-hero-stats{grid-column:1/-1;grid-row:2;display:block;padding:25px 30px}.profile-hero-stat-grid{grid-template-columns:repeat(4,1fr)}.profile-stats{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:650px){.profile-shell{width:calc(100% - 20px)}.profile-hero{display:grid;grid-template-columns:1fr;min-height:0}.profile-copy{grid-column:1;grid-row:1;min-height:420px;padding:28px 22px}.profile-copy h2{font-size:clamp(40px,11vw,70px);max-width:67%;margin-top:25px}.profile-identity-number{font-size:80px}.profile-photo{grid-column:1;grid-row:1;min-height:420px;overflow:hidden}.profile-photo .profile-cutout{height:90%;left:70%;max-height:400px}.profile-hero-stats{grid-column:1;grid-row:2;padding:25px 20px}.profile-hero-stat-grid{grid-template-columns:repeat(2,1fr)}.profile-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.profile-insights{grid-template-columns:1fr}.profile-stat{padding:18px 12px!important}.profile-insight{padding:18px}}
+
 </style>
 </head>
 <body>
@@ -568,62 +608,125 @@ function leagueStatCards(d){
     return `<div class="profile-stat"><b>#${esc(s.rank)}</b><span>${label} Rank</span></div>`;
   }).join("");
 }
+/* Suit colors are sampled from the driver's actual cutout image rather than assigned by league.
+   Explicit entries below are based on the three supplied photos; other suits are sampled in-browser.
+   If the image host blocks pixel reading, a neutral charcoal background is used instead. */
+const HLRN_SUIT_COLORS={
+  evanfuqua:{base:"#971b29",accent:"#e43843"},
+  evankarlbon:{base:"#176a30",accent:"#63c926"},
+  javonethompson:{base:"#12417e",accent:"#2585ec"}
+};
+const HLRN_SUIT_CACHE=new Map();
+function suitPalette(name){return HLRN_SUIT_COLORS[hLrnPhotoKey(name)]||HLRN_SUIT_CACHE.get(hLrnPhotoKey(name))||{base:"#303743",accent:"#dc3544"};}
+function setSuitStyle(hero,palette){
+  if(!hero)return;
+  const hex=palette.base;
+  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  hero.style.setProperty("--suit",hex);
+  hero.style.setProperty("--suit-dark",`rgb(${Math.round(r*.45)},${Math.round(g*.45)},${Math.round(b*.45)})`);
+  hero.style.setProperty("--suit-accent",palette.accent);
+  document.getElementById("profileContent").style.setProperty("--driver-accent",palette.accent);
+}
+function autoSuitColor(name,url){
+  const key=hLrnPhotoKey(name);
+  if(HLRN_SUIT_COLORS[key]||HLRN_SUIT_CACHE.has(key)||!url)return;
+  const img=new Image();img.crossOrigin="anonymous";
+  img.onload=()=>{
+    try{
+      const canvas=document.createElement("canvas");canvas.width=110;canvas.height=140;
+      const ctx=canvas.getContext("2d",{willReadFrequently:true});ctx.drawImage(img,0,0,110,140);
+      const data=ctx.getImageData(0,0,110,140).data, buckets=new Map();
+      // Sample the center/lower racing suit, not the face or transparent background.
+      for(let y=70;y<134;y+=2)for(let x=20;x<90;x+=2){
+        const i=(y*110+x)*4,r=data[i],g=data[i+1],b=data[i+2],a=data[i+3];
+        if(a<180)continue;
+        const max=Math.max(r,g,b),min=Math.min(r,g,b),sat=max-min;
+        if(max>215&&sat<35)continue; // ignore white sponsor lettering
+        const q=v=>Math.min(255,Math.round(v/32)*32);
+        const k=[q(r),q(g),q(b)].join(",");buckets.set(k,(buckets.get(k)||0)+1);
+      }
+      const sorted=[...buckets].sort((a,b)=>b[1]-a[1]);
+      if(!sorted.length)return;
+      let primary=sorted[0][0].split(",").map(Number);
+      // Black and dark gray suits retain a dark background; pick a colored trim where available.
+      let trim=sorted.find(([k,n])=>{const v=k.split(",").map(Number);return Math.max(...v)-Math.min(...v)>55&&Math.max(...v)>75&&n>=2;});
+      let accent=trim?trim[0].split(",").map(Number):primary;
+      const hex=a=>"#"+a.map(v=>Math.max(0,Math.min(255,v)).toString(16).padStart(2,"0")).join("");
+      const palette={base:hex(primary),accent:hex(accent)};
+      HLRN_SUIT_CACHE.set(key,palette);
+      const hero=document.querySelector("#profileContent .profile-hero");
+      if(hero&&hero.dataset.driverKey===key)setSuitStyle(hero,palette);
+    }catch(e){console.info("Suit-color sampling unavailable; using neutral profile background.");}
+  };
+  img.src=url;
+}
+function displayMetric(v){return v===null||v===undefined||v===""||v==="—"?"—":v;}
+function percentMetric(n,total){return !Number.isFinite(Number(total))||Number(total)<=0||n==="—"?"—":(100*num(n)/Number(total)).toFixed(1)+"%";}
 function renderProfile(d){
   const hist=Array.isArray(d.history)?d.history:[];
-  d.driver=prettyName(d.driver); d.carNumber=getDriverNumber(d.driver,d.carNumber);
-  const photo=photoUrl(d.driver);
+  d.driver=prettyName(d.driver);d.carNumber=getDriverNumber(d.driver,d.carNumber);
+  const photo=photoUrl(d.driver),key=hLrnPhotoKey(d.driver),league=d.leagueStats?.[activeLeague]||{};
+  const ready=!d._fallback;
+  const value=v=>ready?displayMetric(v):"—";
+  const starts=value(d.starts),wins=value(d.wins),top5=value(d.top5),top10=value(d.top10);
+  const stat=(label,v)=>`<div class="profile-stat"><b>${esc(v)}</b><span>${esc(label)}</span></div>`;
+  const lead=(label,v)=>`<div class="profile-hero-stat"><span>${esc(label)}</span><b>${esc(v)}</b></div>`;
+  const insight=(label,v,detail)=>`<div class="profile-insight"><span>${esc(label)}</span><strong>${esc(v)}</strong><small>${esc(detail)}</small></div>`;
   const rows=hist.length?hist.slice(0,30).map(r=>{
-    const f=num(r.finish);
-    const league=leagueLabel(activeLeague);
-    return `<tr>
-      <td>${esc(league)}</td>
-      <td>${esc(r.raceNumber||"—")}</td>
-      <td>${esc(r.date||"—")}</td>
-      <td>${esc(r.track||"—")}</td>
-      <td class="${f===1?'win':f>1&&f<=5?'top5':''}">${esc(r.finish||"—")}</td>
-      <td>${esc(r.points||0)}</td>
-      <td>${esc(r.lapsLed||0)}</td>
-      <td>${esc(r.incidents||0)}</td>
-      <td>${esc(r.status||"—")}</td>
-    </tr>`;
-  }).join(""):`<tr><td colspan="9">${d._fallback?"Live race history is syncing.":"No race history available."}</td></tr>`;
-
-  const leagueSummary = Object.entries(d.leagueStats||{}).filter(([k])=>k===activeLeague).map(([k,s])=>{
-    const label=k==="monday"?"Monday":"Sunday";
-    const avg=Number.isFinite(Number(s.averageFinish))?Number(s.averageFinish).toFixed(2):"—";
-    return `${label}: #${s.rank} • ${s.points} pts • ${s.wins} wins • ${avg} avg finish`;
-  }).join("  |  ");
-
+    const f=Number(r.finish);
+    return `<tr><td>${esc(leagueLabel(activeLeague))}</td><td>${esc(r.raceNumber||"—")}</td><td>${esc(r.date||"—")}</td><td>${esc(r.track||"—")}</td><td class="${f===1?'win':f>1&&f<=5?'top5':''}">${esc(r.finish||"—")}</td><td>${esc(r.points??"—")}</td><td>${esc(r.lapsLed??"—")}</td><td>${esc(r.incidents??"—")}</td><td>${esc(r.status||"—")}</td></tr>`;
+  }).join(""):`<tr><td colspan="9">${ready?"No race history available for this league.":"Race history is syncing."}</td></tr>`;
+  const form=hist.filter(r=>Number(r.finish)>0).slice(0,5).map(r=>{
+    const finish=Number(r.finish),cls=finish===1?"form-win":finish<=5?"form-top5":"";
+    return `<span class="${cls}" title="${esc(r.track||"Race")}">P${esc(finish)}</span>`;
+  }).join("");
   document.getElementById("profileContent").innerHTML=`
-    <div class="profile-hero">
-      <div class="profile-photo">
-        <div class="profile-number">${esc(d.carNumber)}</div>
-        ${photo?`<img class="profile-cutout" decoding="async" src="${esc(photo)}" alt="${esc(d.driver)}" onerror="this.remove()">`:``}
-      </div>
+    <div class="profile-hero" data-driver-key="${esc(key)}">
       <div class="profile-copy">
-        <div class="profile-kicker">HLRN Driver Profile</div>
+        <div class="profile-kicker">High Line Racing Network / ${esc(leagueLabel(activeLeague))} League</div>
         <h2>${esc(d.driver)}</h2>
-        <p>${d._fallback?'High Line Racing Network • Live statistics are syncing':esc(leagueSummary||leagueLabel(activeLeague)+" League")}</p>
+        <p>OFFICIAL HLRN DRIVER PROFILE</p>
+        <div class="profile-label">${esc(leagueLabel(activeLeague))} League · #${esc(d.carNumber)}</div>
+        <div class="profile-identity-number">${esc(d.carNumber)}</div>
       </div>
+      <div class="profile-photo">
+        ${photo?`<img class="profile-cutout" decoding="async" src="${esc(photo)}" alt="${esc(d.driver)}" onerror="this.remove()">`:`<div class="profile-missing">#${esc(d.carNumber)}</div>`}
+      </div>
+      <aside class="profile-hero-stats"><h3>Driver Statistics</h3><div class="profile-hero-stat-grid">
+        ${lead("League rank",league.rank!=null&&league.rank!=="—"?"#"+league.rank:"—")}
+        ${lead("League points",value(d.points))}
+        ${lead("Race starts",starts)}
+        ${lead("Career wins",wins)}
+        ${lead("Top 5 finishes",top5)}
+        ${lead("Top 10 finishes",top10)}
+        ${lead("Average finish",value(d.averageFinish))}
+        ${lead("Laps led",hist.length?value(d.lapsLed):"—")}
+      </div></aside>
     </div>
+    <div class="profile-section-heading">Season Performance</div>
     <div class="profile-stats">
-      <div class="profile-stat"><b>${esc(d.starts)}</b><span>Starts</span></div>
-      <div class="profile-stat"><b>${esc(d.wins)}</b><span>Wins</span></div>
-      <div class="profile-stat"><b>${esc(d.top5)}</b><span>Top 5</span></div>
-      <div class="profile-stat"><b>${esc(d.top10)}</b><span>Top 10</span></div>
-      <div class="profile-stat"><b>${esc(d.averageFinish||'—')}</b><span>Avg Finish</span></div>
-      <div class="profile-stat"><b>${esc(d.bestFinish||'—')}</b><span>Best Finish</span></div>
-      <div class="profile-stat"><b>${esc(d.lapsLed||0)}</b><span>Laps Led</span></div>
-      <div class="profile-stat"><b>${esc(d.points||0)}</b><span>League Points</span></div>
-      ${leagueStatCards(d)}
+      ${stat("Starts",starts)}${stat("Wins",wins)}${stat("Top 5",top5)}${stat("Top 10",top10)}
+      ${stat("Average finish",value(d.averageFinish))}${stat("Best finish",hist.length?value(d.bestFinish):"—")}
+      ${stat("Laps led",hist.length?value(d.lapsLed):"—")}${stat("Points",value(d.points))}
+      ${stat("League position",league.rank!=null&&league.rank!=="—"?"#"+league.rank:"—")}
+      ${stat("Recorded results",hist.length?hist.length:"—")}
     </div>
-    <div class="history-wrap">
-      <div class="history-head">Recent ${leagueLabel(activeLeague)} Results</div>
-      <table>
-        <thead><tr><th>League</th><th>Race</th><th>Date</th><th>Track</th><th>Finish</th><th>Points</th><th>Laps Led</th><th>Incidents</th><th>Status</th></tr></thead>
-        <tbody>${rows}</tbody>
-      </table>
+    <div class="profile-section-heading">Performance Breakdown</div>
+    <div class="profile-insights">
+      ${insight("Win percentage",ready?percentMetric(wins,starts):"—","Wins divided by league starts")}
+      ${insight("Top 5 percentage",ready?percentMetric(top5,starts):"—","Top 5 finishes divided by league starts")}
+      ${insight("Top 10 percentage",ready?percentMetric(top10,starts):"—","Top 10 finishes divided by league starts")}
+      ${insight("Points per start",ready&&num(starts)>0?(num(d.points)/num(starts)).toFixed(1):"—","League points divided by starts")}
+      ${insight("Incidents recorded",hist.length?hist.reduce((t,r)=>t+num(r.incidents),0):"—","From available race history")}
+      ${insight("Average laps led",hist.length?(hist.reduce((t,r)=>t+num(r.lapsLed),0)/hist.length).toFixed(1):"—","Across available race results")}
+    </div>
+    <div class="profile-section-heading">Recent Race Form</div>
+    <div class="profile-form">${form||"<span>—</span>"}</div>
+    <div class="history-wrap"><div class="history-head">Recent ${esc(leagueLabel(activeLeague))} Results</div>
+      <table><thead><tr><th>League</th><th>Race</th><th>Date</th><th>Track</th><th>Finish</th><th>Points</th><th>Laps Led</th><th>Incidents</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table>
     </div>`;
+  setSuitStyle(document.querySelector("#profileContent .profile-hero"),suitPalette(d.driver));
+  autoSuitColor(d.driver,photo);
 }
 
 function showDirectory(){document.getElementById("profileView").style.display="none";document.getElementById("directoryView").style.display="block";window.scrollTo({top:0,behavior:"smooth"})}
