@@ -20,7 +20,7 @@
       "title": "The DHR Tryout",
       "kind": "main",
       "number": 2,
-      "opening_regex": "^\\s*7\\s*(?:am|est)?\\s+.*Hunter Welborn"
+      "opening_regex": "^\\s*7\\s*(?:am|est)?\\s+[\\s\\S]*?has grown frustrated with both his results"
     }
   ]
 }
