@@ -1,0 +1,31 @@
+name: Sync HLRN data
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: hlrn-data-sync
+  cancel-in-progress: false
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Refresh verified public snapshot
+        env:
+          HLRN_LEAGUE_WEBAPP_URL: ${{ secrets.HLRN_LEAGUE_WEBAPP_URL }}
+        run: node tools/sync-data.mjs
+      - name: Commit only if league data changed
+        run: |
+          if ! git diff --quiet -- data/hlrn.json; then
+            git config user.name "hlrn-data-bot"
+            git config user.email "actions@users.noreply.github.com"
+            git add data/hlrn.json
+            git commit -m "Sync HLRN league data"
+            git push
+          fi
