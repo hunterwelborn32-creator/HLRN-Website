@@ -17,6 +17,7 @@ function start(){
   else if(path.includes("/race-intelligence/"))active="intelligence";
   else if(path.includes("/results/")||path.includes("/schedule/"))active="results";
   else if(path.includes("/drivers/"))active="drivers";
+   else if(path.includes("/adventures/"))active="adventures";
   else if(path.includes("/fantasy/"))active="fantasy";
   else if(path.includes("/news/"))active="news";
   else if(path.includes("/meet-the-admins/")||path.endsWith("/meet-the-admins"))active="admins";
@@ -26,7 +27,7 @@ function start(){
   const primary=[
     ["home","Home",""],["live","Live","live/"],["standings","Standings","standings/"],
     ["intelligence","Intelligence","race-intelligence/"],["results","Results","results/"],
-    ["drivers","Drivers","drivers/"],["fantasy","Fantasy","fantasy/"],["news","News","news/"],
+    ["drivers","Drivers","drivers/"],["adventures","Adventures","adventures/"],["fantasy","Fantasy","fantasy/"],["news","News","news/"],
     ["admins","Meet the Admins","meet-the-admins/"]
   ];
   const more=[["rules","Rules","rules/"],["broadcasters","Broadcasters","broadcasters/"],["store","Store","store/"]];
