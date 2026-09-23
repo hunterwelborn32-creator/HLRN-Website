@@ -23,6 +23,7 @@ jobs:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
           DISCORD_CHANNEL_ID: '1528189461656244364'
           JIM_USER_ID: '1051673096463077386'
+          PUBLISH_APPROVER_USER_ID: '897239790188109874'
         run: python tools/publish.py
       - name: Commit published episodes and site library
         run: |
