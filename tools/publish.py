@@ -5,7 +5,7 @@ Runs inside GitHub Actions. Reads channel history oldest to newest, only Jim's p
 A confirmed END reaction from the designated publisher closes an episode. Historical opening markers
 are specific and configurable; unknown openings are skipped, never guessed.
 """
-import os, json, re, sys, time, pathlib, urllib.request, urllib.error, mimetypes, html
+import os, json, re, sys, time, pathlib, urllib.request, urllib.error, mimetypes, html, http.client, socket
 from datetime import datetime, timezone
 
 BASE=pathlib.Path(__file__).resolve().parents[1]
@@ -22,19 +22,38 @@ STATE=DEST/'discord-state.json'
 MANIFEST=DEST/'episodes.json'
 PROGRESS=DEST/'episode-status.json'
 
-def request(url, auth=True):
+def request(url, auth=True, expected_size=None):
+    """Retry rate limits, transient HTTP errors and interrupted image downloads."""
+    headers = HEADERS if auth else {'User-Agent': 'HLRN-Adventures-Collector/1.0'}
     for attempt in range(7):
         try:
-            with urllib.request.urlopen(urllib.request.Request(url,headers=HEADERS if auth else {'User-Agent':'HLRN-Adventures-Collector/1.0'}),timeout=35) as r:
-                return r.read()
+            req = urllib.request.Request(url, headers=headers)
+            with urllib.request.urlopen(req, timeout=45) as r:
+                content = r.read()
+                if expected_size is not None and len(content) != expected_size:
+                    raise http.client.IncompleteRead(content, expected_size - len(content))
+                return content
         except urllib.error.HTTPError as exc:
-            if exc.code==429:
-                try: delay=float(json.loads(exc.read()).get('retry_after',2))
-                except Exception: delay=2
-                time.sleep(min(delay+0.3,60));continue
-            if exc.code>=500 and attempt<6:time.sleep(2**attempt);continue
-            raise RuntimeError(f'Discord request failed HTTP {exc.code} at {url.split("?")[0]}') from exc
-    raise RuntimeError('Discord API retries exceeded')
+            if exc.code == 429:
+                try:
+                    delay = float(json.loads(exc.read()).get('retry_after', 2))
+                except Exception:
+                    delay = 2
+                time.sleep(min(delay + 0.3, 60))
+                continue
+            if exc.code >= 500 and attempt < 6:
+                print(f'Temporary HTTP {exc.code}; retrying download ({attempt + 1}/7)', flush=True)
+                time.sleep(min(2 ** attempt, 12))
+                continue
+            raise RuntimeError(f'Download failed HTTP {exc.code} at {url.split("?")[0]}') from exc
+        except (http.client.IncompleteRead, http.client.RemoteDisconnected,
+                ConnectionResetError, BrokenPipeError, TimeoutError,
+                socket.timeout, urllib.error.URLError) as exc:
+            if attempt == 6:
+                raise RuntimeError(f'Download failed after 7 attempts at {url.split("?")[0]}: {exc}') from exc
+            print(f'Interrupted download; retrying ({attempt + 1}/7): {type(exc).__name__}', flush=True)
+            time.sleep(min(2 ** attempt, 12))
+    raise RuntimeError('Download retries exceeded')
 
 def api(path): return json.loads(request(API+path))
 def load(path,default):
@@ -129,7 +148,7 @@ def build_episode(spec,messages):
             name=f'{image_count:03d}{ext}'
             image_dir.mkdir(parents=True,exist_ok=True)
             target=image_dir/name
-            if not target.exists():target.write_bytes(request(a['url'],auth=False))
+            if not target.exists():target.write_bytes(request(a['url'],auth=False,expected_size=a.get('size') or None))
             blocks.append(dict(type='image',src='images/'+name,alt=a.get('description') or 'Adventure illustration'))
     if not blocks or not image_count:raise RuntimeError(f'{slug}: no images and/or content found; not publishing')
     cover=next((b['src'] for b in blocks if b['type']=='image'),None)
