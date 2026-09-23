@@ -16,16 +16,21 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Refresh verified public snapshot
+      - name: Test expansion scripts
+        run: node --test tests/*.test.mjs
+      - name: Refresh leagues and optional Hosted snapshot
         env:
           HLRN_LEAGUE_WEBAPP_URL: ${{ secrets.HLRN_LEAGUE_WEBAPP_URL }}
+          HLRN_HOSTED_WEBAPP_URL: ${{ secrets.HLRN_HOSTED_WEBAPP_URL }}
         run: node tools/sync-data.mjs
-      - name: Commit only if league data changed
+      - name: Build published reports and profiles
+        run: node tools/build-derived.mjs
+      - name: Commit verified data and reports only when changed
         run: |
-          if ! git diff --quiet -- data/hlrn.json; then
+          git add data/hlrn.json data/derived
+          if ! git diff --cached --quiet; then
             git config user.name "hlrn-data-bot"
             git config user.email "actions@users.noreply.github.com"
-            git add data/hlrn.json
-            git commit -m "Sync HLRN league data"
+            git commit -m "Sync HLRN data, reports and driver profiles"
             git push
           fi
