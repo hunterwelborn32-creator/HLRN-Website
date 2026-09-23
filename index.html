@@ -17,6 +17,7 @@ content="width=device-width, initial-scale=1.0">
 
 <title>High Line Racing Network | HLRN iRacing League & Sim Racing</title>
 
+<link rel="canonical" href="https://highlineracingnetwork.com/">
 <meta name="description" content="High Line Racing Network (HLRN) is an iRacing league featuring Sunday and Monday NASCAR Truck racing, live broadcasts, standings, race results, driver statistics, race reports, records and more.">
 
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -26,7 +27,7 @@ content="width=device-width, initial-scale=1.0">
 <meta property="og:type" content="website">
 <meta property="og:title" content="High Line Racing Network | HLRN iRacing League">
 <meta property="og:description" content="Follow High Line Racing Network for Sunday and Monday iRacing league competition, race results, standings, broadcasts, driver statistics and race reports.">
-<meta property="og:url" content="https://sites.google.com/view/highlineracingnetwork">
+<meta property="og:url" content="https://highlineracingnetwork.com/">
 
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="High Line Racing Network | HLRN iRacing League">
@@ -38,7 +39,7 @@ content="width=device-width, initial-scale=1.0">
   "@type": "Organization",
   "name": "High Line Racing Network",
   "alternateName": "HLRN",
-  "url": "https://sites.google.com/view/highlineracingnetwork",
+  "url": "https://highlineracingnetwork.com/",
   "description": "High Line Racing Network (HLRN) is an iRacing league featuring Sunday and Monday NASCAR Truck racing, live broadcasts, standings, race results, driver statistics and race reports.",
   "sameAs": [
     "https://www.youtube.com/@High_Line_Racing",
@@ -3761,6 +3762,65 @@ body.rd-v5>#incidentTab{display:none!important}
 /* The global GitHub navigation replaces the old homepage-only header. */
 #hlrnRaceDayHome > .v6-header { display:none !important; }
 </style>
+<!-- HLRN FOUNDATION: League championship snapshot. Scoped to #hlrnChampionshipSnapshot. -->
+<style id="hlrn-home-foundation-v1-css">
+#hlrnChampionshipSnapshot{
+  --hf-red:#d71920;--hf-green:#329a4c;--hf-ink:#11151a;--hf-muted:#66717c;
+  --hf-line:#e4e8ed;--hf-panel:#f5f7f9;--hf-font:Inter,"Segoe UI",Arial,sans-serif;
+  padding:54px 24px 60px!important;background:#f5f7f9!important;color:var(--hf-ink)!important;
+  font-family:var(--hf-font)!important;border-top:1px solid #e5e9ed;border-bottom:1px solid #e5e9ed;
+}
+#hlrnChampionshipSnapshot *,#hlrnChampionshipSnapshot *:before,#hlrnChampionshipSnapshot *:after{box-sizing:border-box}
+#hlrnChampionshipSnapshot .hf-wrap{width:min(1320px,100%);margin:0 auto}
+#hlrnChampionshipSnapshot .hf-head{display:flex;justify-content:space-between;align-items:end;gap:22px;margin-bottom:22px}
+#hlrnChampionshipSnapshot .hf-kicker{display:block;color:#ad1820;font-size:10px;font-weight:900;letter-spacing:.17em;text-transform:uppercase}
+#hlrnChampionshipSnapshot h2{margin:7px 0 7px;color:#11151a;font:900 clamp(32px,4vw,52px)/.94 "Barlow Condensed","Arial Narrow",Arial,sans-serif;letter-spacing:-.015em;text-transform:uppercase}
+#hlrnChampionshipSnapshot .hf-intro{margin:0;color:#606b75;font-size:13px;line-height:1.55}
+#hlrnChampionshipSnapshot .hf-status{display:flex;flex-direction:column;align-items:flex-end;gap:6px;min-width:240px;text-align:right}
+#hlrnChampionshipSnapshot .hf-status-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 11px;background:#fff;border:1px solid #dde3e9;border-radius:999px;color:#5a6570;font-size:10px;font-weight:800}
+#hlrnChampionshipSnapshot .hf-status-pill:before{content:"";width:8px;height:8px;border-radius:50%;background:#c6a33c}
+#hlrnChampionshipSnapshot .hf-status-pill[data-state="current"]:before{background:#23964b}
+#hlrnChampionshipSnapshot .hf-status-pill[data-state="cached"]:before{background:#ca941b}
+#hlrnChampionshipSnapshot .hf-status-pill[data-state="unavailable"]:before{background:#d71920}
+#hlrnChampionshipSnapshot .hf-updated{color:#7f8993;font-size:10px;font-weight:700}
+#hlrnChampionshipSnapshot .hf-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+#hlrnChampionshipSnapshot .hf-card{--hf-accent:var(--hf-red);--hf-soft:#fff0f1;min-width:0;overflow:hidden;border:1px solid #dde3e9;border-radius:16px;background:#fff;box-shadow:0 12px 32px rgba(18,30,44,.06)}
+#hlrnChampionshipSnapshot .hf-card.monday{--hf-accent:var(--hf-green);--hf-soft:#eef8f0}
+#hlrnChampionshipSnapshot .hf-card:before{content:"";display:block;height:5px;background:var(--hf-accent)}
+#hlrnChampionshipSnapshot .hf-card-main{padding:23px 24px 20px}
+#hlrnChampionshipSnapshot .hf-card-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+#hlrnChampionshipSnapshot .hf-series{color:var(--hf-accent);font:900 14px "Barlow Condensed","Arial Narrow",Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase}
+#hlrnChampionshipSnapshot .hf-round{color:#707a84;font-size:10px;font-weight:800;text-transform:uppercase}
+#hlrnChampionshipSnapshot .hf-lead-title{display:block;margin-top:24px;color:#8b949e;font-size:9px;font-weight:900;letter-spacing:.13em;text-transform:uppercase}
+#hlrnChampionshipSnapshot .hf-leader{display:flex;align-items:center;gap:14px;margin:7px 0 15px}
+#hlrnChampionshipSnapshot .hf-leader-pos{display:grid;place-items:center;width:47px;height:47px;flex:none;background:var(--hf-soft);border-radius:12px;color:var(--hf-accent);font:900 28px "Barlow Condensed","Arial Narrow",Arial,sans-serif}
+#hlrnChampionshipSnapshot .hf-leader-name{min-width:0;color:#15191e;font:900 clamp(25px,2.7vw,36px)/1 "Barlow Condensed","Arial Narrow",Arial,sans-serif;text-transform:uppercase;overflow-wrap:anywhere}
+#hlrnChampionshipSnapshot .hf-points{display:flex;align-items:baseline;gap:7px;margin-left:auto;white-space:nowrap;color:var(--hf-accent);font:900 clamp(25px,2.9vw,35px) "Barlow Condensed","Arial Narrow",Arial,sans-serif}
+#hlrnChampionshipSnapshot .hf-points small{color:#84909b;font:800 9px var(--hf-font);letter-spacing:.07em}
+#hlrnChampionshipSnapshot .hf-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+#hlrnChampionshipSnapshot .hf-stat{padding:10px;background:#f7f9fa;border:1px solid #edf0f3;border-radius:10px}
+#hlrnChampionshipSnapshot .hf-stat strong{display:block;color:#1c242a;font:900 21px/1 "Barlow Condensed","Arial Narrow",Arial,sans-serif}
+#hlrnChampionshipSnapshot .hf-stat span{display:block;margin-top:6px;color:#84909b;font-size:9px;font-weight:800;text-transform:uppercase}
+#hlrnChampionshipSnapshot .hf-divider{height:1px;margin:20px 0 16px;background:#ebeff2}
+#hlrnChampionshipSnapshot .hf-row-title{display:flex;justify-content:space-between;gap:8px;align-items:center;color:#505b65;font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+#hlrnChampionshipSnapshot .hf-list{display:grid;gap:8px;margin-top:12px}
+#hlrnChampionshipSnapshot .hf-list-row{display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 11px;border:1px solid #edf0f3;border-radius:10px;background:#fff}
+#hlrnChampionshipSnapshot .hf-list-pos{color:var(--hf-accent);font:900 19px "Barlow Condensed","Arial Narrow",Arial,sans-serif}
+#hlrnChampionshipSnapshot .hf-list-name{min-width:0;overflow-wrap:anywhere;color:#242b31;font-size:12px;font-weight:800}
+#hlrnChampionshipSnapshot .hf-list-pts{color:#4b5660;font-size:12px;font-weight:900}
+#hlrnChampionshipSnapshot .hf-result{padding:18px 24px 21px;border-top:1px solid #edf0f3;background:linear-gradient(180deg,#fcfdfe,#f6f8fa)}
+#hlrnChampionshipSnapshot .hf-result-label{color:#84909b;font-size:9px;font-weight:900;letter-spacing:.13em;text-transform:uppercase}
+#hlrnChampionshipSnapshot .hf-result-track{margin-top:8px;color:#182027;font:900 23px/1.03 "Barlow Condensed","Arial Narrow",Arial,sans-serif;text-transform:uppercase;overflow-wrap:anywhere}
+#hlrnChampionshipSnapshot .hf-result-line{display:flex;flex-wrap:wrap;gap:5px 16px;margin-top:9px;color:#64707b;font-size:11px;font-weight:800}
+#hlrnChampionshipSnapshot .hf-result-line strong{color:var(--hf-accent)}
+#hlrnChampionshipSnapshot .hf-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:19px}
+#hlrnChampionshipSnapshot .hf-view{display:inline-flex;align-items:center;gap:8px;text-decoration:none!important;color:#fff!important;background:var(--hf-accent);padding:10px 14px;border-radius:8px;font-size:10px;font-weight:900;letter-spacing:.045em;text-transform:uppercase}
+#hlrnChampionshipSnapshot .hf-view:hover{filter:brightness(.92)}
+#hlrnChampionshipSnapshot .hf-count{color:#89949e;font-size:10px;font-weight:800}
+#hlrnChampionshipSnapshot .hf-note{margin:15px 0 0;color:#7a8792;font-size:10px;line-height:1.5}
+@media(max-width:850px){#hlrnChampionshipSnapshot .hf-grid{grid-template-columns:1fr}}
+@media(max-width:560px){#hlrnChampionshipSnapshot{padding:32px 12px 40px!important}#hlrnChampionshipSnapshot .hf-head{display:block}#hlrnChampionshipSnapshot .hf-status{align-items:flex-start;margin-top:15px;text-align:left;min-width:0}#hlrnChampionshipSnapshot .hf-card-main{padding:18px 15px}#hlrnChampionshipSnapshot .hf-result{padding:16px 15px}#hlrnChampionshipSnapshot .hf-leader{flex-wrap:wrap}#hlrnChampionshipSnapshot .hf-points{width:100%;margin-left:61px}#hlrnChampionshipSnapshot .hf-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
 </head>
 
 
@@ -3932,6 +3992,68 @@ body.rd-v5>#incidentTab{display:none!important}
         </div>
       </div>
     </section>
+
+<!-- HLRN FOUNDATION: Sunday and Monday read the same published snapshot as Standings. Hosted remains independent. -->
+<section id="hlrnChampionshipSnapshot" aria-labelledby="hfHeading">
+  <div class="hf-wrap">
+    <div class="hf-head">
+      <div>
+        <span class="hf-kicker">HLRN // CHAMPIONSHIP DATA</span>
+        <h2 id="hfHeading">Sunday &amp; Monday standings</h2>
+        <p class="hf-intro">Points leaders and the latest completed league race from the shared HLRN standings feed.</p>
+      </div>
+      <div class="hf-status" aria-live="polite" aria-atomic="true">
+        <span class="hf-status-pill" id="hfStatus" data-state="loading">Connecting to standings…</span>
+        <span class="hf-updated" id="hfUpdated">Awaiting published data</span>
+      </div>
+    </div>
+    <div class="hf-grid">
+      <article class="hf-card sunday" data-hf-league="sunday" aria-label="Sunday championship">
+        <div class="hf-card-main">
+          <div class="hf-card-top"><span class="hf-series">Sunday championship</span><span class="hf-round" id="hfSundayRound">2026 Season</span></div>
+          <span class="hf-lead-title">Championship leader</span>
+          <div class="hf-leader"><span class="hf-leader-pos">1</span><strong class="hf-leader-name" id="hfSundayLeader">Loading…</strong><span class="hf-points"><span id="hfSundayPoints">—</span><small>PTS</small></span></div>
+          <div class="hf-stats">
+            <div class="hf-stat"><strong id="hfSundayStarts">—</strong><span>Starts</span></div>
+            <div class="hf-stat"><strong id="hfSundayWins">—</strong><span>Wins</span></div>
+            <div class="hf-stat"><strong id="hfSundayTop5">—</strong><span>Top 5</span></div>
+            <div class="hf-stat"><strong id="hfSundayTop10">—</strong><span>Top 10</span></div>
+          </div>
+          <div class="hf-divider"></div><div class="hf-row-title"><span>Championship top 3</span><span>Points</span></div>
+          <div class="hf-list" id="hfSundayTop3" aria-label="Sunday top three"><div class="hf-list-row">Loading standings…</div></div>
+        </div>
+        <div class="hf-result">
+          <span class="hf-result-label">Most recent recorded race</span>
+          <div class="hf-result-track" id="hfSundayTrack">Waiting for results</div>
+          <div class="hf-result-line"><span id="hfSundayRaceDate">—</span><span>Winner: <strong id="hfSundayWinner">—</strong></span></div>
+          <div class="hf-actions"><a class="hf-view" href="/standings/">Sunday standings →</a><span class="hf-count" id="hfSundayCount">—</span></div>
+        </div>
+      </article>
+      <article class="hf-card monday" data-hf-league="monday" aria-label="Monday championship">
+        <div class="hf-card-main">
+          <div class="hf-card-top"><span class="hf-series">Monday championship</span><span class="hf-round" id="hfMondayRound">2026 Season</span></div>
+          <span class="hf-lead-title">Championship leader</span>
+          <div class="hf-leader"><span class="hf-leader-pos">1</span><strong class="hf-leader-name" id="hfMondayLeader">Loading…</strong><span class="hf-points"><span id="hfMondayPoints">—</span><small>PTS</small></span></div>
+          <div class="hf-stats">
+            <div class="hf-stat"><strong id="hfMondayStarts">—</strong><span>Starts</span></div>
+            <div class="hf-stat"><strong id="hfMondayWins">—</strong><span>Wins</span></div>
+            <div class="hf-stat"><strong id="hfMondayTop5">—</strong><span>Top 5</span></div>
+            <div class="hf-stat"><strong id="hfMondayTop10">—</strong><span>Top 10</span></div>
+          </div>
+          <div class="hf-divider"></div><div class="hf-row-title"><span>Championship top 3</span><span>Points</span></div>
+          <div class="hf-list" id="hfMondayTop3" aria-label="Monday top three"><div class="hf-list-row">Loading standings…</div></div>
+        </div>
+        <div class="hf-result">
+          <span class="hf-result-label">Most recent recorded race</span>
+          <div class="hf-result-track" id="hfMondayTrack">Waiting for results</div>
+          <div class="hf-result-line"><span id="hfMondayRaceDate">—</span><span>Winner: <strong id="hfMondayWinner">—</strong></span></div>
+          <div class="hf-actions"><a class="hf-view" href="/standings/">Monday standings →</a><span class="hf-count" id="hfMondayCount">—</span></div>
+        </div>
+      </article>
+    </div>
+    <p class="hf-note">League standings use the latest verified published snapshot. Hosted results above continue using the existing Hosted data source. This is not a live telemetry feed.</p>
+  </div>
+</section>
 
     <section class="v6-raceweek">
       <div class="v6-shell">
@@ -8655,6 +8777,100 @@ if(document.readyState==="loading"){
 })();
 </script>
 
+<script src="assets/hlrn-core.js?v=20260923home1"></script>
+<script id="hlrn-home-foundation-v1-js">
+(function(){
+  'use strict';
+  const ids={sunday:'Sunday',monday:'Monday'};
+  const $=id=>document.getElementById(id);
+  const put=(id,value)=>{const el=$(id);if(el)el.textContent=String(value);};
+  const num=value=>Number.isFinite(Number(value))?Number(value):0;
+  const formatted=value=>num(value).toLocaleString('en-US');
+  function driverName(value){
+    const name=String(value||'').trim();
+    const comma=name.indexOf(',');
+    return comma>=0?(name.slice(comma+1).trim()+' '+name.slice(0,comma).trim()).trim():name;
+  }
+  function dateValue(value){
+    const date=new Date(value||'');
+    return Number.isFinite(date.getTime())?date.getTime():-1;
+  }
+  function shortDate(value){
+    const ms=dateValue(value);
+    if(ms<0)return 'Date unavailable';
+    return new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',month:'short',day:'numeric',year:'numeric'}).format(new Date(ms));
+  }
+  function latestEvent(results){
+    const groups=new Map();
+    for(const row of results){
+      if(!row || !row.raceId)continue;
+      const key=String(row.raceId);
+      const score=dateValue(row.date);
+      if(!groups.has(key))groups.set(key,{score,round:num(row.raceNumber),date:row.date,track:row.track,rows:[]});
+      const item=groups.get(key);
+      if(score>item.score){item.score=score;item.date=row.date;}
+      item.round=Math.max(item.round,num(row.raceNumber));
+      if(!item.track && row.track)item.track=row.track;
+      item.rows.push(row);
+    }
+    return [...groups.values()].sort((a,b)=>(b.score-a.score)||(b.round-a.round))[0]||null;
+  }
+  function buildRow(rank,name,points){
+    const row=document.createElement('div');row.className='hf-list-row';
+    const pos=document.createElement('span');pos.className='hf-list-pos';pos.textContent=String(rank);
+    const who=document.createElement('span');who.className='hf-list-name';who.textContent=name;
+    const pts=document.createElement('span');pts.className='hf-list-pts';pts.textContent=formatted(points);
+    row.append(pos,who,pts);return row;
+  }
+  function renderLeague(key,league){
+    if(!league||!Array.isArray(league.drivers)||!league.drivers.length)return;
+    const prefix=ids[key];
+    const ranked=league.drivers.slice().sort((a,b)=>num(a.rank)-num(b.rank)||num(b.points)-num(a.points));
+    const leader=ranked[0];
+    put('hf'+prefix+'Leader',driverName(leader.driver)||'Name unavailable');
+    put('hf'+prefix+'Points',formatted(leader.points));
+    put('hf'+prefix+'Starts',formatted(leader.starts??leader.races));
+    put('hf'+prefix+'Wins',formatted(leader.wins));
+    put('hf'+prefix+'Top5',formatted(leader.top5));
+    put('hf'+prefix+'Top10',formatted(leader.top10));
+    put('hf'+prefix+'Count',formatted(league.drivers.length)+' drivers');
+    const list=$('hf'+prefix+'Top3');
+    if(list)list.replaceChildren(...ranked.slice(0,3).map((d,i)=>buildRow(num(d.rank)||i+1,driverName(d.driver)||'Name unavailable',d.points)));
+    const event=latestEvent(Array.isArray(league.results)?league.results:[]);
+    if(!event){
+      put('hf'+prefix+'Track','No recorded results yet');
+      put('hf'+prefix+'RaceDate','—');put('hf'+prefix+'Winner','Not available');
+      put('hf'+prefix+'Round','2026 Season');return;
+    }
+    put('hf'+prefix+'Track',event.track||'Track unavailable');
+    put('hf'+prefix+'RaceDate',shortDate(event.date));
+    put('hf'+prefix+'Round',event.round?'Race '+event.round:'2026 Season');
+    const winnerRow=event.rows.find(r=>num(r.finish)===1);
+    const winnerId=winnerRow?.driverId==null?'':String(winnerRow.driverId);
+    const winnerDriver=league.drivers.find(d=>String(d.driverId??'')===winnerId);
+    put('hf'+prefix+'Winner',winnerRow?(driverName(winnerDriver?.driver||winnerRow.driver||'')||'Name unavailable'):'Result pending');
+  }
+  function render(detail){
+    const snapshot=detail?.snapshot;
+    const state=detail?.status?.state||'loading';
+    const badge=$('hfStatus');if(badge)badge.dataset.state=state;
+    if(state==='cached')put('hfStatus','Using last saved standings');
+    else if(state==='current')put('hfStatus','Published standings loaded');
+    else if(state==='unavailable')put('hfStatus','Standings data temporarily unavailable');
+    else put('hfStatus','Connecting to standings…');
+    put('hfUpdated',snapshot?.generatedAt?'Snapshot: '+new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',dateStyle:'medium',timeStyle:'short'}).format(new Date(snapshot.generatedAt))+' ET':'Waiting for the first valid snapshot');
+    if(!snapshot?.leagues)return;
+    renderLeague('sunday',snapshot.leagues.sunday);
+    renderLeague('monday',snapshot.leagues.monday);
+  }
+  function start(){
+    if(!window.HLRNData){put('hfStatus','Shared data loader is missing');const el=$('hfStatus');if(el)el.dataset.state='unavailable';return;}
+    window.HLRNData.subscribe(render);
+    window.HLRNData.load().catch(()=>{});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+})();
+</script>
 <script src="assets/site-shell.js?v=ADMINLOGIN0922"></script>
 </body>
 
