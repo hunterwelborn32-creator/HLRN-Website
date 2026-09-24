@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-23T20:15:08.072Z",
+  "generatedAt": "2026-09-24T02:04:07.658Z",
   "drivers": [
     {
       "series": "sunday",
@@ -8076,9 +8076,9 @@
     {
       "series": "monday",
       "id": "53993",
-      "name": "David Durand2",
-      "sourceName": "Durand2, David",
-      "photoSlug": "david-durand",
+      "name": "David Durand Jr",
+      "sourceName": "Durand Jr, David",
+      "photoSlug": "david-durand-jr",
       "rank": 35,
       "points": 44,
       "change": -1,
