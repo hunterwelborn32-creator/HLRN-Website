@@ -1,7 +1,569 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-27T19:22:18.834Z",
+  "generatedAt": "2026-09-28T03:26:32.941Z",
   "reports": [
+    {
+      "key": "sunday:382036",
+      "series": "sunday",
+      "raceId": "382036",
+      "raceNumber": 11,
+      "track": "Indianapolis Motor Speedway",
+      "date": "2026-09-27T04:00:00.000Z",
+      "winner": {
+        "name": "Trevor Haley",
+        "id": "55541"
+      },
+      "classified": 36,
+      "top10": [
+        {
+          "id": "55541",
+          "name": "Trevor Haley",
+          "start": 6,
+          "finish": 1,
+          "gain": 5,
+          "points": 60,
+          "lapsLed": 20,
+          "incidents": 16,
+          "status": "Running"
+        },
+        {
+          "id": "77498",
+          "name": "Ethan Moreno",
+          "start": 2,
+          "finish": 2,
+          "gain": 0,
+          "points": 51,
+          "lapsLed": 61,
+          "incidents": 1,
+          "status": "Running"
+        },
+        {
+          "id": "115869",
+          "name": "Jared Philpott",
+          "start": 3,
+          "finish": 3,
+          "gain": 0,
+          "points": 48,
+          "lapsLed": 2,
+          "incidents": 15,
+          "status": "Running"
+        },
+        {
+          "id": "33901",
+          "name": "Chris James",
+          "start": 10,
+          "finish": 4,
+          "gain": 6,
+          "points": 47,
+          "lapsLed": 0,
+          "incidents": 9,
+          "status": "Running"
+        },
+        {
+          "id": "13461",
+          "name": "Dylan Jones",
+          "start": 1,
+          "finish": 5,
+          "gain": -4,
+          "points": 47,
+          "lapsLed": 0,
+          "incidents": 17,
+          "status": "Running"
+        },
+        {
+          "id": "95192",
+          "name": "Nicholas Baumann",
+          "start": 23,
+          "finish": 6,
+          "gain": 17,
+          "points": 45,
+          "lapsLed": 0,
+          "incidents": 31,
+          "status": "Running"
+        },
+        {
+          "id": "126078",
+          "name": "Darrel Ceballos",
+          "start": 14,
+          "finish": 7,
+          "gain": 7,
+          "points": 44,
+          "lapsLed": 0,
+          "incidents": 12,
+          "status": "Running"
+        },
+        {
+          "id": "101093",
+          "name": "Randy Showers",
+          "start": 17,
+          "finish": 8,
+          "gain": 9,
+          "points": 43,
+          "lapsLed": 0,
+          "incidents": 12,
+          "status": "Running"
+        },
+        {
+          "id": "99085",
+          "name": "Juan Escamilla",
+          "start": 13,
+          "finish": 9,
+          "gain": 4,
+          "points": 42,
+          "lapsLed": 14,
+          "incidents": 6,
+          "status": "Running"
+        },
+        {
+          "id": "120507",
+          "name": "Larkin Boyer",
+          "start": 9,
+          "finish": 10,
+          "gain": -1,
+          "points": 41,
+          "lapsLed": 0,
+          "incidents": 61,
+          "status": "Running"
+        }
+      ],
+      "results": [
+        {
+          "id": "55541",
+          "name": "Trevor Haley",
+          "start": 6,
+          "finish": 1,
+          "gain": 5,
+          "points": 60,
+          "lapsLed": 20,
+          "incidents": 16,
+          "status": "Running"
+        },
+        {
+          "id": "77498",
+          "name": "Ethan Moreno",
+          "start": 2,
+          "finish": 2,
+          "gain": 0,
+          "points": 51,
+          "lapsLed": 61,
+          "incidents": 1,
+          "status": "Running"
+        },
+        {
+          "id": "115869",
+          "name": "Jared Philpott",
+          "start": 3,
+          "finish": 3,
+          "gain": 0,
+          "points": 48,
+          "lapsLed": 2,
+          "incidents": 15,
+          "status": "Running"
+        },
+        {
+          "id": "33901",
+          "name": "Chris James",
+          "start": 10,
+          "finish": 4,
+          "gain": 6,
+          "points": 47,
+          "lapsLed": 0,
+          "incidents": 9,
+          "status": "Running"
+        },
+        {
+          "id": "13461",
+          "name": "Dylan Jones",
+          "start": 1,
+          "finish": 5,
+          "gain": -4,
+          "points": 47,
+          "lapsLed": 0,
+          "incidents": 17,
+          "status": "Running"
+        },
+        {
+          "id": "95192",
+          "name": "Nicholas Baumann",
+          "start": 23,
+          "finish": 6,
+          "gain": 17,
+          "points": 45,
+          "lapsLed": 0,
+          "incidents": 31,
+          "status": "Running"
+        },
+        {
+          "id": "126078",
+          "name": "Darrel Ceballos",
+          "start": 14,
+          "finish": 7,
+          "gain": 7,
+          "points": 44,
+          "lapsLed": 0,
+          "incidents": 12,
+          "status": "Running"
+        },
+        {
+          "id": "101093",
+          "name": "Randy Showers",
+          "start": 17,
+          "finish": 8,
+          "gain": 9,
+          "points": 43,
+          "lapsLed": 0,
+          "incidents": 12,
+          "status": "Running"
+        },
+        {
+          "id": "99085",
+          "name": "Juan Escamilla",
+          "start": 13,
+          "finish": 9,
+          "gain": 4,
+          "points": 42,
+          "lapsLed": 14,
+          "incidents": 6,
+          "status": "Running"
+        },
+        {
+          "id": "120507",
+          "name": "Larkin Boyer",
+          "start": 9,
+          "finish": 10,
+          "gain": -1,
+          "points": 41,
+          "lapsLed": 0,
+          "incidents": 61,
+          "status": "Running"
+        },
+        {
+          "id": "118360",
+          "name": "Donny Beach",
+          "start": 22,
+          "finish": 11,
+          "gain": 11,
+          "points": 40,
+          "lapsLed": 0,
+          "incidents": 20,
+          "status": "Running"
+        },
+        {
+          "id": "96425",
+          "name": "Jim Segredo",
+          "start": 35,
+          "finish": 12,
+          "gain": 23,
+          "points": 40,
+          "lapsLed": 0,
+          "incidents": 18,
+          "status": "Running"
+        },
+        {
+          "id": "98282",
+          "name": "Brandon Showers",
+          "start": 20,
+          "finish": 13,
+          "gain": 7,
+          "points": 38,
+          "lapsLed": 0,
+          "incidents": 32,
+          "status": "Running"
+        },
+        {
+          "id": "55068",
+          "name": "Joshua McKinney2",
+          "start": 19,
+          "finish": 14,
+          "gain": 5,
+          "points": 37,
+          "lapsLed": 0,
+          "incidents": 33,
+          "status": "Running"
+        },
+        {
+          "id": "76649",
+          "name": "Brian Hennings",
+          "start": 32,
+          "finish": 15,
+          "gain": 17,
+          "points": 36,
+          "lapsLed": 0,
+          "incidents": 37,
+          "status": "Running"
+        },
+        {
+          "id": "65049",
+          "name": "Vicente Guerrero2",
+          "start": 33,
+          "finish": 16,
+          "gain": 17,
+          "points": 35,
+          "lapsLed": 0,
+          "incidents": 25,
+          "status": "Running"
+        },
+        {
+          "id": "55842",
+          "name": "Brandon Beyke",
+          "start": 4,
+          "finish": 17,
+          "gain": -13,
+          "points": 34,
+          "lapsLed": 0,
+          "incidents": 23,
+          "status": "Running"
+        },
+        {
+          "id": "130000",
+          "name": "Timothy Tyler3",
+          "start": 26,
+          "finish": 18,
+          "gain": 8,
+          "points": 33,
+          "lapsLed": 0,
+          "incidents": 29,
+          "status": "Running"
+        },
+        {
+          "id": "109391",
+          "name": "Ryan Wilson21",
+          "start": 16,
+          "finish": 19,
+          "gain": -3,
+          "points": 32,
+          "lapsLed": 0,
+          "incidents": 24,
+          "status": "Running"
+        },
+        {
+          "id": "118777",
+          "name": "Tj Lunn",
+          "start": 31,
+          "finish": 20,
+          "gain": 11,
+          "points": 31,
+          "lapsLed": 0,
+          "incidents": 25,
+          "status": "Running"
+        },
+        {
+          "id": "137126",
+          "name": "Shane Hatfield",
+          "start": 36,
+          "finish": 21,
+          "gain": 15,
+          "points": 30,
+          "lapsLed": 0,
+          "incidents": 19,
+          "status": "Running"
+        },
+        {
+          "id": "74901",
+          "name": "Randy Schweitzer",
+          "start": 18,
+          "finish": 22,
+          "gain": -4,
+          "points": 29,
+          "lapsLed": 0,
+          "incidents": 37,
+          "status": "Running"
+        },
+        {
+          "id": "51327",
+          "name": "Craig Rowe",
+          "start": 12,
+          "finish": 23,
+          "gain": -11,
+          "points": 28,
+          "lapsLed": 0,
+          "incidents": 30,
+          "status": "Disconnected"
+        },
+        {
+          "id": "109865",
+          "name": "Joshua Spragg",
+          "start": 24,
+          "finish": 24,
+          "gain": 0,
+          "points": 27,
+          "lapsLed": 0,
+          "incidents": 17,
+          "status": "Disconnected"
+        },
+        {
+          "id": "116507",
+          "name": "Matthew Brown49",
+          "start": 8,
+          "finish": 25,
+          "gain": -17,
+          "points": 26,
+          "lapsLed": 0,
+          "incidents": 24,
+          "status": "Running"
+        },
+        {
+          "id": "132261",
+          "name": "Easton Collins",
+          "start": 29,
+          "finish": 26,
+          "gain": 3,
+          "points": 25,
+          "lapsLed": 0,
+          "incidents": 45,
+          "status": "Disconnected"
+        },
+        {
+          "id": "139594",
+          "name": "Kenwood Ramsey",
+          "start": 7,
+          "finish": 27,
+          "gain": -20,
+          "points": 24,
+          "lapsLed": 0,
+          "incidents": 17,
+          "status": "Running"
+        },
+        {
+          "id": "103956",
+          "name": "Evan Parry",
+          "start": 28,
+          "finish": 28,
+          "gain": 0,
+          "points": 23,
+          "lapsLed": 9,
+          "incidents": 12,
+          "status": "Disconnected"
+        },
+        {
+          "id": "135679",
+          "name": "Hunter Welborn",
+          "start": 25,
+          "finish": 29,
+          "gain": -4,
+          "points": 22,
+          "lapsLed": 0,
+          "incidents": 14,
+          "status": "Running"
+        },
+        {
+          "id": "112020",
+          "name": "Brian Hebbard2",
+          "start": 21,
+          "finish": 30,
+          "gain": -9,
+          "points": 21,
+          "lapsLed": 0,
+          "incidents": 34,
+          "status": "Disconnected"
+        },
+        {
+          "id": "93056",
+          "name": "Eric Hayden",
+          "start": 27,
+          "finish": 31,
+          "gain": -4,
+          "points": 20,
+          "lapsLed": 0,
+          "incidents": 29,
+          "status": "Running"
+        },
+        {
+          "id": "140056",
+          "name": "Matthew Graham20",
+          "start": 37,
+          "finish": 32,
+          "gain": 5,
+          "points": 19,
+          "lapsLed": 0,
+          "incidents": 37,
+          "status": "Running"
+        },
+        {
+          "id": "47514",
+          "name": "Jeremy Jeffries",
+          "start": 30,
+          "finish": 33,
+          "gain": -3,
+          "points": 18,
+          "lapsLed": 0,
+          "incidents": 26,
+          "status": "Disconnected"
+        },
+        {
+          "id": "88906",
+          "name": "Gerry Bergeron",
+          "start": 15,
+          "finish": 34,
+          "gain": -19,
+          "points": 17,
+          "lapsLed": 0,
+          "incidents": 8,
+          "status": "Disconnected"
+        },
+        {
+          "id": "9726",
+          "name": "Justin Crowe",
+          "start": 11,
+          "finish": 35,
+          "gain": -24,
+          "points": 16,
+          "lapsLed": 0,
+          "incidents": 11,
+          "status": "Disconnected"
+        },
+        {
+          "id": "87070",
+          "name": "Ethan Eckert",
+          "start": 5,
+          "finish": 36,
+          "gain": -31,
+          "points": 15,
+          "lapsLed": 0,
+          "incidents": 12,
+          "status": "Disconnected"
+        }
+      ],
+      "biggestGainers": [
+        {
+          "id": "96425",
+          "name": "Jim Segredo",
+          "start": 35,
+          "finish": 12,
+          "gain": 23,
+          "points": 40,
+          "lapsLed": 0,
+          "incidents": 18,
+          "status": "Running"
+        },
+        {
+          "id": "95192",
+          "name": "Nicholas Baumann",
+          "start": 23,
+          "finish": 6,
+          "gain": 17,
+          "points": 45,
+          "lapsLed": 0,
+          "incidents": 31,
+          "status": "Running"
+        },
+        {
+          "id": "76649",
+          "name": "Brian Hennings",
+          "start": 32,
+          "finish": 15,
+          "gain": 17,
+          "points": 36,
+          "lapsLed": 0,
+          "incidents": 37,
+          "status": "Running"
+        }
+      ],
+      "dataNotes": [
+        "Finishing results reflect published race rows.",
+        "Caution count, lead changes, penalties and incident causes are not available in this source."
+      ]
+    },
     {
       "key": "hosted:latest",
       "series": "hosted",
