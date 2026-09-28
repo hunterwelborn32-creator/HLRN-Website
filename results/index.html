@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>HLRN Race Center</title><style>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>HLRN Results & Schedule | High Line Racing Network</title>
+<meta name="description" content="High Line Racing Network race results, previous winners, upcoming events and the complete Sunday and Monday league schedule.">
+<link rel="canonical" href="https://highlineracingnetwork.com/results/"><style>
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;width:100%;min-height:100%;background:#020202;color:#fff;font-family:Arial,Helvetica,sans-serif}
 body{overflow-x:hidden}
@@ -2440,7 +2442,820 @@ body{font-family:Arial,Helvetica,sans-serif!important}
 .ns-race-row.past .ns-winner{opacity:1}
 </style>
 
-<link rel="stylesheet" href="../assets/site-shell.css">
+<link rel="stylesheet" href="../assets/site-shell.css?v=20260928v6">
+
+<style id="HLRN_RESULTS_V16_NETWORK_POLISH">
+/* =========================================================
+   HLRN RESULTS & SCHEDULE V16
+   Presentation-only layer.
+   Existing race data, schedules, countdowns, winner feeds,
+   driver cutouts and refresh logic remain untouched.
+========================================================= */
+
+:root{
+  --rv-red:#e31837;
+  --rv-red-dark:#b90f29;
+  --rv-green:#68bd2d;
+  --rv-yellow:#ffd21f;
+  --rv-black:#080b0f;
+  --rv-panel:#11161d;
+  --rv-panel2:#171d25;
+  --rv-ink:#12161b;
+  --rv-muted:#68727d;
+  --rv-line:#d9dee4;
+  --rv-paper:#fff;
+  --rv-soft:#f2f4f6;
+  --rv-shadow:0 18px 48px rgba(11,17,24,.12);
+}
+
+/* Overall page */
+html,
+body{
+  background:#e9edf1!important;
+}
+
+.ns-schedule-app{
+  min-height:100vh!important;
+  background:
+    linear-gradient(180deg,#080b0f 0 350px,#e9edf1 350px 100%)!important;
+  color:var(--rv-ink)!important;
+}
+
+/* Internal results control bar */
+.ns-top{
+  width:min(1500px,calc(100% - 28px))!important;
+  height:48px!important;
+  margin:14px auto 0!important;
+  padding:0 16px!important;
+  border:1px solid #2c3540!important;
+  border-left:4px solid var(--rv-red)!important;
+  border-bottom:1px solid #2c3540!important;
+  border-radius:7px 7px 0 0!important;
+  background:linear-gradient(180deg,#151b22,#0d1116)!important;
+  box-shadow:0 12px 30px rgba(0,0,0,.22)!important;
+}
+
+.ns-brand{
+  gap:10px!important;
+}
+
+.ns-mark{
+  color:#fff!important;
+  font:1000 italic 22px/1 Arial,sans-serif!important;
+  letter-spacing:-.04em!important;
+}
+
+.ns-mark span{
+  color:#ff2948!important;
+}
+
+.ns-brand-copy{
+  color:#89939e!important;
+  font-size:8px!important;
+  letter-spacing:.14em!important;
+}
+
+.ns-top-links{
+  gap:8px!important;
+}
+
+.ns-top-links a{
+  min-height:30px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  padding:0 10px!important;
+  border:1px solid #343e48!important;
+  border-radius:4px!important;
+  background:#171d25!important;
+  color:#c3cad2!important;
+  font-size:7px!important;
+  letter-spacing:.09em!important;
+  transition:.15s ease!important;
+}
+
+.ns-top-links a:hover{
+  border-color:#66717d!important;
+  background:#1e2630!important;
+  color:#fff!important;
+}
+
+/* Sunday / Monday league selector */
+.ns-subnav{
+  width:min(1500px,calc(100% - 28px))!important;
+  margin:0 auto!important;
+  justify-content:flex-start!important;
+  border:1px solid #2c3540!important;
+  border-top:0!important;
+  border-radius:0 0 7px 7px!important;
+  background:#0d1217!important;
+  overflow:hidden!important;
+  box-shadow:0 10px 26px rgba(0,0,0,.15)!important;
+}
+
+.ns-league-tab{
+  min-width:190px!important;
+  min-height:46px!important;
+  padding:0 20px!important;
+  border:0!important;
+  border-right:1px solid #2d3540!important;
+  background:#11171d!important;
+  color:#929ca7!important;
+  font-size:8px!important;
+  letter-spacing:.12em!important;
+  transition:.15s ease!important;
+}
+
+.ns-league-tab:hover:not(.active){
+  background:#182029!important;
+  color:#fff!important;
+}
+
+.ns-league-tab.active{
+  padding-bottom:0!important;
+  border-bottom:0!important;
+  background:#fff!important;
+  color:#11151a!important;
+  box-shadow:inset 0 -4px 0 var(--rv-red)!important;
+}
+
+.ns-league-tab[data-league="sunday"].active{
+  box-shadow:inset 0 -4px 0 var(--rv-green)!important;
+}
+
+/* Main width */
+.ns-wrap{
+  width:min(1500px,calc(100% - 28px))!important;
+  margin:14px auto 0!important;
+}
+
+/* Results hero */
+.ns-titlebar{
+  position:relative!important;
+  min-height:300px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:flex-end!important;
+  padding:48px clamp(24px,4.4vw,66px) 42px!important;
+  overflow:hidden!important;
+  border:1px solid #242c35!important;
+  border-radius:10px 10px 0 0!important;
+  background:
+    radial-gradient(circle at 78% 20%,rgba(227,24,55,.18),transparent 29%),
+    linear-gradient(115deg,rgba(255,255,255,.025),transparent 36%),
+    linear-gradient(180deg,#151b22,#080b0f)!important;
+  box-shadow:0 20px 58px rgba(0,0,0,.30)!important;
+}
+
+.ns-titlebar:before{
+  content:"RESULTS"!important;
+  position:absolute!important;
+  right:-18px!important;
+  bottom:-31px!important;
+  color:rgba(255,255,255,.028)!important;
+  font:1000 italic clamp(110px,18vw,250px)/.76 Arial,sans-serif!important;
+  letter-spacing:-.08em!important;
+  pointer-events:none!important;
+}
+
+.ns-titlebar:after{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  bottom:0!important;
+  height:4px!important;
+  background:linear-gradient(
+    90deg,
+    var(--rv-red) 0 58%,
+    var(--rv-yellow) 58% 72%,
+    #fff 72% 75%,
+    #2477d3 75% 100%
+  )!important;
+}
+
+.ns-eyebrow{
+  position:relative!important;
+  z-index:1!important;
+  color:#a4adb7!important;
+  font-size:8px!important;
+  letter-spacing:.18em!important;
+}
+
+.ns-titlebar h1{
+  position:relative!important;
+  z-index:1!important;
+  margin:10px 0 0!important;
+  color:#fff!important;
+  font:1000 italic clamp(55px,7.8vw,106px)/.82 Arial,sans-serif!important;
+  letter-spacing:-.067em!important;
+  text-transform:uppercase!important;
+}
+
+.ns-titlebar h1 span{
+  color:#ff2948!important;
+}
+
+.ns-titlebar p{
+  position:relative!important;
+  z-index:1!important;
+  max-width:760px!important;
+  margin:21px 0 0!important;
+  color:#bcc4cd!important;
+  font-size:13px!important;
+  font-weight:600!important;
+  line-height:1.65!important;
+}
+
+/* Previous / next race summary */
+.ns-race-summary{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:12px!important;
+  padding:14px 0!important;
+}
+
+.ns-summary-card{
+  min-height:236px!important;
+  overflow:hidden!important;
+  border:1px solid var(--rv-line)!important;
+  border-radius:8px!important;
+  background:#fff!important;
+  box-shadow:var(--rv-shadow)!important;
+}
+
+.ns-summary-card.previous{
+  border-top:4px solid #4f5964!important;
+}
+
+.ns-summary-card.next{
+  border-top:4px solid var(--rv-red)!important;
+}
+
+.ns-summary-head{
+  padding:14px 18px!important;
+  border-bottom:1px solid var(--rv-line)!important;
+  background:#f3f5f7!important;
+  color:#5d6670!important;
+  font-size:8px!important;
+  letter-spacing:.15em!important;
+}
+
+.ns-summary-card.next .ns-summary-head{
+  background:#10151b!important;
+  color:#fff!important;
+  border-bottom-color:#28313a!important;
+}
+
+.ns-summary-body{
+  padding:24px 22px!important;
+}
+
+.ns-status{
+  padding:6px 9px!important;
+  border-radius:999px!important;
+  background:#edf0f3!important;
+  color:#6b747d!important;
+  font-size:7px!important;
+}
+
+.ns-summary-card.next .ns-status{
+  background:#fff0f2!important;
+  color:var(--rv-red)!important;
+}
+
+.ns-summary-card.live .ns-status{
+  background:var(--rv-red)!important;
+  color:#fff!important;
+}
+
+.ns-race-name{
+  margin-top:13px!important;
+  color:#11151a!important;
+  font:1000 italic clamp(29px,3.2vw,42px)/.92 Arial,sans-serif!important;
+  letter-spacing:-.045em!important;
+}
+
+.ns-race-meta{
+  margin-top:10px!important;
+  color:#67717b!important;
+  font-size:11px!important;
+  line-height:1.55!important;
+}
+
+.ns-summary-winner{
+  margin-top:13px!important;
+  padding-top:12px!important;
+  border-top:1px solid var(--rv-line)!important;
+  color:#333941!important;
+  font-size:9px!important;
+  letter-spacing:.07em!important;
+}
+
+.ns-summary-winner span{
+  color:var(--rv-red)!important;
+}
+
+.ns-race-actions{
+  gap:7px!important;
+  margin-top:16px!important;
+}
+
+.ns-btn{
+  min-height:39px!important;
+  padding:0 14px!important;
+  border:1px solid #cbd1d7!important;
+  border-radius:4px!important;
+  background:#fff!important;
+  color:#171b20!important;
+  font-size:8px!important;
+  transition:.15s ease!important;
+}
+
+.ns-btn:hover{
+  border-color:#7d8792!important;
+  background:#f6f7f8!important;
+}
+
+.ns-btn.primary{
+  border-color:#ff4a65!important;
+  background:linear-gradient(180deg,#f12645,#d71432)!important;
+  color:#fff!important;
+  box-shadow:0 8px 18px rgba(227,24,55,.17)!important;
+}
+
+.ns-countdown{
+  gap:5px!important;
+  margin-top:16px!important;
+}
+
+.ns-countdown div{
+  min-width:60px!important;
+  padding:9px 8px!important;
+  border:1px solid #2e3740!important;
+  border-radius:5px!important;
+  background:#10151b!important;
+}
+
+.ns-countdown strong{
+  color:#fff!important;
+  font:1000 italic 22px/1 Arial,sans-serif!important;
+}
+
+.ns-countdown span{
+  color:#7f8994!important;
+}
+
+/* Feature race */
+.ns-feature{
+  grid-template-columns:minmax(0,1.25fr) minmax(340px,.75fr)!important;
+  margin-bottom:16px!important;
+  overflow:hidden!important;
+  border:1px solid #29313b!important;
+  border-radius:9px!important;
+  background:#fff!important;
+  box-shadow:var(--rv-shadow)!important;
+}
+
+.ns-feature-main{
+  min-height:315px!important;
+  padding:38px!important;
+  background:
+    radial-gradient(circle at 88% 18%,rgba(227,24,55,.18),transparent 26%),
+    linear-gradient(135deg,#171d25,#090c10)!important;
+}
+
+.ns-feature-main:after{
+  right:-90px!important;
+  bottom:-130px!important;
+  width:360px!important;
+  height:360px!important;
+  border:54px solid rgba(255,255,255,.035)!important;
+}
+
+.ns-feature-kicker{
+  color:#aab3bd!important;
+  font-size:8px!important;
+}
+
+.ns-feature-track{
+  margin-top:18px!important;
+  max-width:850px!important;
+  color:#fff!important;
+  font:1000 italic clamp(43px,5.5vw,76px)/.86 Arial,sans-serif!important;
+  letter-spacing:-.055em!important;
+}
+
+.ns-feature-date{
+  margin-top:20px!important;
+  color:#fff!important;
+  font-size:12px!important;
+}
+
+.ns-feature-desc{
+  max-width:720px!important;
+  margin-top:13px!important;
+  color:#aeb7c1!important;
+  font-size:11px!important;
+  line-height:1.65!important;
+}
+
+.ns-feature-info{
+  background:#f3f5f7!important;
+}
+
+.ns-detail{
+  min-height:101px!important;
+  padding:19px!important;
+  border-color:#d8dde2!important;
+}
+
+.ns-detail small{
+  color:#78828c!important;
+  font-size:7px!important;
+}
+
+.ns-detail strong{
+  margin-top:9px!important;
+  color:#14181d!important;
+  font-size:17px!important;
+  line-height:1.15!important;
+}
+
+.ns-detail.wide strong{
+  font-size:13px!important;
+}
+
+/* Season controls */
+.ns-controls{
+  margin:0!important;
+  padding:13px 15px!important;
+  border:1px solid #d5dae0!important;
+  border-radius:7px!important;
+  background:#fff!important;
+  box-shadow:0 8px 24px rgba(12,18,26,.05)!important;
+}
+
+.ns-season-label,
+.ns-toggle-text{
+  color:#4d5660!important;
+  font-size:8px!important;
+  letter-spacing:.12em!important;
+}
+
+.ns-select{
+  min-width:120px!important;
+  padding:10px 34px 10px 12px!important;
+  border:1px solid #c6ccd2!important;
+  border-radius:4px!important;
+  background:#f7f8f9!important;
+  color:#11151a!important;
+}
+
+.ns-switch{
+  background:#c8ced4!important;
+}
+
+.ns-toggle input:checked + .ns-switch{
+  background:var(--rv-red)!important;
+}
+
+/* Full season schedule */
+.ns-schedule{
+  padding:0 0 42px!important;
+}
+
+.ns-month{
+  margin-top:18px!important;
+  overflow:hidden!important;
+  border:1px solid #d5dae0!important;
+  border-radius:8px!important;
+  background:#fff!important;
+  box-shadow:0 10px 28px rgba(12,18,26,.06)!important;
+}
+
+.ns-month-title{
+  padding:15px 18px 13px!important;
+  border-bottom:3px solid #151a20!important;
+  background:#f3f5f7!important;
+  color:#13171c!important;
+  font:1000 italic 25px/1 Arial,sans-serif!important;
+  letter-spacing:-.035em!important;
+}
+
+.ns-race-row{
+  grid-template-columns:96px minmax(0,1.6fr) minmax(180px,.85fr) 140px!important;
+  gap:18px!important;
+  min-height:122px!important;
+  padding:17px 20px!important;
+  border:0!important;
+  border-bottom:1px solid #dfe3e7!important;
+  background:#fff!important;
+  transition:.15s ease!important;
+}
+
+.ns-race-row:last-child{
+  border-bottom:0!important;
+}
+
+.ns-race-row:hover{
+  background:#f7f8fa!important;
+}
+
+.ns-race-row.past{
+  opacity:1!important;
+}
+
+.ns-race-row.next{
+  padding-left:16px!important;
+  border-left:5px solid var(--rv-red)!important;
+  background:linear-gradient(90deg,#fff2f4,#fff 18%)!important;
+}
+
+.ns-date{
+  padding-right:18px!important;
+  border-right:1px solid #d9dee4!important;
+}
+
+.ns-date b{
+  color:#14181d!important;
+  font:1000 italic 32px/1 Arial,sans-serif!important;
+}
+
+.ns-date span{
+  color:#6e7882!important;
+  font-size:7px!important;
+}
+
+.ns-row-week{
+  color:var(--rv-red)!important;
+  font-size:7px!important;
+  letter-spacing:.13em!important;
+}
+
+.ns-row-track{
+  margin-top:5px!important;
+  color:#15191e!important;
+  font:1000 italic 25px/1 Arial,sans-serif!important;
+  letter-spacing:-.035em!important;
+}
+
+.ns-row-location{
+  margin-top:7px!important;
+  color:#737d87!important;
+  font-size:9px!important;
+}
+
+.ns-row-spec{
+  color:#343b43!important;
+  font-size:9px!important;
+  line-height:1.55!important;
+}
+
+.ns-chip{
+  padding:7px 9px!important;
+  border-radius:999px!important;
+  background:#eef1f4!important;
+  color:#66707a!important;
+  font-size:6px!important;
+}
+
+.ns-chip.next{
+  background:#fff0f2!important;
+  color:var(--rv-red)!important;
+}
+
+.ns-chip.live{
+  background:var(--rv-red)!important;
+  color:#fff!important;
+}
+
+.ns-chip.sunday{
+  border-left:0!important;
+  box-shadow:inset 3px 0 0 var(--rv-green)!important;
+}
+
+.ns-chip.monday{
+  border-left:0!important;
+  box-shadow:inset 3px 0 0 var(--rv-red)!important;
+}
+
+/* Past winner presentation */
+.ns-winner{
+  min-height:62px!important;
+  gap:9px!important;
+  margin-top:10px!important;
+  color:#4b545d!important;
+  font-size:8px!important;
+  letter-spacing:.07em!important;
+}
+
+.ns-winner:before{
+  width:4px!important;
+  height:21px!important;
+  background:var(--rv-red)!important;
+}
+
+.ns-winner-photo{
+  width:56px!important;
+  height:66px!important;
+  flex-basis:56px!important;
+  filter:drop-shadow(0 5px 6px rgba(0,0,0,.20))!important;
+}
+
+.ns-winner-name{
+  color:#171b20!important;
+  font-size:11px!important;
+}
+
+.ns-race-row.past .ns-row-week,
+.ns-race-row.past .ns-row-track,
+.ns-race-row.past .ns-row-location,
+.ns-race-row.past .ns-row-spec{
+  opacity:.78!important;
+}
+
+/* Footer */
+.ns-footer{
+  width:min(1500px,calc(100% - 28px))!important;
+  margin:0 auto 16px!important;
+  padding:22px 20px!important;
+  border:1px solid #2c3540!important;
+  border-top:4px solid var(--rv-red)!important;
+  border-radius:8px!important;
+  background:linear-gradient(180deg,#141a21,#0a0e13)!important;
+  color:#7f8994!important;
+  font-size:7px!important;
+  letter-spacing:.13em!important;
+  box-shadow:0 12px 30px rgba(0,0,0,.18)!important;
+}
+
+.ns-footer b{
+  color:#fff!important;
+}
+
+.ns-footer span{
+  color:var(--rv-yellow)!important;
+}
+
+/* Shared nav compatibility */
+#hlrn-global-nav{
+  margin:0!important;
+}
+
+#hlrn-global-footer{
+  margin-top:0!important;
+}
+
+/* Responsive */
+@media(max-width:1000px){
+  .ns-feature{
+    grid-template-columns:1fr!important;
+  }
+
+  .ns-race-row{
+    grid-template-columns:82px minmax(0,1fr) 130px!important;
+  }
+
+  .ns-row-spec{
+    display:none!important;
+  }
+}
+
+@media(max-width:760px){
+  .ns-top,
+  .ns-subnav,
+  .ns-wrap,
+  .ns-footer{
+    width:calc(100% - 16px)!important;
+  }
+
+  .ns-top-links{
+    display:none!important;
+  }
+
+  .ns-race-summary{
+    grid-template-columns:1fr!important;
+  }
+
+  .ns-titlebar{
+    min-height:280px!important;
+    padding:38px 22px 34px!important;
+  }
+
+  .ns-titlebar h1{
+    font-size:62px!important;
+  }
+
+  .ns-feature-main{
+    min-height:270px!important;
+    padding:28px 22px!important;
+  }
+}
+
+@media(max-width:620px){
+  .ns-top,
+  .ns-subnav,
+  .ns-wrap,
+  .ns-footer{
+    width:calc(100% - 12px)!important;
+  }
+
+  .ns-top{
+    margin-top:7px!important;
+    padding:0 10px!important;
+  }
+
+  .ns-brand-copy{
+    display:block!important;
+    font-size:6px!important;
+  }
+
+  .ns-subnav{
+    display:flex!important;
+  }
+
+  .ns-league-tab{
+    min-width:0!important;
+    flex:1!important;
+    padding:0 8px!important;
+    font-size:7px!important;
+  }
+
+  .ns-titlebar{
+    min-height:250px!important;
+    padding:32px 18px 30px!important;
+  }
+
+  .ns-titlebar h1{
+    font-size:52px!important;
+  }
+
+  .ns-titlebar p{
+    font-size:12px!important;
+  }
+
+  .ns-feature-main{
+    padding:25px 18px!important;
+  }
+
+  .ns-feature-info{
+    grid-template-columns:1fr 1fr!important;
+  }
+
+  .ns-controls{
+    align-items:flex-start!important;
+    flex-direction:column!important;
+  }
+
+  .ns-race-row{
+    grid-template-columns:65px minmax(0,1fr)!important;
+    gap:12px!important;
+    min-height:118px!important;
+    padding:14px 12px!important;
+  }
+
+  .ns-date{
+    padding-right:10px!important;
+  }
+
+  .ns-date b{
+    font-size:26px!important;
+  }
+
+  .ns-row-status{
+    grid-column:2!important;
+    text-align:left!important;
+  }
+
+  .ns-row-track{
+    font-size:21px!important;
+  }
+
+  .ns-countdown{
+    flex-wrap:wrap!important;
+  }
+
+  .ns-countdown div{
+    min-width:51px!important;
+  }
+
+  .ns-footer{
+    flex-direction:column!important;
+    gap:8px!important;
+    line-height:1.6!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,
+  *:before,
+  *:after{
+    scroll-behavior:auto!important;
+    transition:none!important;
+    animation:none!important;
+  }
+}
+</style>
+
 </head><body>
 <div class="hlrn-race-center">
 <div class="ultra-scan"></div><div class="ultra-orb one"></div><div class="ultra-orb two"></div>
@@ -5533,12 +6348,12 @@ body{
   app.className='ns-schedule-app';
   app.innerHTML=`
     <header class="ns-top">
-      <div class="ns-brand"><div class="ns-mark">HLR<span>N</span></div><div class="ns-brand-copy">High Line Racing Network</div></div>
-      <nav class="ns-top-links"><a href="https://sites.google.com/view/highlineracingnetwork/standings" target="_blank" rel="noopener">Standings</a><a href="https://www.youtube.com/@High_Line_Racing" target="_blank" rel="noopener">Watch HLRN</a></nav>
+      <div class="ns-brand"><div class="ns-mark">HLR<span>N</span></div><div class="ns-brand-copy">Results &amp; Schedule Center</div></div>
+      <nav class="ns-top-links"><a href="../standings/">Standings</a><a href="https://www.youtube.com/@High_Line_Racing" target="_blank" rel="noopener">Watch HLRN</a></nav>
     </header>
     <div class="ns-subnav"><button class="ns-league-tab active" data-league="sunday">Sunday League</button><button class="ns-league-tab" data-league="monday">Monday League</button></div>
     <main class="ns-wrap">
-      <section class="ns-titlebar"><div class="ns-eyebrow">HLRN • 2026</div><h1>HLRN League Schedule</h1><p>Race dates, next-event details and the complete High Line Racing Network schedule.</p></section>
+      <section class="ns-titlebar"><div class="ns-eyebrow">HLRN • RESULTS CENTER • 2026</div><h1>Results <span>&amp; Schedule</span></h1><p>Previous winners, race dates, next-event details and the complete High Line Racing Network Sunday and Monday schedule.</p></section>
       <section class="ns-race-summary">
         <article class="ns-summary-card previous"><div class="ns-summary-head">Previous Race</div><div class="ns-summary-body" id="nsPrevious"></div></article>
         <article class="ns-summary-card next" id="nsNextCard"><div class="ns-summary-head">Next Race</div><div class="ns-summary-body" id="nsNext"></div></article>
@@ -5815,5 +6630,5 @@ body{
 })();
 </script>
 
-<script src="../assets/site-shell.js"></script>
+<script src="../assets/site-shell.js?v=20260928v6"></script>
 </body></html>
