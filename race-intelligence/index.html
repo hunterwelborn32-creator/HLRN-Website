@@ -1619,6 +1619,11 @@ document.addEventListener('DOMContentLoaded',function(){
 <link rel="stylesheet" href="../assets/site-shell.css">
 <script src="../assets/site-shell.js" defer></script>
 
+
+<style id="HLRN_RI_REMOVE_MODEL_FORM_V16">
+.v3-card-footer{display:none!important}
+</style>
+
 </head>
 
 <body>
@@ -3818,17 +3823,10 @@ body:after{
   }
 
   function decorateCards(){
-    let cats=[];
-    try{cats=Array.isArray(categories)?categories:[]}catch(e){}
     document.querySelectorAll('.intel-card').forEach((card,i)=>{
       card.dataset.v3Index=String(i+1).padStart(2,'0');
-      if(card.querySelector('.v3-card-footer'))return;
-      const cat=cats.find(c=>c?.key===card.dataset.key);
-      const d=cat?.driver;
-      if(!d)return;
-      const confidence=clamp(d.modelConfidence||0);
-      const form=Number(d.weightedRecentFinish||d.recentAvgFinish||0);
-      card.insertAdjacentHTML('beforeend',`<div class="v3-card-footer"><div class="v3-card-row"><span>Model confidence</span><b>${confidence.toFixed(0)}%</b></div><div class="v3-card-bar"><span style="width:${confidence}%"></span></div><div class="v3-card-row" style="margin-top:7px"><span>Weighted form</span><b>${form>0?'P'+form.toFixed(1):'—'}</b></div></div>`);
+      const oldFooter=card.querySelector('.v3-card-footer');
+      if(oldFooter) oldFooter.remove();
     });
   }
 
@@ -3839,7 +3837,7 @@ body:after{
     list=list.filter(d=>d&&Number(d.races?.length||0)>0).sort((a,b)=>Number(b.overall)-Number(a.overall)).slice(0,3);
     grid.innerHTML=list.length?list.map((d,i)=>{
       const rating=clamp(d.overall);
-      return `<article class="v3-contender">${hLrnPhotoMarkup(d,"full","hlrn-contender-full-photo")}<div class="v3-contender-label">${i===0?'Performance Leader':'Contender '+(i+1)}</div><div class="v3-contender-name">${String(d.name||'Driver').replace(/</g,'&lt;')}</div><div class="v3-contender-meta"><span>Rating ${rating.toFixed(0)}</span><span>Form ${Number(d.weightedRecentFinish)>0?'P'+Number(d.weightedRecentFinish).toFixed(1):'—'}</span><span>${Number(d.top5Rate||0).toFixed(0)}% T5</span></div><div class="v3-contender-meter"><span style="width:${rating}%"></span></div></article>`;
+      return `<article class="v3-contender">${hLrnPhotoMarkup(d,"full","hlrn-contender-full-photo")}<div class="v3-contender-label">${i===0?'Performance Leader':'Contender '+(i+1)}</div><div class="v3-contender-name">${String(d.name||'Driver').replace(/</g,'&lt;')}</div><div class="v3-contender-meta"><span>Rating ${rating.toFixed(0)}</span><span>${Number(d.top5Rate||0).toFixed(0)}% Top 5</span></div><div class="v3-contender-meter"><span style="width:${rating}%"></span></div></article>`;
     }).join(''):'<div style="padding:18px;color:#7f8992;font-size:10px">Waiting for enough race history to build the contender board.</div>';
   }
 
@@ -4158,7 +4156,7 @@ body{overflow-x:hidden!important}
       <button class="compact-tab" data-panel="deep">Selected Driver</button>
       <button class="compact-tab" data-panel="stories">Storylines</button>
     </nav>
-    <section class="compact-panel active" data-panel="board" id="compactPanelBoard"><div class="compact-board-head"><strong>Live Intelligence Board</strong><span>Click a card for the deep dive</span></div><section class="v3-contenders" id="v3Contenders"><div class="v3-contenders-head"><strong>Top 3 Projected Contenders</strong><span id="v3ContenderMeta">Model V3.8 • weighted current form</span></div><div class="v3-contender-grid" id="v3ContenderGrid"></div></section></section>
+    <section class="compact-panel active" data-panel="board" id="compactPanelBoard"><div class="compact-board-head"><strong>Live Intelligence Board</strong><span>Click a card for the deep dive</span></div><section class="v3-contenders" id="v3Contenders"><div class="v3-contenders-head"><strong>Top 3 Projected Contenders</strong><span id="v3ContenderMeta">Live HLRN performance data</span></div><div class="v3-contender-grid" id="v3ContenderGrid"></div></section></section>
     <section class="compact-panel" data-panel="deep" id="compactPanelDeep"></section>
     <section class="compact-panel" data-panel="stories" id="compactPanelStories"></section>`);
 
