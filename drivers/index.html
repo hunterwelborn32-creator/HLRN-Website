@@ -127,25 +127,82 @@ table{width:100%;border-collapse:collapse;min-width:840px}th,td{padding:13px 14p
 @media(max-width:650px){.profile-shell{width:calc(100% - 20px)}.profile-hero{display:grid;grid-template-columns:1fr;min-height:0}.profile-copy{grid-column:1;grid-row:1;min-height:420px;padding:28px 22px}.profile-copy h2{font-size:clamp(40px,11vw,70px);max-width:67%;margin-top:25px}.profile-identity-number{font-size:80px}.profile-photo{grid-column:1;grid-row:1;min-height:420px;overflow:hidden}.profile-photo .profile-cutout{height:90%;left:70%;max-height:400px}.profile-hero-stats{grid-column:1;grid-row:2;padding:25px 20px}.profile-hero-stat-grid{grid-template-columns:repeat(2,1fr)}.profile-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.profile-insights{grid-template-columns:1fr}.profile-stat{padding:18px 12px!important}.profile-insight{padding:18px}}
 
 </style>
+
+<style id="HLRN_DRIVERS_V8_NETWORK_UPGRADE">
+:root{--v8-red:#ed1c24;--v8-green:#1c8b4b;--v8-yellow:#ffd400;--v8-black:#090a0c;--v8-panel:#111318;--v8-line:#d9dde1;--v8-muted:#6e747a}
+.driver-page{background:#f4f5f6!important;padding-bottom:80px!important}
+.driver-heading{position:relative;background:#0a0b0e!important;border-bottom:0!important;color:#fff;overflow:hidden}
+.driver-heading:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 78% 20%,rgba(237,28,36,.18),transparent 32%),linear-gradient(120deg,#090a0c 0%,#111318 60%,#08090b 100%);pointer-events:none}
+.driver-heading:after{content:"DRIVERS";position:absolute;right:-12px;bottom:-37px;font-size:clamp(95px,14vw,220px);font-weight:1000;font-style:italic;letter-spacing:-.08em;color:rgba(255,255,255,.035);pointer-events:none}
+.driver-heading-inner{position:relative;z-index:2;width:min(1450px,calc(100% - 36px))!important;padding:54px 0 48px!important;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:30px;align-items:end}
+.driver-heading .eyebrow{color:#a4aab0!important;font-size:10px!important}.driver-heading .eyebrow:before{background:linear-gradient(90deg,var(--v8-yellow),var(--v8-red))!important;width:36px!important}
+.driver-heading h1{color:#fff!important;font-size:clamp(46px,6vw,86px)!important;line-height:.88!important;letter-spacing:-.055em!important}.driver-heading h1 span{color:#fff!important}
+.driver-heading p{max-width:650px;margin-top:14px!important;color:#aeb3b9!important;font-size:14px!important;line-height:1.55}
+.driver-hero-side{display:grid;grid-template-columns:repeat(2,minmax(130px,1fr));gap:1px;background:#34383e;border:1px solid #34383e;min-width:340px}
+.driver-hero-side div{background:#111318;padding:18px 20px}.driver-hero-side small{display:block;color:#7d858c;font-size:8px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}.driver-hero-side strong{display:block;margin-top:6px;color:#fff;font-size:20px;font-style:italic;text-transform:uppercase}.driver-hero-side .live{color:#67dc8e}
+.driver-command{width:min(1450px,calc(100% - 36px));margin:22px auto 0;border:1px solid var(--v8-line);background:#fff}
+.league-tabs{width:100%!important;margin:0!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:0!important;border-bottom:1px solid var(--v8-line)}
+.league-tab{position:relative;min-height:58px;padding:12px 18px!important;border:0!important;border-right:1px solid #e3e5e7!important;background:#fff!important;color:#26292c!important;text-align:left;font-size:15px!important;letter-spacing:.02em!important}
+.league-tab:last-child{border-right:0!important}.league-tab:after{content:"";position:absolute;left:18px;right:18px;bottom:0;height:4px;background:transparent}
+.league-tab[data-league="sunday"].active{color:#111!important;background:#fafafa!important}.league-tab[data-league="sunday"].active:after{background:var(--v8-red)}
+.league-tab[data-league="monday"].active{color:#111!important;background:#fafafa!important}.league-tab[data-league="monday"].active:after{background:var(--v8-green)}
+.driver-metrics{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--v8-line)}
+.driver-metric{padding:17px 18px;border-right:1px solid #e4e6e8;min-width:0}.driver-metric:last-child{border-right:0}.driver-metric small{display:block;color:#8a9096;font-size:7px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}.driver-metric strong{display:block;margin-top:6px;color:#15171a;font-size:21px;font-weight:1000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.driver-metric strong.accent{color:var(--v8-red)}body.monday-league .driver-metric strong.accent{color:var(--v8-green)}
+.roster-tools{width:100%!important;margin:0!important;padding:15px 16px!important;display:grid!important;grid-template-columns:1fr minmax(220px,330px) minmax(170px,210px);gap:12px;align-items:center!important}.roster-title{font-size:16px!important}.roster-count{margin-top:3px}.search-wrap{width:100%!important}.search-wrap input,.driver-sort{height:44px;border:1px solid #ced2d6;background:#fff;color:#111;font-weight:800;outline:none}.driver-sort{width:100%;padding:0 12px;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+.driver-grid{margin-top:18px!important;gap:16px!important}.driver-card{border:1px solid #d6d9dc!important;box-shadow:0 2px 0 rgba(0,0,0,.02)}.driver-card:hover{transform:translateY(-5px)!important;box-shadow:0 16px 32px rgba(0,0,0,.14)!important;border-color:#b7bcc1!important}
+.driver-media{height:315px!important;background:linear-gradient(160deg,#e4e6e8 0%,#fafafa 58%,#dde0e2 100%)!important}.driver-media:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 88px,rgba(0,0,0,.025) 89px 90px);pointer-events:none}.driver-media:after{height:44%!important;background:linear-gradient(180deg,transparent,rgba(0,0,0,.12))!important}
+.number-badge{background:#111!important;min-width:84px!important;height:68px!important;font-size:38px!important}.number-badge:after{background:var(--v8-red)!important}body.monday-league .number-badge:after{background:var(--v8-green)!important}
+.rank-chip{position:absolute;z-index:5;left:13px;bottom:13px;background:#fff;border:1px solid rgba(0,0,0,.16);padding:7px 10px;color:#111;font-size:10px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase}.rank-chip b{font-size:14px;margin-left:4px}.status-chip{border-radius:999px!important;padding:7px 10px!important;background:rgba(255,255,255,.94)!important}
+.driver-info{padding:18px!important;min-height:130px!important}.driver-name{font-size:22px!important}.driver-sub{font-size:9px!important}.driver-stats{margin-top:15px!important;padding-top:13px!important}.mini-stat b{font-size:16px!important}.mini-stat span{font-size:7px!important}
+.profile-back{border-radius:0!important;background:#111!important;border:0!important}.profile-back:hover{background:var(--v8-red)!important}body.monday-league .profile-back:hover{background:var(--v8-green)!important}
+@media(max-width:980px){.driver-heading-inner{grid-template-columns:1fr!important}.driver-hero-side{min-width:0;width:100%;max-width:520px}.driver-metrics{grid-template-columns:repeat(2,1fr)}.driver-metric:nth-child(2){border-right:0}.driver-metric:nth-child(-n+2){border-bottom:1px solid #e4e6e8}.roster-tools{grid-template-columns:1fr 1fr!important}.roster-tools>div:first-child{grid-column:1/-1}}
+@media(max-width:620px){.driver-heading-inner{width:calc(100% - 22px)!important;padding:38px 0 34px!important}.driver-heading h1{font-size:52px!important}.driver-hero-side{grid-template-columns:1fr 1fr}.driver-hero-side div{padding:14px}.driver-command{width:calc(100% - 22px)!important}.league-tab{min-height:52px!important;padding:10px!important;text-align:center!important;font-size:12px!important}.driver-metrics{grid-template-columns:1fr 1fr}.driver-metric{padding:14px}.driver-metric strong{font-size:17px}.roster-tools{grid-template-columns:1fr!important}.roster-tools>div:first-child{grid-column:auto}.driver-grid{width:calc(100% - 22px)!important}.driver-media{height:350px!important}}
+</style>
+
 </head>
 <body>
 <div id="directoryView" class="driver-page">
   <header class="driver-heading">
     <div class="driver-heading-inner">
-      <div class="eyebrow">High Line Racing Network</div>
-      <h1>HLRN <span>Drivers</span></h1>
-      <p>Official HLRN driver roster, statistics and race history.</p>
+      <div>
+        <div class="eyebrow">High Line Racing Network / Official Roster</div>
+        <h1>HLRN <span>Drivers</span></h1>
+        <p>Explore the Sunday and Monday championship rosters, open full driver profiles, and follow live league statistics throughout the season.</p>
+      </div>
+      <div class="driver-hero-side" aria-label="HLRN driver network status">
+        <div><small>Driver Database</small><strong class="live">Online</strong></div>
+        <div><small>Active Series</small><strong id="activeSeriesText">Sunday</strong></div>
+        <div><small>Race Nights</small><strong>Sun + Mon</strong></div>
+        <div><small>Green Flag</small><strong>8:30 ET</strong></div>
+      </div>
     </div>
   </header>
 
-  <div class="league-tabs" role="tablist" aria-label="Choose league"><button id="sundayTab" class="league-tab active" data-league="sunday" role="tab" aria-selected="true">SUNDAY LEAGUE</button><button id="mondayTab" class="league-tab" data-league="monday" role="tab" aria-selected="false">MONDAY LEAGUE</button></div>
-  <div class="roster-tools">
-    <div>
-      <div class="roster-title">HLRN Drivers</div>
-      <div id="driverCount" class="roster-count">Loading drivers…</div>
+  <section class="driver-command">
+    <div class="league-tabs" role="tablist" aria-label="Choose league">
+      <button id="sundayTab" class="league-tab active" data-league="sunday" role="tab" aria-selected="true">SUNDAY NIGHT LEAGUE</button>
+      <button id="mondayTab" class="league-tab" data-league="monday" role="tab" aria-selected="false">MONDAY NIGHT LEAGUE</button>
     </div>
-    <label class="search-wrap" aria-label="Search drivers"><input id="search" type="search" placeholder="Search driver or car number" autocomplete="off"></label>
-  </div>
+    <div class="driver-metrics" aria-label="Driver roster summary">
+      <div class="driver-metric"><small>Roster</small><strong id="rosterMetricCount">--</strong></div>
+      <div class="driver-metric"><small>Championship Leader</small><strong id="rosterMetricLeader" class="accent">Loading</strong></div>
+      <div class="driver-metric"><small>Combined Wins</small><strong id="rosterMetricWins">--</strong></div>
+      <div class="driver-metric"><small>Combined Starts</small><strong id="rosterMetricStarts">--</strong></div>
+    </div>
+    <div class="roster-tools">
+      <div>
+        <div class="roster-title">Driver Roster</div>
+        <div id="driverCount" class="roster-count">Loading drivers…</div>
+      </div>
+      <label class="search-wrap" aria-label="Search drivers"><input id="search" type="search" placeholder="Search driver or car number" autocomplete="off"></label>
+      <select id="driverSort" class="driver-sort" aria-label="Sort drivers">
+        <option value="rank">Championship Rank</option>
+        <option value="wins">Most Wins</option>
+        <option value="starts">Most Starts</option>
+        <option value="name">Driver Name</option>
+      </select>
+    </div>
+  </section>
 
   <main id="driverGrid" class="driver-grid">
     <div class="loading-card"><div class="spinner"></div>Loading HLRN driver roster…</div>
@@ -498,6 +555,7 @@ function combineDriverFeeds(feeds, resultFeeds){
 const HLRN_DRIVER_REFRESH_MS=5*60*1000;
 const HLRN_LEAGUE_CACHE_KEY="hlrn-driver-tabs-v1";
 let activeLeague="sunday";
+let currentDriverSort="rank";
 const leagueData={sunday:{drivers:[],updated:0,loading:false,results:[]},monday:{drivers:[],updated:0,loading:false,results:[]}};
 function readLeagueCache(){try{return JSON.parse(localStorage.getItem(HLRN_LEAGUE_CACHE_KEY)||"{}")||{};}catch{return {};}}
 function saveLeagueCache(){try{localStorage.setItem(HLRN_LEAGUE_CACHE_KEY,JSON.stringify(leagueData));}catch{}}
@@ -517,6 +575,8 @@ function setLeague(league){
   if(!leagueData[league])return;
   activeLeague=league;
   document.body.classList.toggle("monday-league",league==="monday");
+  const activeSeriesText=document.getElementById("activeSeriesText");
+  if(activeSeriesText)activeSeriesText.textContent=leagueLabel(league);
   document.querySelectorAll(".league-tab").forEach(btn=>{const on=btn.dataset.league===league;btn.classList.toggle("active",on);btn.setAttribute("aria-selected",String(on));});
   document.getElementById("search").value="";
   document.getElementById("profileView").style.display="none";
@@ -570,9 +630,10 @@ function card(d){
  const name=prettyName(d.driver), n=getDriverNumber(name,d.carNumber), photo=photoUrl(name), wins=num(d.wins);
  const right=d._fallback?"STATS SYNCING":`${wins} ${wins===1?'Win':'Wins'}`;
  const car=n==="—"?"HLRN DRIVER":`Car <strong>#${esc(n)}</strong>`;
+ const leagueRank=d.leagueStats&&d.leagueStats[activeLeague]&&d.leagueStats[activeLeague].rank!=null?d.leagueStats[activeLeague].rank:(d.rank??"—");
  return `<button class="driver-card" type="button" data-driver="${esc(name)}" aria-label="Open ${esc(name)} profile">
    <div class="driver-media">
-     <div class="number-badge">${esc(n)}</div><div class="status-chip">HLRN DRIVER</div>
+     <div class="number-badge">${esc(n)}</div><div class="status-chip">HLRN DRIVER</div><div class="rank-chip">CHAMP <b>P${esc(leagueRank)}</b></div>
      <div class="driver-fallback">${n==="—"?"HLRN":"#"+esc(n)}</div>
      ${photo?`<img class="driver-cutout" src="${esc(photo)}" alt="${esc(name)}" loading="lazy" decoding="async" onerror="this.remove()">`:``}
    </div>
@@ -588,7 +649,23 @@ function card(d){
    </div>
  </button>`
 }
-function renderDrivers(list){document.getElementById("driverCount").textContent=`${list.length} ${list.length===1?'driver':'drivers'}`;document.getElementById("driverGrid").innerHTML=list.length?list.map(card).join(""):`<div class="no-card">No drivers found.</div>`}
+function driverRankValue(d){const r=d?.leagueStats?.[activeLeague]?.rank??d?.rank;const n=Number(r);return Number.isFinite(n)&&n>0?n:9999}
+function sortDriverList(list){return [...list].sort((a,b)=>{
+  if(currentDriverSort==="wins")return num(b.wins)-num(a.wins)||driverRankValue(a)-driverRankValue(b);
+  if(currentDriverSort==="starts")return num(b.starts)-num(a.starts)||driverRankValue(a)-driverRankValue(b);
+  if(currentDriverSort==="name")return prettyName(a.driver).localeCompare(prettyName(b.driver));
+  return driverRankValue(a)-driverRankValue(b)||prettyName(a.driver).localeCompare(prettyName(b.driver));
+})}
+function renderDrivers(list){
+  const sorted=sortDriverList(list);
+  document.getElementById("driverCount").textContent=`${list.length} ${list.length===1?'driver':'drivers'}`;
+  const count=document.getElementById("rosterMetricCount"),leader=document.getElementById("rosterMetricLeader"),wins=document.getElementById("rosterMetricWins"),starts=document.getElementById("rosterMetricStarts");
+  if(count)count.textContent=list.length;
+  if(wins)wins.textContent=list.reduce((t,d)=>t+num(d.wins),0);
+  if(starts)starts.textContent=list.reduce((t,d)=>t+num(d.starts),0);
+  if(leader){const lead=[...list].sort((a,b)=>driverRankValue(a)-driverRankValue(b))[0];leader.textContent=lead&&driverRankValue(lead)<9999?prettyName(lead.driver):"--";}
+  document.getElementById("driverGrid").innerHTML=sorted.length?sorted.map(card).join(""):`<div class="no-card">No drivers found.</div>`
+}
 function showError(msg){document.getElementById("driverGrid").innerHTML=`<div class="error-card"><strong>DRIVER DATABASE CONNECTION ERROR</strong><br><br>${esc(msg)}</div>`}
 function searchDrivers(){const q=document.getElementById("search").value.toLowerCase().trim();renderDrivers(drivers.filter(d=>prettyName(d.driver).toLowerCase().includes(q)||String(d.carNumber).toLowerCase().includes(q)))}
 
@@ -731,7 +808,7 @@ function renderProfile(d){
 
 function showDirectory(){document.getElementById("profileView").style.display="none";document.getElementById("directoryView").style.display="block";window.scrollTo({top:0,behavior:"smooth"})}
 
-document.addEventListener("DOMContentLoaded",()=>{document.getElementById("search").addEventListener("input",searchDrivers);document.getElementById("driverGrid").addEventListener("click",e=>{const c=e.target.closest(".driver-card");if(c)openProfile(c.dataset.driver)});document.getElementById("backToDirectory").addEventListener("click",showDirectory);document.querySelectorAll(".league-tab").forEach(btn=>btn.addEventListener("click",()=>setLeague(btn.dataset.league)));initializeDrivers()});
+document.addEventListener("DOMContentLoaded",()=>{document.getElementById("search").addEventListener("input",searchDrivers);document.getElementById("driverSort").addEventListener("change",e=>{currentDriverSort=e.target.value;searchDrivers()});document.getElementById("driverGrid").addEventListener("click",e=>{const c=e.target.closest(".driver-card");if(c)openProfile(c.dataset.driver)});document.getElementById("backToDirectory").addEventListener("click",showDirectory);document.querySelectorAll(".league-tab").forEach(btn=>btn.addEventListener("click",()=>setLeague(btn.dataset.league)));initializeDrivers()});
 </script>
 <script src="../assets/site-shell.js"></script>
 </body>
