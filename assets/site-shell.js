@@ -1,47 +1,76 @@
 (function(){
 "use strict";
+
 function start(){
   if(!document.body){document.addEventListener("DOMContentLoaded",start,{once:true});return;}
+
+  // Keep only one shared HLRN navigation instance.
   document.querySelectorAll("#hlrn-global-nav").forEach((el,i)=>{if(i>0)el.remove();});
-  if(document.getElementById("hlrn-global-nav"))return;
+  if(document.getElementById("hlrn-global-nav")) return;
+
   const scripts=[...document.scripts];
   const shellScript=scripts.slice().reverse().find(s=>/(?:^|\/)site-shell\.js(?:\?|$)/i.test(s.src||""));
   let root;
   try{if(shellScript&&shellScript.src)root=new URL("../",shellScript.src);}catch(e){}
-  if(!root){const marker="/HLRN-Website/",pathname=location.pathname||"/",lower=pathname.toLowerCase(),idx=lower.indexOf(marker.toLowerCase());root=new URL(idx>=0?pathname.slice(0,idx+marker.length):"/",location.origin);}
+  if(!root){
+    const pathname=location.pathname||"/";
+    const repoMarkers=["/HLRN-Website/","/HLRN-App/"];
+    const marker=repoMarkers.find(m=>pathname.toLowerCase().includes(m.toLowerCase()));
+    if(marker){
+      const idx=pathname.toLowerCase().indexOf(marker.toLowerCase());
+      root=new URL(pathname.slice(0,idx+marker.length),location.origin);
+    }else root=new URL("/",location.origin);
+  }
   const url=(path="")=>new URL(path,root).href;
+
   const path=(location.pathname||"").toLowerCase();
   let active="home";
-  if(path.includes("/live/"))active="live";
-  else if(path.includes("/standings/"))active="standings";
-  else if(path.includes("/race-intelligence/"))active="intelligence";
-  else if(path.includes("/results/")||path.includes("/schedule/"))active="results";
-  else if(path.includes("/drivers/"))active="drivers";
-   else if(path.includes("/adventures/"))active="adventures";
-  else if(path.includes("/fantasy/"))active="fantasy";
-  else if(path.includes("/news/"))active="news";
-  else if(path.includes("/meet-the-admins/")||path.endsWith("/meet-the-admins"))active="admins";
-  else if(path.includes("/rules/"))active="rules";
-  else if(path.includes("/broadcasters/"))active="broadcasters";
-  else if(path.includes("/store/"))active="store";
+  if(path.includes("/live/")) active="live";
+  else if(path.includes("/standings/")) active="standings";
+  else if(path.includes("/intelligence/")||path.includes("/race-intelligence/")) active="intelligence";
+  else if(path.includes("/results/")||path.includes("/schedule/")) active="results";
+  else if(path.includes("/drivers/")) active="drivers";
+  else if(path.includes("/news/")) active="news";
+  else if(path.includes("/adventures/")) active="adventures";
+  else if(path.includes("/meet-the-admins/")) active="admins";
+  else if(path.includes("/rules/")) active="rules";
+  else if(path.includes("/broadcast/")||path.includes("/broadcasters/")) active="broadcast";
+  else if(path.includes("/store/")) active="store";
+
   const primary=[
-    ["home","Home",""],["live","Live","live/"],["standings","Standings","standings/"],
-    ["intelligence","Intelligence","race-intelligence/"],["results","Results","results/"],
-    ["drivers","Drivers","drivers/"],["adventures","Adventures","adventures/"],["fantasy","Fantasy","fantasy/"],["news","News","news/"],
-    ["admins","Meet the Admins","meet-the-admins/"]
+    ["home","Home",""],
+    ["live","Live","live/"],
+    ["standings","Standings","standings/"],
+    ["intelligence","Intelligence","intelligence/"],
+    ["results","Results","results/"],
+    ["drivers","Drivers","drivers/"],
+    ["news","News","news/"]
   ];
-  const more=[["rules","Rules","rules/"],["broadcasters","Broadcasters","broadcasters/"],["store","Store","store/"]];
+  const more=[
+    ["adventures","Adventures","adventures/"],
+    ["admins","Meet the Admins","meet-the-admins/"],
+    ["rules","Rules","rules/"],
+    ["broadcast","Broadcasters","broadcast/"],
+    ["store","Store","store/"]
+  ];
+
   const nav=document.createElement("nav");
   nav.id="hlrn-global-nav";
   nav.setAttribute("aria-label","HLRN primary navigation");
-  const primaryLinks=primary.map(([key,label,target])=>`<a class="hgn-link ${active===key?"active":""}" href="${url(target)}">${label}</a>`).join("");
-  const moreLinks=more.map(([key,label,target])=>`<a class="hgn-more-item ${active===key?"active":""}" href="${url(target)}">${label}</a>`).join("");
-  const mobilePrimary=primary.map(([key,label,target])=>`<a class="${active===key?"active":""}" href="${url(target)}">${label}</a>`).join("");
-  const mobileMore=more.map(([key,label,target])=>`<a class="${active===key?"active":""}" href="${url(target)}">${label}</a>`).join("");
+
+  const primaryLinks=primary.map(([key,label,target])=>`<a class="hgn-link ${active===key?"active":""}" ${active===key?'aria-current="page"':''} href="${url(target)}">${label}</a>`).join("");
+  const moreLinks=more.map(([key,label,target])=>`<a class="hgn-more-item ${active===key?"active":""}" ${active===key?'aria-current="page"':''} href="${url(target)}">${label}</a>`).join("");
+  const mobilePrimary=primary.map(([key,label,target])=>`<a class="${active===key?"active":""}" ${active===key?'aria-current="page"':''} href="${url(target)}">${label}</a>`).join("");
+  const mobileMore=more.map(([key,label,target])=>`<a class="${active===key?"active":""}" ${active===key?'aria-current="page"':''} href="${url(target)}">${label}</a>`).join("");
+
   nav.innerHTML=`
     <div class="hgn-inner">
-      <a class="hgn-brand" href="${url("")}"><span class="hgn-mark">HL</span><span class="hgn-name">HIGH LINE RACING NETWORK<small>HLRN // OFFICIAL NETWORK</small></span></a>
-      <div class="hgn-links">${primaryLinks}
+      <a class="hgn-brand" href="${url("")}" aria-label="High Line Racing Network home">
+        <span class="hgn-mark">HL</span>
+        <span class="hgn-name">HIGH LINE RACING NETWORK<small>HLRN // OFFICIAL NETWORK</small></span>
+      </a>
+      <div class="hgn-links">
+        ${primaryLinks}
         <div class="hgn-more-wrap ${more.some(x=>x[0]===active)?"active":""}">
           <button class="hgn-link hgn-more-btn" type="button" aria-expanded="false">MORE <span class="hgn-arrow">▾</span></button>
           <div class="hgn-more-menu">${moreLinks}</div>
@@ -49,42 +78,42 @@ function start(){
       </div>
       <button class="hgn-login" type="button" aria-label="HLRN Driver Login">DRIVER LOGIN</button>
       <a class="hgn-live" href="${url("live/")}"><i></i> RACE CENTER</a>
-      <button class="hgn-menu" type="button" aria-expanded="false" aria-label="Open navigation">☰</button>
+      <button class="hgn-menu" type="button" aria-expanded="false" aria-label="Open HLRN navigation">☰</button>
+      <div class="hgn-account-panel" hidden>
+        <div class="hgn-account-title">DRIVER ACCOUNT</div>
+        <div class="hgn-account-name"></div>
+        <div class="hgn-account-discord"></div>
+        <button type="button" class="hgn-account-profile">MY PROFILE</button>
+        <button type="button" class="hgn-account-signout">SIGN OUT</button>
+      </div>
     </div>
-    <div class="hgn-mobile">${mobilePrimary}<button class="hgn-mobile-login" type="button">DRIVER LOGIN</button><button class="hgn-mobile-more" type="button" aria-expanded="false">MORE <span>▾</span></button><div class="hgn-mobile-more-menu">${mobileMore}</div></div>`;
+    <div class="hgn-mobile">
+      ${mobilePrimary}
+      <button class="hgn-mobile-login" type="button">DRIVER LOGIN</button>
+      <button class="hgn-mobile-more" type="button" aria-expanded="false">MORE <span>▾</span></button>
+      <div class="hgn-mobile-more-menu">${mobileMore}</div>
+    </div>`;
+
   document.body.insertBefore(nav,document.body.firstChild);
-  // Login remains owned by the homepage's existing Discord/device session code.
-  // This shared-nav button delegates to that existing control, never to a new login URL.
-  const loginStyle=document.createElement("style");
-  loginStyle.textContent=`
-    #hlrn-global-nav .hgn-login{flex:0 0 auto!important;min-height:36px!important;padding:0 12px!important;border:1px solid #46515e!important;border-left:3px solid #e31837!important;background:#151a21!important;color:#fff!important;font:900 9px Arial,sans-serif!important;letter-spacing:.06em!important;white-space:nowrap!important;cursor:pointer!important}
-    #hlrn-global-nav .hgn-login:hover{background:#e31837!important}
-    #hlrn-global-nav .hgn-mobile-login{min-height:42px!important;border:1px solid #46515e!important;background:#151a21!important;color:#fff!important;font:900 9px Arial,sans-serif!important;cursor:pointer!important}
-    @media(max-width:1180px){#hlrn-global-nav .hgn-login{display:none!important}}
-  `;
-  nav.appendChild(loginStyle);
-  // Share the homepage's existing saved Discord identity across all GitHub pages.
-  // The homepage remains responsible for authenticating and verifying the device session.
+
+  // -----------------------------
+  // Persistent driver login display
+  // -----------------------------
   const LOGIN_KEY="hlrn_driver_login_device_v1";
-  let accountMenuOpen=false;
   const loginButtons=[...nav.querySelectorAll(".hgn-login,.hgn-mobile-login")];
-  const accountPanel=document.createElement("div");
-  accountPanel.className="hgn-account-panel";
-  accountPanel.hidden=true;
-  accountPanel.innerHTML=`<div class="hgn-account-title">DRIVER ACCOUNT</div><div class="hgn-account-name"></div><div class="hgn-account-discord"></div><button type="button" class="hgn-account-profile">MY PROFILE</button><button type="button" class="hgn-account-signout">SIGN OUT</button>`;
-  nav.querySelector(".hgn-inner").appendChild(accountPanel);
-  loginStyle.textContent+=`
-    #hlrn-global-nav .hgn-account-panel{position:absolute!important;right:120px!important;top:calc(100% - 1px)!important;width:245px!important;padding:15px!important;background:#101318!important;border:1px solid #343b45!important;border-top:3px solid #e31837!important;box-shadow:0 16px 40px #0009!important;z-index:2147483640!important;color:#fff!important}
-    #hlrn-global-nav .hgn-account-panel[hidden]{display:none!important}
-    #hlrn-global-nav .hgn-account-title{font:900 9px Arial,sans-serif!important;color:#8b95a3!important;letter-spacing:.1em!important}
-    #hlrn-global-nav .hgn-account-name{font:900 14px Arial,sans-serif!important;margin:8px 0 4px!important;overflow-wrap:anywhere!important}
-    #hlrn-global-nav .hgn-account-discord{font:11px Arial,sans-serif!important;color:#aeb8c5!important;overflow-wrap:anywhere!important;margin-bottom:12px!important}
-    #hlrn-global-nav .hgn-account-panel button{display:block!important;width:100%!important;padding:11px!important;margin-top:7px!important;background:#1c232c!important;border:1px solid #3a4653!important;color:#fff!important;font:900 10px Arial,sans-serif!important;cursor:pointer!important}
-    #hlrn-global-nav .hgn-account-panel .hgn-account-signout:hover{background:#e31837!important}
-    @media(max-width:1180px){#hlrn-global-nav .hgn-account-panel{right:10px!important;top:100%!important}}
-  `;
+  const accountPanel=nav.querySelector(".hgn-account-panel");
+  let accountMenuOpen=false;
+
   function readLogin(){
-    try{const d=JSON.parse(localStorage.getItem(LOGIN_KEY)||"null");return d&&typeof d.driver==="string"&&d.driver.trim()?d:null;}catch(e){return null;}
+    try{
+      const d=JSON.parse(localStorage.getItem(LOGIN_KEY)||"null");
+      return d&&typeof d.driver==="string"&&d.driver.trim()?d:null;
+    }catch(e){return null;}
+  }
+  function closeAccount(){
+    accountMenuOpen=false;
+    accountPanel.hidden=true;
+    loginButtons.forEach(b=>b.setAttribute("aria-expanded","false"));
   }
   function syncDriverLogin(){
     const data=readLogin();
@@ -95,31 +124,35 @@ function start(){
       btn.setAttribute("aria-label",data?"Open HLRN driver account for "+label:"HLRN Driver Login");
       btn.setAttribute("aria-expanded",String(accountMenuOpen&&!!data));
     });
-    if(!data){accountMenuOpen=false;accountPanel.hidden=true;return;}
+    if(!data){closeAccount();return;}
     accountPanel.querySelector(".hgn-account-name").textContent=data.driver;
     accountPanel.querySelector(".hgn-account-discord").textContent=data.discordUsername?"Discord: @"+data.discordUsername:data.discordDisplayName?"Discord: "+data.discordDisplayName:"Discord account connected";
   }
-  function closeAccount(){accountMenuOpen=false;accountPanel.hidden=true;loginButtons.forEach(b=>b.setAttribute("aria-expanded","false"));}
+
   loginButtons.forEach(btn=>btn.addEventListener("click",e=>{
     e.stopPropagation();
     const data=readLogin();
-    if(data){accountMenuOpen=!accountMenuOpen;accountPanel.hidden=!accountMenuOpen;syncDriverLogin();return;}
+    if(data){
+      accountMenuOpen=!accountMenuOpen;
+      accountPanel.hidden=!accountMenuOpen;
+      syncDriverLogin();
+      return;
+    }
     const old=document.getElementById("hlrnHeaderDriverLogin");
     if(old){old.click();return;}
     location.href=url("")+"#hlrnDriverSignIn";
   }));
   accountPanel.addEventListener("click",e=>e.stopPropagation());
   accountPanel.querySelector(".hgn-account-profile").addEventListener("click",()=>{
+    const d=readLogin();
     closeAccount();
-    if(typeof window.openHomeDriverProfile==="function"){
-      const d=readLogin();if(d)window.openHomeDriverProfile(d.driver);
-    }else location.href=url("drivers/");
+    if(d) location.href=url("drivers/")+"?driver="+encodeURIComponent(d.driver);
+    else location.href=url("drivers/");
   });
   accountPanel.querySelector(".hgn-account-signout").addEventListener("click",()=>{
     closeAccount();
-    // Use the homepage's existing logout handler, which also revokes the server device session.
     const homeSignout=document.getElementById("hlrnDriverSignOut");
-    if(homeSignout){homeSignout.click();syncDriverLogin();return;}
+    if(homeSignout){homeSignout.click();setTimeout(syncDriverLogin,50);return;}
     sessionStorage.setItem("hlrn_pending_signout","1");
     location.href=url("");
   });
@@ -127,46 +160,117 @@ function start(){
   window.addEventListener("storage",e=>{if(e.key===LOGIN_KEY)syncDriverLogin();});
   window.addEventListener("pageshow",syncDriverLogin);
   syncDriverLogin();
+
   const originalLogin=document.getElementById("hlrnHeaderDriverLogin");
   if(originalLogin)new MutationObserver(syncDriverLogin).observe(originalLogin,{childList:true,characterData:true,subtree:true,attributes:true,attributeFilter:["aria-label"]});
-  // Complete a sign-out requested from another page once homepage login code is initialized.
+
+  // Finish a sign-out requested from another page once homepage login code exists.
   if(sessionStorage.getItem("hlrn_pending_signout")==="1"){
     let attempts=0;
     const finishSignout=setInterval(()=>{
       const button=document.getElementById("hlrnDriverSignOut");
-      if(button&&typeof button.onclick!=="undefined"&&attempts>=2){
-        clearInterval(finishSignout);sessionStorage.removeItem("hlrn_pending_signout");
-        button.click();syncDriverLogin();
+      if(button&&attempts>=2){
+        clearInterval(finishSignout);
+        sessionStorage.removeItem("hlrn_pending_signout");
+        button.click();
+        syncDriverLogin();
       }else if(++attempts>50)clearInterval(finishSignout);
     },100);
   }
-  const moreWrap=nav.querySelector(".hgn-more-wrap"),moreBtn=nav.querySelector(".hgn-more-btn"),menuBtn=nav.querySelector(".hgn-menu"),mobile=nav.querySelector(".hgn-mobile"),mobileMoreBtn=nav.querySelector(".hgn-mobile-more"),mobileMoreMenu=nav.querySelector(".hgn-mobile-more-menu");
+
+  // -----------------------------
+  // Menus
+  // -----------------------------
+  const moreWrap=nav.querySelector(".hgn-more-wrap");
+  const moreBtn=nav.querySelector(".hgn-more-btn");
+  const menuBtn=nav.querySelector(".hgn-menu");
+  const mobile=nav.querySelector(".hgn-mobile");
+  const mobileMoreBtn=nav.querySelector(".hgn-mobile-more");
+  const mobileMoreMenu=nav.querySelector(".hgn-mobile-more-menu");
+
   function closeMore(){moreWrap?.classList.remove("open");moreBtn?.setAttribute("aria-expanded","false");}
-  moreBtn?.addEventListener("click",e=>{e.stopPropagation();const open=!moreWrap.classList.contains("open");moreWrap.classList.toggle("open",open);moreBtn.setAttribute("aria-expanded",String(open));});
-  moreWrap?.addEventListener("mouseenter",()=>{moreWrap.classList.add("open");moreBtn?.setAttribute("aria-expanded","true");});
-  moreWrap?.addEventListener("mouseleave",closeMore);
+  function closeMobile(){
+    mobile?.classList.remove("open");
+    mobileMoreMenu?.classList.remove("open");
+    mobileMoreBtn?.setAttribute("aria-expanded","false");
+    if(menuBtn){menuBtn.textContent="☰";menuBtn.setAttribute("aria-expanded","false");}
+  }
+  moreBtn?.addEventListener("click",e=>{
+    e.stopPropagation();
+    const open=!moreWrap.classList.contains("open");
+    moreWrap.classList.toggle("open",open);
+    moreBtn.setAttribute("aria-expanded",String(open));
+  });
   document.addEventListener("click",e=>{if(moreWrap&&!moreWrap.contains(e.target))closeMore();});
-  menuBtn?.addEventListener("click",()=>{const open=mobile.classList.toggle("open");menuBtn.setAttribute("aria-expanded",String(open));menuBtn.textContent=open?"×":"☰";});
-  mobileMoreBtn?.addEventListener("click",()=>{const open=mobileMoreMenu.classList.toggle("open");mobileMoreBtn.classList.toggle("open",open);mobileMoreBtn.setAttribute("aria-expanded",String(open));});
-  document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeMore();mobile?.classList.remove("open");mobileMoreMenu?.classList.remove("open");if(menuBtn){menuBtn.textContent="☰";menuBtn.setAttribute("aria-expanded","false");}}});
+  menuBtn?.addEventListener("click",()=>{
+    const open=mobile.classList.toggle("open");
+    menuBtn.setAttribute("aria-expanded",String(open));
+    menuBtn.textContent=open?"×":"☰";
+  });
+  mobileMoreBtn?.addEventListener("click",()=>{
+    const open=mobileMoreMenu.classList.toggle("open");
+    mobileMoreBtn.setAttribute("aria-expanded",String(open));
+  });
+  document.addEventListener("keydown",e=>{
+    if(e.key==="Escape"){closeMore();closeMobile();closeAccount();}
+  });
+
+  // -----------------------------
+  // Clean old internal/Google Sites links when clicked
+  // -----------------------------
   document.addEventListener("click",e=>{
-    const a=e.target.closest?.("a[href]");if(!a)return;
+    const a=e.target.closest?.("a[href]");
+    if(!a)return;
     let u;try{u=new URL(a.href,location.href);}catch{return;}
-    if(u.hostname===location.hostname&&u.pathname.toLowerCase().includes("/hlrn-website/schedule/")){e.preventDefault();location.href=url("results/");return;}
-    if(u.hostname.toLowerCase()==="sites.google.com"&&u.pathname.toLowerCase().includes("/view/highlineracingnetwork")){
-      const p=u.pathname.toLowerCase();let dest="";
-      if(p.includes("meet-our-team")||p.includes("meet-the-admin")||p.includes("team-members"))dest="meet-the-admins/";
-      else if(p.includes("race-intelligence"))dest="race-intelligence/";
-      else if(p.includes("standings"))dest="standings/";
-      else if(p.includes("schedule"))dest="results/";
-      else if(p.includes("news"))dest="news/";
-      else if(p.includes("rules"))dest="rules/";
-      else if(p.includes("broadcast"))dest="broadcasters/";
-      else if(p.includes("store"))dest="store/";
-      else if(p.includes("driver"))dest="drivers/";
+    const lp=u.pathname.toLowerCase();
+
+    if(u.hostname===location.hostname){
+      let dest=null;
+      if(lp.includes("/race-intelligence/"))dest="intelligence/";
+      else if(lp.includes("/broadcasters/"))dest="broadcast/";
+      else if(lp.includes("/schedule/"))dest="results/";
+      if(dest){e.preventDefault();location.href=url(dest);return;}
+    }
+
+    if(u.hostname.toLowerCase()==="sites.google.com"&&lp.includes("/view/highlineracingnetwork")){
+      let dest="";
+      if(lp.includes("meet-our-team")||lp.includes("meet-the-admin")||lp.includes("team-members"))dest="meet-the-admins/";
+      else if(lp.includes("race-intelligence")||lp.includes("intelligence"))dest="intelligence/";
+      else if(lp.includes("standings"))dest="standings/";
+      else if(lp.includes("schedule")||lp.includes("results"))dest="results/";
+      else if(lp.includes("news"))dest="news/";
+      else if(lp.includes("rules"))dest="rules/";
+      else if(lp.includes("broadcast"))dest="broadcast/";
+      else if(lp.includes("store"))dest="store/";
+      else if(lp.includes("driver"))dest="drivers/";
+      else if(lp.includes("adventure"))dest="adventures/";
       e.preventDefault();location.href=url(dest);
     }
   },true);
+
+  // -----------------------------
+  // Footer: preserve page-specific footer content if present; otherwise add shared footer.
+  // -----------------------------
+  const existingFooter=[...document.querySelectorAll("body > footer, footer")].find(f=>!f.closest("#hlrn-global-nav"));
+  if(existingFooter){
+    existingFooter.classList.add("hlrn-shared-footer-existing");
+  }else{
+    const footer=document.createElement("footer");
+    footer.id="hlrn-global-footer";
+    const year=new Date().getFullYear();
+    footer.innerHTML=`
+      <div class="hgf-inner">
+        <div class="hgf-brand"><span class="hgf-mark">HL</span><span><strong>High Line Racing Network</strong><small>Where the racing never stops</small></span></div>
+        <nav class="hgf-links" aria-label="HLRN footer navigation">
+          <a href="${url("live/")}">Live</a><a href="${url("standings/")}">Standings</a><a href="${url("drivers/")}">Drivers</a><a href="${url("news/")}">News</a><a href="${url("adventures/")}">Adventures</a><a href="${url("broadcast/")}">Broadcasts</a>
+        </nav>
+        <div class="hgf-copy">© ${year} HLRN<br>High Line Racing Network</div>
+      </div>`;
+    document.body.appendChild(footer);
+  }
+
+  document.documentElement.classList.add("hlrn-shell-ready");
 }
+
 start();
 })();
