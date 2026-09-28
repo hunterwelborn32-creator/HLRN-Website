@@ -1,794 +1,1049 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>HLRN Team Members</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090b0f">
+  <title>Meet the Admins | High Line Racing Network</title>
+  <meta name="description" content="Meet the team behind High Line Racing Network — administration, race control and broadcasting.">
+  <link rel="canonical" href="https://highlineracingnetwork.com/meet-the-admins/">
+
+  <link rel="stylesheet" href="../assets/site-shell.css?v=20260928v6">
+  <script src="../assets/site-shell.js?v=20260928v6" defer></script>
+
 <style>
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;background:#f4f4f4;color:#111}
-body{font-family:Inter,Arial,Helvetica,sans-serif;overflow-x:hidden}
-button,input{font:inherit}
-
 :root{
-  --red:#e10600;
-  --yellow:#ffd100;
-  --blue:#2a6bff;
-  --ink:#111214;
-  --muted:#6d7178;
-  --line:#d7d9dd;
-  --paper:#fff;
-  --soft:#f2f3f4;
-  --green:#25a65a;
-  --headline:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --red:#e31837;
+  --red2:#b80e29;
+  --bg:#080b0f;
+  --panel:#11161d;
+  --panel2:#171d25;
+  --line:#2b333d;
+  --soft:#8e98a4;
+  --white:#fff;
+  --gold:#f1c84b;
+  --green:#35d276;
+  --shadow:0 22px 60px rgba(0,0,0,.32);
 }
-
-/* ===== NASCAR-inspired HLRN masthead ===== */
-.hlrn-topbar{
-  height:66px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px;
-  padding:0 clamp(16px,4vw,58px);
-  background:#08090a;
+*{box-sizing:border-box}
+html{background:#080b0f}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 85% 0,rgba(227,24,55,.10),transparent 28%),
+    linear-gradient(180deg,#080b0f,#0b0f14 54%,#080b0f);
   color:#fff;
-  border-bottom:1px solid #24272b;
+  font-family:Arial,Helvetica,sans-serif;
 }
-.hlrn-brand{display:flex;align-items:center;gap:13px;min-width:0}
-.brand-slashes{display:flex;gap:3px;transform:skewX(-20deg)}
-.brand-slashes i{display:block;width:6px;height:25px}
-.brand-slashes i:nth-child(1){background:var(--yellow)}
-.brand-slashes i:nth-child(2){background:var(--red)}
-.brand-slashes i:nth-child(3){background:var(--blue)}
-.brand-copy strong{
-  display:block;
-  font-family:var(--headline);
-  font-size:24px;
-  font-weight:900;
-  letter-spacing:.035em;
-  line-height:.9;
-}
-.brand-copy span{
-  display:block;margin-top:5px;color:#92979f;font-size:8px;font-weight:800;letter-spacing:.17em;text-transform:uppercase
-}
-.topbar-right{color:#a3a8b0;font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
-.topbar-right b{color:#fff}
+button,input{font:inherit}
+button{cursor:pointer}
 
-/* ===== page title ===== */
-.page-shell{width:min(1500px,calc(100% - 32px));margin:0 auto;padding:44px 0 74px}
-.page-heading{
-  display:flex;
-  justify-content:space-between;
-  gap:24px;
-  align-items:end;
-  padding-bottom:22px;
-  border-bottom:3px solid #17191c;
+.admin-page{
+  width:min(1500px,calc(100% - 28px));
+  margin:0 auto;
+  padding:16px 0 54px;
 }
-.heading-kicker{
-  color:#6a6e75;
-  font-size:10px;
-  font-weight:900;
-  letter-spacing:.17em;
-  text-transform:uppercase;
-}
-.page-heading h1{
-  margin:5px 0 0;
-  font-family:var(--headline);
-  font-size:clamp(42px,5.2vw,74px);
-  font-weight:900;
-  line-height:.92;
-  text-transform:uppercase;
-  letter-spacing:-.025em;
-}
-.page-heading h1 span{color:var(--red)}
-.heading-count{
-  flex:0 0 auto;
-  font-family:var(--headline);
-  font-size:18px;
-  font-weight:800;
-  text-transform:uppercase;
-  color:#5e6268;
-}
-.heading-count strong{font-size:32px;color:#111;margin-right:6px}
 
-/* ===== controls ===== */
-.team-controls{
+/* top race-control bar */
+.team-status{
+  min-height:42px;
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  gap:18px;
-  margin:24px 0 30px;
+  gap:8px;
+  padding:7px 10px;
+  margin-bottom:10px;
+  border:1px solid var(--line);
+  border-left:4px solid var(--red);
+  border-radius:7px;
+  background:linear-gradient(180deg,#151b22,#0d1116);
+  box-shadow:0 12px 30px rgba(0,0,0,.22);
+  overflow:auto;
+  scrollbar-width:none;
 }
-.filter-row{display:flex;gap:8px;flex-wrap:wrap}
-.filter-btn{
-  appearance:none;border:1px solid #cfd2d7;background:#fff;color:#272a2f;
-  padding:11px 15px;border-radius:2px;
-  font-family:var(--headline);font-size:13px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;
-  cursor:pointer;transition:.18s ease
-}
-.filter-btn:hover{border-color:#777}
-.filter-btn.active{background:#111214;border-color:#111214;color:#fff;box-shadow:inset 0 -4px 0 var(--red)}
-.search-wrap{position:relative;width:min(300px,100%)}
-.search-wrap input{
-  width:100%;height:42px;border:1px solid #cfd2d7;background:#fff;color:#111;padding:0 40px 0 13px;outline:none;border-radius:2px;
-}
-.search-wrap input:focus{border-color:#777;box-shadow:0 0 0 2px rgba(0,0,0,.06)}
-.search-wrap:after{content:"⌕";position:absolute;right:13px;top:50%;transform:translateY(-52%);font-size:21px;color:#70757d}
-
-/* ===== driver grid ===== */
-.driver-grid{
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:18px;
-}
-.driver-card{
-  appearance:none;
-  width:100%;
-  min-width:0;
-  padding:0;
-  border:1px solid #d6d8dc;
-  background:#fff;
-  color:#111;
-  text-align:left;
-  cursor:pointer;
-  overflow:hidden;
-  border-radius:2px;
-  box-shadow:0 2px 7px rgba(0,0,0,.035);
-  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
-}
-.driver-card:hover{
-  transform:translateY(-4px);
-  border-color:#aeb2b8;
-  box-shadow:0 14px 34px rgba(0,0,0,.13);
-}
-.driver-card.hidden{display:none}
-.driver-status{
-  min-height:31px;
-  display:flex;align-items:center;gap:7px;
-  padding:0 12px;
-  background:#f5f5f5;
-  border-bottom:1px solid #dedfe2;
-  color:#4e535b;
-  font-family:var(--headline);
-  font-size:11px;
-  font-weight:800;
-  letter-spacing:.075em;
+.team-status::-webkit-scrollbar{display:none}
+.team-status-brand{
+  flex:0 0 auto;
+  padding:0 10px 0 6px;
+  color:#fff;
+  font-size:13px;
+  font-weight:1000;
+  font-style:italic;
+  letter-spacing:-.02em;
   text-transform:uppercase;
+  white-space:nowrap;
 }
-.status-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(37,166,90,.11)}
-.driver-photo{
+.team-status-brand span{
+  margin-left:6px;
+  color:#87919c;
+  font-size:8px;
+  font-style:normal;
+  letter-spacing:.14em;
+}
+.team-pill{
+  flex:0 0 auto;
+  min-height:27px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:0 10px;
+  border:1px solid #333d47;
+  border-radius:999px;
+  background:#171d25;
+  color:#aeb7c1;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.team-pill strong{color:#fff}
+.team-pill.live:before{
+  content:"";
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 0 4px rgba(53,210,118,.10);
+}
+
+/* hero */
+.team-hero{
   position:relative;
-  position:relative;
-  aspect-ratio:16/10;
+  min-height:370px;
+  display:flex;
+  align-items:flex-end;
+  padding:54px clamp(24px,4.5vw,68px) 50px;
+  border:1px solid #232a33;
+  border-radius:11px 11px 0 0;
   overflow:hidden;
   background:
-    linear-gradient(135deg,rgba(255,255,255,.03),transparent 30%),
-    #101113;
-  border-bottom:1px solid #d8dade;
+    radial-gradient(circle at 76% 25%,rgba(227,24,55,.20),transparent 28%),
+    linear-gradient(115deg,rgba(255,255,255,.025),transparent 34%),
+    linear-gradient(180deg,#161c23,#080b0f);
+  box-shadow:var(--shadow);
 }
-.driver-photo:after{
-  content:"";
-  position:absolute;inset:0;pointer-events:none;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.03);
-}
-.driver-photo img{
-  display:block;
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  object-position:center center;
-  background:#fff;
-  filter:brightness(1.30) saturate(1.06);
-  transition:transform .28s ease,filter .28s ease;
-}
-.driver-card:hover .driver-photo img{transform:scale(1.018);filter:brightness(1.36) saturate(1.08)}
-.driver-photo:after{display:none!important}
-.number-badge{
+.team-hero:before{
+  content:"TEAM";
   position:absolute;
-  left:12px;bottom:11px;
-  min-width:62px;height:48px;
-  display:flex;align-items:center;justify-content:center;
-  padding:0 11px 0 20px;
-  background:#fff;
-  border:1px solid #cfd1d5;
-  box-shadow:0 5px 16px rgba(0,0,0,.19);
-}
-.number-badge strong{
-  font-family:var(--headline);
+  right:-18px;
+  bottom:-38px;
+  color:rgba(255,255,255,.027);
+  font-size:clamp(130px,20vw,285px);
+  font-weight:1000;
   font-style:italic;
-  font-size:28px;
-  line-height:1;
-  color:#101114;
+  letter-spacing:-.08em;
+  line-height:.72;
+  pointer-events:none;
 }
-.number-slashes{
-  position:absolute;left:6px;top:9px;bottom:9px;
-  display:flex;gap:1px;transform:skewX(-17deg)
+.team-hero:after{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:0;
+  height:4px;
+  background:linear-gradient(90deg,var(--red) 0 60%,var(--gold) 60% 72%,#fff 72% 75%,#2378d4 75% 100%);
 }
-.number-slashes i{width:3px}
-.number-slashes i:nth-child(1){background:var(--yellow)}
-.number-slashes i:nth-child(2){background:var(--red)}
-.number-slashes i:nth-child(3){background:var(--blue)}
-.driver-body{padding:17px 16px 14px}
-.driver-name{
-  min-height:48px;
-  font-family:var(--headline);
-  font-size:27px;
+.hero-copy{position:relative;z-index:1;max-width:970px}
+.eyebrow{
+  margin-bottom:12px;
+  color:#9aa4af;
+  font-size:9px;
   font-weight:900;
-  line-height:.94;
-  text-transform:uppercase;
-  letter-spacing:-.012em;
-}
-.driver-role{
-  min-height:37px;
-  margin-top:7px;
-  color:#6a6f77;
-  font-size:10px;
-  line-height:1.45;
-  font-weight:750;
-  letter-spacing:.06em;
+  letter-spacing:.18em;
   text-transform:uppercase;
 }
-.driver-meta{
-  min-height:29px;
-  display:flex;align-items:center;justify-content:space-between;gap:10px;
-  margin-top:13px;
-  padding-top:12px;
-  border-top:1px solid #e0e1e4;
+.team-hero h1{
+  margin:0;
+  color:#fff;
+  font-size:clamp(58px,8vw,112px);
+  font-weight:1000;
+  font-style:italic;
+  letter-spacing:-.068em;
+  line-height:.82;
+  text-transform:uppercase;
 }
-.hlrn-mark{display:flex;align-items:center;gap:7px;color:#3e4248;font-family:var(--headline);font-size:12px;letter-spacing:.08em}
-.hlrn-mark i{width:19px;height:7px;background:linear-gradient(90deg,var(--yellow) 0 23%,var(--red) 23% 65%,var(--blue) 65%);transform:skewX(-22deg)}
-.card-achievement{display:flex;align-items:center;gap:5px;color:#555a61;font-family:var(--headline);font-size:9px;font-weight:800;letter-spacing:.08em}
-.flag-icon{color:var(--red);font-size:11px;transform:skewX(-12deg)}
-
-/* ===== empty state ===== */
-.empty-state{display:none;padding:70px 20px;text-align:center;background:#fff;border:1px solid #d6d8dc}
-.empty-state.show{display:block}
-.empty-state strong{display:block;font-family:var(--headline);font-size:30px;text-transform:uppercase}
-.empty-state span{display:block;margin-top:6px;color:#777}
-
-/* ===== profile modal ===== */
-.profile-modal{
-  position:fixed;inset:0;z-index:9999;
-  display:none;align-items:center;justify-content:center;
-  padding:24px;
-  background:rgba(0,0,0,.76);
-  backdrop-filter:blur(7px);
+.team-hero h1 span{color:#ff2948}
+.team-hero p{
+  max-width:720px;
+  margin:20px 0 0;
+  color:#bec6cf;
+  font-size:14px;
+  font-weight:600;
+  line-height:1.65;
 }
-.profile-modal.open{display:flex}
-.profile-panel{
-  position:relative;
-  width:min(1280px,100%);
-  max-height:min(900px,calc(100vh - 32px));
-  overflow:auto;
+.hero-kickers{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:22px;
+}
+.hero-kicker{
+  min-height:28px;
+  display:inline-flex;
+  align-items:center;
+  padding:0 10px;
+  border:1px solid #3a4450;
+  border-radius:999px;
+  background:#171d25;
+  color:#aeb7c1;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.hero-kicker.red{border-color:rgba(227,24,55,.5);background:rgba(227,24,55,.12);color:#fff}
+
+/* ticker */
+.team-ticker{
   display:grid;
-  grid-template-columns:minmax(0,1.45fr) minmax(320px,.55fr);
+  grid-template-columns:auto minmax(0,1fr) auto;
+  min-height:39px;
+  border:1px solid #20262e;
+  border-top:0;
+  background:#0d1116;
+  overflow:hidden;
+}
+.ticker-label,.ticker-network{
+  display:flex;
+  align-items:center;
+  padding:0 15px;
+  background:#151b22;
+  color:#fff;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.ticker-label{border-right:1px solid #2a323b}
+.ticker-network{border-left:1px solid #2a323b;color:#89939e}
+.ticker-window{min-width:0;overflow:hidden}
+.ticker-track{
+  min-height:39px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:0 18px;
+  color:#aeb7c2;
+  font-size:8px;
+  font-weight:800;
+  letter-spacing:.09em;
+  white-space:nowrap;
+}
+.ticker-track b{color:#fff}
+.ticker-track em{color:var(--red);font-style:normal}
+
+/* summary */
+.team-summary{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  margin:14px 0;
+  border:1px solid var(--line);
+  border-radius:8px;
+  overflow:hidden;
+  background:#10151b;
+  box-shadow:0 12px 35px rgba(0,0,0,.20);
+}
+.summary-card{
+  min-height:102px;
+  padding:20px 22px;
+  border-right:1px solid var(--line);
+  background:linear-gradient(180deg,#151b22,#10151b);
+}
+.summary-card:last-child{border-right:0}
+.summary-label{
+  color:#7c8691;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.summary-value{
+  margin-top:8px;
+  color:#fff;
+  font-size:30px;
+  font-weight:1000;
+  font-style:italic;
+  letter-spacing:-.045em;
+  line-height:1;
+}
+.summary-sub{
+  margin-top:7px;
+  color:#727c87;
+  font-size:8px;
+  font-weight:800;
+}
+
+/* search + filters */
+.team-tools{
+  display:grid;
+  grid-template-columns:minmax(280px,1fr) auto;
+  gap:10px;
+  margin:16px 0 14px;
+  padding:10px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:linear-gradient(180deg,#151b22,#0f141a);
+  box-shadow:0 12px 30px rgba(0,0,0,.18);
+}
+.search-wrap{position:relative}
+.team-search{
+  width:100%;
+  height:48px;
+  padding:0 46px 0 15px;
+  border:1px solid #3a444f;
+  border-left:4px solid var(--red);
+  border-radius:5px;
+  outline:none;
   background:#fff;
   color:#111;
-  box-shadow:0 28px 90px rgba(0,0,0,.48);
+  font-size:13px;
+  font-weight:700;
 }
-.profile-media{position:relative;min-height:520px;background:#fff;display:flex;align-items:center;justify-content:center;cursor:zoom-in}
-.profile-media:after{content:"CLICK PHOTO TO ENLARGE";position:absolute;left:18px;bottom:18px;padding:8px 10px;background:rgba(0,0,0,.68);color:#fff;font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;pointer-events:none}
-.profile-media img{width:100%;height:100%;max-height:78vh;object-fit:contain;display:block;filter:brightness(1.30) saturate(1.06)}
-.profile-copy{position:relative;padding:42px 34px 34px}
-.profile-copy:before{content:"";position:absolute;top:0;left:0;right:0;height:7px;background:linear-gradient(90deg,var(--yellow) 0 18%,var(--red) 18% 63%,var(--blue) 63% 100%)}
-.profile-kicker{color:#737880;font-size:9px;font-weight:900;letter-spacing:.18em;text-transform:uppercase}
-.profile-number{margin-top:13px;font-family:var(--headline);font-size:72px;line-height:.8;font-weight:900;font-style:italic;color:#15171a}
-.profile-name{margin-top:17px;font-family:var(--headline);font-size:42px;line-height:.9;font-weight:900;text-transform:uppercase}
-.profile-role{margin-top:13px;color:#61666e;font-size:12px;line-height:1.6;font-weight:700;text-transform:uppercase}
-.profile-divider{height:1px;background:#ddd;margin:25px 0}
-.profile-label{color:#777b82;font-size:9px;font-weight:900;letter-spacing:.15em;text-transform:uppercase}
-.profile-value{margin-top:6px;font-family:var(--headline);font-size:19px;font-weight:800;text-transform:uppercase}
-.profile-active{display:inline-flex;align-items:center;gap:7px;margin-top:22px;padding:9px 11px;border:1px solid #d7d9dc;background:#f6f6f6;color:#2c3035;font-size:9px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
-.close-profile{
-  position:absolute;right:12px;top:12px;z-index:3;
-  width:38px;height:38px;border:0;background:#111;color:#fff;cursor:pointer;font-size:23px;line-height:1;
+.team-search:focus{border-color:#75808b;box-shadow:0 0 0 3px rgba(227,24,55,.12)}
+.search-icon{
+  position:absolute;
+  right:15px;
+  top:50%;
+  transform:translateY(-50%);
+  color:#69727b;
+  font-size:20px;
+  pointer-events:none;
 }
-.close-profile:hover{background:var(--red)}
+.filter-row{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex-wrap:wrap;
+}
+.filter-btn{
+  min-height:48px;
+  padding:0 14px;
+  border:1px solid #343e49;
+  border-radius:5px;
+  background:#171d25;
+  color:#9ea8b3;
+  font-size:9px;
+  font-weight:1000;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  transition:.16s ease;
+}
+.filter-btn:hover{border-color:#65717d;color:#fff;background:#1c242d}
+.filter-btn.active{
+  border-color:#ff4c68;
+  background:linear-gradient(180deg,#f12645,#d71432);
+  color:#fff;
+  box-shadow:0 8px 20px rgba(227,24,55,.18);
+}
 
-
-/* full image viewer */
-.image-lightbox{
-  position:fixed;inset:0;z-index:10001;
-  display:none;align-items:center;justify-content:center;
-  padding:20px;
-  background:rgba(0,0,0,.92);
-  backdrop-filter:blur(5px);
+/* section heading */
+.team-section-head{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:20px;
+  margin:26px 0 14px;
 }
-.image-lightbox.open{display:flex}
-.image-lightbox img{
+.team-section-head h2{
+  margin:0;
+  color:#fff;
+  font-size:clamp(31px,4vw,49px);
+  font-weight:1000;
+  font-style:italic;
+  letter-spacing:-.05em;
+  line-height:.92;
+  text-transform:uppercase;
+}
+.team-section-head h2 span{color:#ff2948}
+.team-section-head p{
+  margin:0;
+  color:#707b86;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+.result-count{
+  color:#aeb7c1;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.result-count strong{color:#fff}
+
+/* grid */
+.team-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+}
+.member-card{
+  position:relative;
+  min-width:0;
+  overflow:hidden;
+  border:1px solid #2c3540;
+  border-radius:8px;
+  background:linear-gradient(180deg,#151b22,#0f141a);
+  box-shadow:0 10px 30px rgba(0,0,0,.18);
+  transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease;
+}
+.member-card:hover{
+  transform:translateY(-4px);
+  border-color:#596572;
+  box-shadow:0 20px 44px rgba(0,0,0,.30);
+}
+.member-media{
+  position:relative;
+  height:360px;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 42%,#2d343d 0,#171c22 52%,#0b0e12 100%);
+}
+.member-media:after{
+  content:"";
+  position:absolute;
+  inset:auto 0 0;
+  height:42%;
+  background:linear-gradient(180deg,transparent,rgba(8,11,15,.94));
+  pointer-events:none;
+}
+.member-img{
+  width:100%;
+  height:100%;
   display:block;
-  max-width:min(94vw,1800px);
-  max-height:88vh;
-  width:auto;height:auto;
   object-fit:contain;
-  filter:brightness(1.30) saturate(1.06);
-  background:#fff;
-  box-shadow:0 20px 70px rgba(0,0,0,.45);
+  object-position:center bottom;
+  transition:transform .2s ease;
 }
-.image-lightbox-hint{
-  position:absolute;left:50%;bottom:18px;transform:translateX(-50%);
-  color:#d9dde2;font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;
+.member-card:hover .member-img{transform:scale(1.018)}
+.member-number{
+  position:absolute;
+  top:12px;
+  left:12px;
+  z-index:2;
+  min-width:52px;
+  min-height:36px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 11px;
+  border:1px solid rgba(255,255,255,.26);
+  border-radius:4px;
+  background:rgba(8,11,15,.90);
+  color:#fff;
+  font-size:18px;
+  font-weight:1000;
+  font-style:italic;
+  letter-spacing:-.03em;
+  backdrop-filter:blur(8px);
 }
-.close-image-lightbox{
-  position:absolute;right:14px;top:14px;z-index:2;
-  width:42px;height:42px;border:0;background:#fff;color:#111;cursor:pointer;font-size:26px;line-height:1;
+.member-status{
+  position:absolute;
+  top:12px;
+  right:12px;
+  z-index:2;
+  min-height:27px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:0 9px;
+  border:1px solid rgba(53,210,118,.28);
+  border-radius:999px;
+  background:rgba(8,11,15,.88);
+  color:#a9eac4;
+  font-size:7px;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
 }
-.close-image-lightbox:hover{background:var(--red);color:#fff}
+.member-status:before{
+  content:"";
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--green);
+}
+.member-copy{padding:18px 18px 17px}
+.member-kicker{
+  color:#f3cf58;
+  font-size:7px;
+  font-weight:900;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+}
+.member-name{
+  margin:7px 0 0;
+  color:#fff;
+  font-size:22px;
+  font-weight:1000;
+  font-style:italic;
+  letter-spacing:-.035em;
+  line-height:1.02;
+  text-transform:uppercase;
+}
+.member-role{
+  min-height:35px;
+  margin-top:8px;
+  color:#89939e;
+  font-size:9px;
+  font-weight:800;
+  line-height:1.5;
+  text-transform:uppercase;
+}
+.member-actions{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:7px;
+  margin-top:14px;
+}
+.profile-btn,.image-btn{
+  min-height:39px;
+  border:1px solid #3a444f;
+  border-radius:4px;
+  background:#171d25;
+  color:#fff;
+  font-size:8px;
+  font-weight:1000;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.profile-btn{
+  border-color:#ff4b66;
+  background:linear-gradient(180deg,#f12645,#d71432);
+}
+.profile-btn:hover,.image-btn:hover{filter:brightness(1.08)}
+.image-btn{width:44px;font-size:16px}
 
-/* footer */
-.team-footer{margin-top:46px;padding-top:24px;border-top:1px solid #cfd2d5;display:flex;justify-content:space-between;gap:16px;color:#747980;font-size:9px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
-.team-footer b{color:#111}
+/* no results */
+.empty{
+  display:none;
+  padding:54px 20px;
+  border:1px solid #2b333d;
+  border-radius:8px;
+  background:#10151b;
+  text-align:center;
+}
+.empty.show{display:block}
+.empty strong{
+  display:block;
+  color:#fff;
+  font-size:24px;
+  font-weight:1000;
+  font-style:italic;
+  text-transform:uppercase;
+}
+.empty span{display:block;margin-top:8px;color:#7f8994;font-size:11px}
 
-@media(max-width:1180px){
-  .driver-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+/* local closing panel */
+.team-closing{
+  display:grid;
+  grid-template-columns:1.3fr .7fr;
+  gap:12px;
+  margin-top:30px;
 }
-@media(max-width:840px){
-  .driver-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-  .page-shell{width:min(100% - 20px,1500px);padding-top:30px}
-  .page-heading{align-items:flex-start;flex-direction:column}
-  .team-controls{align-items:stretch;flex-direction:column}
-  .search-wrap{width:100%}
-  .profile-panel{grid-template-columns:1fr}
-  .profile-media{min-height:280px}
+.closing-panel{
+  min-height:190px;
+  padding:28px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:
+    radial-gradient(circle at 90% 10%,rgba(227,24,55,.10),transparent 30%),
+    linear-gradient(180deg,#151b22,#0d1217);
+  box-shadow:0 12px 35px rgba(0,0,0,.20);
 }
-@media(max-width:520px){
-  .hlrn-topbar{height:58px;padding:0 12px}
-  .topbar-right{display:none}
-  .brand-copy strong{font-size:20px}
-  .brand-slashes i{height:21px}
-  .page-shell{width:calc(100% - 14px);padding:24px 0 46px}
-  .page-heading h1{font-size:44px}
-  .heading-count{display:none}
+.closing-panel h3{
+  margin:0;
+  color:#fff;
+  font-size:32px;
+  font-weight:1000;
+  font-style:italic;
+  letter-spacing:-.04em;
+  text-transform:uppercase;
+}
+.closing-panel p{
+  max-width:720px;
+  margin:12px 0 0;
+  color:#8f99a4;
+  font-size:12px;
+  line-height:1.65;
+}
+.closing-stat{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  min-height:190px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:linear-gradient(180deg,#151b22,#0d1217);
+  box-shadow:0 12px 35px rgba(0,0,0,.20);
+}
+.closing-stat strong{
+  color:#fff;
+  font-size:64px;
+  font-weight:1000;
+  font-style:italic;
+  letter-spacing:-.06em;
+  line-height:.9;
+}
+.closing-stat span{
+  margin-top:10px;
+  color:#7f8994;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+}
+
+/* modal */
+.modal,.lightbox{
+  position:fixed;
+  inset:0;
+  z-index:2147483500;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:rgba(3,5,7,.86);
+  backdrop-filter:blur(10px);
+}
+.modal.open,.lightbox.open{display:flex}
+.modal-card{
+  width:min(1000px,100%);
+  max-height:min(90vh,850px);
+  display:grid;
+  grid-template-columns:minmax(300px,.95fr) minmax(340px,1.05fr);
+  overflow:hidden;
+  border:1px solid #3a444f;
+  border-radius:10px;
+  background:#0e1318;
+  box-shadow:0 30px 90px rgba(0,0,0,.65);
+}
+.modal-media{
+  min-height:590px;
+  background:radial-gradient(circle at 50% 42%,#303841,#171d23 52%,#0a0d11);
+}
+.modal-media img{width:100%;height:100%;object-fit:contain;object-position:center bottom;display:block}
+.modal-copy{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:46px;
+  background:
+    radial-gradient(circle at 90% 10%,rgba(227,24,55,.12),transparent 28%),
+    #11161d;
+}
+.close-btn{
+  position:absolute;
+  top:14px;
+  right:14px;
+  width:38px;
+  height:38px;
+  border:1px solid #3a444f;
+  border-radius:50%;
+  background:#171d25;
+  color:#fff;
+  font-size:20px;
+}
+.profile-num{
+  color:#f3cf58;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+.profile-name{
+  margin:9px 0 0;
+  color:#fff;
+  font-size:clamp(38px,5vw,64px);
+  font-weight:1000;
+  font-style:italic;
+  letter-spacing:-.055em;
+  line-height:.88;
+  text-transform:uppercase;
+}
+.profile-role{
+  margin-top:14px;
+  color:#c1c8d0;
+  font-size:12px;
+  font-weight:800;
+  line-height:1.5;
+  text-transform:uppercase;
+}
+.profile-rule{width:70px;height:4px;margin:22px 0;background:var(--red)}
+.profile-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+.profile-meta{
+  padding:14px;
+  border:1px solid #2f3842;
+  border-radius:6px;
+  background:#171d25;
+}
+.profile-meta small{
+  display:block;
+  color:#78828d;
+  font-size:7px;
+  font-weight:900;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.profile-meta strong{
+  display:block;
+  margin-top:6px;
+  color:#fff;
+  font-size:11px;
+  line-height:1.4;
+}
+.lightbox-card{position:relative;max-width:min(1200px,94vw);max-height:90vh}
+.lightbox img{
+  max-width:100%;
+  max-height:86vh;
+  display:block;
+  object-fit:contain;
+  border:1px solid #3a444f;
+  border-radius:8px;
+  background:#0a0d11;
+  box-shadow:0 30px 90px rgba(0,0,0,.65);
+}
+.lightbox .close-btn{z-index:2;top:10px;right:10px}
+.lightbox-hint{
+  position:absolute;
+  left:50%;
+  bottom:12px;
+  transform:translateX(-50%);
+  padding:7px 10px;
+  border-radius:999px;
+  background:rgba(8,11,15,.88);
+  color:#aeb7c1;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.08em;
+  white-space:nowrap;
+}
+
+/* shell safety */
+#hlrn-global-nav{margin:0!important}
+#hlrn-global-footer{margin-top:0!important}
+
+@media(max-width:1100px){
+  .team-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:850px){
+  .admin-page{width:min(100% - 18px,1500px);padding-top:10px}
+  .team-ticker{grid-template-columns:auto 1fr}
+  .ticker-network{display:none}
+  .team-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .summary-card:nth-child(2){border-right:0}
+  .summary-card:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .team-tools{grid-template-columns:1fr}
+  .team-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .team-closing{grid-template-columns:1fr}
+  .modal-card{grid-template-columns:1fr;max-height:92vh;overflow:auto}
+  .modal-media{min-height:430px}
+  .modal-copy{padding:32px}
+}
+@media(max-width:560px){
+  .admin-page{width:100%;padding:7px 8px 30px}
+  .team-status-brand{font-size:11px}
+  .team-hero{min-height:310px;padding:38px 20px 36px}
+  .team-hero h1{font-size:60px}
+  .team-hero p{font-size:13px}
+  .team-summary{grid-template-columns:1fr 1fr}
+  .summary-card{min-height:86px;padding:15px}
+  .summary-value{font-size:24px}
   .filter-row{display:grid;grid-template-columns:1fr 1fr}
-  .filter-btn{padding:10px 8px;font-size:11px}
-  .driver-grid{grid-template-columns:1fr;gap:13px}
-  .driver-photo{
-  position:relative;aspect-ratio:16/9}
-  .driver-name{min-height:0;font-size:30px}
-  .driver-role{min-height:0}
-  .profile-modal{padding:8px}
-  .profile-copy{padding:36px 22px 25px}
-  .profile-name{font-size:36px}
-  .profile-number{font-size:62px}
-  .team-footer{display:block;line-height:1.7}
+  .filter-btn{padding:0 8px}
+  .team-section-head{align-items:flex-start;flex-direction:column;gap:8px}
+  .team-grid{grid-template-columns:1fr}
+  .member-media{height:430px}
+  .modal{padding:8px}
+  .modal-media{min-height:390px}
+  .modal-copy{padding:26px 20px 28px}
+  .profile-grid{grid-template-columns:1fr}
+  .lightbox{padding:8px}
 }
 @media(prefers-reduced-motion:reduce){
-  *,*:before,*:after{scroll-behavior:auto!important;transition:none!important}
+  *,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
 }
 </style>
-<!-- HLRN shared GitHub navigation -->
-<link rel="stylesheet" href="../assets/site-shell.css">
-<script src="../assets/site-shell.js" defer></script>
 </head>
 <body>
 
-<header class="hlrn-topbar">
-  <div class="hlrn-brand">
-    <span class="brand-slashes" aria-hidden="true"><i></i><i></i><i></i></span>
-    <div class="brand-copy">
-      <strong>HIGH LINE RACING NETWORK</strong>
-      <span>Official Team Directory</span>
-    </div>
+<main class="admin-page">
+  <div class="team-status" aria-label="HLRN team status">
+    <div class="team-status-brand">HLRN <span>NETWORK OPERATIONS</span></div>
+    <div class="team-pill live">Active Team</div>
+    <div class="team-pill"><strong id="statusTotal">12</strong> Members</div>
+    <div class="team-pill">Administration</div>
+    <div class="team-pill">Race Control</div>
+    <div class="team-pill">Broadcasting</div>
   </div>
-  <div class="topbar-right"><b>HLRN</b> • TEAM MEMBERS</div>
-</header>
 
-<main class="page-shell">
-  <section class="page-heading">
-    <div>
-      <div class="heading-kicker">High Line Racing Network</div>
-      <h1>HLRN <span>Team Members</span></h1>
+  <section class="team-hero">
+    <div class="hero-copy">
+      <div class="eyebrow">High Line Racing Network // Official Team Directory</div>
+      <h1>Meet the <span>Admins</span></h1>
+      <p>The people behind HLRN race administration, race control, broadcasting and weekly league operations.</p>
+      <div class="hero-kickers">
+        <span class="hero-kicker red">12 Active Team Members</span>
+        <span class="hero-kicker">Race Control</span>
+        <span class="hero-kicker">Administration</span>
+        <span class="hero-kicker">Broadcasting</span>
+      </div>
     </div>
-    <div class="heading-count"><strong id="visibleCount">12</strong> Active Team Members</div>
   </section>
 
-  <section class="team-controls" aria-label="Team directory controls">
-    <div class="filter-row">
+  <div class="team-ticker" aria-label="HLRN team ticker">
+    <div class="ticker-label">HLRN Team</div>
+    <div class="ticker-window">
+      <div class="ticker-track">
+        <b>HIGH LINE RACING NETWORK</b><em>◆</em>
+        ADMINISTRATION • RACE CONTROL • BROADCASTING
+        <em>◆</em><b>THE PEOPLE BEHIND THE NETWORK</b><em>◆</em>
+        WEEKLY LEAGUE OPERATIONS
+      </div>
+    </div>
+    <div class="ticker-network">HLRN // TEAM DIRECTORY</div>
+  </div>
+
+  <section class="team-summary" aria-label="Team overview">
+    <div class="summary-card">
+      <div class="summary-label">Active Team</div>
+      <div class="summary-value" id="summaryTotal">12</div>
+      <div class="summary-sub">Current HLRN members</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-label">Administration</div>
+      <div class="summary-value" id="summaryAdmin">0</div>
+      <div class="summary-sub">League administration</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-label">Race Control</div>
+      <div class="summary-value" id="summaryRace">0</div>
+      <div class="summary-sub">Race-night operations</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-label">Broadcasting</div>
+      <div class="summary-value" id="summaryBroadcast">0</div>
+      <div class="summary-sub">HLRN coverage voices</div>
+    </div>
+  </section>
+
+  <section class="team-tools" aria-label="Search and filter HLRN team">
+    <div class="search-wrap">
+      <input id="teamSearch" class="team-search" type="search" autocomplete="off"
+             placeholder="Search team members by name, number or role"
+             aria-label="Search team members">
+      <span class="search-icon" aria-hidden="true">⌕</span>
+    </div>
+    <div class="filter-row" role="group" aria-label="Team filters">
       <button class="filter-btn active" type="button" data-filter="all">All Team</button>
+      <button class="filter-btn" type="button" data-filter="administration">Administration</button>
       <button class="filter-btn" type="button" data-filter="race-control">Race Control</button>
       <button class="filter-btn" type="button" data-filter="broadcasting">Broadcasting</button>
     </div>
-    <label class="search-wrap">
-      <input id="teamSearch" type="search" placeholder="Search team members" aria-label="Search team members">
-    </label>
   </section>
 
-  <section class="driver-grid" id="driverGrid" aria-live="polite">
-    
-      <button class="driver-card" type="button"
-              data-index="0"
-              data-categories="all administration race-control"
-              data-name="jerry fassett"
-              aria-label="Open profile for Jerry Fassett">
-        <div class="driver-status"><span class="status-dot"></span> HLRN TEAM</div>
-        <div class="driver-photo">
-          <img src="https://drive.google.com/thumbnail?id=1wBGyLWETOhW3j4LfQC7FkwbnqWBO27Wc&amp;sz=w2000" alt="Jerry Fassett #71" loading="lazy">
-          <div class="number-badge">
-            <span class="number-slashes"><i></i><i></i><i></i></span>
-            <strong>71</strong>
-          </div>
-        </div>
-        <div class="driver-body">
-          <div class="driver-name">Jerry Fassett</div>
-          <div class="driver-role">Race Control • Administration</div>
-          <div class="driver-meta">
-            <span class="hlrn-mark"><i></i><b>HLRN</b></span>
-            
-          </div>
-        </div>
-      </button>
-      <button class="driver-card" type="button"
-              data-index="1"
-              data-categories="all administration"
-              data-name="trevor haley"
-              aria-label="Open profile for Trevor Haley">
-        <div class="driver-status"><span class="status-dot"></span> HLRN TEAM</div>
-        <div class="driver-photo">
-          <img src="https://drive.google.com/thumbnail?id=1MPyB6hjpjMofIqGyCWLXUssapBPrW6Ah&amp;sz=w2000" alt="Trevor Haley #12" loading="lazy">
-          <div class="number-badge">
-            <span class="number-slashes"><i></i><i></i><i></i></span>
-            <strong>12</strong>
-          </div>
-        </div>
-        <div class="driver-body">
-          <div class="driver-name">Trevor Haley</div>
-          <div class="driver-role">HLRN Administration</div>
-          <div class="driver-meta">
-            <span class="hlrn-mark"><i></i><b>HLRN</b></span>
-            
-          </div>
-        </div>
-      </button>
-      <button class="driver-card" type="button"
-              data-index="2"
-              data-categories="all administration"
-              data-name="eric pedley hayden"
-              aria-label="Open profile for Eric Pedley Hayden">
-        <div class="driver-status"><span class="status-dot"></span> HLRN TEAM</div>
-        <div class="driver-photo">
-          <img src="https://drive.google.com/thumbnail?id=1Xdy5f9iZpUWaP4PFK6rrzgi_5V_Czw5Y&amp;sz=w2000" alt="Eric Pedley Hayden #100" loading="lazy">
-          <div class="number-badge">
-            <span class="number-slashes"><i></i><i></i><i></i></span>
-            <strong>100</strong>
-          </div>
-        </div>
-        <div class="driver-body">
-          <div class="driver-name">Eric Pedley Hayden</div>
-          <div class="driver-role">HLRN Administration</div>
-          <div class="driver-meta">
-            <span class="hlrn-mark"><i></i><b>HLRN</b></span>
-            
-          </div>
-        </div>
-      </button>
-      <button class="driver-card" type="button"
-              data-index="3"
-              data-categories="all administration"
-              data-name="brian hebbard2"
-              aria-label="Open profile for Brian Hebbard2">
-        <div class="driver-status"><span class="status-dot"></span> HLRN TEAM</div>
-        <div class="driver-photo">
-          <img src="https://drive.google.com/thumbnail?id=1nx4rx2UyF4H0l2cMClG7tshVYs12FVwE&amp;sz=w2000" alt="Brian Hebbard2 #87" loading="lazy">
-          <div class="number-badge">
-            <span class="number-slashes"><i></i><i></i><i></i></span>
-            <strong>87</strong>
-          </div>
-        </div>
-        <div class="driver-body">
-          <div class="driver-name">Brian Hebbard2</div>
-          <div class="driver-role">HLRN Administration</div>
-          <div class="driver-meta">
-            <span class="hlrn-mark"><i></i><b>HLRN</b></span>
-            
-          </div>
-        </div>
-      </button>
-      <button class="driver-card" type="button"
-              data-index="4"
-              data-categories="all leadership administration"
-              data-name="chris james"
-              aria-label="Open profile for Chris James">
-        <div class="driver-status"><span class="status-dot"></span> HLRN TEAM</div>
-        <div class="driver-photo">
-          <img src="https://drive.google.com/thumbnail?id=1-Q-XU7NL-Ds-7Xa0QoKAuC41fmmcv0ax&amp;sz=w2000" alt="Chris James #82" loading="lazy">
-          <div class="number-badge">
-            <span class="number-slashes"><i></i><i></i><i></i></span>
-            <strong>82</strong>
-          </div>
-        </div>
-        <div class="driver-body">
-          <div class="driver-name">Chris James</div>
-          <div class="driver-role">General Admin</div>
-          <div class="driver-meta">
-            <span class="hlrn-mark"><i></i><b>HLRN</b></span>
-            <span class="card-achievement"><span class="flag-icon">▰</span> LEADERSHIP</span>
-          </div>
-        </div>
-      </button>
-      <button class="driver-card" type="button"
-              data-index="5"
-              data-categories="all administration"
-              data-name="kyle kammeron"
-              aria-label="Open profile for Kyle Kammeron">
-        <div class="driver-status"><span class="status-dot"></span> HLRN TEAM</div>
-        <div class="driver-photo">
-          <img src="https://drive.google.com/thumbnail?id=1xpS7Ak_INl3VajR_xWMjgML80-yJmkK3&amp;sz=w2000" alt="Kyle Kammeron #55" loading="lazy">
-          <div class="number-badge">
-            <span class="number-slashes"><i></i><i></i><i></i></span>
-            <strong>55</strong>
-          </div>
-        </div>
-        <div class="driver-body">
-          <div class="driver-name">Kyle Kammeron</div>
-          <div class="driver-role">HLRN Administration</div>
-          <div class="driver-meta">
-            <span class="hlrn-mark"><i></i><b>HLRN</b></span>
-            
-          </div>
-        </div>
-      </button>
-      <button class="driver-card" type="button"
-              data-index="6"
-              data-categories="all administration"
-              data-name="evan parry"
-              aria-label="Open profile for Evan Parry">
-        <div class="driver-status"><span class="status-dot"></span> HLRN TEAM</div>
-        <div class="driver-photo">
-          <img src="https://drive.google.com/thumbnail?id=1lpW9d9GTwPsjF52D-ZgqgAdFx41gblsY&amp;sz=w2000" alt="Evan Parry #72" loading="lazy">
-          <div class="number-badge">
-            <span class="number-slashes"><i></i><i></i><i></i></span>
-            <strong>72</strong>
-          </div>
-        </div>
-        <div class="driver-body">
-          <div class="driver-name">Evan Parry</div>
-          <div class="driver-role">HLRN Administration</div>
-          <div class="driver-meta">
-            <span class="hlrn-mark"><i></i><b>HLRN</b></span>
-            
-          </div>
-        </div>
-      </button>
-      <button class="driver-card" type="button"
-              data-index="7"
-              data-categories="all leadership broadcasting"
-              data-name="tommy rogers “fresh”"
-              aria-label="Open profile for Tommy Rogers “Fresh”">
-        <div class="driver-status"><span class="status-dot"></span> HLRN TEAM</div>
-        <div class="driver-photo">
-          <img src="https://drive.google.com/thumbnail?id=1eouxnFbS8XHFPZLsUzHuwpAx-tsffa4a&amp;sz=w2000" alt="Tommy Rogers “Fresh” #34" loading="lazy">
-          <div class="number-badge">
-            <span class="number-slashes"><i></i><i></i><i></i></span>
-            <strong>34</strong>
-          </div>
-        </div>
-        <div class="driver-body">
-          <div class="driver-name">Tommy Rogers “Fresh”</div>
-          <div class="driver-role">Owner • Broadcaster</div>
-          <div class="driver-meta">
-            <span class="hlrn-mark"><i></i><b>HLRN</b></span>
-            <span class="card-achievement"><span class="flag-icon">▰</span> LEADERSHIP</span>
-          </div>
-        </div>
-      </button>
-      <button class="driver-card" type="button"
-              data-index="8"
-              data-categories="all broadcasting"
-              data-name="randy schweitzer"
-              aria-label="Open profile for Randy Schweitzer">
-        <div class="driver-status"><span class="status-dot"></span> HLRN TEAM</div>
-        <div class="driver-photo">
-          <img src="https://drive.google.com/thumbnail?id=1xZyupUg2ESB9XOwz6moUk630ABOl8iry&amp;sz=w2000" alt="Randy Schweitzer #78" loading="lazy">
-          <div class="number-badge">
-            <span class="number-slashes"><i></i><i></i><i></i></span>
-            <strong>78</strong>
-          </div>
-        </div>
-        <div class="driver-body">
-          <div class="driver-name">Randy Schweitzer</div>
-          <div class="driver-role">RSI Broadcasting</div>
-          <div class="driver-meta">
-            <span class="hlrn-mark"><i></i><b>HLRN</b></span>
-            
-          </div>
-        </div>
-      </button>
-      <button class="driver-card" type="button"
-              data-index="9"
-              data-categories="all administration race-control"
-              data-name="jim segredo"
-              aria-label="Open profile for Jim Segredo">
-        <div class="driver-status"><span class="status-dot"></span> HLRN TEAM</div>
-        <div class="driver-photo">
-          <img src="https://drive.google.com/thumbnail?id=1nND4p4Re7c2acTeuUdrxGrLjugNcBjNM&amp;sz=w2000" alt="Jim Segredo #21" loading="lazy">
-          <div class="number-badge">
-            <span class="number-slashes"><i></i><i></i><i></i></span>
-            <strong>21</strong>
-          </div>
-        </div>
-        <div class="driver-body">
-          <div class="driver-name">Jim Segredo</div>
-          <div class="driver-role">Race Control • Lead Admin • Voice of HLRN</div>
-          <div class="driver-meta">
-            <span class="hlrn-mark"><i></i><b>HLRN</b></span>
-          </div>
-        </div>
-      </button>
-      <button class="driver-card" type="button"
-              data-index="10"
-              data-categories="all leadership administration"
-              data-name="hunter welborn"
-              aria-label="Open profile for Hunter Welborn">
-        <div class="driver-status"><span class="status-dot"></span> HLRN TEAM</div>
-        <div class="driver-photo">
-          <img src="https://drive.google.com/thumbnail?id=1vBeNe2RwT57Cjtb7rt6m1kj4n9tB5E9I&amp;sz=w2000" alt="Hunter Welborn #66" loading="lazy">
-          <div class="number-badge">
-            <span class="number-slashes"><i></i><i></i><i></i></span>
-            <strong>66</strong>
-          </div>
-        </div>
-        <div class="driver-body">
-          <div class="driver-name">Hunter Welborn</div>
-          <div class="driver-role">General Admin • Race Administration</div>
-          <div class="driver-meta">
-            <span class="hlrn-mark"><i></i><b>HLRN</b></span>
-            <span class="card-achievement"><span class="flag-icon">▰</span> LEADERSHIP</span>
-          </div>
-        </div>
-      </button>
-      <button class="driver-card" type="button"
-              data-index="11"
-              data-categories="all administration"
-              data-name="ryan wilson21"
-              aria-label="Open profile for Ryan Wilson21">
-        <div class="driver-status"><span class="status-dot"></span> HLRN TEAM</div>
-        <div class="driver-photo">
-          <img src="https://drive.google.com/thumbnail?id=1Typ9dWuFvQ6kHU9GDc1wrEh22Jn1jlip&amp;sz=w2000" alt="Ryan Wilson21 #23" loading="lazy">
-          <div class="number-badge">
-            <span class="number-slashes"><i></i><i></i><i></i></span>
-            <strong>23</strong>
-          </div>
-        </div>
-        <div class="driver-body">
-          <div class="driver-name">Ryan Wilson21</div>
-          <div class="driver-role">HLRN Administration</div>
-          <div class="driver-meta">
-            <span class="hlrn-mark"><i></i><b>HLRN</b></span>
-            
-          </div>
-        </div>
-      </button>
-  </section>
+  <div class="team-section-head">
+    <div>
+      <h2>HLRN <span>Team Members</span></h2>
+      <p>Official Team Directory</p>
+    </div>
+    <div class="result-count"><strong id="visibleCount">12</strong> Active Team Members</div>
+  </div>
 
-  <div class="empty-state" id="emptyState">
+  <section id="teamGrid" class="team-grid" aria-live="polite"></section>
+
+  <div class="empty" id="emptyState">
     <strong>No team members found</strong>
     <span>Try another filter or search term.</span>
   </div>
 
-  <footer class="team-footer">
-    <span><b>HIGH LINE RACING NETWORK</b> • TEAM DIRECTORY</span>
-    <span>RACE ADMINISTRATION • RACE CONTROL • BROADCASTING • COMMUNITY</span>
-  </footer>
+  <section class="team-closing">
+    <div class="closing-panel">
+      <h3>Built Behind The Scenes</h3>
+      <p>HLRN race nights are powered by the people handling administration, race control and broadcasting. This directory keeps the full team in one place and makes every member easy to find.</p>
+    </div>
+    <div class="closing-stat">
+      <strong>HLRN</strong>
+      <span>High Line Racing Network</span>
+    </div>
+  </section>
 </main>
 
-<div class="profile-modal" id="profileModal" role="dialog" aria-modal="true" aria-labelledby="profileName">
-  <div class="profile-panel">
-    <button class="close-profile" id="closeProfile" type="button" aria-label="Close profile">×</button>
-    <div class="profile-media"><img id="profileImage" src="" alt=""></div>
-    <div class="profile-copy">
-      <div class="profile-kicker">HLRN Team Profile</div>
-      <div class="profile-number" id="profileNumber">#00</div>
-      <div class="profile-name" id="profileName">Team Member</div>
-      <div class="profile-role" id="profileRole">HLRN</div>
-      <div class="profile-divider"></div>
-      <div class="profile-label">Network</div>
-      <div class="profile-value">High Line Racing Network</div>
-      <div class="profile-divider"></div>
-      <div class="profile-label">Primary Role</div>
-      <div class="profile-value" id="profileRoleRepeat">HLRN Team</div>
-      <div class="profile-active"><span class="status-dot"></span> Active HLRN Team</div>
+<div class="modal" id="profileModal" role="dialog" aria-modal="true" aria-labelledby="profileName" aria-hidden="true">
+  <div class="modal-card">
+    <div class="modal-media"><img id="profileImage" alt=""></div>
+    <div class="modal-copy">
+      <button class="close-btn" id="profileClose" type="button" aria-label="Close profile">×</button>
+      <div class="profile-num" id="profileNumber"></div>
+      <div class="profile-name" id="profileName"></div>
+      <div class="profile-role" id="profileRole"></div>
+      <div class="profile-rule"></div>
+      <div class="profile-grid">
+        <div class="profile-meta"><small>Network</small><strong>High Line Racing Network</strong></div>
+        <div class="profile-meta"><small>Status</small><strong>Active HLRN Team</strong></div>
+        <div class="profile-meta"><small>Primary Role</small><strong id="profileRoleRepeat"></strong></div>
+        <div class="profile-meta"><small>Car Number</small><strong id="profileCarNumber"></strong></div>
+      </div>
     </div>
   </div>
 </div>
 
-<div class="image-lightbox" id="imageLightbox" aria-hidden="true">
-  <button class="close-image-lightbox" id="closeImageLightbox" type="button" aria-label="Close image viewer">×</button>
-  <img id="lightboxImage" src="" alt="">
-  <div class="image-lightbox-hint">Press ESC or click outside the image to close</div>
+<div class="lightbox" id="imageLightbox" aria-hidden="true">
+  <div class="lightbox-card">
+    <button class="close-btn" id="lightboxClose" type="button" aria-label="Close image">×</button>
+    <img id="lightboxImage" alt="">
+    <div class="lightbox-hint">Press ESC or click outside the image to close</div>
+  </div>
 </div>
 
 <script>
-const teamMembers=[{"name": "Jerry Fassett", "role": "Race Control • Administration", "car": "#71", "image": "https://drive.google.com/thumbnail?id=1wBGyLWETOhW3j4LfQC7FkwbnqWBO27Wc&sz=w2000", "categories": ["all", "administration", "race-control"], "lead": false}, {"name": "Trevor Haley", "role": "HLRN Administration", "car": "#12", "image": "https://drive.google.com/thumbnail?id=1MPyB6hjpjMofIqGyCWLXUssapBPrW6Ah&sz=w2000", "categories": ["all", "administration"], "lead": false}, {"name": "Eric Pedley Hayden", "role": "HLRN Administration", "car": "#100", "image": "https://drive.google.com/thumbnail?id=1Xdy5f9iZpUWaP4PFK6rrzgi_5V_Czw5Y&sz=w2000", "categories": ["all", "administration"], "lead": false}, {"name": "Brian Hebbard2", "role": "HLRN Administration", "car": "#87", "image": "https://drive.google.com/thumbnail?id=1nx4rx2UyF4H0l2cMClG7tshVYs12FVwE&sz=w2000", "categories": ["all", "administration"], "lead": false}, {"name": "Chris James", "role": "General Admin", "car": "#82", "image": "https://drive.google.com/thumbnail?id=1-Q-XU7NL-Ds-7Xa0QoKAuC41fmmcv0ax&sz=w2000", "categories": ["all", "leadership", "administration"], "lead": true}, {"name": "Kyle Kammeron", "role": "HLRN Administration", "car": "#55", "image": "https://drive.google.com/thumbnail?id=1xpS7Ak_INl3VajR_xWMjgML80-yJmkK3&sz=w2000", "categories": ["all", "administration"], "lead": false}, {"name": "Evan Parry", "role": "HLRN Administration", "car": "#72", "image": "https://drive.google.com/thumbnail?id=1lpW9d9GTwPsjF52D-ZgqgAdFx41gblsY&sz=w2000", "categories": ["all", "administration"], "lead": false}, {"name": "Tommy Rogers “Fresh”", "role": "Owner • Broadcaster", "car": "#34", "image": "https://drive.google.com/thumbnail?id=1eouxnFbS8XHFPZLsUzHuwpAx-tsffa4a&sz=w2000", "categories": ["all", "leadership", "broadcasting"], "lead": true}, {"name": "Randy Schweitzer", "role": "RSI Broadcasting", "car": "#78", "image": "https://drive.google.com/thumbnail?id=1xZyupUg2ESB9XOwz6moUk630ABOl8iry&sz=w2000", "categories": ["all", "broadcasting"], "lead": false}, {"name": "Jim Segredo", "role": "Race Control • Lead Admin • Voice of HLRN", "car": "#21", "image": "https://drive.google.com/thumbnail?id=1nND4p4Re7c2acTeuUdrxGrLjugNcBjNM&sz=w2000", "categories": ["all", "administration", "race-control"], "lead": false}, {"name": "Hunter Welborn", "role": "General Admin • Race Administration", "car": "#66", "image": "https://drive.google.com/thumbnail?id=1vBeNe2RwT57Cjtb7rt6m1kj4n9tB5E9I&sz=w2000", "categories": ["all", "leadership", "administration"], "lead": true}, {"name": "Ryan Wilson21", "role": "HLRN Administration", "car": "#23", "image": "https://drive.google.com/thumbnail?id=1Typ9dWuFvQ6kHU9GDc1wrEh22Jn1jlip&sz=w2000", "categories": ["all", "administration"], "lead": false}];
-const cards=[...document.querySelectorAll('.driver-card')];
-const filterButtons=[...document.querySelectorAll('.filter-btn')];
-const search=document.getElementById('teamSearch');
-const visibleCount=document.getElementById('visibleCount');
-const emptyState=document.getElementById('emptyState');
-let activeFilter='all';
+const MEMBERS = [{"name": "Brian Hebbard2", "number": "87", "role": "HLRN Administration", "image": "https://drive.google.com/thumbnail?id=1nx4rx2UyF4H0l2cMClG7tshVYs12FVwE&sz=w2000", "categories": ["administration"]}, {"name": "Chris James", "number": "82", "role": "General Admin", "image": "https://drive.google.com/thumbnail?id=1-Q-XU7NL-Ds-7Xa0QoKAuC41fmmcv0ax&sz=w2000", "categories": ["administration"]}, {"name": "Eric Pedley Hayden", "number": "100", "role": "HLRN Administration", "image": "https://drive.google.com/thumbnail?id=1Xdy5f9iZpUWaP4PFK6rrzgi_5V_Czw5Y&sz=w2000", "categories": ["administration"]}, {"name": "Evan Parry", "number": "72", "role": "HLRN Administration", "image": "https://drive.google.com/thumbnail?id=1lpW9d9GTwPsjF52D-ZgqgAdFx41gblsY&sz=w2000", "categories": ["administration"]}, {"name": "Hunter Welborn", "number": "66", "role": "General Admin • Race Administration", "image": "https://drive.google.com/thumbnail?id=1vBeNe2RwT57Cjtb7rt6m1kj4n9tB5E9I&sz=w2000", "categories": ["administration", "race-control"]}, {"name": "Jerry Fassett", "number": "71", "role": "Race Control • Administration", "image": "https://drive.google.com/thumbnail?id=1wBGyLWETOhW3j4LfQC7FkwbnqWBO27Wc&sz=w2000", "categories": ["administration", "race-control"]}, {"name": "Jim Segredo", "number": "21", "role": "Race Control • Lead Admin • Voice of HLRN", "image": "https://drive.google.com/thumbnail?id=1nND4p4Re7c2acTeuUdrxGrLjugNcBjNM&sz=w2000", "categories": ["administration", "race-control"]}, {"name": "Kyle Kammeron", "number": "55", "role": "HLRN Administration", "image": "https://drive.google.com/thumbnail?id=1xpS7Ak_INl3VajR_xWMjgML80-yJmkK3&sz=w2000", "categories": ["administration"]}, {"name": "Randy Schweitzer", "number": "78", "role": "RSI Broadcasting", "image": "https://drive.google.com/thumbnail?id=1xZyupUg2ESB9XOwz6moUk630ABOl8iry&sz=w2000", "categories": ["broadcasting"]}, {"name": "Ryan Wilson21", "number": "23", "role": "HLRN Administration", "image": "https://drive.google.com/thumbnail?id=1Typ9dWuFvQ6kHU9GDc1wrEh22Jn1jlip&sz=w2000", "categories": ["administration"]}, {"name": "Tommy Rogers “Fresh”", "number": "34", "role": "Owner • Broadcaster", "image": "https://drive.google.com/thumbnail?id=1eouxnFbS8XHFPZLsUzHuwpAx-tsffa4a&sz=w2000", "categories": ["broadcasting"]}, {"name": "Trevor Haley", "number": "12", "role": "HLRN Administration", "image": "https://drive.google.com/thumbnail?id=1MPyB6hjpjMofIqGyCWLXUssapBPrW6Ah&sz=w2000", "categories": ["administration"]}];
 
-function applyFilters(){
-  const q=(search.value||'').trim().toLowerCase();
-  let shown=0;
-  cards.forEach(card=>{
-    const categories=(card.dataset.categories||'').split(/\s+/);
-    const categoryMatch=activeFilter==='all'||categories.includes(activeFilter);
-    const searchMatch=!q||(card.dataset.name||'').includes(q)||(card.textContent||'').toLowerCase().includes(q);
-    const show=categoryMatch&&searchMatch;
-    card.classList.toggle('hidden',!show);
-    if(show) shown++;
-  });
-  visibleCount.textContent=shown;
-  emptyState.classList.toggle('show',shown===0);
+let activeFilter = "all";
+let searchTerm = "";
+
+const grid = document.getElementById("teamGrid");
+const visibleCount = document.getElementById("visibleCount");
+const emptyState = document.getElementById("emptyState");
+const search = document.getElementById("teamSearch");
+const filterButtons = [...document.querySelectorAll(".filter-btn")];
+
+const modal = document.getElementById("profileModal");
+const profileClose = document.getElementById("profileClose");
+const profileImage = document.getElementById("profileImage");
+const profileNumber = document.getElementById("profileNumber");
+const profileName = document.getElementById("profileName");
+const profileRole = document.getElementById("profileRole");
+const profileRoleRepeat = document.getElementById("profileRoleRepeat");
+const profileCarNumber = document.getElementById("profileCarNumber");
+
+const lightbox = document.getElementById("imageLightbox");
+const lightboxImage = document.getElementById("lightboxImage");
+const lightboxClose = document.getElementById("lightboxClose");
+
+function esc(s){
+  return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
 }
 
-filterButtons.forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    activeFilter=btn.dataset.filter||'all';
-    filterButtons.forEach(b=>b.classList.toggle('active',b===btn));
-    applyFilters();
+function matches(member){
+  const categoryOK = activeFilter === "all" || member.categories.includes(activeFilter);
+  const haystack = `${member.name} ${member.number} ${member.role}`.toLowerCase();
+  const searchOK = !searchTerm || haystack.includes(searchTerm);
+  return categoryOK && searchOK;
+}
+
+function render(){
+  const filtered = MEMBERS.filter(matches);
+  grid.innerHTML = filtered.map((m)=>`
+    <article class="member-card" data-name="${esc(m.name)}" data-number="${esc(m.number)}">
+      <div class="member-media">
+        <img class="member-img" src="${m.image}" alt="${esc(m.name)}" loading="lazy">
+        <div class="member-number">#${esc(m.number)}</div>
+        <div class="member-status">Active</div>
+      </div>
+      <div class="member-copy">
+        <div class="member-kicker">HLRN Team</div>
+        <div class="member-name">${esc(m.name)}</div>
+        <div class="member-role">${esc(m.role)}</div>
+        <div class="member-actions">
+          <button class="profile-btn" type="button" data-profile="${esc(m.name)}">View Profile</button>
+          <button class="image-btn" type="button" data-image="${esc(m.name)}" aria-label="View full image for ${esc(m.name)}">↗</button>
+        </div>
+      </div>
+    </article>
+  `).join("");
+
+  visibleCount.textContent = filtered.length;
+  emptyState.classList.toggle("show", filtered.length === 0);
+
+  grid.querySelectorAll("[data-profile]").forEach(btn=>{
+    btn.addEventListener("click",()=>openProfile(btn.dataset.profile));
   });
+  grid.querySelectorAll("[data-image]").forEach(btn=>{
+    btn.addEventListener("click",()=>openImage(btn.dataset.image));
+  });
+}
+
+function memberByName(name){
+  return MEMBERS.find(m=>m.name===name);
+}
+
+function openProfile(name){
+  const m = memberByName(name);
+  if(!m) return;
+  profileImage.src = m.image;
+  profileImage.alt = m.name;
+  profileNumber.textContent = `HLRN TEAM • #${m.number}`;
+  profileName.textContent = m.name;
+  profileRole.textContent = m.role;
+  profileRoleRepeat.textContent = m.role;
+  profileCarNumber.textContent = `#${m.number}`;
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+  profileClose.focus();
+}
+
+function closeProfile(){
+  modal.classList.remove("open");
+  modal.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+
+function openImage(name){
+  const m = memberByName(name);
+  if(!m) return;
+  lightboxImage.src = m.image;
+  lightboxImage.alt = m.name;
+  lightbox.classList.add("open");
+  lightbox.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+  lightboxClose.focus();
+}
+
+function closeImage(){
+  lightbox.classList.remove("open");
+  lightbox.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+
+filterButtons.forEach(btn=>btn.addEventListener("click",()=>{
+  activeFilter = btn.dataset.filter;
+  filterButtons.forEach(b=>b.classList.toggle("active",b===btn));
+  render();
+}));
+
+search.addEventListener("input",()=>{
+  searchTerm = search.value.trim().toLowerCase();
+  render();
 });
-search.addEventListener('input',applyFilters);
 
-const modal=document.getElementById('profileModal');
-const closeProfile=document.getElementById('closeProfile');
-const profileImage=document.getElementById('profileImage');
-const profileNumber=document.getElementById('profileNumber');
-const profileName=document.getElementById('profileName');
-const profileRole=document.getElementById('profileRole');
-const profileRoleRepeat=document.getElementById('profileRoleRepeat');
+profileClose.addEventListener("click",closeProfile);
+modal.addEventListener("click",e=>{if(e.target===modal) closeProfile();});
+lightboxClose.addEventListener("click",closeImage);
+lightbox.addEventListener("click",e=>{if(e.target===lightbox) closeImage();});
 
-function openProfile(index){
-  const member=teamMembers[index];
-  if(!member) return;
-  profileImage.src=member.image;
-  profileImage.alt=member.name+' '+member.car;
-  profileNumber.textContent=member.car;
-  profileName.textContent=member.name;
-  profileRole.textContent=member.role;
-  profileRoleRepeat.textContent=member.role;
-  modal.classList.add('open');
-  document.body.style.overflow='hidden';
-  closeProfile.focus();
-}
-function closeModal(){
-  modal.classList.remove('open');
-  document.body.style.overflow='';
-}
-cards.forEach(card=>card.addEventListener('click',()=>openProfile(Number(card.dataset.index))));
-closeProfile.addEventListener('click',closeModal);
-modal.addEventListener('click',e=>{if(e.target===modal) closeModal()});
-const imageLightbox=document.getElementById('imageLightbox');
-const lightboxImage=document.getElementById('lightboxImage');
-const closeImageLightbox=document.getElementById('closeImageLightbox');
-
-function openImageLightbox(src,alt){
-  lightboxImage.src=src;
-  lightboxImage.alt=alt||'';
-  imageLightbox.classList.add('open');
-  imageLightbox.setAttribute('aria-hidden','false');
-}
-function closeImageViewer(){
-  imageLightbox.classList.remove('open');
-  imageLightbox.setAttribute('aria-hidden','true');
-}
-
-profileImage.addEventListener('click',()=>openImageLightbox(profileImage.src,profileImage.alt));
-closeImageLightbox.addEventListener('click',closeImageViewer);
-imageLightbox.addEventListener('click',e=>{if(e.target===imageLightbox) closeImageViewer()});
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'&&imageLightbox.classList.contains('open')){
-    closeImageViewer();
-    return;
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){
+    if(lightbox.classList.contains("open")) closeImage();
+    else if(modal.classList.contains("open")) closeProfile();
   }
-  if(e.key==='Escape'&&modal.classList.contains('open')) closeModal();
 });
 
-applyFilters();
+document.getElementById("summaryTotal").textContent = MEMBERS.length;
+document.getElementById("statusTotal").textContent = MEMBERS.length;
+document.getElementById("summaryAdmin").textContent = MEMBERS.filter(m=>m.categories.includes("administration")).length;
+document.getElementById("summaryRace").textContent = MEMBERS.filter(m=>m.categories.includes("race-control")).length;
+document.getElementById("summaryBroadcast").textContent = MEMBERS.filter(m=>m.categories.includes("broadcasting")).length;
+
+render();
 </script>
 </body>
 </html>
