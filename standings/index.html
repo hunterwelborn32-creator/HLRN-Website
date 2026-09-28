@@ -19,7 +19,7 @@
 <style id="HLRN_NASCAR_STATIC_SEAMLESS_OUTER">html,body,.hlrn,.viewport,iframe.page,iframe.page.active{background:#fff!important;color-scheme:light!important}.viewport{border-top:1px solid #d7d9dc!important}iframe.page{background:#fff!important}</style>
 <style id="HLRN_V6_FINAL_LIGHT_HEADERS">html,body,.hlrn,.viewport,iframe.page{background:#fff!important;color:#111214!important}.tabs,.tab,.tab.active{background:#fff!important;color:#111214!important;border-color:#d9dde1!important;box-shadow:none!important}.viewport{height:auto!important;min-height:0!important;overflow:visible!important}iframe.page.active{background:#fff!important}</style>
 <style id="HLRN_INCIDENT_WATCH_V11_DISPLAY_FIX">#incidents{background:#fff!important;color:#111214!important;}#incidentTop10{opacity:1!important;visibility:visible!important;}#incidentTop10 .incident-row{opacity:1!important;visibility:visible!important;transform:none!important;animation:none!important;}</style>
-<link rel="stylesheet" href="../assets/site-shell.css">
+<link rel="stylesheet" href="../assets/site-shell.css?v=20260928v6">
 <link rel="stylesheet" href="../assets/hlrn-core.css?v=standings-1">
 <script src="../assets/hlrn-core.js?v=standings-1"></script>
 <style id="HLRN_SHARED_STANDINGS_STATUS_V1">
@@ -2313,6 +2313,59 @@ iframe{background:#fff!important;color-scheme:light!important}
   return /&lt;\/head&gt;/i.test(markup) ? markup.replace(/&lt;\/head&gt;/i,tag+&#x27;&lt;/head&gt;&#x27;) : tag+markup;
 }
 &lt;/script&gt;
+
+&lt;style id=&quot;HLRN_DRIVER_FULL_STATS_GAP_AHEAD_V1&quot;&gt;
+/* Every Sunday/Monday driver always shows the full championship stat line. */
+#drivers .table-shell{
+  overflow-x:auto!important;
+  -webkit-overflow-scrolling:touch!important;
+}
+#drivers table{
+  width:100%!important;
+  min-width:1240px!important;
+  table-layout:auto!important;
+}
+#drivers th,
+#drivers td,
+#drivers:not(.show-advanced) th,
+#drivers:not(.show-advanced) td{
+  display:table-cell!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+#drivers th{
+  white-space:nowrap!important;
+}
+#drivers td{
+  white-space:nowrap!important;
+}
+#drivers .name-col{
+  min-width:190px!important;
+}
+#drivers .points{
+  min-width:78px!important;
+  font-weight:900!important;
+}
+#drivers .gap-ahead-head{
+  min-width:88px!important;
+}
+#drivers .gap-ahead-cell{
+  min-width:88px!important;
+  color:#c9202b!important;
+  font-weight:900!important;
+  font-size:11px!important;
+  letter-spacing:.02em!important;
+}
+#drivers .gap-ahead-cell.leader-gap{
+  color:#168742!important;
+}
+@media(max-width:760px){
+  #drivers table{
+    min-width:1180px!important;
+  }
+}
+&lt;/style&gt;
+
 &lt;/head&gt;
 &lt;body&gt;
 &lt;div class=&quot;page-wrap&quot;&gt;
@@ -2396,6 +2449,7 @@ DRIVER
 &lt;th&gt;TOP 10&lt;/th&gt;
 &lt;th&gt;AVG FINISH&lt;/th&gt;
 &lt;th&gt;POINTS&lt;/th&gt;
+&lt;th class=&quot;gap-ahead-head&quot;&gt;GAP AHEAD&lt;/th&gt;
 &lt;th&gt;LED&lt;/th&gt;
 &lt;th&gt;INC&lt;/th&gt;
 &lt;/tr&gt;
@@ -3232,6 +3286,10 @@ driver.driverId
 const pos=
 num(driver.rank)||
 index+1;
+const driverAhead=
+index&gt;0 ? sorted[index-1] : null;
+const gapAhead=
+driverAhead ? Math.max(0,num(driverAhead.points)-num(driver.points)) : 0;
 return `
 &lt;tr&gt;
 &lt;td&gt;
@@ -3269,6 +3327,9 @@ driver.avgFinish,
 ${formatNumber(
 driver.points
 )}
+&lt;/td&gt;
+&lt;td class=&quot;gap-ahead-cell ${index===0?&#x27;leader-gap&#x27;:&#x27;&#x27;}&quot;&gt;
+${index===0?&#x27;LEADER&#x27;:&#x27;-&#x27;+formatNumber(gapAhead)+&#x27; PTS&#x27;}
 &lt;/td&gt;
 &lt;td&gt;
 ${formatNumber(
@@ -5604,6 +5665,59 @@ iframe{background:#fff!important;color-scheme:light!important}
   return /&lt;\/head&gt;/i.test(markup) ? markup.replace(/&lt;\/head&gt;/i,tag+&#x27;&lt;/head&gt;&#x27;) : tag+markup;
 }
 &lt;/script&gt;
+
+&lt;style id=&quot;HLRN_DRIVER_FULL_STATS_GAP_AHEAD_V1&quot;&gt;
+/* Every Sunday/Monday driver always shows the full championship stat line. */
+#drivers .table-shell{
+  overflow-x:auto!important;
+  -webkit-overflow-scrolling:touch!important;
+}
+#drivers table{
+  width:100%!important;
+  min-width:1240px!important;
+  table-layout:auto!important;
+}
+#drivers th,
+#drivers td,
+#drivers:not(.show-advanced) th,
+#drivers:not(.show-advanced) td{
+  display:table-cell!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+#drivers th{
+  white-space:nowrap!important;
+}
+#drivers td{
+  white-space:nowrap!important;
+}
+#drivers .name-col{
+  min-width:190px!important;
+}
+#drivers .points{
+  min-width:78px!important;
+  font-weight:900!important;
+}
+#drivers .gap-ahead-head{
+  min-width:88px!important;
+}
+#drivers .gap-ahead-cell{
+  min-width:88px!important;
+  color:#c9202b!important;
+  font-weight:900!important;
+  font-size:11px!important;
+  letter-spacing:.02em!important;
+}
+#drivers .gap-ahead-cell.leader-gap{
+  color:#168742!important;
+}
+@media(max-width:760px){
+  #drivers table{
+    min-width:1180px!important;
+  }
+}
+&lt;/style&gt;
+
 &lt;/head&gt;
 &lt;body&gt;
 &lt;div class=&quot;page-wrap&quot;&gt;
@@ -5695,6 +5809,7 @@ DRIVER
 &lt;th&gt;TOP 10&lt;/th&gt;
 &lt;th&gt;AVG FINISH&lt;/th&gt;
 &lt;th&gt;POINTS&lt;/th&gt;
+&lt;th class=&quot;gap-ahead-head&quot;&gt;GAP AHEAD&lt;/th&gt;
 &lt;th&gt;LED&lt;/th&gt;
 &lt;th&gt;INC&lt;/th&gt;
 &lt;/tr&gt;
@@ -6552,7 +6667,7 @@ if(
 body.innerHTML = `
 &lt;tr&gt;
 &lt;td
-colspan=&quot;11&quot;
+colspan=&quot;12&quot;
 class=&quot;message&quot;
 &gt;
 No Monday driver standings found.
@@ -6577,6 +6692,18 @@ num(
 driver.rank
 ) ||
 index + 1;
+const driverAhead =
+index &gt; 0
+? sorted[index - 1]
+: null;
+const gapAhead =
+driverAhead
+? Math.max(
+0,
+num(driverAhead.points) -
+num(driver.points)
+)
+: 0;
 return `
 &lt;tr&gt;
 &lt;td&gt;
@@ -6622,6 +6749,9 @@ driver.avgFinish,
 ${formatNumber(
 driver.points
 )}
+&lt;/td&gt;
+&lt;td class=&quot;gap-ahead-cell ${index===0?&#x27;leader-gap&#x27;:&#x27;&#x27;}&quot;&gt;
+${index===0?&#x27;LEADER&#x27;:&#x27;-&#x27;+formatNumber(gapAhead)+&#x27; PTS&#x27;}
 &lt;/td&gt;
 &lt;td&gt;
 ${formatNumber(
