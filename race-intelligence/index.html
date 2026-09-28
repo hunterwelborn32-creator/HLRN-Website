@@ -1598,6 +1598,22 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 </script>
 
+
+<style id="hlrn-race-intelligence-auto-sync">
+.ri-toolbar-actions{display:flex;align-items:center;gap:10px}
+.ri-auto-sync{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid #30383f;border-radius:999px;background:#0e1317;color:#9ea8b0;font-size:8px;font-weight:900;letter-spacing:.11em;text-transform:uppercase;white-space:nowrap}
+.ri-auto-sync-dot{width:7px;height:7px;border-radius:50%;background:#32d66b;box-shadow:0 0 10px rgba(50,214,107,.48)}
+.ri-auto-sync.syncing .ri-auto-sync-dot{background:#ffd400;box-shadow:0 0 10px rgba(255,212,0,.5);animation:riSyncPulse .85s ease-in-out infinite alternate}
+.ri-auto-sync.warn .ri-auto-sync-dot{background:#ff8d3b;box-shadow:0 0 10px rgba(255,141,59,.45)}
+@keyframes riSyncPulse{from{opacity:.45;transform:scale(.85)}to{opacity:1;transform:scale(1.15)}}
+.ri-race-update{display:none;align-items:flex-start;gap:12px;margin:0 0 12px;padding:14px 16px;border:1px solid rgba(50,214,107,.5);border-left:4px solid #32d66b;border-radius:7px;background:linear-gradient(100deg,rgba(50,214,107,.09),rgba(9,13,16,.96) 45%);box-shadow:0 16px 35px rgba(0,0,0,.24);color:#dce5e0}
+.ri-race-update.show{display:flex;animation:riRaceUpdateIn .3s ease both}
+.ri-race-update-icon{font-size:21px;line-height:1}
+.ri-race-update strong{display:block;margin-bottom:4px;color:#fff;font-family:var(--ri-display,Impact,Arial,sans-serif);font-size:18px;font-style:italic;letter-spacing:-.02em;text-transform:uppercase}
+.ri-race-update span{color:#aeb8b1;font-size:10px;line-height:1.45}
+@keyframes riRaceUpdateIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:640px){.ri-toolbar-actions{width:100%;justify-content:space-between}.toolbar{flex-wrap:wrap}.ri-auto-sync{font-size:7px;padding:6px 8px}.ri-race-update{margin-left:8px;margin-right:8px}}
+</style>
 </head>
 
 <body>
@@ -1714,11 +1730,20 @@ document.addEventListener('DOMContentLoaded',function(){
 
   <div class="toolbar">
     <div class="section-label">Intelligence Board</div>
-    <button class="refresh" id="refreshBtn">↻ Refresh</button>
+    <div class="ri-toolbar-actions">
+      <div class="ri-auto-sync" id="riAutoSync" title="Race Intelligence checks the active league for new completed results every 60 seconds.">
+        <span class="ri-auto-sync-dot"></span><span id="riAutoSyncText">Auto Sync • 60 Sec</span>
+      </div>
+      <button class="refresh" id="refreshBtn">↻ Refresh</button>
+    </div>
   </div>
 
   <div class="loading show" id="loading">Loading live HLRN race data…</div>
   <div class="error" id="errorBox"></div>
+  <div class="ri-race-update" id="riRaceUpdate" role="status" aria-live="polite">
+    <div class="ri-race-update-icon">🏁</div>
+    <div><strong id="riRaceUpdateTitle">New Race Processed</strong><span id="riRaceUpdateText"></span></div>
+  </div>
 
   <section class="intel-grid" id="intelGrid"></section>
 
@@ -1806,6 +1831,14 @@ let drivers = [];
 let results = [];
 let analytics = [];
 let categories = [];
+let selectedCategoryKey = "favorite";
+let loadRequestId = 0;
+const AUTO_REFRESH_MS = 60 * 1000;
+const raceCompletionState = {
+  sunday:{initialized:false,lastCompletedRace:0,signature:""},
+  monday:{initialized:false,lastCompletedRace:0,signature:""}
+};
+let raceUpdateTimer = null;
 
 /* HLRN drivers intentionally excluded from Race Intelligence. */
 const EXCLUDED_DRIVERS = [
@@ -1964,10 +1997,86 @@ function jsonp(action,league){
   });
 }
 
-async function loadLeague(league){
+function latestCompletedRaceInfo(list){
+  const finished=(Array.isArray(list)?list:[]).filter(r=>number(r.raceNumber)>0 && number(r.finish)>0);
+  if(!finished.length) return {raceNumber:0,winner:null,track:"",fieldSize:0,signature:""};
+
+  const raceNumbers=[...new Set(finished.map(r=>number(r.raceNumber)).filter(Boolean))].sort((a,b)=>b-a);
+  for(const raceNumber of raceNumbers){
+    const rows=finished.filter(r=>number(r.raceNumber)===raceNumber);
+    const winnerRow=rows.find(r=>number(r.finish)===1);
+    if(!winnerRow) continue;
+
+    const winnerId=String(winnerRow?.driverId ?? winnerRow?.id ?? "");
+    const winnerDriver=analytics.find(d=>String(d.id)===winnerId);
+    const winnerName=winnerDriver?.name || formatDriverName(winnerRow?.driver || winnerRow?.name || winnerRow?.displayName || "");
+    const track=winnerRow?.track || rows[0]?.track || "";
+    return {
+      raceNumber,
+      winner:winnerName && winnerName!=="Unknown Driver" ? winnerName : null,
+      track,
+      fieldSize:rows.length,
+      signature:[raceNumber,winnerId,winnerName,track,rows.length].join("|")
+    };
+  }
+  return {raceNumber:0,winner:null,track:"",fieldSize:0,signature:""};
+}
+
+function processRaceCompletion(league,info){
+  const state=raceCompletionState[league] || (raceCompletionState[league]={initialized:false,lastCompletedRace:0,signature:""});
+  if(!state.initialized){
+    state.initialized=true;
+    state.lastCompletedRace=info.raceNumber || 0;
+    state.signature=info.signature || "";
+    return false;
+  }
+
+  const newRace=info.raceNumber>0 && info.raceNumber>state.lastCompletedRace;
+  if(info.raceNumber>=state.lastCompletedRace){
+    state.lastCompletedRace=Math.max(state.lastCompletedRace,info.raceNumber || 0);
+    state.signature=info.signature || state.signature;
+  }
+  return newRace;
+}
+
+function showRaceProcessedNotice(league,info){
+  const box=document.getElementById("riRaceUpdate");
+  const title=document.getElementById("riRaceUpdateTitle");
+  const text=document.getElementById("riRaceUpdateText");
+  if(!box || !title || !text) return;
+
+  const leagueName=league==="monday" ? "Monday" : "Sunday";
+  const winner=info.winner ? ` Winner: ${info.winner}.` : "";
+  const track=info.track ? ` ${info.track}.` : "";
+  title.textContent=`${leagueName} Race ${info.raceNumber} Processed`;
+  text.textContent=`The new race is final.${winner}${track} Rankings, momentum, risk signals, favorites, deep dives and League Storylines have all been recalculated.`;
+  box.classList.add("show");
+  clearTimeout(raceUpdateTimer);
+  raceUpdateTimer=setTimeout(()=>box.classList.remove("show"),18000);
+}
+
+function setAutoSyncStatus(text,state="ok"){
+  const box=document.getElementById("riAutoSync");
+  const label=document.getElementById("riAutoSyncText");
+  if(label) label.textContent=text;
+  if(box){
+    box.classList.toggle("syncing",state==="syncing");
+    box.classList.toggle("warn",state==="warn");
+  }
+}
+
+function currentTimeLabel(){
+  try{return new Date().toLocaleTimeString([], {hour:"numeric",minute:"2-digit"});}
+  catch(e){return "just now";}
+}
+
+async function loadLeague(league,options={}){
+  const silent=!!options.silent;
+  const requestId=++loadRequestId;
   currentLeague = league;
-  setLoading(true);
+  if(!silent) setLoading(true);
   hideError();
+  if(options.auto) setAutoSyncStatus("Checking Results…","syncing");
 
   document.querySelectorAll(".league-btn").forEach(btn=>{
     btn.classList.toggle("active",btn.dataset.league===league);
@@ -1981,6 +2090,8 @@ async function loadLeague(league){
       jsonp("drivers",league),
       jsonp("results",league)
     ]);
+
+    if(requestId!==loadRequestId) return;
 
     if(!driverData || driverData.success === false){
       throw new Error(driverData?.error || "Driver data was not returned.");
@@ -2010,27 +2121,41 @@ async function loadLeague(league){
     renderStorylines();
     if(window.HLRN_V3_SYNC) window.HLRN_V3_SYNC();
 
+    const completion=latestCompletedRaceInfo(results);
+    const isNewCompletedRace=processRaceCompletion(league,completion);
     const maxRace = results.reduce((m,r)=>Math.max(m,number(r.raceNumber)),0);
     document.getElementById("raceBadge").textContent =
       maxRace ? "Through Race " + maxRace : "Waiting For Results";
 
     document.getElementById("liveText").textContent =
-      driverData.lastUpdated ? "Updated " + driverData.lastUpdated : "Live Data";
+      driverData.lastUpdated ? "Updated " + driverData.lastUpdated + " • Auto 60s" : "Auto Sync • 60s";
 
-    const favorite = categories.find(c=>c.key==="favorite");
-    if(favorite){
-      showDriver(favorite);
-      showCategoryDeepDive(favorite);
-      const favCard=document.querySelector('.intel-card[data-key="favorite"]');
-      if(favCard) favCard.classList.add("selected");
+    const preferred = categories.find(c=>c.key===selectedCategoryKey) || categories.find(c=>c.key==="favorite") || categories[0];
+    if(preferred){
+      selectedCategoryKey=preferred.key;
+      showDriver(preferred);
+      showCategoryDeepDive(preferred);
+      const selectedCard=document.querySelector(`.intel-card[data-key="${preferred.key}"]`);
+      if(selectedCard) selectedCard.classList.add("selected");
     }
 
+    if(isNewCompletedRace){
+      showRaceProcessedNotice(league,completion);
+    }
+    setAutoSyncStatus("Auto • Checked " + currentTimeLabel(),"ok");
+
   }catch(err){
-    showError(err.message || "Unable to load HLRN data.");
-    document.getElementById("intelGrid").innerHTML = "";
-    document.getElementById("detailWrap").style.display = "none";
+    if(options.silent){
+      console.warn("HLRN Race Intelligence auto-sync failed:",err);
+      setAutoSyncStatus("Auto Sync • Retry Next Minute","warn");
+    }else{
+      showError(err.message || "Unable to load HLRN data.");
+      document.getElementById("intelGrid").innerHTML = "";
+      document.getElementById("detailWrap").style.display = "none";
+      setAutoSyncStatus("Auto Sync • Waiting","warn");
+    }
   }finally{
-    setLoading(false);
+    if(!silent && requestId===loadRequestId) setLoading(false);
   }
 }
 
@@ -2380,6 +2505,7 @@ function renderBoard(){
     const openCard=()=>{
       const cat=categories.find(c=>c.key===card.dataset.key);
       if(cat){
+        selectedCategoryKey=cat.key;
         grid.querySelectorAll(".intel-card").forEach(x=>x.classList.remove("selected"));
         card.classList.add("selected");
         showDriver(cat);
@@ -2824,14 +2950,30 @@ function hideError(){
 document.querySelectorAll(".league-btn").forEach(btn=>{
   btn.addEventListener("click",()=>{
     if(btn.dataset.league!==currentLeague){
+      selectedCategoryKey="favorite";
       loadLeague(btn.dataset.league);
     }
   });
 });
 
-document.getElementById("refreshBtn").addEventListener("click",()=>loadLeague(currentLeague));
+document.getElementById("refreshBtn").addEventListener("click",()=>loadLeague(currentLeague,{preserveSelection:true}));
 
 loadLeague("sunday");
+
+/* Quiet one-minute result checks. When the results feed exposes a new completed
+   race with a P1 finisher, the entire intelligence model and Storylines section
+   are rebuilt automatically from the new data. */
+setInterval(()=>{
+  if(document.visibilityState==="visible"){
+    loadLeague(currentLeague,{silent:true,auto:true,preserveSelection:true});
+  }
+},AUTO_REFRESH_MS);
+
+document.addEventListener("visibilitychange",()=>{
+  if(document.visibilityState==="visible"){
+    loadLeague(currentLeague,{silent:true,auto:true,preserveSelection:true});
+  }
+});
 </script>
 
 <script>
