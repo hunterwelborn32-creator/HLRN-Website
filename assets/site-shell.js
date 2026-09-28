@@ -50,7 +50,7 @@ function start(){
     ["adventures","Adventures","adventures/"],
     ["admins","Meet the Admins","meet-the-admins/"],
     ["rules","Rules","rules/"],
-    ["broadcast","Broadcasters","broadcast/"],
+    ["broadcast","Broadcasters","broadcasters/"],
     ["store","Store","store/"]
   ];
 
