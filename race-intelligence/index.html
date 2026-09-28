@@ -1523,14 +1523,100 @@ body::after{
 }
 </style>
 
-<link rel="stylesheet" href="../assets/site-shell.css?v=RESET0921">
-<style id="ri-nav-spacing-fix">
-/* Keep the original Race Intelligence design below the global website navigation. */
-.header{position:relative!important;top:auto!important;}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style id="HLRN_RACE_INTELLIGENCE_V11_POLISH">
+:root{
+  --ri-red:#ed1c24;--ri-green:#62d62f;--ri-yellow:#ffd400;--ri-blue:#2d7ff0;
+  --ri-bg:#050607;--ri-panel:#0c0f12;--ri-panel2:#12171c;--ri-line:#2e353c;
+  --ri-text:#f4f6f8;--ri-muted:#929ba4;--ri-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --ri-body:"Inter","Segoe UI",Arial,sans-serif;
+}
+html,body{background:#030405!important;color:var(--ri-text)!important;font-family:var(--ri-body)!important}
+body{overflow-x:hidden!important}
+.shell{width:min(1680px,calc(100% - 26px))!important;padding:12px 0 54px!important;background:transparent!important}
+
+/* ----- GLOBAL HLRN NAV ----- */
+.ri-site-nav{width:100%;position:relative;z-index:100;background:#07090b;border-bottom:1px solid #2b3137;box-shadow:0 10px 28px rgba(0,0,0,.28)}
+.ri-site-nav-inner{width:min(1680px,calc(100% - 26px));min-height:58px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:22px}
+.ri-site-brand{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none;white-space:nowrap}
+.ri-site-mark{font-family:var(--ri-display);font-weight:900;font-style:italic;font-size:27px;letter-spacing:-.06em}.ri-site-mark span{color:var(--ri-red)}
+.ri-site-brand small{display:block;color:#858d95;font-size:7px;font-weight:900;letter-spacing:.15em;text-transform:uppercase}
+.ri-site-links{display:flex;align-items:stretch;min-height:58px}.ri-site-links a{display:flex;align-items:center;padding:0 13px;color:#a8afb6;text-decoration:none;font-size:9px;font-weight:900;letter-spacing:.075em;text-transform:uppercase;border-left:1px solid #20262b;transition:.15s ease}
+.ri-site-links a:hover{color:#fff;background:#11161a}.ri-site-links a.active{color:#fff;background:#151a1f;box-shadow:inset 0 -3px 0 var(--ri-yellow)}
+.ri-site-live{display:inline-flex!important;gap:7px!important;color:#fff!important}.ri-site-live i{width:7px;height:7px;border-radius:50%;background:#44df7a;box-shadow:0 0 10px rgba(68,223,122,.7)}
+
+/* ----- PAGE HEADER ----- */
+.header{min-height:82px!important;padding:14px 18px!important;border:1px solid var(--ri-line)!important;background:linear-gradient(115deg,rgba(237,28,36,.07),transparent 28%,transparent 70%,rgba(98,214,47,.04)),linear-gradient(180deg,#11161a,#090c0f)!important;box-shadow:0 16px 36px rgba(0,0,0,.25)!important}
+.brand{gap:14px!important}.logo{width:96px!important}.logo:before{font-family:var(--ri-display)!important;font-size:36px!important;letter-spacing:-.06em!important}.logo:after{background:var(--ri-red)!important;width:27px!important;height:26px!important}
+.brand-title{font-family:var(--ri-display)!important;font-size:29px!important;font-weight:900!important;font-style:italic!important;letter-spacing:-.035em!important}.brand-sub{color:#9aa2aa!important;font-size:8px!important;letter-spacing:.17em!important}
+.league-tabs{border:1px solid #3a4249!important;border-radius:7px!important;background:#090c0f!important;overflow:hidden!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.025)!important}
+.league-btn{min-width:136px!important;padding:13px 22px!important;background:#0d1114!important;color:#a5adb5!important;border-color:#30373e!important;font-family:var(--ri-display)!important;font-size:15px!important;font-style:italic!important;letter-spacing:.01em!important;position:relative!important}
+.league-btn[data-league="sunday"]{--series:var(--ri-red)}.league-btn[data-league="monday"]{--series:var(--ri-green)}
+.league-btn.active{background:#181d22!important;color:#fff!important;box-shadow:inset 0 -4px 0 var(--series)!important}.league-btn.active:after{content:"ACTIVE";margin-left:8px;color:var(--series);font-family:var(--ri-body);font-size:6px;font-style:normal;font-weight:900;letter-spacing:.13em;vertical-align:middle}
+
+/* ----- BROADCAST / STATUS RAILS ----- */
+.nascar-ticker{margin-top:8px!important;border:1px solid #30373e!important;border-radius:5px!important;overflow:hidden!important;background:#080a0c!important;box-shadow:none!important}.ticker-flag{background:var(--ri-red)!important}.ticker-flag span,.ticker-network{font-family:var(--ri-body)!important;font-weight:900!important;letter-spacing:.11em!important}.ticker-track{font-family:var(--ri-body)!important;color:#a9b1b8!important}.ticker-track b{color:#fff!important}.ticker-track em{color:var(--ri-yellow)!important}
+.live-control-strip{margin-top:8px!important;display:grid!important;grid-template-columns:repeat(4,1fr)!important;border:1px solid #30373e!important;border-radius:6px!important;overflow:hidden!important;background:#090c0f!important;box-shadow:0 14px 30px rgba(0,0,0,.22)!important}.live-control-cell{padding:11px 14px!important;background:linear-gradient(180deg,#11161a,#0a0d10)!important;border-color:#2b3238!important}.live-control-label{color:#6f7881!important;font-size:6px!important;letter-spacing:.16em!important}.live-control-value{margin-top:4px!important;font-family:var(--ri-display)!important;font-size:17px!important;font-style:italic!important}.live-control-value.red{color:var(--ri-red)!important}.live-signal{background:#43df79!important;box-shadow:0 0 12px rgba(67,223,121,.72)!important}
+
+/* ----- COMMAND DECK ----- */
+.cc-command-deck{margin-top:10px!important;grid-template-columns:1.45fr repeat(4,.7fr)!important;border:1px solid #343c43!important;border-radius:8px!important;overflow:hidden!important;background:#080a0c!important;box-shadow:0 18px 44px rgba(0,0,0,.28)!important}
+.cc-command-main{padding:18px 20px!important;background:linear-gradient(115deg,rgba(255,212,0,.07),transparent 58%),linear-gradient(180deg,#13181d,#0a0d10)!important;border-left:5px solid var(--ri-yellow)!important}.cc-command-kicker{color:var(--ri-yellow)!important;font-size:7px!important;letter-spacing:.17em!important}.cc-command-title{margin-top:4px!important;font-family:var(--ri-display)!important;font-size:30px!important;font-weight:900!important;font-style:italic!important;letter-spacing:-.035em!important}.cc-command-title span{color:var(--ri-yellow)!important}.cc-command-sub{color:#8f98a1!important;font-size:8px!important}
+.cc-command-stat{padding:14px!important;background:linear-gradient(180deg,#11161a,#090c0f)!important;border-color:#2b3238!important}.cc-command-stat strong{font-family:var(--ri-display)!important;font-size:25px!important;font-style:italic!important;color:#fff!important}.cc-command-stat span{color:#747d85!important;font-size:6px!important;letter-spacing:.13em!important}
+.cc-meter-band{margin-top:8px!important;gap:8px!important}.cc-meter-card{border:1px solid #30373e!important;border-radius:6px!important;background:#0d1114!important}.cc-meter-head span{color:#818a92!important}.cc-meter-head strong{color:#fff!important}.cc-meter{background:#1a2025!important}.cc-meter span{background:linear-gradient(90deg,var(--ri-red),var(--ri-yellow),var(--ri-green))!important}
+
+/* ----- HERO ----- */
+.hero{margin-top:12px!important;min-height:330px!important;border:1px solid #343b42!important;border-radius:9px!important;overflow:hidden!important;box-shadow:0 26px 60px rgba(0,0,0,.35)!important;position:relative!important}.hero:after{content:"HLRN // ANALYTICS";position:absolute;right:28px;bottom:12px;color:rgba(255,255,255,.06);font-family:var(--ri-display);font-size:48px;font-style:italic;font-weight:900;letter-spacing:-.03em;pointer-events:none}.hero-inner{padding:54px clamp(22px,5vw,72px)!important;max-width:880px!important}.kicker{color:var(--ri-yellow)!important;font-family:var(--ri-body)!important;font-size:8px!important;letter-spacing:.18em!important}.hero h1{font-family:var(--ri-display)!important;font-size:clamp(58px,7vw,102px)!important;font-weight:900!important;line-height:.8!important;letter-spacing:-.055em!important;text-transform:uppercase!important;text-shadow:0 8px 30px rgba(0,0,0,.5)!important}.hero h1 span{color:var(--ri-red)!important}.hero p{max-width:720px!important;color:#c0c6cc!important;font-size:12px!important;line-height:1.6!important}.badge{border:1px solid #3a4249!important;border-radius:999px!important;background:rgba(8,10,12,.82)!important;color:#dfe3e7!important;backdrop-filter:blur(8px)!important}
+
+/* ----- MAIN INTELLIGENCE BOARD ----- */
+.toolbar{margin-top:14px!important;min-height:60px!important;padding:10px 14px!important;border:1px solid #323a41!important;border-radius:7px!important;background:#0a0d10!important}.section-label{font-family:var(--ri-display)!important;font-size:22px!important;font-style:italic!important;letter-spacing:-.02em!important}.refresh{border:1px solid #3a4249!important;border-radius:5px!important;background:#151a1f!important;color:#fff!important;font-family:var(--ri-body)!important}.refresh:hover{background:#20272d!important;border-color:#59636c!important}
+.intel-grid{gap:10px!important;margin-top:10px!important}.intel-card{min-height:230px!important;border:1px solid #343c43!important;border-top:4px solid var(--ri-red)!important;border-radius:8px!important;background:radial-gradient(circle at 80% 10%,rgba(255,212,0,.055),transparent 32%),linear-gradient(155deg,#151a1f,#080a0c)!important;box-shadow:0 16px 36px rgba(0,0,0,.28)!important;transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease!important}.intel-card:hover{transform:translateY(-4px)!important;border-color:#56616b!important;box-shadow:0 23px 44px rgba(0,0,0,.38)!important}.card-tag{color:var(--ri-yellow)!important;font-family:var(--ri-body)!important}.card-driver{font-family:var(--ri-display)!important;font-size:28px!important;font-style:italic!important;letter-spacing:-.035em!important}.card-stat{color:var(--ri-yellow)!important;font-family:var(--ri-display)!important}.card-reason{color:#a5adb5!important;line-height:1.45!important}.card-icon{opacity:.9!important}
+
+/* ----- STORY / DEEP DIVE ----- */
+.story-section,.category-deep,.detail-wrap{margin-top:14px!important;border:1px solid #343c43!important;border-radius:9px!important;background:#080a0c!important;box-shadow:0 18px 42px rgba(0,0,0,.25)!important;overflow:hidden!important}.story-head,.deep-head,.detail-head{padding:18px 20px!important;background:linear-gradient(100deg,rgba(237,28,36,.075),transparent 42%),#0d1114!important;border-bottom:1px solid #30373e!important}.story-title,.deep-title,.detail-name{font-family:var(--ri-display)!important;font-style:italic!important;font-weight:900!important;letter-spacing:-.03em!important}.story-title{font-size:29px!important}.story-sub,.deep-label,.detail-eyebrow{color:var(--ri-yellow)!important}.story-card,.deep-box,.detail-box{border:1px solid #30373e!important;border-radius:6px!important;background:linear-gradient(160deg,#12171b,#090c0f)!important;box-shadow:none!important}.story-card:hover{border-color:#56616b!important;transform:translateY(-2px)!important}.deep-pill{background:var(--ri-yellow)!important;color:#111!important;border-radius:999px!important;font-weight:1000!important}.deep-action{border-top:1px solid #2d343a!important;background:#0a0d10!important}
+.detail-head{border-top:4px solid var(--ri-red)!important}.score-num{color:var(--ri-yellow)!important;font-family:var(--ri-display)!important;font-size:42px!important}.stat-grid{background:#0a0d10!important;border-color:#30373e!important}.stat{padding:14px!important;border-color:#2b3238!important}.stat-label{color:#747d85!important}.stat-value{font-family:var(--ri-display)!important;font-size:25px!important;font-style:italic!important}.race{border:1px solid #262d33!important;border-radius:5px!important;background:#0e1215!important}.trend-row{border-color:#252c31!important}.footer{margin-top:24px!important;padding:22px!important;color:#6e7780!important;border-top:1px solid #282f35!important;font-size:8px!important;letter-spacing:.14em!important;text-transform:uppercase!important}
+
+/* ----- SUNDAY / MONDAY SERIES COLOR ----- */
+body.ri-monday .hero h1 span,body.ri-monday .detail-eyebrow,body.ri-monday .story-sub{color:var(--ri-green)!important}
+body.ri-monday .intel-card,body.ri-monday .detail-head{border-top-color:var(--ri-green)!important}
+
+/* ----- RESPONSIVE ----- */
+@media(max-width:1100px){.ri-site-links a{padding:0 9px;font-size:8px}.cc-command-deck{grid-template-columns:1fr 1fr!important}.cc-command-main{grid-column:1/-1!important}.live-control-strip{grid-template-columns:1fr 1fr!important}.hero:after{display:none}}
+@media(max-width:760px){.ri-site-nav-inner{width:100%;padding:0 10px;min-height:52px}.ri-site-brand small{display:none}.ri-site-links{overflow-x:auto;min-height:52px}.ri-site-links a{padding:0 10px;white-space:nowrap}.shell{width:100%!important;padding:8px 8px 38px!important}.header{align-items:flex-start!important;flex-direction:column!important}.league-tabs{width:100%!important}.league-btn{flex:1!important;min-width:0!important}.nascar-ticker{display:none!important}.live-control-strip{grid-template-columns:1fr 1fr!important}.cc-command-deck{grid-template-columns:1fr 1fr!important}.cc-command-main{grid-column:1/-1!important}.cc-meter-band{grid-template-columns:1fr 1fr!important}.hero{min-height:300px!important}.hero-inner{padding:40px 20px!important}.hero h1{font-size:clamp(55px,17vw,78px)!important}.intel-grid{grid-template-columns:1fr 1fr!important}.stat-grid{grid-template-columns:repeat(4,1fr)!important}.detail-body,.deep-body{grid-template-columns:1fr!important}}
+@media(max-width:520px){.ri-site-links a:nth-child(4),.ri-site-links a:nth-child(5){display:none}.live-control-strip,.cc-meter-band,.cc-command-deck,.intel-grid{grid-template-columns:1fr!important}.cc-command-main{grid-column:auto!important}.hero{min-height:270px!important}.hero p{font-size:10px!important}.stat-grid{grid-template-columns:repeat(2,1fr)!important}.race{grid-template-columns:30px minmax(0,1fr) 48px!important}.race>:nth-child(n+4){display:none!important}.story-head,.deep-head,.detail-head{align-items:flex-start!important;flex-direction:column!important}}
 </style>
+<script id="HLRN_RACE_INTELLIGENCE_V11_SERIES_CLASS">
+document.addEventListener('click',function(e){
+  const b=e.target.closest('.league-btn[data-league]'); if(!b)return;
+  document.body.classList.toggle('ri-monday',b.dataset.league==='monday');
+});
+document.addEventListener('DOMContentLoaded',function(){
+  const active=document.querySelector('.league-btn.active[data-league]');
+  document.body.classList.toggle('ri-monday',!!active&&active.dataset.league==='monday');
+});
+</script>
+
 </head>
 
 <body>
+
+<nav class="ri-site-nav" aria-label="HLRN main navigation">
+  <div class="ri-site-nav-inner">
+    <a class="ri-site-brand" href="../"><span class="ri-site-mark">HL<span>RN</span></span><small>High Line Racing Network</small></a>
+    <div class="ri-site-links">
+      <a href="../">Home</a>
+      <a class="ri-site-live" href="../live/"><i></i>Live</a>
+      <a href="../standings/">Standings</a>
+      <a href="../drivers/">Drivers</a>
+      <a class="active" href="./">Intelligence</a>
+      <a href="../news/">News</a>
+      <a href="../adventures/">Adventures</a>
+    </div>
+  </div>
+</nav>
+
 <div class="shell">
 
   <header class="header">
@@ -1589,7 +1675,7 @@ body::after{
       <div class="cc-command-sub">Live model health • current league • field readout • performance signals</div>
     </div>
     <div class="cc-command-stat"><strong id="ccField">—</strong><span>Drivers Tracked</span></div>
-    <div class="cc-command-stat"><strong id="ccLeader">—</strong><span>Model Favorite</span></div>
+    <div class="cc-command-stat"><strong id="ccLeader">—</strong><span>Performance Leader</span></div>
     <div class="cc-command-stat"><strong id="ccHot">—</strong><span>Hot Driver</span></div>
     <div class="cc-command-stat"><strong id="ccRisk">—</strong><span>Risk Watch</span></div>
   </section>
@@ -1616,8 +1702,7 @@ body::after{
       <div class="kicker">HLRN • Data • Insights • Performance</div>
       <h1>Race <span style="color:#e10600">Intelligence</span></h1>
       <p>
-        Live driver form, momentum, consistency, racecraft and risk signals generated from
-        HLRN league results. The board updates automatically as new race results are added.
+        Race-by-race performance analysis built from HLRN league results. Track form, momentum, consistency, racecraft and risk signals as the championship changes.
       </p>
       <div class="hero-meta">
         <div class="badge"><span class="dot"></span><span id="liveText">Live Data</span></div>
@@ -1710,15 +1795,13 @@ body::after{
     </div>
   </section>
 
-  <div class="footer">High Line Racing Network • Live Race Intelligence</div>
+  <div class="footer">HIGH LINE RACING NETWORK • RACE INTELLIGENCE • SUNDAY + MONDAY PERFORMANCE ANALYSIS</div>
 </div>
 
 <script>
 const API_BASE = "https://script.google.com/macros/s/AKfycbwo4C9RyV-H-F4ekKFcgmrYVpyOUsh9dmFf2jVhJwvieCTKpKzAR_k6lNcppBuehj58/exec";
 
 let currentLeague = "sunday";
-let hLrnRequestSerial = 0;
-const HLRN_RI_CACHE_PREFIX = "hlrn-race-intelligence-v2-";
 let drivers = [];
 let results = [];
 let analytics = [];
@@ -1883,50 +1966,41 @@ function jsonp(action,league){
 
 async function loadLeague(league){
   currentLeague = league;
-  const requestSerial = ++hLrnRequestSerial;
   setLoading(true);
   hideError();
 
   document.querySelectorAll(".league-btn").forEach(btn=>{
     btn.classList.toggle("active",btn.dataset.league===league);
   });
+
   document.getElementById("leagueBadge").textContent =
     league === "monday" ? "Monday League" : "Sunday League";
 
   try{
-    // Load both feeds independently. A transient failure may use the last
-    // successful response for THIS league, never data from the other league.
-    const settled = await Promise.allSettled([
+    const [driverData,resultData] = await Promise.all([
       jsonp("drivers",league),
       jsonp("results",league)
     ]);
-    if(requestSerial !== hLrnRequestSerial) return;
-    function getFeed(index,action){
-      const key=HLRN_RI_CACHE_PREFIX+league+"-"+action;
-      const outcome=settled[index];
-      if(outcome.status==="fulfilled" && outcome.value && outcome.value.success!==false && Array.isArray(outcome.value[action])){
-        try{sessionStorage.setItem(key,JSON.stringify(outcome.value));}catch(e){}
-        return {data:outcome.value,cached:false};
-      }
-      try{
-        const previous=JSON.parse(sessionStorage.getItem(key)||"null");
-        if(previous && Array.isArray(previous[action])) return {data:previous,cached:true};
-      }catch(e){}
-      throw new Error(action==="drivers" ? "Sunday/Monday driver feed unavailable. Press Refresh to retry." : "Race results feed unavailable. Press Refresh to retry.");
-    }
-    const driverFeed=getFeed(0,"drivers");
-    const resultFeed=getFeed(1,"results");
-    const driverData=driverFeed.data;
-    const resultData=resultFeed.data;
-    const rawDrivers=driverData.drivers;
-    const rawResults=resultData.results;
 
+    if(!driverData || driverData.success === false){
+      throw new Error(driverData?.error || "Driver data was not returned.");
+    }
+
+    if(!resultData || resultData.success === false){
+      throw new Error(resultData?.error || "Results data was not returned.");
+    }
+
+    const rawDrivers = Array.isArray(driverData.drivers) ? driverData.drivers : [];
+    const rawResults = Array.isArray(resultData.results) ? resultData.results : [];
+
+    /* Remove banned / excluded drivers from the intelligence model itself. */
     const excludedDriverIds = new Set(
       rawDrivers
         .filter(d => isExcludedDriverName(d?.driver ?? d?.name ?? d?.displayName ?? d?.display_name ?? ""))
         .map(d => String(d?.driverId ?? d?.id ?? ""))
         .filter(Boolean)
     );
+
     drivers = rawDrivers.filter(d => !isExcludedDriverName(d?.driver ?? d?.name ?? d?.displayName ?? d?.display_name ?? ""));
     results = rawResults.filter(r => !excludedDriverIds.has(String(r?.driverId ?? r?.id ?? "")));
 
@@ -1936,25 +2010,27 @@ async function loadLeague(league){
     renderStorylines();
     if(window.HLRN_V3_SYNC) window.HLRN_V3_SYNC();
 
-    const maxRace=results.reduce((m,r)=>Math.max(m,number(r.raceNumber)),0);
-    document.getElementById("raceBadge").textContent=maxRace ? "Through Race "+maxRace : "Waiting For Results";
-    document.getElementById("liveText").textContent=(driverFeed.cached||resultFeed.cached)
-      ? "Saved data • press Refresh to retry"
-      : (driverData.lastUpdated ? "Updated "+driverData.lastUpdated : "Live Data");
-    const favorite=categories.find(c=>c.key==="favorite");
+    const maxRace = results.reduce((m,r)=>Math.max(m,number(r.raceNumber)),0);
+    document.getElementById("raceBadge").textContent =
+      maxRace ? "Through Race " + maxRace : "Waiting For Results";
+
+    document.getElementById("liveText").textContent =
+      driverData.lastUpdated ? "Updated " + driverData.lastUpdated : "Live Data";
+
+    const favorite = categories.find(c=>c.key==="favorite");
     if(favorite){
       showDriver(favorite);
       showCategoryDeepDive(favorite);
       const favCard=document.querySelector('.intel-card[data-key="favorite"]');
       if(favCard) favCard.classList.add("selected");
     }
+
   }catch(err){
-    if(requestSerial !== hLrnRequestSerial) return;
     showError(err.message || "Unable to load HLRN data.");
-    document.getElementById("intelGrid").innerHTML="";
-    document.getElementById("detailWrap").style.display="none";
+    document.getElementById("intelGrid").innerHTML = "";
+    document.getElementById("detailWrap").style.display = "none";
   }finally{
-    if(requestSerial===hLrnRequestSerial) setLoading(false);
+    setLoading(false);
   }
 }
 
@@ -3630,7 +3706,7 @@ body:after{
     list=list.filter(d=>d&&Number(d.races?.length||0)>0).sort((a,b)=>Number(b.overall)-Number(a.overall)).slice(0,3);
     grid.innerHTML=list.length?list.map((d,i)=>{
       const rating=clamp(d.overall);
-      return `<article class="v3-contender">${hLrnPhotoMarkup(d,"full","hlrn-contender-full-photo")}<div class="v3-contender-label">${i===0?'Model Favorite':'Contender '+(i+1)}</div><div class="v3-contender-name">${String(d.name||'Driver').replace(/</g,'&lt;')}</div><div class="v3-contender-meta"><span>Rating ${rating.toFixed(0)}</span><span>Form ${Number(d.weightedRecentFinish)>0?'P'+Number(d.weightedRecentFinish).toFixed(1):'—'}</span><span>${Number(d.top5Rate||0).toFixed(0)}% T5</span></div><div class="v3-contender-meter"><span style="width:${rating}%"></span></div></article>`;
+      return `<article class="v3-contender">${hLrnPhotoMarkup(d,"full","hlrn-contender-full-photo")}<div class="v3-contender-label">${i===0?'Performance Leader':'Contender '+(i+1)}</div><div class="v3-contender-name">${String(d.name||'Driver').replace(/</g,'&lt;')}</div><div class="v3-contender-meta"><span>Rating ${rating.toFixed(0)}</span><span>Form ${Number(d.weightedRecentFinish)>0?'P'+Number(d.weightedRecentFinish).toFixed(1):'—'}</span><span>${Number(d.top5Rate||0).toFixed(0)}% T5</span></div><div class="v3-contender-meter"><span style="width:${rating}%"></span></div></article>`;
     }).join(''):'<div style="padding:18px;color:#7f8992;font-size:10px">Waiting for enough race history to build the contender board.</div>';
   }
 
@@ -3659,13 +3735,9 @@ body:after{
     try{el.textContent=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true}).format(new Date())+' ET'}catch(e){}
   }
 
-  let modelSyncPending=false;
   window.HLRN_V3_SYNC=function(){
-    if(modelSyncPending)return;
-    modelSyncPending=true;
+    ensurePanels();
     requestAnimationFrame(()=>{
-      modelSyncPending=false;
-      ensurePanels();
       decorateCards();
       renderContenders();
       renderVerification();
@@ -3971,7 +4043,7 @@ body{overflow-x:hidden!important}
     // Do not observe the entire document; that created a feedback loop on dynamic UI updates.
     const intel=document.getElementById('intelGrid');
     if(intel){
-      const mo=new MutationObserver(()=>requestAnimationFrame(()=>{updateOverview();}));
+      const mo=new MutationObserver(()=>requestAnimationFrame(()=>{updateOverview(); if(window.HLRN_V3_SYNC) window.HLRN_V3_SYNC();}));
       mo.observe(intel,{childList:true,subtree:true});
     }
     updateOverview();
@@ -6261,6 +6333,5 @@ body:before,.cc-cursor{display:none!important}
 }
 </style>
 
-<script src="../assets/site-shell.js?v=RESET0921"></script>
 </body>
 </html>
