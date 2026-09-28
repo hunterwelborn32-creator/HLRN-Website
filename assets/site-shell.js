@@ -41,7 +41,7 @@ function start(){
     ["home","Home",""],
     ["live","Live","live/"],
     ["standings","Standings","standings/"],
-    ["intelligence","Intelligence","intelligence/"],
+    ["intelligence","Intelligence","race-intelligence/"],
     ["results","Results","results/"],
     ["drivers","Drivers","drivers/"],
     ["news","News","news/"]
@@ -226,7 +226,7 @@ function start(){
 
     if(u.hostname===location.hostname){
       let dest=null;
-      if(lp.includes("/race-intelligence/"))dest="intelligence/";
+      if(lp.includes("/race-intelligence/"))dest="race-intelligence/";
       else if(lp.includes("/broadcasters/"))dest="broadcast/";
       else if(lp.includes("/schedule/"))dest="results/";
       if(dest){e.preventDefault();location.href=url(dest);return;}
@@ -235,7 +235,7 @@ function start(){
     if(u.hostname.toLowerCase()==="sites.google.com"&&lp.includes("/view/highlineracingnetwork")){
       let dest="";
       if(lp.includes("meet-our-team")||lp.includes("meet-the-admin")||lp.includes("team-members"))dest="meet-the-admins/";
-      else if(lp.includes("race-intelligence")||lp.includes("intelligence"))dest="intelligence/";
+      else if(lp.includes("race-intelligence")||lp.includes("intelligence"))dest="race-intelligence/";
       else if(lp.includes("standings"))dest="standings/";
       else if(lp.includes("schedule")||lp.includes("results"))dest="results/";
       else if(lp.includes("news"))dest="news/";
