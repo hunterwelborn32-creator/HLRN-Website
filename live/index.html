@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HLRN Live Results — Race Center</title>
-<meta name="hlrn-live-nav-build" content="shared-shell-20260922-2">
 <style>
   :root{
     --bg:#f3f4f6;
@@ -653,15 +652,122 @@
   @media(max-width:700px){.rc2-summary{grid-template-columns:repeat(2,1fr)}.rc2-stat:nth-child(odd){border-right:1px solid var(--line)}.rc2-stat:nth-child(even){border-right:0}.rc2-order{grid-template-columns:1fr}.rc2-live-stats-head{grid-template-columns:repeat(2,1fr)}.rc2-live-stat:nth-child(2){border-right:0}.rc2-live-stat:nth-child(-n+2){border-bottom:1px solid var(--line)}}
 
 </style>
-<link rel="stylesheet" href="../assets/site-shell.css?v=20260922-live-nav-2">
-<script src="../assets/site-shell.js?v=20260922-live-nav-2" defer></script>
+<link rel="stylesheet" href="../assets/site-shell.css">
+<script src="../assets/site-shell.js" defer></script>
+
+<style id="HLRN_LIVE_V10_VISUAL_UPGRADE">
+:root{
+  --v10-black:#080b0f;
+  --v10-black2:#11161d;
+  --v10-paper:#ffffff;
+  --v10-soft:#f3f5f7;
+  --v10-line:#d9dde3;
+  --v10-ink:#11151b;
+  --v10-muted:#6d7682;
+  --v10-red:#e31837;
+  --v10-yellow:#f6c800;
+  --v10-green:#19b85d;
+  --v10-blue:#146ed8;
+}
+html,body{background:#eef1f4!important;color:var(--v10-ink)!important}
+body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
+.brandbar{
+  position:relative!important;
+  margin:0!important;
+  padding:13px clamp(14px,2vw,28px)!important;
+  background:
+    linear-gradient(90deg,rgba(227,24,55,.11),transparent 24%,transparent 78%,rgba(246,200,0,.05)),
+    linear-gradient(180deg,#11161d,#070a0e)!important;
+  border-bottom:0!important;
+  box-shadow:0 10px 30px rgba(0,0,0,.24)!important;
+}
+.brandbar:after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:linear-gradient(90deg,var(--v10-red) 0 58%,var(--v10-yellow) 58% 73%,#ffffff 73% 76%,#1d75d6 76% 100%)}
+.brandbar-inner{max-width:1760px!important;width:100%!important}
+.brand{font-size:23px!important;font-weight:1000!important;font-style:italic!important;letter-spacing:-.03em!important}
+.brand .red{color:#ff2848!important}
+.brand-sub{position:relative;padding-left:15px!important;color:#aeb6c1!important;font-size:9px!important;font-weight:900!important;letter-spacing:.18em!important;text-transform:uppercase!important}
+.brand-sub:before{content:"";position:absolute;left:0;top:50%;width:6px;height:6px;border-radius:50%;background:var(--v10-yellow);transform:translateY(-50%);box-shadow:0 0 12px rgba(246,200,0,.45)}
+.live-badge{border-color:#353e49!important;background:#111720!important;color:#b9c1ca!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.02)!important}
+.live-badge.on{background:#0c2818!important;border-color:#235f3b!important;color:#9df2ba!important}
+.page{width:100%!important;max-width:1760px!important;padding:16px clamp(8px,1.4vw,24px) 34px!important}
+.event-shell{border:1px solid #cfd5dc!important;border-radius:10px!important;overflow:hidden!important;box-shadow:0 18px 55px rgba(21,28,36,.10)!important;background:#fff!important}
+.event-head{
+  position:relative!important;
+  grid-template-columns:minmax(0,1fr) minmax(300px,440px)!important;
+  padding:26px clamp(18px,2.2vw,34px) 22px!important;
+  background:
+    radial-gradient(circle at 11% 16%,rgba(227,24,55,.19),transparent 28%),
+    linear-gradient(115deg,#151b23 0%,#0d1117 64%,#090c10 100%)!important;
+  color:#fff!important;
+  border-bottom:0!important;
+}
+.event-head:before{content:"HLRN // TIMING & SCORING";position:absolute;right:24px;top:12px;color:rgba(255,255,255,.11);font-size:8px;font-weight:1000;letter-spacing:.18em}
+.series{color:#aeb6c1!important;font-size:9px!important;letter-spacing:.18em!important}
+.series-mark{width:4px!important;height:21px!important;background:var(--v10-red)!important;box-shadow:0 0 18px rgba(227,24,55,.42)!important}
+.event-title{margin:8px 0 7px!important;color:#fff!important;font-size:clamp(34px,4.2vw,64px)!important;line-height:.89!important;letter-spacing:-.055em!important;text-shadow:0 5px 24px rgba(0,0,0,.35)!important}
+.event-meta{gap:7px 10px!important;color:#98a2af!important;font-size:10px!important;text-transform:uppercase!important;letter-spacing:.06em!important}
+.phase-badge{border:1px solid #39424e!important;background:#161d26!important;color:#fff!important;padding:5px 8px!important;font-weight:1000!important}
+.event-status{min-width:0!important;border:1px solid #303945!important;background:rgba(255,255,255,.025)!important;border-radius:7px!important;overflow:hidden!important;align-self:center!important;box-shadow:0 8px 24px rgba(0,0,0,.17)!important}
+.status-box{min-height:72px!important;padding:12px 14px!important;border-color:#2b333d!important;background:rgba(255,255,255,.018)!important}
+.status-label{color:#818b98!important;font-size:8px!important;letter-spacing:.15em!important}
+.status-value{color:#fff!important;font-size:19px!important;font-style:italic!important}
+.status-value.flag-green,.flag-green{color:#51df86!important}.status-value.flag-caution,.status-value.flag-one-to-green,.flag-caution,.flag-one-to-green{color:#ffd52b!important}.status-value.flag-red,.flag-red{color:#ff5067!important}
+.session-flow{padding:0!important;background:#0d1117!important;border:0!important;border-top:1px solid #252c35!important;border-bottom:1px solid #252c35!important}
+.flow-step{min-height:64px!important;padding:11px 18px!important;background:#11161d!important;border-color:#29313b!important;color:#8f99a6!important;transition:.16s ease!important}
+.flow-step:after{opacity:.38!important}
+.flow-step small{font-size:7px!important;letter-spacing:.14em!important}
+.flow-step strong{font-size:13px!important;color:#c7cdd4!important}
+.flow-num{width:28px!important;height:28px!important;background:#1c232c!important;color:#7f8996!important;border:1px solid #303946!important}
+.flow-step.active{background:linear-gradient(180deg,#171d25,#12171e)!important;box-shadow:inset 0 -4px 0 var(--v10-red)!important}
+.flow-step.active strong{color:#fff!important}.flow-step.active .flow-num{background:var(--v10-red)!important;border-color:var(--v10-red)!important;color:#fff!important}
+.flow-step.done .flow-num{background:#173522!important;border-color:#266d3f!important;color:#7ae9a2!important}
+.metric-strip{grid-template-columns:repeat(6,minmax(0,1fr))!important;background:#fff!important;border-color:var(--v10-line)!important}
+.metric{min-height:82px!important;padding:13px 16px!important;background:#fff!important;border-color:#e2e5e9!important;position:relative!important}
+.metric:before{content:"";position:absolute;left:0;top:0;width:100%;height:3px;background:#e5e8eb}.metric:nth-child(1):before,.metric:nth-child(2):before{background:var(--v10-yellow)}.metric:nth-child(3):before{background:var(--v10-red)}.metric:nth-child(4):before{background:#4d89d8}.metric:nth-child(5):before{background:#111}.metric:nth-child(6):before{background:#a8afb8}
+.metric small{color:#8a929d!important;font-size:8px!important;letter-spacing:.13em!important}.metric strong{margin-top:8px!important;color:#171b21!important;font-size:16px!important;font-style:italic!important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rc-crown{margin:0!important;padding:14px!important;gap:14px!important;background:#f0f2f4!important;border-bottom:1px solid var(--v10-line)!important}
+.rc-leader-hero,.rc-front-battle{border-radius:8px!important;border:1px solid #d5dae0!important;overflow:hidden!important;box-shadow:0 7px 20px rgba(0,0,0,.055)!important}
+.rc-leader-hero{background:linear-gradient(120deg,#161b22,#0c0f13)!important;color:#fff!important}
+.rc-leader-hero:after{content:"P1";position:absolute!important;right:20px!important;bottom:-23px!important;font-size:112px!important;font-weight:1000!important;font-style:italic!important;color:rgba(255,255,255,.035)!important;pointer-events:none!important}
+.rc-kicker{color:#a8b0ba!important}.rc-kicker-dot{background:var(--v10-red)!important;box-shadow:0 0 12px rgba(227,24,55,.55)!important}
+.rc-leader-number{color:#fff!important;text-shadow:4px 4px 0 #000!important}.rc-leader-name{color:#fff!important}.rc-pill{background:#1b222c!important;border-color:#343d49!important;color:#c8ced6!important}
+.rc-front-battle{background:#fff!important}.rc-front-head{background:#12171e!important;color:#fff!important;border-color:#29313b!important}.rc-front-head small{color:#8993a0!important}.rc-front-head span{color:#ffcf25!important}
+.live-ticker-bar{margin:0!important;border:0!important;border-top:1px solid #222a34!important;border-bottom:1px solid #222a34!important;border-radius:0!important;background:#0d1117!important;color:#fff!important}
+.live-ticker-kicker{background:#151b23!important;color:#fff!important;border-right:1px solid #2a323c!important}.live-ticker-dot{background:var(--v10-red)!important;box-shadow:0 0 0 4px rgba(227,24,55,.12),0 0 15px rgba(227,24,55,.48)!important}.live-ticker-lap{color:#ffcf25!important}.live-ticker-text{color:#f4f6f8!important}.live-ticker-count{color:#909aa6!important}
+.tabs{scrollbar-width:thin!important;background:#fff!important;border-color:#d9dde3!important}
+.primary-tabs{padding:6px 7px 0!important;gap:3px!important;background:#f6f7f8!important}
+.session-tools{padding:0 7px 6px!important;gap:3px!important;background:#f6f7f8!important}
+.tab{position:relative!important;min-height:44px!important;padding:12px 14px 10px!important;border:1px solid transparent!important;border-bottom:3px solid transparent!important;border-radius:6px 6px 0 0!important;color:#68717d!important;background:transparent!important;transition:.16s ease!important}
+.tab:hover{background:#fff!important;color:#14181e!important}.tab.active{background:#fff!important;color:#11151b!important;border-color:#d9dde3!important;border-bottom-color:var(--v10-red)!important;box-shadow:0 -2px 10px rgba(0,0,0,.035)!important}
+.session-tools .tab.active{border-bottom-color:var(--v10-yellow)!important}
+.section{padding:16px!important;background:#f3f5f7!important}
+.race-layout{grid-template-columns:minmax(0,1fr) minmax(330px,380px)!important;gap:14px!important}
+.panel{border:1px solid #d7dce2!important;border-radius:7px!important;overflow:hidden!important;background:#fff!important;box-shadow:0 6px 18px rgba(16,22,29,.055)!important}
+.panel-head{min-height:52px!important;padding:12px 15px!important;background:linear-gradient(180deg,#fff,#fafbfc)!important;border-color:#dfe3e7!important}
+.panel-title{color:#15191f!important;font-size:11px!important;letter-spacing:.09em!important}
+.panel-mini-meta{color:#7e8792!important;font-size:8px!important;font-weight:1000!important;letter-spacing:.08em!important;text-transform:uppercase!important}
+.segmented{border-radius:5px!important;overflow:hidden!important}.segmented button{padding:7px 12px!important}.segmented button.active{background:#11161d!important}
+.table-shell{background:#fff!important}table{font-variant-numeric:tabular-nums!important}thead th{top:0!important;background:#eef1f4!important;color:#6c7580!important;border-color:#d8dde2!important;font-size:8px!important}tbody td{border-color:#e6e9ec!important}tbody tr:hover{background:#f6f8fa!important}tbody tr.leader{background:#fff4f6!important}.pos-cell{font-style:italic!important}.car-num{background:#12171e!important;box-shadow:inset 0 -3px 0 var(--v10-red)!important}.driver-name{font-size:13px!important;color:#11151b!important}
+.side-stack{gap:14px!important}.flag-box{background:linear-gradient(135deg,#171d25,#0d1117)!important}.tracker-card{padding:10px 14px!important}.tracker-row{padding:10px 0!important}.tracker-row span{font-size:10px!important}.tracker-row strong{font-size:11px!important}
+.storyline-list,.battle-list,.race-pulse-list{background:#fff!important}
+.offline{padding:54px 18px!important;background:#fff!important}.offline strong{font-size:18px!important}
+.timeline-toolbar{background:#f6f7f8!important}.timeline-filter{border-radius:4px!important}.timeline-filter.active{background:#12171e!important}
+.rc2-summary,.rc-flag-summary,.rc2-live-stats-head{background:#fafbfc!important}.rc2-stat,.rc-flag-stat,.rc2-live-stat{border-color:#dfe3e7!important}
+.rc2-banner,.rc-capture-strip{border-radius:0!important}
+.rc2-order,.rc2-side-list,.rc-radio-feed{background:#fff!important}
+.archive-head{padding:22px 20px!important;background:linear-gradient(135deg,#131920,#0a0d11)!important;color:#fff!important}.archive-head h2{font-style:italic!important;letter-spacing:-.03em!important}.archive-head p{color:#9ca6b2!important}
+@media(max-width:1180px){.event-head{grid-template-columns:1fr!important}.event-status{max-width:none!important}.metric-strip{grid-template-columns:repeat(3,1fr)!important}.metric:nth-child(3){border-right:0!important}.race-layout{grid-template-columns:1fr!important}.side-stack{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important}.side-stack>.panel:first-child{grid-column:1/-1!important}}
+@media(max-width:760px){.page{padding:7px 6px 20px!important}.event-shell{border-radius:5px!important}.brand-sub{display:none!important}.event-head{padding:19px 14px 16px!important}.event-head:before{display:none!important}.event-title{font-size:38px!important}.event-meta{font-size:8px!important}.event-status{grid-template-columns:repeat(2,1fr)!important}.status-box{min-height:62px!important}.session-flow{grid-template-columns:repeat(2,1fr)!important}.flow-step{min-height:56px!important;padding:8px 10px!important}.metric-strip{grid-template-columns:repeat(2,1fr)!important}.metric{min-height:70px!important;padding:11px!important}.metric:nth-child(even){border-right:0!important}.rc-crown{grid-template-columns:1fr!important;padding:8px!important}.primary-tabs,.session-tools{padding-left:4px!important;padding-right:4px!important}.tab{padding:10px 11px 8px!important;font-size:9px!important}.section{padding:8px!important}.side-stack{grid-template-columns:1fr!important}.side-stack>.panel:first-child{grid-column:auto!important}.event-status{width:100%!important}.rc-leader-number{font-size:58px!important}.rc-leader-name{font-size:25px!important}.panel{border-radius:5px!important}}
+@media(max-width:480px){.brand{font-size:19px!important}.live-badge{padding:6px 9px!important}.event-title{font-size:33px!important}.metric strong{font-size:14px!important}.flow-step strong{font-size:11px!important}.session-flow{grid-template-columns:1fr 1fr!important}.rc-crown{padding:6px!important}.live-ticker-count{display:none!important}}
+</style>
+
 </head>
 <body>
 
 <div class="brandbar">
   <div class="brandbar-inner">
     <div class="brand">HLRN <span class="red">LIVE</span></div>
-    <div class="brand-sub">LIVE RESULTS</div>
+    <div class="brand-sub">RACE COMMAND CENTER</div>
     <div id="liveBadge" class="live-badge"><span class="dot"></span><span id="liveBadgeText">OFFLINE</span></div>
   </div>
 </div>
