@@ -1,3 +1,259 @@
+#!/usr/bin/env python3
+"""HLRN Adventures Discord -> GitHub Pages collector. Python stdlib only.
+
+Runs inside GitHub Actions. Reads channel history oldest to newest, only Jim's posts.
+A confirmed END reaction from the designated publisher closes an episode. Historical opening markers
+are specific and configurable; unknown openings are skipped, never guessed.
+"""
+import os, json, re, sys, time, pathlib, urllib.request, urllib.error, mimetypes, html, http.client, socket
+from datetime import datetime, timezone
+
+BASE=pathlib.Path(__file__).resolve().parents[1]
+DEST=BASE/'adventures'
+CHANNEL=os.getenv('DISCORD_CHANNEL_ID','1528189461656244364')
+AUTHOR=os.getenv('JIM_USER_ID','1051673096463077386')
+APPROVER=os.getenv('PUBLISH_APPROVER_USER_ID','897239790188109874')
+TOKEN=os.getenv('DISCORD_BOT_TOKEN')
+if not TOKEN: sys.exit('Missing DISCORD_BOT_TOKEN repository secret; no changes made.')
+API='https://discord.com/api/v10'
+HEADERS={'Authorization':'Bot '+TOKEN,'User-Agent':'HLRN-Adventures-Collector/1.0'}
+CONFIG=json.loads((BASE/'tools'/'episode-rules.json').read_text(encoding='utf8'))
+STATE=DEST/'discord-state.json'
+MANIFEST=DEST/'episodes.json'
+PROGRESS=DEST/'episode-status.json'
+
+def request(url, auth=True, expected_size=None):
+    """Retry rate limits, transient HTTP errors and interrupted image downloads."""
+    headers = HEADERS if auth else {'User-Agent': 'HLRN-Adventures-Collector/1.0'}
+    for attempt in range(7):
+        try:
+            req = urllib.request.Request(url, headers=headers)
+            with urllib.request.urlopen(req, timeout=45) as r:
+                content = r.read()
+                # Discord attachment metadata size is not necessarily the size of
+                # the bytes served by CDN/proxy (which may transcode an image).
+                # urlopen().read() validates the actual HTTP Content-Length and
+                # raises IncompleteRead if the connection cuts out early.
+                return content
+        except urllib.error.HTTPError as exc:
+            if exc.code == 429:
+                try:
+                    delay = float(json.loads(exc.read()).get('retry_after', 2))
+                except Exception:
+                    delay = 2
+                time.sleep(min(delay + 0.3, 60))
+                continue
+            if exc.code >= 500 and attempt < 6:
+                print(f'Temporary HTTP {exc.code}; retrying download ({attempt + 1}/7)', flush=True)
+                time.sleep(min(2 ** attempt, 12))
+                continue
+            raise RuntimeError(f'Download failed HTTP {exc.code} at {url.split("?")[0]}') from exc
+        except (http.client.IncompleteRead, http.client.RemoteDisconnected,
+                ConnectionResetError, BrokenPipeError, TimeoutError,
+                socket.timeout, urllib.error.URLError) as exc:
+            if attempt == 6:
+                raise RuntimeError(f'Download failed after 7 attempts at {url.split("?")[0]}: {exc}') from exc
+            print(f'Interrupted download; retrying ({attempt + 1}/7): {type(exc).__name__}', flush=True)
+            time.sleep(min(2 ** attempt, 12))
+    raise RuntimeError('Download retries exceeded')
+
+def api(path): return json.loads(request(API+path))
+def load(path,default):
+    try:return json.loads(path.read_text(encoding='utf8'))
+    except FileNotFoundError:return default
+
+def save(path,object_):
+    path.parent.mkdir(parents=True,exist_ok=True)
+    path.write_text(json.dumps(object_,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+
+def history():
+    # Discord returns newest first. Scan channel history, not just a recent window.
+    before=None; all_messages=[]
+    while True:
+        url=f'/channels/{CHANNEL}/messages?limit=100'+(f'&before={before}' if before else '')
+        batch=api(url)
+        if not batch:break
+        all_messages.extend(batch)
+        before=batch[-1]['id']
+        if len(batch)<100:break
+        if len(all_messages)>20000:raise RuntimeError('More than 20,000 messages: set a manual historical cutoff before continuing.')
+    all_messages.reverse()
+    return [m for m in all_messages if m.get('author',{}).get('id')==AUTHOR and m.get('type',0)==0]
+
+def opening(m):
+    body=(m.get('content') or '').strip()
+    # Historical stories use exact Discord opening message IDs. This avoids
+    # fragile text matching when Discord resolves mentions as <@user_id>.
+    # For ID-configured stories, do not fall back to regex on other posts.
+    for spec in CONFIG['known_episodes']:
+        if spec.get('opening_message_id') == m.get('id'):
+            return spec
+    for spec in CONFIG['known_episodes']:
+        if spec.get('opening_message_id'):
+            continue
+        pattern = spec.get('opening_regex')
+        if pattern and re.search(pattern,body,re.I):
+            return spec
+    match=re.match(r'^\s*(EPISODE|SPECIAL)\s*(?:#?\s*(\d+))?\s*[:\-–—]\s*(.+)',body,re.I)
+    if match:
+        kind='special' if match[1].lower()=='special' else 'main'
+        number=int(match[2]) if kind=='main' and match[2] else None
+        if kind=='main' and number is None:return None
+        title=match[3].strip()
+        if not title:return None
+        slug=('episode-%02d'%number) if kind=='main' else 'special-'+re.sub('[^a-z0-9]+','-',title.lower()).strip('-')[:60]
+        return dict(slug=slug,title=title,kind=kind,number=number)
+    return None
+
+def approved_reaction(m, emoji):
+    """Only Hunter's reaction counts; check paginated Discord reaction users."""
+    import urllib.parse
+    if not any(r.get('emoji', {}).get('name') == emoji for r in m.get('reactions', [])):
+        return False
+    after = None
+    while True:
+        url = f'/channels/{CHANNEL}/messages/{m["id"]}/reactions/{urllib.parse.quote(emoji, safe="")}?limit=100'
+        if after:
+            url += f'&after={after}'
+        users = api(url)
+        if any(u.get('id') == APPROVER for u in users):
+            return True
+        if len(users) < 100:
+            return False
+        after = users[-1]['id']
+
+
+def complete(m):
+    return approved_reaction(m, '✅')
+
+
+def begun(m):
+    return approved_reaction(m, '🟢')
+
+# Resolve Discord mention IDs to human-readable names in story paragraphs.
+# We use Discord's message mention metadata and guild nicknames instead of
+# hard-coding IDs. The first known nickname also covers an older archived post.
+KNOWN_NAMES = {'1275835621109268550': '#72 Evan Parry - SMT Racing'}
+MEMBER_NAMES = {}
+ROLE_NAMES = None
+CHANNEL_NAMES = {}
+GUILD_ID = None
+
+def guild_id():
+    global GUILD_ID
+    if GUILD_ID is None:
+        try:
+            GUILD_ID = api(f'/channels/{CHANNEL}').get('guild_id') or ''
+        except (urllib.error.HTTPError, RuntimeError) as exc:
+            print('Guild lookup unavailable; falling back to message mention names:', type(exc).__name__, flush=True)
+            GUILD_ID = ''
+    return GUILD_ID
+
+def human_user(user_id, message):
+    if user_id in MEMBER_NAMES:
+        return MEMBER_NAMES[user_id]
+    name = None
+    # Fetch the actual current server nickname when available.
+    guild = guild_id()
+    if guild:
+        try:
+            member = api(f'/guilds/{guild}/members/{user_id}')
+            user = member.get('user') or {}
+            name = member.get('nick') or user.get('global_name') or user.get('username')
+        except (urllib.error.HTTPError, RuntimeError):
+            pass
+    if not name:
+        for user in message.get('mentions', []):
+            if user.get('id') == user_id:
+                name = (user.get('member') or {}).get('nick') or user.get('global_name') or user.get('username')
+                break
+    name = name or KNOWN_NAMES.get(user_id) or 'Discord member'
+    MEMBER_NAMES[user_id] = name
+    return name
+
+def human_role(role_id):
+    global ROLE_NAMES
+    if ROLE_NAMES is None:
+        ROLE_NAMES = {}
+        guild = guild_id()
+        if guild:
+            try:
+                ROLE_NAMES = {r['id']: r['name'] for r in api(f'/guilds/{guild}/roles')}
+            except (urllib.error.HTTPError, RuntimeError):
+                pass
+    return ROLE_NAMES.get(role_id, 'Discord role')
+
+def human_channel(channel_id):
+    if channel_id not in CHANNEL_NAMES:
+        try:
+            CHANNEL_NAMES[channel_id] = api(f'/channels/{channel_id}').get('name') or 'channel'
+        except (urllib.error.HTTPError, RuntimeError):
+            CHANNEL_NAMES[channel_id] = 'channel'
+    return CHANNEL_NAMES[channel_id]
+
+def display_mentions(body, message):
+    # Only replace actual Discord mention syntax; plain numbers are unchanged.
+    body = re.sub(r'<@!?(\d+)>', lambda x: '@' + human_user(x.group(1), message), body)
+    body = re.sub(r'<@&(\d+)>', lambda x: '@' + human_role(x.group(1)), body)
+    body = re.sub(r'<#(\d+)>', lambda x: '#' + human_channel(x.group(1)), body)
+    return body
+
+def repair_existing_pages(msgs):
+    """Fix already-published episodes without touching Episode 1 or their pictures.
+
+    Existing generated readers contain precisely escaped raw message paragraphs.
+    Replace only matching paragraph HTML, preserving any other HTML edits.
+    """
+    source = {m['id']: m for m in msgs}
+    repaired = 0
+    for directory in sorted(DEST.glob('*')):
+        if directory.name == 'episode-01' or not directory.is_dir():
+            continue
+        jsonfile, pagefile = directory / 'episode.json', directory / 'index.html'
+        if not jsonfile.exists() or not pagefile.exists():
+            continue
+        data = load(jsonfile, {})
+        page = pagefile.read_text(encoding='utf8')
+        changed = False
+        for block in data.get('blocks', []):
+            if block.get('type') != 'text' or not block.get('message_id'):
+                continue
+            original = block.get('text', '')
+            if not re.search(r'<@!?\d+>|<@&\d+>|<#\d+>', original):
+                continue
+            message = source.get(block['message_id'])
+            if not message:
+                continue
+            updated = display_mentions(original, message)
+            if updated == original:
+                continue
+            old_html = html.escape(original).replace('\n', '<br>')
+            new_html = html.escape(updated).replace('\n', '<br>')
+            # Do not update JSON unless its displayed HTML was updated too.
+            if old_html not in page:
+                print(f'Skipping nonmatching edited paragraph in {directory.name}, message {block["message_id"]}', flush=True)
+                continue
+            page = page.replace(old_html, new_html, 1)
+            block['text'] = updated
+            changed = True
+        if changed:
+            pagefile.write_text(page, encoding='utf8')
+            save(jsonfile, data)
+            repaired += 1
+            print('Resolved names in:', directory.name, flush=True)
+    print('Existing episode pages updated:', repaired, flush=True)
+
+def image_attachment(a):
+    ct=(a.get('content_type') or '').lower()
+    ext=pathlib.Path(a.get('filename','')).suffix.lower()
+    return ct.startswith('image/') or ext in {'.png','.jpg','.jpeg','.webp','.gif'}
+
+def build_episode(spec,messages):
+    slug=spec['slug']; directory=DEST/slug; image_dir=directory/'images'
+    blocks=[]; image_count=0
+    for m in messages:
+        body=display_mentions((m.get('content') or '').strip(), m)
+        if body:blocks.append(dict(type='text',text=body,message_id=m['id']))
         for a in m.get('attachments',[]):
             if not image_attachment(a):continue
             if a.get('size',0)>15_000_000:raise RuntimeError(f'Image too large in message {m["id"]}; not publishing partially')
