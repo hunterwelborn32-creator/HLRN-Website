@@ -56,6 +56,14 @@
     "date": "2026-09-20T11:06:18.364000+00:00"
   },
   {
+    "id": "episode-09",
+    "title": "History Has A Purpose",
+    "kind": "main",
+    "number": 9,
+    "cover": "episode-09/images/001.png",
+    "date": "2026-09-27T11:06:14.168000+00:00"
+  },
+  {
     "id": "special-vrx-land",
     "title": "Welcome to VRX Land",
     "kind": "special",
