@@ -2314,16 +2314,19 @@ iframe{background:#fff!important;color-scheme:light!important}
 }
 &lt;/script&gt;
 
-&lt;style id=&quot;HLRN_DRIVER_FULL_STATS_GAP_AHEAD_V1&quot;&gt;
-/* Every Sunday/Monday driver always shows the full championship stat line. */
+&lt;style id=&quot;HLRN_EXACT_DRIVER_STANDINGS_FULL_STATS_V2&quot;&gt;
 #drivers .table-shell{
   overflow-x:auto!important;
+  overflow-y:visible!important;
   -webkit-overflow-scrolling:touch!important;
+  border-radius:18px!important;
 }
 #drivers table{
   width:100%!important;
-  min-width:1240px!important;
-  table-layout:auto!important;
+  min-width:1480px!important;
+  border-collapse:separate!important;
+  border-spacing:0!important;
+  background:#fff!important;
 }
 #drivers th,
 #drivers td,
@@ -2334,35 +2337,79 @@ iframe{background:#fff!important;color-scheme:light!important}
   opacity:1!important;
 }
 #drivers th{
+  padding:14px 10px!important;
+  background:#f3f4f5!important;
+  color:#111214!important;
+  font-family:&quot;Barlow Condensed&quot;,&quot;Arial Narrow&quot;,Arial,sans-serif!important;
+  font-size:10px!important;
+  font-weight:900!important;
+  font-style:normal!important;
+  text-align:center!important;
+  text-transform:uppercase!important;
   white-space:nowrap!important;
+}
+#drivers th.name-col{
+  text-align:left!important;
 }
 #drivers td{
+  height:82px!important;
+  padding:12px 10px!important;
+  background:#fff!important;
+  color:#111214!important;
+  border-bottom:1px solid #dfe3e6!important;
+  font-family:&quot;Inter&quot;,&quot;Segoe UI&quot;,Arial,sans-serif!important;
+  font-size:12px!important;
+  text-align:center!important;
   white-space:nowrap!important;
 }
-#drivers .name-col{
-  min-width:190px!important;
+#drivers tbody tr:nth-child(even) td{
+  background:#fafafa!important;
 }
+#drivers tbody tr:hover td{
+  background:#f6f8fa!important;
+  color:#111214!important;
+}
+#drivers td.name-col{
+  min-width:270px!important;
+  text-align:left!important;
+  font-family:&quot;Barlow Condensed&quot;,&quot;Arial Narrow&quot;,Arial,sans-serif!important;
+  font-size:16px!important;
+  font-weight:900!important;
+  font-style:italic!important;
+  text-transform:uppercase!important;
+}
+#drivers th:nth-child(1),#drivers td:nth-child(1){width:58px!important}
+#drivers th:nth-child(2),#drivers td:nth-child(2){width:70px!important}
+#drivers th:nth-child(3),#drivers td:nth-child(3){min-width:270px!important}
+#drivers th:nth-child(n+4),#drivers td:nth-child(n+4){min-width:78px!important}
 #drivers .points{
-  min-width:78px!important;
+  color:#111214!important;
+  font-family:&quot;Barlow Condensed&quot;,&quot;Arial Narrow&quot;,Arial,sans-serif!important;
+  font-size:18px!important;
   font-weight:900!important;
 }
-#drivers .gap-ahead-head{
-  min-width:88px!important;
-}
-#drivers .gap-ahead-cell{
-  min-width:88px!important;
+#drivers .gap-ahead{
   color:#c9202b!important;
   font-weight:900!important;
-  font-size:11px!important;
-  letter-spacing:.02em!important;
 }
-#drivers .gap-ahead-cell.leader-gap{
+#drivers .gap-ahead.leader{
   color:#168742!important;
 }
+#drivers .stage-points{
+  font-weight:900!important;
+}
+#drivers .penalty-points{
+  color:#c9202b!important;
+}
+#drivers tbody tr:first-child td{
+  background:#f4f6f7!important;
+}
+#drivers tbody tr:first-child td:first-child{
+  border-left:4px solid var(--hlrnAccent,#d71920)!important;
+}
 @media(max-width:760px){
-  #drivers table{
-    min-width:1180px!important;
-  }
+  #drivers table{min-width:1450px!important}
+  #drivers td{height:76px!important}
 }
 &lt;/style&gt;
 
@@ -2443,13 +2490,16 @@ Last Race
 &lt;th class=&quot;name-col&quot;&gt;
 DRIVER
 &lt;/th&gt;
-&lt;th&gt;STARTS&lt;/th&gt;
 &lt;th&gt;WINS&lt;/th&gt;
 &lt;th&gt;TOP 5&lt;/th&gt;
 &lt;th&gt;TOP 10&lt;/th&gt;
-&lt;th&gt;AVG FINISH&lt;/th&gt;
 &lt;th&gt;POINTS&lt;/th&gt;
-&lt;th class=&quot;gap-ahead-head&quot;&gt;GAP AHEAD&lt;/th&gt;
+&lt;th&gt;GAP AHEAD&lt;/th&gt;
+&lt;th&gt;RACE PTS&lt;/th&gt;
+&lt;th&gt;STAGE PTS&lt;/th&gt;
+&lt;th&gt;BONUS&lt;/th&gt;
+&lt;th&gt;PENALTY&lt;/th&gt;
+&lt;th&gt;LAPS&lt;/th&gt;
 &lt;th&gt;LED&lt;/th&gt;
 &lt;th&gt;INC&lt;/th&gt;
 &lt;/tr&gt;
@@ -3246,6 +3296,51 @@ String(driver.driverId)
 ]=driver;
 });
 }
+
+function hlrnFirstMetric(obj,keys){
+  if(!obj) return null;
+  for(const key of keys){
+    const value=obj[key];
+    if(value!==undefined &amp;&amp; value!==null &amp;&amp; value!==&quot;&quot;){
+      const n=Number(value);
+      if(Number.isFinite(n)) return n;
+    }
+  }
+  return null;
+}
+function hlrnDriverSeasonMetrics(driver){
+  const aliases={
+    racePoints:[&quot;racePoints&quot;,&quot;racePts&quot;,&quot;race_points&quot;,&quot;racepts&quot;],
+    stagePoints:[&quot;stagePoints&quot;,&quot;stagePts&quot;,&quot;stage_points&quot;,&quot;stagepts&quot;],
+    bonus:[&quot;bonus&quot;,&quot;bonusPoints&quot;,&quot;bonusPts&quot;,&quot;bonus_points&quot;],
+    penalty:[&quot;penalty&quot;,&quot;penalties&quot;,&quot;penaltyPoints&quot;,&quot;penaltyPts&quot;,&quot;penalty_points&quot;],
+    laps:[&quot;laps&quot;,&quot;lapsCompleted&quot;,&quot;completedLaps&quot;,&quot;laps_completed&quot;]
+  };
+  const totals={racePoints:0,stagePoints:0,bonus:0,penalty:0,laps:0};
+  const seen={racePoints:false,stagePoints:false,bonus:false,penalty:false,laps:false};
+
+  (results||[]).forEach(function(result){
+    if(String(result.driverId)!==String(driver.driverId)) return;
+    Object.keys(aliases).forEach(function(metric){
+      const v=hlrnFirstMetric(result,aliases[metric]);
+      if(v!==null){
+        totals[metric]+=v;
+        seen[metric]=true;
+      }
+    });
+  });
+
+  const output={};
+  Object.keys(aliases).forEach(function(metric){
+    const direct=hlrnFirstMetric(driver,aliases[metric]);
+    output[metric]=direct!==null ? direct : (seen[metric] ? totals[metric] : null);
+  });
+  return output;
+}
+function hlrnMetricText(value,decimals){
+  return value===null || value===undefined ? &quot;—&quot; : formatNumber(value,decimals||0);
+}
+
 function renderDrivers(){
 const body=
 document.getElementById(
@@ -3283,6 +3378,10 @@ const totals=
 getDriverTotals(
 driver.driverId
 );
+const extra=
+hlrnDriverSeasonMetrics(
+driver
+);
 const pos=
 num(driver.rank)||
 index+1;
@@ -3305,42 +3404,18 @@ driver.change
 &lt;td class=&quot;name-col&quot;&gt;
 ${hLrnNameWithPhoto(driver.driver)}
 &lt;/td&gt;
-&lt;td&gt;
-${num(driver.starts)}
-&lt;/td&gt;
-&lt;td&gt;
-${num(driver.wins)}
-&lt;/td&gt;
-&lt;td&gt;
-${num(driver.top5)}
-&lt;/td&gt;
-&lt;td&gt;
-${num(driver.top10)}
-&lt;/td&gt;
-&lt;td&gt;
-${formatNumber(
-driver.avgFinish,
-2
-)}
-&lt;/td&gt;
-&lt;td class=&quot;points&quot;&gt;
-${formatNumber(
-driver.points
-)}
-&lt;/td&gt;
-&lt;td class=&quot;gap-ahead-cell ${index===0?&#x27;leader-gap&#x27;:&#x27;&#x27;}&quot;&gt;
-${index===0?&#x27;LEADER&#x27;:&#x27;-&#x27;+formatNumber(gapAhead)+&#x27; PTS&#x27;}
-&lt;/td&gt;
-&lt;td&gt;
-${formatNumber(
-totals.led
-)}
-&lt;/td&gt;
-&lt;td&gt;
-${formatNumber(
-totals.inc
-)}
-&lt;/td&gt;
+&lt;td&gt;${num(driver.wins)}&lt;/td&gt;
+&lt;td&gt;${num(driver.top5)}&lt;/td&gt;
+&lt;td&gt;${num(driver.top10)}&lt;/td&gt;
+&lt;td class=&quot;points&quot;&gt;${formatNumber(driver.points)}&lt;/td&gt;
+&lt;td class=&quot;gap-ahead ${index===0?&#x27;leader&#x27;:&#x27;&#x27;}&quot;&gt;${index===0?&#x27;LEADER&#x27;:&#x27;-&#x27;+formatNumber(gapAhead)}&lt;/td&gt;
+&lt;td&gt;${hlrnMetricText(extra.racePoints,0)}&lt;/td&gt;
+&lt;td class=&quot;stage-points&quot;&gt;${hlrnMetricText(extra.stagePoints,0)}&lt;/td&gt;
+&lt;td&gt;${hlrnMetricText(extra.bonus,0)}&lt;/td&gt;
+&lt;td class=&quot;penalty-points&quot;&gt;${hlrnMetricText(extra.penalty,0)}&lt;/td&gt;
+&lt;td&gt;${hlrnMetricText(extra.laps,0)}&lt;/td&gt;
+&lt;td&gt;${formatNumber(totals.led)}&lt;/td&gt;
+&lt;td&gt;${formatNumber(totals.inc)}&lt;/td&gt;
 &lt;/tr&gt;
 `;
 })
@@ -5666,16 +5741,19 @@ iframe{background:#fff!important;color-scheme:light!important}
 }
 &lt;/script&gt;
 
-&lt;style id=&quot;HLRN_DRIVER_FULL_STATS_GAP_AHEAD_V1&quot;&gt;
-/* Every Sunday/Monday driver always shows the full championship stat line. */
+&lt;style id=&quot;HLRN_EXACT_DRIVER_STANDINGS_FULL_STATS_V2&quot;&gt;
 #drivers .table-shell{
   overflow-x:auto!important;
+  overflow-y:visible!important;
   -webkit-overflow-scrolling:touch!important;
+  border-radius:18px!important;
 }
 #drivers table{
   width:100%!important;
-  min-width:1240px!important;
-  table-layout:auto!important;
+  min-width:1480px!important;
+  border-collapse:separate!important;
+  border-spacing:0!important;
+  background:#fff!important;
 }
 #drivers th,
 #drivers td,
@@ -5686,35 +5764,79 @@ iframe{background:#fff!important;color-scheme:light!important}
   opacity:1!important;
 }
 #drivers th{
+  padding:14px 10px!important;
+  background:#f3f4f5!important;
+  color:#111214!important;
+  font-family:&quot;Barlow Condensed&quot;,&quot;Arial Narrow&quot;,Arial,sans-serif!important;
+  font-size:10px!important;
+  font-weight:900!important;
+  font-style:normal!important;
+  text-align:center!important;
+  text-transform:uppercase!important;
   white-space:nowrap!important;
+}
+#drivers th.name-col{
+  text-align:left!important;
 }
 #drivers td{
+  height:82px!important;
+  padding:12px 10px!important;
+  background:#fff!important;
+  color:#111214!important;
+  border-bottom:1px solid #dfe3e6!important;
+  font-family:&quot;Inter&quot;,&quot;Segoe UI&quot;,Arial,sans-serif!important;
+  font-size:12px!important;
+  text-align:center!important;
   white-space:nowrap!important;
 }
-#drivers .name-col{
-  min-width:190px!important;
+#drivers tbody tr:nth-child(even) td{
+  background:#fafafa!important;
 }
+#drivers tbody tr:hover td{
+  background:#f6f8fa!important;
+  color:#111214!important;
+}
+#drivers td.name-col{
+  min-width:270px!important;
+  text-align:left!important;
+  font-family:&quot;Barlow Condensed&quot;,&quot;Arial Narrow&quot;,Arial,sans-serif!important;
+  font-size:16px!important;
+  font-weight:900!important;
+  font-style:italic!important;
+  text-transform:uppercase!important;
+}
+#drivers th:nth-child(1),#drivers td:nth-child(1){width:58px!important}
+#drivers th:nth-child(2),#drivers td:nth-child(2){width:70px!important}
+#drivers th:nth-child(3),#drivers td:nth-child(3){min-width:270px!important}
+#drivers th:nth-child(n+4),#drivers td:nth-child(n+4){min-width:78px!important}
 #drivers .points{
-  min-width:78px!important;
+  color:#111214!important;
+  font-family:&quot;Barlow Condensed&quot;,&quot;Arial Narrow&quot;,Arial,sans-serif!important;
+  font-size:18px!important;
   font-weight:900!important;
 }
-#drivers .gap-ahead-head{
-  min-width:88px!important;
-}
-#drivers .gap-ahead-cell{
-  min-width:88px!important;
+#drivers .gap-ahead{
   color:#c9202b!important;
   font-weight:900!important;
-  font-size:11px!important;
-  letter-spacing:.02em!important;
 }
-#drivers .gap-ahead-cell.leader-gap{
+#drivers .gap-ahead.leader{
   color:#168742!important;
 }
+#drivers .stage-points{
+  font-weight:900!important;
+}
+#drivers .penalty-points{
+  color:#c9202b!important;
+}
+#drivers tbody tr:first-child td{
+  background:#f4f6f7!important;
+}
+#drivers tbody tr:first-child td:first-child{
+  border-left:4px solid var(--hlrnAccent,#d71920)!important;
+}
 @media(max-width:760px){
-  #drivers table{
-    min-width:1180px!important;
-  }
+  #drivers table{min-width:1450px!important}
+  #drivers td{height:76px!important}
 }
 &lt;/style&gt;
 
@@ -5803,20 +5925,23 @@ Loading...
 &lt;th class=&quot;name-col&quot;&gt;
 DRIVER
 &lt;/th&gt;
-&lt;th&gt;STARTS&lt;/th&gt;
 &lt;th&gt;WINS&lt;/th&gt;
 &lt;th&gt;TOP 5&lt;/th&gt;
 &lt;th&gt;TOP 10&lt;/th&gt;
-&lt;th&gt;AVG FINISH&lt;/th&gt;
 &lt;th&gt;POINTS&lt;/th&gt;
-&lt;th class=&quot;gap-ahead-head&quot;&gt;GAP AHEAD&lt;/th&gt;
+&lt;th&gt;GAP AHEAD&lt;/th&gt;
+&lt;th&gt;RACE PTS&lt;/th&gt;
+&lt;th&gt;STAGE PTS&lt;/th&gt;
+&lt;th&gt;BONUS&lt;/th&gt;
+&lt;th&gt;PENALTY&lt;/th&gt;
+&lt;th&gt;LAPS&lt;/th&gt;
 &lt;th&gt;LED&lt;/th&gt;
 &lt;th&gt;INC&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
 &lt;tbody id=&quot;driverBody&quot;&gt;
 &lt;tr&gt;
-&lt;td colspan=&quot;11&quot; class=&quot;message&quot;&gt;
+&lt;td colspan=&quot;15&quot; class=&quot;message&quot;&gt;
 Loading Monday driver standings...
 &lt;/td&gt;
 &lt;/tr&gt;
@@ -6626,6 +6751,51 @@ driver;
 /* =========================
    DRIVER STANDINGS
 ========================= */
+
+function hlrnFirstMetric(obj,keys){
+  if(!obj) return null;
+  for(const key of keys){
+    const value=obj[key];
+    if(value!==undefined &amp;&amp; value!==null &amp;&amp; value!==&quot;&quot;){
+      const n=Number(value);
+      if(Number.isFinite(n)) return n;
+    }
+  }
+  return null;
+}
+function hlrnDriverSeasonMetrics(driver){
+  const aliases={
+    racePoints:[&quot;racePoints&quot;,&quot;racePts&quot;,&quot;race_points&quot;,&quot;racepts&quot;],
+    stagePoints:[&quot;stagePoints&quot;,&quot;stagePts&quot;,&quot;stage_points&quot;,&quot;stagepts&quot;],
+    bonus:[&quot;bonus&quot;,&quot;bonusPoints&quot;,&quot;bonusPts&quot;,&quot;bonus_points&quot;],
+    penalty:[&quot;penalty&quot;,&quot;penalties&quot;,&quot;penaltyPoints&quot;,&quot;penaltyPts&quot;,&quot;penalty_points&quot;],
+    laps:[&quot;laps&quot;,&quot;lapsCompleted&quot;,&quot;completedLaps&quot;,&quot;laps_completed&quot;]
+  };
+  const totals={racePoints:0,stagePoints:0,bonus:0,penalty:0,laps:0};
+  const seen={racePoints:false,stagePoints:false,bonus:false,penalty:false,laps:false};
+
+  (results||[]).forEach(function(result){
+    if(String(result.driverId)!==String(driver.driverId)) return;
+    Object.keys(aliases).forEach(function(metric){
+      const v=hlrnFirstMetric(result,aliases[metric]);
+      if(v!==null){
+        totals[metric]+=v;
+        seen[metric]=true;
+      }
+    });
+  });
+
+  const output={};
+  Object.keys(aliases).forEach(function(metric){
+    const direct=hlrnFirstMetric(driver,aliases[metric]);
+    output[metric]=direct!==null ? direct : (seen[metric] ? totals[metric] : null);
+  });
+  return output;
+}
+function hlrnMetricText(value,decimals){
+  return value===null || value===undefined ? &quot;—&quot; : formatNumber(value,decimals||0);
+}
+
 function renderDrivers(){
 const body =
 document.getElementById(
@@ -6667,7 +6837,7 @@ if(
 body.innerHTML = `
 &lt;tr&gt;
 &lt;td
-colspan=&quot;12&quot;
+colspan=&quot;15&quot;
 class=&quot;message&quot;
 &gt;
 No Monday driver standings found.
@@ -6686,6 +6856,10 @@ index
 const totals =
 getDriverTotals(
 driver.driverId
+);
+const extra =
+hlrnDriverSeasonMetrics(
+driver
 );
 const pos =
 num(
@@ -6719,50 +6893,18 @@ driver.change
 &lt;td class=&quot;name-col&quot;&gt;
 ${hLrnNameWithPhoto(driver.driver)}
 &lt;/td&gt;
-&lt;td&gt;
-${num(
-driver.starts
-)}
-&lt;/td&gt;
-&lt;td&gt;
-${num(
-driver.wins
-)}
-&lt;/td&gt;
-&lt;td&gt;
-${num(
-driver.top5
-)}
-&lt;/td&gt;
-&lt;td&gt;
-${num(
-driver.top10
-)}
-&lt;/td&gt;
-&lt;td&gt;
-${formatNumber(
-driver.avgFinish,
-2
-)}
-&lt;/td&gt;
-&lt;td class=&quot;points&quot;&gt;
-${formatNumber(
-driver.points
-)}
-&lt;/td&gt;
-&lt;td class=&quot;gap-ahead-cell ${index===0?&#x27;leader-gap&#x27;:&#x27;&#x27;}&quot;&gt;
-${index===0?&#x27;LEADER&#x27;:&#x27;-&#x27;+formatNumber(gapAhead)+&#x27; PTS&#x27;}
-&lt;/td&gt;
-&lt;td&gt;
-${formatNumber(
-totals.led
-)}
-&lt;/td&gt;
-&lt;td&gt;
-${formatNumber(
-totals.inc
-)}
-&lt;/td&gt;
+&lt;td&gt;${num(driver.wins)}&lt;/td&gt;
+&lt;td&gt;${num(driver.top5)}&lt;/td&gt;
+&lt;td&gt;${num(driver.top10)}&lt;/td&gt;
+&lt;td class=&quot;points&quot;&gt;${formatNumber(driver.points)}&lt;/td&gt;
+&lt;td class=&quot;gap-ahead ${index===0?&#x27;leader&#x27;:&#x27;&#x27;}&quot;&gt;${index===0?&#x27;LEADER&#x27;:&#x27;-&#x27;+formatNumber(gapAhead)}&lt;/td&gt;
+&lt;td&gt;${hlrnMetricText(extra.racePoints,0)}&lt;/td&gt;
+&lt;td class=&quot;stage-points&quot;&gt;${hlrnMetricText(extra.stagePoints,0)}&lt;/td&gt;
+&lt;td&gt;${hlrnMetricText(extra.bonus,0)}&lt;/td&gt;
+&lt;td class=&quot;penalty-points&quot;&gt;${hlrnMetricText(extra.penalty,0)}&lt;/td&gt;
+&lt;td&gt;${hlrnMetricText(extra.laps,0)}&lt;/td&gt;
+&lt;td&gt;${formatNumber(totals.led)}&lt;/td&gt;
+&lt;td&gt;${formatNumber(totals.inc)}&lt;/td&gt;
 &lt;/tr&gt;
 `;
 }
