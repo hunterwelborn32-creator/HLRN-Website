@@ -2088,6 +2088,95 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
     return `${lap} — ${event.title || "Event"}: ${event.text || ""}${inferred}`;
   }
 
+  function raceLapSnapshots(race){
+    if(!race) return [];
+    const full=Array.isArray(race.lapSnapshots) ? race.lapSnapshots : [];
+    if(full.length) return [...full].sort((a,b)=>Number(a.lap??9999)-Number(b.lap??9999));
+    return race.lapSnapshotLatest ? [race.lapSnapshotLatest] : [];
+  }
+
+  function snapshotEntryLabel(entry, raceDrivers){
+    const drivers=Array.isArray(raceDrivers) ? raceDrivers : [];
+    const carIdx=entry && entry.carIdx != null ? Number(entry.carIdx) : null;
+    const match=carIdx!=null ? drivers.find(d=>Number(d.carIdx)===carIdx) : null;
+    const pos=entry && entry.position != null ? entry.position : (match && match.position != null ? match.position : "—");
+    const number=String(entry && entry.number != null && entry.number !== "" ? entry.number : (match && match.number != null ? match.number : "—"));
+    const name=String(entry && entry.name ? entry.name : (match && match.name ? match.name : "Unknown Driver"));
+    const lapsDown=Number(entry && entry.lapsDown);
+    const suffix=Number.isFinite(lapsDown) && lapsDown>0 ? " ("+lapsDown+"L down)" : "";
+    return "P"+pos+" #"+number+" "+name+suffix;
+  }
+
+  function penaltyRecordsFor(race, events){
+    const records=[];
+    const seen=new Set();
+    const add=item=>{
+      if(!item) return;
+      const lap=item.lap != null ? item.lap : null;
+      const title=String(item.title || "Black Flag");
+      const text=String(item.text || "");
+      const reason=String(item.reason || item.penaltyReason || "Reason not supplied by iRacing telemetry");
+      const source=String(item.reasonSource || item.penaltyReasonSource || "UNAVAILABLE").toUpperCase();
+      const name=String(item.name || (Array.isArray(item.drivers)&&item.drivers[0]) || "");
+      const number=String(item.number || (Array.isArray(item.carNumbers)&&item.carNumbers[0]) || "");
+      const key=[lap,title,text,reason,name,number].join("|");
+      if(seen.has(key)) return;
+      seen.add(key);
+      records.push({lap,title,text,reason,reasonSource:source,name,number,capturedAt:item.capturedAt||item.createdAt||null});
+    };
+    (Array.isArray(race?.penaltyHistory) ? race.penaltyHistory : []).forEach(add);
+    (Array.isArray(events) ? events : []).forEach(e=>{
+      const type=String(e?.type||"").toLowerCase();
+      const title=String(e?.title||"").toUpperCase();
+      if(type==="penalty" || title.includes("BLACK FLAG")) add(e);
+    });
+    return records.sort((a,b)=>Number(a.lap??9999)-Number(b.lap??9999) || Number(a.capturedAt||0)-Number(b.capturedAt||0));
+  }
+
+  function penaltyRecordLine(item){
+    const lap=item.lap != null ? "Lap "+item.lap : "Session";
+    const who=item.name || item.number ? " — #"+(item.number||"—")+" "+(item.name||"Unknown Driver") : "";
+    const source=item.reasonSource && item.reasonSource!=="UNAVAILABLE" ? " ["+item.reasonSource+"]" : "";
+    return lap+" — "+(item.title||"Black Flag")+who+": "+(item.reason||"Reason not supplied by iRacing telemetry")+source;
+  }
+
+  function renderLapRecap(race){
+    const el=$("lapRecap");
+    if(!el) return;
+    const snapshots=raceLapSnapshots(race);
+    const recorder=race?.raceRecorder || {};
+    const frozen=!!race?.raceFrozen;
+    const captured=Number(recorder.completedLapsCaptured || (Array.isArray(race?.lapSnapshots)?race.lapSnapshots.length:0) || 0);
+
+    $("lapRecapCoverage").textContent = frozen
+      ? captured+" completed lap"+(captured===1?"":"s")+" captured"
+      : captured
+        ? captured+" completed lap"+(captured===1?"":"s")+" stored on server • newest lap shown live"
+        : "Waiting for the first completed leader lap";
+
+    $("lapRecapFreeze").textContent=frozen ? "FINAL • FROZEN" : "LIVE RECORDER";
+    $("lapRecapFreeze").className="lap-recap-freeze"+(frozen?" frozen":"");
+
+    if(!snapshots.length){
+      el.innerHTML='<div class="archive-empty"><strong>No completed laps recorded yet</strong>The server will capture the scored running order after each completed leader lap.</div>';
+      return;
+    }
+
+    const raceDrivers=Array.isArray(race?.drivers)?race.drivers:[];
+    el.innerHTML=snapshots.map(snap=>{
+      const order=Array.isArray(snap?.order)?snap.order:[];
+      const flag=String(snap?.flag||"").toUpperCase();
+      return '<div class="lap-recap-row">'
+        +'<div class="lap-recap-meta"><strong>LAP '+esc(snap?.lap??"—")+'</strong><span>'+esc(flag||"SCORING SNAPSHOT")+'</span></div>'
+        +'<div class="lap-recap-order">'
+        +order.map(entry=>{
+          const down=Number(entry?.lapsDown)>0;
+          return '<span class="lap-recap-driver '+(down?"down":"")+'"><b>'+esc(entry?.position??"—")+'</b>'+esc(snapshotEntryLabel(entry,raceDrivers).replace(/^P[^ ]+ /,""))+'</span>';
+        }).join("")
+        +'</div></div>';
+    }).join("");
+  }
+
   function buildPostRaceReport(){
     const practice = getPhaseState("practice");
     const qualifying = getPhaseState("qualifying");
