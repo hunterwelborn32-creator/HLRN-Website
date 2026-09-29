@@ -2192,6 +2192,61 @@ iframe{background:#fff!important;color-scheme:light!important}
   #drivers td{height:56px!important}
 }
 </style>
+<style id="HLRN_STANDINGS_NAME_CLEANUP_V1">
+#drivers td.name-col{
+  width:285px!important;
+  min-width:285px!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+}
+#drivers .hlrn-driver-profile-link{
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+}
+#drivers .hlrn-driver-profile-inner{
+  display:grid!important;
+  grid-template-columns:58px minmax(0,1fr)!important;
+  align-items:center!important;
+  column-gap:12px!important;
+  width:100%!important;
+  min-height:62px!important;
+  max-width:none!important;
+}
+#drivers .hlrn-driver-profile-name{
+  display:block!important;
+  min-width:0!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  white-space:nowrap!important;
+  font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
+  font-size:16px!important;
+  font-weight:900!important;
+  font-style:italic!important;
+  letter-spacing:.01em!important;
+  line-height:1.05!important;
+  text-transform:uppercase!important;
+}
+#drivers .hlrn-driver-profile-arrow{display:none!important}
+@media(max-width:900px){
+  #drivers th:nth-child(3),#drivers td:nth-child(3){
+    width:260px!important;
+    min-width:260px!important;
+  }
+  #drivers .hlrn-driver-profile-name{font-size:15px!important}
+}
+@media(max-width:560px){
+  #drivers th:nth-child(3),#drivers td:nth-child(3){
+    width:250px!important;
+    min-width:250px!important;
+  }
+  #drivers .hlrn-driver-profile-inner{
+    grid-template-columns:56px minmax(0,1fr)!important;
+    column-gap:10px!important;
+  }
+  #drivers .hlrn-driver-profile-name{font-size:14px!important}
+}
+</style>
 </head>
 <body>
 <div class="page-wrap">
@@ -3543,11 +3598,30 @@ let n=shown;
 if(n.indexOf(",")>-1){
   const p=n.split(",");
   let last=(p.shift()||"").trim().replace(/\d+$/,"");
-  let first=p.join(" ").trim();
+  let first=p.join(" ").trim().replace(/\d+$/,"");
   n=(first+" "+last).trim();
 }else{
-  n=n.replace(/\d+$/,"").trim();
+  n=n.replace(/(\p{L})\d+$/u,"$1").trim();
 }
+const displayFixes={
+  "Eric Pedley Hayden":"Eric Hayden",
+  "Randy Schweitzer RSI":"Randy Schweitzer",
+  "Josh Mckinney":"Joshua McKinney",
+  "Joshua McKinney2":"Joshua McKinney",
+  "Ryan Wilson21":"Ryan Wilson",
+  "Brian Hebbard2":"Brian Hebbard",
+  "Brian Hayes4":"Brian Hayes",
+  "Timothy Tyler3":"Timothy Tyler",
+  "Matthew Brown49":"Matthew Brown",
+  "Matthew Graham20":"Matthew Graham",
+  "Nicholas Baumann2":"Nicholas Baumann",
+  "Vicente Guerrero2":"Vicente Guerrero",
+  "Joe R Wells":"Joe Wells",
+  "Larry Fairman2":"Larry Fairman",
+  "Grant Wessley2":"Grant Wessley",
+  "Dylan C Jones":"Dylan Jones"
+};
+n=displayFixes[n]||n;
 let key=n.toLowerCase().replace(/[^a-z0-9]/g,"");
 const special={
 ethanfonsecamoreno:"ethan-moreno",
@@ -3555,14 +3629,16 @@ dylancjones:"dylan-jones",
 joshuamckinney:"josh-mckinney",
 jeremysjeffries:"jeremy-jeffries",
 ericpedleyhayden:"eric-hayden",
+erichayden:"eric-hayden",
 randyschweitzerrsi:"randy-schweitzer",
+randyschweitzer:"randy-schweitzer",
 sebastianmicheals:"sebastian-michaels",
 vicenteguerrero:"vincente-guerrero"
 };
 let slug=special[key]||n.toLowerCase()
   .replace(/[^a-z0-9]+/g,"-")
   .replace(/^-+|-+$/g,"");
-const safe=shown
+const safe=n
  .replace(/&/g,"&amp;")
  .replace(/</g,"&lt;")
  .replace(/>/g,"&gt;")
@@ -3579,7 +3655,7 @@ return '<a class="hlrn-driver-profile-link" href="'+profileUrl+'" target="_top" 
 +'aria-label="Open '+safe+' driver profile" title="View '+safe+' profile">'
 +'<span class="hlrn-driver-profile-inner">'
 +'<img src="'+url+'" alt="" loading="lazy" decoding="async" onerror="this.remove()" '
-+'style="display:block;width:50px;height:58px;flex:0 0 50px;object-fit:contain;object-position:center bottom;'
++'style="display:block;width:52px;height:62px;flex:0 0 52px;object-fit:contain;object-position:center bottom;'
 +'margin:-7px 0 -6px;background:transparent;border:0;outline:0;box-shadow:none">'
 +'<span class="hlrn-driver-profile-name">'+safe+'</span>'
 +'<span class="hlrn-driver-profile-arrow" aria-hidden="true">›</span>'
