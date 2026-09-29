@@ -1,0 +1,3456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HLRN Sunday Night League</title>
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+html,body{
+  width:100%;
+  min-height:100%;
+  background:#050505;
+  color:#fff;
+  font-family:Arial,Helvetica,sans-serif;
+}
+body{
+  padding:18px;
+}
+.page-wrap{
+  width:100%;
+  max-width:1900px;
+  margin:auto;
+}
+.hero{
+  min-height:165px;
+  border:2px solid #d00000;
+  border-radius:12px;
+  background:radial-gradient(circle at top,#1c1c1c,#101010 45%,#080808);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:28px 20px;
+  margin-bottom:18px;
+}
+.hero h1{
+  font-size:clamp(28px,4vw,48px);
+  font-weight:900;
+  letter-spacing:2px;
+  margin-bottom:10px;
+}
+.hero-subtitle{
+  color:#ccc;
+  font-size:17px;
+  margin-bottom:10px;
+}
+.live-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  border:1px solid #333;
+  border-radius:999px;
+  background:#111;
+  padding:6px 12px;
+  color:#ddd;
+  font-size:12px;
+}
+.live-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#ed1c24;
+  box-shadow:0 0 8px #ed1c24;
+}
+.tabs{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-bottom:15px;
+}
+.tab-btn{
+  border:1px solid #333;
+  border-radius:8px;
+  background:linear-gradient(#171717,#111);
+  color:#fff;
+  padding:15px;
+  font-size:15px;
+  font-weight:800;
+  cursor:pointer;
+}
+.tab-btn.active{
+  border-color:#ff1e1e;
+  background:linear-gradient(90deg,#ba0000,#e00000);
+}
+.panel{
+  display:none;
+}
+.panel.active{
+  display:block;
+}
+.section-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin:12px 0 18px;
+}
+.section-header h2{
+  font-size:30px;
+  font-weight:900;
+}
+.count{
+  color:#999;
+  font-size:13px;
+}
+.table-shell{
+  overflow-x:auto;
+  border:1px solid #2d2d2d;
+  border-radius:10px;
+  background:#0d0d0d;
+}
+table{
+  width:100%;
+  min-width:1150px;
+  border-collapse:collapse;
+}
+thead{
+  background:#171717;
+}
+th{
+  padding:14px 11px;
+  border-bottom:1px solid #df0000;
+  font-size:12px;
+  font-weight:900;
+  text-align:center;
+  white-space:nowrap;
+}
+td{
+  padding:14px 11px;
+  border-bottom:1px solid #222;
+  font-size:13px;
+  text-align:center;
+  white-space:nowrap;
+}
+tbody tr:nth-child(even){
+  background:#0a0a0a;
+}
+tbody tr:hover{
+  background:#151515;
+}
+.name-col{
+  text-align:left;
+  font-weight:800;
+}
+.points{
+  color:#ff2929;
+  font-weight:900;
+  font-size:15px;
+}
+.position{
+  font-weight:900;
+}
+.position.top1{
+  color:#ffe100;
+}
+.position.top2{
+  color:#ddd;
+}
+.position.top3{
+  color:#d88927;
+}
+/* MOVEMENT */
+.movement{
+  font-weight:900;
+  font-size:13px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:42px;
+}
+.movement.up{
+  color:#ed1c24;
+}
+.movement.down{
+  color:#ff3b3b;
+}
+.movement.same{
+  color:#777;
+}
+.movement-arrow{
+  font-size:15px;
+  margin-right:4px;
+}
+.last-race-card{
+  border:1px solid #333;
+  border-radius:12px;
+  background:linear-gradient(145deg,#151515,#080808);
+  padding:25px;
+  margin-bottom:18px;
+}
+.race-header{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  flex-wrap:wrap;
+}
+.race-track{
+  font-size:27px;
+  font-weight:900;
+}
+.race-date{
+  color:#999;
+  font-size:13px;
+  margin-top:6px;
+}
+.race-number{
+  padding:8px 13px;
+  border:1px solid #d00000;
+  border-radius:7px;
+  color:#ff3333;
+  background:#100000;
+  font-size:12px;
+  font-weight:900;
+}
+.last-race-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-top:20px;
+}
+.stat-card{
+  padding:18px;
+  background:#101010;
+  border:1px solid #292929;
+  border-radius:8px;
+  text-align:center;
+}
+.stat-label{
+  color:#999;
+  font-size:11px;
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+.stat-value{
+  font-size:22px;
+  font-weight:900;
+}
+.winner-name{
+  color:#ff2b2b;
+}
+.message{
+  padding:35px;
+  text-align:center;
+  color:#aaa;
+}
+@media(max-width:800px){
+  body{
+    padding:10px;
+  }
+  .tabs{
+    grid-template-columns:1fr;
+  }
+  .last-race-grid{
+    grid-template-columns:1fr 1fr;
+  }
+}
+/* =========================================================
+   HLRN SUNDAY NIGHT LEAGUE — NASCAR / BROADCAST STYLE
+   Existing API, standings, tabs, and refresh logic preserved.
+========================================================= */
+:root{
+  --hlrn-red:#ed1c24;
+  --hlrn-yellow:#ffd400;
+  --hlrn-green:#ed1c24;
+  --hlrn-black:#030303;
+  --hlrn-steel:#181818;
+}
+body{
+  background:
+    radial-gradient(circle at 50% -10%,rgba(255,255,255,.055),transparent 28%),
+    linear-gradient(180deg,#050505,#000 72%)!important;
+  overflow-x:hidden;
+}
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  pointer-events:none;
+  background:
+    repeating-linear-gradient(115deg,transparent 0 88px,rgba(255,255,255,.014) 89px 90px),
+    linear-gradient(90deg,rgba(237,28,36,.025),transparent 24%,transparent 76%,rgba(237,28,36,.025));
+}
+body:after{
+  content:"";
+  position:fixed;
+  left:0;right:0;bottom:0;
+  height:105px;
+  z-index:-1;
+  pointer-events:none;
+  opacity:.07;
+  background:
+    linear-gradient(45deg,#fff 25%,transparent 25%,transparent 75%,#fff 75%),
+    linear-gradient(45deg,#fff 25%,transparent 25%,transparent 75%,#fff 75%);
+  background-size:36px 36px;
+  background-position:0 0,18px 18px;
+  -webkit-mask-image:linear-gradient(to top,#000,transparent);
+  mask-image:linear-gradient(to top,#000,transparent);
+}
+/* HERO */
+.hero{
+  position:relative;
+  overflow:hidden;
+  min-height:190px!important;
+  border-radius:3px!important;
+  border:1px solid #333!important;
+  border-top:4px solid var(--hlrn-green)!important;
+  background:
+    linear-gradient(115deg,transparent 0 62%,rgba(255,212,0,.10) 62.2% 63%,transparent 63.2%),
+    linear-gradient(145deg,#151515,#070707 65%,#101010)!important;
+  box-shadow:0 18px 42px rgba(0,0,0,.55)!important;
+}
+.hero:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(115deg,transparent 0 56%,rgba(237,28,36,.20) 56.2% 58.4%,transparent 58.6%),
+    linear-gradient(115deg,transparent 0 63%,rgba(255,255,255,.07) 63.2% 63.8%,transparent 64%);
+}
+.hero:after{
+  content:"SUNDAY NIGHT";
+  position:absolute;
+  right:-10px;
+  bottom:-16px;
+  color:rgba(255,255,255,.035);
+  font-size:clamp(68px,9vw,135px);
+  font-weight:1000;
+  font-style:italic;
+  letter-spacing:-.07em;
+  transform:skewX(-10deg);
+  white-space:nowrap;
+  pointer-events:none;
+}
+.hero h1{
+  position:relative;
+  z-index:2;
+  font-style:italic;
+  text-transform:uppercase;
+  letter-spacing:-.04em!important;
+  text-shadow:4px 4px 0 #151515;
+}
+.hero-subtitle{
+  position:relative;
+  z-index:2;
+  color:var(--hlrn-yellow)!important;
+  font-size:13px!important;
+  font-weight:1000;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+.live-pill{
+  position:relative;
+  z-index:2;
+  border-radius:2px!important;
+  border-left:4px solid var(--hlrn-yellow)!important;
+  background:linear-gradient(180deg,#151515,#090909)!important;
+}
+/* Championship ticker */
+.sunday-ticker{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  min-height:38px;
+  margin:-6px 0 18px;
+  overflow:hidden;
+  border:1px solid #333;
+  border-top:0;
+  background:#070707;
+  box-shadow:0 10px 28px rgba(0,0,0,.5);
+}
+.sunday-ticker .ticker-label{
+  height:100%;
+  display:flex;
+  align-items:center;
+  padding:0 18px;
+  margin-left:-7px;
+  transform:skewX(-12deg);
+  background:var(--hlrn-yellow);
+  color:#050505;
+  font-size:9px;
+  font-weight:1000;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+.sunday-ticker .ticker-label span{transform:skewX(12deg)}
+.sunday-ticker .ticker-window{
+  overflow:hidden;
+  white-space:nowrap;
+  color:#ddd;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+}
+.sunday-ticker .ticker-track{
+  display:inline-block;
+  padding-left:100%;
+  animation:sundayTickerMove 28s linear infinite;
+}
+.sunday-ticker .ticker-track b{color:#fff}
+.sunday-ticker .ticker-track em{
+  color:var(--hlrn-green);
+  font-style:normal;
+  margin:0 14px;
+}
+.sunday-ticker .ticker-network{
+  padding:0 14px;
+  color:#777;
+  font-size:8px;
+  font-weight:1000;
+  letter-spacing:.14em;
+}
+@keyframes sundayTickerMove{
+  from{transform:translateX(0)}
+  to{transform:translateX(-100%)}
+}
+/* Tabs */
+.tabs{
+  gap:6px!important;
+}
+.tab-btn{
+  border-radius:2px!important;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  background:linear-gradient(180deg,#161616,#0b0b0b)!important;
+  border:1px solid #3a3a3a!important;
+  transition:.18s ease;
+}
+.tab-btn:hover{
+  border-color:var(--hlrn-yellow)!important;
+  transform:translateY(-2px);
+}
+.tab-btn.active{
+  color:#050505!important;
+  border-color:var(--hlrn-green)!important;
+  background:linear-gradient(135deg,var(--hlrn-yellow) 0 12%,var(--hlrn-green) 12% 100%)!important;
+  box-shadow:6px 6px 0 rgba(0,0,0,.25);
+}
+/* Section headers */
+.section-header{
+  position:relative;
+  padding-bottom:9px;
+  border-bottom:1px solid #292929;
+}
+.section-header:before{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-1px;
+  width:110px;
+  height:3px;
+  background:linear-gradient(90deg,var(--hlrn-yellow),var(--hlrn-green),transparent);
+}
+.section-header h2{
+  font-style:italic;
+  letter-spacing:-.03em;
+  text-transform:uppercase;
+}
+/* Standings tables = timing/scoring board */
+.table-shell{
+  border-radius:3px!important;
+  border:1px solid #363636!important;
+  background:#090909!important;
+  box-shadow:0 16px 38px rgba(0,0,0,.45);
+}
+thead{
+  background:linear-gradient(180deg,#191919,#0e0e0e)!important;
+}
+th{
+  border-bottom:2px solid var(--hlrn-green)!important;
+  color:#cfcfcf;
+  letter-spacing:.05em;
+}
+td{
+  border-bottom-color:#252525!important;
+  font-variant-numeric:tabular-nums;
+}
+tbody tr{
+  transition:.16s ease;
+}
+tbody tr:hover{
+  background:#151515!important;
+  box-shadow:inset 4px 0 0 var(--hlrn-yellow);
+}
+.name-col{
+  font-style:italic;
+}
+.points{
+  color:var(--hlrn-yellow)!important;
+  font-weight:1000!important;
+}
+.position{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:32px;
+  min-height:26px;
+  padding:3px 6px;
+  background:#111;
+  border-left:3px solid #555;
+  font-style:italic;
+}
+.position.top1{
+  color:#050505!important;
+  background:var(--hlrn-yellow);
+  border-left-color:var(--hlrn-green);
+}
+.position.top2{
+  color:#fff!important;
+  border-left-color:#d7d7d7;
+}
+.position.top3{
+  color:#ffb15d!important;
+  border-left-color:#d88927;
+}
+/* Movement arrows */
+.movement{
+  padding:4px 7px;
+  border-radius:2px;
+  background:#101010;
+}
+.movement.up{
+  color:#ff5b61!important;
+  border-left:3px solid #ff5b61;
+}
+.movement.down{
+  color:#ff6565!important;
+  border-left:3px solid #ff4b4b;
+}
+.movement.same{
+  border-left:3px solid #555;
+}
+/* Last race broadcast card */
+.last-race-card{
+  position:relative;
+  overflow:hidden;
+  border-radius:3px!important;
+  border:1px solid #3a3a3a!important;
+  border-left:5px solid var(--hlrn-green)!important;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.03),transparent 24%),
+    linear-gradient(150deg,#151515,#070707)!important;
+  box-shadow:0 18px 42px rgba(0,0,0,.48);
+}
+.last-race-card:before{
+  content:"";
+  position:absolute;
+  top:0;left:0;right:0;
+  height:4px;
+  background:linear-gradient(90deg,var(--hlrn-yellow) 0 14%,var(--hlrn-green) 14% 62%,transparent);
+}
+.last-race-card:after{
+  content:"";
+  position:absolute;
+  right:-38px;
+  top:-38px;
+  width:115px;
+  height:115px;
+  opacity:.05;
+  transform:rotate(45deg);
+  background:
+    linear-gradient(45deg,#fff 25%,transparent 25%,transparent 75%,#fff 75%),
+    linear-gradient(45deg,#fff 25%,transparent 25%,transparent 75%,#fff 75%);
+  background-size:18px 18px;
+  background-position:0 0,9px 9px;
+  pointer-events:none;
+}
+.race-track{
+  font-style:italic;
+  text-transform:uppercase;
+  letter-spacing:-.03em;
+}
+.race-number{
+  border-radius:2px!important;
+  color:#050505!important;
+  border-color:var(--hlrn-yellow)!important;
+  background:var(--hlrn-yellow)!important;
+  transform:skewX(-7deg);
+}
+.last-race-grid{
+  position:relative;
+  z-index:2;
+}
+.stat-card{
+  border-radius:2px!important;
+  border:1px solid #333!important;
+  border-left:3px solid var(--hlrn-yellow)!important;
+  background:linear-gradient(180deg,#121212,#080808)!important;
+}
+.winner-name{
+  color:var(--hlrn-green)!important;
+}
+/* Scroll entrance */
+.sunday-reveal{
+  opacity:0;
+  transform:translateY(16px);
+  transition:opacity .5s ease,transform .5s ease;
+}
+.sunday-reveal.in-view{
+  opacity:1;
+  transform:none;
+}
+@media(max-width:800px){
+  .sunday-ticker{
+    grid-template-columns:auto 1fr;
+  }
+  .sunday-ticker .ticker-network{
+    display:none;
+  }
+}
+</style>
+<style>
+/* =========================================================
+   HLRN SUNDAY — CHASE TO THE CHAMPIONSHIP — FINAL OVERRIDE
+========================================================= */
+:root{--cc-green:#ed1c24;--cc-yellow:#ffd400;--cc-red:#ed1c24;--cc-blue:#35a7ff;--cc-ink:#050505;--cc-panel:#0b0b0b}
+body{padding:0!important;background:radial-gradient(circle at 50% -8%,rgba(255,255,255,.07),transparent 26%),linear-gradient(180deg,#050505,#000 76%)!important}
+.page-wrap{max-width:1920px!important;padding:0 14px 28px}
+.cc-topline{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;min-height:42px;margin:0 -14px 14px;padding:0 18px;border-bottom:1px solid #2b2b2b;background:#050505;box-shadow:0 8px 24px rgba(0,0,0,.45);position:relative;z-index:30}
+.cc-brand{font-size:10px;font-weight:1000;letter-spacing:.18em;text-transform:uppercase}.cc-brand b{color:var(--cc-green)}
+.cc-status{text-align:center;color:#777;font-size:8px;font-weight:1000;letter-spacing:.15em;text-transform:uppercase}.cc-status span{color:#fff}
+.cc-clock{font-family:Impact,"Arial Narrow",Arial,sans-serif;font-size:18px;font-style:italic;letter-spacing:.03em;color:#fff}.cc-clock small{display:block;margin-top:-1px;color:#666;font:700 6px Arial;letter-spacing:.15em;text-align:right}
+.hero{min-height:310px!important;align-items:stretch!important;justify-content:stretch!important;text-align:left!important;padding:0!important;border:1px solid #333!important;border-top:0!important;clip-path:polygon(0 0,calc(100% - 24px) 0,100% 24px,100% 100%,24px 100%,0 calc(100% - 24px));box-shadow:0 30px 70px rgba(0,0,0,.62)!important}
+.hero:before{background:linear-gradient(115deg,transparent 0 58%,rgba(116,239,0,.14) 58.2% 59.4%,transparent 59.6%),linear-gradient(115deg,transparent 0 64%,rgba(255,212,0,.08) 64.2% 65%,transparent 65.2%)!important}
+.hero:after{content:"CHAMPIONSHIP"!important;right:-18px!important;bottom:-20px!important;font-size:clamp(76px,10vw,160px)!important;color:rgba(255,255,255,.03)!important}
+.cc-hero-grid{display:grid;grid-template-columns:1.45fr .75fr;min-height:310px;position:relative;z-index:2}
+.cc-hero-main{padding:34px 34px 28px;display:flex;flex-direction:column;justify-content:center;background:linear-gradient(110deg,rgba(116,239,0,.05),transparent 48%)}
+.cc-kicker{color:var(--cc-yellow);font-size:9px;font-weight:1000;letter-spacing:.22em;text-transform:uppercase}.cc-title{margin-top:8px;font-family:Impact,"Arial Narrow",Arial,sans-serif;font-size:clamp(52px,6.3vw,108px);line-height:.82;font-style:italic;text-transform:uppercase;letter-spacing:-.045em;text-shadow:6px 6px 0 #121212}.cc-title span{color:var(--cc-green)}
+.cc-sub{margin-top:15px;max-width:760px;color:#a8a8a8;font-size:10px;font-weight:900;line-height:1.6;letter-spacing:.11em;text-transform:uppercase}.cc-live-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}.cc-pill{padding:8px 10px;border:1px solid #343434;background:#0d0d0d;color:#ddd;font-size:8px;font-weight:1000;letter-spacing:.1em;text-transform:uppercase}.cc-pill strong{color:#fff}.cc-pill.green{border-left:4px solid var(--cc-green)}.cc-pill.yellow{border-left:4px solid var(--cc-yellow)}.cc-pill.red{border-left:4px solid var(--cc-red)}
+.cc-hero-side{padding:26px 22px;border-left:1px solid #303030;background:linear-gradient(180deg,#101010,#070707);display:flex;flex-direction:column;justify-content:center}.cc-leader-label{color:#777;font-size:7px;font-weight:1000;letter-spacing:.19em;text-transform:uppercase}.cc-leader-rank{margin-top:4px;color:var(--cc-yellow);font-family:Impact,"Arial Narrow",Arial,sans-serif;font-size:22px;font-style:italic}.cc-leader-name{margin-top:5px;color:#fff;font-family:Impact,"Arial Narrow",Arial,sans-serif;font-size:clamp(30px,3vw,46px);line-height:.95;font-style:italic;text-transform:uppercase;overflow-wrap:anywhere}.cc-leader-points{margin-top:10px;color:var(--cc-green);font-size:30px;font-weight:1000}.cc-leader-points small{color:#777;font-size:8px;letter-spacing:.14em}.cc-gap{margin-top:12px;padding-top:12px;border-top:1px solid #272727;color:#888;font-size:8px;font-weight:900;line-height:1.55;text-transform:uppercase}.cc-gap b{color:#fff}
+.sunday-ticker{margin:10px 0 14px!important;border-top:3px solid var(--cc-green)!important}.ticker-label{background:var(--cc-green)!important}
+.cc-dashboard{display:grid;grid-template-columns:1.35fr repeat(4,.55fr);gap:8px;margin-bottom:14px}.cc-card{min-width:0;padding:14px 14px 12px;border:1px solid #303030;background:linear-gradient(180deg,#111,#080808);position:relative;overflow:hidden;box-shadow:0 10px 22px rgba(0,0,0,.35)}.cc-card:before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:#3b3b3b}.cc-card:nth-child(1):before{background:linear-gradient(90deg,var(--cc-yellow),var(--cc-green))}.cc-card:nth-child(2):before{background:var(--cc-green)}.cc-card:nth-child(3):before{background:var(--cc-yellow)}.cc-card:nth-child(4):before{background:var(--cc-blue)}.cc-card:nth-child(5):before{background:var(--cc-red)}.cc-card-label{color:#707070;font-size:6px;font-weight:1000;letter-spacing:.16em;text-transform:uppercase}.cc-card-value{margin-top:5px;color:#fff;font-family:Impact,"Arial Narrow",Arial,sans-serif;font-size:26px;line-height:1;font-style:italic;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cc-card-sub{margin-top:5px;color:#8b8b8b;font-size:7px;font-weight:900;letter-spacing:.07em;text-transform:uppercase}.cc-battle{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin:0 0 16px}.cc-battle-item{padding:10px 9px;background:#090909;border:1px solid #292929;border-bottom:3px solid #3b3b3b;min-width:0}.cc-battle-item:first-child{border-bottom-color:var(--cc-yellow)}.cc-battle-pos{color:#666;font-size:6px;font-weight:1000;letter-spacing:.15em}.cc-battle-name{margin-top:4px;color:#fff;font-size:9px;font-weight:1000;font-style:italic;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cc-battle-pts{margin-top:3px;color:var(--cc-green);font-size:8px;font-weight:1000}.cc-battle-gap{margin-top:2px;color:#666;font-size:6px;font-weight:900}
+.tabs{position:sticky;top:0;z-index:20;background:rgba(4,4,4,.94);backdrop-filter:blur(10px);padding:8px 0;margin-bottom:18px!important}.tab-btn{min-height:48px!important;font-family:Impact,"Arial Narrow",Arial,sans-serif;font-size:15px!important;font-style:italic!important}.tab-btn.active{box-shadow:inset 0 -4px 0 var(--cc-yellow),0 8px 20px rgba(0,0,0,.35)!important;background:linear-gradient(180deg,#15240a,#0a1105)!important;color:#fff!important;border-color:#466f1a!important}.tab-btn.active:before{content:"LIVE DATA • ";color:var(--cc-yellow);font:900 6px Arial;letter-spacing:.12em}.section-header{margin-top:18px!important}.section-header h2{font-family:Impact,"Arial Narrow",Arial,sans-serif;font-size:34px!important}.count{padding:6px 8px;border:1px solid #303030;background:#0b0b0b;color:#9a9a9a!important;font-weight:900}.table-shell{overflow:auto;max-height:72vh}.table-shell table{position:relative}.table-shell thead th{position:sticky;top:0;z-index:4;background:#101010!important}.table-shell tbody tr:nth-child(-n+3) td{background:linear-gradient(90deg,rgba(255,212,0,.035),transparent 60%)}.table-shell tbody tr:nth-child(1) td{border-top:1px solid rgba(255,212,0,.35)}.name-col{font-weight:1000!important}.points{font-size:16px!important}.last-race-card{padding:28px!important}.last-race-grid{grid-template-columns:repeat(4,1fr)!important}.stat-card{min-height:110px;display:flex;flex-direction:column;justify-content:center}.stat-value{font-size:28px!important}.cc-race-spotlight{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-bottom:16px}.cc-spotlight-card{padding:18px;border:1px solid #303030;background:linear-gradient(180deg,#101010,#070707);position:relative;overflow:hidden}.cc-spotlight-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--cc-green)}.cc-spotlight-card.alt:before{background:var(--cc-yellow)}.cc-spot-label{color:#666;font-size:6px;font-weight:1000;letter-spacing:.16em;text-transform:uppercase}.cc-spot-main{margin-top:5px;color:#fff;font-family:Impact,"Arial Narrow",Arial,sans-serif;font-size:24px;font-style:italic;text-transform:uppercase}.cc-spot-sub{margin-top:4px;color:#8a8a8a;font-size:7px;font-weight:900;text-transform:uppercase}.cc-footer{display:grid;grid-template-columns:1fr auto;align-items:center;margin-top:18px;padding:15px 18px;border-top:3px solid var(--cc-green);background:#080808}.cc-footer-main{font-family:Impact,"Arial Narrow",Arial,sans-serif;font-size:22px;font-style:italic}.cc-footer-sub{color:#666;font-size:6px;font-weight:1000;letter-spacing:.18em;text-transform:uppercase}.cc-footer-right{color:#777;font-size:7px;font-weight:900;letter-spacing:.1em;text-transform:uppercase}
+@media(max-width:1050px){.cc-hero-grid{grid-template-columns:1fr}.cc-hero-side{border-left:0;border-top:1px solid #303030}.cc-dashboard{grid-template-columns:repeat(3,1fr)}.cc-card:first-child{grid-column:span 3}.cc-battle{grid-template-columns:repeat(3,1fr)}.cc-race-spotlight{grid-template-columns:1fr}}
+@media(max-width:760px){.page-wrap{padding:0 8px 20px}.cc-topline{margin:0 -8px 10px;grid-template-columns:1fr auto}.cc-status{display:none}.cc-hero-main{padding:26px 18px 22px}.cc-title{font-size:58px}.cc-dashboard{grid-template-columns:1fr 1fr}.cc-card:first-child{grid-column:1/-1}.cc-battle{grid-template-columns:1fr 1fr}.tabs{position:relative;grid-template-columns:1fr!important}.last-race-grid{grid-template-columns:1fr 1fr!important}.cc-footer{grid-template-columns:1fr;gap:8px}.cc-footer-right{text-align:left}}
+@media(max-width:480px){.cc-title{font-size:46px}.cc-dashboard{grid-template-columns:1fr}.cc-card:first-child{grid-column:auto}.cc-battle{grid-template-columns:1fr}.last-race-grid{grid-template-columns:1fr!important}}
+</style>
+<style id="sundayRaceReportTabStyles">
+.sunday-report-shell{
+  width:100%;
+  overflow:hidden;
+  border:1px solid #363636;
+  background:#050505;
+  box-shadow:0 18px 42px rgba(0,0,0,.45);
+}
+.sunday-report-frame{
+  display:block;
+  width:100%;
+  min-height:1100px;
+  border:0;
+  background:#050505;
+}
+@media(max-width:800px){
+  .sunday-report-frame{min-height:1300px}
+}
+</style>
+<style id="SUNDAY_FORCE_RED">
+:root{
+  --hlrn-green:#ed1c24 !important;
+  --hlrn-red:#ed1c24 !important;
+}
+.hero{border-top-color:#ed1c24 !important}
+.hero:before{
+  background:
+    linear-gradient(115deg,transparent 0 56%,rgba(237,28,36,.28) 56.2% 58.4%,transparent 58.6%),
+    linear-gradient(115deg,transparent 0 63%,rgba(255,255,255,.07) 63.2% 63.8%,transparent 64%) !important;
+}
+.live-dot{background:#ed1c24 !important;box-shadow:0 0 8px #ed1c24 !important}
+.tab-btn.active{
+  background:linear-gradient(135deg,var(--hlrn-yellow) 0 12%,#ed1c24 12% 100%) !important;
+  border-color:#ed1c24 !important;
+}
+.points,.winner-name{color:#ed1c24 !important}
+.position.top1{border-left-color:#ed1c24 !important}
+.last-race-card{border-left-color:#ed1c24 !important}
+.sunday-ticker .ticker-track em{color:#ed1c24 !important}
+.section-header:before{
+  background:linear-gradient(90deg,var(--hlrn-yellow),#ed1c24,transparent) !important;
+}
+</style>
+<style id="SUNDAY_ABSOLUTE_RED_FINAL">
+:root{
+  --cc-green:#ed1c24 !important;
+  --cc-red:#ed1c24 !important;
+  --hlrn-green:#ed1c24 !important;
+  --hlrn-red:#ed1c24 !important;
+}
+.cc-brand b,
+.cc-title span,
+.cc-leader-points,
+.cc-battle-pts{
+  color:#ed1c24 !important;
+}
+.cc-pill.green{
+  border-left-color:#ed1c24 !important;
+}
+.sunday-ticker{
+  border-top-color:#ed1c24 !important;
+}
+.sunday-ticker .ticker-label,
+.ticker-label{
+  background:#ed1c24 !important;
+}
+.cc-card:nth-child(1):before{
+  background:linear-gradient(90deg,var(--cc-yellow),#ed1c24) !important;
+}
+.cc-card:nth-child(2):before,
+.cc-spotlight-card:before{
+  background:#ed1c24 !important;
+}
+.cc-footer{
+  border-top-color:#ed1c24 !important;
+}
+.hero{
+  border-top-color:#ed1c24 !important;
+}
+.hero:before{
+  background:
+    linear-gradient(115deg,transparent 0 56%,rgba(237,28,36,.30) 56.2% 58.5%,transparent 58.7%),
+    linear-gradient(115deg,transparent 0 63%,rgba(255,255,255,.07) 63.2% 63.8%,transparent 64%) !important;
+}
+.live-dot{
+  background:#ed1c24 !important;
+  box-shadow:0 0 8px #ed1c24 !important;
+}
+.tab-btn.active{
+  background:linear-gradient(135deg,var(--hlrn-yellow) 0 12%,#ed1c24 12% 100%) !important;
+  border-color:#ed1c24 !important;
+}
+.section-header:before{
+  background:linear-gradient(90deg,var(--hlrn-yellow),#ed1c24,transparent) !important;
+}
+.points,.winner-name{
+  color:#ed1c24 !important;
+}
+.position.top1,
+.last-race-card{
+  border-left-color:#ed1c24 !important;
+}
+</style>
+<style id="HLRN_GLOBAL_PREMIUM_RED">
+:root{--premium-accent:#ed1c24;--premium-yellow:#ffd400;--premium-line:#323232}
+html{scroll-behavior:smooth}
+body{
+  background:
+    radial-gradient(circle at 50% -12%,rgba(255,255,255,.05),transparent 28%),
+    linear-gradient(180deg,#050505,#000 76%) !important;
+}
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:-10;
+  background:repeating-linear-gradient(115deg,transparent 0 92px,rgba(255,255,255,.01) 93px 94px);
+}
+button,input,select{transition:.18s ease}
+button:hover{filter:brightness(1.08)}
+table{font-variant-numeric:tabular-nums}
+::-webkit-scrollbar{height:10px;width:10px}
+::-webkit-scrollbar-track{background:#0a0a0a}
+::-webkit-scrollbar-thumb{background:#333;border:2px solid #0a0a0a}
+::-webkit-scrollbar-thumb:hover{background:#ed1c24}
+.section,.panel,.card,.table-shell,.last-race-card,.record-card,.leader-card,.matchup-card{
+  box-shadow:0 14px 38px rgba(0,0,0,.30);
+}
+.section-title,.section-header,.card-title,.records-title,.tape-title{
+  letter-spacing:-.02em;
+}
+@media(min-width:900px){
+  .section:hover,.panel:hover,.card:hover,.record-card:hover,.leader-card:hover{
+    border-color:rgba(237,28,36,.50) !important;
+  }
+}
+</style>
+<style id="HLRN_SUNDAY_REPORT_FIXED_SCROLL">
+#sundayRaceReportFrame,
+.sunday-report-frame{
+  width:100% !important;
+  height:70vh !important;
+  min-height:650px !important;
+  max-height:none !important;
+  overflow:auto !important;
+  border:0 !important;
+  background:#050505 !important;
+}
+@media(max-width:800px){
+  #sundayRaceReportFrame,
+  .sunday-report-frame{
+    height:66vh !important;
+    min-height:560px !important;
+  }
+}
+</style>
+<style id="HLRN_SUNDAY_REPORT_VISIBILITY_FIX">
+#sundayRaceReportFrame{
+  display:block !important;
+  width:100% !important;
+  height:70vh !important;
+  min-height:650px !important;
+  max-height:none !important;
+  border:0 !important;
+  overflow:auto !important;
+  background:#050505 !important;
+}
+#sundayRaceReportFrame[hidden]{display:none !important}
+@media(max-width:800px){
+  #sundayRaceReportFrame{
+    height:66vh !important;
+    min-height:560px !important;
+  }
+}
+</style>
+<style id="HLRN_SUNDAY_RACE_REPORT_HARDWIRE">
+#sundayRaceReportFrame{
+  display:block !important;
+  width:100% !important;
+  height:72vh !important;
+  min-height:680px !important;
+  max-height:none !important;
+  border:0 !important;
+  overflow:auto !important;
+  background:#050505 !important;
+}
+@media(max-width:800px){
+  #sundayRaceReportFrame{
+    height:68vh !important;
+    min-height:580px !important;
+  }
+}
+</style>
+<style id="HLRN_SUNDAY_DIRECT_REPORT_CSS">
+#sundayDirectRaceReport{
+  width:100%;
+  max-width:none;
+  background:#050505;
+  overflow:visible;
+}
+#sundayDirectRaceReport *{box-sizing:border-box;margin:0;padding:0}
+#sundayDirectRaceReport{--red:#ed1c24;--red2:#ff5b61;--yellow:#ffd400;--bg:#050505;--panel:#111;--panel2:#181818;--line:#303030;--muted:#9b9b9b;--green:#70df7a}
+#sundayDirectRaceReport{font-family:Arial,Helvetica,sans-serif;background:radial-gradient(circle at 50% -10%,#1c1c1c 0,#050505 28%,#000 70%);color:#f5f5f5;line-height:1.55}
+#sundayDirectRaceReport .page{max-width:1280px;margin:auto;padding:20px 16px 48px}
+#sundayDirectRaceReport .hero{position:relative;overflow:hidden;border:1px solid #333;border-top:6px solid var(--red);background:linear-gradient(110deg,rgba(0,0,0,.96),rgba(0,0,0,.74) 50%,rgba(237,28,36,.16)),radial-gradient(circle at 85% 20%,rgba(255,212,0,.18),transparent 30%),#0d0d0d;padding:48px 28px 42px;margin-bottom:14px}
+#sundayDirectRaceReport .hero:after{content:"HOMESTEAD";position:absolute;right:-18px;bottom:-28px;font-size:100px;font-weight:1000;letter-spacing:-5px;color:rgba(255,255,255,.025);transform:skew(-8deg)}
+#sundayDirectRaceReport .kicker{font-size:12px;font-weight:900;letter-spacing:3px;color:var(--red2);text-transform:uppercase}
+#sundayDirectRaceReport .hero h1{font-size:clamp(38px,6vw,72px);line-height:.95;text-transform:uppercase;margin:10px 0 8px;letter-spacing:-2px}
+#sundayDirectRaceReport .hero h2{font-size:clamp(18px,2.5vw,28px);color:#d5d5d5;font-weight:600}
+#sundayDirectRaceReport .hero-meta{margin-top:12px;color:#8d8d8d;font-size:14px}
+#sundayDirectRaceReport .summary-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:14px}
+#sundayDirectRaceReport .summary-card{background:linear-gradient(180deg,#171717,#101010);border:1px solid var(--line);padding:15px 10px;text-align:center}
+#sundayDirectRaceReport .summary-card strong{display:block;color:var(--red2);font-size:27px;line-height:1.05}
+#sundayDirectRaceReport .summary-card span{display:block;color:#898989;font-size:10px;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;margin-top:4px}
+#sundayDirectRaceReport .tabs{display:flex;gap:6px;flex-wrap:wrap;background:#0b0b0b;border:1px solid var(--line);padding:8px;margin-bottom:12px;position:sticky;top:0;z-index:20}
+#sundayDirectRaceReport .tab-button{flex:1 1 145px;background:#181818;color:#bcbcbc;border:1px solid #343434;padding:11px 10px;font-weight:900;cursor:pointer;text-transform:uppercase;letter-spacing:.5px}
+#sundayDirectRaceReport .tab-button.active{background:var(--red);color:#fff;border-color:#ff504a}
+#sundayDirectRaceReport .tab-content{display:none;background:#0d0d0d;border:1px solid var(--line);padding:22px;min-height:420px}
+#sundayDirectRaceReport .tab-content.active{display:block}
+#sundayDirectRaceReport .section-heading{font-size:28px;text-transform:uppercase;border-bottom:1px solid #333;padding-bottom:9px;margin-bottom:18px}
+#sundayDirectRaceReport .section-heading span{color:var(--red2)}
+#sundayDirectRaceReport .warning-banner{background:linear-gradient(135deg,#6a0500,#d3130c);border:2px solid #ff625b;padding:24px;margin-bottom:22px;box-shadow:0 0 32px rgba(237,28,36,.18)}
+#sundayDirectRaceReport .warning-banner .small{font-size:11px;letter-spacing:2px;font-weight:900;text-transform:uppercase;color:#ffd2cf}
+#sundayDirectRaceReport .warning-banner strong{display:block;font-size:clamp(27px,4vw,46px);line-height:1.02;text-transform:uppercase;margin:7px 0}
+#sundayDirectRaceReport .warning-banner p{color:#fff;font-weight:700;max-width:1000px}
+#sundayDirectRaceReport .winner-panel{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}
+#sundayDirectRaceReport .winner-main{background:linear-gradient(135deg,rgba(237,28,36,.23),transparent 55%),#151515;border-left:6px solid var(--red);padding:28px}
+#sundayDirectRaceReport .winner-main .label{font-size:11px;color:#aaa;letter-spacing:2px;font-weight:900;text-transform:uppercase}
+#sundayDirectRaceReport .winner-main h3{font-size:clamp(34px,5vw,60px);line-height:1;margin:8px 0}
+#sundayDirectRaceReport .winner-main .number{font-size:24px;color:var(--red2);font-weight:900}
+#sundayDirectRaceReport .winner-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:22px}
+#sundayDirectRaceReport .mini{background:#0b0b0b;border:1px solid #333;padding:12px;text-align:center}
+#sundayDirectRaceReport .mini strong{display:block;font-size:23px;color:#fff}
+#sundayDirectRaceReport .mini span{font-size:10px;color:#888;text-transform:uppercase;font-weight:900}
+#sundayDirectRaceReport .podium{display:grid;grid-template-columns:1fr;gap:8px}
+#sundayDirectRaceReport .podium-card{background:#171717;border:1px solid #333;padding:17px}
+#sundayDirectRaceReport .podium-card b{color:var(--red2);font-size:13px}
+#sundayDirectRaceReport .podium-card strong{display:block;font-size:20px;margin-top:3px}
+#sundayDirectRaceReport .podium-card small{color:#999}
+#sundayDirectRaceReport .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+#sundayDirectRaceReport .feature-card{background:#161616;border-top:4px solid var(--red);padding:18px}
+#sundayDirectRaceReport .feature-card .eyebrow{font-size:10px;color:#8b8b8b;text-transform:uppercase;font-weight:900;letter-spacing:1px}
+#sundayDirectRaceReport .feature-card strong{display:block;font-size:21px;margin-top:4px}
+#sundayDirectRaceReport .feature-card span{color:#aaa}
+#sundayDirectRaceReport .table-wrap{overflow:auto;border:1px solid #333}
+#sundayDirectRaceReport table{width:100%;border-collapse:collapse;min-width:990px}
+#sundayDirectRaceReport th{position:sticky;top:0;background:#1c1c1c;color:#aaa;text-align:left;font-size:11px;text-transform:uppercase;padding:10px}
+#sundayDirectRaceReport td{padding:10px;border-bottom:1px solid #252525;font-size:14px}
+#sundayDirectRaceReport tbody tr:hover{background:#171717}
+#sundayDirectRaceReport .winner-row{background:rgba(237,28,36,.12)}
+#sundayDirectRaceReport .position, #sundayDirectRaceReport .carno{color:var(--red2);font-weight:900}
+#sundayDirectRaceReport .driver{font-weight:800}
+#sundayDirectRaceReport .up{color:var(--green);font-weight:900}
+#sundayDirectRaceReport .down{color:#ff7272;font-weight:900}
+#sundayDirectRaceReport .even{color:#999}
+#sundayDirectRaceReport .clean-zero{color:var(--green);font-weight:900}
+#sundayDirectRaceReport .story{font-size:16px;color:#c9c9c9;max-width:1050px}
+#sundayDirectRaceReport .story p{margin-bottom:16px}
+#sundayDirectRaceReport .story .bigquote{font-size:24px;line-height:1.35;color:#fff;font-weight:900;border-left:5px solid var(--red);padding:18px 20px;background:#151515;margin:22px 0}
+#sundayDirectRaceReport .quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:20px 0}
+#sundayDirectRaceReport .quick{background:#151515;border:1px solid #2e2e2e;padding:15px;text-align:center}
+#sundayDirectRaceReport .quick strong{font-size:25px;color:var(--red2);display:block}
+#sundayDirectRaceReport .quick span{font-size:10px;text-transform:uppercase;color:#888;font-weight:900}
+#sundayDirectRaceReport .mover-grid, #sundayDirectRaceReport .timeline-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:14px}
+#sundayDirectRaceReport .mover-story, #sundayDirectRaceReport .moment-card{background:#161616;border:1px solid #303030;border-top:3px solid var(--red);padding:14px}
+#sundayDirectRaceReport .mover-story strong, #sundayDirectRaceReport .moment-card strong{display:block}
+#sundayDirectRaceReport .mover-story span, #sundayDirectRaceReport .moment-card span{color:#aaa;font-size:13px}
+#sundayDirectRaceReport .mover-story b{display:block;color:var(--green);font-size:22px;margin-top:5px}
+#sundayDirectRaceReport .leader-row{display:grid;grid-template-columns:220px 1fr 55px;gap:12px;align-items:center;margin:12px 0}
+#sundayDirectRaceReport .bar{height:14px;background:#242424;overflow:hidden}
+#sundayDirectRaceReport .bar-fill{height:100%;background:linear-gradient(90deg,#8d0000,var(--red2))}
+#sundayDirectRaceReport .laps{text-align:right;color:var(--red2);font-weight:900}
+#sundayDirectRaceReport .list-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+#sundayDirectRaceReport .list-card{background:#151515;border-left:4px solid var(--red);padding:12px}
+#sundayDirectRaceReport .list-card span{display:block;color:#888;font-size:13px}
+#sundayDirectRaceReport .caution-card{background:#151515;border:1px solid #333;padding:13px;margin-bottom:7px}
+#sundayDirectRaceReport .caution-card h3{color:var(--yellow);font-size:18px}
+#sundayDirectRaceReport .caution-card p{color:#ccc}
+#sundayDirectRaceReport .caution-card small{color:#777}
+#sundayDirectRaceReport .footer{text-align:center;color:#666;font-size:12px;margin-top:16px}
+@media (max-width:900px){#sundayDirectRaceReport .summary-grid{grid-template-columns:repeat(3,1fr)}
+#sundayDirectRaceReport .winner-panel{grid-template-columns:1fr}
+#sundayDirectRaceReport .feature-grid, #sundayDirectRaceReport .mover-grid, #sundayDirectRaceReport .timeline-grid{grid-template-columns:1fr}
+#sundayDirectRaceReport .quick-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:600px){#sundayDirectRaceReport .summary-grid{grid-template-columns:repeat(2,1fr)}
+#sundayDirectRaceReport .list-grid{grid-template-columns:1fr}
+#sundayDirectRaceReport .tab-content{padding:14px}
+#sundayDirectRaceReport .leader-row{grid-template-columns:130px 1fr 40px;font-size:12px}}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style id="HLRN_LEAGUE_READER_MODE">
+:root{
+  --read-accent:#ed1c24;
+  --read-yellow:#ffd400;
+  --read-bg:#030405;
+  --read-panel:#0d1114;
+  --read-panel2:#12171b;
+  --read-line:#30373e;
+  --read-text:#e1e5e8;
+  --read-muted:#818a93;
+  --read-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --read-body:"Inter","Segoe UI",Arial,sans-serif;
+}
+html,body{
+  margin:0!important;
+  padding:0!important;
+  background:var(--read-bg)!important;
+  color:#fff!important;
+  font-family:var(--read-body)!important;
+  overflow-x:hidden!important;
+}
+.page-wrap{
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:0 10px 26px!important;
+  background:
+    radial-gradient(circle at 75% 0,rgba(255,255,255,.035),transparent 26%),
+    linear-gradient(180deg,#07090b,#020303 75%)!important;
+}
+/* Remove the duplicated network/dashboard clutter. */
+.cc-topline,
+.cc-dashboard,
+.cc-battle,
+.sunday-ticker,
+.monday-ticker{
+  display:none!important;
+}
+/* Compact editorial championship intro. */
+.page-wrap > .hero{
+  margin:0 -10px 8px!important;
+  padding:18px 18px 16px!important;
+  min-height:0!important;
+  border:0!important;
+  border-bottom:1px solid var(--read-line)!important;
+  border-top:4px solid var(--read-accent)!important;
+  border-radius:0!important;
+  background:
+    radial-gradient(circle at 82% 38%,color-mix(in srgb,var(--read-accent) 13%,transparent),transparent 27%),
+    linear-gradient(110deg,#111519,#07090b 65%)!important;
+  box-shadow:0 14px 34px rgba(0,0,0,.32)!important;
+}
+.cc-hero-grid{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(220px,300px)!important;
+  gap:18px!important;
+  align-items:center!important;
+}
+.cc-hero-main{
+  min-width:0!important;
+}
+.cc-kicker{
+  margin:0 0 5px!important;
+  color:var(--read-accent)!important;
+  font-family:var(--read-body)!important;
+  font-size:7px!important;
+  font-weight:900!important;
+  letter-spacing:.16em!important;
+  text-transform:uppercase!important;
+}
+.cc-title{
+  margin:0!important;
+  color:#fff!important;
+  font-family:var(--read-display)!important;
+  font-size:clamp(36px,4vw,58px)!important;
+  line-height:.86!important;
+  font-weight:900!important;
+  font-style:italic!important;
+  letter-spacing:-.045em!important;
+  text-transform:uppercase!important;
+  text-shadow:none!important;
+}
+.cc-title span{
+  color:var(--read-accent)!important;
+}
+.cc-sub{
+  max-width:680px!important;
+  margin-top:9px!important;
+  color:#9ba4ac!important;
+  font-family:var(--read-body)!important;
+  font-size:9px!important;
+  line-height:1.55!important;
+  font-weight:600!important;
+}
+.cc-live-row{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:5px!important;
+  margin-top:10px!important;
+}
+.cc-pill{
+  min-height:0!important;
+  padding:5px 8px!important;
+  border:1px solid #30373e!important;
+  border-radius:999px!important;
+  background:#0b0f12!important;
+  color:#8d969e!important;
+  font-family:var(--read-body)!important;
+  font-size:6px!important;
+  font-weight:800!important;
+  letter-spacing:.08em!important;
+}
+/* Season number adds no useful reading value here. */
+.cc-pill.yellow{
+  display:none!important;
+}
+.cc-hero-side{
+  min-width:0!important;
+  padding:13px 14px!important;
+  border:1px solid #343c43!important;
+  border-left:4px solid var(--read-accent)!important;
+  border-radius:10px!important;
+  background:#0b0f12!important;
+  box-shadow:none!important;
+}
+.cc-leader-label{
+  color:#747d85!important;
+  font-family:var(--read-body)!important;
+  font-size:6px!important;
+  font-weight:900!important;
+  letter-spacing:.14em!important;
+  text-transform:uppercase!important;
+}
+.cc-leader-rank{
+  display:none!important;
+}
+.cc-leader-name{
+  margin-top:5px!important;
+  color:#fff!important;
+  font-family:var(--read-display)!important;
+  font-size:25px!important;
+  line-height:.95!important;
+  font-weight:900!important;
+  font-style:italic!important;
+  letter-spacing:-.025em!important;
+}
+.cc-leader-points{
+  margin-top:5px!important;
+  color:var(--read-accent)!important;
+  font-family:var(--read-display)!important;
+  font-size:19px!important;
+  font-weight:900!important;
+}
+.cc-gap{
+  margin-top:4px!important;
+  color:#7f8891!important;
+  font-family:var(--read-body)!important;
+  font-size:7px!important;
+  line-height:1.4!important;
+}
+/* Main content nav: the only navigation inside a league. */
+.page-wrap > .tabs{
+  position:relative!important;
+  top:auto!important;
+  z-index:10!important;
+  display:grid!important;
+  grid-template-columns:repeat(3,1fr)!important;
+  gap:5px!important;
+  margin:0 0 8px!important;
+  padding:5px!important;
+  border:1px solid var(--read-line)!important;
+  border-radius:9px!important;
+  background:#080b0e!important;
+  box-shadow:none!important;
+}
+.page-wrap > .tabs .tab-btn{
+  min-height:40px!important;
+  padding:7px 8px!important;
+  border:1px solid transparent!important;
+  border-radius:6px!important;
+  background:transparent!important;
+  color:#7f8992!important;
+  font-family:var(--read-display)!important;
+  font-size:12px!important;
+  font-weight:800!important;
+  font-style:italic!important;
+  letter-spacing:.005em!important;
+  text-transform:uppercase!important;
+}
+.page-wrap > .tabs .tab-btn:hover{
+  color:#fff!important;
+  background:#11161a!important;
+}
+.page-wrap > .tabs .tab-btn.active{
+  color:#fff!important;
+  border-color:#424b53!important;
+  background:#151a1f!important;
+  box-shadow:inset 0 -3px 0 var(--read-accent)!important;
+}
+/* Panels become quiet reading surfaces. */
+.page-wrap > .panel{
+  margin:0!important;
+  padding:0!important;
+  border:1px solid var(--read-line)!important;
+  border-radius:10px!important;
+  background:#090c0f!important;
+  box-shadow:none!important;
+  overflow:hidden!important;
+}
+.page-wrap > .panel:not(.active){
+  display:none!important;
+}
+.section-header{
+  min-height:54px!important;
+  padding:10px 13px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:10px!important;
+  border-bottom:1px solid #2b3238!important;
+  background:#101419!important;
+}
+.section-header h2{
+  margin:0!important;
+  color:#fff!important;
+  font-family:var(--read-display)!important;
+  font-size:22px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  font-style:italic!important;
+  letter-spacing:-.02em!important;
+}
+.count{
+  color:#737c85!important;
+  font-family:var(--read-body)!important;
+  font-size:6px!important;
+  font-weight:800!important;
+  letter-spacing:.1em!important;
+  text-transform:uppercase!important;
+}
+/* Advanced stat controls */
+.read-tools{
+  margin-left:auto;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.read-more-stats{
+  appearance:none;
+  min-height:30px;
+  padding:0 10px;
+  border:1px solid #3a434b;
+  border-radius:6px;
+  background:#0a0e11;
+  color:#aab2b9;
+  font-family:var(--read-body);
+  font-size:6px;
+  font-weight:900;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  cursor:pointer;
+}
+.read-more-stats:hover{
+  color:#fff;
+  border-color:var(--read-accent);
+}
+/* Tables: readable rather than spreadsheet-like. */
+.table-shell{
+  width:100%!important;
+  overflow:auto!important;
+  border:0!important;
+  background:#070a0d!important;
+}
+table{
+  width:100%!important;
+  border-collapse:collapse!important;
+}
+th{
+  position:static!important;
+  top:auto!important;
+  padding:9px 8px!important;
+  border:0!important;
+  border-bottom:1px solid #2b3238!important;
+  background:#0e1216!important;
+  color:#747d85!important;
+  font-family:var(--read-body)!important;
+  font-size:6px!important;
+  font-weight:900!important;
+  letter-spacing:.08em!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+}
+td{
+  padding:10px 8px!important;
+  border:0!important;
+  border-bottom:1px solid #20262b!important;
+  color:#cfd5da!important;
+  font-family:var(--read-body)!important;
+  font-size:9px!important;
+  line-height:1.25!important;
+  font-weight:600!important;
+  white-space:nowrap!important;
+}
+tbody tr:nth-child(even) td{
+  background:#0b0f12!important;
+}
+tbody tr:hover td{
+  background:#13181d!important;
+  color:#fff!important;
+}
+.name-col,
+td:nth-child(3){
+  text-align:left!important;
+  font-weight:800!important;
+}
+tbody tr:first-child td{
+  background:
+    linear-gradient(90deg,color-mix(in srgb,var(--read-accent) 11%,#0b0f12),#0b0f12)!important;
+}
+/* DRIVER STANDINGS — show the core story by default:
+   POS, CHG, DRIVER, WINS, TOP 5, POINTS */
+
+/* TEAM STANDINGS — show POS, CHG, TEAM, WINS, TOP 5, POINTS. */
+#teams:not(.show-advanced) th:nth-child(4),
+#teams:not(.show-advanced) td:nth-child(4),
+#teams:not(.show-advanced) th:nth-child(5),
+#teams:not(.show-advanced) td:nth-child(5),
+#teams:not(.show-advanced) th:nth-child(8),
+#teams:not(.show-advanced) td:nth-child(8),
+#teams:not(.show-advanced) th:nth-child(10),
+#teams:not(.show-advanced) td:nth-child(10),
+#teams:not(.show-advanced) th:nth-child(11),
+#teams:not(.show-advanced) td:nth-child(11),
+#teams:not(.show-advanced) th:nth-child(12),
+#teams:not(.show-advanced) td:nth-child(12),
+#teams:not(.show-advanced) th:nth-child(13),
+#teams:not(.show-advanced) td:nth-child(13),
+#teams:not(.show-advanced) th:nth-child(14),
+#teams:not(.show-advanced) td:nth-child(14),
+#teams:not(.show-advanced) th:nth-child(15),
+#teams:not(.show-advanced) td:nth-child(15),
+#teams:not(.show-advanced) th:nth-child(16),
+#teams:not(.show-advanced) td:nth-child(16){
+  display:none!important;
+}
+/* Last race: useful, but compact. */
+.cc-race-spotlight{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:7px!important;
+  margin:10px!important;
+}
+.cc-spotlight-card{
+  min-height:0!important;
+  padding:12px!important;
+  border:1px solid #30373e!important;
+  border-left:4px solid var(--read-accent)!important;
+  border-radius:8px!important;
+  background:#0c1013!important;
+  box-shadow:none!important;
+}
+.cc-spot-label{
+  color:#747d86!important;
+  font-size:6px!important;
+  letter-spacing:.12em!important;
+}
+.cc-spot-main{
+  margin-top:4px!important;
+  color:#fff!important;
+  font-family:var(--read-display)!important;
+  font-size:21px!important;
+  font-weight:900!important;
+  font-style:italic!important;
+}
+.cc-spot-sub{
+  margin-top:3px!important;
+  color:#7c858e!important;
+  font-size:7px!important;
+}
+.last-race-card{
+  margin:0 10px 10px!important;
+  padding:12px!important;
+  border:1px solid #2d343a!important;
+  border-radius:8px!important;
+  background:#0b0f12!important;
+  box-shadow:none!important;
+}
+/* Race Report already has its own internal title — remove duplicate header. */
+#raceReport > .section-header{
+  display:none!important;
+}
+.hlrn-direct-race-report{
+  background:#050708!important;
+  color:#e4e8eb!important;
+  font-family:var(--read-body)!important;
+}
+.hlrn-direct-race-report p,
+.hlrn-direct-race-report .story,
+.hlrn-direct-race-report .story p{
+  font-family:var(--read-body)!important;
+  font-size:14px!important;
+  line-height:1.78!important;
+  color:#c8cfd5!important;
+}
+.hlrn-direct-race-report .story{
+  max-width:960px!important;
+}
+/* Reduce needless animation and visual noise. */
+*{
+  scroll-behavior:smooth;
+}
+@media(prefers-reduced-motion:reduce){
+  *{
+    animation:none!important;
+    transition:none!important;
+    scroll-behavior:auto!important;
+  }
+}
+@media(max-width:760px){
+  .page-wrap{
+    padding-left:6px!important;
+    padding-right:6px!important;
+  }
+  .page-wrap > .hero{
+    margin-left:-6px!important;
+    margin-right:-6px!important;
+    padding:14px 11px!important;
+  }
+  .cc-hero-grid{
+    grid-template-columns:1fr!important;
+  }
+  .cc-hero-side{
+    display:grid!important;
+    grid-template-columns:1fr auto!important;
+    gap:5px 12px!important;
+    align-items:center!important;
+  }
+  .cc-gap{
+    grid-column:1/-1!important;
+  }
+  .page-wrap > .tabs{
+    grid-template-columns:1fr 1fr!important;
+  }
+  .page-wrap > .tabs .tab-btn{
+    font-size:10px!important;
+  }
+  .section-header{
+    flex-wrap:wrap!important;
+  }
+  .read-tools{
+    width:100%;
+    justify-content:flex-end;
+  }
+  .cc-race-spotlight{
+    grid-template-columns:1fr!important;
+  }
+}
+</style>
+<style id="HLRN_MOVEMENT_ARROW_COLOR_FIX">
+/* =========================================================
+   HLRN STANDINGS MOVEMENT
+   ▲ GREEN = moved UP in points / standings
+   ▼ RED   = moved DOWN
+   — GRAY  = no change
+========================================================= */
+.movement{
+    font-weight:900!important;
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:3px!important;
+    min-width:42px!important;
+    padding:4px 7px!important;
+    border-radius:3px!important;
+}
+/* POSITIVE CHANGE = UP = GREEN */
+.movement.up{
+    color:#35e67a!important;
+    border-left:3px solid #35e67a!important;
+    background:rgba(53,230,122,.055)!important;
+}
+/* NEGATIVE CHANGE = DOWN = RED */
+.movement.down{
+    color:#ff555c!important;
+    border-left:3px solid #ff555c!important;
+    background:rgba(255,85,92,.055)!important;
+}
+/* NO CHANGE = GRAY */
+.movement.same{
+    color:#757d85!important;
+    border-left:3px solid #555d64!important;
+    background:rgba(255,255,255,.025)!important;
+}
+.movement.up .movement-arrow{
+    color:#35e67a!important;
+}
+.movement.down .movement-arrow{
+    color:#ff555c!important;
+}
+.movement.same .movement-arrow{
+    color:#757d85!important;
+}
+</style>
+<style id="HLRN_STATIC_NASCAR_SERIES">
+    :root{
+      --nas-accent:#d71920;
+      --nas-ink:#111214;
+      --nas-muted:#6d7278;
+      --nas-line:#d8dade;
+      --nas-soft:#f4f5f6;
+      --nas-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+      --nas-body:"Inter","Segoe UI",Arial,sans-serif;
+    }
+    html,body{
+      background:#fff!important;
+      color:var(--nas-ink)!important;
+      font-family:var(--nas-body)!important;
+    }
+    body{overflow-x:hidden!important;overflow-y:auto!important}
+    .page-wrap{
+      width:100%!important;
+      max-width:1500px!important;
+      min-height:100%!important;
+      margin:0 auto!important;
+      padding:0 28px 48px!important;
+      background:#fff!important;
+      color:var(--nas-ink)!important;
+    }
+    .cc-topline,
+    .hero,
+    .cc-dashboard,
+    .cc-battle,
+    .sunday-ticker,
+    .monday-ticker,
+    .read-tools,
+    .cc-footer{
+      display:none!important;
+    }
+    .page-wrap>.tabs{
+      position:relative!important;
+      top:auto!important;
+      z-index:1!important;
+      display:flex!important;
+      gap:0!important;
+      margin:0 -28px 28px!important;
+      padding:0 28px!important;
+      border:0!important;
+      border-bottom:1px solid var(--nas-line)!important;
+      background:#fff!important;
+      box-shadow:none!important;
+      backdrop-filter:none!important;
+    }
+    .page-wrap>.tabs .tab-btn{
+      appearance:none!important;
+      min-height:58px!important;
+      padding:13px 20px 10px!important;
+      border:0!important;
+      border-right:1px solid #eceeef!important;
+      border-radius:0!important;
+      background:#fff!important;
+      color:#6f747a!important;
+      font-family:var(--nas-display)!important;
+      font-size:14px!important;
+      font-weight:800!important;
+      font-style:normal!important;
+      letter-spacing:.01em!important;
+      text-transform:uppercase!important;
+      box-shadow:none!important;
+      transform:none!important;
+    }
+    .page-wrap>.tabs .tab-btn:first-child{border-left:1px solid #eceeef!important}
+    .page-wrap>.tabs .tab-btn:before{display:none!important}
+    .page-wrap>.tabs .tab-btn:hover{background:#f7f7f7!important;color:#111!important}
+    .page-wrap>.tabs .tab-btn.active{
+      position:relative!important;
+      background:#f7f7f7!important;
+      color:#111!important;
+      border-color:#e0e2e4!important;
+      box-shadow:none!important;
+    }
+    .page-wrap>.tabs .tab-btn.active:after{
+      content:""!important;
+      position:absolute!important;
+      left:16px!important;right:16px!important;bottom:0!important;
+      height:4px!important;
+      background:var(--nas-accent)!important;
+    }
+    .panel,.panel.active{
+      color:var(--nas-ink)!important;
+      background:#fff!important;
+    }
+    .section-header{
+      display:flex!important;
+      align-items:end!important;
+      justify-content:space-between!important;
+      gap:18px!important;
+      margin:0 0 17px!important;
+      padding:0 0 13px!important;
+      border-bottom:2px solid #17191b!important;
+      background:#fff!important;
+    }
+    .section-header h2{
+      margin:0!important;
+      color:#111!important;
+      font-family:var(--nas-display)!important;
+      font-size:clamp(30px,3.5vw,46px)!important;
+      line-height:.92!important;
+      font-weight:900!important;
+      font-style:normal!important;
+      letter-spacing:-.025em!important;
+      text-transform:uppercase!important;
+      text-shadow:none!important;
+    }
+    .count{
+      padding:0!important;
+      border:0!important;
+      background:transparent!important;
+      color:#777c82!important;
+      font-family:var(--nas-body)!important;
+      font-size:10px!important;
+      font-weight:800!important;
+      letter-spacing:.08em!important;
+      text-transform:uppercase!important;
+    }
+    .table-shell{
+      width:100%!important;
+      max-height:none!important;
+      overflow:auto!important;
+      border:0!important;
+      border-top:1px solid #cfd2d5!important;
+      background:#fff!important;
+      box-shadow:none!important;
+    }
+    table{
+      width:100%!important;
+      min-width:1000px!important;
+      border-collapse:collapse!important;
+      border-spacing:0!important;
+      background:#fff!important;
+      color:#111!important;
+    }
+    thead th,th{
+      position:static!important;
+      top:auto!important;
+      height:42px!important;
+      padding:10px 12px!important;
+      border:0!important;
+      border-bottom:2px solid #17191b!important;
+      background:#f3f4f5!important;
+      color:#363a3e!important;
+      font-family:var(--nas-display)!important;
+      font-size:11px!important;
+      font-weight:800!important;
+      letter-spacing:.035em!important;
+      text-align:center!important;
+      text-transform:uppercase!important;
+      white-space:nowrap!important;
+    }
+    th.name-col{min-width:220px!important;text-align:left!important}
+    tbody tr{background:#fff!important}
+    tbody tr:nth-child(even) td{background:#fafafa!important}
+    tbody tr:first-child td{background:#fff!important}
+    tbody td,td{
+      height:56px!important;
+      padding:11px 12px!important;
+      border:0!important;
+      border-bottom:1px solid #dedfe1!important;
+      background:#fff!important;
+      color:#25282b!important;
+      font-family:var(--nas-body)!important;
+      font-size:12px!important;
+      line-height:1.25!important;
+      font-weight:600!important;
+      text-align:center!important;
+      white-space:nowrap!important;
+    }
+    tbody tr:nth-child(even) td{background:#fafafa!important}
+    tbody tr:hover td{background:#f1f2f3!important;color:#111!important}
+    td.name-col,td:nth-child(3){
+      color:#111!important;
+      font-family:var(--nas-display)!important;
+      font-size:16px!important;
+      font-weight:800!important;
+      text-align:left!important;
+      text-transform:uppercase!important;
+    }
+    .points{
+      color:#111!important;
+      font-family:var(--nas-display)!important;
+      font-size:18px!important;
+      font-weight:900!important;
+    }
+    .position,
+    .position.top1,.position.top2,.position.top3{
+      min-width:0!important;
+      padding:0!important;
+      border:0!important;
+      border-radius:0!important;
+      background:transparent!important;
+      color:#111!important;
+      font-family:var(--nas-display)!important;
+      font-size:18px!important;
+      font-weight:900!important;
+      box-shadow:none!important;
+    }
+    .movement{
+      min-width:0!important;
+      padding:0!important;
+      border:0!important;
+      border-radius:0!important;
+      background:transparent!important;
+      font-size:11px!important;
+      font-weight:900!important;
+    }
+    .movement.up{color:#168742!important;border:0!important;background:transparent!important}
+    .movement.down{color:#c9202b!important;border:0!important;background:transparent!important}
+    .movement.same{color:#8b9095!important;border:0!important;background:transparent!important}
+    #drivers:not(.show-advanced) th,
+    #drivers:not(.show-advanced) td,
+    #teams:not(.show-advanced) th,
+    #teams:not(.show-advanced) td{
+      display:table-cell!important;
+    }
+    .read-more-stats{display:none!important}
+    .message{color:#666!important;background:#fff!important}
+    .last-race-card,.stat-card,.cc-spotlight-card,.race-report-card,.report-card,.race-card{
+      background:#fff!important;
+      color:#111!important;
+      border:1px solid #d9dbde!important;
+      box-shadow:none!important;
+    }
+    .last-race-card h2,.last-race-card h3,.stat-card h3,
+    .section-head h2,.section-head h3{color:#111!important;text-shadow:none!important}
+    .stat-value,.big-number,.metric-value{color:#111!important}
+    .stat-label,.section-head p{color:#747a80!important}
+    a{color:#b31820}
+    @media(max-width:760px){
+      .page-wrap{padding:0 10px 36px!important}
+      .page-wrap>.tabs{margin:0 -10px 20px!important;padding:0 10px!important;overflow-x:auto!important}
+      .page-wrap>.tabs .tab-btn{min-width:135px!important;min-height:50px!important;padding:10px 12px!important;font-size:11px!important}
+      .section-header{align-items:flex-start!important;flex-direction:column!important;gap:6px!important}
+      .section-header h2{font-size:32px!important}
+      table{min-width:940px!important}
+    }
+:root{color-scheme:light!important;--hlrn-light-bg:#fff;--hlrn-light-ink:#111214;--hlrn-light-line:#d9dbde;}
+html,body{background:#fff!important;color:#111214!important;color-scheme:light!important}
+body{overflow-x:hidden!important}
+*{scrollbar-color:#b9bdc1 #f4f5f6}
+.container,.page,.wrap,.wrapper,.content-wrap,.main,.main-content,.section,.panel,.card,.table-wrap,.table-shell,.stage,.hub,.race-center,.records-page,.driver-page,.h2h-page{background-color:#fff!important;color:#111214!important}
+h1,h2,h3,h4,h5,h6,.title,.heading,.name,.driver-name,.record-title,.section-title{color:#111214!important;text-shadow:none!important}
+p,.sub,.subtitle,.meta,.muted,.label,.copy,.description{color:#656b72!important}
+a{color:#b31820!important}
+table{background:#fff!important;color:#111214!important;border-collapse:collapse!important}
+thead th,th{background:#f3f4f5!important;color:#34383d!important;border-color:#d9dbde!important}
+tbody tr,tbody td,td{background:#fff!important;color:#25282b!important;border-color:#dedfe1!important}
+tbody tr:nth-child(even) td{background:#fafafa!important}
+input,select,button{color:#111!important}
+.loading,.message,.empty,.placeholder{background:#fff!important;color:#6f747a!important}
+iframe{background:#fff!important;color-scheme:light!important}
+</style>
+<script>
+function hlrnLightRaceReport(markup){
+  if(!markup) return markup;
+  const css=`
+:root{color-scheme:light!important;--hlrn-light-bg:#fff;--hlrn-light-ink:#111214;--hlrn-light-line:#d9dbde;}
+html,body{background:#fff!important;color:#111214!important;color-scheme:light!important}
+body{overflow-x:hidden!important}
+*{scrollbar-color:#b9bdc1 #f4f5f6}
+.container,.page,.wrap,.wrapper,.content-wrap,.main,.main-content,.section,.panel,.card,.table-wrap,.table-shell,.stage,.hub,.race-center,.records-page,.driver-page,.h2h-page{background-color:#fff!important;color:#111214!important}
+h1,h2,h3,h4,h5,h6,.title,.heading,.name,.driver-name,.record-title,.section-title{color:#111214!important;text-shadow:none!important}
+p,.sub,.subtitle,.meta,.muted,.label,.copy,.description{color:#656b72!important}
+a{color:#b31820!important}
+table{background:#fff!important;color:#111214!important;border-collapse:collapse!important}
+thead th,th{background:#f3f4f5!important;color:#34383d!important;border-color:#d9dbde!important}
+tbody tr,tbody td,td{background:#fff!important;color:#25282b!important;border-color:#dedfe1!important}
+tbody tr:nth-child(even) td{background:#fafafa!important}
+input,select,button{color:#111!important}
+.loading,.message,.empty,.placeholder{background:#fff!important;color:#6f747a!important}
+iframe{background:#fff!important;color-scheme:light!important}
+`;
+  const tag='<style id="HLRN_STATIC_LIGHT_INNER">'+css+'</style>';
+  return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'</head>') : tag+markup;
+}
+</script>
+
+<style id="HLRN_EXACT_DRIVER_STANDINGS_FULL_STATS_V2">
+#drivers .table-shell{
+  overflow-x:auto!important;
+  overflow-y:visible!important;
+  -webkit-overflow-scrolling:touch!important;
+  border-radius:18px!important;
+}
+#drivers table{
+  width:100%!important;
+  min-width:1480px!important;
+  border-collapse:separate!important;
+  border-spacing:0!important;
+  background:#fff!important;
+}
+#drivers th,
+#drivers td,
+#drivers:not(.show-advanced) th,
+#drivers:not(.show-advanced) td{
+  display:table-cell!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+#drivers th{
+  padding:12px 6px!important;
+  background:#f3f4f5!important;
+  color:#111214!important;
+  font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
+  font-size:9px!important;
+  font-weight:900!important;
+  font-style:normal!important;
+  text-align:center!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+}
+#drivers th.name-col{
+  text-align:left!important;
+}
+#drivers td{
+  height:78px!important;
+  padding:10px 6px!important;
+  background:#fff!important;
+  color:#111214!important;
+  border-bottom:1px solid #dfe3e6!important;
+  font-family:"Inter","Segoe UI",Arial,sans-serif!important;
+  font-size:12px!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+}
+#drivers tbody tr:nth-child(even) td{
+  background:#fafafa!important;
+}
+#drivers tbody tr:hover td{
+  background:#f6f8fa!important;
+  color:#111214!important;
+}
+#drivers td.name-col{
+  min-width:270px!important;
+  text-align:left!important;
+  font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
+  font-size:16px!important;
+  font-weight:900!important;
+  font-style:italic!important;
+  text-transform:uppercase!important;
+}
+#drivers th:nth-child(1),#drivers td:nth-child(1){width:58px!important}
+#drivers th:nth-child(2),#drivers td:nth-child(2){width:70px!important}
+#drivers th:nth-child(3),#drivers td:nth-child(3){min-width:220px!important}
+#drivers th:nth-child(n+4),#drivers td:nth-child(n+4){min-width:62px!important}
+#drivers .points{
+  color:#111214!important;
+  font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
+  font-size:18px!important;
+  font-weight:900!important;
+}
+#drivers .gap-ahead{
+  color:#c9202b!important;
+  font-weight:900!important;
+}
+#drivers .gap-ahead.leader{
+  color:#168742!important;
+}
+#drivers .stage-points{
+  font-weight:900!important;
+}
+#drivers .penalty-points{
+  color:#c9202b!important;
+}
+#drivers tbody tr:first-child td{
+  background:#f4f6f7!important;
+}
+#drivers tbody tr:first-child td:first-child{
+  border-left:4px solid var(--hlrnAccent,#d71920)!important;
+}
+@media(max-width:760px){
+  #drivers table{min-width:1000px!important}
+  #drivers td{height:76px!important}
+}
+</style>
+
+
+<style id="HLRN_NASCAR_DRIVER_COLUMNS_FINAL">
+#drivers .table-shell{
+  overflow-x:auto!important;
+  -webkit-overflow-scrolling:touch!important;
+}
+#drivers table{
+  width:100%!important;
+  min-width:1000px!important;
+  table-layout:auto!important;
+  border-collapse:separate!important;
+  border-spacing:0!important;
+}
+#drivers th,
+#drivers td,
+#drivers:not(.show-advanced) th,
+#drivers:not(.show-advanced) td{
+  display:table-cell!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+#drivers th{
+  padding:12px 6px!important;
+  background:#f3f4f5!important;
+  color:#111214!important;
+  font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
+  font-size:9px!important;
+  font-weight:900!important;
+  text-align:center!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+}
+#drivers th.name-col{text-align:left!important}
+#drivers td{
+  height:78px!important;
+  padding:10px 6px!important;
+  background:#fff!important;
+  color:#111214!important;
+  border-bottom:1px solid #dfe3e6!important;
+  font-size:12px!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+}
+#drivers tbody tr:nth-child(even) td{background:#fafafa!important}
+#drivers td.name-col{
+  min-width:220px!important;
+  text-align:left!important;
+  font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
+  font-size:16px!important;
+  font-weight:900!important;
+  font-style:italic!important;
+  text-transform:uppercase!important;
+}
+#drivers .points{
+  font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
+  font-size:18px!important;
+  font-weight:900!important;
+}
+#drivers .stage-points{font-weight:900!important}
+#drivers .top10-head,
+#drivers th:nth-child(10),
+#drivers td:nth-child(10){
+  min-width:62px!important;
+  font-weight:900!important;
+}
+#drivers .behind{
+  font-weight:900!important;
+  color:#111214!important;
+}
+#drivers .behind.leader{color:#111214!important}
+#drivers tbody tr:first-child td:first-child{
+  border-left:4px solid var(--hlrnAccent,#d71920)!important;
+}
+@media(max-width:760px){
+  #drivers table{min-width:1000px!important}
+  #drivers td{height:76px!important}
+}
+</style>
+
+<style id="HLRN_DRIVER_COLUMNS_ALWAYS_VISIBLE_V3">
+#drivers:not(.show-advanced) th:nth-child(n),
+#drivers:not(.show-advanced) td:nth-child(n),
+#drivers.show-advanced th:nth-child(n),
+#drivers.show-advanced td:nth-child(n){
+  display:table-cell!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+#drivers .read-more-stats{display:none!important}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+<div class="cc-topline">
+  <div class="cc-brand">HLRN <b>Sunday Championship</b></div>
+  <div class="cc-status">DATA FEED <span id="ccDataStatus">CONNECTING</span> • SEASON 2</div>
+  <div class="cc-clock"><span id="ccClock">--:--:-- --</span><small>EASTERN TIME</small></div>
+</div>
+<section class="hero">
+  <div class="cc-hero-grid">
+    <div class="cc-hero-main">
+      <div class="cc-kicker">High Line Racing Network • Sunday Night League</div>
+      <div class="cc-title">Chase to the <span>Championship</span></div>
+      <div class="cc-sub">Live standings, championship movement, team battle, and last-race intelligence — all driven by the HLRN Sunday data feed.</div>
+      <div class="cc-live-row">
+        <div class="cc-pill green"><strong id="updateTime">Live • Loading...</strong></div>
+        <div class="cc-pill yellow">Season <strong>2</strong></div>
+        <div class="cc-pill red">Race Night <strong>Sunday • 8:30 PM ET</strong></div>
+      </div>
+    </div>
+    <aside class="cc-hero-side">
+      <div class="cc-leader-label">Championship Leader</div>
+      <div class="cc-leader-rank">P1</div>
+      <div class="cc-leader-name" id="ccLeaderName">Loading...</div>
+      <div class="cc-leader-points"><span id="ccLeaderPoints">--</span> <small>PTS</small></div>
+      <div class="cc-gap" id="ccLeaderGap">Calculating championship gap...</div>
+    </aside>
+  </div>
+</section>
+<div class="cc-dashboard" aria-label="Sunday championship metrics">
+  <div class="cc-card"><div class="cc-card-label">Championship Battle</div><div class="cc-card-value" id="ccBattleText">Loading standings</div><div class="cc-card-sub" id="ccBattleSub">Top contenders</div></div>
+  <div class="cc-card"><div class="cc-card-label">Most Wins</div><div class="cc-card-value" id="ccWinsLeader">--</div><div class="cc-card-sub" id="ccWinsValue">-- wins</div></div>
+  <div class="cc-card"><div class="cc-card-label">Most Top 5s</div><div class="cc-card-value" id="ccTop5Leader">--</div><div class="cc-card-sub" id="ccTop5Value">-- top 5s</div></div>
+  <div class="cc-card"><div class="cc-card-label">Biggest Mover</div><div class="cc-card-value" id="ccMoverLeader">--</div><div class="cc-card-sub" id="ccMoverValue">No change yet</div></div>
+  <div class="cc-card"><div class="cc-card-label">Incident Watch</div><div class="cc-card-value" id="ccIncLeader">--</div><div class="cc-card-sub" id="ccIncValue">-- incidents</div></div>
+</div>
+<div class="cc-battle" id="ccTopFive"></div>
+<section class="sunday-ticker" aria-label="Sunday Night League championship ticker">
+  <div class="ticker-label"><span>Sunday Series</span></div>
+  <div class="ticker-window">
+    <div class="ticker-track" id="sundayStandingsTicker">
+      <b>HLRN SUNDAY NIGHT LEAGUE</b><em>◆</em>
+      DRIVER STANDINGS • TEAM STANDINGS • LAST RACE RESULTS
+      <em>◆</em>
+      SEASON 2 • 8:30 PM ET • HIGH LINE RACING NETWORK
+    </div>
+  </div>
+  <div class="ticker-network">HLRN // CHAMPIONSHIP MODE</div>
+</section>
+<div class="tabs">
+<button class="tab-btn active"
+onclick="showTab('drivers',this)">
+Driver Standings
+</button>
+<button class="tab-btn"
+onclick="showTab('teams',this)">
+Team Standings
+</button>
+<button class="tab-btn"
+onclick="showTab('lastRace',this)">
+Last Race
+</button>
+</div>
+<section id="drivers" class="panel active">
+<div class="section-header">
+<h2>DRIVER STANDINGS</h2>
+<div id="driverCount" class="count"></div>
+</div>
+<div class="table-shell">
+<table>
+<thead>
+<tr>
+<th>POS</th>
+<th>CHG</th>
+<th class="name-col">
+DRIVER
+</th>
+<th>SEASON PTS</th>
+<th>STAGE PTS</th>
+<th>BEHIND</th>
+<th>STARTS</th>
+<th>WINS</th>
+<th>TOP 5s</th>
+<th class="top10-head">TOP 10s</th>
+<th>DNFs</th>
+<th>LAPS LED</th>
+</tr>
+</thead>
+<tbody id="driverBody"></tbody>
+</table>
+</div>
+</section>
+<section id="teams" class="panel">
+<div class="section-header">
+<h2>TEAM STANDINGS</h2>
+<div id="teamCount" class="count"></div>
+</div>
+<div class="table-shell">
+<table>
+<thead>
+<tr>
+<th>POS</th>
+<th>CHG</th>
+<th class="name-col">
+TEAM
+</th>
+<th>STARTS</th>
+<th>COUNTED</th>
+<th>WINS</th>
+<th>TOP 5</th>
+<th>TOP 10</th>
+<th>POINTS</th>
+<th>RACE PTS</th>
+<th>STAGE PTS</th>
+<th>BONUS</th>
+<th>PENALTY</th>
+<th>LAPS</th>
+<th>LED</th>
+<th>INC</th>
+</tr>
+</thead>
+<tbody id="teamBody"></tbody>
+</table>
+</div>
+</section>
+<section id="lastRace" class="panel">
+<div class="section-header">
+<h2>LAST RACE</h2>
+<div id="raceEntryCount" class="count"></div>
+</div>
+<div class="cc-race-spotlight">
+  <div class="cc-spotlight-card"><div class="cc-spot-label">Latest Winner</div><div class="cc-spot-main" id="ccLatestWinner">Loading...</div><div class="cc-spot-sub" id="ccLatestRace">Last race result</div></div>
+  <div class="cc-spotlight-card alt"><div class="cc-spot-label">Team Championship Leader</div><div class="cc-spot-main" id="ccTeamLeader">Loading...</div><div class="cc-spot-sub" id="ccTeamLeaderPts">Team points</div></div>
+</div>
+<div id="lastRaceSummary"
+class="last-race-card">
+<div class="message">
+Loading race...
+</div>
+</div>
+<div class="table-shell">
+<table>
+<thead>
+<tr>
+<th>FINISH</th>
+<th class="name-col">
+DRIVER
+</th>
+<th>POINTS</th>
+<th>LAPS LED</th>
+<th>INC</th>
+<th>STATUS</th>
+</tr>
+</thead>
+<tbody id="raceResultsBody"></tbody>
+</table>
+</div>
+</section>
+<section id="raceReport" class="panel">
+  <div class="section-header">
+    <h2>RACE REPORT</h2>
+    <div class="count">MICHIGAN INTERNATIONAL SPEEDWAY • SEPTEMBER 20, 2026</div>
+  </div>
+  <div id="sundayDirectRaceReport" class="hlrn-direct-race-report">
+<div class="page">
+<section class="hero">
+<div class="kicker">High Line Racing Network • Sunday League • Season 2</div>
+<h1>Race Report</h1>
+<h2>Michigan International Speedway • Oval</h2>
+<div class="hero-meta">September 20, 2026 • NASCAR Trucks • Unofficial Session 88788983</div>
+</section>
+<section class="summary-grid">
+<div class="summary-card"><strong>125</strong><span>Laps</span></div>
+<div class="summary-card"><strong>37</strong><span>Starters</span></div>
+<div class="summary-card"><strong>6</strong><span>Cautions</span></div>
+<div class="summary-card"><strong>19</strong><span>Caution Laps</span></div>
+<div class="summary-card"><strong>18</strong><span>Lead Changes</span></div>
+<div class="summary-card"><strong>38.924</strong><span>Fastest Lap</span></div>
+</section>
+<div class="tabs">
+<button class="tab-button active" onclick="showSundayReportTab('overview',this)">Overview</button>
+<button class="tab-button" onclick="showSundayReportTab('results',this)">Full Results</button>
+<button class="tab-button" onclick="showSundayReportTab('breakdown',this)">Race Breakdown</button>
+<button class="tab-button" onclick="showSundayReportTab('leaders',this)">Leaders</button>
+<button class="tab-button" onclick="showSundayReportTab('cautions',this)">Cautions</button>
+</div>
+<section class="tab-content active" id="overview">
+<h2 class="section-heading"><span>Race</span> Overview</h2>
+<div class="warning-banner">
+<div class="small">The defining story of Michigan</div>
+<strong>Jared Philpott Charges From 30th To Victory Lane</strong>
+<p>Official iRacing scoring lists #8 Jared Philpott as the winner after starting 30th. Philpott led 27 laps and finished 0.439 seconds ahead of Dylan C Jones. The race featured six cautions, 19 caution laps, and 18 official lead changes.</p>
+</div>
+<div class="winner-panel">
+<div class="winner-main">
+<div class="label">Race Winner</div>
+<h3>Jared Philpott</h3>
+<div class="number">#8 • Started P30 • Finished P1</div>
+<div class="winner-stats">
+<div class="mini"><strong>27</strong><span>Laps Led</span></div>
+<div class="mini"><strong>13</strong><span>Incidents</span></div>
+<div class="mini"><strong>39.318</strong><span>Best Lap</span></div>
+<div class="mini"><strong>+29</strong><span>Positions</span></div>
+</div>
+</div>
+<div class="podium">
+<div class="podium-card"><b>P1</b><strong>#8 Jared Philpott</strong><small>P30 → P1 • 27 laps led</small></div>
+<div class="podium-card"><b>P2</b><strong>#56 Dylan C Jones</strong><small>P32 → P2 • +30 positions</small></div>
+<div class="podium-card"><b>P3</b><strong>#12 Trevor Haley</strong><small>Pole • fastest lap 38.924</small></div>
+</div>
+</div>
+<div class="feature-grid">
+<div class="feature-card"><div class="eyebrow">Fastest Lap</div><strong>#12 Trevor Haley</strong><span>38.924 seconds</span></div>
+<div class="feature-card"><div class="eyebrow">Biggest Mover</div><strong>#56 Dylan C Jones</strong><span>P32 → P2 (+30)</span></div>
+<div class="feature-card"><div class="eyebrow">Fourth Place</div><strong>#03 Joshua McKinney</strong><span>P23 → P4 (+19)</span></div>
+</div>
+</section>
+<section class="tab-content" id="results">
+<h2 class="section-heading"><span>Full</span> Results</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Pos</th><th>Car</th><th>Driver</th><th>Start</th><th>+/-</th><th>Laps</th><th>Led</th><th>Best</th><th>Average</th><th>Inc</th><th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="position">P1</td>
+<td><span class="carno">#8</span></td>
+<td class="driver">Jared Philpott</td>
+<td>30</td>
+<td class="up">+29</td>
+<td>125</td>
+<td>27</td>
+<td>39.318</td>
+<td>48.700</td>
+<td>13</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P2</td>
+<td><span class="carno">#56</span></td>
+<td class="driver">Dylan C Jones</td>
+<td>32</td>
+<td class="up">+30</td>
+<td>125</td>
+<td>21</td>
+<td>39.505</td>
+<td>48.703</td>
+<td>5</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P3</td>
+<td><span class="carno">#12</span></td>
+<td class="driver">Trevor Haley</td>
+<td>1</td>
+<td class="down">-2</td>
+<td>125</td>
+<td>1</td>
+<td>38.924</td>
+<td>48.730</td>
+<td>5</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P4</td>
+<td><span class="carno">#03</span></td>
+<td class="driver">Joshua McKinney</td>
+<td>23</td>
+<td class="up">+19</td>
+<td>125</td>
+<td>0</td>
+<td>39.340</td>
+<td>48.733</td>
+<td>12</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P5</td>
+<td><span class="carno">#14</span></td>
+<td class="driver">Matthew Brown</td>
+<td>3</td>
+<td class="down">-2</td>
+<td>125</td>
+<td>12</td>
+<td>39.370</td>
+<td>48.735</td>
+<td>16</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P6</td>
+<td><span class="carno">#99</span></td>
+<td class="driver">Juan Escamilla</td>
+<td>6</td>
+<td class="">0</td>
+<td>125</td>
+<td>16</td>
+<td>39.141</td>
+<td>48.735</td>
+<td>16</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P7</td>
+<td><span class="carno">#54</span></td>
+<td class="driver">Kenwood Ramsey</td>
+<td>4</td>
+<td class="down">-3</td>
+<td>125</td>
+<td>0</td>
+<td>39.158</td>
+<td>48.738</td>
+<td>0</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P8</td>
+<td><span class="carno">#5</span></td>
+<td class="driver">Brandon Showers</td>
+<td>10</td>
+<td class="up">+2</td>
+<td>125</td>
+<td>0</td>
+<td>39.267</td>
+<td>48.753</td>
+<td>6</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P9</td>
+<td><span class="carno">#72</span></td>
+<td class="driver">Evan Parry</td>
+<td>15</td>
+<td class="up">+6</td>
+<td>125</td>
+<td>0</td>
+<td>39.406</td>
+<td>48.785</td>
+<td>5</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P10</td>
+<td><span class="carno">#9</span></td>
+<td class="driver">Darrel Ceballos</td>
+<td>11</td>
+<td class="up">+1</td>
+<td>125</td>
+<td>0</td>
+<td>39.097</td>
+<td>48.803</td>
+<td>13</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P11</td>
+<td><span class="carno">#66</span></td>
+<td class="driver">Hunter Welborn</td>
+<td>18</td>
+<td class="up">+7</td>
+<td>125</td>
+<td>0</td>
+<td>39.288</td>
+<td>48.805</td>
+<td>0</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P12</td>
+<td><span class="carno">#37</span></td>
+<td class="driver">Joshua Spragg</td>
+<td>19</td>
+<td class="up">+7</td>
+<td>125</td>
+<td>0</td>
+<td>39.477</td>
+<td>48.830</td>
+<td>6</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P13</td>
+<td><span class="carno">#100</span></td>
+<td class="driver">Eric Hayden</td>
+<td>26</td>
+<td class="up">+13</td>
+<td>125</td>
+<td>0</td>
+<td>39.516</td>
+<td>48.831</td>
+<td>6</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P14</td>
+<td><span class="carno">#83</span></td>
+<td class="driver">Timothy Tyler</td>
+<td>7</td>
+<td class="down">-7</td>
+<td>125</td>
+<td>0</td>
+<td>39.316</td>
+<td>48.832</td>
+<td>4</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P15</td>
+<td><span class="carno">#41</span></td>
+<td class="driver">Vicente Guerrero</td>
+<td>13</td>
+<td class="down">-2</td>
+<td>125</td>
+<td>0</td>
+<td>39.271</td>
+<td>48.858</td>
+<td>4</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P16</td>
+<td><span class="carno">#82</span></td>
+<td class="driver">Chris James</td>
+<td>12</td>
+<td class="down">-4</td>
+<td>125</td>
+<td>0</td>
+<td>39.388</td>
+<td>48.862</td>
+<td>10</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P17</td>
+<td><span class="carno">#21</span></td>
+<td class="driver">Jim Segredo</td>
+<td>27</td>
+<td class="up">+10</td>
+<td>125</td>
+<td>0</td>
+<td>39.412</td>
+<td>48.864</td>
+<td>6</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P18</td>
+<td><span class="carno">#01</span></td>
+<td class="driver">Jeremy S Jeffries</td>
+<td>9</td>
+<td class="down">-9</td>
+<td>125</td>
+<td>2</td>
+<td>39.645</td>
+<td>48.909</td>
+<td>4</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P19</td>
+<td><span class="carno">#78</span></td>
+<td class="driver">Randy Schweitzer</td>
+<td>35</td>
+<td class="up">+16</td>
+<td>125</td>
+<td>0</td>
+<td>39.827</td>
+<td>48.921</td>
+<td>0</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P20</td>
+<td><span class="carno">#2</span></td>
+<td class="driver">Matthew Graham</td>
+<td>37</td>
+<td class="up">+17</td>
+<td>125</td>
+<td>0</td>
+<td>39.543</td>
+<td>48.995</td>
+<td>0</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P21</td>
+<td><span class="carno">#11</span></td>
+<td class="driver">Donny Beach</td>
+<td>28</td>
+<td class="up">+7</td>
+<td>125</td>
+<td>0</td>
+<td>39.808</td>
+<td>49.010</td>
+<td>0</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P22</td>
+<td><span class="carno">#86</span></td>
+<td class="driver">Justin Crowe</td>
+<td>29</td>
+<td class="up">+7</td>
+<td>124</td>
+<td>0</td>
+<td>39.357</td>
+<td>49.099</td>
+<td>11</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P23</td>
+<td><span class="carno">#15</span></td>
+<td class="driver">Shane Hatfield</td>
+<td>36</td>
+<td class="up">+13</td>
+<td>124</td>
+<td>2</td>
+<td>39.896</td>
+<td>49.130</td>
+<td>6</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P24</td>
+<td><span class="carno">#47</span></td>
+<td class="driver">Brian Hayes</td>
+<td>16</td>
+<td class="down">-8</td>
+<td>124</td>
+<td>0</td>
+<td>39.576</td>
+<td>49.322</td>
+<td>14</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P25</td>
+<td><span class="carno">#88</span></td>
+<td class="driver">Ethan Fonseca Moreno</td>
+<td>2</td>
+<td class="down">-23</td>
+<td>123</td>
+<td>34</td>
+<td>39.379</td>
+<td>49.529</td>
+<td>5</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P26</td>
+<td><span class="carno">#22</span></td>
+<td class="driver">Randy Showers</td>
+<td>21</td>
+<td class="down">-5</td>
+<td>123</td>
+<td>0</td>
+<td>39.394</td>
+<td>49.684</td>
+<td>10</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P27</td>
+<td><span class="carno">#23</span></td>
+<td class="driver">Ryan Wilson</td>
+<td>25</td>
+<td class="down">-2</td>
+<td>123</td>
+<td>0</td>
+<td>39.690</td>
+<td>49.805</td>
+<td>4</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P28</td>
+<td><span class="carno">#74</span></td>
+<td class="driver">Brian Hennings</td>
+<td>20</td>
+<td class="down">-8</td>
+<td>122</td>
+<td>0</td>
+<td>39.550</td>
+<td>50.271</td>
+<td>18</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P29</td>
+<td><span class="carno">#87</span></td>
+<td class="driver">Brian Hebbard</td>
+<td>8</td>
+<td class="down">-21</td>
+<td>119</td>
+<td>0</td>
+<td>39.426</td>
+<td>51.480</td>
+<td>8</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P30</td>
+<td><span class="carno">#55</span></td>
+<td class="driver">Kyle Kammeron</td>
+<td>33</td>
+<td class="up">+3</td>
+<td>113</td>
+<td>0</td>
+<td>39.653</td>
+<td>54.054</td>
+<td>4</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P31</td>
+<td><span class="carno">#02</span></td>
+<td class="driver">Tj Lunn</td>
+<td>17</td>
+<td class="down">-14</td>
+<td>112</td>
+<td>0</td>
+<td>39.624</td>
+<td>54.499</td>
+<td>4</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P32</td>
+<td><span class="carno">#97</span></td>
+<td class="driver">Nicholas Baumann</td>
+<td>5</td>
+<td class="down">-27</td>
+<td>60</td>
+<td>5</td>
+<td>39.399</td>
+<td>55.077</td>
+<td>4</td>
+<td>Disconnected</td>
+</tr>
+<tr>
+<td class="position">P33</td>
+<td><span class="carno">#012</span></td>
+<td class="driver">Ethan Eckert</td>
+<td>31</td>
+<td class="down">-2</td>
+<td>59</td>
+<td>5</td>
+<td>39.428</td>
+<td>52.114</td>
+<td>12</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P34</td>
+<td><span class="carno">#09</span></td>
+<td class="driver">Shawn Stamper</td>
+<td>14</td>
+<td class="down">-20</td>
+<td>39</td>
+<td>0</td>
+<td>39.390</td>
+<td>49.259</td>
+<td>0</td>
+<td>Disconnected</td>
+</tr>
+<tr>
+<td class="position">P35</td>
+<td><span class="carno">#10</span></td>
+<td class="driver">Larkin Boyer</td>
+<td>22</td>
+<td class="down">-13</td>
+<td>28</td>
+<td>0</td>
+<td>39.170</td>
+<td>52.688</td>
+<td>4</td>
+<td>Running</td>
+</tr>
+<tr>
+<td class="position">P36</td>
+<td><span class="carno">#51</span></td>
+<td class="driver">Brock Piper</td>
+<td>24</td>
+<td class="down">-12</td>
+<td>27</td>
+<td>0</td>
+<td>39.543</td>
+<td>46.490</td>
+<td>16</td>
+<td>Disconnected</td>
+</tr>
+<tr>
+<td class="position">P37</td>
+<td><span class="carno">#71</span></td>
+<td class="driver">Jerry Fassett</td>
+<td>34</td>
+<td class="down">-3</td>
+<td>0</td>
+<td>0</td>
+<td>—</td>
+<td>0.000</td>
+<td>0</td>
+<td>Running</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="tab-content" id="breakdown">
+<h2 class="section-heading"><span>Long-Form</span> Race Breakdown</h2>
+<div class="story">
+<p>Trevor Haley started from the pole, but Ethan Fonseca Moreno took the lead on lap 1. Moreno controlled much of the opening portion before Juan Escamilla moved to the point on lap 19. Moreno reclaimed the lead on lap 22.</p>
+<p>The first caution came on lap 5 for a slow car involving #8 Jared Philpott. Philpott recovered from that early trouble and from a 30th-place starting position to eventually win the race.</p>
+<p>The second caution came on lap 27 involving #10. Race control issued repairs-needed calls to Larkin Boyer and Brock Piper during that caution cycle, along with additional admin and Lucky Dog instructions.</p>
+<p>Haley returned to the lead on lap 38 before another caution involving the #12. Ethan Eckert, Juan Escamilla, Nicholas Baumann, Jared Philpott and Dylan C Jones all spent time at the front through the middle portion of the race.</p>
+<p>The fifth caution came on lap 59 involving #012 Ethan Eckert. The sixth and final official caution began on lap 65 for a slow car involving #86. From there, Michigan settled into a long green-flag run to the finish.</p>
+<p>The supplied session-event history records Jared Philpott taking the lead from Dylan C Jones on lap 115. Official scoring at the finish put <strong>Philpott P1, Dylan C Jones P2, Trevor Haley P3, Joshua McKinney P4 and Matthew Brown P5.</strong></p>
+<div class="bigquote">Jared Philpott: P30 → P1. Dylan C Jones: P32 → P2. Two massive drives through the field decided the Michigan podium.</div>
+<p>The official race summary reports 18 lead changes. The session-event list supplied for this report contains 19 lead-change entries, so the website keeps the official summary number while still displaying every supplied lead-change event.</p>
+</div>
+<div class="quick-grid">
+<div class="quick"><strong>6</strong><span>Total Cautions</span></div>
+<div class="quick"><strong>19</strong><span>Caution Laps</span></div>
+<div class="quick"><strong>18</strong><span>Official Lead Changes</span></div>
+<div class="quick"><strong>+30</strong><span>Biggest Gain</span></div>
+</div>
+<h3 class="section-heading"><span>Major</span> Movers</h3>
+<div class="mover-grid">
+<div class="mover-story"><strong>#56 Dylan C Jones</strong><span>Started P32 • Finished P2</span><b>+30 positions</b></div><div class="mover-story"><strong>#8 Jared Philpott</strong><span>Started P30 • Finished P1</span><b>+29 positions</b></div><div class="mover-story"><strong>#03 Joshua McKinney</strong><span>Started P23 • Finished P4</span><b>+19 positions</b></div>
+</div>
+<h3 class="section-heading" style="margin-top:25px"><span>Lead</span> Change Events</h3>
+<div class="timeline-grid">
+<div class="moment-card"><strong>Lap 1</strong><span>#88 Ethan Fonseca Moreno takes over from #12 Trevor Haley</span></div><div class="moment-card"><strong>Lap 19</strong><span>#99 Juan Escamilla takes over from #88 Ethan Fonseca Moreno</span></div><div class="moment-card"><strong>Lap 22</strong><span>#88 Ethan Fonseca Moreno takes over from #99 Juan Escamilla</span></div><div class="moment-card"><strong>Lap 38</strong><span>#12 Trevor Haley takes over from #88 Ethan Fonseca Moreno</span></div><div class="moment-card"><strong>Lap 39</strong><span>#012 Ethan Eckert takes over from #12 Trevor Haley</span></div><div class="moment-card"><strong>Lap 40</strong><span>#99 Juan Escamilla takes over from #012 Ethan Eckert</span></div><div class="moment-card"><strong>Lap 48</strong><span>#97 Nicholas Baumann takes over from #99 Juan Escamilla</span></div><div class="moment-card"><strong>Lap 53</strong><span>#8 Jared Philpott takes over from #97 Nicholas Baumann</span></div><div class="moment-card"><strong>Lap 56</strong><span>#012 Ethan Eckert takes over from #8 Jared Philpott</span></div><div class="moment-card"><strong>Lap 60</strong><span>#56 Dylan C Jones takes over from #012 Ethan Eckert</span></div><div class="moment-card"><strong>Lap 70</strong><span>#99 Juan Escamilla takes over from #56 Dylan C Jones</span></div><div class="moment-card"><strong>Lap 73</strong><span>#8 Jared Philpott takes over from #99 Juan Escamilla</span></div><div class="moment-card"><strong>Lap 74</strong><span>#99 Juan Escamilla takes over from #8 Jared Philpott</span></div><div class="moment-card"><strong>Lap 76</strong><span>#14 Matthew Brown takes over from #99 Juan Escamilla</span></div><div class="moment-card"><strong>Lap 88</strong><span>#8 Jared Philpott takes over from #14 Matthew Brown</span></div><div class="moment-card"><strong>Lap 100</strong><span>#01 Jeremy S Jeffries takes over from #8 Jared Philpott</span></div><div class="moment-card"><strong>Lap 102</strong><span>#15 Shane Hatfield takes over from #01 Jeremy S Jeffries</span></div><div class="moment-card"><strong>Lap 104</strong><span>#56 Dylan C Jones takes over from #15 Shane Hatfield</span></div><div class="moment-card"><strong>Lap 115</strong><span>#8 Jared Philpott takes over from #56 Dylan C Jones</span></div>
+</div>
+</section>
+<section class="tab-content" id="leaders">
+<h2 class="section-heading"><span>Laps</span> Led</h2>
+<div class="leader-row"><div class="name"><span class="carno">#88</span> Ethan Fonseca Moreno</div><div class="bar"><div class="bar-fill" style="width:100.0%"></div></div><div class="laps">34</div></div><div class="leader-row"><div class="name"><span class="carno">#8</span> Jared Philpott</div><div class="bar"><div class="bar-fill" style="width:79.4%"></div></div><div class="laps">27</div></div><div class="leader-row"><div class="name"><span class="carno">#56</span> Dylan C Jones</div><div class="bar"><div class="bar-fill" style="width:61.8%"></div></div><div class="laps">21</div></div><div class="leader-row"><div class="name"><span class="carno">#99</span> Juan Escamilla</div><div class="bar"><div class="bar-fill" style="width:47.1%"></div></div><div class="laps">16</div></div><div class="leader-row"><div class="name"><span class="carno">#14</span> Matthew Brown</div><div class="bar"><div class="bar-fill" style="width:35.3%"></div></div><div class="laps">12</div></div><div class="leader-row"><div class="name"><span class="carno">#97</span> Nicholas Baumann</div><div class="bar"><div class="bar-fill" style="width:14.7%"></div></div><div class="laps">5</div></div><div class="leader-row"><div class="name"><span class="carno">#012</span> Ethan Eckert</div><div class="bar"><div class="bar-fill" style="width:14.7%"></div></div><div class="laps">5</div></div><div class="leader-row"><div class="name"><span class="carno">#01</span> Jeremy S Jeffries</div><div class="bar"><div class="bar-fill" style="width:5.9%"></div></div><div class="laps">2</div></div><div class="leader-row"><div class="name"><span class="carno">#15</span> Shane Hatfield</div><div class="bar"><div class="bar-fill" style="width:5.9%"></div></div><div class="laps">2</div></div><div class="leader-row"><div class="name"><span class="carno">#12</span> Trevor Haley</div><div class="bar"><div class="bar-fill" style="width:2.9%"></div></div><div class="laps">1</div></div>
+</section>
+<section class="tab-content" id="cautions">
+<h2 class="section-heading"><span>Caution</span> Log</h2>
+<div class="warning-banner">
+<div class="small">Official race summary</div>
+<strong>6 Cautions / 19 Caution Laps</strong>
+<p>The session-event history identifies the following six caution periods.</p>
+</div>
+<div class="caution-card"><h3>Lap 5</h3><p>Caution for slow car involving #8</p></div><div class="caution-card"><h3>Lap 27</h3><p>Caution for slow car involving #10</p></div><div class="caution-card"><h3>Lap 38</h3><p>Caution for slow car involving #12</p></div><div class="caution-card"><h3>Lap 51</h3><p>Caution for slow car involving #22</p></div><div class="caution-card"><h3>Lap 59</h3><p>Caution for slow car involving #012</p></div><div class="caution-card"><h3>Lap 65</h3><p>Caution for slow car involving #86</p></div>
+</section>
+<div class="footer">High Line Racing Network • HLRN Sunday League • Michigan International Speedway Race Report</div>
+</div>
+  </div>
+  <script id="HLRN_SUNDAY_DIRECT_REPORT_JS">
+function showSundayReportTab(id,btn){
+document.querySelectorAll('.tab-content').forEach(x=>x.classList.remove('active'));
+document.querySelectorAll('.tab-button').forEach(x=>x.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+btn.classList.add('active');
+}
+  </script>
+</section>
+<div class="cc-footer"><div><div class="cc-footer-main">HIGH LINE RACING NETWORK</div><div class="cc-footer-sub">Sunday Night League • Chase to the Championship</div></div><div class="cc-footer-right">Drivers • Teams • Results • Live Data</div></div>
+</div>
+<script>const LEAGUE = "sunday";
+let drivers=[];
+let teams=[];
+let results=[];
+let driverMap={};
+function showTab(id,button){
+document
+.querySelectorAll(".panel")
+.forEach(function(panel){
+panel.classList.remove("active");
+});
+document
+.querySelectorAll(".tab-btn")
+.forEach(function(btn){
+btn.classList.remove("active");
+});
+document
+.getElementById(id)
+.classList.add("active");
+button.classList.add("active");
+}
+
+// HLRN SHARED DATA V1: one published snapshot and one connection/cache status.
+// These functions live inside the existing same-origin srcdoc iframe.
+let hlrnRenderedVersion = '';
+function hlrnApplyLeagueStatus(){
+  const hub = window.parent && window.parent.HLRNData;
+  const status = hub ? hub.getStatus() : {state:'unavailable'};
+  const state = status.state;
+  const badge = document.getElementById('ccDataStatus');
+  const updated = document.getElementById('updateTime');
+  const good = state === 'current';
+  const saved = state === 'cached';
+  if(badge){
+    badge.textContent = good ? 'SYNCED' : saved ? 'SAVED DATA' : state === 'loading' ? 'CONNECTING' : 'DATA UNAVAILABLE';
+    badge.style.color = good ? (LEAGUE === 'sunday' ? '#d71920' : '#55b932') : saved ? '#a56b0b' : '#c52a2a';
+  }
+  if(updated){
+    const snapshot = hub && hub.get();
+    const stamp = snapshot && snapshot.generatedAt;
+    const when = stamp ? new Date(stamp).toLocaleString() : 'No snapshot available';
+    updated.textContent = (saved ? 'Saved snapshot' : good ? 'Published snapshot' : 'Data status') + ' • ' + when;
+  }
+}
+function hlrnRenderSharedSnapshot(snapshot){
+  const data = snapshot && snapshot.leagues && snapshot.leagues[LEAGUE];
+  if(!data || !Array.isArray(data.drivers) || !data.drivers.length || !Array.isArray(data.teams) || !Array.isArray(data.results)){
+    throw new Error('Incomplete ' + LEAGUE + ' standings snapshot');
+  }
+  if(snapshot.generatedAt !== hlrnRenderedVersion){
+    drivers = data.drivers;
+    teams = data.teams;
+    results = data.results;
+    buildDriverMap();
+    renderDrivers();
+    renderTeams();
+    renderLastRace();
+    hlrnRenderedVersion = snapshot.generatedAt;
+    if(LEAGUE === 'sunday' && typeof window.updateChaseDashboard === 'function') window.updateChaseDashboard();
+    if(LEAGUE === 'monday' && typeof window.updateMondayChaseDashboard === 'function') window.updateMondayChaseDashboard();
+  }
+  hlrnApplyLeagueStatus();
+}
+function hlrnStandingsLoadError(err){
+  console.error('HLRN shared standings:', err);
+  const hub = window.parent && window.parent.HLRNData;
+  if(hub && hub.get()) { hlrnApplyLeagueStatus(); return; } // Preserve previously displayed data.
+  const badge = document.getElementById('ccDataStatus');
+  if(badge){ badge.textContent='DATA UNAVAILABLE'; badge.style.color='#c52a2a'; }
+  const leader = document.getElementById('ccLeaderName');
+  if(leader && leader.textContent === 'Loading...') leader.textContent='DATA UNAVAILABLE';
+  const updated=document.getElementById('updateTime');
+  if(updated) updated.textContent='Data temporarily unavailable';
+}
+async function loadEverything(){
+  const hub=window.parent && window.parent.HLRNData;
+  if(!hub){ hlrnStandingsLoadError(new Error('Shared data library not loaded.')); return; }
+  try { hlrnRenderSharedSnapshot(await hub.load()); }
+  catch(err){ hlrnStandingsLoadError(err); }
+}
+function movementHTML(change){
+const n=
+Number(change)||
+0;
+if(n>0){
+return `
+<span class="movement up">
+<span class="movement-arrow">▲</span>
+${n}
+</span>
+`;
+}
+if(n<0){
+return `
+<span class="movement down">
+<span class="movement-arrow">▼</span>
+${Math.abs(n)}
+</span>
+`;
+}
+return `
+<span class="movement same">
+—
+</span>
+`;
+}
+function buildDriverMap(){
+driverMap={};
+drivers.forEach(function(driver){
+driverMap[
+String(driver.driverId)
+]=driver;
+});
+}
+
+function hlrnFirstMetric(obj,keys){
+  if(!obj) return null;
+  for(const key of keys){
+    const value=obj[key];
+    if(value!==undefined && value!==null && value!==""){
+      const n=Number(value);
+      if(Number.isFinite(n)) return n;
+    }
+  }
+  return null;
+}
+function hlrnDriverSeasonMetrics(driver){
+  const aliases={
+    racePoints:["racePoints","racePts","race_points","racepts"],
+    stagePoints:["stagePoints","stagePts","stage_points","stagepts"],
+    bonus:["bonus","bonusPoints","bonusPts","bonus_points"],
+    penalty:["penalty","penalties","penaltyPoints","penaltyPts","penalty_points"],
+    laps:["laps","lapsCompleted","completedLaps","laps_completed"]
+  };
+  const totals={racePoints:0,stagePoints:0,bonus:0,penalty:0,laps:0};
+  const seen={racePoints:false,stagePoints:false,bonus:false,penalty:false,laps:false};
+
+  (results||[]).forEach(function(result){
+    if(String(result.driverId)!==String(driver.driverId)) return;
+    Object.keys(aliases).forEach(function(metric){
+      const v=hlrnFirstMetric(result,aliases[metric]);
+      if(v!==null){
+        totals[metric]+=v;
+        seen[metric]=true;
+      }
+    });
+  });
+
+  const output={};
+  Object.keys(aliases).forEach(function(metric){
+    const direct=hlrnFirstMetric(driver,aliases[metric]);
+    output[metric]=direct!==null ? direct : (seen[metric] ? totals[metric] : null);
+  });
+  return output;
+}
+function hlrnMetricText(value,decimals){
+  return value===null || value===undefined ? "—" : formatNumber(value,decimals||0);
+}
+
+function renderDrivers(){
+const body=
+document.getElementById(
+"driverBody"
+);
+const sorted=
+drivers
+.slice()
+.sort(function(a,b){
+if(
+num(a.rank)!==
+num(b.rank)
+){
+return (
+num(a.rank)-
+num(b.rank)
+);
+}
+return (
+num(b.points)-
+num(a.points)
+);
+});
+document
+.getElementById(
+"driverCount"
+)
+.textContent=
+sorted.length+
+" Drivers";
+body.innerHTML=
+sorted
+.map(function(driver,index){
+const totals=
+getDriverTotals(
+driver.driverId
+);
+const pos=
+num(driver.rank)||
+index+1;
+const driverAhead=
+index>0 ? sorted[index-1] : null;
+const behind=
+driverAhead ? Math.max(0,num(driverAhead.points)-num(driver.points)) : 0;
+const stagePoints=
+(driver.stagePoints===undefined || driver.stagePoints===null || driver.stagePoints==="")
+? "—"
+: formatNumber(driver.stagePoints);
+return `
+<tr>
+<td>
+<span class="position ${positionClass(pos)}">
+${pos}
+</span>
+</td>
+<td>
+${movementHTML(driver.change)}
+</td>
+<td class="name-col">
+${hLrnNameWithPhoto(driver.driver)}
+</td>
+<td class="points">${formatNumber(driver.points)}</td>
+<td class="stage-points">${stagePoints}</td>
+<td class="behind ${index===0?'leader':''}">${index===0?'0':'-'+formatNumber(behind)}</td>
+<td>${formatNumber(driver.starts)}</td>
+<td>${formatNumber(driver.wins)}</td>
+<td>${formatNumber(driver.top5)}</td>
+<td>${formatNumber(driver.top10)}</td>
+<td>${formatNumber(totals.dnf)}</td>
+<td>${formatNumber(totals.led)}</td>
+</tr>
+`;
+})
+.join("");
+}
+function getDriverTotals(driverId){
+let led=0;
+let inc=0;
+let dnf=0;
+results.forEach(function(result){
+if(
+String(result.driverId)===
+String(driverId)
+){
+led+=num(result.lapsLed);
+inc+=num(result.incidents);
+const status=String(result.status||"").trim().toLowerCase();
+if(
+status &&
+/(disconnect|disqual|(^|\\s)dq($|\\s)|retir|wreck|crash|engine|out|tow)/i.test(status)
+){
+dnf++;
+}
+}
+});
+return{
+led:led,
+inc:inc,
+dnf:dnf
+};
+}
+function renderTeams(){
+const body=
+document.getElementById(
+"teamBody"
+);
+const sorted=
+teams
+.slice()
+.sort(function(a,b){
+if(
+num(a.rank)!==
+num(b.rank)
+){
+return (
+num(a.rank)-
+num(b.rank)
+);
+}
+return (
+num(b.points)-
+num(a.points)
+);
+});
+document
+.getElementById(
+"teamCount"
+)
+.textContent=
+sorted.length+
+" Teams";
+body.innerHTML=
+sorted
+.map(function(team,index){
+const pos=
+num(team.rank)||
+index+1;
+return `
+<tr>
+<td>
+<span class="position ${positionClass(pos)}">
+${pos}
+</span>
+</td>
+<td>
+${movementHTML(
+team.change
+)}
+</td>
+<td class="name-col">
+${escapeHTML(
+team.team
+)}
+</td>
+<td>${formatNumber(team.starts)}</td>
+<td>${formatNumber(team.racesCounted)}</td>
+<td>${formatNumber(team.wins)}</td>
+<td>${formatNumber(team.top5)}</td>
+<td>${formatNumber(team.top10)}</td>
+<td class="points">
+${formatNumber(team.points,1)}
+</td>
+<td>${formatNumber(team.racePoints,1)}</td>
+<td>${formatNumber(team.stagePoints,1)}</td>
+<td>${formatNumber(team.bonus,1)}</td>
+<td>${formatNumber(team.penalty,1)}</td>
+<td>${formatNumber(team.laps,1)}</td>
+<td>${formatNumber(team.lapsLed,1)}</td>
+<td>${formatNumber(team.incidents,1)}</td>
+</tr>
+`;
+})
+.join("");
+}
+function renderLastRace(){
+if(!results.length){
+return;
+}
+let latest=0;
+results.forEach(function(result){
+latest=
+Math.max(
+latest,
+num(result.raceNumber)
+);
+});
+const raceResults=
+results
+.filter(function(result){
+return (
+num(result.raceNumber)===
+latest
+);
+})
+.sort(function(a,b){
+return (
+num(a.finish)-
+num(b.finish)
+);
+});
+if(!raceResults.length){
+return;
+}
+const race=
+raceResults[0];
+const winner=
+raceResults.find(function(result){
+return (
+num(result.finish)===
+1
+);
+});
+let winnerName=
+"Unknown";
+if(
+winner &&
+driverMap[
+String(winner.driverId)
+]
+){
+winnerName=
+driverMap[
+String(winner.driverId)
+].driver;
+}
+let totalInc=0;
+let totalLed=0;
+raceResults.forEach(function(result){
+totalInc+=
+num(result.incidents);
+totalLed+=
+num(result.lapsLed);
+});
+document
+.getElementById(
+"raceEntryCount"
+)
+.textContent=
+raceResults.length+
+" Drivers";
+document
+.getElementById(
+"lastRaceSummary"
+)
+.innerHTML=`
+<div class="race-header">
+<div>
+<div class="race-track">
+${escapeHTML(race.track)}
+</div>
+<div class="race-date">
+${formatDate(race.date)}
+</div>
+</div>
+<div class="race-number">
+RACE ${latest}
+</div>
+</div>
+<div class="last-race-grid">
+<div class="stat-card">
+<div class="stat-label">
+Winner
+</div>
+<div class="stat-value winner-name">
+${escapeHTML(winnerName)}
+</div>
+</div>
+<div class="stat-card">
+<div class="stat-label">
+Drivers
+</div>
+<div class="stat-value">
+${raceResults.length}
+</div>
+</div>
+<div class="stat-card">
+<div class="stat-label">
+Laps Led
+</div>
+<div class="stat-value">
+${totalLed}
+</div>
+</div>
+<div class="stat-card">
+<div class="stat-label">
+Incidents
+</div>
+<div class="stat-value">
+${totalInc}
+</div>
+</div>
+</div>
+`;
+document
+.getElementById(
+"raceResultsBody"
+)
+.innerHTML=
+raceResults
+.map(function(result){
+const driver=
+driverMap[
+String(result.driverId)
+];
+return `
+<tr>
+<td>
+${num(result.finish)}
+</td>
+<td class="name-col">
+${escapeHTML(
+driver
+?
+driver.driver
+:
+"Unknown Driver"
+)}
+</td>
+<td class="points">
+${num(result.points)}
+</td>
+<td>
+${num(result.lapsLed)}
+</td>
+<td>
+${num(result.incidents)}
+</td>
+<td>
+${escapeHTML(result.status)}
+</td>
+</tr>
+`;
+})
+.join("");
+}
+function positionClass(pos){
+if(pos===1){
+return "top1";
+}
+if(pos===2){
+return "top2";
+}
+if(pos===3){
+return "top3";
+}
+return "";
+}
+function num(value){
+const n=
+Number(value);
+return Number.isFinite(n)
+?
+n
+:
+0;
+}
+function formatNumber(
+value,
+decimals=1
+){
+const n=
+num(value);
+if(
+Number.isInteger(n)
+){
+return String(n);
+}
+return n
+.toFixed(decimals)
+.replace(
+/\.0+$/,
+""
+);
+}
+function formatDate(value){
+const date=
+new Date(value);
+if(
+isNaN(
+date.getTime()
+)
+){
+return value||
+"";
+}
+return date.toLocaleDateString(
+[],
+{
+weekday:"long",
+month:"long",
+day:"numeric",
+year:"numeric"
+}
+);
+}
+function hLrnNameWithPhoto(name){
+const shown=String(name||"").trim();
+let n=shown;
+if(n.indexOf(",")>-1){
+  const p=n.split(",");
+  let last=(p.shift()||"").trim().replace(/\d+$/,"");
+  let first=p.join(" ").trim();
+  n=(first+" "+last).trim();
+}else{
+  n=n.replace(/\d+$/,"").trim();
+}
+let key=n.toLowerCase().replace(/[^a-z0-9]/g,"");
+const special={
+ethanfonsecamoreno:"ethan-moreno",
+dylancjones:"dylan-jones",
+joshuamckinney:"josh-mckinney",
+jeremysjeffries:"jeremy-jeffries",
+ericpedleyhayden:"eric-hayden",
+randyschweitzerrsi:"randy-schweitzer",
+sebastianmicheals:"sebastian-michaels",
+vicenteguerrero:"vincente-guerrero"
+};
+let slug=special[key]||n.toLowerCase()
+  .replace(/[^a-z0-9]+/g,"-")
+  .replace(/^-+|-+$/g,"");
+const safe=shown
+ .replace(/&/g,"&amp;")
+ .replace(/</g,"&lt;")
+ .replace(/>/g,"&gt;")
+ .replace(/"/g,"&quot;")
+ .replace(/'/g,"&#039;");
+if(!slug) return safe;
+const url="https://hunterwelborn32-creator.github.io/HLRN-App/driver-photos/cutout/"+slug+".webp";
+return '<span style="display:inline-flex;align-items:center;gap:10px;min-height:58px;vertical-align:middle">'
++'<img src="'+url+'" alt="" loading="lazy" decoding="async" onerror="this.remove()" '
++'style="display:block;width:50px;height:58px;flex:0 0 50px;object-fit:contain;object-position:center bottom;'
++'margin:-7px 0 -6px;background:transparent;border:0;outline:0;box-shadow:none">'
++'<span>'+safe+'</span></span>';
+}
+function escapeHTML(value){
+return String(
+value===undefined ||
+value===null
+?
+""
+:
+value
+)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+}
+
+// Subscribe to the ONE shared data layer. Never open six duplicate JSONP requests.
+(function connectHLRNSharedStandings(){
+  const hub = window.parent && window.parent.HLRNData;
+  if(!hub){ hlrnStandingsLoadError(new Error('Shared data library not loaded.')); return; }
+  hub.subscribe(function(detail){
+    try {
+      if(detail.snapshot) hlrnRenderSharedSnapshot(detail.snapshot);
+      else hlrnApplyLeagueStatus();
+    } catch(err){ hlrnStandingsLoadError(err); }
+  });
+  loadEverything();
+})();
+</script>
+<script>
+(function(){
+  function updateStandingsTicker(){
+    const ticker=document.getElementById("sundayStandingsTicker");
+    if(!ticker) return;
+    const rows=[...document.querySelectorAll("#driverBody tr")];
+    if(!rows.length) return;
+    const leaders=rows.slice(0,5).map(function(row,index){
+      const name=row.querySelector(".name-col")?.textContent.trim() || "";
+      const pts=row.querySelector(".points")?.textContent.trim() || "";
+      return "P"+(index+1)+" "+name+(pts ? " • "+pts+" PTS" : "");
+    }).filter(Boolean);
+    let text="<b>SUNDAY CHAMPIONSHIP</b>";
+    if(leaders.length){
+      text+="<em>◆</em>"+leaders.join("<em>◆</em>");
+    }
+    text+="<em>◆</em><b>HLRN SUNDAY NIGHT LEAGUE</b> • DRIVER STANDINGS • TEAM STANDINGS • LAST RACE";
+    ticker.innerHTML=text;
+    ticker.style.animationDuration="38s";
+  }
+  document.addEventListener("DOMContentLoaded",function(){
+    const targets=document.querySelectorAll(
+      ".tabs,.section-header,.table-shell,.last-race-card"
+    );
+    targets.forEach(el=>el.classList.add("sunday-reveal"));
+    if("IntersectionObserver" in window){
+      const io=new IntersectionObserver(entries=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){
+            entry.target.classList.add("in-view");
+            io.unobserve(entry.target);
+          }
+        });
+      },{threshold:.08});
+      targets.forEach(el=>io.observe(el));
+    }else{
+      targets.forEach(el=>el.classList.add("in-view"));
+    }
+    setTimeout(updateStandingsTicker,1500);
+    setTimeout(updateStandingsTicker,3500);
+  });
+  const driverBody=document.getElementById("driverBody");
+  if(driverBody){
+    const mo=new MutationObserver(updateStandingsTicker);
+    mo.observe(driverBody,{childList:true,subtree:true});
+  }
+})();
+</script>
+<script>
+(function(){
+  function clock(){
+    const el=document.getElementById('ccClock');
+    if(!el)return;
+    try{
+      el.textContent=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true}).format(new Date());
+    }catch(e){}
+  }
+  setInterval(clock,1000);clock();
+  function safeNum(v){const n=Number(v);return Number.isFinite(n)?n:0}
+  function topBy(arr,key){return (arr||[]).slice().sort((a,b)=>safeNum(b[key])-safeNum(a[key]))[0]||null}
+  function updateCommand(){
+    if(!Array.isArray(drivers) || !drivers.length)return;
+    const sorted=drivers.slice().sort((a,b)=>safeNum(a.rank)-safeNum(b.rank)||safeNum(b.points)-safeNum(a.points));
+    const leader=sorted[0], second=sorted[1];
+    if(leader){
+      document.getElementById('ccLeaderName').textContent=leader.driver||'Unknown';
+      document.getElementById('ccLeaderPoints').textContent=formatNumber(leader.points);
+      const gap=second?safeNum(leader.points)-safeNum(second.points):0;
+      document.getElementById('ccLeaderGap').innerHTML=second?'<b>'+escapeHTML(second.driver)+'</b> trails by <b>'+formatNumber(gap)+'</b> points.':'No second-place driver available.';
+    }
+    const wins=topBy(sorted,'wins'); if(wins){document.getElementById('ccWinsLeader').textContent=wins.driver;document.getElementById('ccWinsValue').textContent=formatNumber(wins.wins)+' wins'}
+    const t5=topBy(sorted,'top5'); if(t5){document.getElementById('ccTop5Leader').textContent=t5.driver;document.getElementById('ccTop5Value').textContent=formatNumber(t5.top5)+' top 5s'}
+    const mover=sorted.slice().sort((a,b)=>safeNum(b.change)-safeNum(a.change))[0]; if(mover){document.getElementById('ccMoverLeader').textContent=mover.driver;document.getElementById('ccMoverValue').textContent=(safeNum(mover.change)>0?'+':'')+safeNum(mover.change)+' positions'}
+    const totals=sorted.map(d=>{const t=getDriverTotals(d.driverId);return {...d,_inc:t.inc}}).sort((a,b)=>b._inc-a._inc)[0]; if(totals){document.getElementById('ccIncLeader').textContent=totals.driver;document.getElementById('ccIncValue').textContent=formatNumber(totals._inc)+' incidents'}
+    if(second){document.getElementById('ccBattleText').textContent=(leader.driver||'P1')+' vs '+(second.driver||'P2');document.getElementById('ccBattleSub').textContent=formatNumber(safeNum(leader.points)-safeNum(second.points))+' point gap'}
+    const top5=document.getElementById('ccTopFive');
+    if(top5){const lp=safeNum(leader?.points);top5.innerHTML=sorted.slice(0,5).map((d,i)=>{const gap=lp-safeNum(d.points);return '<div class="cc-battle-item"><div class="cc-battle-pos">P'+(i+1)+'</div><div class="cc-battle-name">'+escapeHTML(d.driver)+'</div><div class="cc-battle-pts">'+formatNumber(d.points)+' PTS</div><div class="cc-battle-gap">'+(i===0?'LEADER':'-'+formatNumber(gap))+'</div></div>'}).join('')}
+    if(Array.isArray(teams)&&teams.length){const ts=teams.slice().sort((a,b)=>safeNum(a.rank)-safeNum(b.rank)||safeNum(b.points)-safeNum(a.points));const t=ts[0];if(t){document.getElementById('ccTeamLeader').textContent=t.team||'Unknown';document.getElementById('ccTeamLeaderPts').textContent=formatNumber(t.points,1)+' points'}}
+    if(Array.isArray(results)&&results.length){let latest=0;results.forEach(r=>latest=Math.max(latest,safeNum(r.raceNumber)));const rr=results.filter(r=>safeNum(r.raceNumber)===latest).sort((a,b)=>safeNum(a.finish)-safeNum(b.finish));const w=rr.find(r=>safeNum(r.finish)===1);if(w){const d=driverMap[String(w.driverId)];document.getElementById('ccLatestWinner').textContent=d?d.driver:'Unknown Driver';document.getElementById('ccLatestRace').textContent=(rr[0]?.track||'Last Race')+' • Race '+latest}}
+    if(typeof window.hlrnApplyLeagueStatus==='function') window.hlrnApplyLeagueStatus();
+  }
+  window.updateChaseDashboard=updateCommand;
+  const old=window.loadEverything;
+  if(typeof old==='function'){window.loadEverything=async function(){await old();updateCommand()}}
+  document.addEventListener('DOMContentLoaded',()=>{
+    setTimeout(updateCommand,500);
+    setTimeout(updateCommand,1600);
+    setTimeout(updateCommand,3500);
+    const body=document.getElementById('driverBody');
+    if(body && 'MutationObserver' in window){
+      new MutationObserver(updateCommand).observe(body,{childList:true,subtree:true});
+    }
+  });
+  setInterval(updateCommand,10000);
+})();
+</script>
+<script id="sundayRaceReportLoader">
+(function(){
+  const REPORT_B64="";
+  let reportLoaded=false;
+  let reportObserver=null;
+  function decodeReport(){
+    const bytes=Uint8Array.from(atob(REPORT_B64),c=>c.charCodeAt(0));
+    return new TextDecoder("utf-8").decode(bytes);
+  }
+  function resizeReport(){}
+  function loadRaceReport(){
+    if(reportLoaded){resizeReport();return;}
+    const frame=document.getElementById("sundayRaceReportFrame");
+    if(!frame) return;
+    frame.addEventListener("load",function(){
+      reportLoaded=true;
+      resizeReport();
+      try{
+        const doc=frame.contentDocument;
+      }catch(e){}
+    },{once:true});
+    frame.srcdoc=hlrnLightRaceReport(decodeReport());
+  }
+  const originalShowTab=window.showTab;
+  window.showTab=function(id,button){
+    if(typeof originalShowTab==="function") originalShowTab(id,button);
+    if(id==="raceReport") loadRaceReport();
+  };
+})();
+</script>
+<script id="HLRN_READABLE_STATS_TOGGLE">
+document.addEventListener("DOMContentLoaded",function(){
+  function addToggle(panelId){
+    const panel=document.getElementById(panelId);
+    if(!panel) return;
+    const header=panel.querySelector(".section-header");
+    if(!header || header.querySelector(".read-more-stats")) return;
+    const existingCount=header.querySelector(".count");
+    const tools=document.createElement("div");
+    tools.className="read-tools";
+    if(existingCount){
+      tools.appendChild(existingCount);
+    }
+    const button=document.createElement("button");
+    button.type="button";
+    button.className="read-more-stats";
+    button.textContent="Show More Stats";
+    button.setAttribute("aria-expanded","false");
+    button.addEventListener("click",function(){
+      const open=panel.classList.toggle("show-advanced");
+      button.textContent=open ? "Show Less Stats" : "Show More Stats";
+      button.setAttribute("aria-expanded",open ? "true" : "false");
+    });
+    tools.appendChild(button);
+    header.appendChild(tools);
+  }
+
+  addToggle("teams");
+});
+</script>
+</body>
+</html>
