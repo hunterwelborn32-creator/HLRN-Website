@@ -3391,6 +3391,89 @@ html,body,.page-wrap{
   }
 }
 </style>
+
+<style id="HLRN_MOBILE_INNER_NAV_FINAL">
+@media(max-width:760px){
+  .page-wrap > .tabs{
+    position:relative!important;
+    top:auto!important;
+    z-index:40!important;
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:4px!important;
+    width:100%!important;
+    margin:8px 0 10px!important;
+    padding:4px!important;
+    border:1px solid #d9dde1!important;
+    border-radius:10px!important;
+    background:#f1f3f4!important;
+    box-shadow:none!important;
+  }
+  .page-wrap > .tabs .tab-btn{
+    position:relative!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    min-width:0!important;
+    min-height:38px!important;
+    height:38px!important;
+    margin:0!important;
+    padding:0 5px!important;
+    overflow:hidden!important;
+    border:1px solid transparent!important;
+    border-radius:7px!important;
+    background:transparent!important;
+    background-image:none!important;
+    color:#687078!important;
+    box-shadow:none!important;
+    transform:none!important;
+    font-size:0!important;
+    font-style:normal!important;
+    line-height:1!important;
+    text-align:center!important;
+    text-transform:none!important;
+  }
+  .page-wrap > .tabs .tab-btn:before{display:none!important}
+  .page-wrap > .tabs .tab-btn:after{
+    content:attr(data-mobile-label)!important;
+    position:static!important;
+    display:block!important;
+    width:auto!important;
+    height:auto!important;
+    background:transparent!important;
+    color:inherit!important;
+    font-family:"Inter","Segoe UI",Arial,sans-serif!important;
+    font-size:10px!important;
+    font-weight:800!important;
+    font-style:normal!important;
+    line-height:1!important;
+    letter-spacing:.01em!important;
+    text-transform:uppercase!important;
+  }
+  .page-wrap > .tabs .tab-btn.active{
+    border-color:#d5d9dc!important;
+    background:#fff!important;
+    color:#d71920!important;
+    box-shadow:0 2px 7px rgba(17,18,20,.08)!important;
+  }
+  .page-wrap > .tabs .tab-btn.active:before{
+    content:""!important;
+    display:block!important;
+    position:absolute!important;
+    left:8px!important;
+    right:8px!important;
+    top:auto!important;
+    bottom:0!important;
+    width:auto!important;
+    height:3px!important;
+    border-radius:999px 999px 0 0!important;
+    background:#d71920!important;
+  }
+  .page-wrap > .tabs .tab-btn:active{
+    background:#fff3f4!important;
+  }
+}
+</style>
 </head>
 <body>
 <div class="page-wrap">
@@ -3446,15 +3529,15 @@ html,body,.page-wrap{
   <div class="ticker-network">HLRN // CHAMPIONSHIP MODE</div>
 </section>
 <div class="tabs">
-<button class="tab-btn active"
+<button class="tab-btn active" data-mobile-label="Drivers"
 onclick="showTab('drivers',this)">
 Driver Standings
 </button>
-<button class="tab-btn"
+<button class="tab-btn" data-mobile-label="Teams"
 onclick="showTab('teams',this)">
 Team Standings
 </button>
-<button class="tab-btn"
+<button class="tab-btn" data-mobile-label="Last Race"
 onclick="showTab('lastRace',this)">
 Last Race
 </button>
