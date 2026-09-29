@@ -98,3 +98,36 @@ test('Monday stage awards are reclassified from bonus without changing total poi
  assert.equal(rows[1].stagePoints,4);
  assert.equal(rows[1].bonus,8);
 });
+
+test('Monday stage reconciliation keeps native stage points but fills missing stage wins', () => {
+ const stages=new Map([['10',{points:5,wins:1,awards:[{label:'Stage 1st Place',points:5}]}]]);
+ const rows=applyStageBonusReclassification([
+   {driverId:'10',points:389,stagePoints:5,stageWins:0,bonus:84}
+ ],stages);
+ assert.equal(rows[0].points,389);
+ assert.equal(rows[0].stagePoints,5);
+ assert.equal(rows[0].stageWins,1);
+ assert.equal(rows[0].bonus,84);
+});
+
+test('Monday stage reconciliation only moves the missing stage amount out of bonus', () => {
+ const stages=new Map([['10',{points:5,wins:1,awards:[]}]]);
+ const rows=applyStageBonusReclassification([
+   {driverId:'10',points:100,stagePoints:2,stageWins:0,bonus:10}
+ ],stages);
+ assert.equal(rows[0].stagePoints,5);
+ assert.equal(rows[0].stageWins,1);
+ assert.equal(rows[0].bonus,7);
+});
+
+test('stage parser survives SimRacerHub markup without bonus_form/jsTableRow classes', () => {
+ const html=`
+ <table><tbody>
+ <tr><td><a href="/driver_stats.php?season_id=30442&driver_id=10">Driver One</a></td><td>5</td><td>Stage 1st Place</td></tr>
+ <tr><td><a href="/driver_stats.php?season_id=30442&driver_id=20">Driver Two</a></td><td>4</td><td>Stage 2nd Place</td></tr>
+ </tbody></table>`;
+ const map=parseStageBonusBreakdownHtml(html);
+ assert.equal(map.get('10').points,5);
+ assert.equal(map.get('10').wins,1);
+ assert.equal(map.get('20').points,4);
+});
