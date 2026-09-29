@@ -5492,3 +5492,223 @@ body{
     font-size:6px!important;
   }
 }
+
+
+/* HLRN FROZEN RECORDER ARCHIVE */
+.hlrn-recorder-archive{
+  --rec-yellow:#ffd400;
+  --rec-red:#e31837;
+  width:100%;
+  margin:14px 0 24px;
+  padding:18px;
+  border:1px solid #303840;
+  border-left:5px solid var(--rec-yellow);
+  border-radius:9px;
+  background:
+    linear-gradient(105deg,rgba(255,212,0,.055),transparent 28%),
+    #080a0c;
+  color:#fff;
+  box-shadow:0 14px 36px rgba(0,0,0,.26);
+}
+.recorder-archive-head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:22px;
+  align-items:end;
+  padding-bottom:14px;
+  border-bottom:1px solid #303840;
+}
+.recorder-archive-head small{
+  color:var(--rec-yellow);
+  font-size:7px;
+  font-weight:1000;
+  letter-spacing:.13em;
+}
+.recorder-archive-head h2{
+  margin:5px 0 6px;
+  font-family:var(--rc-font);
+  font-size:34px;
+  font-style:italic;
+  line-height:.95;
+  text-transform:uppercase;
+}
+.recorder-archive-head p{
+  max-width:760px;
+  margin:0;
+  color:#8f99a3;
+  font-size:8px;
+  line-height:1.55;
+}
+.recorder-archive-status{
+  min-height:34px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:0 10px;
+  border:1px solid #36404a;
+  background:#101419;
+  color:#abb4bd;
+  font-size:6px;
+  letter-spacing:.08em;
+  white-space:nowrap;
+}
+.recorder-archive-status span{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#2fd477;
+  box-shadow:0 0 10px rgba(47,212,119,.55);
+}
+.recorder-archive-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+  margin-top:12px;
+}
+.recorder-card{
+  min-width:0;
+  overflow:hidden;
+  border:1px solid #303840;
+  border-top:3px solid var(--rec-yellow);
+  border-radius:7px;
+  background:#0d1014;
+}
+.recorder-card-top{
+  min-height:34px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding:0 10px;
+  border-bottom:1px solid #2b333a;
+  background:#11161c;
+  font-size:6px;
+  font-weight:1000;
+  letter-spacing:.09em;
+}
+.recorder-card-top span{color:var(--rec-yellow)}
+.recorder-card-top b{color:#9ea8b2}
+.recorder-card-body{padding:12px}
+.recorder-card-body>small{
+  color:#6f7983;
+  font-size:6px;
+  font-weight:900;
+  letter-spacing:.06em;
+}
+.recorder-card-body h3{
+  margin:5px 0 10px;
+  color:#fff;
+  font-family:var(--rc-font);
+  font-size:20px;
+  line-height:1;
+  text-transform:uppercase;
+}
+.recorder-winner{
+  padding:9px 0;
+  border-top:1px solid #272e35;
+  border-bottom:1px solid #272e35;
+}
+.recorder-winner span{
+  display:block;
+  color:#7a848e;
+  font-size:5px;
+  font-weight:1000;
+  letter-spacing:.1em;
+}
+.recorder-winner strong{
+  display:block;
+  margin-top:4px;
+  color:#fff;
+  font-size:11px;
+  text-transform:uppercase;
+}
+.recorder-facts{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  margin-top:8px;
+  border:1px solid #293139;
+}
+.recorder-facts span{
+  min-width:0;
+  padding:7px 4px;
+  border-right:1px solid #293139;
+  text-align:center;
+}
+.recorder-facts span:last-child{border-right:0}
+.recorder-facts b{
+  display:block;
+  color:#fff;
+  font-size:10px;
+}
+.recorder-facts small{
+  display:block;
+  margin-top:3px;
+  color:#6d7781;
+  font-size:4.5px;
+  font-weight:1000;
+  letter-spacing:.03em;
+}
+.recorder-card-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1px;
+  border-top:1px solid #293139;
+  background:#293139;
+}
+.recorder-card-actions a{
+  min-height:38px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:6px;
+  background:#151a20;
+  color:#fff;
+  font-size:6px;
+  font-weight:1000;
+  letter-spacing:.05em;
+  text-decoration:none;
+  text-align:center;
+}
+.recorder-card-actions a:hover{background:#202832}
+.recorder-card-actions a.secondary{color:#aab3bc}
+.recorder-archive-empty{
+  grid-column:1/-1;
+  padding:22px 14px;
+  border:1px dashed #3b444d;
+  color:#8d97a1;
+  text-align:center;
+  font-size:8px;
+  line-height:1.5;
+}
+@media(max-width:1000px){
+  .recorder-archive-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:620px){
+  .hlrn-recorder-archive{
+    margin:10px 0 20px!important;
+    padding:10px!important;
+    border-left-width:3px!important;
+  }
+  .recorder-archive-head{
+    grid-template-columns:1fr!important;
+    gap:8px!important;
+    padding-bottom:9px!important;
+  }
+  .recorder-archive-head h2{font-size:25px!important}
+  .recorder-archive-head p{font-size:7px!important}
+  .recorder-archive-status{
+    min-height:30px!important;
+    width:max-content!important;
+    max-width:100%!important;
+    font-size:5px!important;
+  }
+  .recorder-archive-grid{
+    grid-template-columns:1fr!important;
+    gap:7px!important;
+    margin-top:8px!important;
+  }
+  .recorder-card-body{padding:10px!important}
+  .recorder-card-body h3{font-size:18px!important}
+  .recorder-facts b{font-size:9px!important}
+  .recorder-card-actions a{min-height:36px!important}
+}
