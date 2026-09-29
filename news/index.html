@@ -8,8 +8,8 @@
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://highlineracingnetwork.com/news/">
 <link rel="stylesheet" href="../assets/site-shell.css?v=20260929newsroom10">
-<link rel="stylesheet" href="../assets/race-recaps.css?v=1">
 <link rel="stylesheet" href="../assets/news/newsroom-v10.css?v=20260929n10a1">
+<link rel="stylesheet" href="../assets/news/recap-center.css?v=20260929recap1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -98,20 +98,30 @@
           </div>
         </section>
 
-        <section id="recaps" style="scroll-margin-top:60px" aria-label="HLRN Post-Race Recaps">
+        <section id="recaps" style="scroll-margin-top:60px" aria-label="HLRN Race Recap Center">
           <div class="nr-section-head" style="margin-top:34px">
-            <div><small>CHECKERED-FLAG COVERAGE</small><h2>POST-RACE RECAPS</h2></div>
+            <div><small>CHECKERED-FLAG COVERAGE</small><h2>RACE RECAP CENTER</h2></div>
             <a href="race-recaps/">FULL RECAP ARCHIVE →</a>
           </div>
-          <section id="newsRaceRecaps" class="hlrn-recap-section" aria-label="HLRN Race Recaps">
-            <div class="hlrn-recap-section-head">
-              <div><small>POST-RACE COVERAGE</small><h2>Race Recaps</h2></div>
-              <a href="race-recaps/">VIEW ALL RACE RECAPS →</a>
+
+          <div class="nr-recap-center">
+            <div class="nr-recap-feature" id="nrRecapFeature">
+              <div class="nr-recap-empty">Loading the latest permanent HLRN race story…</div>
             </div>
-            <div id="newsRaceRecapsGrid" class="hlrn-recap-grid">
-              <div class="hlrn-recap-empty" data-race-recaps-loading>Race recaps will appear here automatically after the next completed HLRN race.</div>
+
+            <div class="nr-recap-toolbar">
+              <div class="nr-recap-filters" aria-label="Filter HLRN race recaps">
+                <button class="nr-recap-filter active" type="button" data-filter="all">All Recaps</button>
+                <button class="nr-recap-filter" type="button" data-filter="sunday">Sunday</button>
+                <button class="nr-recap-filter" type="button" data-filter="monday">Monday</button>
+              </div>
+              <div class="nr-recap-count" id="nrRecapFilterCount">CHECKING PERMANENT ARCHIVE</div>
             </div>
-          </section>
+
+            <div class="nr-recap-grid" id="nrRecapGrid">
+              <div class="nr-recap-empty">Race recap cards will appear automatically after a real race is frozen at checkered and published.</div>
+            </div>
+          </div>
         </section>
 
         <section class="nr-shortcuts" aria-label="HLRN newsroom desks">
@@ -203,6 +213,7 @@
 </script>
 <script src="../assets/hlrn-core.js?v=newsroom10"></script>
 <script src="../assets/news/newsroom-v10.js?v=20260929n10a2"></script>
+<script src="../assets/news/recap-center.js?v=20260929recap1"></script>
 <script>
 document.addEventListener("DOMContentLoaded",()=>{
   const shortcut=document.getElementById("nrAnnouncementShortcut");
@@ -214,6 +225,5 @@ document.addEventListener("DOMContentLoaded",()=>{
 });
 </script>
 <script src="../assets/site-shell.js?v=20260929newsroom10b"></script>
-<script src="../assets/race-recaps.js?v=1"></script>
 </body>
 </html>
