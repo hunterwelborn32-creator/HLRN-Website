@@ -18,12 +18,12 @@
   const league=["sunday","monday"].includes(String(q.get("league")||"").toLowerCase())
     ?String(q.get("league")).toLowerCase():"sunday";
   const driverId=String(q.get("driverId")||"").trim();
-  const canonical=new URL("/drivers/","https://highlineracingnetwork.com");
-  if(driver){
-    canonical.searchParams.set("league",league);
-    if(driverId)canonical.searchParams.set("driverId",driverId);
-    canonical.searchParams.set("driver",driver);
-  }
+  const slugName=value=>{
+    let s=String(value||"").trim();
+    if(s.includes(",")){const parts=s.split(",");const last=(parts.shift()||"").trim();const first=parts.join(" ").trim();s=(first+" "+last).trim();}
+    return s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"")||"driver";
+  };
+  const canonical=new URL(driver?"/drivers/"+slugName(driver)+"/":"/drivers/","https://highlineracingnetwork.com");
   const leagueLabel=league==="monday"?"Monday":"Sunday";
   const title=driver ? `${driver} | HLRN ${leagueLabel} Driver Profile` : "HLRN Drivers | High Line Racing Network";
   const description=driver
@@ -423,6 +423,11 @@ function prettyName(name){
 }
 
 
+function driverPageSlug(name){
+  let s=prettyName(name);
+  return String(s||"driver").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"")||"driver";
+}
+
 function normalizeDriver(d){
   return {
     ...d,
@@ -817,20 +822,8 @@ function showError(msg){document.getElementById("driverGrid").innerHTML=`<div cl
 function searchDrivers(){const q=document.getElementById("search").value.toLowerCase().trim();renderDrivers(drivers.filter(d=>prettyName(d.driver).toLowerCase().includes(q)||String(d.carNumber).toLowerCase().includes(q)))}
 
 function openProfile(name,options={}){
-  document.getElementById("directoryView").style.display="none";
-  document.getElementById("profileView").style.display="block";
-  window.scrollTo({top:0,behavior:options.smooth===false?"auto":"smooth"});
-  const local=drivers.find(d=>hLrnSameDriverName(d.driver,name));
-  const target=local||{driver:name,carNumber:"—",starts:"—",wins:"—",top5:"—",top10:"—",averageFinish:"—",bestFinish:"—",history:[],_fallback:true,leagueStats:{},driverIds:{}};
-  renderProfile(target);
-  if(options.updateUrl!==false){
-    const params=new URLSearchParams();
-    params.set("league",activeLeague);
-    const id=target.driverIds?.[activeLeague];
-    if(id)params.set("driverId",id);
-    params.set("driver",prettyName(target.driver));
-    history.pushState({driverProfile:true,league:activeLeague,driver:prettyName(target.driver)},"","?"+params.toString());
-  }
+  const clean=prettyName(name);
+  location.href="/drivers/"+driverPageSlug(clean)+"/";
 }
 function leagueStatCards(d){
   const leagues=[activeLeague];
