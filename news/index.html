@@ -6,6 +6,7 @@
 <title>HLRN News | High Line Racing Network</title>
 <meta name="description" content="Latest HLRN race news, league announcements, driver stories, championship coverage and network updates.">
 <link rel="stylesheet" href="../assets/site-shell.css?v=20260921b">
+<link rel="stylesheet" href="../assets/race-recaps.css?v=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -470,6 +471,7 @@ button,input{font:inherit}
       <a href="#latest">Monday League</a>
       <a href="#latest">Hosted Racing</a>
       <a href="#latest">Driver News</a>
+      <a href="race-recaps/">Race Recaps</a>
       <a href="#announcements" id="announcementsTab" aria-controls="announcementsPanel">Announcements</a>
       <a href="../standings/">Standings</a>
       <a href="../drivers/">Drivers</a>
@@ -513,6 +515,16 @@ button,input{font:inherit}
           </article>
         </div>
 
+      </div>
+    </section>
+
+    <section id="newsRaceRecaps" class="hlrn-recap-section" aria-label="HLRN Race Recaps">
+      <div class="hlrn-recap-section-head">
+        <div><small>POST-RACE COVERAGE</small><h2>Race Recaps</h2></div>
+        <a href="race-recaps/">VIEW ALL RACE RECAPS →</a>
+      </div>
+      <div id="newsRaceRecapsGrid" class="hlrn-recap-grid">
+        <div class="hlrn-recap-empty" data-race-recaps-loading>Race recaps will appear here automatically after the next completed HLRN race.</div>
       </div>
     </section>
 
@@ -634,5 +646,6 @@ button,input{font:inherit}
 })();
 </script>
 <script src="../assets/site-shell.js?v=20260921b"></script>
+<script src="../assets/race-recaps.js?v=1"></script>
 </body>
 </html>
