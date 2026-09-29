@@ -1,0 +1,17 @@
+.hlrn-recap-section{margin:28px 0 34px}
+.hlrn-recap-section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;padding-bottom:12px;border-bottom:4px solid #111}
+.hlrn-recap-section-head small{display:block;color:#e31837;font-size:9px;font-weight:1000;letter-spacing:.12em;text-transform:uppercase}
+.hlrn-recap-section-head h2{margin:3px 0 0;font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif;font-size:38px;font-style:italic;line-height:1;text-transform:uppercase}
+.hlrn-recap-section-head a{font-size:9px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase}
+.hlrn-recap-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px}
+.hlrn-recap-card{display:grid;background:#fff;border:1px solid #dfe3e7;box-shadow:0 8px 24px rgba(0,0,0,.05);transition:.16s ease;overflow:hidden}
+.hlrn-recap-card:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(0,0,0,.09);border-color:#c8cdd3}
+.hlrn-recap-card-top{display:flex;justify-content:space-between;gap:12px;padding:9px 12px;background:#11161d;color:#fff;font-size:8px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase}
+.hlrn-recap-card-top span{color:#ffd400}.hlrn-recap-card-main{padding:18px 18px 15px}
+.hlrn-recap-card-main small{color:#7d858e;font-size:8px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+.hlrn-recap-card-main h3{margin:7px 0 8px;font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif;font-size:31px;font-style:italic;line-height:.98;text-transform:uppercase}
+.hlrn-recap-card-main p{margin:0;color:#646c75;font-size:11px;line-height:1.5;font-weight:700}
+.hlrn-recap-card-foot{display:grid;grid-template-columns:1fr 1fr auto;align-items:center;gap:10px;padding:11px 14px;border-top:1px solid #e1e4e8;background:#fafbfc;font-size:8px;font-weight:900;text-transform:uppercase}
+.hlrn-recap-card-foot b{color:#e31837}.hlrn-recap-card.compact .hlrn-recap-card-main h3{font-size:26px}
+.hlrn-recap-empty{grid-column:1/-1;padding:28px;background:#fff;border:1px solid #dfe3e7;color:#707983;font-size:11px;font-weight:800;text-align:center}
+@media(max-width:760px){.hlrn-recap-grid{grid-template-columns:1fr}.hlrn-recap-section-head{align-items:flex-start;flex-direction:column}.hlrn-recap-card-foot{grid-template-columns:1fr}.hlrn-recap-card-main h3{font-size:28px}}
