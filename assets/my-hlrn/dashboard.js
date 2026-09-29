@@ -27,9 +27,10 @@ function readLogin(){
 }
 function text(id,value){const el=$(id);if(el)el.textContent=value==null?"—":String(value)}
 function formatDate(value){
-  const d=new Date(value);
+  const raw=String(value||"");
+  const d=/^\d{4}-\d{2}-\d{2}$/.test(raw)?new Date(raw+"T12:00:00Z"):new Date(value);
   if(Number.isNaN(d.getTime()))return "DATE TBD";
-  return new Intl.DateTimeFormat("en-US",{month:"short",day:"numeric",year:"numeric"}).format(d).toUpperCase();
+  return new Intl.DateTimeFormat("en-US",{month:"short",day:"numeric",year:"numeric",timeZone:"America/New_York"}).format(d).toUpperCase();
 }
 function easternToday(){
   const parts=new Intl.DateTimeFormat("en-CA",{timeZone:"America/New_York",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());
