@@ -545,7 +545,7 @@ def render_article(model):
 <meta property="og:description" content="{escape(model["subtitle"])}">
 <meta property="og:url" content="{escape(canonical)}">
 <script type="application/ld+json">{schema_json}</script>
-<link rel="stylesheet" href="/assets/site-shell.css?v=20260928v6">
+<link rel="stylesheet" href="/assets/site-shell.css?v=20260929health1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,800;1,900&family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
@@ -643,7 +643,7 @@ table{{width:100%;border-collapse:collapse}}th{{background:#11161d;color:#fff;te
     </section>
   </article>
 </main>
-<script src="/assets/site-shell.js?v=20260928v6"></script>
+<script src="/assets/site-shell.js?v=20260929health1"></script>
 </body>
 </html>
 """
