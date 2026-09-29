@@ -50,14 +50,28 @@ export function seasonDriverTotals(raw) {
 
   for (const [driverId, driver] of Object.entries(rps)) {
     if (!driver || typeof driver !== 'object') continue;
+    const counted = firstNum(driver, ['counted', 'racesCounted', 'races_counted']);
+    const ratingTotal = firstNum(driver, ['rat', 'ratingTotal', 'rating_total']);
     out.set(String(driverId), {
+      rank: firstNum(driver, ['pos2', 'pos1', 'rank']),
+      change: firstNum(driver, ['chg', 'change']),
+      starts: firstNum(driver, ['starts']),
+      racesCounted: counted,
+      wins: firstNum(driver, ['wins']),
+      top5: firstNum(driver, ['t5', 'top5']),
+      top10: firstNum(driver, ['t10', 'top10']),
+      points: firstNum(driver, ['tpts', 'points', 'totalPoints', 'total_points']),
       racePoints: firstNum(driver, ['rpts', 'racePoints', 'race_points', 'race_pts']),
       stagePoints: firstNum(driver, ['spts', 'stagePoints', 'stage_points', 'stage_pts']),
       bonus: firstNum(driver, ['bpts', 'bonus', 'bonusPoints', 'bonus_points']),
       penalty: firstNum(driver, ['ppts', 'penalty', 'penaltyPoints', 'penalty_points']),
       laps: firstNum(driver, ['laps', 'lapsCompleted', 'completedLaps', 'laps_completed']),
       lapsLed: firstNum(driver, ['led', 'lapsLed', 'laps_led']),
-      incidents: firstNum(driver, ['inc', 'incidents', 'incidentPoints', 'incident_points'])
+      incidents: firstNum(driver, ['inc', 'incidents', 'incidentPoints', 'incident_points']),
+      poles: firstNum(driver, ['poles']),
+      stageWins: firstNum(driver, ['swins', 'stageWins', 'stage_wins']),
+      ratingTotal,
+      avgRating: counted && ratingTotal !== null ? ratingTotal / counted : null
     });
   }
   return out;
@@ -74,6 +88,142 @@ export function mergeSeasonDriverTotals(drivers, raw) {
     }
     return merged;
   });
+}
+
+export function parseStageBonusBreakdownHtml(html) {
+  const out = new Map();
+  const source = String(html || '');
+  const form = source.match(/<form\b[^>]*id=['"]bonus_form['"][^>]*>([\s\S]*?)<\/form>/i);
+  if (!form) return out;
+
+  let currentDriverId = '';
+  let currentDriverName = '';
+  for (const row of form[1].matchAll(/<tr\b[^>]*class=['"][^'"]*jsTableRow[^'"]*['"][^>]*>([\s\S]*?)<\/tr>/gi)) {
+    const body = row[1];
+    const driver = body.match(/driver_stats\.php\?driver_id=(\d+)[^'"]*['"][^>]*>([\s\S]*?)<\/a>/i);
+    if (driver) {
+      currentDriverId = String(driver[1]);
+      currentDriverName = stripHtml(driver[2]);
+    }
+    const pointsMatch = body.match(/<td\b[^>]*class=['"][^'"]*text-success[^'"]*['"][^>]*>\s*(?:<span[^>]*>)?\s*([+-]?\d+(?:\.\d+)?)\s*(?:<\/span>)?/i);
+    const labelMatch = body.match(/<td\b[^>]*class=['"][^'"]*wrap[^'"]*['"][^>]*>([\s\S]*?)<\/td>/i);
+    if (!currentDriverId || !pointsMatch || !labelMatch) continue;
+
+    const label = stripHtml(labelMatch[1]);
+    const stageMatch = label.match(/^Stage\s+(\d+)(?:st|nd|rd|th)\s+Place$/i);
+    if (!stageMatch) continue;
+
+    const points = num(pointsMatch[1]) ?? 0;
+    if (points <= 0) continue;
+
+    const existing = out.get(currentDriverId) || {
+      driverId: currentDriverId,
+      driver: currentDriverName,
+      points: 0,
+      wins: 0,
+      awards: []
+    };
+    existing.points += points;
+    if (Number(stageMatch[1]) === 1) existing.wins += 1;
+    existing.awards.push({ label, points });
+    out.set(currentDriverId, existing);
+  }
+  return out;
+}
+
+export function mainSeasonRaceIds(raw) {
+  const schedules = Array.isArray(raw?.schedules)
+    ? raw.schedules
+    : (raw?.schedules && typeof raw.schedules === 'object' ? Object.values(raw.schedules) : []);
+  const ids = [];
+  for (const schedule of schedules) {
+    const race = schedule?.race_id;
+    let value = null;
+    if (race && typeof race === 'object' && !Array.isArray(race)) {
+      value = race['0.0'] ?? race['0'] ?? null;
+      if (value === null) value = Object.values(race).find(v => /^\d+$/.test(String(v ?? ''))) ?? null;
+    } else if (Array.isArray(race)) {
+      value = race.find(v => /^\d+$/.test(String(v ?? ''))) ?? null;
+    } else {
+      value = race;
+    }
+    if (/^\d+$/.test(String(value ?? ''))) ids.push(String(value));
+  }
+  return [...new Set(ids)];
+}
+
+export function combineStageAwardMaps(maps = []) {
+  const totals = new Map();
+  for (const map of maps) {
+    if (!(map instanceof Map)) continue;
+    for (const [driverId, entry] of map.entries()) {
+      const points = num(entry?.points ?? entry) ?? 0;
+      if (points <= 0) continue;
+      const existing = totals.get(String(driverId)) || {
+        driverId: String(driverId),
+        driver: entry?.driver || '',
+        points: 0,
+        wins: 0,
+        awards: []
+      };
+      existing.points += points;
+      existing.wins += num(entry?.wins) ?? 0;
+      if (Array.isArray(entry?.awards)) existing.awards.push(...entry.awards);
+      totals.set(String(driverId), existing);
+    }
+  }
+  return totals;
+}
+
+export function publishedStageTotals(drivers = []) {
+  const totals = new Map();
+  for (const driver of drivers || []) {
+    const driverId = String(driver?.driverId ?? '');
+    const points = num(driver?.stagePoints) ?? 0;
+    const wins = num(driver?.stageWins) ?? 0;
+    if (!driverId || (points <= 0 && wins <= 0)) continue;
+    totals.set(driverId, {
+      driverId,
+      driver: driver?.driver || driver?.name || '',
+      points,
+      wins,
+      awards: []
+    });
+  }
+  return totals;
+}
+
+export function applyStageBonusReclassification(drivers, stageTotals) {
+  if (!(stageTotals instanceof Map) || !stageTotals.size) return drivers || [];
+  return (drivers || []).map(driver => {
+    const driverId = String(driver?.driverId ?? '');
+    const award = stageTotals.get(driverId);
+    if (!award) return driver;
+
+    const stagePoints = num(award.points) ?? 0;
+    const stageWins = num(award.wins) ?? 0;
+    const nativeStage = num(driver?.stagePoints) ?? 0;
+    if (nativeStage > 0) return driver;
+
+    const merged = { ...driver, stagePoints, stageWins };
+    const bonus = num(driver?.bonus);
+    if (bonus !== null && stagePoints > 0) merged.bonus = Math.max(0, bonus - stagePoints);
+    return merged;
+  });
+}
+
+export function applyDriverTeams(drivers, roster = {}) {
+  const byId = new Map();
+  for (const [team, members] of Object.entries(roster || {})) {
+    for (const member of members || []) {
+      const driverId = String(member?.driverId ?? '');
+      if (driverId && !byId.has(driverId)) byId.set(driverId, team);
+    }
+  }
+  return (drivers || []).map(driver => ({
+    ...driver,
+    team: byId.get(String(driver?.driverId ?? '')) || driver?.team || ''
+  }));
 }
 
 function decodeHtml(value = '') {
@@ -130,21 +280,26 @@ export function parseTeamRostersHtml(html, drivers = []) {
   }
   return roster;
 }
-export function buildSnapshot(payloads, old = {}, hosted = old.hosted ?? null, seasonRaw = {}, teamRosters = {}) {
+export function buildSnapshot(payloads, old = {}, hosted = old.hosted ?? null, seasonRaw = {}, teamRosters = {}, stageTotals = {}) {
   const leagues = {};
   for (const league of LEAGUES) {
     leagues[league] = {};
-    for (const action of ACTIONS) {
-      const verified = validateAction(payloads[league]?.[action], action, league);
-      leagues[league][action] =
-        action === 'drivers'
-          ? mergeSeasonDriverTotals(verified, seasonRaw[league])
-          : verified;
-    }
-    leagues[league].teamRosters =
+    const roster =
       teamRosters[league] && typeof teamRosters[league] === 'object'
         ? teamRosters[league]
         : (old?.leagues?.[league]?.teamRosters || {});
+    for (const action of ACTIONS) {
+      const verified = validateAction(payloads[league]?.[action], action, league);
+      let value = action === 'drivers'
+        ? mergeSeasonDriverTotals(verified, seasonRaw[league])
+        : verified;
+      if (league === 'monday' && action === 'drivers') {
+        value = applyStageBonusReclassification(value, stageTotals.monday);
+      }
+      if (action === 'drivers') value = applyDriverTeams(value, roster);
+      leagues[league][action] = value;
+    }
+    leagues[league].teamRosters = roster;
   }
   return { schemaVersion: 1, generatedAt: new Date().toISOString(), leagues, hosted };
 }
@@ -223,6 +378,25 @@ async function requestTeamRosters(league, drivers) {
   return rosters;
 }
 
+async function requestMondayStageTotals(raw) {
+  const raceIds = mainSeasonRaceIds(raw);
+  if (!raceIds.length) throw new Error('monday/stage breakdown: no completed race ids');
+
+  const maps = await Promise.all(raceIds.map(async raceId => {
+    const url = new URL('https://simracerhub.com/season_race.php');
+    url.searchParams.set('race_id', raceId);
+    url.searchParams.set('scbp', 'y');
+    url.searchParams.set('_', String(Date.now()));
+    const html = await requestText(url, `monday/stage breakdown race ${raceId}`, {
+      'User-Agent': 'Mozilla/5.0',
+      'Accept': 'text/html,application/xhtml+xml'
+    });
+    return parseStageBonusBreakdownHtml(html);
+  }));
+
+  return combineStageAwardMaps(maps);
+}
+
 export async function sync({
   endpoint = process.env.HLRN_LEAGUE_WEBAPP_URL,
   hostedEndpoint = process.env.HLRN_HOSTED_WEBAPP_URL,
@@ -257,6 +431,15 @@ export async function sync({
     }
   }
 
+  const stageTotals = {};
+  try {
+    stageTotals.monday = await requestMondayStageTotals(seasonRaw.monday);
+    console.log(`monday stage breakdown rebuilt for ${stageTotals.monday.size} drivers across ${mainSeasonRaceIds(seasonRaw.monday).length} races.`);
+  } catch (e) {
+    stageTotals.monday = publishedStageTotals(old?.leagues?.monday?.drivers || []);
+    console.warn('monday stage breakdown refresh failed; prior published stage totals retained:', e.message);
+  }
+
   const teamRosters = {};
   for (const league of LEAGUES) {
     try {
@@ -284,7 +467,7 @@ export async function sync({
     console.log('HLRN_HOSTED_WEBAPP_URL not configured; existing Hosted snapshot retained.');
   }
 
-  const next = buildSnapshot(payloads, old, hosted, seasonRaw, teamRosters);
+  const next = buildSnapshot(payloads, old, hosted, seasonRaw, teamRosters, stageTotals);
   if (sameData(old, next)) {
     console.log('No data changes; prior snapshot kept.');
     return false;
