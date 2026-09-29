@@ -216,6 +216,7 @@ table{width:100%;border-collapse:collapse;min-width:840px}th,td{padding:13px 14p
   </div>
 </section>
 
+<script src="../assets/hlrn-core.js?v=drivers-profile-2"></script>
 <script>
 const HLRN_API_URL="https://script.google.com/macros/s/AKfycbwo4C9RyV-H-F4ekKFcgmrYVpyOUsh9dmFf2jVhJwvieCTKpKzAR_k6lNcppBuehj58/exec";
 const HLRN_DRIVER_PHOTO_BASE="https://hunterwelborn32-creator.github.io/HLRN-App/driver-photos/cutout/";
@@ -488,7 +489,7 @@ function combineDriverFeeds(feeds, resultFeeds){
           driver:prettyName(d.driver),carNumber:d.carNumber||KNOWN_DRIVER_NUMBERS[hLrnPhotoKey(d.driver)]||"—",
           starts:0,wins:0,top5:0,top10:0,points:0,
           _avgWeighted:0,_avgStarts:0,bestFinish:null,lapsLed:0,
-          leagueStats:{},history:[],_fallback:false
+          driverIds:{},leagueStats:{},history:[],_fallback:false
         });
       }
       const out=map.get(key);
@@ -510,9 +511,13 @@ function combineDriverFeeds(feeds, resultFeeds){
       out.leagueStats[league]={
         rank:d.rank??"—",change:d.change??0,points:num(d.points),starts,
         wins:num(d.wins),top5:num(d.top5),top10:num(d.top10),
-        averageFinish:Number.isFinite(avg)?avg:"—"
+        averageFinish:Number.isFinite(avg)?avg:"—",
+        racePoints:d.racePoints??null,stagePoints:d.stagePoints??null,
+        bonus:d.bonus??null,penalty:d.penalty??null,laps:d.laps??null,
+        lapsLed:d.lapsLed??null,incidents:d.incidents??null
       };
       if(d.driverId!==undefined && d.driverId!==null && String(d.driverId)!==""){
+        out.driverIds[league]=String(d.driverId);
         idToKey.set(league+"|"+String(d.driverId),key);
       }
     });
@@ -560,6 +565,92 @@ const leagueData={sunday:{drivers:[],updated:0,loading:false,results:[]},monday:
 function readLeagueCache(){try{return JSON.parse(localStorage.getItem(HLRN_LEAGUE_CACHE_KEY)||"{}")||{};}catch{return {};}}
 function saveLeagueCache(){try{localStorage.setItem(HLRN_LEAGUE_CACHE_KEY,JSON.stringify(leagueData));}catch{}}
 function leagueLabel(league){return league==="sunday"?"Sunday":"Monday";}
+
+const HLRN_PROFILE_QUERY=new URLSearchParams(location.search);
+const HLRN_PROFILE_REQUEST={
+  league:["sunday","monday"].includes(String(HLRN_PROFILE_QUERY.get("league")||"").toLowerCase())
+    ?String(HLRN_PROFILE_QUERY.get("league")).toLowerCase():"sunday",
+  driverId:String(HLRN_PROFILE_QUERY.get("driverId")||"").trim(),
+  driver:String(HLRN_PROFILE_QUERY.get("driver")||"").trim()
+};
+let hlrnDirectProfilePending=!!(HLRN_PROFILE_REQUEST.driverId||HLRN_PROFILE_REQUEST.driver);
+
+function hLrnSameDriverName(a,b){return mergeKey(prettyName(a))===mergeKey(prettyName(b));}
+function hLrnSharedDriver(league,driver){
+  const rows=window.HLRNData?.league?.(league)?.drivers||[];
+  const id=String(driver?.driverIds?.[league]||"");
+  return rows.find(row=>id&&String(row.driverId||"")===id)
+    ||rows.find(row=>hLrnSameDriverName(row.driver,driver?.driver));
+}
+function enrichDriverFromShared(league,driver){
+  const shared=hLrnSharedDriver(league,driver);
+  if(!shared)return driver;
+  const stats=driver.leagueStats?.[league]||{};
+  const metric=(key,fallback=null)=>{
+    const value=shared[key];
+    return value===undefined||value===null||value===""?fallback:value;
+  };
+  driver.driverIds=driver.driverIds||{};
+  if(shared.driverId!==undefined&&shared.driverId!==null)driver.driverIds[league]=String(shared.driverId);
+  driver.leagueStats=driver.leagueStats||{};
+  driver.leagueStats[league]={
+    ...stats,
+    rank:metric("rank",stats.rank??"—"),change:metric("change",stats.change??0),
+    points:metric("points",stats.points??0),starts:metric("starts",metric("races",stats.starts??0)),
+    wins:metric("wins",stats.wins??0),top5:metric("top5",stats.top5??0),top10:metric("top10",stats.top10??0),
+    averageFinish:metric("avgFinish",stats.averageFinish??"—"),
+    racePoints:metric("racePoints",stats.racePoints),stagePoints:metric("stagePoints",stats.stagePoints),
+    bonus:metric("bonus",stats.bonus),penalty:metric("penalty",stats.penalty),
+    laps:metric("laps",stats.laps),lapsLed:metric("lapsLed",stats.lapsLed),incidents:metric("incidents",stats.incidents)
+  };
+  const s=driver.leagueStats[league];
+  driver.points=num(s.points);driver.starts=num(s.starts);driver.wins=num(s.wins);driver.top5=num(s.top5);driver.top10=num(s.top10);
+  if(s.averageFinish!==undefined&&s.averageFinish!==null&&s.averageFinish!=="")driver.averageFinish=s.averageFinish;
+  if(s.lapsLed!==undefined&&s.lapsLed!==null)driver.lapsLed=num(s.lapsLed);
+  return driver;
+}
+function enrichLeagueDriversFromShared(league){
+  const state=leagueData[league];
+  if(!state||!Array.isArray(state.drivers))return;
+  state.drivers=state.drivers.map(driver=>enrichDriverFromShared(league,driver));
+  if(activeLeague===league){
+    drivers=state.drivers;
+    const open=document.getElementById("profileView").style.display==="block";
+    if(open){
+      const name=document.querySelector("#profileContent h2")?.textContent;
+      const d=drivers.find(x=>hLrnSameDriverName(x.driver,name));
+      if(d)renderProfile(d);
+    }else renderActiveLeague();
+  }
+}
+async function loadSharedDriverMetrics(){
+  if(!window.HLRNData)return;
+  try{
+    await window.HLRNData.load();
+    enrichLeagueDriversFromShared("sunday");
+    enrichLeagueDriversFromShared("monday");
+    tryOpenRequestedProfile();
+  }catch(e){console.warn("HLRN enriched driver metrics unavailable",e);}
+}
+function requestedDriver(){
+  const list=leagueData[HLRN_PROFILE_REQUEST.league]?.drivers||[];
+  return list.find(d=>HLRN_PROFILE_REQUEST.driverId&&String(d.driverIds?.[HLRN_PROFILE_REQUEST.league]||"")===HLRN_PROFILE_REQUEST.driverId)
+    ||list.find(d=>HLRN_PROFILE_REQUEST.driver&&hLrnSameDriverName(d.driver,HLRN_PROFILE_REQUEST.driver));
+}
+function tryOpenRequestedProfile(){
+  if(!hlrnDirectProfilePending)return false;
+  const target=requestedDriver();
+  if(!target)return false;
+  if(activeLeague!==HLRN_PROFILE_REQUEST.league){
+    activeLeague=HLRN_PROFILE_REQUEST.league;
+    document.body.classList.toggle("monday-league",activeLeague==="monday");
+    document.querySelectorAll(".league-tab").forEach(btn=>{const on=btn.dataset.league===activeLeague;btn.classList.toggle("active",on);btn.setAttribute("aria-selected",String(on));});
+  }
+  drivers=leagueData[activeLeague].drivers;
+  hlrnDirectProfilePending=false;
+  openProfile(target.driver,{updateUrl:false,smooth:false});
+  return true;
+}
 function makeLeagueDrivers(league,driverFeed,resultFeed){
   const result=combineDriverFeeds([driverFeed],resultFeed?[resultFeed]:[]);
   return result.map(d=>({...d,history:(d.history||[]).filter(r=>r.league===league),leagueStats:{[league]:d.leagueStats?.[league]}}));
@@ -594,12 +685,16 @@ async function refreshLeague(league){
     if(!feed||feed.success===false||!Array.isArray(feed.drivers))throw new Error("Invalid driver feed");
     // Show the league roster immediately; race history must not hold up the cards.
     state.drivers=makeLeagueDrivers(league,feed,null);
-    state.updated=Date.now();saveLeagueCache();
+    state.updated=Date.now();
+    enrichLeagueDriversFromShared(league);
+    saveLeagueCache();
     if(activeLeague===league)renderActiveLeague();
+    tryOpenRequestedProfile();
     try{
       const results=await jsonp("results",league);
       if(results&&results.success!==false&&Array.isArray(results.results)){
         state.drivers=makeLeagueDrivers(league,feed,results);
+        enrichLeagueDriversFromShared(league);
         saveLeagueCache();
         if(activeLeague===league){
           const open=document.getElementById("profileView").style.display==="block";
@@ -619,9 +714,10 @@ function initializeDrivers(){
       leagueData[league].updated=Number(cached[league].updated)||0;
     }
   }
-  setLeague("sunday");
-  // Start Monday independently, so switching tabs is fast.
-  refreshLeague("monday");
+  setLeague(HLRN_PROFILE_REQUEST.league||"sunday");
+  refreshLeague(HLRN_PROFILE_REQUEST.league==="monday"?"sunday":"monday");
+  loadSharedDriverMetrics();
+  tryOpenRequestedProfile();
   setInterval(()=>{if(document.visibilityState==="visible"){refreshLeague("sunday");refreshLeague("monday");}},60000);
   document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){refreshLeague("sunday");refreshLeague("monday");}});
 }
@@ -669,12 +765,21 @@ function renderDrivers(list){
 function showError(msg){document.getElementById("driverGrid").innerHTML=`<div class="error-card"><strong>DRIVER DATABASE CONNECTION ERROR</strong><br><br>${esc(msg)}</div>`}
 function searchDrivers(){const q=document.getElementById("search").value.toLowerCase().trim();renderDrivers(drivers.filter(d=>prettyName(d.driver).toLowerCase().includes(q)||String(d.carNumber).toLowerCase().includes(q)))}
 
-function openProfile(name){
+function openProfile(name,options={}){
   document.getElementById("directoryView").style.display="none";
   document.getElementById("profileView").style.display="block";
-  window.scrollTo({top:0,behavior:"smooth"});
-  const local=drivers.find(d=>d.driver===name);
-  renderProfile(local||{driver:name,carNumber:"—",starts:"—",wins:"—",top5:"—",top10:"—",averageFinish:"—",bestFinish:"—",history:[],_fallback:true,leagueStats:{}});
+  window.scrollTo({top:0,behavior:options.smooth===false?"auto":"smooth"});
+  const local=drivers.find(d=>hLrnSameDriverName(d.driver,name));
+  const target=local||{driver:name,carNumber:"—",starts:"—",wins:"—",top5:"—",top10:"—",averageFinish:"—",bestFinish:"—",history:[],_fallback:true,leagueStats:{},driverIds:{}};
+  renderProfile(target);
+  if(options.updateUrl!==false){
+    const params=new URLSearchParams();
+    params.set("league",activeLeague);
+    const id=target.driverIds?.[activeLeague];
+    if(id)params.set("driverId",id);
+    params.set("driver",prettyName(target.driver));
+    history.pushState({driverProfile:true,league:activeLeague,driver:prettyName(target.driver)},"","?"+params.toString());
+  }
 }
 function leagueStatCards(d){
   const leagues=[activeLeague];
@@ -745,7 +850,12 @@ function renderProfile(d){
   const photo=photoUrl(d.driver),key=hLrnPhotoKey(d.driver),league=d.leagueStats?.[activeLeague]||{};
   const ready=!d._fallback;
   const value=v=>ready?displayMetric(v):"—";
-  const starts=value(d.starts),wins=value(d.wins),top5=value(d.top5),top10=value(d.top10);
+  const starts=value(league.starts??d.starts),wins=value(league.wins??d.wins),top5=value(league.top5??d.top5),top10=value(league.top10??d.top10);
+  const seasonPoints=value(league.points??d.points),racePoints=value(league.racePoints),stagePoints=value(league.stagePoints);
+  const bonusPoints=value(league.bonus),penaltyPoints=value(league.penalty),seasonLaps=value(league.laps);
+  const seasonLapsLed=value(league.lapsLed??(hist.length?d.lapsLed:"—"));
+  const seasonIncidents=value(league.incidents??(hist.length?hist.reduce((t,r)=>t+num(r.incidents),0):"—"));
+  const avgFinish=value(league.averageFinish??d.averageFinish);
   const stat=(label,v)=>`<div class="profile-stat"><b>${esc(v)}</b><span>${esc(label)}</span></div>`;
   const lead=(label,v)=>`<div class="profile-hero-stat"><span>${esc(label)}</span><b>${esc(v)}</b></div>`;
   const insight=(label,v,detail)=>`<div class="profile-insight"><span>${esc(label)}</span><strong>${esc(v)}</strong><small>${esc(detail)}</small></div>`;
@@ -771,20 +881,22 @@ function renderProfile(d){
       </div>
       <aside class="profile-hero-stats"><h3>Driver Statistics</h3><div class="profile-hero-stat-grid">
         ${lead("League rank",league.rank!=null&&league.rank!=="—"?"#"+league.rank:"—")}
-        ${lead("League points",value(d.points))}
-        ${lead("Race starts",starts)}
-        ${lead("Career wins",wins)}
+        ${lead("Season points",seasonPoints)}
+        ${lead("Stage points",stagePoints)}
+        ${lead("Wins",wins)}
         ${lead("Top 5 finishes",top5)}
         ${lead("Top 10 finishes",top10)}
-        ${lead("Average finish",value(d.averageFinish))}
-        ${lead("Laps led",hist.length?value(d.lapsLed):"—")}
+        ${lead("Average finish",avgFinish)}
+        ${lead("Laps led",seasonLapsLed)}
       </div></aside>
     </div>
     <div class="profile-section-heading">Season Performance</div>
     <div class="profile-stats">
       ${stat("Starts",starts)}${stat("Wins",wins)}${stat("Top 5",top5)}${stat("Top 10",top10)}
-      ${stat("Average finish",value(d.averageFinish))}${stat("Best finish",hist.length?value(d.bestFinish):"—")}
-      ${stat("Laps led",hist.length?value(d.lapsLed):"—")}${stat("Points",value(d.points))}
+      ${stat("Average finish",avgFinish)}${stat("Best finish",hist.length?value(d.bestFinish):"—")}
+      ${stat("Season points",seasonPoints)}${stat("Race points",racePoints)}
+      ${stat("Stage points",stagePoints)}${stat("Bonus",bonusPoints)}${stat("Penalty",penaltyPoints)}
+      ${stat("Laps",seasonLaps)}${stat("Laps led",seasonLapsLed)}${stat("Incidents",seasonIncidents)}
       ${stat("League position",league.rank!=null&&league.rank!=="—"?"#"+league.rank:"—")}
       ${stat("Recorded results",hist.length?hist.length:"—")}
     </div>
@@ -793,8 +905,8 @@ function renderProfile(d){
       ${insight("Win percentage",ready?percentMetric(wins,starts):"—","Wins divided by league starts")}
       ${insight("Top 5 percentage",ready?percentMetric(top5,starts):"—","Top 5 finishes divided by league starts")}
       ${insight("Top 10 percentage",ready?percentMetric(top10,starts):"—","Top 10 finishes divided by league starts")}
-      ${insight("Points per start",ready&&num(starts)>0?(num(d.points)/num(starts)).toFixed(1):"—","League points divided by starts")}
-      ${insight("Incidents recorded",hist.length?hist.reduce((t,r)=>t+num(r.incidents),0):"—","From available race history")}
+      ${insight("Points per start",ready&&num(starts)>0?(num(seasonPoints)/num(starts)).toFixed(1):"—","League points divided by starts")}
+      ${insight("Incidents recorded",seasonIncidents,"Season incident total")}
       ${insight("Average laps led",hist.length?(hist.reduce((t,r)=>t+num(r.lapsLed),0)/hist.length).toFixed(1):"—","Across available race results")}
     </div>
     <div class="profile-section-heading">Recent Race Form</div>
@@ -806,7 +918,27 @@ function renderProfile(d){
   autoSuitColor(d.driver,photo);
 }
 
-function showDirectory(){document.getElementById("profileView").style.display="none";document.getElementById("directoryView").style.display="block";window.scrollTo({top:0,behavior:"smooth"})}
+function showDirectory(){
+  document.getElementById("profileView").style.display="none";
+  document.getElementById("directoryView").style.display="block";
+  history.pushState({driverProfile:false,league:activeLeague},"","?league="+encodeURIComponent(activeLeague));
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+window.addEventListener("popstate",()=>{
+  const q=new URLSearchParams(location.search);
+  const league=["sunday","monday"].includes(q.get("league"))?q.get("league"):activeLeague;
+  const id=q.get("driverId"),name=q.get("driver");
+  if(league!==activeLeague)setLeague(league);
+  if(id||name){
+    const target=(leagueData[league]?.drivers||[]).find(d=>id&&String(d.driverIds?.[league]||"")===String(id))
+      ||(leagueData[league]?.drivers||[]).find(d=>name&&hLrnSameDriverName(d.driver,name));
+    if(target)openProfile(target.driver,{updateUrl:false,smooth:false});
+  }else{
+    document.getElementById("profileView").style.display="none";
+    document.getElementById("directoryView").style.display="block";
+    renderActiveLeague();
+  }
+});
 
 document.addEventListener("DOMContentLoaded",()=>{document.getElementById("search").addEventListener("input",searchDrivers);document.getElementById("driverSort").addEventListener("change",e=>{currentDriverSort=e.target.value;searchDrivers()});document.getElementById("driverGrid").addEventListener("click",e=>{const c=e.target.closest(".driver-card");if(c)openProfile(c.dataset.driver)});document.getElementById("backToDirectory").addEventListener("click",showDirectory);document.querySelectorAll(".league-tab").forEach(btn=>btn.addEventListener("click",()=>setLeague(btn.dataset.league)));initializeDrivers()});
 </script>
