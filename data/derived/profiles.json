@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-28T23:46:17.929Z",
+  "generatedAt": "2026-09-29T01:51:53.479Z",
   "drivers": [
     {
       "series": "sunday",
@@ -15,6 +15,13 @@
       "wins": 1,
       "top5": 8,
       "top10": 10,
+      "racePoints": 480,
+      "stagePoints": 42,
+      "bonus": 23,
+      "penalty": 0,
+      "laps": 1617,
+      "lapsLed": 269,
+      "incidents": 160,
       "avgFinish": 7.36,
       "results": [
         {
@@ -164,6 +171,13 @@
       "wins": 4,
       "top5": 4,
       "top10": 5,
+      "racePoints": 340,
+      "stagePoints": 50,
+      "bonus": 71,
+      "penalty": 0,
+      "laps": 1202,
+      "lapsLed": 279,
+      "incidents": 131,
       "avgFinish": 17,
       "results": [
         {
@@ -301,6 +315,13 @@
       "wins": 2,
       "top5": 6,
       "top10": 6,
+      "racePoints": 358,
+      "stagePoints": 46,
+      "bonus": 33,
+      "penalty": 0,
+      "laps": 1223,
+      "lapsLed": 252,
+      "incidents": 126,
       "avgFinish": 11.22,
       "results": [
         {
@@ -426,6 +447,13 @@
       "wins": 0,
       "top5": 2,
       "top10": 6,
+      "racePoints": 372,
+      "stagePoints": 44,
+      "bonus": 15,
+      "penalty": 0,
+      "laps": 1514,
+      "lapsLed": 59,
+      "incidents": 195,
       "avgFinish": 17.18,
       "results": [
         {
@@ -575,6 +603,13 @@
       "wins": 0,
       "top5": 3,
       "top10": 4,
+      "racePoints": 388,
+      "stagePoints": 35,
+      "bonus": 3,
+      "penalty": 0,
+      "laps": 1594,
+      "lapsLed": 14,
+      "incidents": 191,
       "avgFinish": 15.73,
       "results": [
         {
@@ -724,6 +759,13 @@
       "wins": 0,
       "top5": 1,
       "top10": 3,
+      "racePoints": 385,
+      "stagePoints": 31,
+      "bonus": 4,
+      "penalty": 0,
+      "laps": 1500,
+      "lapsLed": 0,
+      "incidents": 139,
       "avgFinish": 16,
       "results": [
         {
@@ -873,6 +915,13 @@
       "wins": 1,
       "top5": 4,
       "top10": 5,
+      "racePoints": 327,
+      "stagePoints": 49,
+      "bonus": 32,
+      "penalty": 0,
+      "laps": 1120,
+      "lapsLed": 79,
+      "incidents": 111,
       "avgFinish": 10.13,
       "results": [
         {
@@ -986,6 +1035,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 4,
+      "racePoints": 352,
+      "stagePoints": 37,
+      "bonus": 8,
+      "penalty": 0,
+      "laps": 1564,
+      "lapsLed": 9,
+      "incidents": 148,
       "avgFinish": 19,
       "results": [
         {
@@ -1135,6 +1191,13 @@
       "wins": 0,
       "top5": 3,
       "top10": 3,
+      "racePoints": 364,
+      "stagePoints": 24,
+      "bonus": 8,
+      "penalty": 0,
+      "laps": 1593,
+      "lapsLed": 41,
+      "incidents": 244,
       "avgFinish": 17.91,
       "results": [
         {
@@ -1284,6 +1347,13 @@
       "wins": 0,
       "top5": 1,
       "top10": 2,
+      "racePoints": 337,
+      "stagePoints": 45,
+      "bonus": 10,
+      "penalty": 0,
+      "laps": 1506,
+      "lapsLed": 52,
+      "incidents": 180,
       "avgFinish": 20.36,
       "results": [
         {
@@ -1433,6 +1503,13 @@
       "wins": 0,
       "top5": 1,
       "top10": 2,
+      "racePoints": 360,
+      "stagePoints": 18,
+      "bonus": 12,
+      "penalty": 0,
+      "laps": 1452,
+      "lapsLed": 5,
+      "incidents": 194,
       "avgFinish": 15,
       "results": [
         {
@@ -1570,6 +1647,13 @@
       "wins": 0,
       "top5": 1,
       "top10": 2,
+      "racePoints": 348,
+      "stagePoints": 36,
+      "bonus": 4,
+      "penalty": 0,
+      "laps": 1542,
+      "lapsLed": 10,
+      "incidents": 210,
       "avgFinish": 19.36,
       "results": [
         {
@@ -1719,6 +1803,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 1,
+      "racePoints": 342,
+      "stagePoints": 41,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 1580,
+      "lapsLed": 0,
+      "incidents": 189,
       "avgFinish": 19.91,
       "results": [
         {
@@ -1868,6 +1959,13 @@
       "wins": 0,
       "top5": 1,
       "top10": 3,
+      "racePoints": 338,
+      "stagePoints": 27,
+      "bonus": 5,
+      "penalty": 0,
+      "laps": 1617,
+      "lapsLed": 15,
+      "incidents": 204,
       "avgFinish": 20.27,
       "results": [
         {
@@ -2017,6 +2115,13 @@
       "wins": 0,
       "top5": 1,
       "top10": 4,
+      "racePoints": 327,
+      "stagePoints": 33,
+      "bonus": 1,
+      "penalty": 0,
+      "laps": 1284,
+      "lapsLed": 1,
+      "incidents": 147,
       "avgFinish": 18.3,
       "results": [
         {
@@ -2154,6 +2259,13 @@
       "wins": 0,
       "top5": 1,
       "top10": 2,
+      "racePoints": 344,
+      "stagePoints": 17,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 1492,
+      "lapsLed": 6,
+      "incidents": 237,
       "avgFinish": 19.73,
       "results": [
         {
@@ -2303,6 +2415,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 2,
+      "racePoints": 334,
+      "stagePoints": 21,
+      "bonus": 3,
+      "penalty": 0,
+      "laps": 1542,
+      "lapsLed": 0,
+      "incidents": 222,
       "avgFinish": 20.64,
       "results": [
         {
@@ -2452,6 +2571,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 1,
+      "racePoints": 327,
+      "stagePoints": 14,
+      "bonus": 2,
+      "penalty": 0,
+      "laps": 1555,
+      "lapsLed": 0,
+      "incidents": 179,
       "avgFinish": 21.27,
       "results": [
         {
@@ -2601,6 +2727,13 @@
       "wins": 0,
       "top5": 1,
       "top10": 2,
+      "racePoints": 283,
+      "stagePoints": 40,
+      "bonus": 2,
+      "penalty": 0,
+      "laps": 1268,
+      "lapsLed": 0,
+      "incidents": 169,
       "avgFinish": 22.7,
       "results": [
         {
@@ -2738,6 +2871,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 1,
+      "racePoints": 286,
+      "stagePoints": 38,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 1492,
+      "lapsLed": 2,
+      "incidents": 219,
       "avgFinish": 25,
       "results": [
         {
@@ -2887,6 +3027,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 282,
+      "stagePoints": 30,
+      "bonus": 1,
+      "penalty": 0,
+      "laps": 1474,
+      "lapsLed": 10,
+      "incidents": 198,
       "avgFinish": 25.36,
       "results": [
         {
@@ -3036,6 +3183,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 4,
+      "racePoints": 287,
+      "stagePoints": 20,
+      "bonus": 4,
+      "penalty": 0,
+      "laps": 1137,
+      "lapsLed": 4,
+      "incidents": 195,
       "avgFinish": 19.11,
       "results": [
         {
@@ -3161,6 +3315,13 @@
       "wins": 0,
       "top5": 1,
       "top10": 4,
+      "racePoints": 271,
+      "stagePoints": 15,
+      "bonus": 9,
+      "penalty": 0,
+      "laps": 1067,
+      "lapsLed": 37,
+      "incidents": 131,
       "avgFinish": 20.89,
       "results": [
         {
@@ -3286,6 +3447,13 @@
       "wins": 0,
       "top5": 1,
       "top10": 3,
+      "racePoints": 284,
+      "stagePoints": 0,
+      "bonus": 1,
+      "penalty": 0,
+      "laps": 1135,
+      "lapsLed": 31,
+      "incidents": 252,
       "avgFinish": 19.44,
       "results": [
         {
@@ -3411,6 +3579,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 1,
+      "racePoints": 251,
+      "stagePoints": 26,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 1209,
+      "lapsLed": 0,
+      "incidents": 168,
       "avgFinish": 23.11,
       "results": [
         {
@@ -3536,6 +3711,13 @@
       "wins": 0,
       "top5": 1,
       "top10": 3,
+      "racePoints": 264,
+      "stagePoints": 0,
+      "bonus": 12,
+      "penalty": 0,
+      "laps": 1087,
+      "lapsLed": 89,
+      "incidents": 151,
       "avgFinish": 18,
       "results": [
         {
@@ -3649,6 +3831,13 @@
       "wins": 1,
       "top5": 3,
       "top10": 4,
+      "racePoints": 255,
+      "stagePoints": 0,
+      "bonus": 21,
+      "penalty": 0,
+      "laps": 844,
+      "lapsLed": 53,
+      "incidents": 123,
       "avgFinish": 8.5,
       "results": [
         {
@@ -3738,6 +3927,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 1,
+      "racePoints": 256,
+      "stagePoints": 16,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 1278,
+      "lapsLed": 0,
+      "incidents": 118,
       "avgFinish": 22.56,
       "results": [
         {
@@ -3863,6 +4059,13 @@
       "wins": 0,
       "top5": 1,
       "top10": 4,
+      "racePoints": 268,
+      "stagePoints": 0,
+      "bonus": 3,
+      "penalty": 0,
+      "laps": 969,
+      "lapsLed": 10,
+      "incidents": 65,
       "avgFinish": 12.71,
       "results": [
         {
@@ -3964,6 +4167,13 @@
       "wins": 0,
       "top5": 2,
       "top10": 2,
+      "racePoints": 240,
+      "stagePoints": 22,
+      "bonus": 1,
+      "penalty": 0,
+      "laps": 1081,
+      "lapsLed": 5,
+      "incidents": 176,
       "avgFinish": 21,
       "results": [
         {
@@ -4077,6 +4287,13 @@
       "wins": 0,
       "top5": 1,
       "top10": 2,
+      "racePoints": 209,
+      "stagePoints": 39,
+      "bonus": 7,
+      "penalty": 0,
+      "laps": 885,
+      "lapsLed": 85,
+      "incidents": 95,
       "avgFinish": 16.17,
       "results": [
         {
@@ -4166,6 +4383,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 1,
+      "racePoints": 202,
+      "stagePoints": 48,
+      "bonus": 4,
+      "penalty": 0,
+      "laps": 1050,
+      "lapsLed": 13,
+      "incidents": 137,
       "avgFinish": 22.14,
       "results": [
         {
@@ -4267,6 +4491,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 218,
+      "stagePoints": 23,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 1290,
+      "lapsLed": 0,
+      "incidents": 240,
       "avgFinish": 31.18,
       "results": [
         {
@@ -4416,6 +4647,13 @@
       "wins": 0,
       "top5": 1,
       "top10": 2,
+      "racePoints": 199,
+      "stagePoints": 32,
+      "bonus": 1,
+      "penalty": 0,
+      "laps": 937,
+      "lapsLed": 9,
+      "incidents": 115,
       "avgFinish": 17.83,
       "results": [
         {
@@ -4505,6 +4743,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 204,
+      "stagePoints": 28,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 1055,
+      "lapsLed": 0,
+      "incidents": 163,
       "avgFinish": 32.45,
       "results": [
         {
@@ -4654,6 +4899,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 1,
+      "racePoints": 219,
+      "stagePoints": 0,
+      "bonus": 1,
+      "penalty": 0,
+      "laps": 969,
+      "lapsLed": 0,
+      "incidents": 124,
       "avgFinish": 19.71,
       "results": [
         {
@@ -4755,6 +5007,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 2,
+      "racePoints": 189,
+      "stagePoints": 19,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 823,
+      "lapsLed": 0,
+      "incidents": 168,
       "avgFinish": 19.5,
       "results": [
         {
@@ -4844,6 +5103,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 157,
+      "stagePoints": 43,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 801,
+      "lapsLed": 0,
+      "incidents": 131,
       "avgFinish": 19.6,
       "results": [
         {
@@ -4921,6 +5187,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 187,
+      "stagePoints": 12,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 1180,
+      "lapsLed": 0,
+      "incidents": 226,
       "avgFinish": 27.63,
       "results": [
         {
@@ -5034,6 +5307,13 @@
       "wins": 2,
       "top5": 3,
       "top10": 3,
+      "racePoints": 174,
+      "stagePoints": 0,
+      "bonus": 22,
+      "penalty": 0,
+      "laps": 564,
+      "lapsLed": 67,
+      "incidents": 65,
       "avgFinish": 7.5,
       "results": [
         {
@@ -5099,6 +5379,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 168,
+      "stagePoints": 25,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 886,
+      "lapsLed": 0,
+      "incidents": 118,
       "avgFinish": 27,
       "results": [
         {
@@ -5200,6 +5487,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 186,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 959,
+      "lapsLed": 0,
+      "incidents": 177,
       "avgFinish": 24.43,
       "results": [
         {
@@ -5301,6 +5595,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 140,
+      "stagePoints": 29,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 785,
+      "lapsLed": 3,
+      "incidents": 81,
       "avgFinish": 27.67,
       "results": [
         {
@@ -5390,6 +5691,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 148,
+      "stagePoints": 13,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 828,
+      "lapsLed": 5,
+      "incidents": 154,
       "avgFinish": 26.33,
       "results": [
         {
@@ -5479,6 +5787,13 @@
       "wins": 0,
       "top5": 1,
       "top10": 1,
+      "racePoints": 106,
+      "stagePoints": 47,
+      "bonus": 2,
+      "penalty": 0,
+      "laps": 528,
+      "lapsLed": 0,
+      "incidents": 48,
       "avgFinish": 15.67,
       "results": [
         {
@@ -5532,6 +5847,13 @@
       "wins": 0,
       "top5": 1,
       "top10": 2,
+      "racePoints": 146,
+      "stagePoints": 0,
+      "bonus": 3,
+      "penalty": 0,
+      "laps": 423,
+      "lapsLed": 69,
+      "incidents": 61,
       "avgFinish": 21.8,
       "results": [
         {
@@ -5609,6 +5931,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 139,
+      "stagePoints": 0,
+      "bonus": 1,
+      "penalty": 0,
+      "laps": 533,
+      "lapsLed": 5,
+      "incidents": 98,
       "avgFinish": 16.25,
       "results": [
         {
@@ -5674,6 +6003,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 139,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 674,
+      "lapsLed": 5,
+      "incidents": 93,
       "avgFinish": 23.2,
       "results": [
         {
@@ -5751,6 +6087,13 @@
       "wins": 0,
       "top5": 1,
       "top10": 1,
+      "racePoints": 77,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 277,
+      "lapsLed": 0,
+      "incidents": 32,
       "avgFinish": 12.5,
       "results": [
         {
@@ -5792,6 +6135,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 43,
+      "stagePoints": 34,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 369,
+      "lapsLed": 31,
+      "incidents": 62,
       "avgFinish": 29.5,
       "results": [
         {
@@ -5833,6 +6183,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 63,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 366,
+      "lapsLed": 0,
+      "incidents": 98,
       "avgFinish": 35.25,
       "results": [
         {
@@ -5898,6 +6255,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 1,
+      "racePoints": 56,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 260,
+      "lapsLed": 0,
+      "incidents": 25,
       "avgFinish": 23,
       "results": [
         {
@@ -5939,6 +6303,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 54,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 351,
+      "lapsLed": 0,
+      "incidents": 31,
       "avgFinish": 24,
       "results": [
         {
@@ -5980,6 +6351,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 51,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 217,
+      "lapsLed": 0,
+      "incidents": 29,
       "avgFinish": 25.5,
       "results": [
         {
@@ -6021,6 +6399,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 37,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 177,
+      "lapsLed": 0,
+      "incidents": 6,
       "avgFinish": 14,
       "results": [
         {
@@ -6050,6 +6435,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 31,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 178,
+      "lapsLed": 0,
+      "incidents": 25,
       "avgFinish": 20,
       "results": [
         {
@@ -6079,6 +6471,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 31,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 101,
+      "lapsLed": 6,
+      "incidents": 33,
       "avgFinish": 20,
       "results": [
         {
@@ -6108,6 +6507,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 25,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 164,
+      "lapsLed": 0,
+      "incidents": 32,
       "avgFinish": 26,
       "results": [
         {
@@ -6137,6 +6543,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 21,
+      "stagePoints": 0,
+      "bonus": 1,
+      "penalty": 0,
+      "laps": 101,
+      "lapsLed": 1,
+      "incidents": 41,
       "avgFinish": 30,
       "results": [
         {
@@ -6166,6 +6579,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 17,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 61,
+      "lapsLed": 0,
+      "incidents": 8,
       "avgFinish": 34,
       "results": [
         {
@@ -6195,6 +6615,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 17,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 121,
+      "lapsLed": 0,
+      "incidents": 32,
       "avgFinish": 42.5,
       "results": [
         {
@@ -6236,6 +6663,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 11,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 86,
+      "lapsLed": 0,
+      "incidents": 20,
       "avgFinish": 40,
       "results": [
         {
@@ -6265,6 +6699,13 @@
       "wins": 5,
       "top5": 5,
       "top10": 5,
+      "racePoints": 250,
+      "stagePoints": 0,
+      "bonus": 75,
+      "penalty": 0,
+      "laps": 626,
+      "lapsLed": 312,
+      "incidents": 25,
       "avgFinish": 1,
       "results": [
         {
@@ -6342,6 +6783,13 @@
       "wins": 0,
       "top5": 2,
       "top10": 4,
+      "racePoints": 216,
+      "stagePoints": 0,
+      "bonus": 15,
+      "penalty": 0,
+      "laps": 562,
+      "lapsLed": 22,
+      "incidents": 48,
       "avgFinish": 7.8,
       "results": [
         {
@@ -6419,6 +6867,13 @@
       "wins": 0,
       "top5": 3,
       "top10": 4,
+      "racePoints": 218,
+      "stagePoints": 0,
+      "bonus": 8,
+      "penalty": 0,
+      "laps": 622,
+      "lapsLed": 46,
+      "incidents": 28,
       "avgFinish": 7.4,
       "results": [
         {
@@ -6496,6 +6951,13 @@
       "wins": 0,
       "top5": 1,
       "top10": 3,
+      "racePoints": 195,
+      "stagePoints": 0,
+      "bonus": 4,
+      "penalty": 0,
+      "laps": 508,
+      "lapsLed": 19,
+      "incidents": 44,
       "avgFinish": 12,
       "results": [
         {
@@ -6573,6 +7035,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 3,
+      "racePoints": 199,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 625,
+      "lapsLed": 14,
+      "incidents": 34,
       "avgFinish": 11.2,
       "results": [
         {
@@ -6650,6 +7119,13 @@
       "wins": 0,
       "top5": 1,
       "top10": 2,
+      "racePoints": 190,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 509,
+      "lapsLed": 0,
+      "incidents": 51,
       "avgFinish": 13,
       "results": [
         {
@@ -6727,6 +7203,13 @@
       "wins": 0,
       "top5": 1,
       "top10": 2,
+      "racePoints": 186,
+      "stagePoints": 0,
+      "bonus": 2,
+      "penalty": 0,
+      "laps": 624,
+      "lapsLed": 21,
+      "incidents": 38,
       "avgFinish": 13.8,
       "results": [
         {
@@ -6804,6 +7287,13 @@
       "wins": 0,
       "top5": 1,
       "top10": 3,
+      "racePoints": 184,
+      "stagePoints": 0,
+      "bonus": 2,
+      "penalty": 0,
+      "laps": 485,
+      "lapsLed": 3,
+      "incidents": 30,
       "avgFinish": 14.2,
       "results": [
         {
@@ -6881,6 +7371,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 3,
+      "racePoints": 182,
+      "stagePoints": 0,
+      "bonus": 2,
+      "penalty": 0,
+      "laps": 509,
+      "lapsLed": 38,
+      "incidents": 31,
       "avgFinish": 14.6,
       "results": [
         {
@@ -6958,6 +7455,13 @@
       "wins": 0,
       "top5": 1,
       "top10": 2,
+      "racePoints": 182,
+      "stagePoints": 0,
+      "bonus": 1,
+      "penalty": 0,
+      "laps": 533,
+      "lapsLed": 0,
+      "incidents": 26,
       "avgFinish": 14.6,
       "results": [
         {
@@ -7035,6 +7539,13 @@
       "wins": 0,
       "top5": 1,
       "top10": 1,
+      "racePoints": 178,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 516,
+      "lapsLed": 0,
+      "incidents": 31,
       "avgFinish": 15.4,
       "results": [
         {
@@ -7112,6 +7623,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 174,
+      "stagePoints": 0,
+      "bonus": 1,
+      "penalty": 0,
+      "laps": 514,
+      "lapsLed": 18,
+      "incidents": 38,
       "avgFinish": 16.2,
       "results": [
         {
@@ -7189,6 +7707,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 175,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 615,
+      "lapsLed": 16,
+      "incidents": 46,
       "avgFinish": 16,
       "results": [
         {
@@ -7266,6 +7791,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 1,
+      "racePoints": 169,
+      "stagePoints": 0,
+      "bonus": 1,
+      "penalty": 0,
+      "laps": 522,
+      "lapsLed": 7,
+      "incidents": 40,
       "avgFinish": 17.2,
       "results": [
         {
@@ -7343,6 +7875,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 2,
+      "racePoints": 163,
+      "stagePoints": 0,
+      "bonus": 3,
+      "penalty": 0,
+      "laps": 463,
+      "lapsLed": 3,
+      "incidents": 41,
       "avgFinish": 18.4,
       "results": [
         {
@@ -7420,6 +7959,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 164,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 504,
+      "lapsLed": 0,
+      "incidents": 31,
       "avgFinish": 18.2,
       "results": [
         {
@@ -7497,6 +8043,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 2,
+      "racePoints": 159,
+      "stagePoints": 0,
+      "bonus": 4,
+      "penalty": 0,
+      "laps": 499,
+      "lapsLed": 1,
+      "incidents": 48,
       "avgFinish": 11.25,
       "results": [
         {
@@ -7562,6 +8115,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 1,
+      "racePoints": 161,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 578,
+      "lapsLed": 5,
+      "incidents": 69,
       "avgFinish": 18.8,
       "results": [
         {
@@ -7639,6 +8199,13 @@
       "wins": 0,
       "top5": 1,
       "top10": 1,
+      "racePoints": 160,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 607,
+      "lapsLed": 0,
+      "incidents": 49,
       "avgFinish": 19,
       "results": [
         {
@@ -7716,6 +8283,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 152,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 594,
+      "lapsLed": 0,
+      "incidents": 45,
       "avgFinish": 20.6,
       "results": [
         {
@@ -7793,6 +8367,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 151,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 530,
+      "lapsLed": 0,
+      "incidents": 41,
       "avgFinish": 20.8,
       "results": [
         {
@@ -7870,6 +8451,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 146,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 589,
+      "lapsLed": 0,
+      "incidents": 47,
       "avgFinish": 21.8,
       "results": [
         {
@@ -7947,6 +8535,13 @@
       "wins": 0,
       "top5": 2,
       "top10": 2,
+      "racePoints": 135,
+      "stagePoints": 0,
+      "bonus": 5,
+      "penalty": 0,
+      "laps": 376,
+      "lapsLed": 36,
+      "incidents": 22,
       "avgFinish": 6,
       "results": [
         {
@@ -8000,6 +8595,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 135,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 558,
+      "lapsLed": 0,
+      "incidents": 21,
       "avgFinish": 24,
       "results": [
         {
@@ -8077,6 +8679,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 124,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 363,
+      "lapsLed": 0,
+      "incidents": 22,
       "avgFinish": 20,
       "results": [
         {
@@ -8142,6 +8751,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 1,
+      "racePoints": 121,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 396,
+      "lapsLed": 0,
+      "incidents": 25,
       "avgFinish": 20.75,
       "results": [
         {
@@ -8207,6 +8823,13 @@
       "wins": 0,
       "top5": 2,
       "top10": 2,
+      "racePoints": 98,
+      "stagePoints": 0,
+      "bonus": 12,
+      "penalty": 0,
+      "laps": 250,
+      "lapsLed": 50,
+      "incidents": 10,
       "avgFinish": 2,
       "results": [
         {
@@ -8248,6 +8871,13 @@
       "wins": 0,
       "top5": 2,
       "top10": 2,
+      "racePoints": 93,
+      "stagePoints": 0,
+      "bonus": 4,
+      "penalty": 0,
+      "laps": 251,
+      "lapsLed": 0,
+      "incidents": 18,
       "avgFinish": 4.5,
       "results": [
         {
@@ -8289,6 +8919,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 95,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 373,
+      "lapsLed": 0,
+      "incidents": 40,
       "avgFinish": 19.33,
       "results": [
         {
@@ -8342,6 +8979,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 79,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 262,
+      "lapsLed": 11,
+      "incidents": 38,
       "avgFinish": 24.67,
       "results": [
         {
@@ -8395,6 +9039,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 70,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 230,
+      "lapsLed": 0,
+      "incidents": 8,
       "avgFinish": 16,
       "results": [
         {
@@ -8436,6 +9087,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 60,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 224,
+      "lapsLed": 0,
+      "incidents": 46,
       "avgFinish": 21,
       "results": [
         {
@@ -8477,6 +9135,13 @@
       "wins": 0,
       "top5": 1,
       "top10": 1,
+      "racePoints": 48,
+      "stagePoints": 0,
+      "bonus": 5,
+      "penalty": 0,
+      "laps": 101,
+      "lapsLed": 3,
+      "incidents": 28,
       "avgFinish": 3,
       "results": [
         {
@@ -8506,6 +9171,13 @@
       "wins": 0,
       "top5": 1,
       "top10": 1,
+      "racePoints": 48,
+      "stagePoints": 0,
+      "bonus": 1,
+      "penalty": 0,
+      "laps": 125,
+      "lapsLed": 0,
+      "incidents": 4,
       "avgFinish": 3,
       "results": [
         {
@@ -8535,6 +9207,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 1,
+      "racePoints": 43,
+      "stagePoints": 0,
+      "bonus": 1,
+      "penalty": 0,
+      "laps": 150,
+      "lapsLed": 0,
+      "incidents": 4,
       "avgFinish": 8,
       "results": [
         {
@@ -8564,6 +9243,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 1,
+      "racePoints": 41,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 124,
+      "lapsLed": 0,
+      "incidents": 4,
       "avgFinish": 10,
       "results": [
         {
@@ -8593,6 +9279,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 39,
+      "stagePoints": 0,
+      "bonus": 1,
+      "penalty": 0,
+      "laps": 125,
+      "lapsLed": 0,
+      "incidents": 6,
       "avgFinish": 12,
       "results": [
         {
@@ -8622,6 +9315,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 25,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 7,
+      "lapsLed": 0,
+      "incidents": 4,
       "avgFinish": 26,
       "results": [
         {
@@ -8651,6 +9351,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 21,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 39,
+      "lapsLed": 0,
+      "incidents": 13,
       "avgFinish": 30,
       "results": [
         {
@@ -8680,6 +9387,13 @@
       "wins": 0,
       "top5": 0,
       "top10": 0,
+      "racePoints": 20,
+      "stagePoints": 0,
+      "bonus": 0,
+      "penalty": 0,
+      "laps": 33,
+      "lapsLed": 1,
+      "incidents": 18,
       "avgFinish": 31,
       "results": [
         {

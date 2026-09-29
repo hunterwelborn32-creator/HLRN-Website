@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-28T23:46:17.929Z",
+  "generatedAt": "2026-09-29T01:51:53.479Z",
   "leagues": {
     "sunday": {
       "drivers": [
@@ -16,7 +16,13 @@
           "top5": 8,
           "top10": 10,
           "avgFinish": 7.36,
-          "driverId": "55541"
+          "driverId": "55541",
+          "racePoints": 480,
+          "bonus": 23,
+          "penalty": 0,
+          "laps": 1617,
+          "lapsLed": 269,
+          "incidents": 160
         },
         {
           "driver": "Baumann, Nicholas",
@@ -30,7 +36,13 @@
           "top5": 4,
           "top10": 5,
           "avgFinish": 17,
-          "driverId": "95192"
+          "driverId": "95192",
+          "racePoints": 340,
+          "bonus": 71,
+          "penalty": 0,
+          "laps": 1202,
+          "lapsLed": 279,
+          "incidents": 131
         },
         {
           "driver": "Moreno, Ethan",
@@ -44,7 +56,13 @@
           "top5": 6,
           "top10": 6,
           "avgFinish": 11.22,
-          "driverId": "77498"
+          "driverId": "77498",
+          "racePoints": 358,
+          "bonus": 33,
+          "penalty": 0,
+          "laps": 1223,
+          "lapsLed": 252,
+          "incidents": 126
         },
         {
           "driver": "Showers, Brandon",
@@ -58,7 +76,13 @@
           "top5": 2,
           "top10": 6,
           "avgFinish": 17.18,
-          "driverId": "98282"
+          "driverId": "98282",
+          "racePoints": 372,
+          "bonus": 15,
+          "penalty": 0,
+          "laps": 1514,
+          "lapsLed": 59,
+          "incidents": 195
         },
         {
           "driver": "Showers, Randy",
@@ -72,7 +96,13 @@
           "top5": 3,
           "top10": 4,
           "avgFinish": 15.73,
-          "driverId": "101093"
+          "driverId": "101093",
+          "racePoints": 388,
+          "bonus": 3,
+          "penalty": 0,
+          "laps": 1594,
+          "lapsLed": 14,
+          "incidents": 191
         },
         {
           "driver": "James, Chris",
@@ -86,7 +116,13 @@
           "top5": 1,
           "top10": 3,
           "avgFinish": 16,
-          "driverId": "33901"
+          "driverId": "33901",
+          "racePoints": 385,
+          "bonus": 4,
+          "penalty": 0,
+          "laps": 1500,
+          "lapsLed": 0,
+          "incidents": 139
         },
         {
           "driver": "Jones, Dylan",
@@ -100,7 +136,13 @@
           "top5": 4,
           "top10": 5,
           "avgFinish": 10.13,
-          "driverId": "13461"
+          "driverId": "13461",
+          "racePoints": 327,
+          "bonus": 32,
+          "penalty": 0,
+          "laps": 1120,
+          "lapsLed": 79,
+          "incidents": 111
         },
         {
           "driver": "Parry, Evan",
@@ -114,7 +156,13 @@
           "top5": 0,
           "top10": 4,
           "avgFinish": 19,
-          "driverId": "103956"
+          "driverId": "103956",
+          "racePoints": 352,
+          "bonus": 8,
+          "penalty": 0,
+          "laps": 1564,
+          "lapsLed": 9,
+          "incidents": 148
         },
         {
           "driver": "Brown49, Matthew",
@@ -128,7 +176,13 @@
           "top5": 3,
           "top10": 3,
           "avgFinish": 17.91,
-          "driverId": "116507"
+          "driverId": "116507",
+          "racePoints": 364,
+          "bonus": 8,
+          "penalty": 0,
+          "laps": 1593,
+          "lapsLed": 41,
+          "incidents": 244
         },
         {
           "driver": "Guerrero2, Vicente",
@@ -142,7 +196,13 @@
           "top5": 1,
           "top10": 2,
           "avgFinish": 20.36,
-          "driverId": "65049"
+          "driverId": "65049",
+          "racePoints": 337,
+          "bonus": 10,
+          "penalty": 0,
+          "laps": 1506,
+          "lapsLed": 52,
+          "incidents": 180
         },
         {
           "driver": "Hennings, Brian",
@@ -156,7 +216,13 @@
           "top5": 1,
           "top10": 2,
           "avgFinish": 15,
-          "driverId": "76649"
+          "driverId": "76649",
+          "racePoints": 360,
+          "bonus": 12,
+          "penalty": 0,
+          "laps": 1452,
+          "lapsLed": 5,
+          "incidents": 194
         },
         {
           "driver": "Wilson21, Ryan",
@@ -170,7 +236,13 @@
           "top5": 1,
           "top10": 2,
           "avgFinish": 19.36,
-          "driverId": "109391"
+          "driverId": "109391",
+          "racePoints": 348,
+          "bonus": 4,
+          "penalty": 0,
+          "laps": 1542,
+          "lapsLed": 10,
+          "incidents": 210
         },
         {
           "driver": "Beach, Donny",
@@ -184,7 +256,13 @@
           "top5": 0,
           "top10": 1,
           "avgFinish": 19.91,
-          "driverId": "118360"
+          "driverId": "118360",
+          "racePoints": 342,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 1580,
+          "lapsLed": 0,
+          "incidents": 189
         },
         {
           "driver": "McKinney2, Joshua",
@@ -198,7 +276,13 @@
           "top5": 1,
           "top10": 3,
           "avgFinish": 20.27,
-          "driverId": "55068"
+          "driverId": "55068",
+          "racePoints": 338,
+          "bonus": 5,
+          "penalty": 0,
+          "laps": 1617,
+          "lapsLed": 15,
+          "incidents": 204
         },
         {
           "driver": "Crowe, Justin",
@@ -212,7 +296,13 @@
           "top5": 1,
           "top10": 4,
           "avgFinish": 18.3,
-          "driverId": "9726"
+          "driverId": "9726",
+          "racePoints": 327,
+          "bonus": 1,
+          "penalty": 0,
+          "laps": 1284,
+          "lapsLed": 1,
+          "incidents": 147
         },
         {
           "driver": "Jeffries, Jeremy",
@@ -226,7 +316,13 @@
           "top5": 1,
           "top10": 2,
           "avgFinish": 19.73,
-          "driverId": "47514"
+          "driverId": "47514",
+          "racePoints": 344,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 1492,
+          "lapsLed": 6,
+          "incidents": 237
         },
         {
           "driver": "Spragg, Joshua",
@@ -240,7 +336,13 @@
           "top5": 0,
           "top10": 2,
           "avgFinish": 20.64,
-          "driverId": "109865"
+          "driverId": "109865",
+          "racePoints": 334,
+          "bonus": 3,
+          "penalty": 0,
+          "laps": 1542,
+          "lapsLed": 0,
+          "incidents": 222
         },
         {
           "driver": "Segredo, Jim",
@@ -254,7 +356,13 @@
           "top5": 0,
           "top10": 1,
           "avgFinish": 21.27,
-          "driverId": "96425"
+          "driverId": "96425",
+          "racePoints": 327,
+          "bonus": 2,
+          "penalty": 0,
+          "laps": 1555,
+          "lapsLed": 0,
+          "incidents": 179
         },
         {
           "driver": "Kammeron, Kyle",
@@ -268,7 +376,13 @@
           "top5": 1,
           "top10": 2,
           "avgFinish": 22.7,
-          "driverId": "106245"
+          "driverId": "106245",
+          "racePoints": 283,
+          "bonus": 2,
+          "penalty": 0,
+          "laps": 1268,
+          "lapsLed": 0,
+          "incidents": 169
         },
         {
           "driver": "Hayden, Eric",
@@ -282,7 +396,13 @@
           "top5": 0,
           "top10": 1,
           "avgFinish": 25,
-          "driverId": "93056"
+          "driverId": "93056",
+          "racePoints": 286,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 1492,
+          "lapsLed": 2,
+          "incidents": 219
         },
         {
           "driver": "Hatfield, Shane",
@@ -296,7 +416,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 25.36,
-          "driverId": "137126"
+          "driverId": "137126",
+          "racePoints": 282,
+          "bonus": 1,
+          "penalty": 0,
+          "laps": 1474,
+          "lapsLed": 10,
+          "incidents": 198
         },
         {
           "driver": "Ceballos, Darrel",
@@ -310,7 +436,13 @@
           "top5": 0,
           "top10": 4,
           "avgFinish": 19.11,
-          "driverId": "126078"
+          "driverId": "126078",
+          "racePoints": 287,
+          "bonus": 4,
+          "penalty": 0,
+          "laps": 1137,
+          "lapsLed": 4,
+          "incidents": 195
         },
         {
           "driver": "Escamilla, Juan",
@@ -324,7 +456,13 @@
           "top5": 1,
           "top10": 4,
           "avgFinish": 20.89,
-          "driverId": "99085"
+          "driverId": "99085",
+          "racePoints": 271,
+          "bonus": 9,
+          "penalty": 0,
+          "laps": 1067,
+          "lapsLed": 37,
+          "incidents": 131
         },
         {
           "driver": "Boyer, Larkin",
@@ -338,7 +476,13 @@
           "top5": 1,
           "top10": 3,
           "avgFinish": 19.44,
-          "driverId": "120507"
+          "driverId": "120507",
+          "racePoints": 284,
+          "bonus": 1,
+          "penalty": 0,
+          "laps": 1135,
+          "lapsLed": 31,
+          "incidents": 252
         },
         {
           "driver": "Welborn, Hunter",
@@ -352,7 +496,13 @@
           "top5": 0,
           "top10": 1,
           "avgFinish": 23.11,
-          "driverId": "135679"
+          "driverId": "135679",
+          "racePoints": 251,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 1209,
+          "lapsLed": 0,
+          "incidents": 168
         },
         {
           "driver": "Neagles, Kody",
@@ -366,7 +516,13 @@
           "top5": 1,
           "top10": 3,
           "avgFinish": 18,
-          "driverId": "66005"
+          "driverId": "66005",
+          "racePoints": 264,
+          "bonus": 12,
+          "penalty": 0,
+          "laps": 1087,
+          "lapsLed": 89,
+          "incidents": 151
         },
         {
           "driver": "Philpott, Jared",
@@ -380,7 +536,13 @@
           "top5": 3,
           "top10": 4,
           "avgFinish": 8.5,
-          "driverId": "115869"
+          "driverId": "115869",
+          "racePoints": 255,
+          "bonus": 21,
+          "penalty": 0,
+          "laps": 844,
+          "lapsLed": 53,
+          "incidents": 123
         },
         {
           "driver": "Stamper, Shawn",
@@ -394,7 +556,13 @@
           "top5": 0,
           "top10": 1,
           "avgFinish": 22.56,
-          "driverId": "56823"
+          "driverId": "56823",
+          "racePoints": 256,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 1278,
+          "lapsLed": 0,
+          "incidents": 118
         },
         {
           "driver": "Ramsey, Kenwood",
@@ -408,7 +576,13 @@
           "top5": 1,
           "top10": 4,
           "avgFinish": 12.71,
-          "driverId": "139594"
+          "driverId": "139594",
+          "racePoints": 268,
+          "bonus": 3,
+          "penalty": 0,
+          "laps": 969,
+          "lapsLed": 10,
+          "incidents": 65
         },
         {
           "driver": "Campoli, Ross",
@@ -422,7 +596,13 @@
           "top5": 2,
           "top10": 2,
           "avgFinish": 21,
-          "driverId": "127180"
+          "driverId": "127180",
+          "racePoints": 240,
+          "bonus": 1,
+          "penalty": 0,
+          "laps": 1081,
+          "lapsLed": 5,
+          "incidents": 176
         },
         {
           "driver": "Hinton2, Bryce",
@@ -436,7 +616,13 @@
           "top5": 1,
           "top10": 2,
           "avgFinish": 16.17,
-          "driverId": "105882"
+          "driverId": "105882",
+          "racePoints": 209,
+          "bonus": 7,
+          "penalty": 0,
+          "laps": 885,
+          "lapsLed": 85,
+          "incidents": 95
         },
         {
           "driver": "Branch, Jason",
@@ -450,7 +636,13 @@
           "top5": 0,
           "top10": 1,
           "avgFinish": 22.14,
-          "driverId": "48128"
+          "driverId": "48128",
+          "racePoints": 202,
+          "bonus": 4,
+          "penalty": 0,
+          "laps": 1050,
+          "lapsLed": 13,
+          "incidents": 137
         },
         {
           "driver": "Graham20, Matthew",
@@ -464,7 +656,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 31.18,
-          "driverId": "140056"
+          "driverId": "140056",
+          "racePoints": 218,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 1290,
+          "lapsLed": 0,
+          "incidents": 240
         },
         {
           "driver": "Wessley2, Grant",
@@ -478,7 +676,13 @@
           "top5": 1,
           "top10": 2,
           "avgFinish": 17.83,
-          "driverId": "34773"
+          "driverId": "34773",
+          "racePoints": 199,
+          "bonus": 1,
+          "penalty": 0,
+          "laps": 937,
+          "lapsLed": 9,
+          "incidents": 115
         },
         {
           "driver": "Tyler3, Timothy",
@@ -492,7 +696,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 32.45,
-          "driverId": "130000"
+          "driverId": "130000",
+          "racePoints": 204,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 1055,
+          "lapsLed": 0,
+          "incidents": 163
         },
         {
           "driver": "Schweitzer, Randy",
@@ -506,7 +716,13 @@
           "top5": 0,
           "top10": 1,
           "avgFinish": 19.71,
-          "driverId": "74901"
+          "driverId": "74901",
+          "racePoints": 219,
+          "bonus": 1,
+          "penalty": 0,
+          "laps": 969,
+          "lapsLed": 0,
+          "incidents": 124
         },
         {
           "driver": "Cox, Keaton",
@@ -520,7 +736,13 @@
           "top5": 0,
           "top10": 2,
           "avgFinish": 19.5,
-          "driverId": "82788"
+          "driverId": "82788",
+          "racePoints": 189,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 823,
+          "lapsLed": 0,
+          "incidents": 168
         },
         {
           "driver": "Richards, Benjamin",
@@ -534,7 +756,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 19.6,
-          "driverId": "63510"
+          "driverId": "63510",
+          "racePoints": 157,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 801,
+          "lapsLed": 0,
+          "incidents": 131
         },
         {
           "driver": "Micheals, Sebastian",
@@ -548,7 +776,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 27.63,
-          "driverId": "114989"
+          "driverId": "114989",
+          "racePoints": 187,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 1180,
+          "lapsLed": 0,
+          "incidents": 226
         },
         {
           "driver": "Rowe, Craig",
@@ -562,7 +796,13 @@
           "top5": 3,
           "top10": 3,
           "avgFinish": 7.5,
-          "driverId": "51327"
+          "driverId": "51327",
+          "racePoints": 174,
+          "bonus": 22,
+          "penalty": 0,
+          "laps": 564,
+          "lapsLed": 67,
+          "incidents": 65
         },
         {
           "driver": "Fletcher, Charles",
@@ -576,7 +816,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 27,
-          "driverId": "101291"
+          "driverId": "101291",
+          "racePoints": 168,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 886,
+          "lapsLed": 0,
+          "incidents": 118
         },
         {
           "driver": "Hebbard2, Brian",
@@ -590,7 +836,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 24.43,
-          "driverId": "112020"
+          "driverId": "112020",
+          "racePoints": 186,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 959,
+          "lapsLed": 0,
+          "incidents": 177
         },
         {
           "driver": "Hayes4, Brian",
@@ -604,7 +856,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 27.67,
-          "driverId": "109390"
+          "driverId": "109390",
+          "racePoints": 140,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 785,
+          "lapsLed": 3,
+          "incidents": 81
         },
         {
           "driver": "Wise, Scott",
@@ -618,7 +876,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 26.33,
-          "driverId": "38810"
+          "driverId": "38810",
+          "racePoints": 148,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 828,
+          "lapsLed": 5,
+          "incidents": 154
         },
         {
           "driver": "Cooke, Cori",
@@ -632,7 +896,13 @@
           "top5": 1,
           "top10": 1,
           "avgFinish": 15.67,
-          "driverId": "37043"
+          "driverId": "37043",
+          "racePoints": 106,
+          "bonus": 2,
+          "penalty": 0,
+          "laps": 528,
+          "lapsLed": 0,
+          "incidents": 48
         },
         {
           "driver": "Eckert, Ethan",
@@ -646,7 +916,13 @@
           "top5": 1,
           "top10": 2,
           "avgFinish": 21.8,
-          "driverId": "87070"
+          "driverId": "87070",
+          "racePoints": 146,
+          "bonus": 3,
+          "penalty": 0,
+          "laps": 423,
+          "lapsLed": 69,
+          "incidents": 61
         },
         {
           "driver": "Beyke, Brandon",
@@ -660,7 +936,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 16.25,
-          "driverId": "55842"
+          "driverId": "55842",
+          "racePoints": 139,
+          "bonus": 1,
+          "penalty": 0,
+          "laps": 533,
+          "lapsLed": 5,
+          "incidents": 98
         },
         {
           "driver": "Piper, Brock",
@@ -674,7 +956,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 23.2,
-          "driverId": "126849"
+          "driverId": "126849",
+          "racePoints": 139,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 674,
+          "lapsLed": 5,
+          "incidents": 93
         },
         {
           "driver": "Daniels, Bill",
@@ -688,7 +976,13 @@
           "top5": 1,
           "top10": 1,
           "avgFinish": 12.5,
-          "driverId": "93794"
+          "driverId": "93794",
+          "racePoints": 77,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 277,
+          "lapsLed": 0,
+          "incidents": 32
         },
         {
           "driver": "McDowell, Trace",
@@ -702,7 +996,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 29.5,
-          "driverId": "110198"
+          "driverId": "110198",
+          "racePoints": 43,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 369,
+          "lapsLed": 31,
+          "incidents": 62
         },
         {
           "driver": "Collins, Easton",
@@ -716,7 +1016,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 35.25,
-          "driverId": "132261"
+          "driverId": "132261",
+          "racePoints": 63,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 366,
+          "lapsLed": 0,
+          "incidents": 98
         },
         {
           "driver": "Thompson, Javone",
@@ -730,7 +1036,13 @@
           "top5": 0,
           "top10": 1,
           "avgFinish": 23,
-          "driverId": "62821"
+          "driverId": "62821",
+          "racePoints": 56,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 260,
+          "lapsLed": 0,
+          "incidents": 25
         },
         {
           "driver": "Treubig, Aaron",
@@ -744,7 +1056,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 24,
-          "driverId": "126021"
+          "driverId": "126021",
+          "racePoints": 54,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 351,
+          "lapsLed": 0,
+          "incidents": 31
         },
         {
           "driver": "Lunn, Tj",
@@ -758,7 +1076,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 25.5,
-          "driverId": "118777"
+          "driverId": "118777",
+          "racePoints": 51,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 217,
+          "lapsLed": 0,
+          "incidents": 29
         },
         {
           "driver": "Moody, Nicholas",
@@ -772,7 +1096,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 14,
-          "driverId": "115120"
+          "driverId": "115120",
+          "racePoints": 37,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 177,
+          "lapsLed": 0,
+          "incidents": 6
         },
         {
           "driver": "Speicher, Greg",
@@ -786,7 +1116,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 20,
-          "driverId": "57085"
+          "driverId": "57085",
+          "racePoints": 31,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 178,
+          "lapsLed": 0,
+          "incidents": 25
         },
         {
           "driver": "Gothard, Tyler",
@@ -800,7 +1136,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 20,
-          "driverId": "125222"
+          "driverId": "125222",
+          "racePoints": 31,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 101,
+          "lapsLed": 6,
+          "incidents": 33
         },
         {
           "driver": "Fairman2, Larry",
@@ -814,7 +1156,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 26,
-          "driverId": "71443"
+          "driverId": "71443",
+          "racePoints": 25,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 164,
+          "lapsLed": 0,
+          "incidents": 32
         },
         {
           "driver": "Wells, Joe",
@@ -828,7 +1176,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 30,
-          "driverId": "81845"
+          "driverId": "81845",
+          "racePoints": 21,
+          "bonus": 1,
+          "penalty": 0,
+          "laps": 101,
+          "lapsLed": 1,
+          "incidents": 41
         },
         {
           "driver": "Bergeron, Gerry",
@@ -842,7 +1196,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 34,
-          "driverId": "88906"
+          "driverId": "88906",
+          "racePoints": 17,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 61,
+          "lapsLed": 0,
+          "incidents": 8
         },
         {
           "driver": "Harry, Zach",
@@ -856,7 +1216,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 42.5,
-          "driverId": "107035"
+          "driverId": "107035",
+          "racePoints": 17,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 121,
+          "lapsLed": 0,
+          "incidents": 32
         },
         {
           "driver": "Rivera, Victor",
@@ -870,7 +1236,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 40,
-          "driverId": "137602"
+          "driverId": "137602",
+          "racePoints": 11,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 86,
+          "lapsLed": 0,
+          "incidents": 20
         }
       ],
       "teams": [
@@ -7116,7 +7488,13 @@
           "top5": 5,
           "top10": 5,
           "avgFinish": 1,
-          "driverId": "87070"
+          "driverId": "87070",
+          "racePoints": 250,
+          "bonus": 75,
+          "penalty": 0,
+          "laps": 626,
+          "lapsLed": 312,
+          "incidents": 25
         },
         {
           "driver": "Aswarnauth, Trevor",
@@ -7130,7 +7508,13 @@
           "top5": 2,
           "top10": 4,
           "avgFinish": 7.8,
-          "driverId": "10188"
+          "driverId": "10188",
+          "racePoints": 216,
+          "bonus": 15,
+          "penalty": 0,
+          "laps": 562,
+          "lapsLed": 22,
+          "incidents": 48
         },
         {
           "driver": "Daniels, Bill",
@@ -7144,7 +7528,13 @@
           "top5": 3,
           "top10": 4,
           "avgFinish": 7.4,
-          "driverId": "93794"
+          "driverId": "93794",
+          "racePoints": 218,
+          "bonus": 8,
+          "penalty": 0,
+          "laps": 622,
+          "lapsLed": 46,
+          "incidents": 28
         },
         {
           "driver": "James, Chris",
@@ -7158,7 +7548,13 @@
           "top5": 1,
           "top10": 3,
           "avgFinish": 12,
-          "driverId": "33901"
+          "driverId": "33901",
+          "racePoints": 195,
+          "bonus": 4,
+          "penalty": 0,
+          "laps": 508,
+          "lapsLed": 19,
+          "incidents": 44
         },
         {
           "driver": "Bergeron, Gerry",
@@ -7172,7 +7568,13 @@
           "top5": 0,
           "top10": 3,
           "avgFinish": 11.2,
-          "driverId": "88906"
+          "driverId": "88906",
+          "racePoints": 199,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 625,
+          "lapsLed": 14,
+          "incidents": 34
         },
         {
           "driver": "Thompson, Javone",
@@ -7186,7 +7588,13 @@
           "top5": 1,
           "top10": 2,
           "avgFinish": 13,
-          "driverId": "62821"
+          "driverId": "62821",
+          "racePoints": 190,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 509,
+          "lapsLed": 0,
+          "incidents": 51
         },
         {
           "driver": "Ramsey, Kenwood",
@@ -7200,7 +7608,13 @@
           "top5": 1,
           "top10": 2,
           "avgFinish": 13.8,
-          "driverId": "139594"
+          "driverId": "139594",
+          "racePoints": 186,
+          "bonus": 2,
+          "penalty": 0,
+          "laps": 624,
+          "lapsLed": 21,
+          "incidents": 38
         },
         {
           "driver": "Freeman, Carson",
@@ -7214,7 +7628,13 @@
           "top5": 1,
           "top10": 3,
           "avgFinish": 14.2,
-          "driverId": "84782"
+          "driverId": "84782",
+          "racePoints": 184,
+          "bonus": 2,
+          "penalty": 0,
+          "laps": 485,
+          "lapsLed": 3,
+          "incidents": 30
         },
         {
           "driver": "Stamper, Shawn",
@@ -7228,7 +7648,13 @@
           "top5": 0,
           "top10": 3,
           "avgFinish": 14.6,
-          "driverId": "56823"
+          "driverId": "56823",
+          "racePoints": 182,
+          "bonus": 2,
+          "penalty": 0,
+          "laps": 509,
+          "lapsLed": 38,
+          "incidents": 31
         },
         {
           "driver": "Welborn, Hunter",
@@ -7242,7 +7668,13 @@
           "top5": 1,
           "top10": 2,
           "avgFinish": 14.6,
-          "driverId": "135679"
+          "driverId": "135679",
+          "racePoints": 182,
+          "bonus": 1,
+          "penalty": 0,
+          "laps": 533,
+          "lapsLed": 0,
+          "incidents": 26
         },
         {
           "driver": "Moody, Nicholas",
@@ -7256,7 +7688,13 @@
           "top5": 1,
           "top10": 1,
           "avgFinish": 15.4,
-          "driverId": "115120"
+          "driverId": "115120",
+          "racePoints": 178,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 516,
+          "lapsLed": 0,
+          "incidents": 31
         },
         {
           "driver": "Wilson21, Ryan",
@@ -7270,7 +7708,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 16.2,
-          "driverId": "109391"
+          "driverId": "109391",
+          "racePoints": 174,
+          "bonus": 1,
+          "penalty": 0,
+          "laps": 514,
+          "lapsLed": 18,
+          "incidents": 38
         },
         {
           "driver": "Beach, Donny",
@@ -7284,7 +7728,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 16,
-          "driverId": "118360"
+          "driverId": "118360",
+          "racePoints": 175,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 615,
+          "lapsLed": 16,
+          "incidents": 46
         },
         {
           "driver": "Fassett, Jerry",
@@ -7298,7 +7748,13 @@
           "top5": 0,
           "top10": 1,
           "avgFinish": 17.2,
-          "driverId": "116496"
+          "driverId": "116496",
+          "racePoints": 169,
+          "bonus": 1,
+          "penalty": 0,
+          "laps": 522,
+          "lapsLed": 7,
+          "incidents": 40
         },
         {
           "driver": "Kammeron, Kyle",
@@ -7312,7 +7768,13 @@
           "top5": 0,
           "top10": 2,
           "avgFinish": 18.4,
-          "driverId": "106245"
+          "driverId": "106245",
+          "racePoints": 163,
+          "bonus": 3,
+          "penalty": 0,
+          "laps": 463,
+          "lapsLed": 3,
+          "incidents": 41
         },
         {
           "driver": "Konen, Joe",
@@ -7326,7 +7788,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 18.2,
-          "driverId": "137810"
+          "driverId": "137810",
+          "racePoints": 164,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 504,
+          "lapsLed": 0,
+          "incidents": 31
         },
         {
           "driver": "McKinney2, Joshua",
@@ -7340,7 +7808,13 @@
           "top5": 0,
           "top10": 2,
           "avgFinish": 11.25,
-          "driverId": "55068"
+          "driverId": "55068",
+          "racePoints": 159,
+          "bonus": 4,
+          "penalty": 0,
+          "laps": 499,
+          "lapsLed": 1,
+          "incidents": 48
         },
         {
           "driver": "Hebbard2, Brian",
@@ -7354,7 +7828,13 @@
           "top5": 0,
           "top10": 1,
           "avgFinish": 18.8,
-          "driverId": "112020"
+          "driverId": "112020",
+          "racePoints": 161,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 578,
+          "lapsLed": 5,
+          "incidents": 69
         },
         {
           "driver": "Fuqua, Evan",
@@ -7368,7 +7848,13 @@
           "top5": 1,
           "top10": 1,
           "avgFinish": 19,
-          "driverId": "132994"
+          "driverId": "132994",
+          "racePoints": 160,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 607,
+          "lapsLed": 0,
+          "incidents": 49
         },
         {
           "driver": "Hatfield, Shane",
@@ -7382,7 +7868,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 20.6,
-          "driverId": "137126"
+          "driverId": "137126",
+          "racePoints": 152,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 594,
+          "lapsLed": 0,
+          "incidents": 45
         },
         {
           "driver": "Hayden, Eric",
@@ -7396,7 +7888,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 20.8,
-          "driverId": "93056"
+          "driverId": "93056",
+          "racePoints": 151,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 530,
+          "lapsLed": 0,
+          "incidents": 41
         },
         {
           "driver": "Lunn, Tj",
@@ -7410,7 +7908,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 21.8,
-          "driverId": "118777"
+          "driverId": "118777",
+          "racePoints": 146,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 589,
+          "lapsLed": 0,
+          "incidents": 47
         },
         {
           "driver": "Karlbon, Evan",
@@ -7424,7 +7928,13 @@
           "top5": 2,
           "top10": 2,
           "avgFinish": 6,
-          "driverId": "98668"
+          "driverId": "98668",
+          "racePoints": 135,
+          "bonus": 5,
+          "penalty": 0,
+          "laps": 376,
+          "lapsLed": 36,
+          "incidents": 22
         },
         {
           "driver": "Jacobs, Derek",
@@ -7438,7 +7948,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 24,
-          "driverId": "49145"
+          "driverId": "49145",
+          "racePoints": 135,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 558,
+          "lapsLed": 0,
+          "incidents": 21
         },
         {
           "driver": "Miles, Ricky",
@@ -7452,7 +7968,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 20,
-          "driverId": "101290"
+          "driverId": "101290",
+          "racePoints": 124,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 363,
+          "lapsLed": 0,
+          "incidents": 22
         },
         {
           "driver": "Miles4, John",
@@ -7466,7 +7988,13 @@
           "top5": 0,
           "top10": 1,
           "avgFinish": 20.75,
-          "driverId": "99926"
+          "driverId": "99926",
+          "racePoints": 121,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 396,
+          "lapsLed": 0,
+          "incidents": 25
         },
         {
           "driver": "Reel, Kenny",
@@ -7480,7 +8008,13 @@
           "top5": 2,
           "top10": 2,
           "avgFinish": 2,
-          "driverId": "76958"
+          "driverId": "76958",
+          "racePoints": 98,
+          "bonus": 12,
+          "penalty": 0,
+          "laps": 250,
+          "lapsLed": 50,
+          "incidents": 10
         },
         {
           "driver": "Whiting, Jordan",
@@ -7494,7 +8028,13 @@
           "top5": 2,
           "top10": 2,
           "avgFinish": 4.5,
-          "driverId": "69977"
+          "driverId": "69977",
+          "racePoints": 93,
+          "bonus": 4,
+          "penalty": 0,
+          "laps": 251,
+          "lapsLed": 0,
+          "incidents": 18
         },
         {
           "driver": "Rogers, Tommy",
@@ -7508,7 +8048,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 19.33,
-          "driverId": "109389"
+          "driverId": "109389",
+          "racePoints": 95,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 373,
+          "lapsLed": 0,
+          "incidents": 40
         },
         {
           "driver": "Leebaw, Alex",
@@ -7522,7 +8068,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 24.67,
-          "driverId": "116494"
+          "driverId": "116494",
+          "racePoints": 79,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 262,
+          "lapsLed": 11,
+          "incidents": 38
         },
         {
           "driver": "Parry, Evan",
@@ -7536,7 +8088,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 16,
-          "driverId": "103956"
+          "driverId": "103956",
+          "racePoints": 70,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 230,
+          "lapsLed": 0,
+          "incidents": 8
         },
         {
           "driver": "Micheals, Sebastian",
@@ -7550,7 +8108,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 21,
-          "driverId": "114989"
+          "driverId": "114989",
+          "racePoints": 60,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 224,
+          "lapsLed": 0,
+          "incidents": 46
         },
         {
           "driver": "Dynda, Max",
@@ -7564,7 +8128,13 @@
           "top5": 1,
           "top10": 1,
           "avgFinish": 3,
-          "driverId": "69907"
+          "driverId": "69907",
+          "racePoints": 48,
+          "bonus": 5,
+          "penalty": 0,
+          "laps": 101,
+          "lapsLed": 3,
+          "incidents": 28
         },
         {
           "driver": "Hinton2, Bryce",
@@ -7578,7 +8148,13 @@
           "top5": 1,
           "top10": 1,
           "avgFinish": 3,
-          "driverId": "105882"
+          "driverId": "105882",
+          "racePoints": 48,
+          "bonus": 1,
+          "penalty": 0,
+          "laps": 125,
+          "lapsLed": 0,
+          "incidents": 4
         },
         {
           "driver": "Durand Jr, David",
@@ -7592,7 +8168,13 @@
           "top5": 0,
           "top10": 1,
           "avgFinish": 8,
-          "driverId": "53993"
+          "driverId": "53993",
+          "racePoints": 43,
+          "bonus": 1,
+          "penalty": 0,
+          "laps": 150,
+          "lapsLed": 0,
+          "incidents": 4
         },
         {
           "driver": "Neagles, Kody",
@@ -7606,7 +8188,13 @@
           "top5": 0,
           "top10": 1,
           "avgFinish": 10,
-          "driverId": "66005"
+          "driverId": "66005",
+          "racePoints": 41,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 124,
+          "lapsLed": 0,
+          "incidents": 4
         },
         {
           "driver": "Hayes4, Brian",
@@ -7620,7 +8208,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 12,
-          "driverId": "109390"
+          "driverId": "109390",
+          "racePoints": 39,
+          "bonus": 1,
+          "penalty": 0,
+          "laps": 125,
+          "lapsLed": 0,
+          "incidents": 6
         },
         {
           "driver": "Boyer, Larkin",
@@ -7634,7 +8228,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 26,
-          "driverId": "120507"
+          "driverId": "120507",
+          "racePoints": 25,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 7,
+          "lapsLed": 0,
+          "incidents": 4
         },
         {
           "driver": "Blasdell, Nate",
@@ -7648,7 +8248,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 30,
-          "driverId": "108633"
+          "driverId": "108633",
+          "racePoints": 21,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 39,
+          "lapsLed": 0,
+          "incidents": 13
         },
         {
           "driver": "Thompson, Knox",
@@ -7662,7 +8268,13 @@
           "top5": 0,
           "top10": 0,
           "avgFinish": 31,
-          "driverId": "114101"
+          "driverId": "114101",
+          "racePoints": 20,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 33,
+          "lapsLed": 1,
+          "incidents": 18
         }
       ],
       "teams": [
