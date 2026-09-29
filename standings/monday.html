@@ -3192,6 +3192,254 @@ html,body,.page-wrap{
   #teams .hlrn-team-profile-arrow{display:none!important}
 }
 </style>
+
+<style id="HLRN_MOBILE_SCORECARD_V2">
+.hlrn-mobile-driver-rank,
+.hlrn-mobile-team-rank,
+.hlrn-mobile-keypoints{display:none}
+
+@media(max-width:760px){
+  .hlrn-mobile-scroll-hint{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:7px!important;
+    min-height:34px!important;
+    margin:0!important;
+    padding:7px 10px!important;
+    border-top:1px solid #e7eaed!important;
+    border-bottom:1px solid #e7eaed!important;
+    background:linear-gradient(90deg,#fff,#f7f8f9,#fff)!important;
+    color:#666e76!important;
+    font-family:"Inter","Segoe UI",Arial,sans-serif!important;
+    font-size:9px!important;
+    font-weight:800!important;
+    letter-spacing:.035em!important;
+    text-transform:uppercase!important;
+  }
+
+  #drivers table{min-width:1120px!important}
+  #teams table{min-width:900px!important}
+
+  /* The pinned identity card replaces duplicate mobile POS/CHG/TOT/STG columns. */
+  #drivers th:nth-child(1),#drivers td:nth-child(1),
+  #drivers th:nth-child(2),#drivers td:nth-child(2),
+  #drivers th:nth-child(8),#drivers td:nth-child(8),
+  #drivers th:nth-child(9),#drivers td:nth-child(9){
+    display:none!important;
+  }
+  #teams th:nth-child(1),#teams td:nth-child(1),
+  #teams th:nth-child(2),#teams td:nth-child(2),
+  #teams th:nth-child(9),#teams td:nth-child(9),
+  #teams th:nth-child(10),#teams td:nth-child(10){
+    display:none!important;
+  }
+
+  #drivers thead th.name-col,
+  #drivers tbody td.name-col,
+  #teams thead th.name-col,
+  #teams tbody td.name-col{
+    position:-webkit-sticky!important;
+    position:sticky!important;
+    left:0!important;
+    z-index:60!important;
+    box-shadow:10px 0 16px -14px rgba(0,0,0,.85)!important;
+  }
+  #drivers thead th.name-col,
+  #teams thead th.name-col{
+    z-index:80!important;
+    background:#f3f5f6!important;
+    font-size:0!important;
+    letter-spacing:0!important;
+  }
+  #drivers thead th.name-col:after{
+    content:"DRIVER • POINTS";
+    font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
+    font-size:10px!important;
+    font-weight:800!important;
+    letter-spacing:.08em!important;
+  }
+  #teams thead th.name-col:after{
+    content:"TEAM • POINTS";
+    font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
+    font-size:10px!important;
+    font-weight:800!important;
+    letter-spacing:.08em!important;
+  }
+
+  #drivers th.name-col,#drivers td.name-col{
+    width:260px!important;
+    min-width:260px!important;
+    max-width:260px!important;
+  }
+  #teams th.name-col,#teams td.name-col{
+    width:245px!important;
+    min-width:245px!important;
+    max-width:245px!important;
+  }
+
+  #drivers tbody td.name-col,
+  #teams tbody td.name-col{
+    height:76px!important;
+    padding:7px 8px!important;
+    overflow:visible!important;
+  }
+
+  #drivers .hlrn-mobile-driver-card{
+    display:grid!important;
+    grid-template-columns:34px minmax(0,1fr) 52px!important;
+    gap:6px!important;
+    align-items:center!important;
+    width:100%!important;
+    min-width:0!important;
+  }
+  #teams .hlrn-mobile-team-card{
+    display:grid!important;
+    grid-template-columns:36px minmax(0,1fr) 52px!important;
+    gap:7px!important;
+    align-items:center!important;
+    width:100%!important;
+    min-width:0!important;
+  }
+
+  .hlrn-mobile-driver-rank,
+  .hlrn-mobile-team-rank{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    min-width:0!important;
+    color:#111214!important;
+    font-family:"Inter","Segoe UI",Arial,sans-serif!important;
+  }
+  .hlrn-mobile-driver-rank b,
+  .hlrn-mobile-team-rank b{
+    font-size:13px!important;
+    font-weight:900!important;
+    line-height:1!important;
+  }
+  .hlrn-mobile-driver-rank .movement,
+  .hlrn-mobile-team-rank .movement{
+    margin-top:5px!important;
+    font-size:9px!important;
+    font-weight:700!important;
+    line-height:1!important;
+  }
+
+  #drivers .hlrn-mobile-driver-profile,
+  #teams .hlrn-mobile-team-name{
+    min-width:0!important;
+    overflow:hidden!important;
+  }
+
+  #drivers .hlrn-driver-profile-link{
+    display:flex!important;
+    width:100%!important;
+    min-width:0!important;
+  }
+  #drivers .hlrn-driver-profile-inner{
+    display:grid!important;
+    grid-template-columns:40px minmax(0,1fr)!important;
+    gap:7px!important;
+    align-items:center!important;
+    width:100%!important;
+    min-width:0!important;
+  }
+  #drivers td.name-col img{
+    width:40px!important;
+    height:52px!important;
+    flex:0 0 40px!important;
+    margin:-5px 0!important;
+    object-fit:contain!important;
+  }
+  #drivers .hlrn-driver-profile-name{
+    display:block!important;
+    min-width:0!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+    font-size:14px!important;
+    line-height:1!important;
+  }
+  #drivers .hlrn-driver-profile-arrow{display:none!important}
+
+  #teams .hlrn-team-profile-link{
+    display:block!important;
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+    font-size:16px!important;
+    line-height:1!important;
+  }
+  #teams .hlrn-team-profile-arrow{display:none!important}
+
+  .hlrn-mobile-keypoints{
+    display:grid!important;
+    grid-template-rows:1fr 1fr!important;
+    gap:3px!important;
+    align-self:stretch!important;
+  }
+  .hlrn-mobile-keypoints span{
+    display:flex!important;
+    align-items:baseline!important;
+    justify-content:flex-end!important;
+    gap:3px!important;
+    min-width:0!important;
+    padding:3px 0!important;
+    border-bottom:1px solid #e4e7ea!important;
+    color:#111214!important;
+    font-family:"Inter","Segoe UI",Arial,sans-serif!important;
+  }
+  .hlrn-mobile-keypoints span:last-child{border-bottom:0!important}
+  .hlrn-mobile-keypoints b{
+    font-size:13px!important;
+    font-weight:900!important;
+    line-height:1!important;
+  }
+  .hlrn-mobile-keypoints small{
+    color:#747b82!important;
+    font-size:7px!important;
+    font-weight:800!important;
+    line-height:1!important;
+    letter-spacing:.04em!important;
+  }
+
+  #drivers tbody tr:nth-child(odd) td.name-col,
+  #teams tbody tr:nth-child(odd) td.name-col{background:#fff!important}
+  #drivers tbody tr:nth-child(even) td.name-col,
+  #teams tbody tr:nth-child(even) td.name-col{background:#fafafa!important}
+
+  #drivers tbody tr:first-child td.name-col{
+    background:var(--driver-accent-soft,#f6f7f8)!important;
+    border-left:4px solid var(--driver-accent,#d71920)!important;
+  }
+  #teams tbody tr:first-child td.name-col{
+    background:var(--team-accent-soft,#f6f7f8)!important;
+    border-left:4px solid var(--team-accent,#d71920)!important;
+  }
+
+  #drivers tbody td:not(.name-col),
+  #teams tbody td:not(.name-col){
+    height:76px!important;
+    font-size:11px!important;
+  }
+
+  /* Keep the extra stat strip tight and easy to scan. */
+  #drivers th:nth-child(n+4),#drivers td:nth-child(n+4){
+    width:58px!important;
+    min-width:58px!important;
+    max-width:72px!important;
+  }
+  #teams th:nth-child(n+4),#teams td:nth-child(n+4){
+    width:58px!important;
+    min-width:58px!important;
+    max-width:70px!important;
+  }
+}
+</style>
 </head>
 <body>
 <div class="page-wrap">
@@ -4196,7 +4444,16 @@ function renderDrivers(){
 <tr>
 <td><span class="position ${positionClass(pos)}">${pos}</span></td>
 <td>${movementHTML(driver.change)}</td>
-<td class="name-col">${hLrnNameWithPhoto(driver.driver,driver.driverId)}</td>
+<td class="name-col">
+<div class="hlrn-mobile-driver-card">
+  <div class="hlrn-mobile-driver-rank"><b>P${pos}</b><span>${movementHTML(driver.change)}</span></div>
+  <div class="hlrn-mobile-driver-profile">${hLrnNameWithPhoto(driver.driver,driver.driverId)}</div>
+  <div class="hlrn-mobile-keypoints">
+    <span><b>${formatNumber(points)}</b><small>PTS</small></span>
+    <span><b>${formatNumber(stagePoints)}</b><small>STG</small></span>
+  </div>
+</div>
+</td>
 <td>${formatNumber(starts)}</td>
 <td>${formatNumber(wins)}</td>
 <td>${formatNumber(top5)}</td>
@@ -4332,7 +4589,14 @@ team.change
 )}
 </td>
 <td class="name-col">
-${hLrnTeamProfileLink(team.team)}
+<div class="hlrn-mobile-team-card">
+  <div class="hlrn-mobile-team-rank"><b>P${pos}</b><span>${movementHTML(team.change)}</span></div>
+  <div class="hlrn-mobile-team-name">${hLrnTeamProfileLink(team.team)}</div>
+  <div class="hlrn-mobile-keypoints">
+    <span><b>${formatNumber(team.points,1)}</b><small>PTS</small></span>
+    <span><b>${formatNumber(team.stagePoints,1)}</b><small>STG</small></span>
+  </div>
+</div>
 </td>
 <td>
 ${formatNumber(
