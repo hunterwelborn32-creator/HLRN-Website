@@ -971,6 +971,664 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
   }
 </style>
 
+
+<style id="HLRN_LIVE_MOBILE_COMMAND_CENTER_FINAL">
+.mobile-live-command,
+.mobile-penalty-alert,
+.mobile-live-board{display:none}
+
+/* Desktop remains the Top 3 presentation even though Top 5 data is rendered. */
+@media(min-width:681px){
+  .rc-front-list .rc-top3-row:nth-child(n+4){display:none!important}
+}
+
+@media(max-width:620px){
+  .page{
+    padding:5px 5px 18px!important;
+  }
+  .event-shell{
+    border-radius:7px!important;
+    overflow:visible!important;
+  }
+
+  /* Compact race header / phase banner */
+  .brandbar{
+    padding:9px 10px!important;
+    border-bottom-width:3px!important;
+  }
+  .brandbar-inner{gap:8px!important}
+  .brand{font-size:18px!important}
+  .live-badge{
+    padding:5px 7px!important;
+    font-size:8px!important;
+    letter-spacing:.05em!important;
+  }
+  .live-badge .dot{width:7px!important;height:7px!important}
+
+  .event-head{
+    padding:12px 10px 10px!important;
+    gap:10px!important;
+  }
+  .series{
+    gap:6px!important;
+    font-size:7px!important;
+    letter-spacing:.08em!important;
+  }
+  .series-mark{height:13px!important;width:3px!important}
+  .event-title{
+    margin:5px 0 7px!important;
+    font-size:27px!important;
+    line-height:.94!important;
+  }
+  .event-meta{
+    display:grid!important;
+    grid-template-columns:auto minmax(0,1fr)!important;
+    align-items:center!important;
+    gap:5px 8px!important;
+    font-size:7px!important;
+  }
+  #phaseBadge{
+    grid-row:1/3!important;
+    min-height:37px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    padding:6px 8px!important;
+    border-radius:6px!important;
+    font-size:8px!important;
+  }
+  #sessionName,#connectionText{
+    min-width:0!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+
+  .event-status{
+    display:grid!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    border-radius:7px!important;
+    overflow:hidden!important;
+  }
+  .status-box{
+    min-height:54px!important;
+    padding:8px 5px!important;
+    border-bottom:0!important;
+    text-align:center!important;
+  }
+  .status-box:nth-child(2n){border-right:1px solid var(--line)!important}
+  .status-box:last-child{border-right:0!important}
+  .status-label{
+    font-size:6px!important;
+    letter-spacing:.04em!important;
+  }
+  .status-value{
+    margin-top:5px!important;
+    font-size:13px!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+
+  /* Session progression becomes a slim horizontal indicator. */
+  .session-flow{
+    display:grid!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  }
+  .flow-step{
+    min-height:43px!important;
+    padding:6px 4px!important;
+    gap:4px!important;
+  }
+  .flow-num{
+    width:20px!important;
+    height:20px!important;
+    font-size:8px!important;
+  }
+  .flow-step small{display:none!important}
+  .flow-step strong{
+    font-size:7px!important;
+    letter-spacing:0!important;
+    text-align:center!important;
+  }
+
+  /* Hide the redundant six-box metric wall; key race facts already live below. */
+  .metric-strip{display:none!important}
+
+  /* Leader + Top 5 gets priority. */
+  .rc-crown{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:6px!important;
+    padding:6px!important;
+  }
+  .rc-leader-hero{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) 112px!important;
+    min-height:154px!important;
+    border-radius:8px!important;
+  }
+  .rc-leader-copy{
+    padding:13px 5px 12px 13px!important;
+  }
+  .rc-kicker{
+    gap:6px!important;
+    font-size:7px!important;
+    letter-spacing:.07em!important;
+  }
+  .rc-kicker-dot{
+    width:7px!important;height:7px!important;
+  }
+  .rc-leader-number{
+    margin-top:8px!important;
+    font-size:38px!important;
+    letter-spacing:-2px!important;
+  }
+  .rc-leader-name{
+    margin-top:5px!important;
+    font-size:20px!important;
+    letter-spacing:-.7px!important;
+  }
+  .rc-leader-meta{
+    gap:4px!important;
+    margin-top:9px!important;
+  }
+  .rc-pill{
+    padding:5px 6px!important;
+    font-size:7px!important;
+    letter-spacing:.02em!important;
+  }
+  .rc-leader-photo-wrap{
+    height:154px!important;
+  }
+  .rc-leader-photo{
+    height:154px!important;
+    max-width:125%!important;
+  }
+  .rc-leader-photo-wrap:before{
+    inset:10px 5px!important;
+  }
+
+  .rc-front-battle{
+    padding:9px!important;
+    min-height:0!important;
+    border-radius:8px!important;
+  }
+  .rc-front-head{
+    padding-bottom:7px!important;
+    margin-bottom:2px!important;
+  }
+  .rc-front-head small{font-size:6px!important}
+  .rc-front-head strong{
+    margin-top:2px!important;
+    font-size:13px!important;
+  }
+  .rc-front-head span{font-size:7px!important}
+  .rc-top3-row{
+    display:grid!important;
+    grid-template-columns:31px 35px minmax(0,1fr) auto!important;
+    gap:5px!important;
+    min-height:43px!important;
+  }
+  .rc-top3-pos{font-size:15px!important}
+  .rc-top3-photo{
+    width:35px!important;
+    height:41px!important;
+  }
+  .rc-top3-name{font-size:10px!important}
+  .rc-top3-sub{
+    margin-top:1px!important;
+    font-size:6px!important;
+  }
+  .rc-top3-gap{font-size:11px!important}
+  .rc-top3-gap small{font-size:5px!important}
+
+  /* Compact live ticker. */
+  .live-ticker-bar{
+    min-height:37px!important;
+    grid-template-columns:auto minmax(0,1fr)!important;
+  }
+  .live-ticker-kicker{
+    padding:0 8px 0 10px!important;
+    font-size:7px!important;
+  }
+  .live-ticker-content{
+    gap:6px!important;
+    padding:7px 8px!important;
+  }
+  .live-ticker-lap{font-size:7px!important}
+  .live-ticker-text{font-size:8px!important}
+  .live-ticker-count{display:none!important}
+
+  /* Race Center tabs remain accessible without consuming the screen. */
+  .primary-tabs{
+    position:sticky!important;
+    top:0!important;
+    z-index:90!important;
+    display:flex!important;
+    gap:3px!important;
+    padding:4px!important;
+    overflow-x:auto!important;
+    background:rgba(246,247,248,.97)!important;
+    backdrop-filter:blur(10px)!important;
+    -webkit-backdrop-filter:blur(10px)!important;
+    scrollbar-width:none!important;
+  }
+  .primary-tabs::-webkit-scrollbar{display:none!important}
+  .primary-tabs .tab{
+    flex:0 0 auto!important;
+    min-height:35px!important;
+    padding:8px 9px 6px!important;
+    border-radius:6px!important;
+    font-size:7px!important;
+    letter-spacing:.03em!important;
+  }
+  .session-tools{
+    display:flex!important;
+    gap:3px!important;
+    padding:4px!important;
+    overflow-x:auto!important;
+    scrollbar-width:none!important;
+  }
+  .session-tools::-webkit-scrollbar{display:none!important}
+  .session-tools .tab{
+    flex:0 0 auto!important;
+    min-height:31px!important;
+    padding:6px 8px!important;
+    font-size:7px!important;
+  }
+  .session-tools:before{display:none!important}
+
+  .section{padding:5px!important}
+
+  /* Always-visible mobile Race Control command strip on Leaderboard. */
+  .mobile-live-command{
+    display:block!important;
+    margin-bottom:6px!important;
+    overflow:hidden!important;
+    border:1px solid #303845!important;
+    border-radius:8px!important;
+    background:#111820!important;
+    color:#fff!important;
+  }
+  .mobile-live-command-grid{
+    display:grid!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  }
+  .mobile-live-command-grid>div{
+    min-width:0!important;
+    padding:8px 5px!important;
+    border-right:1px solid #303845!important;
+    text-align:center!important;
+  }
+  .mobile-live-command-grid>div:last-child{border-right:0!important}
+  .mobile-live-command-grid small{
+    display:block!important;
+    color:#8f99a6!important;
+    font-size:5px!important;
+    font-weight:900!important;
+    letter-spacing:.05em!important;
+    text-transform:uppercase!important;
+  }
+  .mobile-live-command-grid strong{
+    display:block!important;
+    margin-top:4px!important;
+    overflow:hidden!important;
+    color:#fff!important;
+    font-size:10px!important;
+    font-weight:1000!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+  .mobile-live-command-grid strong.flag-yellow,
+  .mobile-live-command-grid strong.flag-caution,
+  .mobile-live-command-grid strong.flag-one-to-green{color:#ffd94b!important}
+  .mobile-live-command-grid strong.flag-green{color:#62e590!important}
+  .mobile-live-command-grid strong.flag-red{color:#ff6379!important}
+  .mobile-live-command-grid strong.flag-checkered{color:#fff!important}
+
+  .mobile-live-command-message{
+    padding:7px 9px!important;
+    border-top:1px solid #303845!important;
+    color:#c9d1da!important;
+    background:#171f28!important;
+    font-size:7px!important;
+    font-weight:800!important;
+    line-height:1.35!important;
+  }
+  .mobile-live-command-message.green,
+  .mobile-live-command-message.restart{
+    color:#94ebb4!important;
+    background:#10251a!important;
+  }
+  .mobile-live-command-message.caution{
+    color:#ffe070!important;
+    background:#2b2506!important;
+  }
+  .mobile-live-command-message.red{
+    color:#ff9bad!important;
+    background:#2b1117!important;
+  }
+
+  .mobile-penalty-alert{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:3px!important;
+    margin-bottom:6px!important;
+    padding:9px 10px!important;
+    border:1px solid #da8c9a!important;
+    border-left:4px solid var(--red)!important;
+    border-radius:8px!important;
+    background:#fff0f2!important;
+  }
+  .mobile-penalty-alert[hidden]{display:none!important}
+  .mobile-penalty-alert small{
+    display:block!important;
+    color:#a91a31!important;
+    font-size:6px!important;
+    font-weight:1000!important;
+    letter-spacing:.06em!important;
+    text-transform:uppercase!important;
+  }
+  .mobile-penalty-alert strong{
+    display:block!important;
+    margin-top:2px!important;
+    color:#8f1026!important;
+    font-size:10px!important;
+  }
+  .mobile-penalty-alert>span{
+    color:#7d2635!important;
+    font-size:8px!important;
+    font-weight:700!important;
+    line-height:1.35!important;
+  }
+
+  /* Main leaderboard: purpose-built mobile cards, no sideways table. */
+  #tab-race .race-layout{
+    display:block!important;
+  }
+  #tab-race .race-layout>.panel:first-child{
+    border:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    overflow:visible!important;
+  }
+  #tab-race .race-layout>.panel:first-child>.panel-head{
+    min-height:40px!important;
+    padding:7px 8px!important;
+    border:1px solid #d8dde2!important;
+    border-radius:7px!important;
+    background:#fff!important;
+  }
+  #livePanelTitle{font-size:9px!important}
+  .segmented button{
+    padding:5px 7px!important;
+    font-size:7px!important;
+  }
+  #leaderboard>.table-shell{display:none!important}
+  .mobile-live-board{
+    display:grid!important;
+    gap:5px!important;
+    margin-top:5px!important;
+  }
+  .mobile-timing-card{
+    overflow:hidden!important;
+    border:1px solid #d7dce2!important;
+    border-radius:8px!important;
+    background:#fff!important;
+    box-shadow:0 2px 7px rgba(16,22,29,.04)!important;
+  }
+  .mobile-timing-card.leader{
+    border-left:4px solid var(--red)!important;
+    background:#fffafa!important;
+  }
+  .mobile-timing-card.battle:not(.leader){
+    border-left:3px solid #e4b300!important;
+  }
+  .mobile-timing-main{
+    display:grid!important;
+    grid-template-columns:34px 39px minmax(0,1fr) auto!important;
+    gap:5px!important;
+    align-items:center!important;
+    min-height:57px!important;
+    padding:5px 7px!important;
+  }
+  .mobile-timing-pos{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:4px!important;
+  }
+  .mobile-timing-pos>b{
+    color:#111820!important;
+    font-size:15px!important;
+    font-weight:1000!important;
+  }
+  .mobile-timing-pos>span{
+    font-size:7px!important;
+    font-weight:1000!important;
+  }
+  .mobile-timing-pos .up{color:#118948!important}
+  .mobile-timing-pos .down{color:#d6273e!important}
+  .mobile-timing-pos .same{color:#8a919c!important}
+  .mobile-timing-photo{
+    width:39px!important;
+    height:51px!important;
+    object-fit:contain!important;
+    object-position:center bottom!important;
+    align-self:end!important;
+  }
+  .mobile-timing-photo-fallback{
+    display:grid!important;
+    place-items:center!important;
+    width:39px!important;
+    height:39px!important;
+    border-radius:50%!important;
+    background:#171d25!important;
+    color:#fff!important;
+    font-size:9px!important;
+    font-weight:1000!important;
+  }
+  .mobile-timing-driver{
+    min-width:0!important;
+  }
+  .mobile-timing-driver strong{
+    display:block!important;
+    overflow:hidden!important;
+    color:#111820!important;
+    font-size:10px!important;
+    font-weight:1000!important;
+    text-overflow:ellipsis!important;
+    text-transform:uppercase!important;
+    white-space:nowrap!important;
+  }
+  .mobile-timing-driver span{
+    display:block!important;
+    margin-top:2px!important;
+    overflow:hidden!important;
+    color:#7d8691!important;
+    font-size:6px!important;
+    font-weight:800!important;
+    text-overflow:ellipsis!important;
+    text-transform:uppercase!important;
+    white-space:nowrap!important;
+  }
+  .mobile-timing-gap{
+    min-width:48px!important;
+    text-align:right!important;
+  }
+  .mobile-timing-gap b{
+    display:block!important;
+    color:#171d25!important;
+    font-size:10px!important;
+    font-weight:1000!important;
+    font-variant-numeric:tabular-nums!important;
+  }
+  .mobile-timing-gap small{
+    display:block!important;
+    margin-top:2px!important;
+    color:#8a929d!important;
+    font-size:5px!important;
+    font-weight:900!important;
+    letter-spacing:.04em!important;
+  }
+
+  .mobile-timing-stats{
+    display:grid!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    border-top:1px solid #e3e6e9!important;
+    background:#f8f9fa!important;
+  }
+  .mobile-timing-stats>span{
+    min-width:0!important;
+    padding:6px 4px!important;
+    border-right:1px solid #e1e4e7!important;
+    text-align:center!important;
+  }
+  .mobile-timing-stats>span:last-child{border-right:0!important}
+  .mobile-timing-stats b{
+    display:block!important;
+    overflow:hidden!important;
+    color:#242a31!important;
+    font-size:8px!important;
+    font-weight:1000!important;
+    font-variant-numeric:tabular-nums!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+  .mobile-timing-stats small{
+    display:block!important;
+    margin-top:3px!important;
+    color:#8a929d!important;
+    font-size:5px!important;
+    font-weight:900!important;
+    letter-spacing:.04em!important;
+  }
+  .mobile-timing-status.black-flag b,
+  .mobile-timing-status.dq b,
+  .mobile-timing-status.meatball b{color:#c5122f!important}
+  .mobile-timing-status.finished b,
+  .mobile-timing-status.lead-lap b{color:#118a4d!important}
+
+  .mobile-timing-alert{
+    padding:5px 7px!important;
+    border-top:1px solid #e2e5e8!important;
+    font-size:6px!important;
+    font-weight:1000!important;
+    letter-spacing:.04em!important;
+    text-transform:uppercase!important;
+  }
+  .mobile-timing-alert.battle-alert{
+    background:#fff8da!important;
+    color:#795e00!important;
+  }
+  .mobile-timing-alert.penalty-alert{
+    background:#fff0f2!important;
+    color:#a7132b!important;
+  }
+
+  /* Sidebar information is still available, but secondary on phones. */
+  #tab-race .side-stack{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:6px!important;
+    margin-top:7px!important;
+  }
+  #tab-race .side-stack .panel{
+    border-radius:7px!important;
+  }
+  #tab-race .side-stack .panel:first-child{
+    display:none!important;
+  }
+
+  /* Race Control tab remains compact when opened. */
+  .rc2-summary{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+  .rc2-stat{
+    min-height:55px!important;
+    padding:8px 6px!important;
+  }
+  .rc2-stat:nth-child(3n){border-right:0!important}
+  .rc2-stat small{font-size:6px!important}
+  .rc2-stat strong{
+    margin-top:4px!important;
+    font-size:12px!important;
+  }
+  .rc2-banner{
+    margin:6px!important;
+    padding:8px!important;
+    font-size:8px!important;
+  }
+  .rc2-order{
+    gap:4px!important;
+    padding:6px!important;
+  }
+  .rc2-order-row{
+    grid-template-columns:29px 32px minmax(0,1fr) auto!important;
+    min-height:42px!important;
+    gap:5px!important;
+    padding:3px 5px!important;
+  }
+  .rc2-order-pos{font-size:13px!important}
+  .rc2-order-photo{
+    width:32px!important;
+    height:37px!important;
+  }
+  .rc2-order-name{font-size:8px!important}
+  .rc2-order-sub,.rc2-order-status{font-size:6px!important}
+
+  /* Penalties page optimized for alerts first. */
+  .rc-flag-summary{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  }
+  .rc-flag-stat{
+    min-width:0!important;
+    padding:8px 5px!important;
+  }
+  .rc-flag-stat small{font-size:5px!important}
+  .rc-flag-stat strong{
+    margin-top:4px!important;
+    font-size:11px!important;
+  }
+  .rc-active-penalty{
+    grid-template-columns:42px minmax(0,1fr)!important;
+    gap:7px!important;
+    padding:8px!important;
+  }
+  .rc-active-penalty img{
+    width:42px!important;
+    height:48px!important;
+  }
+  .rc-flag-badge{
+    grid-column:1/-1!important;
+    justify-self:start!important;
+    margin-left:49px!important;
+  }
+
+  .offline{
+    padding:25px 12px!important;
+    font-size:9px!important;
+  }
+  .offline strong{
+    font-size:14px!important;
+  }
+}
+
+@media(max-width:380px){
+  .rc-leader-hero{
+    grid-template-columns:minmax(0,1fr) 96px!important;
+  }
+  .rc-leader-photo-wrap,
+  .rc-leader-photo{height:145px!important}
+  .rc-leader-name{font-size:18px!important}
+  .mobile-timing-main{
+    grid-template-columns:31px 34px minmax(0,1fr) auto!important;
+  }
+  .mobile-timing-photo{width:34px!important;height:47px!important}
+}
+</style>
 </head>
 <body>
 
@@ -1062,6 +1720,19 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
     </nav>
 
     <section id="tab-race" class="section active">
+      <div class="mobile-live-command" aria-label="Mobile race control">
+        <div class="mobile-live-command-grid">
+          <div><small>Flag</small><strong id="mrcFlag">OFFLINE</strong></div>
+          <div><small>Caution</small><strong id="mrcCaution">—</strong></div>
+          <div><small>Restart</small><strong id="mrcRestart">—</strong></div>
+          <div><small>Green Run</small><strong id="mrcGreenRun">0</strong></div>
+        </div>
+        <div id="mrcMessage" class="mobile-live-command-message">Race Control is standing by.</div>
+      </div>
+      <div id="mobilePenaltyAlert" class="mobile-penalty-alert" hidden>
+        <div><small>Race Control Alert</small><strong id="mobilePenaltyTitle">Penalty</strong></div>
+        <span id="mobilePenaltyReason">—</span>
+      </div>
       <div class="race-layout">
         <div class="panel">
           <div class="panel-head">
@@ -2188,7 +2859,35 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
     const savedTableScrollLeft = oldTableShell ? oldTableShell.scrollLeft : 0;
 
     if(!online){
-      el.innerHTML = `<div class="offline"><strong>Live timing is offline</strong>Start the HLRN iRacing bridge to populate the leaderboard.</div>`;
+      const mobileCards = shown.map(driver => {
+      const delta = positionDelta(driver);
+      const photo=hLrnDriverPhotoUrl(driver.name);
+      const status=driverStatus(driver);
+      const penaltyText=driver.blackFlag
+        ? (driver.penaltyReason || "Reason not exposed by iRacing")
+        : (driver.disqualified ? "Driver disqualified" : "");
+      return `<article class="mobile-timing-card ${driver.position===1?"leader":""} ${hotBattleKeys.has(driverKey(driver))?"battle":""}">
+        <div class="mobile-timing-main">
+          <div class="mobile-timing-pos"><b>P${esc(driver.position??"—")}</b><span class="${delta.cls}">${esc(delta.text)}</span></div>
+          ${photo?`<img class="mobile-timing-photo" src="${esc(photo)}" alt="" onerror="this.remove()" loading="lazy" decoding="async">`:`<div class="mobile-timing-photo-fallback">#${esc(driver.number||"—")}</div>`}
+          <div class="mobile-timing-driver">
+            <strong>#${esc(driver.number||"—")} ${esc(driver.name||"Unknown")}</strong>
+            <span>${esc(driver.team||driver.car||"HLRN Competitor")}</span>
+          </div>
+          <div class="mobile-timing-gap"><b>${esc(gapText(driver))}</b><small>${Number(driver.position)===1?"RACE LEADER":"BEHIND"}</small></div>
+        </div>
+        <div class="mobile-timing-stats">
+          <span><b>${esc(lapTime(driver.lastLapTime))}</b><small>LAST</small></span>
+          <span><b>${esc(lapTime(driver.bestLapTime))}</b><small>BEST</small></span>
+          <span><b>${driver.lapsCompleted!=null&&Number(driver.lapsCompleted)>=0?esc(driver.lapsCompleted):"—"}</b><small>LAPS</small></span>
+          <span class="mobile-timing-status ${esc(statusClass(driver))}"><b>${esc(status)}</b><small>STATUS</small></span>
+        </div>
+        ${hotBattleKeys.has(driverKey(driver))&&state&&state.phase==="race"?`<div class="mobile-timing-alert battle-alert">CLOSE BATTLE</div>`:""}
+        ${driver.blackFlag||driver.disqualified?`<div class="mobile-timing-alert penalty-alert">${driver.disqualified?"DISQUALIFIED":"BLACK FLAG"}${penaltyText?` • ${esc(penaltyText)}`:""}</div>`:""}
+      </article>`;
+    }).join("");
+
+    el.innerHTML = `<div class="offline"><strong>Live timing is offline</strong>Start the HLRN iRacing bridge to populate the leaderboard.</div>`;
       return;
     }
 
@@ -2208,6 +2907,7 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
     }
 
     el.innerHTML = `
+      <div class="mobile-live-board">${mobileCards}</div>
       <div class="table-shell">
       <table>
         <thead>
@@ -2977,7 +3677,7 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
     if(leaderPhoto){photo.src=leaderPhoto;photo.style.display="block";}else{photo.style.display="none";photo.removeAttribute("src");}
 
     const top = [...drivers]
-      .filter(d => Number(d.position) >= 1 && Number(d.position) <= 3)
+      .filter(d => Number(d.position) >= 1 && Number(d.position) <= 5)
       .filter(d => !d.disqualified)
       .sort((a,b)=>Number(a.position)-Number(b.position));
     $("rcFrontMeta").textContent = raceMode ? `LAP ${state?.lap ?? "—"}` : phaseLabel(state?.phase || "other");
@@ -3072,6 +3772,35 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
       banner.textContent=`GREEN — last restart was lap ${rc.lastRestartLap}. Current green run: ${rc.currentGreenRun || 0} laps. Longest green run: ${rc.longestGreenRun || 0} laps.`;
     }else{
       banner.textContent=`GREEN FLAG — ${rc.longestGreenRun || 0} laps is the longest green run tracked so far.`;
+    }
+
+    if($("mrcFlag")){
+      $("mrcFlag").textContent=flag;
+      $("mrcFlag").className=flagClass(flag);
+      $("mrcCaution").textContent=Number(rc.cautionCount)>0 ? `#${rc.cautionCount}` : "—";
+      $("mrcGreenRun").textContent=Number(rc.currentGreenRun||0);
+      $("mrcRestart").textContent=rc.oneToGreen
+        ? "1 TO GREEN"
+        : (Number(rc.lastRestartLap)>0 ? `LAP ${rc.lastRestartLap}` : "—");
+      const mobileMessage=$("mrcMessage");
+      mobileMessage.className="mobile-live-command-message";
+      if(!raceState){
+        mobileMessage.textContent="Race Control is standing by.";
+      }else if(flag==="RED"){
+        mobileMessage.classList.add("red");
+        mobileMessage.textContent=`RED FLAG • Race stopped on lap ${raceState.lap??"—"}.`;
+      }else if(rc.oneToGreen){
+        mobileMessage.classList.add("restart");
+        mobileMessage.textContent=`ONE TO GREEN • Caution #${rc.cautionCount||"—"} • Restart order is set.`;
+      }else if(rc.active){
+        mobileMessage.classList.add("caution");
+        mobileMessage.textContent=`CAUTION #${rc.cautionCount||"—"} • Started lap ${rc.cautionStartLap??"—"} • Yellow lap ${rc.currentCautionLaps||"—"}.`;
+      }else{
+        mobileMessage.classList.add("green");
+        mobileMessage.textContent=Number(rc.lastRestartLap)>0
+          ? `GREEN • Restarted lap ${rc.lastRestartLap} • Green run ${rc.currentGreenRun||0} laps.`
+          : `GREEN FLAG • Current green run ${rc.currentGreenRun||0} laps.`;
+      }
     }
 
     let order=[];
@@ -3179,6 +3908,24 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
       const captured=d.penaltyAutoCaptured ? " • SDK SNAPSHOT SAVED" : "";
       return `<div class="rc-active-penalty">${url?`<img src="${esc(url)}" alt="" onerror="this.remove()" loading="lazy" decoding="async">`:`<div></div>`}<div><strong>#${esc(d.number||"—")} ${esc(d.name||"Unknown")}<span class="rc-source-badge ${esc(sourceClass)}">${esc(source.replace("_"," "))}${esc(captured)}</span></strong><div class="rc-penalty-category">${esc(category)}</div><p><b>${esc(reason)}</b><br>${esc(detail)}</p></div><span class="rc-flag-badge">${esc(label)}</span></div>`;
     }).join("") : `<div class="offline"><strong>No active penalties</strong>Every new black flag is detected from iRacing's per-car flag state and captured automatically for reason analysis.</div>`;
+
+    const mobilePenalty=$("mobilePenaltyAlert");
+    if(mobilePenalty){
+      if(active.length){
+        const first=active[0];
+        const label=first.disqualified||first.dqFlag?"DISQUALIFIED":"BLACK FLAG";
+        const reason=first.blackFlag
+          ? (first.penaltyReason||"Reason not exposed by iRacing")
+          : (first.statusDetail||"Driver disqualified");
+        mobilePenalty.hidden=false;
+        $("mobilePenaltyTitle").textContent=`${label} • #${first.number||"—"} ${first.name||"Unknown"}`;
+        $("mobilePenaltyReason").textContent=reason;
+      }else{
+        mobilePenalty.hidden=true;
+        $("mobilePenaltyTitle").textContent="Penalty";
+        $("mobilePenaltyReason").textContent="—";
+      }
+    }
 
     const recent=penaltyEvents.slice(-24).reverse();
     $("rcFlagTimeline").innerHTML=recent.length ? recent.map(e=>{
