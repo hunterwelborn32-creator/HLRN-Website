@@ -1350,6 +1350,8 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
   let liveTickerItems = [];
   let liveTickerIndex = 0;
   let liveTickerSignature = "";
+  let replaySelectedIndex = null;
+  let replayRaceKey = null;
 
   // Strict race-leader validation. We intentionally do NOT trust raw lead-change
   // events from the bridge because pit-exit scoring can briefly make several cars P1.
@@ -2372,6 +2374,258 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
     return lap+" — "+(item.title||"Black Flag")+who+": "+(item.reason||"Reason not supplied by iRacing telemetry")+source;
   }
 
+  function replayEntryKey(entry){
+    if(entry?.carIdx != null) return "idx:"+entry.carIdx;
+    return "car:"+String(entry?.number||"")+"|"+String(entry?.name||"");
+  }
+
+  function replaySnapshotLeader(snapshot){
+    const order=Array.isArray(snapshot?.order)?snapshot.order:[];
+    return order.find(x=>Number(x?.position)===1) || order[0] || null;
+  }
+
+  function replayLeadChangeLaps(snapshots){
+    const laps=[];
+    let previous=null;
+    snapshots.forEach((snap,i)=>{
+      const leader=replaySnapshotLeader(snap);
+      const key=leader?replayEntryKey(leader):null;
+      if(i>0 && key && previous && key!==previous) laps.push(Number(snap.lap));
+      if(key) previous=key;
+    });
+    return [...new Set(laps.filter(Number.isFinite))].sort((a,b)=>a-b);
+  }
+
+  function replayCautionData(race){
+    const history=Array.isArray(race?.raceControl?.history)?race.raceControl.history:[];
+    return history.map(c=>({
+      number:c.number,
+      startLap:Number(c.startLap),
+      restartLap:c.restartLap!=null?Number(c.restartLap):null,
+      reason:c.reason || "Reason not supplied by iRacing telemetry",
+      reasonSource:String(c.reasonSource||"UNAVAILABLE").toUpperCase()
+    })).filter(c=>Number.isFinite(c.startLap));
+  }
+
+  function replayPenaltyData(race){
+    return penaltyRecordsFor(race,accurateRaceEvents(race))
+      .filter(p=>Number.isFinite(Number(p.lap)))
+      .map(p=>({...p,lap:Number(p.lap)}));
+  }
+
+  function replayFlagForLap(race,snapshot,lap,cautions){
+    if(race?.raceFrozen && lap===Number(raceLapSnapshots(race).at(-1)?.lap)) return "CHECKERED";
+    const restart=cautions.find(c=>c.restartLap===lap);
+    if(restart) return "GREEN / RESTART";
+    const caution=cautions.find(c=>{
+      if(!Number.isFinite(c.startLap)) return false;
+      if(Number.isFinite(c.restartLap)) return lap>=c.startLap && lap<c.restartLap;
+      return lap>=c.startLap;
+    });
+    if(caution) return "CAUTION";
+    return String(snapshot?.flag||"SCORING").toUpperCase();
+  }
+
+  function replayEventModel(race,snapshots){
+    const cautions=replayCautionData(race);
+    const penalties=replayPenaltyData(race);
+    const leadChanges=replayLeadChangeLaps(snapshots);
+    const events=[];
+
+    cautions.forEach(c=>{
+      events.push({
+        lap:c.startLap,type:"caution",title:"CAUTION #"+(c.number??"—"),
+        text:"Reason: "+c.reason+(c.reasonSource!=="UNAVAILABLE"?" ["+c.reasonSource+"]":"")
+      });
+      if(Number.isFinite(c.restartLap)){
+        events.push({
+          lap:c.restartLap,type:"restart",title:"RESTART",
+          text:"Green flag after caution #"+(c.number??"—")
+        });
+      }
+    });
+
+    penalties.forEach(p=>{
+      const who=p.name||p.number?"#"+(p.number||"—")+" "+(p.name||"Unknown Driver")+" — ":"";
+      events.push({
+        lap:p.lap,type:"penalty",title:p.title||"BLACK FLAG",
+        text:who+(p.reason||"Reason not supplied by iRacing telemetry")
+      });
+    });
+
+    leadChanges.forEach(lap=>{
+      const snap=snapshots.find(s=>Number(s.lap)===lap);
+      const leader=replaySnapshotLeader(snap);
+      events.push({
+        lap,type:"lead",title:"LEAD CHANGE",
+        text:leader?"#"+(leader.number||"—")+" "+(leader.name||"Unknown Driver")+" is scored P1 after Lap "+lap:"New leader after Lap "+lap
+      });
+    });
+
+    if(race?.raceFrozen && snapshots.length){
+      const last=snapshots[snapshots.length-1];
+      const leader=replaySnapshotLeader(last);
+      events.push({
+        lap:Number(last.lap),type:"checkered",title:"CHECKERED",
+        text:leader?"#"+(leader.number||"—")+" "+(leader.name||"Unknown Driver")+" is the frozen race winner.":"Final race data frozen."
+      });
+    }
+
+    return events
+      .filter(e=>Number.isFinite(Number(e.lap)))
+      .sort((a,b)=>Number(a.lap)-Number(b.lap));
+  }
+
+  function replayIndexForLap(snapshots,lap){
+    if(!snapshots.length) return 0;
+    const exact=snapshots.findIndex(s=>Number(s.lap)===Number(lap));
+    if(exact>=0) return exact;
+    const after=snapshots.findIndex(s=>Number(s.lap)>=Number(lap));
+    return after>=0?after:snapshots.length-1;
+  }
+
+  function replayDelta(entry,previousSnapshot){
+    if(!previousSnapshot) return {text:"—",cls:"same"};
+    const previous=(Array.isArray(previousSnapshot.order)?previousSnapshot.order:[])
+      .find(x=>replayEntryKey(x)===replayEntryKey(entry));
+    if(!previous || !Number.isFinite(Number(previous.position)) || !Number.isFinite(Number(entry.position))){
+      return {text:"NEW",cls:"same"};
+    }
+    const gain=Number(previous.position)-Number(entry.position);
+    if(gain>0) return {text:"▲ +"+gain,cls:"up"};
+    if(gain<0) return {text:"▼ "+Math.abs(gain),cls:"down"};
+    return {text:"—",cls:"same"};
+  }
+
+  function setReplayIndex(index){
+    const race=getPhaseState("race");
+    const snapshots=raceLapSnapshots(race);
+    if(!snapshots.length) return;
+    replaySelectedIndex=Math.max(0,Math.min(snapshots.length-1,Number(index)||0));
+    renderRaceReplay(race);
+  }
+
+  function jumpReplay(kind,direction){
+    const race=getPhaseState("race");
+    const snapshots=raceLapSnapshots(race);
+    if(!snapshots.length) return;
+    const current=Number(snapshots[Math.max(0,Math.min(snapshots.length-1,replaySelectedIndex??snapshots.length-1))]?.lap);
+    let laps=[];
+    if(kind==="caution") laps=replayCautionData(race).map(c=>c.startLap);
+    if(kind==="lead") laps=replayLeadChangeLaps(snapshots);
+    laps=[...new Set(laps.filter(Number.isFinite))].sort((a,b)=>a-b);
+    if(!laps.length) return;
+
+    let target=null;
+    if(direction>0) target=laps.find(l=>l>current);
+    else target=[...laps].reverse().find(l=>l<current);
+    if(target==null) return;
+    setReplayIndex(replayIndexForLap(snapshots,target));
+  }
+
+  function renderRaceReplay(race){
+    const shell=$("raceReplay");
+    if(!shell) return;
+
+    const snapshots=raceLapSnapshots(race);
+    const key=String(race?.subSessionId ?? race?.sessionId ?? race?.track ?? "race");
+    if(key!==replayRaceKey){
+      replayRaceKey=key;
+      replaySelectedIndex=null;
+    }
+
+    if(!snapshots.length){
+      $("replayCoverage").textContent="Waiting for completed-lap snapshots";
+      $("replayState").textContent="RECORDER WAITING";
+      $("replayState").className="race-replay-state";
+      $("replayLapSlider").disabled=true;
+      $("replayMarkers").innerHTML="";
+      $("replayOrder").innerHTML='<div class="archive-empty"><strong>Race Replay waiting</strong>The full replay becomes available as completed-lap snapshots are recorded.</div>';
+      return;
+    }
+
+    if(replaySelectedIndex==null || replaySelectedIndex>=snapshots.length){
+      replaySelectedIndex=snapshots.length-1;
+    }
+
+    const index=replaySelectedIndex;
+    const snap=snapshots[index];
+    const previous=index>0?snapshots[index-1]:null;
+    const lap=Number(snap.lap);
+    const order=[...(Array.isArray(snap.order)?snap.order:[])].sort((a,b)=>Number(a.position??9999)-Number(b.position??9999));
+    const leader=replaySnapshotLeader(snap);
+    const cautions=replayCautionData(race);
+    const events=replayEventModel(race,snapshots);
+    const lapEvents=events.filter(e=>Number(e.lap)===lap);
+    const leadLaps=replayLeadChangeLaps(snapshots);
+    const cautionLaps=cautions.map(c=>c.startLap);
+
+    $("replayCoverage").textContent=snapshots.length+" completed lap"+(snapshots.length===1?"":"s")+" available";
+    $("replayState").textContent=race?.raceFrozen?"FINAL • REPLAY READY":"LIVE • BUILDING REPLAY";
+    $("replayState").className="race-replay-state"+(race?.raceFrozen?" ready":"");
+
+    const slider=$("replayLapSlider");
+    slider.disabled=snapshots.length<2;
+    slider.min="0";
+    slider.max=String(Math.max(0,snapshots.length-1));
+    slider.value=String(index);
+    $("replayMinLap").textContent="LAP "+(snapshots[0]?.lap??"—");
+    $("replayMaxLap").textContent="LAP "+(snapshots.at(-1)?.lap??"—");
+    $("replaySelectedLap").textContent="LAP "+(snap?.lap??"—");
+
+    $("replayPrevLap").disabled=index<=0;
+    $("replayNextLap").disabled=index>=snapshots.length-1;
+    $("replayPrevCaution").disabled=!cautionLaps.some(x=>x<lap);
+    $("replayNextCaution").disabled=!cautionLaps.some(x=>x>lap);
+    $("replayPrevLead").disabled=!leadLaps.some(x=>x<lap);
+    $("replayNextLead").disabled=!leadLaps.some(x=>x>lap);
+
+    $("replayLapStat").textContent=String(lap);
+    $("replayLeader").textContent=leader?"#"+(leader.number||"—")+" "+(leader.name||"Unknown Driver"):"—";
+    $("replayFlag").textContent=replayFlagForLap(race,snap,lap,cautions);
+    $("replayField").textContent=String(order.length);
+
+    $("replayLapEvents").innerHTML=lapEvents.length
+      ? lapEvents.map(e=>'<span class="replay-event '+esc(e.type)+'"><b>'+esc(e.title)+'</b> '+esc(e.text)+'</span>').join("")
+      : '<span class="replay-event empty">No caution, penalty or lead-change marker on this lap.</span>';
+
+    const minLap=Number(snapshots[0].lap);
+    const maxLap=Number(snapshots.at(-1).lap);
+    const span=Math.max(1,maxLap-minLap);
+    const markerPriority={checkered:5,penalty:4,caution:3,restart:2,lead:1};
+    const byLap=new Map();
+    events.forEach(e=>{
+      const existing=byLap.get(Number(e.lap));
+      if(!existing || (markerPriority[e.type]||0)>(markerPriority[existing.type]||0)) byLap.set(Number(e.lap),e);
+    });
+    $("replayMarkers").innerHTML=[...byLap.values()].map(e=>{
+      const pct=Math.max(0,Math.min(100,((Number(e.lap)-minLap)/span)*100));
+      return '<button class="replay-marker '+esc(e.type)+'" type="button" style="left:'+pct.toFixed(3)+'%" data-replay-lap="'+esc(e.lap)+'" title="'+esc("Lap "+e.lap+" • "+e.title)+'"></button>';
+    }).join("");
+    $("replayMarkers").querySelectorAll("[data-replay-lap]").forEach(btn=>{
+      btn.addEventListener("click",()=>setReplayIndex(replayIndexForLap(snapshots,Number(btn.dataset.replayLap))));
+    });
+
+    $("replayOrder").innerHTML='<table class="replay-table"><thead><tr>'
+      +'<th style="text-align:center">POS</th><th>+/- LAP</th><th>CAR</th><th>DRIVER</th><th>LAPS DOWN</th><th>STATUS</th>'
+      +'</tr></thead><tbody>'
+      +order.map(entry=>{
+        const delta=replayDelta(entry,previous);
+        const lapsDown=Number(entry?.lapsDown);
+        const down=Number.isFinite(lapsDown)&&lapsDown>0?lapsDown:0;
+        const status=entry?.disqualified?"DQ":(entry?.blackFlag?"BLACK FLAG":(entry?.status||"ACTIVE"));
+        return '<tr>'
+          +'<td class="replay-pos">'+esc(entry?.position??"—")+'</td>'
+          +'<td class="replay-delta '+delta.cls+'">'+esc(delta.text)+'</td>'
+          +'<td><span class="car-num"><span>'+esc(entry?.number||"—")+'</span></span></td>'
+          +'<td><div class="replay-driver">'+hLrnDriverPhotoTag(entry?.name,"small")+'<span>'+esc(entry?.name||"Unknown Driver")+'</span></div></td>'
+          +'<td>'+(down?esc(down+" LAP"+(down===1?"":"S")):"LEAD LAP")+'</td>'
+          +'<td><span class="replay-status">'+esc(status)+'</span></td>'
+          +'</tr>';
+      }).join("")
+      +'</tbody></table>';
+  }
+
   function renderLapRecap(race){
     const el=$("lapRecap");
     if(!el) return;
@@ -2599,6 +2853,7 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
 
   function renderReport(){
     const race = getPhaseState("race");
+    renderRaceReplay(race);
     renderLapRecap(race);
 
     const report = buildPostRaceReport();
@@ -3220,6 +3475,14 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
   if(["race","timeline","fastest","battles","control","stats","flags","radio","practice","qualifying","report"].includes(requestedTab)){
     activateTab(requestedTab);
   }
+
+  $("replayLapSlider")?.addEventListener("input",event=>setReplayIndex(Number(event.target.value)));
+  $("replayPrevLap")?.addEventListener("click",()=>setReplayIndex((replaySelectedIndex??0)-1));
+  $("replayNextLap")?.addEventListener("click",()=>setReplayIndex((replaySelectedIndex??0)+1));
+  $("replayPrevCaution")?.addEventListener("click",()=>jumpReplay("caution",-1));
+  $("replayNextCaution")?.addEventListener("click",()=>jumpReplay("caution",1));
+  $("replayPrevLead")?.addEventListener("click",()=>jumpReplay("lead",-1));
+  $("replayNextLead")?.addEventListener("click",()=>jumpReplay("lead",1));
 
   document.querySelectorAll(".timeline-filter").forEach(btn => {
     btn.addEventListener("click", () => {
