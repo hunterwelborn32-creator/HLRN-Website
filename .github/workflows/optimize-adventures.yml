@@ -1,0 +1,50 @@
+name: Optimize Adventures Images
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'adventures/**/images/*.png'
+      - 'adventures/**/images/*.jpg'
+      - 'adventures/**/images/*.jpeg'
+      - 'tools/optimize_adventures.py'
+      - '.github/workflows/optimize-adventures.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: hlrn-adventures-publisher
+  cancel-in-progress: false
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install image optimizer
+        run: python -m pip install --disable-pip-version-check Pillow
+
+      - name: Convert Adventures artwork to WebP
+        run: python tools/optimize_adventures.py
+
+      - name: Commit optimized Adventures artwork
+        run: |
+          git config user.name "HLRN Adventure Optimizer"
+          git config user.email "actions@users.noreply.github.com"
+          git add adventures/
+          if ! git diff --cached --quiet; then
+            git commit -m "Optimize Adventures images for the web"
+            git push
+          else
+            echo "No Adventure image changes to commit."
+          fi
