@@ -1,0 +1,48 @@
+name: Build permanent driver pages
+
+on:
+  push:
+    paths:
+      - 'tools/build-driver-pages.py'
+      - 'tools/build-sitemap.py'
+      - 'tests/test_driver_pages.py'
+      - 'drivers/index.html'
+      - 'data/derived/profiles.json'
+      - 'data/hlrn.json'
+      - '.github/workflows/driver-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: hlrn-driver-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Test permanent driver profiles
+        run: python -m unittest tests/test_driver_pages.py
+
+      - name: Generate permanent driver profiles
+        run: python tools/build-driver-pages.py
+
+      - name: Rebuild sitemap
+        run: python tools/build-sitemap.py
+
+      - name: Commit generated driver profiles
+        run: |
+          git add drivers data/driver-pages.json sitemap.xml
+          if ! git diff --cached --quiet; then
+            git config user.name "hlrn-driver-pages-bot"
+            git config user.email "actions@users.noreply.github.com"
+            git commit -m "Build permanent HLRN driver profile pages"
+            git pull --rebase origin main
+            git push
+          fi
