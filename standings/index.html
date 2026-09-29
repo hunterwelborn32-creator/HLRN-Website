@@ -2337,11 +2337,11 @@ iframe{background:#fff!important;color-scheme:light!important}
   opacity:1!important;
 }
 #drivers th{
-  padding:14px 10px!important;
+  padding:12px 6px!important;
   background:#f3f4f5!important;
   color:#111214!important;
   font-family:&quot;Barlow Condensed&quot;,&quot;Arial Narrow&quot;,Arial,sans-serif!important;
-  font-size:10px!important;
+  font-size:9px!important;
   font-weight:900!important;
   font-style:normal!important;
   text-align:center!important;
@@ -2352,8 +2352,8 @@ iframe{background:#fff!important;color-scheme:light!important}
   text-align:left!important;
 }
 #drivers td{
-  height:82px!important;
-  padding:12px 10px!important;
+  height:78px!important;
+  padding:10px 6px!important;
   background:#fff!important;
   color:#111214!important;
   border-bottom:1px solid #dfe3e6!important;
@@ -2380,8 +2380,8 @@ iframe{background:#fff!important;color-scheme:light!important}
 }
 #drivers th:nth-child(1),#drivers td:nth-child(1){width:58px!important}
 #drivers th:nth-child(2),#drivers td:nth-child(2){width:70px!important}
-#drivers th:nth-child(3),#drivers td:nth-child(3){min-width:270px!important}
-#drivers th:nth-child(n+4),#drivers td:nth-child(n+4){min-width:78px!important}
+#drivers th:nth-child(3),#drivers td:nth-child(3){min-width:220px!important}
+#drivers th:nth-child(n+4),#drivers td:nth-child(n+4){min-width:62px!important}
 #drivers .points{
   color:#111214!important;
   font-family:&quot;Barlow Condensed&quot;,&quot;Arial Narrow&quot;,Arial,sans-serif!important;
@@ -2408,7 +2408,7 @@ iframe{background:#fff!important;color-scheme:light!important}
   border-left:4px solid var(--hlrnAccent,#d71920)!important;
 }
 @media(max-width:760px){
-  #drivers table{min-width:1450px!important}
+  #drivers table{min-width:1000px!important}
   #drivers td{height:76px!important}
 }
 &lt;/style&gt;
@@ -2421,7 +2421,7 @@ iframe{background:#fff!important;color-scheme:light!important}
 }
 #drivers table{
   width:100%!important;
-  min-width:1180px!important;
+  min-width:1000px!important;
   table-layout:auto!important;
   border-collapse:separate!important;
   border-spacing:0!important;
@@ -2435,11 +2435,11 @@ iframe{background:#fff!important;color-scheme:light!important}
   opacity:1!important;
 }
 #drivers th{
-  padding:14px 10px!important;
+  padding:12px 6px!important;
   background:#f3f4f5!important;
   color:#111214!important;
   font-family:&quot;Barlow Condensed&quot;,&quot;Arial Narrow&quot;,Arial,sans-serif!important;
-  font-size:10px!important;
+  font-size:9px!important;
   font-weight:900!important;
   text-align:center!important;
   text-transform:uppercase!important;
@@ -2447,8 +2447,8 @@ iframe{background:#fff!important;color-scheme:light!important}
 }
 #drivers th.name-col{text-align:left!important}
 #drivers td{
-  height:82px!important;
-  padding:12px 10px!important;
+  height:78px!important;
+  padding:10px 6px!important;
   background:#fff!important;
   color:#111214!important;
   border-bottom:1px solid #dfe3e6!important;
@@ -2458,7 +2458,7 @@ iframe{background:#fff!important;color-scheme:light!important}
 }
 #drivers tbody tr:nth-child(even) td{background:#fafafa!important}
 #drivers td.name-col{
-  min-width:265px!important;
+  min-width:220px!important;
   text-align:left!important;
   font-family:&quot;Barlow Condensed&quot;,&quot;Arial Narrow&quot;,Arial,sans-serif!important;
   font-size:16px!important;
@@ -2472,6 +2472,12 @@ iframe{background:#fff!important;color-scheme:light!important}
   font-weight:900!important;
 }
 #drivers .stage-points{font-weight:900!important}
+#drivers .top10-head,
+#drivers th:nth-child(10),
+#drivers td:nth-child(10){
+  min-width:62px!important;
+  font-weight:900!important;
+}
 #drivers .behind{
   font-weight:900!important;
   color:#111214!important;
@@ -2481,7 +2487,7 @@ iframe{background:#fff!important;color-scheme:light!important}
   border-left:4px solid var(--hlrnAccent,#d71920)!important;
 }
 @media(max-width:760px){
-  #drivers table{min-width:1120px!important}
+  #drivers table{min-width:1000px!important}
   #drivers td{height:76px!important}
 }
 &lt;/style&gt;
@@ -2563,13 +2569,13 @@ Last Race
 &lt;th class=&quot;name-col&quot;&gt;
 DRIVER
 &lt;/th&gt;
-&lt;th&gt;POINTS&lt;/th&gt;
-&lt;th&gt;STAGE POINTS&lt;/th&gt;
+&lt;th&gt;SEASON PTS&lt;/th&gt;
+&lt;th&gt;STAGE PTS&lt;/th&gt;
 &lt;th&gt;BEHIND&lt;/th&gt;
 &lt;th&gt;STARTS&lt;/th&gt;
 &lt;th&gt;WINS&lt;/th&gt;
 &lt;th&gt;TOP 5s&lt;/th&gt;
-&lt;th&gt;TOP 10s&lt;/th&gt;
+&lt;th class=&quot;top10-head&quot;&gt;TOP 10s&lt;/th&gt;
 &lt;th&gt;DNFs&lt;/th&gt;
 &lt;th&gt;LAPS LED&lt;/th&gt;
 &lt;/tr&gt;
@@ -5836,11 +5842,11 @@ iframe{background:#fff!important;color-scheme:light!important}
   opacity:1!important;
 }
 #drivers th{
-  padding:14px 10px!important;
+  padding:12px 6px!important;
   background:#f3f4f5!important;
   color:#111214!important;
   font-family:&quot;Barlow Condensed&quot;,&quot;Arial Narrow&quot;,Arial,sans-serif!important;
-  font-size:10px!important;
+  font-size:9px!important;
   font-weight:900!important;
   font-style:normal!important;
   text-align:center!important;
@@ -5851,8 +5857,8 @@ iframe{background:#fff!important;color-scheme:light!important}
   text-align:left!important;
 }
 #drivers td{
-  height:82px!important;
-  padding:12px 10px!important;
+  height:78px!important;
+  padding:10px 6px!important;
   background:#fff!important;
   color:#111214!important;
   border-bottom:1px solid #dfe3e6!important;
@@ -5879,8 +5885,8 @@ iframe{background:#fff!important;color-scheme:light!important}
 }
 #drivers th:nth-child(1),#drivers td:nth-child(1){width:58px!important}
 #drivers th:nth-child(2),#drivers td:nth-child(2){width:70px!important}
-#drivers th:nth-child(3),#drivers td:nth-child(3){min-width:270px!important}
-#drivers th:nth-child(n+4),#drivers td:nth-child(n+4){min-width:78px!important}
+#drivers th:nth-child(3),#drivers td:nth-child(3){min-width:220px!important}
+#drivers th:nth-child(n+4),#drivers td:nth-child(n+4){min-width:62px!important}
 #drivers .points{
   color:#111214!important;
   font-family:&quot;Barlow Condensed&quot;,&quot;Arial Narrow&quot;,Arial,sans-serif!important;
@@ -5907,7 +5913,7 @@ iframe{background:#fff!important;color-scheme:light!important}
   border-left:4px solid var(--hlrnAccent,#d71920)!important;
 }
 @media(max-width:760px){
-  #drivers table{min-width:1450px!important}
+  #drivers table{min-width:1000px!important}
   #drivers td{height:76px!important}
 }
 &lt;/style&gt;
@@ -5920,7 +5926,7 @@ iframe{background:#fff!important;color-scheme:light!important}
 }
 #drivers table{
   width:100%!important;
-  min-width:1180px!important;
+  min-width:1000px!important;
   table-layout:auto!important;
   border-collapse:separate!important;
   border-spacing:0!important;
@@ -5934,11 +5940,11 @@ iframe{background:#fff!important;color-scheme:light!important}
   opacity:1!important;
 }
 #drivers th{
-  padding:14px 10px!important;
+  padding:12px 6px!important;
   background:#f3f4f5!important;
   color:#111214!important;
   font-family:&quot;Barlow Condensed&quot;,&quot;Arial Narrow&quot;,Arial,sans-serif!important;
-  font-size:10px!important;
+  font-size:9px!important;
   font-weight:900!important;
   text-align:center!important;
   text-transform:uppercase!important;
@@ -5946,8 +5952,8 @@ iframe{background:#fff!important;color-scheme:light!important}
 }
 #drivers th.name-col{text-align:left!important}
 #drivers td{
-  height:82px!important;
-  padding:12px 10px!important;
+  height:78px!important;
+  padding:10px 6px!important;
   background:#fff!important;
   color:#111214!important;
   border-bottom:1px solid #dfe3e6!important;
@@ -5957,7 +5963,7 @@ iframe{background:#fff!important;color-scheme:light!important}
 }
 #drivers tbody tr:nth-child(even) td{background:#fafafa!important}
 #drivers td.name-col{
-  min-width:265px!important;
+  min-width:220px!important;
   text-align:left!important;
   font-family:&quot;Barlow Condensed&quot;,&quot;Arial Narrow&quot;,Arial,sans-serif!important;
   font-size:16px!important;
@@ -5971,6 +5977,12 @@ iframe{background:#fff!important;color-scheme:light!important}
   font-weight:900!important;
 }
 #drivers .stage-points{font-weight:900!important}
+#drivers .top10-head,
+#drivers th:nth-child(10),
+#drivers td:nth-child(10){
+  min-width:62px!important;
+  font-weight:900!important;
+}
 #drivers .behind{
   font-weight:900!important;
   color:#111214!important;
@@ -5980,7 +5992,7 @@ iframe{background:#fff!important;color-scheme:light!important}
   border-left:4px solid var(--hlrnAccent,#d71920)!important;
 }
 @media(max-width:760px){
-  #drivers table{min-width:1120px!important}
+  #drivers table{min-width:1000px!important}
   #drivers td{height:76px!important}
 }
 &lt;/style&gt;
@@ -6070,13 +6082,13 @@ Loading...
 &lt;th class=&quot;name-col&quot;&gt;
 DRIVER
 &lt;/th&gt;
-&lt;th&gt;POINTS&lt;/th&gt;
-&lt;th&gt;STAGE POINTS&lt;/th&gt;
+&lt;th&gt;SEASON PTS&lt;/th&gt;
+&lt;th&gt;STAGE PTS&lt;/th&gt;
 &lt;th&gt;BEHIND&lt;/th&gt;
 &lt;th&gt;STARTS&lt;/th&gt;
 &lt;th&gt;WINS&lt;/th&gt;
 &lt;th&gt;TOP 5s&lt;/th&gt;
-&lt;th&gt;TOP 10s&lt;/th&gt;
+&lt;th class=&quot;top10-head&quot;&gt;TOP 10s&lt;/th&gt;
 &lt;th&gt;DNFs&lt;/th&gt;
 &lt;th&gt;LAPS LED&lt;/th&gt;
 &lt;/tr&gt;
