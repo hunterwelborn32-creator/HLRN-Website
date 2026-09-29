@@ -2494,6 +2494,63 @@ html,body,.page-wrap{
   .cc-momentum-card > strong{font-size:22px!important}
 }
 </style>
+
+<style id="HLRN_STANDINGS_NUMBER_UNIFORM_FINAL">
+/* Uniform numeric typography inside the driver standings table. */
+#drivers tbody td:not(.name-col):not(.team-name),
+#drivers tbody td:not(.name-col):not(.team-name) *,
+#drivers .position,
+#drivers .movement,
+#drivers .behind,
+#drivers .bonus-points,
+#drivers .penalty-points,
+#drivers .stage-wins{
+  font-family:"Inter","Segoe UI",Arial,sans-serif!important;
+  font-size:12px!important;
+  font-weight:600!important;
+  font-style:normal!important;
+  line-height:1.1!important;
+  letter-spacing:0!important;
+  font-variant-numeric:tabular-nums lining-nums!important;
+}
+
+/* Only the championship totals we want emphasized. */
+#drivers td.points,
+#drivers td.stage-points,
+#drivers td.points *,
+#drivers td.stage-points *{
+  font-family:"Inter","Segoe UI",Arial,sans-serif!important;
+  font-size:12px!important;
+  font-weight:900!important;
+  font-style:normal!important;
+  letter-spacing:0!important;
+}
+
+/* Keep movement colors/arrows, but not heavier than the other regular stats. */
+#drivers .movement.up,
+#drivers .movement.down,
+#drivers .movement.same{
+  font-weight:600!important;
+}
+
+/* Team and driver names remain text styling, not numeric styling. */
+#drivers td.team-name{
+  font-family:"Inter","Segoe UI",Arial,sans-serif!important;
+  font-size:11px!important;
+  font-weight:600!important;
+  font-style:normal!important;
+}
+@media(max-width:900px){
+  #drivers tbody td:not(.name-col):not(.team-name),
+  #drivers tbody td:not(.name-col):not(.team-name) *,
+  #drivers td.points,
+  #drivers td.stage-points,
+  #drivers td.points *,
+  #drivers td.stage-points *{
+    font-size:11px!important;
+  }
+}
+</style>
 </head>
 <body>
 <div class="page-wrap">
