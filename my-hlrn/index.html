@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,follow">
+<meta name="theme-color" content="#07090d">
+<title>My HLRN | Driver Dashboard</title>
+<meta name="description" content="Personal HLRN driver dashboard for signed-in High Line Racing Network competitors.">
+<link rel="stylesheet" href="../assets/site-shell.css?v=20260929health1">
+<link rel="stylesheet" href="../assets/my-hlrn/dashboard.css?v=20260929a1">
+</head>
+<body>
+<main class="myh-page">
+  <section class="myh-gate" id="myhGate" hidden>
+    <div class="myh-gate-card">
+      <div class="myh-mark">HLRN</div>
+      <small>DRIVER ACCOUNT REQUIRED</small>
+      <h1>MY HLRN</h1>
+      <p>Sign in with your HLRN driver account to open your personalized racing dashboard.</p>
+      <a href="../#hlrnDriverSignIn">DRIVER LOGIN →</a>
+    </div>
+  </section>
+
+  <div class="myh-shell" id="myhDashboard" hidden>
+    <section class="myh-hero">
+      <div class="myh-hero-copy">
+        <div class="myh-eyebrow">HLRN // DRIVER COMMAND CENTER</div>
+        <div class="myh-number" id="myhNumber">#—</div>
+        <h1 id="myhName">MY HLRN</h1>
+        <div class="myh-account-line" id="myhDiscord">DRIVER ACCOUNT CONNECTED</div>
+        <div class="myh-hero-actions">
+          <a id="myhProfileLink" href="../drivers/">VIEW FULL PROFILE</a>
+          <a href="../race-preview/">RACE PREVIEW</a>
+          <a href="../live/">LIVE RACE CENTER</a>
+        </div>
+      </div>
+      <div class="myh-photo-stage">
+        <div class="myh-photo-number" id="myhPhotoNumber">—</div>
+        <img id="myhPhoto" alt="" loading="eager" decoding="async" fetchpriority="high">
+      </div>
+      <div class="myh-data-badge"><span>DATA</span><b id="myhDataStatus">SYNCING</b></div>
+    </section>
+
+    <section class="myh-overview" aria-label="Career overview">
+      <div><small>STARTS</small><strong id="myhStarts">—</strong></div>
+      <div><small>WINS</small><strong id="myhWins">—</strong></div>
+      <div><small>TOP 5</small><strong id="myhTop5">—</strong></div>
+      <div><small>TOP 10</small><strong id="myhTop10">—</strong></div>
+      <div><small>AVG FINISH</small><strong id="myhAvg">—</strong></div>
+      <div><small>LAPS LED</small><strong id="myhLed">—</strong></div>
+    </section>
+
+    <section class="myh-section">
+      <div class="myh-section-head">
+        <div><small>CHAMPIONSHIP STATUS</small><h2>SUNDAY + MONDAY</h2></div>
+        <a href="../standings/">FULL STANDINGS →</a>
+      </div>
+      <div class="myh-champ-grid">
+        <article class="myh-champ sunday" id="myhSundayCard">
+          <div class="myh-champ-top"><span>SUNDAY NIGHT</span><b id="myhSundayMove">—</b></div>
+          <div class="myh-champ-rank"><small>CHAMPIONSHIP</small><strong id="myhSundayRank">P—</strong></div>
+          <div class="myh-champ-stats">
+            <span><b id="myhSundayPoints">—</b><small>POINTS</small></span>
+            <span><b id="myhSundayStage">—</b><small>STAGE</small></span>
+            <span><b id="myhSundayAvg">—</b><small>AVG FIN</small></span>
+            <span><b id="myhSundayTeam">—</b><small>TEAM</small></span>
+          </div>
+        </article>
+        <article class="myh-champ monday" id="myhMondayCard">
+          <div class="myh-champ-top"><span>MONDAY NIGHT</span><b id="myhMondayMove">—</b></div>
+          <div class="myh-champ-rank"><small>CHAMPIONSHIP</small><strong id="myhMondayRank">P—</strong></div>
+          <div class="myh-champ-stats">
+            <span><b id="myhMondayPoints">—</b><small>POINTS</small></span>
+            <span><b id="myhMondayStage">—</b><small>STAGE</small></span>
+            <span><b id="myhMondayAvg">—</b><small>AVG FIN</small></span>
+            <span><b id="myhMondayTeam">—</b><small>TEAM</small></span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="myh-section">
+      <div class="myh-section-head">
+        <div><small>RACE WEEK</small><h2>WHAT'S NEXT</h2></div>
+        <a href="../race-preview/">FULL PREVIEW →</a>
+      </div>
+      <div class="myh-next-grid" id="myhNextGrid">
+        <div class="myh-loading">LOADING SCHEDULE…</div>
+      </div>
+    </section>
+
+    <section class="myh-two-col">
+      <section class="myh-section myh-section-tight">
+        <div class="myh-section-head">
+          <div><small>RECENT FORM</small><h2>LAST RACES</h2></div>
+          <a href="../results/">RESULTS →</a>
+        </div>
+        <div class="myh-recent" id="myhRecent"><div class="myh-loading">LOADING RESULTS…</div></div>
+      </section>
+
+      <section class="myh-section myh-section-tight">
+        <div class="myh-section-head">
+          <div><small>PERFORMANCE</small><h2>TREND</h2></div>
+        </div>
+        <div class="myh-trend-grid">
+          <div><small>LAST 5 AVG</small><strong id="myhLast5Avg">—</strong><span id="myhTrendNote">WAITING FOR DATA</span></div>
+          <div><small>BEST FINISH</small><strong id="myhBestFinish">—</strong><span>Sunday + Monday</span></div>
+          <div><small>INCIDENTS</small><strong id="myhIncidents">—</strong><span>Season total</span></div>
+          <div><small>RACE POINTS</small><strong id="myhRacePoints">—</strong><span>Sunday + Monday</span></div>
+        </div>
+      </section>
+    </section>
+
+    <section class="myh-two-col">
+      <section class="myh-section myh-section-tight">
+        <div class="myh-section-head">
+          <div><small>TRACK PERFORMANCE</small><h2>BEST TRACKS</h2></div>
+        </div>
+        <div class="myh-track-list" id="myhTracks"><div class="myh-loading">BUILDING TRACK HISTORY…</div></div>
+      </section>
+
+      <section class="myh-section myh-section-tight">
+        <div class="myh-section-head">
+          <div><small>HOSTED RACING</small><h2>CAREER SNAPSHOT</h2></div>
+        </div>
+        <div class="myh-hosted" id="myhHosted"><div class="myh-loading">LOADING HOSTED DATA…</div></div>
+      </section>
+    </section>
+
+    <section class="myh-section">
+      <div class="myh-section-head">
+        <div><small>FROZEN RACE RECORDS</small><h2>RACE CONTROL HISTORY</h2></div>
+        <a href="../results/#recorderArchive">FROZEN RECORDS →</a>
+      </div>
+      <div class="myh-penalties" id="myhPenalties">
+        <div class="myh-loading">CHECKING PUBLISHED RECORDER HISTORY…</div>
+      </div>
+    </section>
+
+    <section class="myh-quick">
+      <a href="../drivers/"><small>DRIVER DIRECTORY</small><strong>VIEW THE FIELD →</strong></a>
+      <a href="../standings/"><small>CHAMPIONSHIP</small><strong>OPEN STANDINGS →</strong></a>
+      <a href="../results/"><small>RACE ARCHIVE</small><strong>OPEN RESULTS →</strong></a>
+      <a href="../race-intelligence/"><small>RACE INTELLIGENCE</small><strong>OPEN ANALYSIS →</strong></a>
+    </section>
+  </div>
+</main>
+
+<script src="../assets/hlrn-core.js?v=my-hlrn-1"></script>
+<script src="../assets/my-hlrn/dashboard.js?v=20260929a1"></script>
+<script src="../assets/site-shell.js?v=20260929health1"></script>
+</body>
+</html>
