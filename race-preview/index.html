@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>HLRN Race Week Preview | High Line Racing Network</title>
+<meta name="description" content="Automatic High Line Racing Network race week preview with championship standings, recent form, track history, team battles and drivers to watch.">
+<link rel="canonical" href="https://highlineracingnetwork.com/race-preview/">
+<link rel="icon" type="image/x-icon" href="/favicon.ico?v=3">
+<link rel="stylesheet" href="../assets/race-preview/preview-v1.css?v=20260928p1">
+<link rel="stylesheet" href="../assets/site-shell.css?v=20260928v6">
+</head>
+<body>
+<main class="rp-page">
+  <section class="rp-network-bar">
+    <div class="rp-shell rp-network-inner">
+      <div class="rp-brand"><span class="rp-live-dot"></span><div><small>HIGH LINE RACING NETWORK</small><strong>RACE WEEK PREVIEW</strong></div></div>
+      <div class="rp-network-stat"><small>DATA SOURCE</small><strong>CONFIRMED HLRN RESULTS</strong></div>
+      <div class="rp-network-stat"><small>GREEN FLAG</small><strong>8:30 PM EASTERN</strong></div>
+      <div class="rp-network-stat"><small>UPDATED</small><strong id="rpUpdated">CONNECTING</strong></div>
+    </div>
+  </section>
+
+  <section class="rp-hero">
+    <div class="rp-hero-grid"></div>
+    <div class="rp-shell rp-hero-inner">
+      <div class="rp-hero-copy">
+        <div class="rp-kicker" id="rpKicker">HLRN // NEXT RACE</div>
+        <h1 id="rpTrack">LOADING RACE WEEK</h1>
+        <p id="rpDescription">Building the next HLRN race preview from confirmed league results.</p>
+        <div class="rp-race-meta">
+          <div><small>SERIES</small><strong id="rpSeries">--</strong></div>
+          <div><small>WEEK</small><strong id="rpWeek">--</strong></div>
+          <div><small>DATE</small><strong id="rpDate">--</strong></div>
+          <div><small>CAR</small><strong id="rpCar">--</strong></div>
+          <div><small>LAPS</small><strong id="rpLaps">--</strong></div>
+          <div><small>TRACK</small><strong id="rpTrackType">--</strong></div>
+        </div>
+        <div class="rp-hero-actions">
+          <a id="rpStandingsLink" href="../standings/">OPEN STANDINGS <b>→</b></a>
+          <a href="../results/">RESULTS &amp; SCHEDULE</a>
+          <a href="../race-intelligence/">RACE INTELLIGENCE</a>
+        </div>
+      </div>
+
+      <aside class="rp-countdown-card">
+        <div class="rp-count-head"><span class="rp-live-dot"></span><div><small id="rpCountdownLabel">TIME TO GREEN</small><strong id="rpCountdownStatus">RACE WEEK</strong></div></div>
+        <div class="rp-countdown">
+          <div><strong id="rpDays">00</strong><span>DAYS</span></div>
+          <div><strong id="rpHours">00</strong><span>HRS</span></div>
+          <div><strong id="rpMinutes">00</strong><span>MIN</span></div>
+          <div><strong id="rpSeconds">00</strong><span>SEC</span></div>
+        </div>
+        <div class="rp-track-facts">
+          <div><span>LOCATION</span><strong id="rpLocation">--</strong></div>
+          <div><span>DISTANCE</span><strong id="rpMiles">--</strong></div>
+          <div><span>BANKING</span><strong id="rpBanking">--</strong></div>
+          <div><span>TIRES</span><strong id="rpTires">--</strong></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="rp-league-switch">
+    <div class="rp-shell rp-switch-inner">
+      <div><small>CHOOSE PREVIEW</small><strong>RACE WEEK BOARD</strong></div>
+      <div class="rp-tabs">
+        <button class="rp-tab sunday active" type="button" data-league="sunday">SUNDAY</button>
+        <button class="rp-tab monday" type="button" data-league="monday">MONDAY</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="rp-main">
+    <div class="rp-shell">
+      <div class="rp-section-head">
+        <div><small>CHAMPIONSHIP</small><h2>THE BATTLE ENTERING RACE WEEK</h2></div>
+        <span id="rpChampGap">LIVE STANDINGS</span>
+      </div>
+      <div class="rp-champ-grid" id="rpChampGrid"><div class="rp-loading">LOADING CHAMPIONSHIP…</div></div>
+
+      <div class="rp-section-head rp-space">
+        <div><small>PERFORMANCE</small><h2>DRIVERS TO WATCH</h2></div>
+        <span>RANK + RECENT FORM + TRACK HISTORY</span>
+      </div>
+      <div class="rp-watch-grid" id="rpWatchGrid"><div class="rp-loading">BUILDING DATA-BASED WATCH LIST…</div></div>
+
+      <div class="rp-two-col rp-space">
+        <section class="rp-panel">
+          <div class="rp-panel-head"><small>TRACK HISTORY</small><h3 id="rpHistoryTitle">HLRN AT THIS TRACK</h3></div>
+          <div class="rp-history-hero" id="rpHistoryHero"></div>
+          <div class="rp-history-grid" id="rpHistoryGrid"></div>
+        </section>
+
+        <section class="rp-panel">
+          <div class="rp-panel-head"><small>MOMENTUM</small><h3>FORM &amp; STREAKS</h3></div>
+          <div class="rp-form-list" id="rpFormList"></div>
+        </section>
+      </div>
+
+      <div class="rp-two-col rp-space">
+        <section class="rp-panel">
+          <div class="rp-panel-head"><small>TEAM CHAMPIONSHIP</small><h3>TEAM BATTLE</h3></div>
+          <div class="rp-team-list" id="rpTeamList"></div>
+        </section>
+
+        <section class="rp-panel">
+          <div class="rp-panel-head"><small>RACE WEEK NOTES</small><h3>WHAT TO KNOW</h3></div>
+          <div class="rp-notes" id="rpNotes"></div>
+        </section>
+      </div>
+
+      <section class="rp-previous rp-space">
+        <div class="rp-section-head">
+          <div><small>RECENT HISTORY</small><h2>PAST HLRN RACES HERE</h2></div>
+          <a id="rpArchiveLink" href="../results/#raceArchive">OPEN RACE ARCHIVE →</a>
+        </div>
+        <div class="rp-past-grid" id="rpPastGrid"></div>
+      </section>
+    </div>
+  </section>
+</main>
+
+<script src="../assets/hlrn-core.js?v=race-preview-1"></script>
+<script src="../assets/race-preview/preview-v1.js?v=20260928p1"></script>
+<script src="../assets/site-shell.js?v=20260928v6"></script>
+</body>
+</html>
