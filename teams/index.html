@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HLRN Team Profiles</title>
+<meta name="description" content="Explore High Line Racing Network team profiles, rosters, standings and performance across HLRN competition.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
@@ -70,6 +71,10 @@ tbody tr:nth-child(even) td{background:#fafbfb}
 @media(max-width:1000px){.team-grid{grid-template-columns:repeat(2,1fr)}.roster-grid{grid-template-columns:repeat(2,1fr)}.stats-grid{grid-template-columns:repeat(3,1fr)}.profile-hero{grid-template-columns:1fr}}
 @media(max-width:650px){.page{width:calc(100% - 20px);padding-top:18px}.hero{display:block;padding:24px 17px}.hero-copy{margin-top:14px}.league-tabs{display:grid;grid-template-columns:1fr 1fr}.league-tab{padding:14px 8px}.team-grid,.roster-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(2,1fr)}.profile-hero{padding:28px 19px}.profile-name{font-size:64px}.hero-stats{grid-template-columns:1fr 1fr}}
 </style>
+
+<link rel="canonical" href="https://highlineracingnetwork.com/teams/">
+
+<meta name="theme-color" content="#07090d">
 </head>
 <body>
 <div class="page">
@@ -169,6 +174,6 @@ document.getElementById("back").addEventListener("click",()=>{requestedTeam="";r
 window.addEventListener("popstate",()=>{const p=new URLSearchParams(location.search);activeLeague=["sunday","monday"].includes(p.get("league"))?p.get("league"):"sunday";requestedTeam=p.get("team")||"";requestedTeam&&findTeam(requestedTeam)?renderProfile(findTeam(requestedTeam)):renderDirectory()});
 (async()=>{try{snapshot=await HLRNData.load();syncLeagueUi();if(requestedTeam&&findTeam(requestedTeam))renderProfile(findTeam(requestedTeam));else renderDirectory()}catch(e){document.getElementById("status").textContent="Team data temporarily unavailable";document.getElementById("teamGrid").innerHTML='<div class="empty">HLRN team data could not be loaded.</div>'}})();
 </script>
-<script src="../assets/site-shell.js"></script>
+<script src="../assets/site-shell.js?v=20260929health1"></script>
 </body>
 </html>
