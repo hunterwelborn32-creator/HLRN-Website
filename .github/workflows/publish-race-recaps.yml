@@ -1,0 +1,74 @@
+name: Publish HLRN Race Recaps
+
+on:
+  schedule:
+    - cron: '2-59/5 * * * *'
+  workflow_dispatch:
+  push:
+    paths:
+      - 'tools/publish-race-recap.py'
+      - 'tests/test_race_recap_publisher.py'
+      - '.github/workflows/publish-race-recaps.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: hlrn-race-recap-publisher
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      HLRN_RECAP_URL: https://hlrn-live-feed.onrender.com/api/recaps
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Test race recap publisher
+        run: python -m unittest tests/test_race_recap_publisher.py
+
+      - name: Publish any newly frozen races
+        run: python tools/publish-race-recap.py
+
+      - name: Refresh sitemap
+        run: python tools/build-sitemap.py
+
+      - name: Save permanent race records
+        shell: bash
+        run: |
+          git config user.name "hlrn-race-recap-bot"
+          git config user.email "actions@users.noreply.github.com"
+
+          for attempt in 1 2 3; do
+            git add data/race-recaps
+            if [ -d news/race-recaps ]; then git add news/race-recaps; fi
+            if [ -f sitemap.xml ]; then git add sitemap.xml; fi
+
+            if git diff --cached --quiet; then
+              echo "No new frozen races to publish."
+              exit 0
+            fi
+
+            git commit -m "Publish frozen HLRN race recap"
+            if git push origin main; then
+              echo "Permanent race record published."
+              exit 0
+            fi
+
+            echo "Main changed during recap publication; rebuilding on latest main (attempt $attempt)."
+            git fetch origin main
+            git reset --hard origin/main
+            python tools/publish-race-recap.py
+            python tools/build-sitemap.py
+          done
+
+          echo "Unable to publish race recap after 3 attempts."
+          exit 1
