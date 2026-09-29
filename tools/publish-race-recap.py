@@ -28,7 +28,7 @@ ROOT = Path(__file__).resolve().parents[1]
 INDEX_PATH = ROOT / "data" / "race-recaps" / "index.json"
 DATA_DIR = ROOT / "data" / "race-recaps"
 ARTICLE_DIR = ROOT / "news" / "race-recaps"
-DEFAULT_RECAP_URL = "https://hlrn-live-feed.onrender.com/api/recap"
+DEFAULT_RECAP_URL = "https://hlrn-live-feed.onrender.com/api/recaps"
 SITE_ORIGIN = "https://highlineracingnetwork.com"
 ET = ZoneInfo("America/New_York")
 
@@ -86,6 +86,23 @@ def fetch_json(url, timeout=25):
     )
     with urllib.request.urlopen(req, timeout=timeout) as response:
         return json.loads(response.read().decode("utf-8"))
+
+
+def extract_recaps(payload):
+    """Accept either the legacy single recap or the rolling /api/recaps envelope."""
+    if isinstance(payload, dict) and isinstance(payload.get("recaps"), list):
+        return [x for x in payload.get("recaps") or [] if isinstance(x, dict)]
+    if isinstance(payload, dict):
+        return [payload]
+    return []
+
+
+def recap_sort_key(recap):
+    return str(
+        (recap or {}).get("raceFrozenAt")
+        or (recap or {}).get("publishedAt")
+        or ""
+    )
 
 
 def identity(entry):
@@ -706,16 +723,28 @@ def main():
     args = parser.parse_args()
 
     try:
-        recap = load_json(args.input) if args.input else fetch_json(args.url)
+        payload = load_json(args.input) if args.input else fetch_json(args.url)
     except Exception as exc:
         print(f"[HLRN recap] Recorder API unavailable; continuing without recap publication: {exc}")
         return 0
 
+    recaps = extract_recaps(payload)
+    if not recaps:
+        print("[HLRN recap] No frozen recorder races available.")
+        return 0
+
+    published = 0
     try:
-        publish(recap)
+        # Oldest first ensures back-to-back races are all published even when
+        # several frozen sessions arrive in the same sync window.
+        for recap in sorted(recaps, key=recap_sort_key):
+            if publish(recap):
+                published += 1
     except Exception as exc:
         print(f"[HLRN recap] Publisher error: {exc}", file=sys.stderr)
         return 1
+
+    print(f"[HLRN recap] Archive scan complete: {len(recaps)} checked, {published} newly published.")
     return 0
 
 
