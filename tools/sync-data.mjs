@@ -76,7 +76,61 @@ export function mergeSeasonDriverTotals(drivers, raw) {
   });
 }
 
-export function buildSnapshot(payloads, old = {}, hosted = old.hosted ?? null, seasonRaw = {}) {
+function decodeHtml(value = '') {
+  return String(value)
+    .replace(/&amp;/gi, '&').replace(/&quot;/gi, '"').replace(/&#39;|&#039;/gi, "'")
+    .replace(/&lt;/gi, '<').replace(/&gt;/gi, '>').replace(/&nbsp;/gi, ' ')
+    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(Number(n)));
+}
+function stripHtml(value = '') {
+  return decodeHtml(String(value)
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')).trim();
+}
+function norm(value = '') {
+  return stripHtml(value).toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+function driverVariants(name = '') {
+  const raw = stripHtml(name).trim();
+  const variants = new Set([norm(raw), norm(raw.replace(/\d+$/g,''))]);
+  if (raw.includes(',')) {
+    const parts = raw.split(',');
+    const last = (parts.shift() || '').trim();
+    const first = parts.join(' ').trim();
+    variants.add(norm(first + ' ' + last));
+    variants.add(norm(first + ' ' + last.replace(/\d+$/g,'')));
+  }
+  return [...variants].filter(Boolean);
+}
+export function parseTeamRostersHtml(html, drivers = []) {
+  const roster = {};
+  const source = String(html || '');
+  let headingRe = /<h4\b[^>]*>([\s\S]*?)<\/h4>/gi;
+  let matches = [...source.matchAll(headingRe)];
+  if (!matches.length) {
+    headingRe = /<h3\b[^>]*>([\s\S]*?)<\/h3>/gi;
+    matches = [...source.matchAll(headingRe)].filter(m => !/season\s+teams/i.test(stripHtml(m[1])));
+  }
+  for (let i = 0; i < matches.length; i++) {
+    const team = stripHtml(matches[i][1]).trim();
+    if (!team) continue;
+    const start = (matches[i].index || 0) + matches[i][0].length;
+    const end = i + 1 < matches.length ? (matches[i + 1].index || source.length) : source.length;
+    const section = norm(source.slice(start, end));
+    const found = [];
+    for (const driver of drivers || []) {
+      if (!driver?.driver) continue;
+      if (driverVariants(driver.driver).some(v => v.length >= 5 && section.includes(v))) {
+        found.push({ driverId: String(driver.driverId ?? ''), driver: String(driver.driver) });
+      }
+    }
+    roster[team] = found;
+  }
+  return roster;
+}
+export function buildSnapshot(payloads, old = {}, hosted = old.hosted ?? null, seasonRaw = {}, teamRosters = {}) {
   const leagues = {};
   for (const league of LEAGUES) {
     leagues[league] = {};
@@ -87,6 +141,10 @@ export function buildSnapshot(payloads, old = {}, hosted = old.hosted ?? null, s
           ? mergeSeasonDriverTotals(verified, seasonRaw[league])
           : verified;
     }
+    leagues[league].teamRosters =
+      teamRosters[league] && typeof teamRosters[league] === 'object'
+        ? teamRosters[league]
+        : (old?.leagues?.[league]?.teamRosters || {});
   }
   return { schemaVersion: 1, generatedAt: new Date().toISOString(), leagues, hosted };
 }
@@ -132,6 +190,39 @@ async function requestSeasonStandings(league) {
   return data;
 }
 
+async function requestText(url, description, headers = {}) {
+  let last;
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const res = await fetch(url, {
+        redirect: 'follow',
+        cache: 'no-store',
+        headers,
+        signal: AbortSignal.timeout(20000)
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return await res.text();
+    } catch (e) {
+      last = e;
+      if (attempt < 3) await new Promise(r => setTimeout(r, attempt * 1000));
+    }
+  }
+  throw new Error(`${description}: ${last?.message || 'failed'}`);
+}
+
+async function requestTeamRosters(league, drivers) {
+  const url = new URL('https://simracerhub.com/teams.php');
+  url.searchParams.set('season_id', String(SEASON_IDS[league]));
+  url.searchParams.set('_', String(Date.now()));
+  const html = await requestText(url, `${league}/SimRacerHub teams`, {
+    'User-Agent': 'Mozilla/5.0',
+    'Accept': 'text/html,application/xhtml+xml'
+  });
+  const rosters = parseTeamRostersHtml(html, drivers);
+  if (!Object.keys(rosters).length) throw new Error(`${league}/teams: no team sections found`);
+  return rosters;
+}
+
 export async function sync({
   endpoint = process.env.HLRN_LEAGUE_WEBAPP_URL,
   hostedEndpoint = process.env.HLRN_HOSTED_WEBAPP_URL,
@@ -166,6 +257,19 @@ export async function sync({
     }
   }
 
+  const teamRosters = {};
+  for (const league of LEAGUES) {
+    try {
+      const baseDrivers = validateAction(payloads[league]?.drivers, 'drivers', league);
+      teamRosters[league] = await requestTeamRosters(league, baseDrivers);
+      const assigned = Object.values(teamRosters[league]).reduce((n, rows) => n + rows.length, 0);
+      console.log(`${league} team rosters published: ${Object.keys(teamRosters[league]).length} teams / ${assigned} driver assignments.`);
+    } catch (e) {
+      teamRosters[league] = old?.leagues?.[league]?.teamRosters || {};
+      console.warn(`${league} team roster refresh failed; previous roster retained:`, e.message);
+    }
+  }
+
   let hosted = old.hosted ?? null;
   if (hostedEndpoint) {
     try {
@@ -180,7 +284,7 @@ export async function sync({
     console.log('HLRN_HOSTED_WEBAPP_URL not configured; existing Hosted snapshot retained.');
   }
 
-  const next = buildSnapshot(payloads, old, hosted, seasonRaw);
+  const next = buildSnapshot(payloads, old, hosted, seasonRaw, teamRosters);
   if (sameData(old, next)) {
     console.log('No data changes; prior snapshot kept.');
     return false;
