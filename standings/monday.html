@@ -1,0 +1,3897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HLRN Monday Night League</title>
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+html,body{
+  width:100%;
+  min-height:100%;
+  background:#050505;
+  color:#fff;
+  font-family:Arial,Helvetica,sans-serif;
+}
+body{
+  padding:18px;
+}
+.page-wrap{
+  width:100%;
+  max-width:1900px;
+  margin:auto;
+}
+.hero{
+  min-height:165px;
+  border:2px solid #69e000;
+  border-radius:12px;
+  background:radial-gradient(circle at top,#1c1c1c,#101010 45%,#080808);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:28px 20px;
+  margin-bottom:18px;
+}
+.hero h1{
+  font-size:clamp(28px,4vw,48px);
+  font-weight:900;
+  letter-spacing:2px;
+  margin-bottom:10px;
+}
+.hero-subtitle{
+  color:#ccc;
+  font-size:17px;
+  margin-bottom:10px;
+}
+.live-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  border:1px solid #333;
+  border-radius:999px;
+  background:#111;
+  padding:6px 12px;
+  color:#ddd;
+  font-size:12px;
+}
+.live-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#00e676;
+  box-shadow:0 0 8px #00e676;
+}
+.tabs{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-bottom:15px;
+}
+.tab-btn{
+  border:1px solid #333;
+  border-radius:8px;
+  background:linear-gradient(#171717,#111);
+  color:#fff;
+  padding:15px;
+  font-size:15px;
+  font-weight:800;
+  cursor:pointer;
+}
+.tab-btn:hover{
+  border-color:#69e000;
+}
+.tab-btn.active{
+  border-color:#8cf04a;
+  background:linear-gradient(90deg,#ba0000,#e00000);
+}
+.panel{
+  display:none;
+}
+.panel.active{
+  display:block;
+}
+.section-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin:12px 0 18px;
+}
+.section-header h2{
+  font-size:30px;
+  font-weight:900;
+}
+.count{
+  color:#999;
+  font-size:13px;
+}
+.table-shell{
+  overflow-x:auto;
+  border:1px solid #2d2d2d;
+  border-radius:10px;
+  background:#0d0d0d;
+}
+table{
+  width:100%;
+  min-width:1150px;
+  border-collapse:collapse;
+}
+thead{
+  background:#171717;
+}
+th{
+  padding:14px 11px;
+  border-bottom:1px solid #df0000;
+  font-size:12px;
+  font-weight:900;
+  text-align:center;
+  white-space:nowrap;
+}
+td{
+  padding:14px 11px;
+  border-bottom:1px solid #222;
+  font-size:13px;
+  text-align:center;
+  white-space:nowrap;
+}
+tbody tr:nth-child(even){
+  background:#0a0a0a;
+}
+tbody tr:hover{
+  background:#151515;
+}
+.name-col{
+  text-align:left;
+  font-weight:800;
+}
+.points{
+  color:#8cf04a;
+  font-weight:900;
+  font-size:15px;
+}
+.position{
+  font-weight:900;
+}
+.position.top1{
+  color:#ffe100;
+}
+.position.top2{
+  color:#ddd;
+}
+.position.top3{
+  color:#d88927;
+}
+/* =========================
+   MOVEMENT
+========================= */
+.movement{
+  font-weight:900;
+  font-size:13px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:42px;
+}
+.movement.up{
+  color:#00e676;
+}
+.movement.down{
+  color:#ff3b3b;
+}
+.movement.same{
+  color:#777;
+}
+.movement-arrow{
+  font-size:15px;
+  margin-right:4px;
+}
+/* =========================
+   LAST RACE
+========================= */
+.last-race-card{
+  border:1px solid #333;
+  border-radius:12px;
+  background:linear-gradient(145deg,#151515,#080808);
+  padding:25px;
+  margin-bottom:18px;
+}
+.race-header{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  flex-wrap:wrap;
+}
+.race-track{
+  font-size:27px;
+  font-weight:900;
+}
+.race-date{
+  color:#999;
+  font-size:13px;
+  margin-top:6px;
+}
+.race-number{
+  padding:8px 13px;
+  border:1px solid #69e000;
+  border-radius:7px;
+  color:#8cf04a;
+  background:#100000;
+  font-size:12px;
+  font-weight:900;
+}
+.last-race-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-top:20px;
+}
+.stat-card{
+  padding:18px;
+  background:#101010;
+  border:1px solid #292929;
+  border-radius:8px;
+  text-align:center;
+}
+.stat-label{
+  color:#999;
+  font-size:11px;
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+.stat-value{
+  font-size:22px;
+  font-weight:900;
+}
+.winner-name{
+  color:#8cf04a;
+}
+.message{
+  padding:35px;
+  text-align:center;
+  color:#aaa;
+}
+.error{
+  color:#ff5555;
+}
+@media(max-width:800px){
+  body{
+    padding:10px;
+  }
+  .tabs{
+    grid-template-columns:1fr;
+  }
+  .last-race-grid{
+    grid-template-columns:1fr 1fr;
+  }
+}
+@media(max-width:500px){
+  .last-race-grid{
+    grid-template-columns:1fr;
+  }
+}
+/* =========================================================
+   HLRN MONDAY NIGHT LEAGUE — NASCAR / BROADCAST STYLE
+   Existing API, standings, tabs, and refresh logic preserved.
+========================================================= */
+:root{
+  --hlrn-red:#69e000;
+  --hlrn-yellow:#ffd400;
+  --hlrn-black:#030303;
+  --hlrn-steel:#181818;
+}
+body{
+  background:
+    radial-gradient(circle at 50% -10%,rgba(255,255,255,.055),transparent 28%),
+    linear-gradient(180deg,#050505,#000 72%)!important;
+  overflow-x:hidden;
+}
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  pointer-events:none;
+  background:
+    repeating-linear-gradient(115deg,transparent 0 88px,rgba(255,255,255,.014) 89px 90px),
+    linear-gradient(90deg,rgba(105,224,0,.035),transparent 24%,transparent 76%,rgba(105,224,0,.025));
+}
+body:after{
+  content:"";
+  position:fixed;
+  left:0;right:0;bottom:0;
+  height:105px;
+  z-index:-1;
+  pointer-events:none;
+  opacity:.07;
+  background:
+    linear-gradient(45deg,#fff 25%,transparent 25%,transparent 75%,#fff 75%),
+    linear-gradient(45deg,#fff 25%,transparent 25%,transparent 75%,#fff 75%);
+  background-size:36px 36px;
+  background-position:0 0,18px 18px;
+  -webkit-mask-image:linear-gradient(to top,#000,transparent);
+  mask-image:linear-gradient(to top,#000,transparent);
+}
+/* HERO */
+.hero{
+  position:relative;
+  overflow:hidden;
+  min-height:190px!important;
+  border-radius:3px!important;
+  border:1px solid #333!important;
+  border-top:4px solid var(--hlrn-red)!important;
+  background:
+    linear-gradient(115deg,transparent 0 62%,rgba(255,212,0,.10) 62.2% 63%,transparent 63.2%),
+    linear-gradient(145deg,#151515,#070707 65%,#101010)!important;
+  box-shadow:0 18px 42px rgba(0,0,0,.55)!important;
+}
+.hero:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(115deg,transparent 0 56%,rgba(105,224,0,.30) 56.2% 58.5%,transparent 58.7%),
+    linear-gradient(115deg,transparent 0 63%,rgba(255,255,255,.07) 63.2% 63.8%,transparent 64%);
+}
+.hero:after{
+  content:"MONDAY NIGHT";
+  position:absolute;
+  right:-10px;
+  bottom:-16px;
+  color:rgba(255,255,255,.035);
+  font-size:clamp(68px,9vw,135px);
+  font-weight:1000;
+  font-style:italic;
+  letter-spacing:-.07em;
+  transform:skewX(-10deg);
+  white-space:nowrap;
+  pointer-events:none;
+}
+.hero h1{
+  position:relative;
+  z-index:2;
+  font-style:italic;
+  text-transform:uppercase;
+  letter-spacing:-.04em!important;
+  text-shadow:4px 4px 0 #151515;
+}
+.hero-subtitle{
+  position:relative;
+  z-index:2;
+  color:var(--hlrn-yellow)!important;
+  font-size:13px!important;
+  font-weight:1000;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+.live-pill{
+  position:relative;
+  z-index:2;
+  border-radius:2px!important;
+  border-left:4px solid var(--hlrn-yellow)!important;
+  background:linear-gradient(180deg,#151515,#090909)!important;
+}
+/* Championship ticker */
+.monday-ticker{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  min-height:38px;
+  margin:-6px 0 18px;
+  overflow:hidden;
+  border:1px solid #333;
+  border-top:0;
+  background:#070707;
+  box-shadow:0 10px 28px rgba(0,0,0,.5);
+}
+.monday-ticker .ticker-label{
+  height:100%;
+  display:flex;
+  align-items:center;
+  padding:0 18px;
+  margin-left:-7px;
+  transform:skewX(-12deg);
+  background:var(--hlrn-yellow);
+  color:#050505;
+  font-size:9px;
+  font-weight:1000;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+.monday-ticker .ticker-label span{transform:skewX(12deg)}
+.monday-ticker .ticker-window{
+  overflow:hidden;
+  white-space:nowrap;
+  color:#ddd;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+}
+.monday-ticker .ticker-track{
+  display:inline-block;
+  padding-left:100%;
+  animation:mondayTickerMove 28s linear infinite;
+}
+.monday-ticker .ticker-track b{color:#fff}
+.monday-ticker .ticker-track em{
+  color:var(--hlrn-red);
+  font-style:normal;
+  margin:0 14px;
+}
+.monday-ticker .ticker-network{
+  padding:0 14px;
+  color:#777;
+  font-size:8px;
+  font-weight:1000;
+  letter-spacing:.14em;
+}
+@keyframes mondayTickerMove{
+  from{transform:translateX(0)}
+  to{transform:translateX(-100%)}
+}
+/* Tabs */
+.tabs{
+  gap:6px!important;
+}
+.tab-btn{
+  border-radius:2px!important;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  background:linear-gradient(180deg,#161616,#0b0b0b)!important;
+  border:1px solid #3a3a3a!important;
+  transition:.18s ease;
+}
+.tab-btn:hover{
+  border-color:var(--hlrn-yellow)!important;
+  transform:translateY(-2px);
+}
+.tab-btn.active{
+  color:#fff!important;
+  border-color:var(--hlrn-red)!important;
+  background:linear-gradient(135deg,var(--hlrn-yellow) 0 12%,var(--hlrn-red) 12% 100%)!important;
+  box-shadow:6px 6px 0 rgba(0,0,0,.25);
+}
+/* Section headers */
+.section-header{
+  position:relative;
+  padding-bottom:9px;
+  border-bottom:1px solid #292929;
+}
+.section-header:before{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-1px;
+  width:110px;
+  height:3px;
+  background:linear-gradient(90deg,var(--hlrn-yellow),var(--hlrn-red),transparent);
+}
+.section-header h2{
+  font-style:italic;
+  letter-spacing:-.03em;
+  text-transform:uppercase;
+}
+/* Standings tables */
+.table-shell{
+  border-radius:3px!important;
+  border:1px solid #363636!important;
+  background:#090909!important;
+  box-shadow:0 16px 38px rgba(0,0,0,.45);
+}
+thead{
+  background:linear-gradient(180deg,#191919,#0e0e0e)!important;
+}
+th{
+  border-bottom:2px solid var(--hlrn-red)!important;
+  color:#cfcfcf;
+  letter-spacing:.05em;
+}
+td{
+  border-bottom-color:#252525!important;
+  font-variant-numeric:tabular-nums;
+}
+tbody tr{
+  transition:.16s ease;
+}
+tbody tr:hover{
+  background:#151515!important;
+  box-shadow:inset 4px 0 0 var(--hlrn-yellow);
+}
+.name-col{
+  font-style:italic;
+}
+.points{
+  color:var(--hlrn-yellow)!important;
+  font-weight:1000!important;
+}
+.position{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:32px;
+  min-height:26px;
+  padding:3px 6px;
+  background:#111;
+  border-left:3px solid #555;
+  font-style:italic;
+}
+.position.top1{
+  color:#050505!important;
+  background:var(--hlrn-yellow);
+  border-left-color:var(--hlrn-red);
+}
+.position.top2{
+  color:#fff!important;
+  border-left-color:#d7d7d7;
+}
+.position.top3{
+  color:#ffb15d!important;
+  border-left-color:#d88927;
+}
+/* Movement arrows */
+.movement{
+  padding:4px 7px;
+  border-radius:2px;
+  background:#101010;
+}
+.movement.up{
+  color:#63ef8b!important;
+  border-left:3px solid #63ef8b;
+}
+.movement.down{
+  color:#ff6565!important;
+  border-left:3px solid #ff4b4b;
+}
+.movement.same{
+  border-left:3px solid #555;
+}
+/* Last race */
+.last-race-card{
+  position:relative;
+  overflow:hidden;
+  border-radius:3px!important;
+  border:1px solid #3a3a3a!important;
+  border-left:5px solid var(--hlrn-red)!important;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.03),transparent 24%),
+    linear-gradient(150deg,#151515,#070707)!important;
+  box-shadow:0 18px 42px rgba(0,0,0,.48);
+}
+.last-race-card:before{
+  content:"";
+  position:absolute;
+  top:0;left:0;right:0;
+  height:4px;
+  background:linear-gradient(90deg,var(--hlrn-yellow) 0 14%,var(--hlrn-red) 14% 62%,transparent);
+}
+.last-race-card:after{
+  content:"";
+  position:absolute;
+  right:-38px;
+  top:-38px;
+  width:115px;
+  height:115px;
+  opacity:.05;
+  transform:rotate(45deg);
+  background:
+    linear-gradient(45deg,#fff 25%,transparent 25%,transparent 75%,#fff 75%),
+    linear-gradient(45deg,#fff 25%,transparent 25%,transparent 75%,#fff 75%);
+  background-size:18px 18px;
+  background-position:0 0,9px 9px;
+  pointer-events:none;
+}
+.race-track{
+  font-style:italic;
+  text-transform:uppercase;
+  letter-spacing:-.03em;
+}
+.race-number{
+  border-radius:2px!important;
+  color:#050505!important;
+  border-color:var(--hlrn-yellow)!important;
+  background:var(--hlrn-yellow)!important;
+  transform:skewX(-7deg);
+}
+.last-race-grid{
+  position:relative;
+  z-index:2;
+}
+.stat-card{
+  border-radius:2px!important;
+  border:1px solid #333!important;
+  border-left:3px solid var(--hlrn-yellow)!important;
+  background:linear-gradient(180deg,#121212,#080808)!important;
+}
+.winner-name{
+  color:var(--hlrn-red)!important;
+}
+/* Scroll reveal */
+.monday-reveal{
+  opacity:0;
+  transform:translateY(16px);
+  transition:opacity .5s ease,transform .5s ease;
+}
+.monday-reveal.in-view{
+  opacity:1;
+  transform:none;
+}
+@media(max-width:800px){
+  .monday-ticker{
+    grid-template-columns:auto 1fr;
+  }
+  .monday-ticker .ticker-network{
+    display:none;
+  }
+}
+</style>
+<style>
+/* =========================================================
+   HLRN MONDAY — CHASE TO THE CHAMPIONSHIP — FINAL OVERRIDE
+========================================================= */
+:root{--cc-red:#69e000;--cc-yellow:#ffd400;--cc-green:#69e000;--cc-blue:#35a7ff;--cc-ink:#050505;--cc-panel:#0b0b0b}
+body{padding:0!important;background:radial-gradient(circle at 50% -8%,rgba(255,255,255,.07),transparent 26%),linear-gradient(180deg,#050505,#000 76%)!important}
+.page-wrap{max-width:1920px!important;padding:0 14px 28px}
+.cc-topline{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;min-height:42px;margin:0 -14px 14px;padding:0 18px;border-bottom:1px solid #2b2b2b;background:#050505;box-shadow:0 8px 24px rgba(0,0,0,.45);position:relative;z-index:30}
+.cc-brand{font-size:10px;font-weight:1000;letter-spacing:.18em;text-transform:uppercase}.cc-brand b{color:var(--cc-red)}
+.cc-status{text-align:center;color:#777;font-size:8px;font-weight:1000;letter-spacing:.15em;text-transform:uppercase}.cc-status span{color:#fff}
+.cc-clock{font-family:Impact,"Arial Narrow",Arial,sans-serif;font-size:18px;font-style:italic;letter-spacing:.03em;color:#fff}.cc-clock small{display:block;margin-top:-1px;color:#666;font:700 6px Arial;letter-spacing:.15em;text-align:right}
+.hero{min-height:310px!important;align-items:stretch!important;justify-content:stretch!important;text-align:left!important;padding:0!important;border:1px solid #333!important;border-top:0!important;clip-path:polygon(0 0,calc(100% - 24px) 0,100% 24px,100% 100%,24px 100%,0 calc(100% - 24px));box-shadow:0 30px 70px rgba(0,0,0,.62)!important}
+.hero:before{background:linear-gradient(115deg,transparent 0 58%,rgba(105,224,0,.18) 58.2% 59.4%,transparent 59.6%),linear-gradient(115deg,transparent 0 64%,rgba(255,212,0,.08) 64.2% 65%,transparent 65.2%)!important}
+.hero:after{content:"CHAMPIONSHIP"!important;right:-18px!important;bottom:-20px!important;font-size:clamp(76px,10vw,160px)!important;color:rgba(255,255,255,.03)!important}
+.cc-hero-grid{display:grid;grid-template-columns:1.45fr .75fr;min-height:310px;position:relative;z-index:2}
+.cc-hero-main{padding:34px 34px 28px;display:flex;flex-direction:column;justify-content:center;background:linear-gradient(110deg,rgba(105,224,0,.055),transparent 48%)}
+.cc-kicker{color:var(--cc-yellow);font-size:9px;font-weight:1000;letter-spacing:.22em;text-transform:uppercase}.cc-title{margin-top:8px;font-family:Impact,"Arial Narrow",Arial,sans-serif;font-size:clamp(52px,6.3vw,108px);line-height:.82;font-style:italic;text-transform:uppercase;letter-spacing:-.045em;text-shadow:6px 6px 0 #121212}.cc-title span{color:var(--cc-red)}
+.cc-sub{margin-top:15px;max-width:760px;color:#a8a8a8;font-size:10px;font-weight:900;line-height:1.6;letter-spacing:.11em;text-transform:uppercase}.cc-live-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}.cc-pill{padding:8px 10px;border:1px solid #343434;background:#0d0d0d;color:#ddd;font-size:8px;font-weight:1000;letter-spacing:.1em;text-transform:uppercase}.cc-pill strong{color:#fff}.cc-pill.red{border-left:4px solid var(--cc-red)}.cc-pill.yellow{border-left:4px solid var(--cc-yellow)}.cc-pill.green{border-left:4px solid var(--cc-green)}
+.cc-hero-side{padding:26px 22px;border-left:1px solid #303030;background:linear-gradient(180deg,#101010,#070707);display:flex;flex-direction:column;justify-content:center}.cc-leader-label{color:#777;font-size:7px;font-weight:1000;letter-spacing:.19em;text-transform:uppercase}.cc-leader-rank{margin-top:4px;color:var(--cc-yellow);font-family:Impact,"Arial Narrow",Arial,sans-serif;font-size:22px;font-style:italic}.cc-leader-name{margin-top:5px;color:#fff;font-family:Impact,"Arial Narrow",Arial,sans-serif;font-size:clamp(30px,3vw,46px);line-height:.95;font-style:italic;text-transform:uppercase;overflow-wrap:anywhere}.cc-leader-points{margin-top:10px;color:var(--cc-red);font-size:30px;font-weight:1000}.cc-leader-points small{color:#777;font-size:8px;letter-spacing:.14em}.cc-gap{margin-top:12px;padding-top:12px;border-top:1px solid #272727;color:#888;font-size:8px;font-weight:900;line-height:1.55;text-transform:uppercase}.cc-gap b{color:#fff}
+.monday-ticker{margin:10px 0 14px!important;border-top:3px solid var(--cc-red)!important}.monday-ticker .ticker-label{background:var(--cc-yellow)!important;color:#050505!important}
+.cc-dashboard{display:grid;grid-template-columns:1.35fr repeat(4,.55fr);gap:8px;margin-bottom:14px}.cc-card{min-width:0;padding:14px 14px 12px;border:1px solid #303030;background:linear-gradient(180deg,#111,#080808);position:relative;overflow:hidden;box-shadow:0 10px 22px rgba(0,0,0,.35)}.cc-card:before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:#3b3b3b}.cc-card:nth-child(1):before{background:linear-gradient(90deg,var(--cc-yellow),var(--cc-red))}.cc-card:nth-child(2):before{background:var(--cc-red)}.cc-card:nth-child(3):before{background:var(--cc-yellow)}.cc-card:nth-child(4):before{background:var(--cc-green)}.cc-card:nth-child(5):before{background:#ff5d5d}.cc-card-label{color:#707070;font-size:6px;font-weight:1000;letter-spacing:.16em;text-transform:uppercase}.cc-card-value{margin-top:5px;color:#fff;font-family:Impact,"Arial Narrow",Arial,sans-serif;font-size:26px;line-height:1;font-style:italic;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cc-card-sub{margin-top:5px;color:#8b8b8b;font-size:7px;font-weight:900;letter-spacing:.07em;text-transform:uppercase}
+.cc-battle{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin:0 0 16px}.cc-battle-item{padding:10px 9px;background:#090909;border:1px solid #292929;border-bottom:3px solid #3b3b3b;min-width:0}.cc-battle-item:first-child{border-bottom-color:var(--cc-yellow)}.cc-battle-pos{color:#666;font-size:6px;font-weight:1000;letter-spacing:.15em}.cc-battle-name{margin-top:4px;color:#fff;font-size:9px;font-weight:1000;font-style:italic;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cc-battle-pts{margin-top:3px;color:var(--cc-red);font-size:8px;font-weight:1000}.cc-battle-gap{margin-top:2px;color:#666;font-size:6px;font-weight:900}
+.tabs{position:sticky;top:0;z-index:20;background:rgba(4,4,4,.94);backdrop-filter:blur(10px);padding:8px 0;margin-bottom:18px!important}.tab-btn{min-height:48px!important;font-family:Impact,"Arial Narrow",Arial,sans-serif;font-size:15px!important;font-style:italic!important}.tab-btn.active{box-shadow:inset 0 -4px 0 var(--cc-yellow),0 8px 20px rgba(0,0,0,.35)!important;background:linear-gradient(180deg,#280909,#130505)!important;color:#fff!important;border-color:#7b1b1f!important}.tab-btn.active:before{content:"LIVE DATA • ";color:var(--cc-yellow);font:900 6px Arial;letter-spacing:.12em}
+.section-header{margin-top:18px!important}.section-header h2{font-family:Impact,"Arial Narrow",Arial,sans-serif;font-size:34px!important}.count{padding:6px 8px;border:1px solid #303030;background:#0b0b0b;color:#9a9a9a!important;font-weight:900}.table-shell{overflow:auto;max-height:72vh}.table-shell table{position:relative}.table-shell thead th{position:sticky;top:0;z-index:4;background:#101010!important}.table-shell tbody tr:nth-child(-n+3) td{background:linear-gradient(90deg,rgba(105,224,0,.04),transparent 60%)}.table-shell tbody tr:nth-child(1) td{border-top:1px solid rgba(255,212,0,.35)}.name-col{font-weight:1000!important}.points{font-size:16px!important}
+.last-race-card{padding:28px!important}.last-race-grid{grid-template-columns:repeat(4,1fr)!important}.stat-card{min-height:110px;display:flex;flex-direction:column;justify-content:center}.stat-value{font-size:28px!important}.cc-race-spotlight{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-bottom:16px}.cc-spotlight-card{padding:18px;border:1px solid #303030;background:linear-gradient(180deg,#101010,#070707);position:relative;overflow:hidden}.cc-spotlight-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--cc-red)}.cc-spotlight-card.alt:before{background:var(--cc-yellow)}.cc-spot-label{color:#666;font-size:6px;font-weight:1000;letter-spacing:.16em;text-transform:uppercase}.cc-spot-main{margin-top:5px;color:#fff;font-family:Impact,"Arial Narrow",Arial,sans-serif;font-size:24px;font-style:italic;text-transform:uppercase}.cc-spot-sub{margin-top:4px;color:#8a8a8a;font-size:7px;font-weight:900;text-transform:uppercase}
+.cc-footer{display:grid;grid-template-columns:1fr auto;align-items:center;margin-top:18px;padding:15px 18px;border-top:3px solid var(--cc-red);background:#080808}.cc-footer-main{font-family:Impact,"Arial Narrow",Arial,sans-serif;font-size:22px;font-style:italic}.cc-footer-sub{color:#666;font-size:6px;font-weight:1000;letter-spacing:.18em;text-transform:uppercase}.cc-footer-right{color:#777;font-size:7px;font-weight:900;letter-spacing:.1em;text-transform:uppercase}
+@media(max-width:1050px){.cc-hero-grid{grid-template-columns:1fr}.cc-hero-side{border-left:0;border-top:1px solid #303030}.cc-dashboard{grid-template-columns:repeat(3,1fr)}.cc-card:first-child{grid-column:span 3}.cc-battle{grid-template-columns:repeat(3,1fr)}.cc-race-spotlight{grid-template-columns:1fr}}
+@media(max-width:760px){.page-wrap{padding:0 8px 20px}.cc-topline{margin:0 -8px 10px;grid-template-columns:1fr auto}.cc-status{display:none}.cc-hero-main{padding:26px 18px 22px}.cc-title{font-size:58px}.cc-dashboard{grid-template-columns:1fr 1fr}.cc-card:first-child{grid-column:1/-1}.cc-battle{grid-template-columns:1fr 1fr}.tabs{position:relative;grid-template-columns:1fr!important}.last-race-grid{grid-template-columns:1fr 1fr!important}.cc-footer{grid-template-columns:1fr;gap:8px}.cc-footer-right{text-align:left}}
+@media(max-width:480px){.cc-title{font-size:46px}.cc-dashboard{grid-template-columns:1fr}.cc-card:first-child{grid-column:auto}.cc-battle{grid-template-columns:1fr}.last-race-grid{grid-template-columns:1fr!important}}
+</style>
+<style id="mondayRaceReportTabStyles">
+.monday-report-shell{
+  width:100%;
+  overflow:hidden;
+  border:1px solid #363636;
+  background:#050505;
+  box-shadow:0 18px 42px rgba(0,0,0,.45);
+}
+.monday-report-frame{
+  display:block;
+  width:100%;
+  min-height:1100px;
+  border:0;
+  background:#050505;
+}
+@media(max-width:800px){
+  .monday-report-frame{min-height:1300px}
+}
+</style>
+<style id="MONDAY_FORCE_GREEN">
+:root{
+  --hlrn-red:#69e000 !important;
+}
+.hero{border-top-color:#69e000 !important}
+.hero:before{
+  background:
+    linear-gradient(115deg,transparent 0 56%,rgba(105,224,0,.28) 56.2% 58.5%,transparent 58.7%),
+    linear-gradient(115deg,transparent 0 63%,rgba(255,255,255,.07) 63.2% 63.8%,transparent 64%) !important;
+}
+.live-dot{background:#69e000 !important;box-shadow:0 0 8px #69e000 !important}
+.tab-btn.active{
+  background:linear-gradient(135deg,var(--hlrn-yellow) 0 12%,#69e000 12% 100%) !important;
+  border-color:#69e000 !important;
+}
+.points,.winner-name{color:#69e000 !important}
+.position.top1{border-left-color:#69e000 !important}
+.last-race-card{border-left-color:#69e000 !important}
+.monday-ticker .ticker-track em{color:#69e000 !important}
+.section-header:before{
+  background:linear-gradient(90deg,var(--hlrn-yellow),#69e000,transparent) !important;
+}
+</style>
+<style id="MONDAY_ABSOLUTE_GREEN_FINAL">
+:root{
+  --cc-green:#69e000 !important;
+  --cc-red:#69e000 !important;
+  --hlrn-green:#69e000 !important;
+  --hlrn-red:#69e000 !important;
+}
+.cc-brand b,
+.cc-title span,
+.cc-leader-points,
+.cc-battle-pts{
+  color:#69e000 !important;
+}
+.cc-pill.green,
+.cc-pill.red{
+  border-left-color:#69e000 !important;
+}
+.monday-ticker{
+  border-top-color:#69e000 !important;
+}
+.monday-ticker .ticker-label,
+.ticker-label{
+  background:#69e000 !important;
+}
+.cc-card:nth-child(1):before{
+  background:linear-gradient(90deg,var(--cc-yellow),#69e000) !important;
+}
+.cc-card:nth-child(2):before,
+.cc-spotlight-card:before{
+  background:#69e000 !important;
+}
+.cc-footer{
+  border-top-color:#69e000 !important;
+}
+.hero{
+  border-top-color:#69e000 !important;
+}
+.hero:before{
+  background:
+    linear-gradient(115deg,transparent 0 56%,rgba(105,224,0,.30) 56.2% 58.5%,transparent 58.7%),
+    linear-gradient(115deg,transparent 0 63%,rgba(255,255,255,.07) 63.2% 63.8%,transparent 64%) !important;
+}
+.live-dot{
+  background:#69e000 !important;
+  box-shadow:0 0 8px #69e000 !important;
+}
+.tab-btn.active{
+  background:linear-gradient(135deg,var(--hlrn-yellow) 0 12%,#69e000 12% 100%) !important;
+  border-color:#69e000 !important;
+}
+.section-header:before{
+  background:linear-gradient(90deg,var(--hlrn-yellow),#69e000,transparent) !important;
+}
+.points,.winner-name{
+  color:#69e000 !important;
+}
+.position.top1,
+.last-race-card{
+  border-left-color:#69e000 !important;
+}
+</style>
+<style id="HLRN_GLOBAL_PREMIUM_GREEN">
+:root{--premium-accent:#69e000;--premium-yellow:#ffd400;--premium-line:#323232}
+html{scroll-behavior:smooth}
+body{
+  background:
+    radial-gradient(circle at 50% -12%,rgba(255,255,255,.05),transparent 28%),
+    linear-gradient(180deg,#050505,#000 76%) !important;
+}
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:-10;
+  background:repeating-linear-gradient(115deg,transparent 0 92px,rgba(255,255,255,.01) 93px 94px);
+}
+button,input,select{transition:.18s ease}
+button:hover{filter:brightness(1.08)}
+table{font-variant-numeric:tabular-nums}
+::-webkit-scrollbar{height:10px;width:10px}
+::-webkit-scrollbar-track{background:#0a0a0a}
+::-webkit-scrollbar-thumb{background:#333;border:2px solid #0a0a0a}
+::-webkit-scrollbar-thumb:hover{background:#69e000}
+.section,.panel,.card,.table-shell,.last-race-card,.record-card,.leader-card,.matchup-card{
+  box-shadow:0 14px 38px rgba(0,0,0,.30);
+}
+.section-title,.section-header,.card-title,.records-title,.tape-title{
+  letter-spacing:-.02em;
+}
+@media(min-width:900px){
+  .section:hover,.panel:hover,.card:hover,.record-card:hover,.leader-card:hover{
+    border-color:rgba(105,224,0,.50) !important;
+  }
+}
+</style>
+<style id="HLRN_MONDAY_REPORT_SCROLL_FIX">
+#mondayRaceReportFrame{
+  width:100% !important;
+  height:76vh !important;
+  min-height:720px !important;
+  border:0 !important;
+  overflow:auto !important;
+  background:#050505 !important;
+}
+@media(max-width:800px){
+  #mondayRaceReportFrame{
+    height:72vh !important;
+    min-height:600px !important;
+  }
+}
+</style>
+<style id="HLRN_MONDAY_REPORT_FIXED_SCROLL">
+#mondayRaceReportFrame,
+.monday-report-frame{
+  width:100% !important;
+  height:70vh !important;
+  min-height:650px !important;
+  max-height:none !important;
+  overflow:auto !important;
+  border:0 !important;
+  background:#050505 !important;
+}
+@media(max-width:800px){
+  #mondayRaceReportFrame,
+  .monday-report-frame{
+    height:66vh !important;
+    min-height:560px !important;
+  }
+}
+</style>
+<style id="HLRN_MONDAY_REPORT_VISIBILITY_FIX">
+#mondayRaceReportFrame{
+  display:block !important;
+  width:100% !important;
+  height:70vh !important;
+  min-height:650px !important;
+  max-height:none !important;
+  border:0 !important;
+  overflow:auto !important;
+  background:#050505 !important;
+}
+#mondayRaceReportFrame[hidden]{display:none !important}
+@media(max-width:800px){
+  #mondayRaceReportFrame{
+    height:66vh !important;
+    min-height:560px !important;
+  }
+}
+</style>
+<style id="HLRN_MONDAY_RACE_REPORT_HARDWIRE">
+#mondayRaceReportFrame{
+  display:block !important;
+  width:100% !important;
+  height:72vh !important;
+  min-height:680px !important;
+  max-height:none !important;
+  border:0 !important;
+  overflow:auto !important;
+  background:#050505 !important;
+}
+@media(max-width:800px){
+  #mondayRaceReportFrame{
+    height:68vh !important;
+    min-height:580px !important;
+  }
+}
+</style>
+<style id="HLRN_MONDAY_DIRECT_REPORT_CSS">
+#mondayDirectRaceReport{
+  width:100%;
+  max-width:none;
+  background:#050505;
+  overflow:visible;
+}
+#mondayDirectRaceReport *{box-sizing:border-box}
+#mondayDirectRaceReport, #mondayDirectRaceReport{margin:0;background:#050505;color:#fff;font-family:Arial,Helvetica,sans-serif}
+#mondayDirectRaceReport{--g:#69e000;--y:#ffd400;--r:#ed1c24;--p:#0d0d0d;--p2:#141414;--line:#2c2c2c;--muted:#919191}
+#mondayDirectRaceReport{overflow-x:hidden;background:radial-gradient(circle at 80% 0,rgba(105,224,0,.08),transparent 28%),#050505}
+#mondayDirectRaceReport .hero{padding:42px 24px 30px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#151515,#070707 62%,#101a0d)}
+#mondayDirectRaceReport .hero .inner, #mondayDirectRaceReport .main{max-width:1460px;margin:auto}
+#mondayDirectRaceReport .eyebrow{font-size:9px;letter-spacing:.2em;text-transform:uppercase;font-weight:1000;color:var(--g)}
+#mondayDirectRaceReport .hero h1{margin:10px 0 8px;font-size:clamp(42px,7vw,88px);line-height:.88;font-style:italic;text-transform:uppercase;letter-spacing:-.05em}
+#mondayDirectRaceReport .hero h1 span{color:var(--g);display:block}
+#mondayDirectRaceReport .hero p{max-width:1000px;color:#c4c4c4;font-size:15px;line-height:1.6;font-weight:700}
+#mondayDirectRaceReport .meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+#mondayDirectRaceReport .meta span{border:1px solid #333;background:#090909;padding:7px 9px;font-size:8px;letter-spacing:.1em;text-transform:uppercase;font-weight:1000}
+#mondayDirectRaceReport .tabs{position:sticky;top:0;z-index:50;display:flex;gap:6px;overflow-x:auto;padding:10px 12px;background:rgba(5,5,5,.97);border-bottom:1px solid var(--line);backdrop-filter:blur(10px)}
+#mondayDirectRaceReport .rr-tab{flex:0 0 auto;border:1px solid #333;background:#111;color:#888;padding:11px 14px;font-size:9px;font-weight:1000;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+#mondayDirectRaceReport .rr-tab.active{color:#fff;border-color:var(--g);box-shadow:inset 0 -3px 0 var(--g)}
+#mondayDirectRaceReport .main{padding:24px 18px 50px}
+#mondayDirectRaceReport .rr-panel{display:none}
+#mondayDirectRaceReport .rr-panel.active{display:block}
+#mondayDirectRaceReport .section-head{display:flex;justify-content:space-between;gap:20px;align-items:end;padding-bottom:10px;margin-bottom:14px;border-bottom:1px solid var(--line)}
+#mondayDirectRaceReport .section-head h2{margin:0;font-size:clamp(28px,4vw,48px);font-style:italic;text-transform:uppercase;letter-spacing:-.04em}
+#mondayDirectRaceReport .section-head h2 span{color:var(--g)}
+#mondayDirectRaceReport .section-head p{margin:0;color:#777;font-size:9px;font-weight:1000;text-transform:uppercase;letter-spacing:.1em}
+#mondayDirectRaceReport .stat-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:9px}
+#mondayDirectRaceReport .stat{padding:17px;border:1px solid var(--line);background:linear-gradient(145deg,#141414,#0a0a0a);min-height:112px}
+#mondayDirectRaceReport .stat small, #mondayDirectRaceReport .mini small{display:block;color:#777;font-size:8px;letter-spacing:.13em;text-transform:uppercase;font-weight:1000}
+#mondayDirectRaceReport .stat strong, #mondayDirectRaceReport .mini strong{display:block;font-size:28px;font-style:italic;margin-top:8px}
+#mondayDirectRaceReport .stat p, #mondayDirectRaceReport .mini p{margin:6px 0 0;color:#999;font-size:9px;line-height:1.4}
+#mondayDirectRaceReport .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+#mondayDirectRaceReport .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+#mondayDirectRaceReport .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+#mondayDirectRaceReport .card{border:1px solid var(--line);background:var(--p);padding:20px}
+#mondayDirectRaceReport .card h3{margin:0 0 10px;font-size:20px;text-transform:uppercase;font-style:italic}
+#mondayDirectRaceReport .card p{margin:0 0 12px;color:#bcbcbc;font-size:13px;line-height:1.68}
+#mondayDirectRaceReport .big-callout{font-size:clamp(28px,4vw,52px);font-weight:1000;font-style:italic;line-height:.95;text-transform:uppercase}
+#mondayDirectRaceReport .big-callout span{color:var(--g)}
+#mondayDirectRaceReport .driver-list{display:grid;gap:8px}
+#mondayDirectRaceReport .driver-card{display:grid;grid-template-columns:56px 1fr;gap:12px;align-items:start;padding:12px;border:1px solid #252525;background:#0b0b0b}
+#mondayDirectRaceReport .driver-card .num{display:flex;align-items:center;justify-content:center;min-height:42px;background:#171717;border-left:4px solid var(--g);font-weight:1000;font-style:italic}
+#mondayDirectRaceReport .driver-card b{display:block;font-size:12px}
+#mondayDirectRaceReport .driver-card small{display:block;color:#777;margin-top:3px;font-size:8px;line-height:1.45}
+#mondayDirectRaceReport .driver-card p{margin:6px 0 0;color:#aaa;font-size:9px;line-height:1.4}
+#mondayDirectRaceReport .up{color:var(--g);font-weight:1000}
+#mondayDirectRaceReport .down{color:#ff6066;font-weight:1000}
+#mondayDirectRaceReport .even{color:#777;font-weight:1000}
+#mondayDirectRaceReport .winner-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:14px}
+#mondayDirectRaceReport .winner-main{padding:28px;border:1px solid #33432d;background:linear-gradient(135deg,#101010,#10180d)}
+#mondayDirectRaceReport .winner-main h3{font-size:clamp(40px,6vw,72px);line-height:.9;margin:8px 0 14px;font-style:italic;text-transform:uppercase;letter-spacing:-.05em}
+#mondayDirectRaceReport .winner-main p{color:#c4c4c4;line-height:1.75;font-size:14px}
+#mondayDirectRaceReport .quote{padding:16px;border-left:4px solid var(--g);background:#0a0a0a;font-size:17px;font-weight:900;font-style:italic;line-height:1.45}
+#mondayDirectRaceReport .story-block{padding:20px;border:1px solid var(--line);background:#0b0b0b;margin-bottom:10px}
+#mondayDirectRaceReport .story-block .lap-tag{color:var(--g);font-size:8px;font-weight:1000;letter-spacing:.15em;text-transform:uppercase}
+#mondayDirectRaceReport .story-block h3{margin:6px 0 8px;font-size:22px;font-style:italic;text-transform:uppercase}
+#mondayDirectRaceReport .story-block p{margin:0;color:#bbb;font-size:13px;line-height:1.7}
+#mondayDirectRaceReport .leader-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+#mondayDirectRaceReport .leader-card{padding:18px;border:1px solid var(--line);background:#0b0b0b}
+#mondayDirectRaceReport .leader-card strong{font-size:34px;font-style:italic;color:var(--g)}
+#mondayDirectRaceReport .leader-card span{display:block;font-size:7px;color:#777;font-weight:1000;letter-spacing:.15em}
+#mondayDirectRaceReport .leader-card b{display:block;margin-top:10px;font-size:13px}
+#mondayDirectRaceReport .leader-card small{display:block;margin-top:5px;color:#777;font-size:8px;line-height:1.45}
+#mondayDirectRaceReport .event-row{display:grid;grid-template-columns:70px 1fr 90px;gap:10px;padding:10px 0;border-bottom:1px solid #222;align-items:center}
+#mondayDirectRaceReport .event-row span{color:var(--g);font-size:9px;font-weight:1000}
+#mondayDirectRaceReport .event-row b{font-size:10px}
+#mondayDirectRaceReport .event-row small{text-align:right;color:#666;font-size:8px}
+#mondayDirectRaceReport .caution-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+#mondayDirectRaceReport .caution-card{padding:18px;border:1px solid #453131;background:#110909}
+#mondayDirectRaceReport .caution-lap{color:var(--y);font-size:9px;font-weight:1000;letter-spacing:.12em}
+#mondayDirectRaceReport .caution-card b{display:block;font-size:17px;margin:5px 0}
+#mondayDirectRaceReport .caution-card p{font-size:10px;color:#b99999;line-height:1.55}
+#mondayDirectRaceReport .caution-card small{color:#765d5d;font-size:8px}
+#mondayDirectRaceReport .mini-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+#mondayDirectRaceReport .mini{padding:14px;border:1px solid var(--line);background:#0b0b0b}
+#mondayDirectRaceReport .finish-list{border:1px solid var(--line);background:#090909}
+#mondayDirectRaceReport .finish-row{display:grid;grid-template-columns:44px 1fr 100px;gap:10px;align-items:center;padding:11px 14px;border-bottom:1px solid #202020}
+#mondayDirectRaceReport .finish-row:last-child{border-bottom:0}
+#mondayDirectRaceReport .finish-pos{font-size:21px;font-weight:1000;font-style:italic}
+#mondayDirectRaceReport .finish-row b{font-size:11px}
+#mondayDirectRaceReport .finish-row small{display:block;color:#777;font-size:8px;margin-top:3px}
+#mondayDirectRaceReport .finish-row .right{text-align:right;font-size:10px}
+#mondayDirectRaceReport .finish-row .right small{margin-top:5px}
+#mondayDirectRaceReport .table-wrap{overflow:auto;border:1px solid var(--line)}
+#mondayDirectRaceReport table{border-collapse:collapse;width:100%;min-width:1060px;background:#080808}
+#mondayDirectRaceReport th{background:#141414;color:#777;text-align:left;padding:11px 9px;font-size:8px;text-transform:uppercase;letter-spacing:.1em}
+#mondayDirectRaceReport td{padding:10px 9px;border-bottom:1px solid #1e1e1e;font-size:9px;color:#bbb}
+#mondayDirectRaceReport td.pos{font-size:15px;color:#fff;font-weight:1000}
+#mondayDirectRaceReport .intel-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+#mondayDirectRaceReport .intel{padding:18px;border:1px solid var(--line);background:#0b0b0b;min-height:130px}
+#mondayDirectRaceReport .intel small{color:#777;font-size:8px;font-weight:1000;letter-spacing:.14em;text-transform:uppercase}
+#mondayDirectRaceReport .intel strong{display:block;font-size:28px;font-style:italic;margin-top:7px}
+#mondayDirectRaceReport .intel p{font-size:10px;color:#999;line-height:1.5}
+#mondayDirectRaceReport .subhead{margin:24px 0 10px;font-size:18px;font-style:italic;text-transform:uppercase}
+#mondayDirectRaceReport .note{margin-top:20px;padding:14px;border-left:4px solid var(--g);background:#0a0a0a;color:#888;font-size:9px;line-height:1.5}
+@media (max-width:1100px){#mondayDirectRaceReport .stat-grid{grid-template-columns:repeat(3,1fr)}
+#mondayDirectRaceReport .winner-grid, #mondayDirectRaceReport .grid2{grid-template-columns:1fr}
+#mondayDirectRaceReport .leader-grid{grid-template-columns:repeat(3,1fr)}
+#mondayDirectRaceReport .caution-grid{grid-template-columns:repeat(2,1fr)}
+#mondayDirectRaceReport .intel-grid, #mondayDirectRaceReport .grid4{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:700px){#mondayDirectRaceReport .hero{padding:32px 16px 24px}
+#mondayDirectRaceReport .main{padding:18px 10px 40px}
+#mondayDirectRaceReport .stat-grid{grid-template-columns:repeat(2,1fr)}
+#mondayDirectRaceReport .leader-grid, #mondayDirectRaceReport .caution-grid, #mondayDirectRaceReport .intel-grid, #mondayDirectRaceReport .grid3, #mondayDirectRaceReport .grid4, #mondayDirectRaceReport .mini-grid{grid-template-columns:1fr}
+#mondayDirectRaceReport .section-head{align-items:start;flex-direction:column}
+#mondayDirectRaceReport .finish-row{grid-template-columns:36px 1fr 70px}}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style id="HLRN_LEAGUE_READER_MODE">
+:root{
+  --read-accent:#69e000;
+  --read-yellow:#ffd400;
+  --read-bg:#030405;
+  --read-panel:#0d1114;
+  --read-panel2:#12171b;
+  --read-line:#30373e;
+  --read-text:#e1e5e8;
+  --read-muted:#818a93;
+  --read-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --read-body:"Inter","Segoe UI",Arial,sans-serif;
+}
+html,body{
+  margin:0!important;
+  padding:0!important;
+  background:var(--read-bg)!important;
+  color:#fff!important;
+  font-family:var(--read-body)!important;
+  overflow-x:hidden!important;
+}
+.page-wrap{
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:0 10px 26px!important;
+  background:
+    radial-gradient(circle at 75% 0,rgba(255,255,255,.035),transparent 26%),
+    linear-gradient(180deg,#07090b,#020303 75%)!important;
+}
+/* Remove the duplicated network/dashboard clutter. */
+.cc-topline,
+.cc-dashboard,
+.cc-battle,
+.sunday-ticker,
+.monday-ticker{
+  display:none!important;
+}
+/* Compact editorial championship intro. */
+.page-wrap > .hero{
+  margin:0 -10px 8px!important;
+  padding:18px 18px 16px!important;
+  min-height:0!important;
+  border:0!important;
+  border-bottom:1px solid var(--read-line)!important;
+  border-top:4px solid var(--read-accent)!important;
+  border-radius:0!important;
+  background:
+    radial-gradient(circle at 82% 38%,color-mix(in srgb,var(--read-accent) 13%,transparent),transparent 27%),
+    linear-gradient(110deg,#111519,#07090b 65%)!important;
+  box-shadow:0 14px 34px rgba(0,0,0,.32)!important;
+}
+.cc-hero-grid{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(220px,300px)!important;
+  gap:18px!important;
+  align-items:center!important;
+}
+.cc-hero-main{
+  min-width:0!important;
+}
+.cc-kicker{
+  margin:0 0 5px!important;
+  color:var(--read-accent)!important;
+  font-family:var(--read-body)!important;
+  font-size:7px!important;
+  font-weight:900!important;
+  letter-spacing:.16em!important;
+  text-transform:uppercase!important;
+}
+.cc-title{
+  margin:0!important;
+  color:#fff!important;
+  font-family:var(--read-display)!important;
+  font-size:clamp(36px,4vw,58px)!important;
+  line-height:.86!important;
+  font-weight:900!important;
+  font-style:italic!important;
+  letter-spacing:-.045em!important;
+  text-transform:uppercase!important;
+  text-shadow:none!important;
+}
+.cc-title span{
+  color:var(--read-accent)!important;
+}
+.cc-sub{
+  max-width:680px!important;
+  margin-top:9px!important;
+  color:#9ba4ac!important;
+  font-family:var(--read-body)!important;
+  font-size:9px!important;
+  line-height:1.55!important;
+  font-weight:600!important;
+}
+.cc-live-row{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:5px!important;
+  margin-top:10px!important;
+}
+.cc-pill{
+  min-height:0!important;
+  padding:5px 8px!important;
+  border:1px solid #30373e!important;
+  border-radius:999px!important;
+  background:#0b0f12!important;
+  color:#8d969e!important;
+  font-family:var(--read-body)!important;
+  font-size:6px!important;
+  font-weight:800!important;
+  letter-spacing:.08em!important;
+}
+/* Season number adds no useful reading value here. */
+.cc-pill.yellow{
+  display:none!important;
+}
+.cc-hero-side{
+  min-width:0!important;
+  padding:13px 14px!important;
+  border:1px solid #343c43!important;
+  border-left:4px solid var(--read-accent)!important;
+  border-radius:10px!important;
+  background:#0b0f12!important;
+  box-shadow:none!important;
+}
+.cc-leader-label{
+  color:#747d85!important;
+  font-family:var(--read-body)!important;
+  font-size:6px!important;
+  font-weight:900!important;
+  letter-spacing:.14em!important;
+  text-transform:uppercase!important;
+}
+.cc-leader-rank{
+  display:none!important;
+}
+.cc-leader-name{
+  margin-top:5px!important;
+  color:#fff!important;
+  font-family:var(--read-display)!important;
+  font-size:25px!important;
+  line-height:.95!important;
+  font-weight:900!important;
+  font-style:italic!important;
+  letter-spacing:-.025em!important;
+}
+.cc-leader-points{
+  margin-top:5px!important;
+  color:var(--read-accent)!important;
+  font-family:var(--read-display)!important;
+  font-size:19px!important;
+  font-weight:900!important;
+}
+.cc-gap{
+  margin-top:4px!important;
+  color:#7f8891!important;
+  font-family:var(--read-body)!important;
+  font-size:7px!important;
+  line-height:1.4!important;
+}
+/* Main content nav: the only navigation inside a league. */
+.page-wrap > .tabs{
+  position:relative!important;
+  top:auto!important;
+  z-index:10!important;
+  display:grid!important;
+  grid-template-columns:repeat(3,1fr)!important;
+  gap:5px!important;
+  margin:0 0 8px!important;
+  padding:5px!important;
+  border:1px solid var(--read-line)!important;
+  border-radius:9px!important;
+  background:#080b0e!important;
+  box-shadow:none!important;
+}
+.page-wrap > .tabs .tab-btn{
+  min-height:40px!important;
+  padding:7px 8px!important;
+  border:1px solid transparent!important;
+  border-radius:6px!important;
+  background:transparent!important;
+  color:#7f8992!important;
+  font-family:var(--read-display)!important;
+  font-size:12px!important;
+  font-weight:800!important;
+  font-style:italic!important;
+  letter-spacing:.005em!important;
+  text-transform:uppercase!important;
+}
+.page-wrap > .tabs .tab-btn:hover{
+  color:#fff!important;
+  background:#11161a!important;
+}
+.page-wrap > .tabs .tab-btn.active{
+  color:#fff!important;
+  border-color:#424b53!important;
+  background:#151a1f!important;
+  box-shadow:inset 0 -3px 0 var(--read-accent)!important;
+}
+/* Panels become quiet reading surfaces. */
+.page-wrap > .panel{
+  margin:0!important;
+  padding:0!important;
+  border:1px solid var(--read-line)!important;
+  border-radius:10px!important;
+  background:#090c0f!important;
+  box-shadow:none!important;
+  overflow:hidden!important;
+}
+.page-wrap > .panel:not(.active){
+  display:none!important;
+}
+.section-header{
+  min-height:54px!important;
+  padding:10px 13px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:10px!important;
+  border-bottom:1px solid #2b3238!important;
+  background:#101419!important;
+}
+.section-header h2{
+  margin:0!important;
+  color:#fff!important;
+  font-family:var(--read-display)!important;
+  font-size:22px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  font-style:italic!important;
+  letter-spacing:-.02em!important;
+}
+.count{
+  color:#737c85!important;
+  font-family:var(--read-body)!important;
+  font-size:6px!important;
+  font-weight:800!important;
+  letter-spacing:.1em!important;
+  text-transform:uppercase!important;
+}
+/* Advanced stat controls */
+.read-tools{
+  margin-left:auto;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.read-more-stats{
+  appearance:none;
+  min-height:30px;
+  padding:0 10px;
+  border:1px solid #3a434b;
+  border-radius:6px;
+  background:#0a0e11;
+  color:#aab2b9;
+  font-family:var(--read-body);
+  font-size:6px;
+  font-weight:900;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  cursor:pointer;
+}
+.read-more-stats:hover{
+  color:#fff;
+  border-color:var(--read-accent);
+}
+/* Tables: readable rather than spreadsheet-like. */
+.table-shell{
+  width:100%!important;
+  overflow:auto!important;
+  border:0!important;
+  background:#070a0d!important;
+}
+table{
+  width:100%!important;
+  border-collapse:collapse!important;
+}
+th{
+  position:static!important;
+  top:auto!important;
+  padding:9px 8px!important;
+  border:0!important;
+  border-bottom:1px solid #2b3238!important;
+  background:#0e1216!important;
+  color:#747d85!important;
+  font-family:var(--read-body)!important;
+  font-size:6px!important;
+  font-weight:900!important;
+  letter-spacing:.08em!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+}
+td{
+  padding:10px 8px!important;
+  border:0!important;
+  border-bottom:1px solid #20262b!important;
+  color:#cfd5da!important;
+  font-family:var(--read-body)!important;
+  font-size:9px!important;
+  line-height:1.25!important;
+  font-weight:600!important;
+  white-space:nowrap!important;
+}
+tbody tr:nth-child(even) td{
+  background:#0b0f12!important;
+}
+tbody tr:hover td{
+  background:#13181d!important;
+  color:#fff!important;
+}
+.name-col,
+td:nth-child(3){
+  text-align:left!important;
+  font-weight:800!important;
+}
+tbody tr:first-child td{
+  background:
+    linear-gradient(90deg,color-mix(in srgb,var(--read-accent) 11%,#0b0f12),#0b0f12)!important;
+}
+/* DRIVER STANDINGS — show the core story by default:
+   POS, CHG, DRIVER, WINS, TOP 5, POINTS */
+
+/* TEAM STANDINGS — show POS, CHG, TEAM, WINS, TOP 5, POINTS. */
+#teams:not(.show-advanced) th:nth-child(4),
+#teams:not(.show-advanced) td:nth-child(4),
+#teams:not(.show-advanced) th:nth-child(5),
+#teams:not(.show-advanced) td:nth-child(5),
+#teams:not(.show-advanced) th:nth-child(8),
+#teams:not(.show-advanced) td:nth-child(8),
+#teams:not(.show-advanced) th:nth-child(10),
+#teams:not(.show-advanced) td:nth-child(10),
+#teams:not(.show-advanced) th:nth-child(11),
+#teams:not(.show-advanced) td:nth-child(11),
+#teams:not(.show-advanced) th:nth-child(12),
+#teams:not(.show-advanced) td:nth-child(12),
+#teams:not(.show-advanced) th:nth-child(13),
+#teams:not(.show-advanced) td:nth-child(13),
+#teams:not(.show-advanced) th:nth-child(14),
+#teams:not(.show-advanced) td:nth-child(14),
+#teams:not(.show-advanced) th:nth-child(15),
+#teams:not(.show-advanced) td:nth-child(15),
+#teams:not(.show-advanced) th:nth-child(16),
+#teams:not(.show-advanced) td:nth-child(16){
+  display:none!important;
+}
+/* Last race: useful, but compact. */
+.cc-race-spotlight{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:7px!important;
+  margin:10px!important;
+}
+.cc-spotlight-card{
+  min-height:0!important;
+  padding:12px!important;
+  border:1px solid #30373e!important;
+  border-left:4px solid var(--read-accent)!important;
+  border-radius:8px!important;
+  background:#0c1013!important;
+  box-shadow:none!important;
+}
+.cc-spot-label{
+  color:#747d86!important;
+  font-size:6px!important;
+  letter-spacing:.12em!important;
+}
+.cc-spot-main{
+  margin-top:4px!important;
+  color:#fff!important;
+  font-family:var(--read-display)!important;
+  font-size:21px!important;
+  font-weight:900!important;
+  font-style:italic!important;
+}
+.cc-spot-sub{
+  margin-top:3px!important;
+  color:#7c858e!important;
+  font-size:7px!important;
+}
+.last-race-card{
+  margin:0 10px 10px!important;
+  padding:12px!important;
+  border:1px solid #2d343a!important;
+  border-radius:8px!important;
+  background:#0b0f12!important;
+  box-shadow:none!important;
+}
+/* Race Report already has its own internal title — remove duplicate header. */
+#raceReport > .section-header{
+  display:none!important;
+}
+.hlrn-direct-race-report{
+  background:#050708!important;
+  color:#e4e8eb!important;
+  font-family:var(--read-body)!important;
+}
+.hlrn-direct-race-report p,
+.hlrn-direct-race-report .story,
+.hlrn-direct-race-report .story p{
+  font-family:var(--read-body)!important;
+  font-size:14px!important;
+  line-height:1.78!important;
+  color:#c8cfd5!important;
+}
+.hlrn-direct-race-report .story{
+  max-width:960px!important;
+}
+/* Reduce needless animation and visual noise. */
+*{
+  scroll-behavior:smooth;
+}
+@media(prefers-reduced-motion:reduce){
+  *{
+    animation:none!important;
+    transition:none!important;
+    scroll-behavior:auto!important;
+  }
+}
+@media(max-width:760px){
+  .page-wrap{
+    padding-left:6px!important;
+    padding-right:6px!important;
+  }
+  .page-wrap > .hero{
+    margin-left:-6px!important;
+    margin-right:-6px!important;
+    padding:14px 11px!important;
+  }
+  .cc-hero-grid{
+    grid-template-columns:1fr!important;
+  }
+  .cc-hero-side{
+    display:grid!important;
+    grid-template-columns:1fr auto!important;
+    gap:5px 12px!important;
+    align-items:center!important;
+  }
+  .cc-gap{
+    grid-column:1/-1!important;
+  }
+  .page-wrap > .tabs{
+    grid-template-columns:1fr 1fr!important;
+  }
+  .page-wrap > .tabs .tab-btn{
+    font-size:10px!important;
+  }
+  .section-header{
+    flex-wrap:wrap!important;
+  }
+  .read-tools{
+    width:100%;
+    justify-content:flex-end;
+  }
+  .cc-race-spotlight{
+    grid-template-columns:1fr!important;
+  }
+}
+</style>
+<style id="HLRN_MOVEMENT_ARROW_COLOR_FIX">
+/* =========================================================
+   HLRN STANDINGS MOVEMENT
+   ▲ GREEN = moved UP in points / standings
+   ▼ RED   = moved DOWN
+   — GRAY  = no change
+========================================================= */
+.movement{
+    font-weight:900!important;
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:3px!important;
+    min-width:42px!important;
+    padding:4px 7px!important;
+    border-radius:3px!important;
+}
+/* POSITIVE CHANGE = UP = GREEN */
+.movement.up{
+    color:#35e67a!important;
+    border-left:3px solid #35e67a!important;
+    background:rgba(53,230,122,.055)!important;
+}
+/* NEGATIVE CHANGE = DOWN = RED */
+.movement.down{
+    color:#ff555c!important;
+    border-left:3px solid #ff555c!important;
+    background:rgba(255,85,92,.055)!important;
+}
+/* NO CHANGE = GRAY */
+.movement.same{
+    color:#757d85!important;
+    border-left:3px solid #555d64!important;
+    background:rgba(255,255,255,.025)!important;
+}
+.movement.up .movement-arrow{
+    color:#35e67a!important;
+}
+.movement.down .movement-arrow{
+    color:#ff555c!important;
+}
+.movement.same .movement-arrow{
+    color:#757d85!important;
+}
+</style>
+<style id="HLRN_STATIC_NASCAR_SERIES">
+    :root{
+      --nas-accent:#55b932;
+      --nas-ink:#111214;
+      --nas-muted:#6d7278;
+      --nas-line:#d8dade;
+      --nas-soft:#f4f5f6;
+      --nas-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+      --nas-body:"Inter","Segoe UI",Arial,sans-serif;
+    }
+    html,body{
+      background:#fff!important;
+      color:var(--nas-ink)!important;
+      font-family:var(--nas-body)!important;
+    }
+    body{overflow-x:hidden!important;overflow-y:auto!important}
+    .page-wrap{
+      width:100%!important;
+      max-width:1500px!important;
+      min-height:100%!important;
+      margin:0 auto!important;
+      padding:0 28px 48px!important;
+      background:#fff!important;
+      color:var(--nas-ink)!important;
+    }
+    .cc-topline,
+    .hero,
+    .cc-dashboard,
+    .cc-battle,
+    .sunday-ticker,
+    .monday-ticker,
+    .read-tools,
+    .cc-footer{
+      display:none!important;
+    }
+    .page-wrap>.tabs{
+      position:relative!important;
+      top:auto!important;
+      z-index:1!important;
+      display:flex!important;
+      gap:0!important;
+      margin:0 -28px 28px!important;
+      padding:0 28px!important;
+      border:0!important;
+      border-bottom:1px solid var(--nas-line)!important;
+      background:#fff!important;
+      box-shadow:none!important;
+      backdrop-filter:none!important;
+    }
+    .page-wrap>.tabs .tab-btn{
+      appearance:none!important;
+      min-height:58px!important;
+      padding:13px 20px 10px!important;
+      border:0!important;
+      border-right:1px solid #eceeef!important;
+      border-radius:0!important;
+      background:#fff!important;
+      color:#6f747a!important;
+      font-family:var(--nas-display)!important;
+      font-size:14px!important;
+      font-weight:800!important;
+      font-style:normal!important;
+      letter-spacing:.01em!important;
+      text-transform:uppercase!important;
+      box-shadow:none!important;
+      transform:none!important;
+    }
+    .page-wrap>.tabs .tab-btn:first-child{border-left:1px solid #eceeef!important}
+    .page-wrap>.tabs .tab-btn:before{display:none!important}
+    .page-wrap>.tabs .tab-btn:hover{background:#f7f7f7!important;color:#111!important}
+    .page-wrap>.tabs .tab-btn.active{
+      position:relative!important;
+      background:#f7f7f7!important;
+      color:#111!important;
+      border-color:#e0e2e4!important;
+      box-shadow:none!important;
+    }
+    .page-wrap>.tabs .tab-btn.active:after{
+      content:""!important;
+      position:absolute!important;
+      left:16px!important;right:16px!important;bottom:0!important;
+      height:4px!important;
+      background:var(--nas-accent)!important;
+    }
+    .panel,.panel.active{
+      color:var(--nas-ink)!important;
+      background:#fff!important;
+    }
+    .section-header{
+      display:flex!important;
+      align-items:end!important;
+      justify-content:space-between!important;
+      gap:18px!important;
+      margin:0 0 17px!important;
+      padding:0 0 13px!important;
+      border-bottom:2px solid #17191b!important;
+      background:#fff!important;
+    }
+    .section-header h2{
+      margin:0!important;
+      color:#111!important;
+      font-family:var(--nas-display)!important;
+      font-size:clamp(30px,3.5vw,46px)!important;
+      line-height:.92!important;
+      font-weight:900!important;
+      font-style:normal!important;
+      letter-spacing:-.025em!important;
+      text-transform:uppercase!important;
+      text-shadow:none!important;
+    }
+    .count{
+      padding:0!important;
+      border:0!important;
+      background:transparent!important;
+      color:#777c82!important;
+      font-family:var(--nas-body)!important;
+      font-size:10px!important;
+      font-weight:800!important;
+      letter-spacing:.08em!important;
+      text-transform:uppercase!important;
+    }
+    .table-shell{
+      width:100%!important;
+      max-height:none!important;
+      overflow:auto!important;
+      border:0!important;
+      border-top:1px solid #cfd2d5!important;
+      background:#fff!important;
+      box-shadow:none!important;
+    }
+    table{
+      width:100%!important;
+      min-width:1000px!important;
+      border-collapse:collapse!important;
+      border-spacing:0!important;
+      background:#fff!important;
+      color:#111!important;
+    }
+    thead th,th{
+      position:static!important;
+      top:auto!important;
+      height:42px!important;
+      padding:10px 12px!important;
+      border:0!important;
+      border-bottom:2px solid #17191b!important;
+      background:#f3f4f5!important;
+      color:#363a3e!important;
+      font-family:var(--nas-display)!important;
+      font-size:11px!important;
+      font-weight:800!important;
+      letter-spacing:.035em!important;
+      text-align:center!important;
+      text-transform:uppercase!important;
+      white-space:nowrap!important;
+    }
+    th.name-col{min-width:220px!important;text-align:left!important}
+    tbody tr{background:#fff!important}
+    tbody tr:nth-child(even) td{background:#fafafa!important}
+    tbody tr:first-child td{background:#fff!important}
+    tbody td,td{
+      height:56px!important;
+      padding:11px 12px!important;
+      border:0!important;
+      border-bottom:1px solid #dedfe1!important;
+      background:#fff!important;
+      color:#25282b!important;
+      font-family:var(--nas-body)!important;
+      font-size:12px!important;
+      line-height:1.25!important;
+      font-weight:600!important;
+      text-align:center!important;
+      white-space:nowrap!important;
+    }
+    tbody tr:nth-child(even) td{background:#fafafa!important}
+    tbody tr:hover td{background:#f1f2f3!important;color:#111!important}
+    td.name-col,td:nth-child(3){
+      color:#111!important;
+      font-family:var(--nas-display)!important;
+      font-size:16px!important;
+      font-weight:800!important;
+      text-align:left!important;
+      text-transform:uppercase!important;
+    }
+    .points{
+      color:#111!important;
+      font-family:var(--nas-display)!important;
+      font-size:18px!important;
+      font-weight:900!important;
+    }
+    .position,
+    .position.top1,.position.top2,.position.top3{
+      min-width:0!important;
+      padding:0!important;
+      border:0!important;
+      border-radius:0!important;
+      background:transparent!important;
+      color:#111!important;
+      font-family:var(--nas-display)!important;
+      font-size:18px!important;
+      font-weight:900!important;
+      box-shadow:none!important;
+    }
+    .movement{
+      min-width:0!important;
+      padding:0!important;
+      border:0!important;
+      border-radius:0!important;
+      background:transparent!important;
+      font-size:11px!important;
+      font-weight:900!important;
+    }
+    .movement.up{color:#168742!important;border:0!important;background:transparent!important}
+    .movement.down{color:#c9202b!important;border:0!important;background:transparent!important}
+    .movement.same{color:#8b9095!important;border:0!important;background:transparent!important}
+    #drivers:not(.show-advanced) th,
+    #drivers:not(.show-advanced) td,
+    #teams:not(.show-advanced) th,
+    #teams:not(.show-advanced) td{
+      display:table-cell!important;
+    }
+    .read-more-stats{display:none!important}
+    .message{color:#666!important;background:#fff!important}
+    .last-race-card,.stat-card,.cc-spotlight-card,.race-report-card,.report-card,.race-card{
+      background:#fff!important;
+      color:#111!important;
+      border:1px solid #d9dbde!important;
+      box-shadow:none!important;
+    }
+    .last-race-card h2,.last-race-card h3,.stat-card h3,
+    .section-head h2,.section-head h3{color:#111!important;text-shadow:none!important}
+    .stat-value,.big-number,.metric-value{color:#111!important}
+    .stat-label,.section-head p{color:#747a80!important}
+    a{color:#b31820}
+    @media(max-width:760px){
+      .page-wrap{padding:0 10px 36px!important}
+      .page-wrap>.tabs{margin:0 -10px 20px!important;padding:0 10px!important;overflow-x:auto!important}
+      .page-wrap>.tabs .tab-btn{min-width:135px!important;min-height:50px!important;padding:10px 12px!important;font-size:11px!important}
+      .section-header{align-items:flex-start!important;flex-direction:column!important;gap:6px!important}
+      .section-header h2{font-size:32px!important}
+      table{min-width:940px!important}
+    }
+:root{color-scheme:light!important;--hlrn-light-bg:#fff;--hlrn-light-ink:#111214;--hlrn-light-line:#d9dbde;}
+html,body{background:#fff!important;color:#111214!important;color-scheme:light!important}
+body{overflow-x:hidden!important}
+*{scrollbar-color:#b9bdc1 #f4f5f6}
+.container,.page,.wrap,.wrapper,.content-wrap,.main,.main-content,.section,.panel,.card,.table-wrap,.table-shell,.stage,.hub,.race-center,.records-page,.driver-page,.h2h-page{background-color:#fff!important;color:#111214!important}
+h1,h2,h3,h4,h5,h6,.title,.heading,.name,.driver-name,.record-title,.section-title{color:#111214!important;text-shadow:none!important}
+p,.sub,.subtitle,.meta,.muted,.label,.copy,.description{color:#656b72!important}
+a{color:#b31820!important}
+table{background:#fff!important;color:#111214!important;border-collapse:collapse!important}
+thead th,th{background:#f3f4f5!important;color:#34383d!important;border-color:#d9dbde!important}
+tbody tr,tbody td,td{background:#fff!important;color:#25282b!important;border-color:#dedfe1!important}
+tbody tr:nth-child(even) td{background:#fafafa!important}
+input,select,button{color:#111!important}
+.loading,.message,.empty,.placeholder{background:#fff!important;color:#6f747a!important}
+iframe{background:#fff!important;color-scheme:light!important}
+</style>
+<script>
+function hlrnLightRaceReport(markup){
+  if(!markup) return markup;
+  const css=`
+:root{color-scheme:light!important;--hlrn-light-bg:#fff;--hlrn-light-ink:#111214;--hlrn-light-line:#d9dbde;}
+html,body{background:#fff!important;color:#111214!important;color-scheme:light!important}
+body{overflow-x:hidden!important}
+*{scrollbar-color:#b9bdc1 #f4f5f6}
+.container,.page,.wrap,.wrapper,.content-wrap,.main,.main-content,.section,.panel,.card,.table-wrap,.table-shell,.stage,.hub,.race-center,.records-page,.driver-page,.h2h-page{background-color:#fff!important;color:#111214!important}
+h1,h2,h3,h4,h5,h6,.title,.heading,.name,.driver-name,.record-title,.section-title{color:#111214!important;text-shadow:none!important}
+p,.sub,.subtitle,.meta,.muted,.label,.copy,.description{color:#656b72!important}
+a{color:#b31820!important}
+table{background:#fff!important;color:#111214!important;border-collapse:collapse!important}
+thead th,th{background:#f3f4f5!important;color:#34383d!important;border-color:#d9dbde!important}
+tbody tr,tbody td,td{background:#fff!important;color:#25282b!important;border-color:#dedfe1!important}
+tbody tr:nth-child(even) td{background:#fafafa!important}
+input,select,button{color:#111!important}
+.loading,.message,.empty,.placeholder{background:#fff!important;color:#6f747a!important}
+iframe{background:#fff!important;color-scheme:light!important}
+`;
+  const tag='<style id="HLRN_STATIC_LIGHT_INNER">'+css+'</style>';
+  return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'</head>') : tag+markup;
+}
+</script>
+
+<style id="HLRN_EXACT_DRIVER_STANDINGS_FULL_STATS_V2">
+#drivers .table-shell{
+  overflow-x:auto!important;
+  overflow-y:visible!important;
+  -webkit-overflow-scrolling:touch!important;
+  border-radius:18px!important;
+}
+#drivers table{
+  width:100%!important;
+  min-width:1480px!important;
+  border-collapse:separate!important;
+  border-spacing:0!important;
+  background:#fff!important;
+}
+#drivers th,
+#drivers td,
+#drivers:not(.show-advanced) th,
+#drivers:not(.show-advanced) td{
+  display:table-cell!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+#drivers th{
+  padding:12px 6px!important;
+  background:#f3f4f5!important;
+  color:#111214!important;
+  font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
+  font-size:9px!important;
+  font-weight:900!important;
+  font-style:normal!important;
+  text-align:center!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+}
+#drivers th.name-col{
+  text-align:left!important;
+}
+#drivers td{
+  height:78px!important;
+  padding:10px 6px!important;
+  background:#fff!important;
+  color:#111214!important;
+  border-bottom:1px solid #dfe3e6!important;
+  font-family:"Inter","Segoe UI",Arial,sans-serif!important;
+  font-size:12px!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+}
+#drivers tbody tr:nth-child(even) td{
+  background:#fafafa!important;
+}
+#drivers tbody tr:hover td{
+  background:#f6f8fa!important;
+  color:#111214!important;
+}
+#drivers td.name-col{
+  min-width:270px!important;
+  text-align:left!important;
+  font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
+  font-size:16px!important;
+  font-weight:900!important;
+  font-style:italic!important;
+  text-transform:uppercase!important;
+}
+#drivers th:nth-child(1),#drivers td:nth-child(1){width:58px!important}
+#drivers th:nth-child(2),#drivers td:nth-child(2){width:70px!important}
+#drivers th:nth-child(3),#drivers td:nth-child(3){min-width:220px!important}
+#drivers th:nth-child(n+4),#drivers td:nth-child(n+4){min-width:62px!important}
+#drivers .points{
+  color:#111214!important;
+  font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
+  font-size:18px!important;
+  font-weight:900!important;
+}
+#drivers .gap-ahead{
+  color:#c9202b!important;
+  font-weight:900!important;
+}
+#drivers .gap-ahead.leader{
+  color:#168742!important;
+}
+#drivers .stage-points{
+  font-weight:900!important;
+}
+#drivers .penalty-points{
+  color:#c9202b!important;
+}
+#drivers tbody tr:first-child td{
+  background:#f4f6f7!important;
+}
+#drivers tbody tr:first-child td:first-child{
+  border-left:4px solid var(--hlrnAccent,#d71920)!important;
+}
+@media(max-width:760px){
+  #drivers table{min-width:1000px!important}
+  #drivers td{height:76px!important}
+}
+</style>
+
+
+<style id="HLRN_NASCAR_DRIVER_COLUMNS_FINAL">
+#drivers .table-shell{
+  overflow-x:auto!important;
+  -webkit-overflow-scrolling:touch!important;
+}
+#drivers table{
+  width:100%!important;
+  min-width:1000px!important;
+  table-layout:auto!important;
+  border-collapse:separate!important;
+  border-spacing:0!important;
+}
+#drivers th,
+#drivers td,
+#drivers:not(.show-advanced) th,
+#drivers:not(.show-advanced) td{
+  display:table-cell!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+#drivers th{
+  padding:12px 6px!important;
+  background:#f3f4f5!important;
+  color:#111214!important;
+  font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
+  font-size:9px!important;
+  font-weight:900!important;
+  text-align:center!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+}
+#drivers th.name-col{text-align:left!important}
+#drivers td{
+  height:78px!important;
+  padding:10px 6px!important;
+  background:#fff!important;
+  color:#111214!important;
+  border-bottom:1px solid #dfe3e6!important;
+  font-size:12px!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+}
+#drivers tbody tr:nth-child(even) td{background:#fafafa!important}
+#drivers td.name-col{
+  min-width:220px!important;
+  text-align:left!important;
+  font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
+  font-size:16px!important;
+  font-weight:900!important;
+  font-style:italic!important;
+  text-transform:uppercase!important;
+}
+#drivers .points{
+  font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
+  font-size:18px!important;
+  font-weight:900!important;
+}
+#drivers .stage-points{font-weight:900!important}
+#drivers .top10-head,
+#drivers th:nth-child(10),
+#drivers td:nth-child(10){
+  min-width:62px!important;
+  font-weight:900!important;
+}
+#drivers .behind{
+  font-weight:900!important;
+  color:#111214!important;
+}
+#drivers .behind.leader{color:#111214!important}
+#drivers tbody tr:first-child td:first-child{
+  border-left:4px solid var(--hlrnAccent,#d71920)!important;
+}
+@media(max-width:760px){
+  #drivers table{min-width:1000px!important}
+  #drivers td{height:76px!important}
+}
+</style>
+
+<style id="HLRN_DRIVER_COLUMNS_ALWAYS_VISIBLE_V3">
+#drivers:not(.show-advanced) th:nth-child(n),
+#drivers:not(.show-advanced) td:nth-child(n),
+#drivers.show-advanced th:nth-child(n),
+#drivers.show-advanced td:nth-child(n){
+  display:table-cell!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+#drivers .read-more-stats{display:none!important}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+<div class="cc-topline">
+  <div class="cc-brand">HLRN <b>Monday Championship</b></div>
+  <div class="cc-status">DATA FEED <span id="ccDataStatus">CONNECTING</span> • SEASON 2</div>
+  <div class="cc-clock"><span id="ccClock">--:--:-- --</span><small>EASTERN TIME</small></div>
+</div>
+<section class="hero">
+  <div class="cc-hero-grid">
+    <div class="cc-hero-main">
+      <div class="cc-kicker">High Line Racing Network • Monday Night League</div>
+      <div class="cc-title">Chase to the <span>Championship</span></div>
+      <div class="cc-sub">Live standings, championship movement, team battle, and last-race intelligence — all driven by the HLRN Monday data feed.</div>
+      <div class="cc-live-row">
+        <div class="cc-pill red"><strong id="updateTime">Live • Loading...</strong></div>
+        <div class="cc-pill yellow">Season <strong>2</strong></div>
+        <div class="cc-pill green">Race Night <strong>Monday • 8:30 PM ET</strong></div>
+      </div>
+    </div>
+    <aside class="cc-hero-side">
+      <div class="cc-leader-label">Championship Leader</div>
+      <div class="cc-leader-rank">P1</div>
+      <div class="cc-leader-name" id="ccLeaderName">Loading...</div>
+      <div class="cc-leader-points"><span id="ccLeaderPoints">--</span> <small>PTS</small></div>
+      <div class="cc-gap" id="ccLeaderGap">Calculating championship gap...</div>
+    </aside>
+  </div>
+</section>
+<div class="cc-dashboard" aria-label="Monday championship metrics">
+  <div class="cc-card"><div class="cc-card-label">Championship Battle</div><div class="cc-card-value" id="ccBattleText">Loading standings</div><div class="cc-card-sub" id="ccBattleSub">Top contenders</div></div>
+  <div class="cc-card"><div class="cc-card-label">Most Wins</div><div class="cc-card-value" id="ccWinsLeader">--</div><div class="cc-card-sub" id="ccWinsValue">-- wins</div></div>
+  <div class="cc-card"><div class="cc-card-label">Most Top 5s</div><div class="cc-card-value" id="ccTop5Leader">--</div><div class="cc-card-sub" id="ccTop5Value">-- top 5s</div></div>
+  <div class="cc-card"><div class="cc-card-label">Biggest Mover</div><div class="cc-card-value" id="ccMoverLeader">--</div><div class="cc-card-sub" id="ccMoverValue">No change yet</div></div>
+  <div class="cc-card"><div class="cc-card-label">Incident Watch</div><div class="cc-card-value" id="ccIncLeader">--</div><div class="cc-card-sub" id="ccIncValue">-- incidents</div></div>
+</div>
+<div class="cc-battle" id="ccTopFive"></div>
+<section class="monday-ticker" aria-label="Monday Night League championship ticker">
+  <div class="ticker-label"><span>Monday Series</span></div>
+  <div class="ticker-window">
+    <div class="ticker-track" id="mondayStandingsTicker">
+      <b>HLRN MONDAY NIGHT LEAGUE</b><em>◆</em>
+      DRIVER STANDINGS • TEAM STANDINGS • LAST RACE RESULTS
+      <em>◆</em>
+      SEASON 2 • HIGH LINE RACING NETWORK
+    </div>
+  </div>
+  <div class="ticker-network">HLRN // CHAMPIONSHIP MODE</div>
+</section>
+<div class="tabs">
+<button
+class="tab-btn active"
+onclick="showTab('drivers',this)">
+Driver Standings
+</button>
+<button
+class="tab-btn"
+onclick="showTab('teams',this)">
+Team Standings
+</button>
+<button
+class="tab-btn"
+onclick="showTab('lastRace',this)">
+Last Race
+</button>
+</div>
+<!-- =========================
+     DRIVER STANDINGS
+========================= -->
+<section id="drivers" class="panel active">
+<div class="section-header">
+<h2>DRIVER STANDINGS</h2>
+<div id="driverCount" class="count">
+Loading...
+</div>
+</div>
+<div class="table-shell">
+<table>
+<thead>
+<tr>
+<th>POS</th>
+<th>CHG</th>
+<th class="name-col">
+DRIVER
+</th>
+<th>SEASON PTS</th>
+<th>STAGE PTS</th>
+<th>BEHIND</th>
+<th>STARTS</th>
+<th>WINS</th>
+<th>TOP 5s</th>
+<th class="top10-head">TOP 10s</th>
+<th>DNFs</th>
+<th>LAPS LED</th>
+</tr>
+</thead>
+<tbody id="driverBody">
+<tr>
+<td colspan="12" class="message">
+Loading Monday driver standings...
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- =========================
+     TEAM STANDINGS
+========================= -->
+<section id="teams" class="panel">
+<div class="section-header">
+<h2>TEAM STANDINGS</h2>
+<div id="teamCount" class="count">
+Loading...
+</div>
+</div>
+<div class="table-shell">
+<table>
+<thead>
+<tr>
+<th>POS</th>
+<th>CHG</th>
+<th class="name-col">
+TEAM
+</th>
+<th>STARTS</th>
+<th>COUNTED</th>
+<th>WINS</th>
+<th>TOP 5</th>
+<th>TOP 10</th>
+<th>POINTS</th>
+<th>RACE PTS</th>
+<th>STAGE PTS</th>
+<th>BONUS</th>
+<th>PENALTY</th>
+<th>LAPS</th>
+<th>LED</th>
+<th>INC</th>
+</tr>
+</thead>
+<tbody id="teamBody">
+<tr>
+<td colspan="16" class="message">
+Loading Monday team standings...
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- =========================
+     LAST RACE
+========================= -->
+<section id="lastRace" class="panel">
+<div class="section-header">
+<h2>LAST RACE</h2>
+<div id="raceEntryCount" class="count"></div>
+</div>
+<div class="cc-race-spotlight">
+  <div class="cc-spotlight-card"><div class="cc-spot-label">Latest Winner</div><div class="cc-spot-main" id="ccLatestWinner">Loading...</div><div class="cc-spot-sub" id="ccLatestRace">Last race result</div></div>
+  <div class="cc-spotlight-card alt"><div class="cc-spot-label">Team Championship Leader</div><div class="cc-spot-main" id="ccTeamLeader">Loading...</div><div class="cc-spot-sub" id="ccTeamLeaderPts">Team points</div></div>
+</div>
+<div
+id="lastRaceSummary"
+class="last-race-card">
+<div class="message">
+Loading race...
+</div>
+</div>
+<div class="table-shell">
+<table>
+<thead>
+<tr>
+<th>FINISH</th>
+<th class="name-col">
+DRIVER
+</th>
+<th>POINTS</th>
+<th>LAPS LED</th>
+<th>INC</th>
+<th>STATUS</th>
+</tr>
+</thead>
+<tbody id="raceResultsBody">
+<tr>
+<td colspan="6" class="message">
+Loading race results...
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="raceReport" class="panel">
+  <div class="section-header">
+    <h2>RACE REPORT</h2>
+    <div class="count">ECHOPARK SPEEDWAY • SEPTEMBER 14, 2026</div>
+  </div>
+  <div id="mondayDirectRaceReport" class="hlrn-direct-race-report">
+<header class="hero"><div class="inner">
+<div class="eyebrow">HLRN Monday Night • Race Report</div>
+<h1>ECHOPARK <span>AFTERMATH</span></h1>
+<p>A full breakdown of the September 14, 2026 HLRN Monday Night race at EchoPark Speedway: 125 laps, 29 starters, six cautions, nine lead changes, a 0.048-second finish, and a winner who came from 21st.</p>
+<div class="meta"><span>Winner #012 Ethan Eckert</span><span>125 Laps</span><span>29 Cars</span><span>6 Cautions</span><span>18 Caution Laps</span><span>9 Lead Changes</span><span>Unofficial Session</span></div>
+</div></header>
+<div class="tabs">
+<button class="rr-tab active" data-tab="overview">Overview</button>
+<button class="rr-tab" data-tab="winner">Winner</button>
+<button class="rr-tab" data-tab="story">Race Story</button>
+<button class="rr-tab" data-tab="leaders">Lead Battle</button>
+<button class="rr-tab" data-tab="cautions">Cautions</button>
+<button class="rr-tab" data-tab="top10">Top 10</button>
+<button class="rr-tab" data-tab="results">Full Results</button>
+<button class="rr-tab" data-tab="intel">Race Intelligence</button>
+</div>
+<main class="main">
+<section class="rr-panel active" id="panel-overview">
+<div class="section-head"><h2>Race <span>Overview</span></h2><p>Everything important at a glance</p></div>
+<div class="stat-grid">
+<div class="stat"><small>Winner</small><strong>#012</strong><p>Ethan Eckert • 21st to 1st</p></div>
+<div class="stat"><small>Winning Margin</small><strong>0.048</strong><p>Seconds over Kenny Reel</p></div>
+<div class="stat"><small>Race Distance</small><strong>125</strong><p>Laps completed</p></div>
+<div class="stat"><small>Field Size</small><strong>29</strong><p>Next Gen starters</p></div>
+<div class="stat"><small>Cautions</small><strong>6</strong><p>18 laps under yellow</p></div>
+<div class="stat"><small>Lead Changes</small><strong>9</strong><p>Five different leaders</p></div>
+<div class="stat"><small>Strength of Field</small><strong>2222</strong><p>iRacing field strength</p></div>
+<div class="stat"><small>Fastest Lap</small><strong>29.148</strong><p>#47 Brian Hayes4</p></div>
+<div class="stat"><small>Most Laps Led</small><strong>86</strong><p>Ethan Eckert • 68.8%</p></div>
+<div class="stat"><small>Lead-Lap Finishers</small><strong>13</strong><p>Cars completed all 125 laps</p></div>
+<div class="stat"><small>Total Incidents</small><strong>160</strong><p>5.5 average per starter</p></div>
+<div class="stat"><small>100+ Lap Cars</small><strong>19</strong><p>Drivers completing at least 100 laps</p></div>
+</div>
+<div class="grid2">
+<div class="card"><h3>Headline of the Night</h3><div class="big-callout"><span>Row 11</span> became the fight for the win.</div><p>Ethan Eckert started 21st and Kenny Reel started 22nd. They finished first and second, separated by only 0.048 seconds. Together, the top two gained 40 positions.</p></div>
+<div class="card"><h3>What Defined the Race</h3><p>The race began with pole sitter Kenwood Ramsey leading the first 17 laps, then shifted through Donny Beach and Ryan Wilson21 before Eckert took over on lap 38. Two later caution cycles briefly gave Carson Freeman the lead, but Eckert reclaimed it both times.</p><p>The six cautions repeatedly reset the field, and 47 penalty calls were recorded in the session event log, making pit-road execution and surviving restarts major parts of the outcome.</p></div>
+</div>
+<h3 class="subhead">Biggest Movers</h3><div class="grid4"><div class="driver-card"><div class="num">#012</div><div><b>Ethan Eckert</b><small>P1 • Started 21 • <span class="up">+20</span> • 4x • Best 29.292</small><p>Gained 20 positions from P21 to P1.</p></div></div>
+<div class="driver-card"><div class="num">#20</div><div><b>Kenny Reel</b><small>P2 • Started 22 • <span class="up">+20</span> • 6x • Best 29.350</small><p>Gained 20 positions from P22 to P2.</p></div></div>
+<div class="driver-card"><div class="num">#05</div><div><b>Ricky Miles</b><small>P11 • Started 28 • <span class="up">+17</span> • 0x • Best 29.510</small><p>Gained 17 positions from P28 to P11.</p></div></div>
+<div class="driver-card"><div class="num">#66</div><div><b>Hunter Welborn</b><small>P5 • Started 19 • <span class="up">+14</span> • 6x • Best 29.260</small><p>Gained 14 positions from P19 to P5.</p></div></div>
+<div class="driver-card"><div class="num">#60</div><div><b>Nicholas Moody</b><small>P3 • Started 12 • <span class="up">+9</span> • 6x • Best 29.355</small><p>Gained 9 positions from P12 to P3.</p></div></div>
+<div class="driver-card"><div class="num">#15</div><div><b>Shane Hatfield</b><small>P20 • Started 29 • <span class="up">+9</span> • 6x • Best 29.493</small><p>Gained 9 positions from P29 to P20.</p></div></div>
+<div class="driver-card"><div class="num">#47</div><div><b>Brian Hayes4</b><small>P12 • Started 18 • <span class="up">+6</span> • 6x • Best 29.148</small><p>Gained 6 positions from P18 to P12.</p></div></div>
+<div class="driver-card"><div class="num">#44</div><div><b>Derek Jacobs</b><small>P21 • Started 24 • <span class="up">+3</span> • 0x • Best 29.390</small><p>Gained 3 positions from P24 to P21.</p></div></div></div>
+<h3 class="subhead">Fastest Cars</h3><div class="grid4"><div class="driver-card"><div class="num">#47</div><div><b>Brian Hayes4</b><small>P12 • Started 18 • <span class="up">+6</span> • 6x • Best 29.148</small><p>29.148 sec best lap; finished P12.</p></div></div>
+<div class="driver-card"><div class="num">#70</div><div><b>Joe Konen</b><small>P28 • Started 26 • <span class="down">-2</span> • 2x • Best 29.177</small><p>29.177 sec best lap; finished P28.</p></div></div>
+<div class="driver-card"><div class="num">#100</div><div><b>Eric Hayden</b><small>P23 • Started 17 • <span class="down">-6</span> • 8x • Best 29.212</small><p>29.212 sec best lap; finished P23.</p></div></div>
+<div class="driver-card"><div class="num">#66</div><div><b>Hunter Welborn</b><small>P5 • Started 19 • <span class="up">+14</span> • 6x • Best 29.260</small><p>29.260 sec best lap; finished P5.</p></div></div>
+<div class="driver-card"><div class="num">#87</div><div><b>Brian Hebbard2</b><small>P6 • Started 4 • <span class="down">-2</span> • 16x • Best 29.266</small><p>29.266 sec best lap; finished P6.</p></div></div>
+<div class="driver-card"><div class="num">#89</div><div><b>Trevor Aswarnauth</b><small>P22 • Started 23 • <span class="up">+1</span> • 12x • Best 29.276</small><p>29.276 sec best lap; finished P22.</p></div></div>
+<div class="driver-card"><div class="num">#55</div><div><b>Kyle Kammeron</b><small>P25 • Started 25 • <span class="even">0</span> • 4x • Best 29.279</small><p>29.279 sec best lap; finished P25.</p></div></div>
+<div class="driver-card"><div class="num">#09</div><div><b>Shawn Stamper</b><small>P10 • Started 8 • <span class="down">-2</span> • 4x • Best 29.284</small><p>29.284 sec best lap; finished P10.</p></div></div></div>
+</section>
+<section class="rr-panel" id="panel-winner">
+<div class="section-head"><h2>Winner <span>Spotlight</span></h2><p>#012 Ethan Eckert</p></div>
+<div class="winner-grid">
+<div class="winner-main">
+<div class="eyebrow">Monday Night Winner</div><h3>Ethan Eckert</h3>
+<p>Eckert started 21st in a 29-car field and needed only 38 laps to reach the lead. Once he got there, the #012 became the central car in the race. He led 86 laps, more than every other leader combined, and controlled 68.8% of the entire event.</p>
+<p>His night was not simply a green-flag runaway. Cautions at laps 63 and 85 shuffled the order and briefly handed the lead to Carson Freeman. On each occasion Eckert took it back one lap later. The final caution at lap 110 gave the field one more shot, and Kenny Reel closed to within 0.048 seconds at the finish.</p>
+<div class="quote">“21st to 1st, 86 laps led, and a margin of less than five hundredths — the #012 had to earn every part of this one.”</div>
+</div>
+<div class="stat-grid" style="grid-template-columns:1fr 1fr">
+<div class="stat"><small>Start</small><strong>21st</strong><p>Deep in the field</p></div>
+<div class="stat"><small>Finish</small><strong>1st</strong><p>Race winner</p></div>
+<div class="stat"><small>Positions Gained</small><strong>+20</strong><p>Tied for most</p></div>
+<div class="stat"><small>Laps Led</small><strong>86</strong><p>Race-high total</p></div>
+<div class="stat"><small>Best Lap</small><strong>29.292</strong><p>Competitive race pace</p></div>
+<div class="stat"><small>Incidents</small><strong>4x</strong><p>Across 125 laps</p></div>
+<div class="stat"><small>Avg. Lap</small><strong>38.787</strong><p>Includes cautions</p></div>
+<div class="stat"><small>Margin</small><strong>0.048</strong><p>Over Kenny Reel</p></div>
+</div></div>
+<div class="grid3">
+<div class="card"><h3>How He Got There</h3><p>Ramsey, Beach, and Wilson controlled the first 37 laps. Eckert moved to the point on lap 38 after the third caution sequence and immediately established the #012 as the car to beat.</p></div>
+<div class="card"><h3>How He Kept It</h3><p>Freeman briefly led on laps 65 and 87 during caution-cycle reshuffles. Eckert reclaimed the lead on laps 66 and 88, showing that the #012 could recover track position after strategy altered the order.</p></div>
+<div class="card"><h3>How He Finished It</h3><p>The lap-110 caution created a short final run. Reel closed from behind and finished just 0.048 seconds back, but Eckert remained ahead at the checkered flag.</p></div>
+</div>
+<h3 class="subhead">The Closest Chasers</h3>
+<div class="grid4">
+<div class="driver-card"><div class="num">#20</div><div><b>Kenny Reel</b><small>P2 • Started 22 • <span class="up">+20</span> • 6x • Best 29.350</small><p>Started 22nd, gained 20 positions, and missed the win by only 0.048 seconds.</p></div></div>
+<div class="driver-card"><div class="num">#60</div><div><b>Nicholas Moody</b><small>P3 • Started 12 • <span class="up">+9</span> • 6x • Best 29.355</small><p>Nicholas Moody came from 12th to third and finished only 0.283 seconds behind.</p></div></div>
+<div class="driver-card"><div class="num">#93</div><div><b>Javone Thompson</b><small>P4 • Started 6 • <span class="up">+2</span> • 9x • Best 29.443</small><p>Javone Thompson started sixth and finished fourth, staying in the lead pack to the end.</p></div></div>
+<div class="driver-card"><div class="num">#66</div><div><b>Hunter Welborn</b><small>P5 • Started 19 • <span class="up">+14</span> • 6x • Best 29.260</small><p>Hunter Welborn gained 14 positions from 19th to fifth and ran a 29.260-second best lap.</p></div></div>
+</div>
+</section>
+<section class="rr-panel" id="panel-story">
+<div class="section-head"><h2>Race <span>Story</span></h2><p>The race broken into phases</p></div>
+<div class="story-block"><div class="lap-tag">Laps 1–17 • Opening Run</div><h3>Ramsey controls the start</h3><p>Kenwood Ramsey launched from the pole and led the opening 17 laps. The first caution came at lap 6 involving the #82, and the second followed at lap 11 involving the #91. Those early yellows prevented the race from settling into a long opening green-flag rhythm.</p></div>
+<div class="story-block"><div class="lap-tag">Laps 18–37 • New Leaders Emerge</div><h3>Beach and Wilson trade the front</h3><p>Donny Beach took the lead on lap 18. Ryan Wilson21 moved ahead on lap 29, Beach reclaimed the point on lap 30, and Wilson returned to the lead on lap 34 during the third caution sequence. The front of the field had changed rapidly before the race reached one-third distance.</p></div>
+<div class="story-block"><div class="lap-tag">Laps 38–64 • The #012 Arrives</div><h3>Eckert takes command</h3><p>Ethan Eckert took the lead on lap 38 after starting 21st. From that point forward, the race largely ran through him. The #012 controlled the longest sustained stretch at the front and began building what would become an 86-lap race-leading total.</p></div>
+<div class="story-block"><div class="lap-tag">Laps 63–88 • Strategy Interrupts the Leader</div><h3>Freeman gets two brief chances</h3><p>A caution on lap 63 involving the #87 changed pit-cycle positioning. Carson Freeman moved to the lead on lap 65, but Eckert retook it on lap 66. The same sequence repeated after the lap-85 caution: Freeman led on lap 87, Eckert reclaimed the point on lap 88.</p></div>
+<div class="story-block"><div class="lap-tag">Laps 89–109 • Long Green Stretch</div><h3>Eckert rebuilds control</h3><p>Once back in front, Eckert stayed there through a substantial green-flag stretch. Behind him, drivers such as Kenny Reel, Nicholas Moody, Hunter Welborn, Brian Hebbard2, and others continued fighting for position as the top 10 compressed around the leader.</p></div>
+<div class="story-block"><div class="lap-tag">Laps 110–125 • Final Sprint</div><h3>Reel makes it a thriller</h3><p>The final caution came at lap 110 involving the #03. The race resumed with a short run to the finish. Kenny Reel, who had started 22nd, emerged as Eckert's biggest threat and closed the final margin to 0.048 seconds. Moody, Thompson, and Welborn completed the top five.</p></div>
+<div class="grid3">
+<div class="card"><h3>Best Comeback</h3><p>Eckert and Reel each gained 20 spots. Ricky Miles gained 17, while Hunter Welborn gained 14.</p></div>
+<div class="card"><h3>Biggest Early Loss</h3><p>Front-row starter Chris James completed seven laps and was scored 27th, a drop of 25 positions from his second-place start.</p></div>
+<div class="card"><h3>Survival Story</h3><p>Ricky Miles started 28th, completed all 125 laps, recorded zero incidents, and finished 11th — one spot outside the top 10.</p></div>
+</div>
+</section>
+<section class="rr-panel" id="panel-leaders">
+<div class="section-head"><h2>Lead <span>Battle</span></h2><p>Five leaders • nine lead changes</p></div>
+<div class="leader-grid">
+<div class="leader-card"><strong>86</strong><span>LAPS LED</span><b>#012 Ethan Eckert</b>
+<small>68.8% of race • Started 21 • Finished P1</small></div>
+<div class="leader-card"><strong>17</strong><span>LAPS LED</span><b>#54 Kenwood Ramsey</b>
+<small>13.6% of race • Started 1 • Finished P7</small></div>
+<div class="leader-card"><strong>15</strong><span>LAPS LED</span><b>#11 Donny Beach</b>
+<small>12.0% of race • Started 20 • Finished P18</small></div>
+<div class="leader-card"><strong>5</strong><span>LAPS LED</span><b>#23 Ryan Wilson21</b>
+<small>4.0% of race • Started 16 • Finished P15</small></div>
+<div class="leader-card"><strong>2</strong><span>LAPS LED</span><b>#4 Carson Freeman</b>
+<small>1.6% of race • Started 9 • Finished P9</small></div></div>
+<div class="grid2">
+<div class="card"><h3>Every Lead Change</h3><div class="event-row"><span>LAP 18</span><b>#11 Donny Beach takes over from #54 Kenwood Ramsey</b><small>17:50.166</small></div>
+<div class="event-row"><span>LAP 29</span><b>#23 Ryan Wilson21 takes over from #11 Donny Beach</b><small>23:19.400</small></div>
+<div class="event-row"><span>LAP 30</span><b>#11 Donny Beach takes over from #23 Ryan Wilson21</b><small>23:49.433</small></div>
+<div class="event-row"><span>LAP 34</span><b>#23 Ryan Wilson21 takes over from #11 Donny Beach</b><small>25:49.233</small></div>
+<div class="event-row"><span>LAP 38</span><b>#012 Ethan Eckert takes over from #23 Ryan Wilson21</b><small>30:47.933</small></div>
+<div class="event-row"><span>LAP 65</span><b>#4 Carson Freeman takes over from #012 Ethan Eckert</b><small>45:00.583</small></div>
+<div class="event-row"><span>LAP 66</span><b>#012 Ethan Eckert takes over from #4 Carson Freeman</b><small>46:38.016</small></div>
+<div class="event-row"><span>LAP 87</span><b>#4 Carson Freeman takes over from #012 Ethan Eckert</b><small>59:07.816</small></div>
+<div class="event-row"><span>LAP 88</span><b>#012 Ethan Eckert takes over from #4 Carson Freeman</b><small>1:45.083</small></div></div>
+<div class="card"><h3>Leadership Breakdown</h3>
+<p><b>Ethan Eckert:</b> 86 laps led, 68.8% of the race.</p>
+<p><b>Kenwood Ramsey:</b> 17 laps led from the pole.</p>
+<p><b>Donny Beach:</b> 15 laps led during the early middle portion.</p>
+<p><b>Ryan Wilson21:</b> 5 laps led across two separate stints.</p>
+<p><b>Carson Freeman:</b> 2 laps led, both during caution-cycle reshuffles.</p>
+<div class="quote">Eckert led more laps by himself than the other four leaders combined: 86 to 39.</div>
+</div></div>
+<div class="grid4">
+<div class="intel"><small>First Leader</small><strong>#54</strong><p>Kenwood Ramsey led laps 1–17.</p></div>
+<div class="intel"><small>First Eckert Lead</small><strong>Lap 38</strong><p>The #012 first reached P1 after the third caution.</p></div>
+<div class="intel"><small>Last Lead Change</small><strong>Lap 88</strong><p>Eckert took the lead back from Freeman.</p></div>
+<div class="intel"><small>Final Leader Run</small><strong>38 laps</strong><p>Eckert led from lap 88 through lap 125.</p></div>
+</div>
+</section>
+<section class="rr-panel" id="panel-cautions">
+<div class="section-head"><h2>Caution &amp; <span>Race Control</span></h2><p>Six cautions • 47 recorded penalty calls</p></div>
+<div class="caution-grid"><div class="caution-card"><div class="caution-lap">LAP 6</div>
+<b>#82 Chris James</b>
+<p>Caution for slow car involving #82. The yellow reset track position and created another pit-road decision point for the field.</p>
+<small>Event time 5:56.816</small></div>
+<div class="caution-card"><div class="caution-lap">LAP 11</div>
+<b>#91 Bill Daniels</b>
+<p>Caution for slow car involving #91. The yellow reset track position and created another pit-road decision point for the field.</p>
+<small>Event time 11:27.216</small></div>
+<div class="caution-card"><div class="caution-lap">LAP 33</div>
+<b>#20 Kenny Reel</b>
+<p>Caution for slow car involving #20. The yellow reset track position and created another pit-road decision point for the field.</p>
+<small>Event time 25:48.816</small></div>
+<div class="caution-card"><div class="caution-lap">LAP 63</div>
+<b>#87 Brian Hebbard2</b>
+<p>Caution for slow car involving #87. The yellow reset track position and created another pit-road decision point for the field.</p>
+<small>Event time 43:41.616</small></div>
+<div class="caution-card"><div class="caution-lap">LAP 85</div>
+<b>#23 Ryan Wilson21</b>
+<p>Caution for slow car involving #23. The yellow reset track position and created another pit-road decision point for the field.</p>
+<small>Event time 57:32.283</small></div>
+<div class="caution-card"><div class="caution-lap">LAP 110</div>
+<b>#03 Joshua McKinney2</b>
+<p>Caution for slow car involving #03. The yellow reset track position and created another pit-road decision point for the field.</p>
+<small>Event time 1:13:07.483</small></div></div>
+<h3 class="subhead">Penalty Activity by Type</h3>
+<div class="mini-grid"><div class="mini"><small>Unsafe pit entrance</small><strong>12</strong><p>Recorded penalty calls</p></div>
+<div class="mini"><small>Repairs needed</small><strong>10</strong><p>Recorded penalty calls</p></div>
+<div class="mini"><small>Passing under yellow</small><strong>8</strong><p>Recorded penalty calls</p></div>
+<div class="mini"><small>Lucky Dog</small><strong>5</strong><p>Recorded penalty calls</p></div>
+<div class="mini"><small>Entering closed pits</small><strong>5</strong><p>Recorded penalty calls</p></div>
+<div class="mini"><small>Admin caution</small><strong>4</strong><p>Recorded penalty calls</p></div>
+<div class="mini"><small>Excessive speeding in pits</small><strong>3</strong><p>Recorded penalty calls</p></div></div>
+<div class="grid2">
+<div class="card"><h3>Why the Cautions Mattered</h3><p>Only 18 of the 125 laps were officially caution laps, but the yellows repeatedly changed strategy, track position, and pit-road timing. The lap-33 caution was especially busy, producing multiple repairs, pit-road calls, admin actions, and closed-pit issues before racing resumed.</p><p>Later cautions at laps 63 and 85 interrupted long stretches of Eckert control and temporarily put Carson Freeman at the front. The final yellow at lap 110 created the closing sprint that allowed Kenny Reel to challenge for the win.</p></div>
+<div class="card"><h3>Race-Control Snapshot</h3><p>The session log recorded <b>47 penalty calls</b>. The largest categories were unsafe pit entrance (12), repairs needed (10), passing under yellow (8), Lucky Dog (5), entering closed pits (5), admin caution (4), and excessive pit speed (3).</p><p>Many calls were later cleared by the system or an admin. The report lists the recorded activity but does not assign fault beyond the session log wording.</p></div>
+</div>
+</section>
+<section class="rr-panel" id="panel-top10">
+<div class="section-head"><h2>Top <span>10</span></h2><p>Detailed finishing breakdown</p></div>
+<div class="grid2">
+<div class="finish-list">
+<div class="finish-row"><span class="finish-pos">1</span>
+<div><b>#012 Ethan Eckert</b><small>Start 21 • 86 led • 4x • Best 29.292</small></div>
+<div class="right"><span class="up">+20</span><small>WINNER</small></div></div>
+<div class="finish-row"><span class="finish-pos">2</span>
+<div><b>#20 Kenny Reel</b><small>Start 22 • 0 led • 6x • Best 29.350</small></div>
+<div class="right"><span class="up">+20</span><small>+0.048s</small></div></div>
+<div class="finish-row"><span class="finish-pos">3</span>
+<div><b>#60 Nicholas Moody</b><small>Start 12 • 0 led • 6x • Best 29.355</small></div>
+<div class="right"><span class="up">+9</span><small>+0.283s</small></div></div>
+<div class="finish-row"><span class="finish-pos">4</span>
+<div><b>#93 Javone Thompson</b><small>Start 6 • 0 led • 9x • Best 29.443</small></div>
+<div class="right"><span class="up">+2</span><small>+0.485s</small></div></div>
+<div class="finish-row"><span class="finish-pos">5</span>
+<div><b>#66 Hunter Welborn</b><small>Start 19 • 0 led • 6x • Best 29.260</small></div>
+<div class="right"><span class="up">+14</span><small>+0.538s</small></div></div>
+<div class="finish-row"><span class="finish-pos">6</span>
+<div><b>#87 Brian Hebbard2</b><small>Start 4 • 0 led • 16x • Best 29.266</small></div>
+<div class="right"><span class="down">-2</span><small>+0.940s</small></div></div>
+<div class="finish-row"><span class="finish-pos">7</span>
+<div><b>#54 Kenwood Ramsey</b><small>Start 1 • 17 led • 4x • Best 29.470</small></div>
+<div class="right"><span class="down">-6</span><small>+1.432s</small></div></div>
+<div class="finish-row"><span class="finish-pos">8</span>
+<div><b>#1 Gerry Bergeron</b><small>Start 10 • 0 led • 5x • Best 29.404</small></div>
+<div class="right"><span class="up">+2</span><small>+1.547s</small></div></div>
+<div class="finish-row"><span class="finish-pos">9</span>
+<div><b>#4 Carson Freeman</b><small>Start 9 • 2 led • 4x • Best 29.529</small></div>
+<div class="right"><span class="even">0</span><small>+1.660s</small></div></div>
+<div class="finish-row"><span class="finish-pos">10</span>
+<div><b>#09 Shawn Stamper</b><small>Start 8 • 0 led • 4x • Best 29.284</small></div>
+<div class="right"><span class="down">-2</span><small>+1.713s</small></div></div></div>
+<div class="card"><h3>What the Top 10 Tells Us</h3>
+<p>The first two finishers started 21st and 22nd. Third-place Nicholas Moody started 12th, while fifth-place Hunter Welborn started 19th. That means four of the top five began outside the top 10.</p>
+<p>Brian Hebbard2 finished sixth despite recording 16 incident points, the most among the top 10. Pole sitter Kenwood Ramsey led 17 laps and finished seventh. Carson Freeman led twice for two total laps and finished ninth.</p>
+<p>The entire top 10 finished on the lead lap, and the difference between first and tenth was only 1.713 seconds in the recorded interval data.</p></div>
+</div>
+<h3 class="subhead">Top-10 Driver Notes</h3>
+<div class="grid4">
+<div class="driver-card"><div class="num">#012</div><div><b>Ethan Eckert</b><small>P1 • Started 21 • <span class="up">+20</span> • 4x • Best 29.292</small><p>Won from 21st and led 86 laps.</p></div></div>
+<div class="driver-card"><div class="num">#20</div><div><b>Kenny Reel</b><small>P2 • Started 22 • <span class="up">+20</span> • 6x • Best 29.350</small><p>Finished 0.048 seconds behind after starting 22nd.</p></div></div>
+<div class="driver-card"><div class="num">#60</div><div><b>Nicholas Moody</b><small>P3 • Started 12 • <span class="up">+9</span> • 6x • Best 29.355</small><p>Advanced nine spots and completed the podium.</p></div></div>
+<div class="driver-card"><div class="num">#93</div><div><b>Javone Thompson</b><small>P4 • Started 6 • <span class="up">+2</span> • 9x • Best 29.443</small><p>Started sixth and brought home fourth.</p></div></div>
+<div class="driver-card"><div class="num">#66</div><div><b>Hunter Welborn</b><small>P5 • Started 19 • <span class="up">+14</span> • 6x • Best 29.260</small><p>Gained 14 positions to finish fifth.</p></div></div>
+<div class="driver-card"><div class="num">#87</div><div><b>Brian Hebbard2</b><small>P6 • Started 4 • <span class="down">-2</span> • 16x • Best 29.266</small><p>Finished sixth with 16 incident points.</p></div></div>
+<div class="driver-card"><div class="num">#54</div><div><b>Kenwood Ramsey</b><small>P7 • Started 1 • <span class="down">-6</span> • 4x • Best 29.470</small><p>Pole sitter; led the opening 17 laps.</p></div></div>
+<div class="driver-card"><div class="num">#1</div><div><b>Gerry Bergeron</b><small>P8 • Started 10 • <span class="up">+2</span> • 5x • Best 29.404</small><p>Finished eighth after starting 10th.</p></div></div>
+<div class="driver-card"><div class="num">#4</div><div><b>Carson Freeman</b><small>P9 • Started 9 • <span class="even">0</span> • 4x • Best 29.529</small><p>Led two laps during caution cycles and finished ninth.</p></div></div>
+<div class="driver-card"><div class="num">#09</div><div><b>Shawn Stamper</b><small>P10 • Started 8 • <span class="down">-2</span> • 4x • Best 29.284</small><p>Finished 10th with a 29.284-second best lap.</p></div></div>
+</div>
+</section>
+<section class="rr-panel" id="panel-results">
+<div class="section-head"><h2>Full <span>Results</span></h2><p>All 29 starters • detailed race data</p></div>
+<div class="table-wrap"><table>
+<thead><tr><th>Pos</th><th>Driver</th><th>Start</th><th>+/-</th><th>Laps</th><th>Led</th><th>Inc</th><th>Best</th><th>Avg</th><th>Gap</th><th>Status</th></tr></thead>
+<tbody>
+<tr>
+<td class="pos">1</td>
+<td><b>#012 Ethan Eckert</b></td>
+<td>21</td><td><span class="up">+20</span></td>
+<td>125</td><td>86</td><td>4</td>
+<td>29.292</td><td>38.787</td>
+<td>WINNER</td><td>Running</td>
+</tr>
+<tr>
+<td class="pos">2</td>
+<td><b>#20 Kenny Reel</b></td>
+<td>22</td><td><span class="up">+20</span></td>
+<td>125</td><td>0</td><td>6</td>
+<td>29.350</td><td>38.787</td>
+<td>+0.048s</td><td>Running</td>
+</tr>
+<tr>
+<td class="pos">3</td>
+<td><b>#60 Nicholas Moody</b></td>
+<td>12</td><td><span class="up">+9</span></td>
+<td>125</td><td>0</td><td>6</td>
+<td>29.355</td><td>38.789</td>
+<td>+0.283s</td><td>Running</td>
+</tr>
+<tr>
+<td class="pos">4</td>
+<td><b>#93 Javone Thompson</b></td>
+<td>6</td><td><span class="up">+2</span></td>
+<td>125</td><td>0</td><td>9</td>
+<td>29.443</td><td>38.791</td>
+<td>+0.485s</td><td>Running</td>
+</tr>
+<tr>
+<td class="pos">5</td>
+<td><b>#66 Hunter Welborn</b></td>
+<td>19</td><td><span class="up">+14</span></td>
+<td>125</td><td>0</td><td>6</td>
+<td>29.260</td><td>38.791</td>
+<td>+0.538s</td><td>Running</td>
+</tr>
+<tr>
+<td class="pos">6</td>
+<td><b>#87 Brian Hebbard2</b></td>
+<td>4</td><td><span class="down">-2</span></td>
+<td>125</td><td>0</td><td>16</td>
+<td>29.266</td><td>38.794</td>
+<td>+0.940s</td><td>Running</td>
+</tr>
+<tr>
+<td class="pos">7</td>
+<td><b>#54 Kenwood Ramsey</b></td>
+<td>1</td><td><span class="down">-6</span></td>
+<td>125</td><td>17</td><td>4</td>
+<td>29.470</td><td>38.798</td>
+<td>+1.432s</td><td>Running</td>
+</tr>
+<tr>
+<td class="pos">8</td>
+<td><b>#1 Gerry Bergeron</b></td>
+<td>10</td><td><span class="up">+2</span></td>
+<td>125</td><td>0</td><td>5</td>
+<td>29.404</td><td>38.799</td>
+<td>+1.547s</td><td>Running</td>
+</tr>
+<tr>
+<td class="pos">9</td>
+<td><b>#4 Carson Freeman</b></td>
+<td>9</td><td><span class="even">0</span></td>
+<td>125</td><td>2</td><td>4</td>
+<td>29.529</td><td>38.800</td>
+<td>+1.660s</td><td>Running</td>
+</tr>
+<tr>
+<td class="pos">10</td>
+<td><b>#09 Shawn Stamper</b></td>
+<td>8</td><td><span class="down">-2</span></td>
+<td>125</td><td>0</td><td>4</td>
+<td>29.284</td><td>38.800</td>
+<td>+1.713s</td><td>Running</td>
+</tr>
+<tr>
+<td class="pos">11</td>
+<td><b>#05 Ricky Miles</b></td>
+<td>28</td><td><span class="up">+17</span></td>
+<td>125</td><td>0</td><td>0</td>
+<td>29.510</td><td>38.833</td>
+<td>+5.763s</td><td>Running</td>
+</tr>
+<tr>
+<td class="pos">12</td>
+<td><b>#47 Brian Hayes4</b></td>
+<td>18</td><td><span class="up">+6</span></td>
+<td>125</td><td>0</td><td>6</td>
+<td>29.148</td><td>38.834</td>
+<td>+5.980s</td><td>Running</td>
+</tr>
+<tr>
+<td class="pos">13</td>
+<td><b>#58 Evan Karlbon</b></td>
+<td>5</td><td><span class="down">-8</span></td>
+<td>125</td><td>0</td><td>8</td>
+<td>29.446</td><td>38.905</td>
+<td>+14.730s</td><td>Running</td>
+</tr>
+<tr>
+<td class="pos">14</td>
+<td><b>#03 Joshua McKinney2</b></td>
+<td>14</td><td><span class="even">0</span></td>
+<td>124</td><td>0</td><td>8</td>
+<td>29.388</td><td>39.325</td>
+<td>1 lap down</td><td>Running</td>
+</tr>
+<tr>
+<td class="pos">15</td>
+<td><b>#23 Ryan Wilson21</b></td>
+<td>16</td><td><span class="up">+1</span></td>
+<td>122</td><td>5</td><td>4</td>
+<td>29.322</td><td>39.788</td>
+<td>3 laps down</td><td>Running</td>
+</tr>
+<tr>
+<td class="pos">16</td>
+<td><b>#91 Bill Daniels</b></td>
+<td>3</td><td><span class="down">-13</span></td>
+<td>121</td><td>0</td><td>4</td>
+<td>29.470</td><td>40.120</td>
+<td>4 laps down</td><td>Running</td>
+</tr>
+<tr>
+<td class="pos">17</td>
+<td><b>#02 Tj Lunn</b></td>
+<td>11</td><td><span class="down">-6</span></td>
+<td>119</td><td>0</td><td>6</td>
+<td>29.426</td><td>40.799</td>
+<td>6 laps down</td><td>Running</td>
+</tr>
+<tr>
+<td class="pos">18</td>
+<td><b>#11 Donny Beach</b></td>
+<td>20</td><td><span class="up">+2</span></td>
+<td>117</td><td>15</td><td>4</td>
+<td>29.487</td><td>41.621</td>
+<td>8 laps down</td><td>Running</td>
+</tr>
+<tr>
+<td class="pos">19</td>
+<td><b>#76 Evan Fuqua</b></td>
+<td>15</td><td><span class="down">-4</span></td>
+<td>111</td><td>0</td><td>8</td>
+<td>29.288</td><td>40.186</td>
+<td>14 laps down</td><td>Running</td>
+</tr>
+<tr>
+<td class="pos">20</td>
+<td><b>#15 Shane Hatfield</b></td>
+<td>29</td><td><span class="up">+9</span></td>
+<td>99</td><td>0</td><td>6</td>
+<td>29.493</td><td>49.261</td>
+<td>26 laps down</td><td>Running</td>
+</tr>
+<tr>
+<td class="pos">21</td>
+<td><b>#44 Derek Jacobs</b></td>
+<td>24</td><td><span class="up">+3</span></td>
+<td>85</td><td>0</td><td>0</td>
+<td>29.390</td><td>39.233</td>
+<td>40 laps down</td><td>Running</td>
+</tr>
+<tr>
+<td class="pos">22</td>
+<td><b>#89 Trevor Aswarnauth</b></td>
+<td>23</td><td><span class="up">+1</span></td>
+<td>61</td><td>0</td><td>12</td>
+<td>29.276</td><td>62.889</td>
+<td>64 laps down</td><td>Disconnected</td>
+</tr>
+<tr>
+<td class="pos">23</td>
+<td><b>#100 Eric Hayden</b></td>
+<td>17</td><td><span class="down">-6</span></td>
+<td>35</td><td>0</td><td>8</td>
+<td>29.212</td><td>41.904</td>
+<td>90 laps down</td><td>Disconnected</td>
+</tr>
+<tr>
+<td class="pos">24</td>
+<td><b>#71 Jerry Fassett</b></td>
+<td>13</td><td><span class="down">-11</span></td>
+<td>35</td><td>0</td><td>8</td>
+<td>29.463</td><td>43.811</td>
+<td>90 laps down</td><td>Running</td>
+</tr>
+<tr>
+<td class="pos">25</td>
+<td><b>#55 Kyle Kammeron</b></td>
+<td>25</td><td><span class="even">0</span></td>
+<td>13</td><td>0</td><td>4</td>
+<td>29.279</td><td>60.331</td>
+<td>112 laps down</td><td>Running</td>
+</tr>
+<tr>
+<td class="pos">26</td>
+<td><b>#10 Larkin Boyer</b></td>
+<td>7</td><td><span class="down">-19</span></td>
+<td>7</td><td>0</td><td>4</td>
+<td>29.478</td><td>35.538</td>
+<td>118 laps down</td><td>Disconnected</td>
+</tr>
+<tr>
+<td class="pos">27</td>
+<td><b>#82 Chris James</b></td>
+<td>2</td><td><span class="down">-25</span></td>
+<td>7</td><td>0</td><td>4</td>
+<td>29.307</td><td>63.574</td>
+<td>118 laps down</td><td>Running</td>
+</tr>
+<tr>
+<td class="pos">28</td>
+<td><b>#70 Joe Konen</b></td>
+<td>26</td><td><span class="down">-2</span></td>
+<td>6</td><td>0</td><td>2</td>
+<td>29.177</td><td>31.405</td>
+<td>119 laps down</td><td>Running</td>
+</tr>
+<tr>
+<td class="pos">29</td>
+<td><b>#21 Jim Segredo</b></td>
+<td>27</td><td><span class="down">-2</span></td>
+<td>0</td><td>0</td><td>0</td>
+<td>—</td><td>—</td>
+<td>125 laps down</td><td>Running</td>
+</tr></tbody></table></div>
+<div class="grid3">
+<div class="card"><h3>Lead-Lap Group</h3><p>13 drivers completed all 125 laps. The lead-lap group ran from winner Ethan Eckert through 13th-place Evan Karlbon.</p></div>
+<div class="card"><h3>Cars Completing 100+</h3><p>19 of the 29 starters completed at least 100 laps, showing that a large portion of the field remained active deep into the race.</p></div>
+<div class="card"><h3>Early Exits / Lost Laps</h3><p>Several drivers lost significant distance or disconnected, including Trevor Aswarnauth, Eric Hayden, Larkin Boyer, and others. Jim Segredo was scored with zero laps completed.</p></div>
+</div>
+</section>
+<section class="rr-panel" id="panel-intel">
+<div class="section-head"><h2>Race <span>Intelligence</span></h2><p>Deeper numbers and performance notes</p></div>
+<div class="intel-grid">
+<div class="intel"><small>Winner Dominance</small><strong>68.8%</strong><p>Eckert led 86 of 125 laps.</p></div>
+<div class="intel"><small>Top-2 Movement</small><strong>+40</strong><p>Eckert and Reel combined to gain 40 positions.</p></div>
+<div class="intel"><small>Biggest Mover</small><strong>+20</strong><p>Eckert and Reel tied for the largest gain.</p></div>
+<div class="intel"><small>Best Clean Run</small><strong>0x</strong><p>Ricky Miles finished P11 with zero incidents.</p></div>
+<div class="intel"><small>Fastest Lap</small><strong>29.148</strong><p>Brian Hayes4, who finished P12.</p></div>
+<div class="intel"><small>Hunter's Gain</small><strong>+14</strong><p>Hunter Welborn went from 19th to fifth.</p></div>
+<div class="intel"><small>Caution Share</small><strong>14.4%</strong><p>18 of 125 laps were caution laps.</p></div>
+<div class="intel"><small>Recorded Penalties</small><strong>47</strong><p>Calls listed in the race event log.</p></div>
+<div class="intel"><small>Lead-Lap Cars</small><strong>13</strong><p>Completed all 125 laps.</p></div>
+<div class="intel"><small>Average Incidents</small><strong>5.5</strong><p>Across all 29 starters.</p></div>
+<div class="intel"><small>Total Incidents</small><strong>160</strong><p>Combined incident count in results.</p></div>
+<div class="intel"><small>Leaders</small><strong>5</strong><p>Five different drivers led at least one lap.</p></div>
+</div>
+<h3 class="subhead">Fastest 8 Laps</h3><div class="grid4"><div class="driver-card"><div class="num">#47</div><div><b>Brian Hayes4</b><small>P12 • Started 18 • <span class="up">+6</span> • 6x • Best 29.148</small><p>29.148 sec best lap; finished P12.</p></div></div>
+<div class="driver-card"><div class="num">#70</div><div><b>Joe Konen</b><small>P28 • Started 26 • <span class="down">-2</span> • 2x • Best 29.177</small><p>29.177 sec best lap; finished P28.</p></div></div>
+<div class="driver-card"><div class="num">#100</div><div><b>Eric Hayden</b><small>P23 • Started 17 • <span class="down">-6</span> • 8x • Best 29.212</small><p>29.212 sec best lap; finished P23.</p></div></div>
+<div class="driver-card"><div class="num">#66</div><div><b>Hunter Welborn</b><small>P5 • Started 19 • <span class="up">+14</span> • 6x • Best 29.260</small><p>29.260 sec best lap; finished P5.</p></div></div>
+<div class="driver-card"><div class="num">#87</div><div><b>Brian Hebbard2</b><small>P6 • Started 4 • <span class="down">-2</span> • 16x • Best 29.266</small><p>29.266 sec best lap; finished P6.</p></div></div>
+<div class="driver-card"><div class="num">#89</div><div><b>Trevor Aswarnauth</b><small>P22 • Started 23 • <span class="up">+1</span> • 12x • Best 29.276</small><p>29.276 sec best lap; finished P22.</p></div></div>
+<div class="driver-card"><div class="num">#55</div><div><b>Kyle Kammeron</b><small>P25 • Started 25 • <span class="even">0</span> • 4x • Best 29.279</small><p>29.279 sec best lap; finished P25.</p></div></div>
+<div class="driver-card"><div class="num">#09</div><div><b>Shawn Stamper</b><small>P10 • Started 8 • <span class="down">-2</span> • 4x • Best 29.284</small><p>29.284 sec best lap; finished P10.</p></div></div></div>
+<h3 class="subhead">Biggest Position Gains</h3><div class="grid4"><div class="driver-card"><div class="num">#012</div><div><b>Ethan Eckert</b><small>P1 • Started 21 • <span class="up">+20</span> • 4x • Best 29.292</small><p>Gained 20 positions from P21 to P1.</p></div></div>
+<div class="driver-card"><div class="num">#20</div><div><b>Kenny Reel</b><small>P2 • Started 22 • <span class="up">+20</span> • 6x • Best 29.350</small><p>Gained 20 positions from P22 to P2.</p></div></div>
+<div class="driver-card"><div class="num">#05</div><div><b>Ricky Miles</b><small>P11 • Started 28 • <span class="up">+17</span> • 0x • Best 29.510</small><p>Gained 17 positions from P28 to P11.</p></div></div>
+<div class="driver-card"><div class="num">#66</div><div><b>Hunter Welborn</b><small>P5 • Started 19 • <span class="up">+14</span> • 6x • Best 29.260</small><p>Gained 14 positions from P19 to P5.</p></div></div>
+<div class="driver-card"><div class="num">#60</div><div><b>Nicholas Moody</b><small>P3 • Started 12 • <span class="up">+9</span> • 6x • Best 29.355</small><p>Gained 9 positions from P12 to P3.</p></div></div>
+<div class="driver-card"><div class="num">#15</div><div><b>Shane Hatfield</b><small>P20 • Started 29 • <span class="up">+9</span> • 6x • Best 29.493</small><p>Gained 9 positions from P29 to P20.</p></div></div>
+<div class="driver-card"><div class="num">#47</div><div><b>Brian Hayes4</b><small>P12 • Started 18 • <span class="up">+6</span> • 6x • Best 29.148</small><p>Gained 6 positions from P18 to P12.</p></div></div>
+<div class="driver-card"><div class="num">#44</div><div><b>Derek Jacobs</b><small>P21 • Started 24 • <span class="up">+3</span> • 0x • Best 29.390</small><p>Gained 3 positions from P24 to P21.</p></div></div></div>
+<h3 class="subhead">Lowest Incident Totals</h3><div class="grid4"><div class="driver-card"><div class="num">#21</div><div><b>Jim Segredo</b><small>P29 • Started 27 • <span class="down">-2</span> • 0x • Best —</small><p>0 incident points; completed 0 laps.</p></div></div>
+<div class="driver-card"><div class="num">#44</div><div><b>Derek Jacobs</b><small>P21 • Started 24 • <span class="up">+3</span> • 0x • Best 29.390</small><p>0 incident points; completed 85 laps.</p></div></div>
+<div class="driver-card"><div class="num">#05</div><div><b>Ricky Miles</b><small>P11 • Started 28 • <span class="up">+17</span> • 0x • Best 29.510</small><p>0 incident points; completed 125 laps.</p></div></div>
+<div class="driver-card"><div class="num">#70</div><div><b>Joe Konen</b><small>P28 • Started 26 • <span class="down">-2</span> • 2x • Best 29.177</small><p>2 incident points; completed 6 laps.</p></div></div>
+<div class="driver-card"><div class="num">#82</div><div><b>Chris James</b><small>P27 • Started 2 • <span class="down">-25</span> • 4x • Best 29.307</small><p>4 incident points; completed 7 laps.</p></div></div>
+<div class="driver-card"><div class="num">#10</div><div><b>Larkin Boyer</b><small>P26 • Started 7 • <span class="down">-19</span> • 4x • Best 29.478</small><p>4 incident points; completed 7 laps.</p></div></div>
+<div class="driver-card"><div class="num">#55</div><div><b>Kyle Kammeron</b><small>P25 • Started 25 • <span class="even">0</span> • 4x • Best 29.279</small><p>4 incident points; completed 13 laps.</p></div></div>
+<div class="driver-card"><div class="num">#11</div><div><b>Donny Beach</b><small>P18 • Started 20 • <span class="up">+2</span> • 4x • Best 29.487</small><p>4 incident points; completed 117 laps.</p></div></div></div>
+<div class="grid2">
+<div class="card"><h3>Performance Note: Hunter Welborn</h3><p>Welborn started 19th and finished fifth, a 14-position gain. His 29.260-second best lap was quicker than the best laps of the winner, runner-up, third-place finisher, and fourth-place finisher. He completed all 125 laps with six incident points.</p></div>
+<div class="card"><h3>Performance Note: Brian Hayes4</h3><p>Hayes finished 12th but recorded the fastest single race lap at 29.148 seconds. His raw pace was stronger than his finishing position suggests, and he gained six positions from an 18th-place start.</p></div>
+<div class="card"><h3>Performance Note: Ricky Miles</h3><p>Miles produced one of the most efficient drives of the night: 28th to 11th, +17 positions, all 125 laps completed, and zero incidents.</p></div>
+<div class="card"><h3>Performance Note: Kenwood Ramsey</h3><p>Ramsey started from the pole, led the first 17 laps, and finished seventh. His result shows how dramatically the order changed once the race moved beyond the opening segment.</p></div>
+</div>
+</section>
+<div class="note"><b>Source note:</b> Built from the supplied iRacing event result and session event log for HLRN Monday at EchoPark Speedway on September 14, 2026. The session is marked unofficial. Penalty and caution descriptions are summarized exactly at the level supported by the iRacing event log and do not independently assign fault.</div>
+</main>
+  </div>
+  <script id="HLRN_MONDAY_DIRECT_REPORT_JS">
+(function(){
+  const tabs=[...document.querySelectorAll(".rr-tab")];
+  const panels=[...document.querySelectorAll(".rr-panel")];
+  function show(id){
+    tabs.forEach(btn=>{
+      const active=btn.dataset.tab===id;
+      btn.classList.toggle("active",active);
+      btn.setAttribute("aria-selected",active ? "true":"false");
+    });
+    panels.forEach(panel=>{
+      const active=panel.id==="panel-"+id;
+      panel.classList.toggle("active",active);
+      panel.hidden=!active;
+    });
+    // Keep the selected tab section at the top of the report frame.
+  }
+  tabs.forEach(btn=>{
+    btn.addEventListener("click",e=>{
+      e.preventDefault();
+      e.stopPropagation();
+      show(btn.dataset.tab);
+    });
+  });
+  panels.forEach(panel=>panel.hidden=true);
+  show("overview");
+})();
+  </script>
+</section>
+<div class="cc-footer"><div><div class="cc-footer-main">HIGH LINE RACING NETWORK</div><div class="cc-footer-sub">Monday Night League • Chase to the Championship</div></div><div class="cc-footer-right">Drivers • Teams • Results • Live Data</div></div>
+</div>
+<script>const LEAGUE = "monday";
+let drivers = [];
+let teams = [];
+let results = [];
+let driverMap = {};
+/* =========================
+   TABS
+========================= */
+function showTab(
+id,
+button
+){
+document
+.querySelectorAll(".panel")
+.forEach(function(panel){
+panel.classList.remove(
+"active"
+);
+});
+document
+.querySelectorAll(".tab-btn")
+.forEach(function(btn){
+btn.classList.remove(
+"active"
+);
+});
+document
+.getElementById(
+id
+)
+.classList.add(
+"active"
+);
+button.classList.add(
+"active"
+);
+}
+/* =========================
+   JSONP
+========================= */
+
+// HLRN SHARED DATA V1: one published snapshot and one connection/cache status.
+// These functions live inside the existing same-origin srcdoc iframe.
+let hlrnRenderedVersion = '';
+function hlrnApplyLeagueStatus(){
+  const hub = window.parent && window.parent.HLRNData;
+  const status = hub ? hub.getStatus() : {state:'unavailable'};
+  const state = status.state;
+  const badge = document.getElementById('ccDataStatus');
+  const updated = document.getElementById('updateTime');
+  const good = state === 'current';
+  const saved = state === 'cached';
+  if(badge){
+    badge.textContent = good ? 'SYNCED' : saved ? 'SAVED DATA' : state === 'loading' ? 'CONNECTING' : 'DATA UNAVAILABLE';
+    badge.style.color = good ? (LEAGUE === 'sunday' ? '#d71920' : '#55b932') : saved ? '#a56b0b' : '#c52a2a';
+  }
+  if(updated){
+    const snapshot = hub && hub.get();
+    const stamp = snapshot && snapshot.generatedAt;
+    const when = stamp ? new Date(stamp).toLocaleString() : 'No snapshot available';
+    updated.textContent = (saved ? 'Saved snapshot' : good ? 'Published snapshot' : 'Data status') + ' • ' + when;
+  }
+}
+function hlrnRenderSharedSnapshot(snapshot){
+  const data = snapshot && snapshot.leagues && snapshot.leagues[LEAGUE];
+  if(!data || !Array.isArray(data.drivers) || !data.drivers.length || !Array.isArray(data.teams) || !Array.isArray(data.results)){
+    throw new Error('Incomplete ' + LEAGUE + ' standings snapshot');
+  }
+  if(snapshot.generatedAt !== hlrnRenderedVersion){
+    drivers = data.drivers;
+    teams = data.teams;
+    results = data.results;
+    buildDriverMap();
+    renderDrivers();
+    renderTeams();
+    renderLastRace();
+    hlrnRenderedVersion = snapshot.generatedAt;
+    if(LEAGUE === 'sunday' && typeof window.updateChaseDashboard === 'function') window.updateChaseDashboard();
+    if(LEAGUE === 'monday' && typeof window.updateMondayChaseDashboard === 'function') window.updateMondayChaseDashboard();
+  }
+  hlrnApplyLeagueStatus();
+}
+function hlrnStandingsLoadError(err){
+  console.error('HLRN shared standings:', err);
+  const hub = window.parent && window.parent.HLRNData;
+  if(hub && hub.get()) { hlrnApplyLeagueStatus(); return; } // Preserve previously displayed data.
+  const badge = document.getElementById('ccDataStatus');
+  if(badge){ badge.textContent='DATA UNAVAILABLE'; badge.style.color='#c52a2a'; }
+  const leader = document.getElementById('ccLeaderName');
+  if(leader && leader.textContent === 'Loading...') leader.textContent='DATA UNAVAILABLE';
+  const updated=document.getElementById('updateTime');
+  if(updated) updated.textContent='Data temporarily unavailable';
+}
+async function loadEverything(){
+  const hub=window.parent && window.parent.HLRNData;
+  if(!hub){ hlrnStandingsLoadError(new Error('Shared data library not loaded.')); return; }
+  try { hlrnRenderSharedSnapshot(await hub.load()); }
+  catch(err){ hlrnStandingsLoadError(err); }
+}
+function movementHTML(
+change
+){
+const n =
+Number(
+change
+) || 0;
+if(
+n > 0
+){
+return `
+<span class="movement up">
+<span class="movement-arrow">
+▲
+</span>
+${n}
+</span>
+`;
+}
+if(
+n < 0
+){
+return `
+<span class="movement down">
+<span class="movement-arrow">
+▼
+</span>
+${Math.abs(n)}
+</span>
+`;
+}
+return `
+<span class="movement same">
+—
+</span>
+`;
+}
+/* =========================
+   DRIVER MAP
+========================= */
+function buildDriverMap(){
+driverMap = {};
+drivers.forEach(
+function(driver){
+driverMap[
+String(
+driver.driverId
+)
+] =
+driver;
+}
+);
+}
+/* =========================
+   DRIVER STANDINGS
+========================= */
+
+function hlrnFirstMetric(obj,keys){
+  if(!obj) return null;
+  for(const key of keys){
+    const value=obj[key];
+    if(value!==undefined && value!==null && value!==""){
+      const n=Number(value);
+      if(Number.isFinite(n)) return n;
+    }
+  }
+  return null;
+}
+function hlrnDriverSeasonMetrics(driver){
+  const aliases={
+    racePoints:["racePoints","racePts","race_points","racepts"],
+    stagePoints:["stagePoints","stagePts","stage_points","stagepts"],
+    bonus:["bonus","bonusPoints","bonusPts","bonus_points"],
+    penalty:["penalty","penalties","penaltyPoints","penaltyPts","penalty_points"],
+    laps:["laps","lapsCompleted","completedLaps","laps_completed"]
+  };
+  const totals={racePoints:0,stagePoints:0,bonus:0,penalty:0,laps:0};
+  const seen={racePoints:false,stagePoints:false,bonus:false,penalty:false,laps:false};
+
+  (results||[]).forEach(function(result){
+    if(String(result.driverId)!==String(driver.driverId)) return;
+    Object.keys(aliases).forEach(function(metric){
+      const v=hlrnFirstMetric(result,aliases[metric]);
+      if(v!==null){
+        totals[metric]+=v;
+        seen[metric]=true;
+      }
+    });
+  });
+
+  const output={};
+  Object.keys(aliases).forEach(function(metric){
+    const direct=hlrnFirstMetric(driver,aliases[metric]);
+    output[metric]=direct!==null ? direct : (seen[metric] ? totals[metric] : null);
+  });
+  return output;
+}
+function hlrnMetricText(value,decimals){
+  return value===null || value===undefined ? "—" : formatNumber(value,decimals||0);
+}
+
+function renderDrivers(){
+const body=
+document.getElementById(
+"driverBody"
+);
+const sorted=
+drivers
+.slice()
+.sort(function(a,b){
+if(
+num(a.rank)!==
+num(b.rank)
+){
+return (
+num(a.rank)-
+num(b.rank)
+);
+}
+return (
+num(b.points)-
+num(a.points)
+);
+});
+document
+.getElementById(
+"driverCount"
+)
+.textContent=
+sorted.length+
+" Drivers";
+body.innerHTML=
+sorted
+.map(function(driver,index){
+const totals=
+getDriverTotals(
+driver.driverId
+);
+const pos=
+num(driver.rank)||
+index+1;
+const driverAhead=
+index>0 ? sorted[index-1] : null;
+const behind=
+driverAhead ? Math.max(0,num(driverAhead.points)-num(driver.points)) : 0;
+const stagePoints=
+(driver.stagePoints===undefined || driver.stagePoints===null || driver.stagePoints==="")
+? "—"
+: formatNumber(driver.stagePoints);
+return `
+<tr>
+<td>
+<span class="position ${positionClass(pos)}">
+${pos}
+</span>
+</td>
+<td>
+${movementHTML(driver.change)}
+</td>
+<td class="name-col">
+${hLrnNameWithPhoto(driver.driver)}
+</td>
+<td class="points">${formatNumber(driver.points)}</td>
+<td class="stage-points">${stagePoints}</td>
+<td class="behind ${index===0?'leader':''}">${index===0?'0':'-'+formatNumber(behind)}</td>
+<td>${formatNumber(driver.starts)}</td>
+<td>${formatNumber(driver.wins)}</td>
+<td>${formatNumber(driver.top5)}</td>
+<td>${formatNumber(driver.top10)}</td>
+<td>${formatNumber(totals.dnf)}</td>
+<td>${formatNumber(totals.led)}</td>
+</tr>
+`;
+})
+.join("");
+}
+function getDriverTotals(driverId){
+let led=0;
+let inc=0;
+let dnf=0;
+results.forEach(function(result){
+if(
+String(result.driverId)===
+String(driverId)
+){
+led+=num(result.lapsLed);
+inc+=num(result.incidents);
+const status=String(result.status||"").trim().toLowerCase();
+if(
+status &&
+/(disconnect|disqual|(^|\\s)dq($|\\s)|retir|wreck|crash|engine|out|tow)/i.test(status)
+){
+dnf++;
+}
+}
+});
+return{
+led:led,
+inc:inc,
+dnf:dnf
+};
+}
+/* =========================
+   TEAM STANDINGS
+========================= */
+function renderTeams(){
+const body =
+document.getElementById(
+"teamBody"
+);
+const sorted =
+teams
+.slice()
+.sort(
+function(
+a,
+b
+){
+if(
+num(a.rank) !==
+num(b.rank)
+){
+return (
+num(a.rank) -
+num(b.rank)
+);
+}
+return (
+num(b.points) -
+num(a.points)
+);
+}
+);
+document
+.getElementById(
+"teamCount"
+)
+.textContent =
+sorted.length +
+" Teams";
+if(
+!sorted.length
+){
+body.innerHTML = `
+<tr>
+<td
+colspan="16"
+class="message"
+>
+No Monday team standings found.
+</td>
+</tr>
+`;
+return;
+}
+body.innerHTML =
+sorted
+.map(
+function(
+team,
+index
+){
+const pos =
+num(
+team.rank
+) ||
+index + 1;
+return `
+<tr>
+<td>
+<span class="position ${positionClass(pos)}">
+${pos}
+</span>
+</td>
+<td>
+${movementHTML(
+team.change
+)}
+</td>
+<td class="name-col">
+${escapeHTML(
+team.team
+)}
+</td>
+<td>
+${formatNumber(
+team.starts
+)}
+</td>
+<td>
+${formatNumber(
+team.racesCounted
+)}
+</td>
+<td>
+${formatNumber(
+team.wins
+)}
+</td>
+<td>
+${formatNumber(
+team.top5
+)}
+</td>
+<td>
+${formatNumber(
+team.top10
+)}
+</td>
+<td class="points">
+${formatNumber(
+team.points,
+1
+)}
+</td>
+<td>
+${formatNumber(
+team.racePoints,
+1
+)}
+</td>
+<td>
+${formatNumber(
+team.stagePoints,
+1
+)}
+</td>
+<td>
+${formatNumber(
+team.bonus,
+1
+)}
+</td>
+<td>
+${formatNumber(
+team.penalty,
+1
+)}
+</td>
+<td>
+${formatNumber(
+team.laps,
+1
+)}
+</td>
+<td>
+${formatNumber(
+team.lapsLed,
+1
+)}
+</td>
+<td>
+${formatNumber(
+team.incidents,
+1
+)}
+</td>
+</tr>
+`;
+}
+)
+.join("");
+}
+/* =========================
+   LAST RACE
+========================= */
+function renderLastRace(){
+if(
+!results.length
+){
+document
+.getElementById(
+"lastRaceSummary"
+)
+.innerHTML = `
+<div class="message">
+No Monday race results found.
+</div>
+`;
+return;
+}
+let latest = 0;
+results.forEach(
+function(result){
+latest =
+Math.max(
+latest,
+num(
+result.raceNumber
+)
+);
+}
+);
+const raceResults =
+results
+.filter(
+function(result){
+return (
+num(
+result.raceNumber
+) ===
+latest
+);
+}
+)
+.sort(
+function(
+a,
+b
+){
+return (
+num(a.finish) -
+num(b.finish)
+);
+}
+);
+if(
+!raceResults.length
+){
+return;
+}
+const race =
+raceResults[0];
+const winner =
+raceResults.find(
+function(result){
+return (
+num(
+result.finish
+) ===
+1
+);
+}
+);
+let winnerName =
+"Unknown";
+if(
+winner &&
+driverMap[
+String(
+winner.driverId
+)
+]
+){
+winnerName =
+driverMap[
+String(
+winner.driverId
+)
+].driver;
+}
+let totalInc = 0;
+let totalLed = 0;
+raceResults.forEach(
+function(result){
+totalInc +=
+num(
+result.incidents
+);
+totalLed +=
+num(
+result.lapsLed
+);
+}
+);
+document
+.getElementById(
+"raceEntryCount"
+)
+.textContent =
+raceResults.length +
+" Drivers";
+document
+.getElementById(
+"lastRaceSummary"
+)
+.innerHTML = `
+<div class="race-header">
+<div>
+<div class="race-track">
+${escapeHTML(
+race.track
+)}
+</div>
+<div class="race-date">
+${formatDate(
+race.date
+)}
+</div>
+</div>
+<div class="race-number">
+RACE ${latest}
+</div>
+</div>
+<div class="last-race-grid">
+<div class="stat-card">
+<div class="stat-label">
+Winner
+</div>
+<div class="stat-value winner-name">
+${escapeHTML(
+winnerName
+)}
+</div>
+</div>
+<div class="stat-card">
+<div class="stat-label">
+Drivers
+</div>
+<div class="stat-value">
+${raceResults.length}
+</div>
+</div>
+<div class="stat-card">
+<div class="stat-label">
+Laps Led
+</div>
+<div class="stat-value">
+${formatNumber(
+totalLed
+)}
+</div>
+</div>
+<div class="stat-card">
+<div class="stat-label">
+Incidents
+</div>
+<div class="stat-value">
+${formatNumber(
+totalInc
+)}
+</div>
+</div>
+</div>
+`;
+document
+.getElementById(
+"raceResultsBody"
+)
+.innerHTML =
+raceResults
+.map(
+function(result){
+const driver =
+driverMap[
+String(
+result.driverId
+)
+];
+const driverName =
+driver
+?
+driver.driver
+:
+"Unknown Driver";
+return `
+<tr>
+<td>
+<span class="position ${positionClass(num(result.finish))}">
+${num(
+result.finish
+)}
+</span>
+</td>
+<td class="name-col">
+${escapeHTML(
+driverName
+)}
+</td>
+<td class="points">
+${formatNumber(
+result.points
+)}
+</td>
+<td>
+${formatNumber(
+result.lapsLed
+)}
+</td>
+<td>
+${formatNumber(
+result.incidents
+)}
+</td>
+<td>
+${escapeHTML(
+result.status
+)}
+</td>
+</tr>
+`;
+}
+)
+.join("");
+}
+/* =========================
+   POSITION COLOR
+========================= */
+function positionClass(
+pos
+){
+if(
+pos === 1
+){
+return "top1";
+}
+if(
+pos === 2
+){
+return "top2";
+}
+if(
+pos === 3
+){
+return "top3";
+}
+return "";
+}
+/* =========================
+   NUMBER HELPERS
+========================= */
+function num(
+value
+){
+const n =
+Number(
+value
+);
+return Number.isFinite(
+n
+)
+?
+n
+:
+0;
+}
+function formatNumber(
+value,
+decimals = 1
+){
+const n =
+num(
+value
+);
+if(
+Number.isInteger(
+n
+)
+){
+return String(
+n
+);
+}
+return n
+.toFixed(
+decimals
+)
+.replace(
+/\.0+$/,
+""
+);
+}
+/* =========================
+   DATE
+========================= */
+function formatDate(
+value
+){
+const date =
+new Date(
+value
+);
+if(
+isNaN(
+date.getTime()
+)
+){
+return value ||
+"";
+}
+return date.toLocaleDateString(
+[],
+{
+weekday:
+"long",
+month:
+"long",
+day:
+"numeric",
+year:
+"numeric"
+}
+);
+}
+/* =========================
+   HTML ESCAPE
+========================= */
+function hLrnNameWithPhoto(name){
+const shown=String(name||"").trim();
+let n=shown;
+if(n.indexOf(",")>-1){
+  const p=n.split(",");
+  let last=(p.shift()||"").trim().replace(/\d+$/,"");
+  let first=p.join(" ").trim();
+  n=(first+" "+last).trim();
+}else{
+  n=n.replace(/\d+$/,"").trim();
+}
+let key=n.toLowerCase().replace(/[^a-z0-9]/g,"");
+const special={
+ethanfonsecamoreno:"ethan-moreno",
+dylancjones:"dylan-jones",
+joshuamckinney:"josh-mckinney",
+jeremysjeffries:"jeremy-jeffries",
+ericpedleyhayden:"eric-hayden",
+randyschweitzerrsi:"randy-schweitzer",
+sebastianmicheals:"sebastian-michaels",
+vicenteguerrero:"vincente-guerrero"
+};
+let slug=special[key]||n.toLowerCase()
+  .replace(/[^a-z0-9]+/g,"-")
+  .replace(/^-+|-+$/g,"");
+const safe=shown
+ .replace(/&/g,"&amp;")
+ .replace(/</g,"&lt;")
+ .replace(/>/g,"&gt;")
+ .replace(/"/g,"&quot;")
+ .replace(/'/g,"&#039;");
+if(!slug) return safe;
+const url="https://hunterwelborn32-creator.github.io/HLRN-App/driver-photos/cutout/"+slug+".webp";
+return '<span style="display:inline-flex;align-items:center;gap:10px;min-height:58px;vertical-align:middle">'
++'<img src="'+url+'" alt="" loading="lazy" decoding="async" onerror="this.remove()" '
++'style="display:block;width:50px;height:58px;flex:0 0 50px;object-fit:contain;object-position:center bottom;'
++'margin:-7px 0 -6px;background:transparent;border:0;outline:0;box-shadow:none">'
++'<span>'+safe+'</span></span>';
+}
+function escapeHTML(
+value
+){
+return String(
+value === undefined ||
+value === null
+?
+""
+:
+value
+)
+.replace(
+/&/g,
+"&amp;"
+)
+.replace(
+/</g,
+"&lt;"
+)
+.replace(
+/>/g,
+"&gt;"
+)
+.replace(
+/"/g,
+"&quot;"
+)
+.replace(
+/'/g,
+"&#039;"
+);
+}
+/* =========================
+   ERROR
+========================= */
+function showError(
+message
+){
+document
+.getElementById(
+"driverBody"
+)
+.innerHTML = `
+<tr>
+<td
+colspan="11"
+class="message error"
+>
+${escapeHTML(
+message
+)}
+</td>
+</tr>
+`;
+document
+.getElementById(
+"teamBody"
+)
+.innerHTML = `
+<tr>
+<td
+colspan="16"
+class="message error"
+>
+${escapeHTML(
+message
+)}
+</td>
+</tr>
+`;
+document
+.getElementById(
+"raceResultsBody"
+)
+.innerHTML = `
+<tr>
+<td
+colspan="6"
+class="message error"
+>
+${escapeHTML(
+message
+)}
+</td>
+</tr>
+`;
+}
+/* =========================
+   START
+========================= */
+
+// Subscribe to the ONE shared data layer. Never open six duplicate JSONP requests.
+(function connectHLRNSharedStandings(){
+  const hub = window.parent && window.parent.HLRNData;
+  if(!hub){ hlrnStandingsLoadError(new Error('Shared data library not loaded.')); return; }
+  hub.subscribe(function(detail){
+    try {
+      if(detail.snapshot) hlrnRenderSharedSnapshot(detail.snapshot);
+      else hlrnApplyLeagueStatus();
+    } catch(err){ hlrnStandingsLoadError(err); }
+  });
+  loadEverything();
+})();
+</script>
+<script>
+(function(){
+  function updateMondayStandingsTicker(){
+    const ticker =
+      document.getElementById(
+        "mondayStandingsTicker"
+      );
+    if(!ticker) return;
+    const rows =
+      [...document.querySelectorAll(
+        "#driverBody tr"
+      )];
+    const validRows =
+      rows.filter(
+        row =>
+          row.querySelector(".name-col") &&
+          !row.querySelector(".message")
+      );
+    if(!validRows.length) return;
+    const leaders =
+      validRows
+      .slice(0,5)
+      .map(function(row,index){
+        const name =
+          row.querySelector(
+            ".name-col"
+          )?.textContent.trim() || "";
+        const pts =
+          row.querySelector(
+            ".points"
+          )?.textContent.trim() || "";
+        return (
+          "P" +
+          (index+1) +
+          " " +
+          name +
+          (
+            pts
+            ? " • " + pts + " PTS"
+            : ""
+          )
+        );
+      })
+      .filter(Boolean);
+    let text =
+      "<b>MONDAY CHAMPIONSHIP</b>";
+    if(leaders.length){
+      text +=
+        "<em>◆</em>" +
+        leaders.join(
+          "<em>◆</em>"
+        );
+    }
+    text +=
+      "<em>◆</em>" +
+      "<b>HLRN MONDAY NIGHT LEAGUE</b>" +
+      " • DRIVER STANDINGS • TEAM STANDINGS • LAST RACE";
+    ticker.innerHTML = text;
+    ticker.style.animationDuration = "38s";
+  }
+  document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+      const targets =
+        document.querySelectorAll(
+          ".tabs,.section-header,.table-shell,.last-race-card"
+        );
+      targets.forEach(
+        el =>
+          el.classList.add(
+            "monday-reveal"
+          )
+      );
+      if(
+        "IntersectionObserver"
+        in window
+      ){
+        const io =
+          new IntersectionObserver(
+            entries => {
+              entries.forEach(
+                entry => {
+                  if(
+                    entry.isIntersecting
+                  ){
+                    entry.target
+                      .classList
+                      .add(
+                        "in-view"
+                      );
+                    io.unobserve(
+                      entry.target
+                    );
+                  }
+                }
+              );
+            },
+            {
+              threshold:.08
+            }
+          );
+        targets.forEach(
+          el => io.observe(el)
+        );
+      } else {
+        targets.forEach(
+          el =>
+            el.classList.add(
+              "in-view"
+            )
+        );
+      }
+      setTimeout(
+        updateMondayStandingsTicker,
+        1500
+      );
+      setTimeout(
+        updateMondayStandingsTicker,
+        3500
+      );
+    }
+  );
+  const driverBody =
+    document.getElementById(
+      "driverBody"
+    );
+  if(driverBody){
+    const mo =
+      new MutationObserver(
+        updateMondayStandingsTicker
+      );
+    mo.observe(
+      driverBody,
+      {
+        childList:true,
+        subtree:true
+      }
+    );
+  }
+})();
+</script>
+<script>
+(function(){
+  function clock(){
+    const el=document.getElementById('ccClock');
+    if(!el)return;
+    try{el.textContent=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true}).format(new Date())}catch(e){}
+  }
+  setInterval(clock,1000);clock();
+  function safeNum(v){const n=Number(v);return Number.isFinite(n)?n:0}
+  function topBy(arr,key){return (arr||[]).slice().sort((a,b)=>safeNum(b[key])-safeNum(a[key]))[0]||null}
+  function setStatus(text,color){const s=document.getElementById('ccDataStatus');if(s){s.textContent=text;s.style.color=color||'#fff'}}
+  function updateChase(){
+    if(!Array.isArray(drivers) || !drivers.length)return false;
+    const sorted=drivers.slice().sort((a,b)=>safeNum(a.rank)-safeNum(b.rank)||safeNum(b.points)-safeNum(a.points));
+    const leader=sorted[0],second=sorted[1];
+    if(leader){
+      document.getElementById('ccLeaderName').textContent=leader.driver||'Unknown';
+      document.getElementById('ccLeaderPoints').textContent=formatNumber(leader.points);
+      const gap=second?safeNum(leader.points)-safeNum(second.points):0;
+      document.getElementById('ccLeaderGap').innerHTML=second?'<b>'+escapeHTML(second.driver)+'</b> trails by <b>'+formatNumber(gap)+'</b> points.':'No second-place driver available.';
+    }
+    const wins=topBy(sorted,'wins');if(wins){document.getElementById('ccWinsLeader').textContent=wins.driver;document.getElementById('ccWinsValue').textContent=formatNumber(wins.wins)+' wins'}
+    const t5=topBy(sorted,'top5');if(t5){document.getElementById('ccTop5Leader').textContent=t5.driver;document.getElementById('ccTop5Value').textContent=formatNumber(t5.top5)+' top 5s'}
+    const mover=sorted.slice().sort((a,b)=>safeNum(b.change)-safeNum(a.change))[0];if(mover){document.getElementById('ccMoverLeader').textContent=mover.driver;document.getElementById('ccMoverValue').textContent=(safeNum(mover.change)>0?'+':'')+safeNum(mover.change)+' positions'}
+    const incLeader=sorted.map(d=>{const t=getDriverTotals(d.driverId);return {...d,_inc:t.inc}}).sort((a,b)=>b._inc-a._inc)[0];if(incLeader){document.getElementById('ccIncLeader').textContent=incLeader.driver;document.getElementById('ccIncValue').textContent=formatNumber(incLeader._inc)+' incidents'}
+    if(second){document.getElementById('ccBattleText').textContent=(leader.driver||'P1')+' vs '+(second.driver||'P2');document.getElementById('ccBattleSub').textContent=formatNumber(safeNum(leader.points)-safeNum(second.points))+' point gap'}
+    const top5=document.getElementById('ccTopFive');if(top5){const lp=safeNum(leader?.points);top5.innerHTML=sorted.slice(0,5).map((d,i)=>{const gap=lp-safeNum(d.points);return '<div class="cc-battle-item"><div class="cc-battle-pos">P'+(i+1)+'</div><div class="cc-battle-name">'+escapeHTML(d.driver)+'</div><div class="cc-battle-pts">'+formatNumber(d.points)+' PTS</div><div class="cc-battle-gap">'+(i===0?'LEADER':'-'+formatNumber(gap))+'</div></div>'}).join('')}
+    if(Array.isArray(teams)&&teams.length){const ts=teams.slice().sort((a,b)=>safeNum(a.rank)-safeNum(b.rank)||safeNum(b.points)-safeNum(a.points));const t=ts[0];if(t){document.getElementById('ccTeamLeader').textContent=t.team||'Unknown';document.getElementById('ccTeamLeaderPts').textContent=formatNumber(t.points,1)+' points'}}
+    if(Array.isArray(results)&&results.length){let latest=0;results.forEach(r=>latest=Math.max(latest,safeNum(r.raceNumber)));const rr=results.filter(r=>safeNum(r.raceNumber)===latest).sort((a,b)=>safeNum(a.finish)-safeNum(b.finish));const w=rr.find(r=>safeNum(r.finish)===1);if(w){const d=driverMap[String(w.driverId)];document.getElementById('ccLatestWinner').textContent=d?d.driver:'Unknown Driver';document.getElementById('ccLatestRace').textContent=(rr[0]?.track||'Last Race')+' • Race '+latest}}
+    if(typeof window.hlrnApplyLeagueStatus==='function') window.hlrnApplyLeagueStatus();
+    return true;
+  }
+  window.updateMondayChaseDashboard=updateChase;
+  document.addEventListener('DOMContentLoaded',()=>{
+    setTimeout(updateChase,500);setTimeout(updateChase,1600);setTimeout(updateChase,3500);
+    const body=document.getElementById('driverBody');if(body&&'MutationObserver'in window){new MutationObserver(updateChase).observe(body,{childList:true,subtree:true})}
+  });
+  setInterval(updateChase,10000);
+  window.addEventListener('error',function(e){
+    if(String(e.message||'').toLowerCase().includes('hlrn'))setStatus('CONNECTION ERROR','#ff5555');
+  });
+})();
+</script>
+<script id="mondayRaceReportLoader">
+(function(){
+  const REPORT_B64="";
+  let reportLoaded=false;
+  let reportObserver=null;
+  function decodeReport(){
+    const bytes=Uint8Array.from(atob(REPORT_B64),c=>c.charCodeAt(0));
+    return new TextDecoder("utf-8").decode(bytes);
+  }
+  function resizeReport(){}
+  function loadRaceReport(){
+    if(reportLoaded){resizeReport();return;}
+    const frame=document.getElementById("mondayRaceReportFrame");
+    if(!frame) return;
+    frame.addEventListener("load",function(){
+      reportLoaded=true;
+      resizeReport();
+      try{
+        const doc=frame.contentDocument;
+      }catch(e){}
+    },{once:true});
+    frame.srcdoc=hlrnLightRaceReport(decodeReport());
+  }
+  const originalShowTab=window.showTab;
+  window.showTab=function(id,button){
+    if(typeof originalShowTab==="function") originalShowTab(id,button);
+    if(id==="raceReport") loadRaceReport();
+  };
+})();
+</script>
+<script id="HLRN_READABLE_STATS_TOGGLE">
+document.addEventListener("DOMContentLoaded",function(){
+  function addToggle(panelId){
+    const panel=document.getElementById(panelId);
+    if(!panel) return;
+    const header=panel.querySelector(".section-header");
+    if(!header || header.querySelector(".read-more-stats")) return;
+    const existingCount=header.querySelector(".count");
+    const tools=document.createElement("div");
+    tools.className="read-tools";
+    if(existingCount){
+      tools.appendChild(existingCount);
+    }
+    const button=document.createElement("button");
+    button.type="button";
+    button.className="read-more-stats";
+    button.textContent="Show More Stats";
+    button.setAttribute("aria-expanded","false");
+    button.addEventListener("click",function(){
+      const open=panel.classList.toggle("show-advanced");
+      button.textContent=open ? "Show Less Stats" : "Show More Stats";
+      button.setAttribute("aria-expanded",open ? "true" : "false");
+    });
+    tools.appendChild(button);
+    header.appendChild(tools);
+  }
+
+  addToggle("teams");
+});
+</script>
+</body>
+</html>
