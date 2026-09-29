@@ -6,7 +6,7 @@ const SERIES={
   sunday:{
     key:"sunday",label:"Sunday Night League",short:"Sunday Night",dow:0,hour:20,minute:30,
     network:"High Line Racing Network",broadcaster:"Tommy Rogers",
-    channelUrl:"https://www.youtube.com/@High_Line_Racing",directOnly:true
+    channelUrl:"https://www.youtube.com/@High_Line_Racing",uploadsUser:"High_Line_Racing"
   },
   monday:{
     key:"monday",label:"Monday Night League",short:"Monday Night",dow:1,hour:20,minute:30,
@@ -72,13 +72,17 @@ function setCountdown(target){
   Object.entries(vals).forEach(([k,v])=>{const el=document.querySelector('[data-count="'+k+'"]');if(el)el.textContent=pad(v)});
 }
 function playerUrl(s,live){
-  if(s.directOnly)return "";
+  if(s.uploadsUser){
+    return "https://www.youtube.com/embed?listType=user_uploads&list="+encodeURIComponent(s.uploadsUser)+"&rel=0";
+  }
   return live
     ? "https://www.youtube.com/embed/live_stream?channel="+encodeURIComponent(s.channelId)+"&autoplay=0&rel=0"
     : "https://www.youtube.com/embed/videoseries?list="+encodeURIComponent(s.uploads)+"&rel=0";
 }
 function replayUrl(s){
-  if(s.directOnly)return "";
+  if(s.uploadsUser){
+    return "https://www.youtube.com/embed?listType=user_uploads&list="+encodeURIComponent(s.uploadsUser)+"&rel=0";
+  }
   return "https://www.youtube.com/embed/videoseries?list="+encodeURIComponent(s.uploads)+"&rel=0";
 }
 
@@ -94,20 +98,11 @@ function render(){
   const s=SERIES[active];
   const isLive=!!(state.current&&state.current.series.key===active);
   const main=$("#bcMainPlayer");
-  const sundayPanel=$("#bcSundayChannelPanel");
   if(main){
-    if(s.directOnly){
-      main.removeAttribute("src");
-      main.dataset.src="";
-      main.hidden=true;
-      if(sundayPanel)sundayPanel.hidden=false;
-    }else{
-      if(sundayPanel)sundayPanel.hidden=true;
-      main.hidden=false;
-      const desired=playerUrl(s,isLive);
-      if(main.dataset.src!==desired){main.src=desired;main.dataset.src=desired}
-      main.title=(isLive?"Live ":"Latest ")+s.label+" broadcast";
-    }
+    main.hidden=false;
+    const desired=playerUrl(s,isLive);
+    if(main.dataset.src!==desired){main.src=desired;main.dataset.src=desired}
+    main.title=(s.key==="sunday"&&!isLive?"Previous ":"Latest ")+s.label+" broadcast";
   }
 
   $$(".bc-tab").forEach(btn=>btn.classList.toggle("active",btn.dataset.series===active));
@@ -116,11 +111,11 @@ function render(){
   const pTitle=$("#bcPlayerTitle");
   const pDesc=$("#bcPlayerDesc");
   const yt=$("#bcYoutubeLink");
-  if(pStatus)pStatus.textContent=s.directOnly?(isLive?"SUNDAY RACE NIGHT":"HLRN SUNDAY CHANNEL"):(isLive?"ON AIR":"LATEST REPLAYS");
-  if(pSub)pSub.textContent=s.directOnly?"Official coverage at youtube.com/@High_Line_Racing":(isLive?"Scheduled race-night live feed":"Most recent uploads from the broadcast channel");
+  if(pStatus)pStatus.textContent=s.key==="sunday"?(isLive?"SUNDAY RACE NIGHT":"PREVIOUS SUNDAY RACE"):(isLive?"ON AIR":"LATEST REPLAYS");
+  if(pSub)pSub.textContent=s.key==="sunday"?"Official High Line Racing YouTube uploads":"Most recent uploads from the broadcast channel";
   if(pTitle)pTitle.textContent=s.label+" • "+s.broadcaster;
-  if(pDesc)pDesc.textContent=s.directOnly
-    ? "Sunday broadcasts and replays are available on the official High Line Racing YouTube channel • 8:30 PM ET."
+  if(pDesc)pDesc.textContent=s.key==="sunday"
+    ? "Previous Sunday coverage from the official High Line Racing YouTube channel • Sunday Night League • 8:30 PM ET."
     : (isLive?"Watch the scheduled live race broadcast. ":"Catch up on recent HLRN race coverage. ")+s.network+" • 8:30 PM ET.";
   if(yt){yt.href=s.channelUrl;yt.textContent="OPEN "+(active==="sunday"?"HLRN":"RSI")+" YOUTUBE ↗"}
 
@@ -172,7 +167,6 @@ function bind(){
 
 function initReplayFrames(){
   Object.values(SERIES).forEach(s=>{
-    if(s.directOnly)return;
     const f=document.querySelector('[data-replay-frame="'+s.key+'"]');
     if(f&&!f.src)f.src=replayUrl(s);
   });
