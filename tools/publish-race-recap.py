@@ -692,6 +692,8 @@ def publish(recap):
         "raceKey": model["raceKey"],
         "slug": model["slug"],
         "url": f"/news/race-recaps/{model['slug']}/",
+        "rawUrl": f"/data/race-recaps/{model['slug']}.json",
+        "resultsUrl": f"/results/?recap={model['slug']}",
         "title": model["title"],
         "subtitle": model["subtitle"],
         "publishedAt": model["publishedAt"],
