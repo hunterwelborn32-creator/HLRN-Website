@@ -1425,26 +1425,49 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
 
   function accurateRaceEvents(raceState){
     const raw = raceState && Array.isArray(raceState.events) ? raceState.events : [];
+    const recorded = raceState && Array.isArray(raceState.recorderTimeline) ? raceState.recorderTimeline : [];
+
     // Raw bridge lead events are intentionally excluded. Only stable, on-track,
-    // client-verified changes are shown/count toward the report. Incident inference
-    // is also excluded from the website because HLRN now uses verified race facts only.
+    // client-verified lead changes are shown. Incident inference is also excluded
+    // because HLRN's public Timeline is reserved for verified race-control/scoring facts.
     const hiddenTypes = new Set(["lead","incident","possible_incident","possible_contact","possible_spin","possible_wreck","offtrack","pit"]);
     const clean = raw.filter(e => !hiddenTypes.has(String(e?.type || "").toLowerCase()));
-    const merged = [...clean, ...verifiedLeadEvents];
+
+    const candidates = [...clean, ...recorded, ...verifiedLeadEvents];
+    const seen = new Set();
+    const merged = [];
+
+    candidates.forEach((e, i) => {
+      if(!e) return;
+      const type = String(e.type || "session").toLowerCase();
+      const title = String(e.title || "").trim();
+      const text = String(e.text || "").trim();
+      const lap = e.lap != null && Number.isFinite(Number(e.lap)) ? Number(e.lap) : null;
+
+      // Prefer semantic identity over IDs because the same caution/penalty may be
+      // reported by both the bridge and the authoritative server recorder.
+      const normalizedTitle = title.toUpperCase()
+        .replace(/CAUTION\s*#?\d*/g,"CAUTION")
+        .replace(/GREEN FLAG\s*\/\s*RESTART/g,"RESTART");
+      const key = [type, lap ?? "", normalizedTitle, text].join("|");
+      if(seen.has(key)) return;
+      seen.add(key);
+      merged.push({...e, __order:i});
+    });
+
     return merged
-      .map((e, i) => ({e, i}))
       .sort((a,b) => {
-        const al = Number(a.e?.lap);
-        const bl = Number(b.e?.lap);
+        const al = Number(a?.lap);
+        const bl = Number(b?.lap);
         const av = Number.isFinite(al) ? al : -1;
         const bv = Number.isFinite(bl) ? bl : -1;
         if(av !== bv) return av - bv;
-        const at = Number(a.e?.capturedAt || 0);
-        const bt = Number(b.e?.capturedAt || 0);
+        const at = Number(a?.capturedAt || a?.createdAt || 0);
+        const bt = Number(b?.capturedAt || b?.createdAt || 0);
         if(at && bt && at !== bt) return at - bt;
-        return a.i - b.i;
+        return Number(a.__order||0) - Number(b.__order||0);
       })
-      .map(x => x.e);
+      .map(({__order,...e}) => e);
   }
 
   function activateTab(tabName){
