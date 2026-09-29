@@ -2,178 +2,118 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HLRN Team Profiles</title>
-<meta name="description" content="Explore High Line Racing Network team profiles, rosters, standings and performance across HLRN competition.">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>HLRN Teams | Team Championship Center</title>
+<meta name="description" content="High Line Racing Network team standings, driver lineups, wins, average finish, recent form, team comparisons and championship profiles.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://highlineracingnetwork.com/teams/">
+<meta name="theme-color" content="#07090d">
+<link rel="icon" href="../favicon.ico">
+<link rel="stylesheet" href="../assets/site-shell.css?v=20260929mobile2">
+<link rel="stylesheet" href="../assets/teams/team-center.css?v=20260929tc1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/site-shell.css?v=20260928v6">
-<style>
-*{box-sizing:border-box}html,body{margin:0;background:#f4f5f6;color:#111214;font-family:Inter,Arial,sans-serif}
-:root{--accent:#d71920;--green:#55b932;--yellow:#f7c900;--ink:#111214;--line:#dfe3e6;--muted:#68717a;--soft:#f7f8f9}
-body.monday{--accent:#55b932}
-.page{width:min(1500px,calc(100% - 34px));margin:auto;padding:34px 0 70px}
-.hero{background:#fff;border:1px solid var(--line);border-top:5px solid var(--accent);padding:32px clamp(20px,4vw,50px);display:flex;justify-content:space-between;gap:28px;align-items:end}
-.eyebrow{font-size:9px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
-h1,h2,h3{font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif;text-transform:uppercase;margin:0}
-h1{font-size:clamp(42px,5vw,76px);line-height:.9;font-weight:900;letter-spacing:-.04em}
-.hero-copy{max-width:470px;color:var(--muted);font-size:12px;line-height:1.6;font-weight:700}
-.league-tabs{display:flex;background:#fff;border:1px solid var(--line);border-top:0}
-.league-tab{appearance:none;border:0;border-right:1px solid var(--line);background:#fff;padding:16px 24px;font-family:"Barlow Condensed";font-size:17px;font-weight:900;text-transform:uppercase;cursor:pointer}
-.league-tab.active{box-shadow:inset 0 -4px 0 var(--accent);background:#fafafa}
-.toolbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin:22px 0 14px}
-.toolbar h2{font-size:30px}
-.status{font-size:11px;color:var(--muted);font-weight:700}
-.team-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
-.team-card{appearance:none;text-align:left;border:1px solid var(--line);background:#fff;padding:0;cursor:pointer;transition:.15s ease}
-.team-card:hover{transform:translateY(-2px);box-shadow:0 12px 25px rgba(17,18,20,.08);border-color:#c8ced3}
-.team-band{height:7px;background:var(--accent)}
-.team-card-body{padding:20px}
-.team-rank{font-size:10px;color:var(--muted);font-weight:900;letter-spacing:.13em;text-transform:uppercase}
-.team-name{font:900 34px/1 "Barlow Condensed";text-transform:uppercase;margin-top:5px}
-.team-points{margin-top:18px;font:900 34px/1 "Barlow Condensed";color:var(--accent)}
-.team-points small{display:block;margin-top:5px;font:800 9px/1 Inter;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
-.team-mini{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);margin-top:18px}
-.team-mini div{padding:12px 8px 0;border-right:1px solid var(--line)}.team-mini div:last-child{border-right:0}
-.team-mini b{display:block;font-size:18px}.team-mini span{display:block;margin-top:3px;font-size:8px;color:var(--muted);font-weight:900;text-transform:uppercase;letter-spacing:.08em}
-.profile{display:none}
-.back{appearance:none;border:0;background:#111;color:#fff;padding:12px 17px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;cursor:pointer;margin:22px 0 10px}
-.profile-hero{position:relative;overflow:hidden;background:#111;color:#fff;border-top:6px solid var(--accent);padding:40px clamp(22px,5vw,66px);display:grid;grid-template-columns:1.25fr .75fr;gap:30px;min-height:290px}
-.profile-hero:after{content:"TEAM";position:absolute;right:-10px;bottom:-55px;font:900 180px/1 "Barlow Condensed";color:rgba(255,255,255,.035);pointer-events:none}
-.profile-kicker{font-size:9px;letter-spacing:.17em;text-transform:uppercase;font-weight:900;color:#c8cdd2}
-.profile-name{font:900 clamp(56px,8vw,110px)/.85 "Barlow Condensed";text-transform:uppercase;letter-spacing:-.04em;margin-top:10px}
-.profile-rank{margin-top:18px;font-size:13px;font-weight:800;color:#cbd0d5}
-.profile-rank b{color:#fff}
-.hero-stats{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:10px;align-content:center}
-.hero-stat{padding:17px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.05)}
-.hero-stat span{display:block;font-size:8px;color:#b5bdc5;font-weight:900;letter-spacing:.1em;text-transform:uppercase}
-.hero-stat b{display:block;margin-top:7px;font:900 28px/1 "Barlow Condensed"}
-.section-title{font-size:28px;margin:30px 0 12px;display:flex;align-items:center;gap:10px}
-.section-title:before{content:"";width:5px;height:25px;background:var(--accent)}
-.stats-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
-.stat{background:#fff;border:1px solid var(--line);padding:18px}
-.stat b{display:block;font:900 27px/1 "Barlow Condensed"}.stat span{display:block;margin-top:6px;font-size:8px;color:var(--muted);font-weight:900;letter-spacing:.1em;text-transform:uppercase}
-.roster-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-.driver-card{display:flex;align-items:center;gap:12px;text-decoration:none;color:#111;background:#fff;border:1px solid var(--line);padding:13px;min-height:92px}
-.driver-card:hover{border-color:var(--accent);box-shadow:0 8px 18px rgba(17,18,20,.06)}
-.driver-photo{width:62px;height:68px;flex:0 0 62px;object-fit:contain;object-position:center bottom}
-.driver-name{font:900 20px/1 "Barlow Condensed";text-transform:uppercase}
-.driver-meta{margin-top:5px;color:var(--muted);font-size:9px;font-weight:800;text-transform:uppercase}
-.driver-meta b{color:var(--accent)}
-.empty{background:#fff;border:1px dashed #cfd4d8;padding:24px;color:var(--muted);font-size:12px;font-weight:700}
-.table-shell{overflow:auto;border:1px solid var(--line);background:#fff}
-table{width:100%;min-width:900px;border-collapse:collapse}
-th{background:#f1f3f4;color:#596168;font-size:8px;letter-spacing:.09em;text-transform:uppercase;text-align:left;padding:11px;border-bottom:1px solid var(--line)}
-td{padding:12px 11px;border-bottom:1px solid #e7eaec;font-size:11px;font-weight:700}
-tbody tr:nth-child(even) td{background:#fafbfb}
-.pos{font-weight:900;color:var(--accent)}
-@media(max-width:1000px){.team-grid{grid-template-columns:repeat(2,1fr)}.roster-grid{grid-template-columns:repeat(2,1fr)}.stats-grid{grid-template-columns:repeat(3,1fr)}.profile-hero{grid-template-columns:1fr}}
-@media(max-width:650px){.page{width:calc(100% - 20px);padding-top:18px}.hero{display:block;padding:24px 17px}.hero-copy{margin-top:14px}.league-tabs{display:grid;grid-template-columns:1fr 1fr}.league-tab{padding:14px 8px}.team-grid,.roster-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(2,1fr)}.profile-hero{padding:28px 19px}.profile-name{font-size:64px}.hero-stats{grid-template-columns:1fr 1fr}}
-</style>
-
-<link rel="canonical" href="https://highlineracingnetwork.com/teams/">
-
-<meta name="theme-color" content="#07090d">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
-<body>
-<div class="page">
-  <section class="hero">
-    <div><div class="eyebrow">High Line Racing Network</div><h1>Team Profiles</h1></div>
-    <div class="hero-copy">Open a Sunday or Monday team to view its championship position, full season totals, roster, and recent race activity.</div>
-  </section>
-  <nav class="league-tabs">
-    <button class="league-tab active" data-league="sunday">Sunday Teams</button>
-    <button class="league-tab" data-league="monday">Monday Teams</button>
-  </nav>
+<body class="tc-page">
 
-  <section id="directory">
-    <div class="toolbar"><h2 id="directoryTitle">Sunday Team Standings</h2><div class="status" id="status">Loading shared data…</div></div>
-    <div id="teamGrid" class="team-grid"></div>
-  </section>
+<header class="tc-mast">
+  <div class="tc-shell tc-mast-grid">
+    <div>
+      <div class="tc-kicker"><span>HLRN //</span> TEAM CHAMPIONSHIP CENTER</div>
+      <h1>HLRN <span>TEAMS</span></h1>
+      <p>Follow the organizations behind the championship fight. Compare team performance, open full driver lineups, track recent form and see how every Sunday and Monday team stacks up across the season.</p>
+    </div>
 
-  <section id="profile" class="profile">
-    <button id="back" class="back" type="button">← Team Standings</button>
-    <div id="profileContent"></div>
-  </section>
-</div>
-<script src="../assets/hlrn-core.js?v=teams-1"></script>
-<script>
-const PHOTO_BASE="https://hunterwelborn32-creator.github.io/HLRN-App/driver-photos/cutout/";
-const PHOTO_ALIASES={ethanfonsecamoreno:"ethan-moreno",dylancjones:"dylan-jones",joshuamckinney:"josh-mckinney",jeremysjeffries:"jeremy-jeffries",ericpedleyhayden:"eric-hayden",randyschweitzerrsi:"randy-schweitzer",sebastianmicheals:"sebastian-michaels",vicenteguerrero:"vincente-guerrero",vicenteguerrero2:"vincente-guerrero",brianhebbard2:"brian-hebbard",brianhayes4:"brian-hayes",ryanwilson21:"ryan-wilson",timothytyler3:"timothy-tyler",matthewbrown49:"matthew-brown",matthewgraham20:"matthew-graham",nicholasbaumann2:"nicholas-baumann",grantwessley2:"grant-wessley",brycehinton2:"bryce-hinton"};
-const esc=v=>String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
-const num=v=>{const n=Number(v);return Number.isFinite(n)?n:0};
-const fmt=(v,d=1)=>{const n=Number(v);if(!Number.isFinite(n))return "—";if(Math.abs(n-Math.round(n))<.0001)return String(Math.round(n));return n.toFixed(d)};
-function pretty(name){let s=String(name||"").trim();if(s.includes(",")){const p=s.split(","),last=(p.shift()||"").trim().replace(/\d+$/,""),first=p.join(" ").trim();return (first+" "+last).trim()}return s.replace(/\d+$/,"").trim()}
-function photo(name){const p=pretty(name),key=p.toLowerCase().replace(/[^a-z0-9]/g,"");const slug=PHOTO_ALIASES[key]||p.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");return slug?PHOTO_BASE+slug+".webp":""}
-function teamSlug(v){return String(v||"").trim().toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")}
-const q=new URLSearchParams(location.search);
-let activeLeague=["sunday","monday"].includes(String(q.get("league")||"").toLowerCase())?String(q.get("league")).toLowerCase():"sunday";
-let requestedTeam=String(q.get("team")||"").trim();
-let snapshot=null;
+    <aside class="tc-summary" aria-label="HLRN team championship summary">
+      <div class="tc-summary-head">
+        <strong id="tcSummaryLeague">SUNDAY NIGHT</strong>
+        <span id="tcUpdated">CONNECTING</span>
+      </div>
+      <div class="tc-summary-main">
+        <small>CHAMPIONSHIP LEADER</small>
+        <strong id="tcSummaryLeader">CONNECTING</strong>
+        <p id="tcSummaryCopy">Loading HLRN team standings…</p>
+      </div>
+      <div class="tc-summary-stats">
+        <div><b id="tcSummaryTeams">--</b><span>Teams</span></div>
+        <div><b id="tcSummaryDrivers">--</b><span>Drivers</span></div>
+        <div><b id="tcSummaryWins">--</b><span>Wins</span></div>
+      </div>
+    </aside>
+  </div>
+</header>
 
-function league(){return snapshot?.leagues?.[activeLeague]||{drivers:[],teams:[],results:[],teamRosters:{}}}
-function findTeam(name){const key=teamSlug(name);return (league().teams||[]).find(t=>teamSlug(t.team)===key)}
-function rosterFor(teamName){
-  const rosters=league().teamRosters||{};
-  const exact=Object.keys(rosters).find(k=>teamSlug(k)===teamSlug(teamName));
-  return exact?(rosters[exact]||[]):[];
-}
-function driverMap(){return new Map((league().drivers||[]).map(d=>[String(d.driverId),d]))}
-function syncLeagueUi(){
-  document.body.classList.toggle("monday",activeLeague==="monday");
-  document.querySelectorAll(".league-tab").forEach(b=>b.classList.toggle("active",b.dataset.league===activeLeague));
-  document.getElementById("directoryTitle").textContent=(activeLeague==="sunday"?"Sunday":"Monday")+" Team Standings";
-}
-function teamCard(t){
- return '<button class="team-card" type="button" data-team="'+esc(t.team)+'"><div class="team-band"></div><div class="team-card-body">'
- +'<div class="team-rank">Championship P'+esc(t.rank)+'</div><div class="team-name">'+esc(t.team)+'</div>'
- +'<div class="team-points">'+fmt(t.points)+'<small>Team Points</small></div>'
- +'<div class="team-mini"><div><b>'+fmt(t.wins)+'</b><span>Wins</span></div><div><b>'+fmt(t.top5)+'</b><span>Top 5</span></div><div><b>'+fmt(t.lapsLed)+'</b><span>Laps Led</span></div></div>'
- +'</div></button>';
-}
-function renderDirectory(){
- syncLeagueUi();
- const teams=[...(league().teams||[])].sort((a,b)=>num(a.rank)-num(b.rank)||num(b.points)-num(a.points));
- document.getElementById("teamGrid").innerHTML=teams.length?teams.map(teamCard).join(""):'<div class="empty">No team standings are available yet.</div>';
- document.getElementById("status").textContent=snapshot?.generatedAt?"Updated "+new Date(snapshot.generatedAt).toLocaleString():"Data unavailable";
- document.getElementById("profile").style.display="none";document.getElementById("directory").style.display="block";
-}
-function driverCard(entry){
- const map=driverMap(),d=map.get(String(entry.driverId))||{},name=pretty(d.driver||entry.driver),url="../drivers/?league="+encodeURIComponent(activeLeague)+"&driverId="+encodeURIComponent(entry.driverId||"")+"&driver="+encodeURIComponent(name);
- return '<a class="driver-card" href="'+url+'"><img class="driver-photo" src="'+esc(photo(name))+'" alt="" onerror="this.remove()">'
- +'<div><div class="driver-name">'+esc(name)+'</div><div class="driver-meta">P'+esc(d.rank??"—")+' • <b>'+esc(d.points??"—")+' PTS</b> • '+esc(d.wins??0)+' WINS</div></div></a>';
-}
-function renderProfile(team){
- syncLeagueUi();
- const roster=rosterFor(team.team),ids=new Set(roster.map(r=>String(r.driverId))),map=driverMap();
- const recent=(league().results||[]).filter(r=>ids.has(String(r.driverId))).sort((a,b)=>num(b.raceNumber)-num(a.raceNumber)||num(a.finish)-num(b.finish)).slice(0,30);
- const rows=recent.length?recent.map(r=>{const d=map.get(String(r.driverId));return '<tr><td>'+esc(r.raceNumber??"—")+'</td><td>'+esc(r.track||"—")+'</td><td>'+esc(pretty(d?.driver||"Unknown Driver"))+'</td><td class="pos">P'+esc(r.finish??"—")+'</td><td>'+esc(r.points??"—")+'</td><td>'+esc(r.lapsLed??"—")+'</td><td>'+esc(r.incidents??"—")+'</td><td>'+esc(r.status||"—")+'</td></tr>'}).join(""):'<tr><td colspan="8">No linked team race results are available yet.</td></tr>';
- const rosterHtml=roster.length?roster.map(driverCard).join(""):'<div class="empty">Roster data is still syncing from the SimRacerHub team page. Team championship stats are already live.</div>';
- document.getElementById("profileContent").innerHTML=
- '<section class="profile-hero"><div><div class="profile-kicker">'+(activeLeague==="sunday"?"Sunday Night League":"Monday Night League")+' / Team Profile</div><div class="profile-name">'+esc(team.team)+'</div><div class="profile-rank">Championship position <b>P'+esc(team.rank)+'</b> • '+fmt(team.points)+' points</div></div>'
- +'<div class="hero-stats"><div class="hero-stat"><span>Race Points</span><b>'+fmt(team.racePoints)+'</b></div><div class="hero-stat"><span>Stage Points</span><b>'+fmt(team.stagePoints)+'</b></div><div class="hero-stat"><span>Wins</span><b>'+fmt(team.wins)+'</b></div><div class="hero-stat"><span>Laps Led</span><b>'+fmt(team.lapsLed)+'</b></div></div></section>'
- +'<h2 class="section-title">Season Performance</h2><div class="stats-grid">'
- +[['Points',team.points],['Starts',team.starts],['Races Counted',team.racesCounted],['Wins',team.wins],['Top 5',team.top5],['Top 10',team.top10],['Race Points',team.racePoints],['Stage Points',team.stagePoints],['Bonus',team.bonus],['Penalty',team.penalty],['Laps',team.laps],['Laps Led',team.lapsLed],['Incidents',team.incidents]].map(([l,v])=>'<div class="stat"><b>'+fmt(v)+'</b><span>'+esc(l)+'</span></div>').join("")+'</div>'
- +'<h2 class="section-title">Team Roster</h2><div class="roster-grid">'+rosterHtml+'</div>'
- +'<h2 class="section-title">Recent Team Results</h2><div class="table-shell"><table><thead><tr><th>Race</th><th>Track</th><th>Driver</th><th>Finish</th><th>Points</th><th>Laps Led</th><th>Inc</th><th>Status</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
- document.getElementById("directory").style.display="none";document.getElementById("profile").style.display="block";
-}
-function openTeam(name,updateUrl=true){
- const team=findTeam(name);if(!team)return;
- requestedTeam=team.team;renderProfile(team);
- if(updateUrl){const p=new URLSearchParams({league:activeLeague,team:team.team});history.pushState({team:true},"","?"+p.toString())}
-}
-function setLeague(value){
- activeLeague=value;requestedTeam="";renderDirectory();
- history.pushState({team:false},"","?league="+encodeURIComponent(activeLeague));
-}
-document.querySelectorAll(".league-tab").forEach(b=>b.addEventListener("click",()=>setLeague(b.dataset.league)));
-document.getElementById("teamGrid").addEventListener("click",e=>{const c=e.target.closest(".team-card");if(c)openTeam(c.dataset.team)});
-document.getElementById("back").addEventListener("click",()=>{requestedTeam="";renderDirectory();history.pushState({team:false},"","?league="+encodeURIComponent(activeLeague))});
-window.addEventListener("popstate",()=>{const p=new URLSearchParams(location.search);activeLeague=["sunday","monday"].includes(p.get("league"))?p.get("league"):"sunday";requestedTeam=p.get("team")||"";requestedTeam&&findTeam(requestedTeam)?renderProfile(findTeam(requestedTeam)):renderDirectory()});
-(async()=>{try{snapshot=await HLRNData.load();syncLeagueUi();if(requestedTeam&&findTeam(requestedTeam))renderProfile(findTeam(requestedTeam));else renderDirectory()}catch(e){document.getElementById("status").textContent="Team data temporarily unavailable";document.getElementById("teamGrid").innerHTML='<div class="empty">HLRN team data could not be loaded.</div>'}})();
-</script>
-<script src="../assets/site-shell.js?v=20260929myhlrn1"></script>
+<main class="tc-main">
+  <div class="tc-shell">
+
+    <nav class="tc-tabs" aria-label="HLRN team leagues">
+      <button class="tc-tab sunday" type="button" data-league="sunday">Sunday Teams</button>
+      <button class="tc-tab monday" type="button" data-league="monday">Monday Teams</button>
+    </nav>
+
+    <section id="tcDirectory">
+      <section class="tc-board" aria-label="Team championship overview">
+        <article class="tc-leader-card">
+          <div class="tc-leader-label">TEAM CHAMPIONSHIP LEADER</div>
+          <div class="tc-leader-name" id="tcLeaderName">CONNECTING</div>
+          <div class="tc-leader-points" id="tcLeaderPoints">--</div>
+          <div class="tc-leader-meta">
+            <div><small>BEST DRIVER</small><b id="tcLeaderBest">--</b></div>
+            <div><small>WINS</small><b id="tcLeaderWins">--</b></div>
+            <div><small>AVG FINISH</small><b id="tcLeaderAvg">--</b></div>
+            <div><small>DRIVERS</small><b id="tcLeaderDrivers">--</b></div>
+          </div>
+        </article>
+
+        <div class="tc-side-stats">
+          <article class="tc-stat-card"><small>ACTIVE TEAMS</small><b id="tcTotalTeams">--</b><span>Current championship field</span></article>
+          <article class="tc-stat-card"><small>TEAMED DRIVERS</small><b id="tcTotalDrivers">--</b><span>Drivers attached to teams</span></article>
+          <article class="tc-stat-card"><small>MOST WINS</small><b id="tcMostWins">--</b><span>Winningest team this season</span></article>
+          <article class="tc-stat-card"><small>RECENT FORM</small><b id="tcHotTeam">--</b><span>Best recent team finishes</span></article>
+        </div>
+      </section>
+
+      <section class="tc-section">
+        <div class="tc-section-head">
+          <div><div class="tc-section-kicker">OFFICIAL HLRN STANDINGS</div><h2 id="tcStandingsTitle">Team Championship</h2></div>
+          <span>CLICK A TEAM TO OPEN ITS PROFILE</span>
+        </div>
+        <div class="tc-team-grid" id="tcTeamGrid">
+          <div class="tc-empty">Loading live HLRN team standings…</div>
+        </div>
+      </section>
+
+      <section class="tc-section">
+        <div class="tc-section-head">
+          <div><div class="tc-section-kicker">HEAD-TO-HEAD</div><h2>Compare Teams</h2></div>
+          <span>POINTS • WINS • FORM • BEST DRIVER</span>
+        </div>
+        <div class="tc-compare">
+          <div class="tc-compare-controls">
+            <select class="tc-select" id="tcCompareA" aria-label="First team"></select>
+            <div class="tc-vs">VS</div>
+            <select class="tc-select" id="tcCompareB" aria-label="Second team"></select>
+          </div>
+          <div class="tc-compare-grid" id="tcCompareGrid"></div>
+        </div>
+      </section>
+    </section>
+
+    <section class="tc-profile" id="tcProfile">
+      <button class="tc-back" id="tcBack" type="button">← Back to Team Championship</button>
+      <div id="tcProfileContent"></div>
+    </section>
+
+    <footer class="tc-footer">
+      <span>HIGH LINE RACING NETWORK • TEAM CHAMPIONSHIP CENTER</span>
+      <span>DRIVERS → TEAMS → STANDINGS → RESULTS</span>
+    </footer>
+  </div>
+</main>
+
+<script src="../assets/hlrn-core.js?v=teams-center1"></script>
+<script src="../assets/teams/team-center.js?v=20260929tc1"></script>
+<script src="../assets/site-shell.js?v=20260929teams1"></script>
 </body>
 </html>
