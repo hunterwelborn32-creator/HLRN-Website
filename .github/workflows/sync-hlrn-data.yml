@@ -16,6 +16,10 @@ concurrency:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    env:
+      HLRN_LEAGUE_WEBAPP_URL: ${{ secrets.HLRN_LEAGUE_WEBAPP_URL }}
+      HLRN_HOSTED_WEBAPP_URL: ${{ secrets.HLRN_HOSTED_WEBAPP_URL }}
+      HLRN_RECAP_URL: https://hlrn-live-feed.onrender.com/api/recap
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -26,27 +30,47 @@ jobs:
       - name: Test Python publishers
         run: python -m unittest tests/test_race_recap_publisher.py tests/test_driver_pages.py
       - name: Refresh leagues and optional Hosted snapshot
-        env:
-          HLRN_LEAGUE_WEBAPP_URL: ${{ secrets.HLRN_LEAGUE_WEBAPP_URL }}
-          HLRN_HOSTED_WEBAPP_URL: ${{ secrets.HLRN_HOSTED_WEBAPP_URL }}
         run: node tools/sync-data.mjs
       - name: Build published reports and profiles
         run: node tools/build-derived.mjs
       - name: Publish frozen post-race recap when available
-        env:
-          HLRN_RECAP_URL: https://hlrn-live-feed.onrender.com/api/recap
         run: python tools/publish-race-recap.py
       - name: Rebuild public sitemap
         run: python tools/build-sitemap.py
       - name: Commit verified data, reports, recaps and sitemap only when changed
         run: |
-          git add data/hlrn.json data/derived data/race-recaps
-          if [ -d news/race-recaps ]; then git add news/race-recaps; fi
-          if [ -f sitemap.xml ]; then git add sitemap.xml; fi
-          if ! git diff --cached --quiet; then
-            git config user.name "hlrn-data-bot"
-            git config user.email "actions@users.noreply.github.com"
+          git config user.name "hlrn-data-bot"
+          git config user.email "actions@users.noreply.github.com"
+
+          for attempt in 1 2 3; do
+            git fetch origin main
+
+            if [ "$(git rev-parse HEAD)" != "$(git rev-parse origin/main)" ]; then
+              echo "Main changed while sync was running; rebuilding against latest main (attempt $attempt)."
+              git reset --hard origin/main
+              node tools/sync-data.mjs
+              node tools/build-derived.mjs
+              python tools/publish-race-recap.py
+              python tools/build-sitemap.py
+            fi
+
+            git add data/hlrn.json data/derived data/race-recaps
+            if [ -d news/race-recaps ]; then git add news/race-recaps; fi
+            if [ -f sitemap.xml ]; then git add sitemap.xml; fi
+
+            if git diff --cached --quiet; then
+              echo "No publish changes."
+              exit 0
+            fi
+
             git commit -m "Sync HLRN data, reports, recaps and sitemap"
-            git pull --rebase origin main
-            git push
-          fi
+            if git push origin main; then
+              exit 0
+            fi
+
+            echo "Push raced another update; retrying from newest main."
+          done
+
+          echo "Unable to publish sync after 3 attempts."
+          exit 1
+
