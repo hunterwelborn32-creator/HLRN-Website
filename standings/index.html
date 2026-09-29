@@ -1839,18 +1839,7 @@ tbody tr:first-child td{
 }
 /* DRIVER STANDINGS — show the core story by default:
    POS, CHG, DRIVER, WINS, TOP 5, POINTS */
-#drivers:not(.show-advanced) th:nth-child(4),
-#drivers:not(.show-advanced) td:nth-child(4),
-#drivers:not(.show-advanced) th:nth-child(7),
-#drivers:not(.show-advanced) td:nth-child(7),
-#drivers:not(.show-advanced) th:nth-child(8),
-#drivers:not(.show-advanced) td:nth-child(8),
-#drivers:not(.show-advanced) th:nth-child(10),
-#drivers:not(.show-advanced) td:nth-child(10),
-#drivers:not(.show-advanced) th:nth-child(11),
-#drivers:not(.show-advanced) td:nth-child(11){
-  display:none!important;
-}
+
 /* TEAM STANDINGS — show POS, CHG, TEAM, WINS, TOP 5, POINTS. */
 #teams:not(.show-advanced) th:nth-child(4),
 #teams:not(.show-advanced) td:nth-child(4),
@@ -2492,6 +2481,17 @@ iframe{background:#fff!important;color-scheme:light!important}
 }
 &lt;/style&gt;
 
+&lt;style id=&quot;HLRN_DRIVER_COLUMNS_ALWAYS_VISIBLE_V3&quot;&gt;
+#drivers:not(.show-advanced) th:nth-child(n),
+#drivers:not(.show-advanced) td:nth-child(n),
+#drivers.show-advanced th:nth-child(n),
+#drivers.show-advanced td:nth-child(n){
+  display:table-cell!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+#drivers .read-more-stats{display:none!important}
+&lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
 &lt;div class=&quot;page-wrap&quot;&gt;
@@ -4032,7 +4032,7 @@ document.addEventListener(&quot;DOMContentLoaded&quot;,function(){
     tools.appendChild(button);
     header.appendChild(tools);
   }
-  addToggle(&quot;drivers&quot;);
+
   addToggle(&quot;teams&quot;);
 });
 &lt;/script&gt;
@@ -5344,18 +5344,7 @@ tbody tr:first-child td{
 }
 /* DRIVER STANDINGS — show the core story by default:
    POS, CHG, DRIVER, WINS, TOP 5, POINTS */
-#drivers:not(.show-advanced) th:nth-child(4),
-#drivers:not(.show-advanced) td:nth-child(4),
-#drivers:not(.show-advanced) th:nth-child(7),
-#drivers:not(.show-advanced) td:nth-child(7),
-#drivers:not(.show-advanced) th:nth-child(8),
-#drivers:not(.show-advanced) td:nth-child(8),
-#drivers:not(.show-advanced) th:nth-child(10),
-#drivers:not(.show-advanced) td:nth-child(10),
-#drivers:not(.show-advanced) th:nth-child(11),
-#drivers:not(.show-advanced) td:nth-child(11){
-  display:none!important;
-}
+
 /* TEAM STANDINGS — show POS, CHG, TEAM, WINS, TOP 5, POINTS. */
 #teams:not(.show-advanced) th:nth-child(4),
 #teams:not(.show-advanced) td:nth-child(4),
@@ -5997,6 +5986,17 @@ iframe{background:#fff!important;color-scheme:light!important}
 }
 &lt;/style&gt;
 
+&lt;style id=&quot;HLRN_DRIVER_COLUMNS_ALWAYS_VISIBLE_V3&quot;&gt;
+#drivers:not(.show-advanced) th:nth-child(n),
+#drivers:not(.show-advanced) td:nth-child(n),
+#drivers.show-advanced th:nth-child(n),
+#drivers.show-advanced td:nth-child(n){
+  display:table-cell!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+#drivers .read-more-stats{display:none!important}
+&lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
 &lt;div class=&quot;page-wrap&quot;&gt;
@@ -7051,15 +7051,6 @@ inc:inc,
 dnf:dnf
 };
 }
-}
-);
-return {
-led:
-led,
-inc:
-inc
-};
-}
 /* =========================
    TEAM STANDINGS
 ========================= */
@@ -7938,7 +7929,7 @@ document.addEventListener(&quot;DOMContentLoaded&quot;,function(){
     tools.appendChild(button);
     header.appendChild(tools);
   }
-  addToggle(&quot;drivers&quot;);
+
   addToggle(&quot;teams&quot;);
 });
 &lt;/script&gt;
