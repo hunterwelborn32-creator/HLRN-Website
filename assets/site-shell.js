@@ -22,6 +22,20 @@ function start(){
     }else root=new URL("/",location.origin);
   }
   const url=(path="")=>new URL(path,root).href;
+
+  // Always use the current shared shell stylesheet. This gives every page
+  // the same global mobile layer without requiring page-by-page CSS edits.
+  const SHELL_CSS_VERSION="20260929mobile1";
+  let shellCss=[...document.querySelectorAll('link[rel="stylesheet"]')].find(link=>/\/site-shell\.css(?:\?|$)/i.test(link.getAttribute("href")||""));
+  if(!shellCss){
+    shellCss=document.createElement("link");
+    shellCss.rel="stylesheet";
+    shellCss.setAttribute("data-hlrn-shell-css","");
+    document.head.appendChild(shellCss);
+  }
+  const freshShellCss=url("assets/site-shell.css?v="+SHELL_CSS_VERSION);
+  if(shellCss.href!==freshShellCss)shellCss.href=freshShellCss;
+
   function hgnDriverSlug(name){
     let text=String(name||"").trim();
     if(text.includes(",")){const parts=text.split(",");const last=(parts.shift()||"").trim();const first=parts.join(" ").trim();text=(first+" "+last).trim();}
@@ -29,6 +43,27 @@ function start(){
   }
 
   const path=(location.pathname||"").toLowerCase();
+
+  // Page classification lets the shared phone layer protect pages that
+  // already have purpose-built mobile layouts.
+  let relPath=path;
+  try{
+    const rootPath=(root.pathname||"/").toLowerCase();
+    if(relPath.startsWith(rootPath)) relPath=relPath.slice(rootPath.length);
+  }catch(e){}
+  const route=(relPath.split("/").filter(Boolean)[0]||"home").replace(/[^a-z0-9-]/g,"");
+  document.documentElement.dataset.hlrnRoute=route||"home";
+  document.documentElement.classList.add("hlrn-global-mobile-ready");
+
+  const driverDirectory=/^drivers\/?(?:index\.html)?$/.test(relPath);
+  const specializedMobile=
+    /^live\//.test(relPath) ||
+    /^standings\//.test(relPath) ||
+    /^results\//.test(relPath) ||
+    driverDirectory;
+  document.documentElement.classList.toggle("hlrn-mobile-specialized",specializedMobile);
+  document.documentElement.classList.toggle("hlrn-mobile-global",!specializedMobile);
+
   let active="home";
   if(path.includes("/live/")) active="live";
   else if(path.includes("/standings/")) active="standings";
@@ -252,6 +287,42 @@ function start(){
       e.preventDefault();location.href=url(dest);
     }
   },true);
+
+  // -----------------------------
+  // Global phone safety pass
+  // -----------------------------
+  function applyGlobalMobileSafety(){
+    const phone=window.matchMedia("(max-width:620px)").matches;
+    if(!phone || document.documentElement.classList.contains("hlrn-mobile-specialized")) return;
+
+    // Preserve table semantics; make only the existing parent scroll when a
+    // table is genuinely wider than the phone.
+    document.querySelectorAll("table").forEach(table=>{
+      if(table.closest("#hlrn-global-nav,#hlrn-global-footer")) return;
+      const host=table.parentElement;
+      if(!host) return;
+      const available=Math.max(1,host.clientWidth||document.documentElement.clientWidth);
+      if(table.scrollWidth>available+2) host.classList.add("hlrn-mobile-table-host");
+    });
+
+    // Save bandwidth on long content pages without delaying visible hero art.
+    document.querySelectorAll("img:not([loading])").forEach(img=>{
+      const rect=img.getBoundingClientRect();
+      if(rect.top>window.innerHeight*1.25){
+        img.loading="lazy";
+        img.decoding="async";
+      }
+    });
+  }
+  requestAnimationFrame(applyGlobalMobileSafety);
+  setTimeout(applyGlobalMobileSafety,250);
+  setTimeout(applyGlobalMobileSafety,900);
+  window.addEventListener("load",applyGlobalMobileSafety,{once:true});
+  let mobileSafetyTimer=0;
+  window.addEventListener("resize",()=>{
+    clearTimeout(mobileSafetyTimer);
+    mobileSafetyTimer=setTimeout(applyGlobalMobileSafety,120);
+  });
 
   // -----------------------------
   // Footer: preserve page-specific footer content if present; otherwise add shared footer.
