@@ -6,7 +6,7 @@ on:
       - 'tests/**'
       - '.github/workflows/sync-hlrn-data.yml'
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '*/5 * * * *'
   workflow_dispatch:
 permissions:
   contents: write
@@ -19,7 +19,7 @@ jobs:
     env:
       HLRN_LEAGUE_WEBAPP_URL: ${{ secrets.HLRN_LEAGUE_WEBAPP_URL }}
       HLRN_HOSTED_WEBAPP_URL: ${{ secrets.HLRN_HOSTED_WEBAPP_URL }}
-      HLRN_RECAP_URL: https://hlrn-live-feed.onrender.com/api/recap
+      HLRN_RECAP_URL: https://hlrn-live-feed.onrender.com/api/recaps
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
