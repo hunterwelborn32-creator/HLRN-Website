@@ -2247,6 +2247,51 @@ iframe{background:#fff!important;color-scheme:light!important}
   #drivers .hlrn-driver-profile-name{font-size:14px!important}
 }
 </style>
+<style id="HLRN_SRH_FULL_DRIVER_TABLE_V1">
+#drivers table{
+  min-width:2050px!important;
+}
+#drivers th,#drivers td{
+  font-variant-numeric:tabular-nums!important;
+}
+#drivers th:nth-child(4),#drivers td:nth-child(4){
+  background:inherit!important;
+  color:#111214!important;
+  font-family:"Inter","Segoe UI",Arial,sans-serif!important;
+  font-size:12px!important;
+  font-weight:700!important;
+}
+#drivers th:nth-child(9){
+  background:var(--driver-accent-soft,#f3f7f0)!important;
+}
+#drivers td:nth-child(9){
+  background:var(--driver-accent-soft,#f3f7f0)!important;
+  color:#111214!important;
+  font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
+  font-size:18px!important;
+  font-weight:900!important;
+}
+#drivers .bonus-points{font-weight:900!important}
+#drivers .stage-points,#drivers .stage-wins{font-weight:900!important}
+#drivers .team-name{
+  min-width:110px!important;
+  font-weight:800!important;
+  text-align:left!important;
+}
+#drivers th:nth-child(14),#drivers td:nth-child(14),
+#drivers th:nth-child(15),#drivers td:nth-child(15){
+  min-width:80px!important;
+}
+#drivers th:nth-child(19),#drivers td:nth-child(19){
+  min-width:88px!important;
+}
+@media(max-width:900px){
+  #drivers table{min-width:1950px!important}
+}
+@media(max-width:560px){
+  #drivers table{min-width:1900px!important}
+}
+</style>
 </head>
 <body>
 <div class="page-wrap">
@@ -2326,23 +2371,26 @@ Last Race
 <tr>
 <th>POS</th>
 <th>CHG</th>
-<th class="name-col">
-DRIVER
-</th>
-<th>SEASON PTS</th>
-<th>RACE PTS</th>
-<th>STAGE PTS</th>
-<th>BONUS</th>
-<th>PENALTY</th>
-<th>BEHIND</th>
+<th class="name-col">DRIVER</th>
 <th>STARTS</th>
+<th>RACES<br>COUNTED</th>
 <th>WINS</th>
-<th>TOP 5s</th>
-<th class="top10-head">TOP 10s</th>
-<th>DNFs</th>
+<th>T-5</th>
+<th>T-10</th>
+<th>TOT<br>PTS</th>
+<th>BNS<br>PTS</th>
+<th>PEN<br>PTS</th>
 <th>LAPS</th>
-<th>LAPS LED</th>
-<th>INC</th>
+<th>INCS</th>
+<th>BEH<br>LEAD</th>
+<th>BEH<br>NEXT</th>
+<th>INC/<br>RACE</th>
+<th>LAPS<br>LED</th>
+<th>POLES</th>
+<th>AVG<br>RATING</th>
+<th>STG<br>PTS</th>
+<th>STG<br>WINS</th>
+<th>TEAM</th>
 </tr>
 </thead>
 <tbody id="driverBody"></tbody>
@@ -3183,86 +3231,69 @@ function hlrnMetricText(value,decimals){
 }
 
 function renderDrivers(){
-const body=
-document.getElementById(
-"driverBody"
-);
-const sorted=
-drivers
-.slice()
-.sort(function(a,b){
-if(
-num(a.rank)!==
-num(b.rank)
-){
-return (
-num(a.rank)-
-num(b.rank)
-);
-}
-return (
-num(b.points)-
-num(a.points)
-);
-});
-document
-.getElementById(
-"driverCount"
-)
-.textContent=
-sorted.length+
-" Drivers";
-body.innerHTML=
-sorted
-.map(function(driver,index){
-const totals=
-getDriverTotals(
-driver.driverId
-);
-const pos=
-num(driver.rank)||
-index+1;
-const driverAhead=
-index>0 ? sorted[index-1] : null;
-const behind=
-driverAhead ? Math.max(0,num(driverAhead.points)-num(driver.points)) : 0;
-const seasonMetrics=hlrnDriverSeasonMetrics(driver);
-const stagePoints=hlrnMetricText(seasonMetrics.stagePoints);
-const racePoints=hlrnMetricText(seasonMetrics.racePoints);
-const bonusPoints=hlrnMetricText(seasonMetrics.bonus);
-const penaltyPoints=hlrnMetricText(seasonMetrics.penalty);
-const seasonLaps=hlrnMetricText(seasonMetrics.laps);
-return `
+  const body=document.getElementById("driverBody");
+  const sorted=drivers.slice().sort(function(a,b){
+    if(num(a.rank)!==num(b.rank)) return num(a.rank)-num(b.rank);
+    return num(b.points)-num(a.points);
+  });
+  document.getElementById("driverCount").textContent=sorted.length+" Drivers";
+
+  const leaderPoints=sorted.length ? num(sorted[0].points) : 0;
+
+  body.innerHTML=sorted.map(function(driver,index){
+    const totals=getDriverTotals(driver.driverId);
+    const pos=num(driver.rank)||index+1;
+    const points=hlrnFirstMetric(driver,["points"]) ?? 0;
+    const starts=hlrnFirstMetric(driver,["starts"]) ?? 0;
+    const counted=hlrnFirstMetric(driver,["racesCounted","counted"]) ?? starts;
+    const wins=hlrnFirstMetric(driver,["wins"]) ?? 0;
+    const top5=hlrnFirstMetric(driver,["top5","t5"]) ?? 0;
+    const top10=hlrnFirstMetric(driver,["top10","t10"]) ?? 0;
+    const bonus=hlrnFirstMetric(driver,["bonus","bonusPoints","bonusPts"]) ?? 0;
+    const penalty=hlrnFirstMetric(driver,["penalty","penaltyPoints","penaltyPts"]) ?? 0;
+    const laps=hlrnFirstMetric(driver,["laps"]) ?? 0;
+    const incidents=hlrnFirstMetric(driver,["incidents","inc"]) ?? totals.inc;
+    const lapsLed=hlrnFirstMetric(driver,["lapsLed","led"]) ?? totals.led;
+    const poles=hlrnFirstMetric(driver,["poles"]) ?? 0;
+    const stagePoints=hlrnFirstMetric(driver,["stagePoints","stagePts"]) ?? 0;
+    const stageWins=hlrnFirstMetric(driver,["stageWins","swins"]) ?? 0;
+    const avgRatingDirect=hlrnFirstMetric(driver,["avgRating"]);
+    const ratingTotal=hlrnFirstMetric(driver,["ratingTotal","rat"]);
+    const avgRating=avgRatingDirect!==null
+      ? avgRatingDirect
+      : (counted>0 && ratingTotal!==null ? ratingTotal/counted : null);
+    const incPerRace=starts>0 ? incidents/starts : null;
+    const behindLead=index===0 ? null : Math.max(0,leaderPoints-points);
+    const prev=index>0 ? sorted[index-1] : null;
+    const behindNext=prev ? Math.max(0,num(prev.points)-points) : null;
+    const team=String(driver.team||"").trim();
+
+    return `
 <tr>
-<td>
-<span class="position ${positionClass(pos)}">
-${pos}
-</span>
-</td>
-<td>
-${movementHTML(driver.change)}
-</td>
-<td class="name-col">
-${hLrnNameWithPhoto(driver.driver,driver.driverId)}
-</td>
-<td class="points">${formatNumber(driver.points)}</td>
-<td>${racePoints}</td>
-<td class="stage-points">${stagePoints}</td>
-<td>${bonusPoints}</td>
-<td class="penalty-points">${penaltyPoints}</td>
-<td class="behind ${index===0?'leader':''}">${index===0?'0':'-'+formatNumber(behind)}</td>
-<td>${formatNumber(driver.starts)}</td>
-<td>${formatNumber(driver.wins)}</td>
-<td>${formatNumber(driver.top5)}</td>
-<td>${formatNumber(driver.top10)}</td>
-<td>${formatNumber(totals.dnf)}</td>
-<td>${seasonLaps}</td>
-<td>${formatNumber(totals.led)}</td>
-<td>${formatNumber(totals.inc)}</td>
-</tr>
-`;
-})
-.join("");
+<td><span class="position ${positionClass(pos)}">${pos}</span></td>
+<td>${movementHTML(driver.change)}</td>
+<td class="name-col">${hLrnNameWithPhoto(driver.driver,driver.driverId)}</td>
+<td>${formatNumber(starts)}</td>
+<td>${formatNumber(counted)}</td>
+<td>${formatNumber(wins)}</td>
+<td>${formatNumber(top5)}</td>
+<td>${formatNumber(top10)}</td>
+<td class="points">${formatNumber(points)}</td>
+<td class="bonus-points">${formatNumber(bonus)}</td>
+<td class="penalty-points">${formatNumber(penalty)}</td>
+<td>${formatNumber(laps)}</td>
+<td>${formatNumber(incidents)}</td>
+<td class="behind ${index===0?'leader':''}">${behindLead===null?'—':'-'+formatNumber(behindLead)}</td>
+<td class="behind">${behindNext===null?'—':'-'+formatNumber(behindNext)}</td>
+<td>${incPerRace===null?'—':incPerRace.toFixed(2)}</td>
+<td>${formatNumber(lapsLed)}</td>
+<td>${formatNumber(poles)}</td>
+<td>${avgRating===null?'—':avgRating.toFixed(2)}</td>
+<td class="stage-points">${formatNumber(stagePoints)}</td>
+<td class="stage-wins">${formatNumber(stageWins)}</td>
+<td class="team-name">${team?escapeHTML(team):'—'}</td>
+</tr>`;
+  }).join("");
 }
 function getDriverTotals(driverId){
 let led=0;
