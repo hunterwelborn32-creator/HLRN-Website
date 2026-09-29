@@ -76,15 +76,50 @@
 <script>
 const buttons=[...document.querySelectorAll('.tab')];
 const pages=[...document.querySelectorAll('.page')];
-function openPage(name){
+const HLRN_STANDINGS_SERIES_KEY='hlrnStandingsSeries';
+const HLRN_STANDINGS_SERIES=new Set(['hosted','sunday','monday']);
+
+function openPage(name,persist=true){
+  name=String(name||'').toLowerCase();
+  if(!HLRN_STANDINGS_SERIES.has(name)) name='hosted';
   const selected=document.getElementById('page-'+name);
   if(!selected)return;
-  // Both championship documents load normally; switching keeps their state.
+
   buttons.forEach(btn=>btn.classList.toggle('active',btn.dataset.page===name));
   pages.forEach(frame=>frame.classList.toggle('active',frame===selected));
+
+  const wrap=document.querySelector('.hlrn');
+  if(wrap) wrap.setAttribute('data-active-series',name);
+  const activeSeries=document.getElementById('cnActiveSeries');
+  if(activeSeries){
+    activeSeries.textContent=name.toUpperCase();
+    activeSeries.className='cn-cell-value '+name;
+  }
+  const ribbon=document.getElementById('cnRibbonText');
+  if(ribbon) ribbon.textContent=name.charAt(0).toUpperCase()+name.slice(1)+' Racing Active';
+
+  if(persist){
+    try{sessionStorage.setItem(HLRN_STANDINGS_SERIES_KEY,name);}catch(e){}
+    const wanted='#'+name;
+    if(location.hash!==wanted){
+      try{history.replaceState(null,'',location.pathname+location.search+wanted);}catch(e){}
+    }
+  }
 }
-buttons.forEach(btn=>btn.addEventListener('click',()=>openPage(btn.dataset.page)));
-openPage('hosted');
+
+buttons.forEach(btn=>btn.addEventListener('click',()=>openPage(btn.dataset.page,true)));
+
+let initialSeries=String(location.hash||'').replace(/^#/,'').toLowerCase();
+if(!HLRN_STANDINGS_SERIES.has(initialSeries)){
+  try{initialSeries=sessionStorage.getItem(HLRN_STANDINGS_SERIES_KEY)||'';}catch(e){}
+}
+if(!HLRN_STANDINGS_SERIES.has(initialSeries)) initialSeries='hosted';
+openPage(initialSeries,false);
+
+window.addEventListener('hashchange',()=>{
+  const requested=String(location.hash||'').replace(/^#/,'').toLowerCase();
+  if(HLRN_STANDINGS_SERIES.has(requested)) openPage(requested,true);
+});
 </script>
 <script id="HLRN_REMOVE_HOSTED_BLACK_HERO_SCRIPT">
 (function(){
