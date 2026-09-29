@@ -7,606 +7,158 @@
 <meta name="description" content="Latest HLRN race news, league announcements, driver stories, championship coverage and network updates.">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://highlineracingnetwork.com/news/">
-<link rel="stylesheet" href="../assets/site-shell.css?v=20260921b">
+<link rel="stylesheet" href="../assets/site-shell.css?v=20260929newsroom10">
 <link rel="stylesheet" href="../assets/race-recaps.css?v=1">
+<link rel="stylesheet" href="../assets/news/newsroom-v10.css?v=20260929n10a1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-:root{
-  --red:#e21b23;
-  --ink:#0d0d0f;
-  --gray:#f2f2f2;
-  --mid:#777;
-  --line:#d8d8d8;
-  --white:#fff;
-  --max:1460px;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0;
-  background:#f4f4f4;
-  color:#111;
-  font-family:Arial,Helvetica,sans-serif;
-}
-a{color:inherit;text-decoration:none}
-img{display:block;max-width:100%}
-button,input{font:inherit}
-
-.hlrn-news{
-  min-height:100vh;
-  background:
-    linear-gradient(#f7f7f7,#f1f1f1 420px,#f4f4f4 420px);
-}
-.page-shell{
-  width:min(var(--max),calc(100% - 40px));
-  margin:0 auto;
-}
-
-/* breadcrumb */
-.breadcrumb{
-  padding:26px 0 16px;
-  font-size:12px;
-  font-weight:700;
-  text-transform:uppercase;
-  color:#727272;
-}
-.breadcrumb span{color:#111}
-.breadcrumb i{
-  font-style:normal;
-  margin:0 8px;
-  color:#aaa;
-}
-
-/* page title */
-.title-row{
-  display:flex;
-  align-items:flex-end;
-  justify-content:space-between;
-  gap:20px;
-  padding-bottom:22px;
-  border-bottom:4px solid #111;
-}
-.page-title{
-  margin:0;
-  font-size:clamp(42px,6vw,84px);
-  line-height:.9;
-  letter-spacing:-.055em;
-  font-weight:1000;
-  text-transform:uppercase;
-}
-.page-title span{color:var(--red)}
-.title-sub{
-  max-width:560px;
-  margin:0 0 6px;
-  color:#646464;
-  font-size:14px;
-  line-height:1.55;
-  font-weight:600;
-}
-
-/* category rail */
-.category-rail{
-  display:flex;
-  align-items:center;
-  gap:0;
-  border-bottom:1px solid #cfcfcf;
-  background:#fff;
-  overflow:auto;
-  scrollbar-width:none;
-}
-.category-rail::-webkit-scrollbar{display:none}
-.category-rail a{
-  flex:0 0 auto;
-  padding:17px 24px;
-  border-right:1px solid #e1e1e1;
-  font-size:12px;
-  font-weight:900;
-  text-transform:uppercase;
-  letter-spacing:.04em;
-}
-.category-rail a:first-child{
-  color:#fff;
-  background:#111;
-}
-.category-rail a:hover{
-  color:var(--red);
-}
-
-/* feature grid */
-.feature-wrap{padding:28px 0 34px}
-.feature-grid{
-  display:grid;
-  grid-template-columns:minmax(0,2fr) minmax(320px,1fr);
-  gap:18px;
-}
-.feature-main,
-.side-story{
-  position:relative;
-  overflow:hidden;
-  background:#111;
-  color:#fff;
-}
-.feature-main{
-  min-height:520px;
-}
-.feature-main img{
-  width:100%;
-  height:100%;
-  min-height:520px;
-  object-fit:cover;
-}
-.feature-main:after,
-.side-story:after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(180deg,transparent 34%,rgba(0,0,0,.18) 52%,rgba(0,0,0,.92) 100%);
-  pointer-events:none;
-}
-.feature-copy{
-  position:absolute;
-  z-index:2;
-  left:0;
-  right:0;
-  bottom:0;
-  padding:34px 36px;
-}
-.eyebrow{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  margin-bottom:12px;
-  color:#fff;
-  font-size:11px;
-  font-weight:900;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-}
-.eyebrow:before{
-  content:"";
-  width:28px;
-  height:4px;
-  background:var(--red);
-}
-.feature-copy h2{
-  max-width:900px;
-  margin:0;
-  font-size:clamp(30px,4vw,58px);
-  line-height:.98;
-  letter-spacing:-.045em;
-  font-weight:1000;
-  text-transform:uppercase;
-}
-.feature-copy p{
-  max-width:800px;
-  margin:13px 0 0;
-  color:#e5e5e5;
-  font-size:14px;
-  line-height:1.5;
-  font-weight:600;
-}
-.feature-link{
-  display:inline-block;
-  margin-top:18px;
-  border-bottom:3px solid var(--red);
-  padding-bottom:4px;
-  font-size:12px;
-  font-weight:900;
-  text-transform:uppercase;
-}
-
-.side-stack{
-  display:grid;
-  grid-template-rows:1fr 1fr;
-  gap:18px;
-}
-.side-story{
-  min-height:251px;
-  border:1px solid #222;
-}
-.side-story .visual{
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(circle at 78% 34%,rgba(226,27,35,.55),transparent 22%),
-    linear-gradient(130deg,#202024,#08080a 65%);
-}
-.side-story.alt .visual{
-  background:
-    linear-gradient(115deg,transparent 48%,rgba(255,255,255,.08) 49% 51%,transparent 52%),
-    repeating-linear-gradient(135deg,#131315 0 36px,#171719 36px 72px);
-}
-.side-story .big-word{
-  position:absolute;
-  top:25px;
-  right:22px;
-  color:rgba(255,255,255,.09);
-  font-size:64px;
-  font-weight:1000;
-  font-style:italic;
-  letter-spacing:-.07em;
-}
-.side-story .feature-copy{
-  padding:24px;
-}
-.side-story .feature-copy h3{
-  margin:0;
-  font-size:25px;
-  line-height:1;
-  letter-spacing:-.035em;
-  text-transform:uppercase;
-}
-.side-story .feature-copy p{
-  margin:8px 0 0;
-  font-size:12px;
-}
-
-/* latest header */
-.latest-head{
-  display:flex;
-  align-items:flex-end;
-  justify-content:space-between;
-  gap:24px;
-  margin-top:4px;
-  padding:0 0 13px;
-  border-bottom:4px solid #111;
-}
-.latest-title{
-  margin:0;
-  font-size:34px;
-  font-weight:1000;
-  letter-spacing:-.035em;
-  text-transform:uppercase;
-}
-.latest-title:after{
-  content:"";
-  display:block;
-  width:78px;
-  height:5px;
-  margin-top:9px;
-  background:var(--red);
-}
-.latest-note{
-  margin:0 0 4px;
-  color:#777;
-  font-size:12px;
-  font-weight:700;
-  text-transform:uppercase;
-}
-
-/* promo cards */
-.promo-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px;
-  padding:22px 0 26px;
-}
-.promo-card{
-  display:grid;
-  grid-template-columns:112px 1fr;
-  min-height:112px;
-  background:#fff;
-  border:1px solid var(--line);
-}
-.promo-art{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#111;
-  color:#fff;
-  font-size:34px;
-  font-weight:1000;
-  font-style:italic;
-}
-.promo-card:nth-child(2) .promo-art{background:var(--red)}
-.promo-card:nth-child(3) .promo-art{background:#242428}
-.promo-copy{padding:15px}
-.promo-label{
-  color:var(--red);
-  font-size:10px;
-  font-weight:900;
-  text-transform:uppercase;
-}
-.promo-copy h3{
-  margin:6px 0 0;
-  font-size:18px;
-  line-height:1.07;
-  text-transform:uppercase;
-}
-.promo-copy p{
-  margin:7px 0 0;
-  color:#727272;
-  font-size:11px;
-  line-height:1.35;
-}
-
-/* live feed */
-.feed-shell{
-  margin-bottom:50px;
-  background:#fff;
-  border:1px solid var(--line);
-  box-shadow:0 6px 24px rgba(0,0,0,.06);
-}
-.feed-top{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px;
-  min-height:58px;
-  padding:0 20px;
-  border-bottom:1px solid #dedede;
-}
-.feed-top strong{
-  font-size:13px;
-  font-weight:1000;
-  text-transform:uppercase;
-}
-.feed-live{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  color:#777;
-  font-size:10px;
-  font-weight:900;
-  text-transform:uppercase;
-}
-.feed-live i{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:#2fc36b;
-  box-shadow:0 0 0 4px rgba(47,195,107,.12);
-}
-.frame-wrap{
-  position:relative;
-  min-height:1500px;
-  overflow:hidden;
-  background:#fff;
-}
-.news-frame{
-  display:block;
-  width:100%;
-  min-height:1500px;
-  border:0;
-  background:#fff;
-}
-.loading{
-  position:absolute;
-  z-index:3;
-  top:0;
-  left:0;
-  right:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  height:56px;
-  background:#fff;
-  border-bottom:1px solid #eee;
-  font-size:10px;
-  font-weight:900;
-  text-transform:uppercase;
-  transition:.25s;
-}
-.loading.hide{
-  opacity:0;
-  visibility:hidden;
-}
-.loading b{
-  width:9px;
-  height:9px;
-  border-radius:50%;
-  background:var(--red);
-  animation:pulse 1s infinite alternate;
-}
-
-.footer-note{
-  padding:20px 0 50px;
-  color:#777;
-  font-size:11px;
-  text-align:center;
-}
-
-@keyframes pulse{to{opacity:.25}}
-
-@media(max-width:1050px){
-  .feature-grid{grid-template-columns:1fr}
-  .side-stack{grid-template-columns:1fr 1fr;grid-template-rows:auto}
-  .promo-grid{grid-template-columns:1fr}
-}
-@media(max-width:760px){
-  .page-shell{width:min(100% - 24px,var(--max))}
-  .title-row{display:block}
-  .title-sub{margin-top:14px}
-  .feature-main,
-  .feature-main img{min-height:430px}
-  .feature-copy{padding:24px}
-  .side-stack{grid-template-columns:1fr}
-  .promo-card{grid-template-columns:88px 1fr}
-  .category-rail a{padding:15px 17px}
-  .latest-head{display:block}
-  .latest-note{margin-top:10px}
-  .frame-wrap,.news-frame{min-height:1800px}
-}
-
-/* News category: embedded official Discord announcements */
-.category-rail a.selected{background:#111!important;color:#fff!important}
-.announcements-panel[hidden],#newsLatestContent[hidden]{display:none!important}
-.announcements-panel{padding:18px 0 32px}
-#hlrnAnnouncementsFrame{display:block;width:100%;min-height:800px;border:0;background:#f3f4f5;overflow:hidden}
-</style>
-\n<style id="HLRN_NEWS_V9_UPGRADE">\n:root{\n  --news-red:#e31837;\n  --news-yellow:#ffd400;\n  --news-green:#63d13d;\n  --news-ink:#111318;\n  --news-muted:#69717a;\n  --news-line:#dfe2e5;\n  --news-soft:#f5f6f7;\n  --news-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;\n  --news-body:"Inter","Segoe UI",Arial,sans-serif;\n}\nhtml,body{font-family:var(--news-body)!important;background:#f3f4f5!important;color:var(--news-ink)!important}\n.hlrn-news{background:linear-gradient(180deg,#fff 0 330px,#f3f4f5 330px)!important}\n.page-shell{width:min(1520px,calc(100% - 44px))!important}\n.breadcrumb{padding-top:20px!important;font-size:10px!important;letter-spacing:.09em!important}\n.title-row{padding:16px 0 22px!important;border-bottom:0!important;position:relative!important}\n.title-row:after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:linear-gradient(90deg,var(--news-yellow) 0 14%,var(--news-red) 14% 59%,#2176d2 59% 100%)}\n.page-title{font-family:var(--news-display)!important;font-size:clamp(54px,6.2vw,94px)!important;font-style:italic!important;letter-spacing:-.055em!important;line-height:.82!important}\n.page-title span{color:var(--news-red)!important}\n.title-sub{max-width:620px!important;color:#656d75!important;font-size:13px!important;line-height:1.6!important}\n\n.newsroom-status{display:grid;grid-template-columns:1.4fr repeat(4,.72fr);margin:20px 0 0;border:1px solid var(--news-line);background:#fff;box-shadow:0 8px 25px rgba(0,0,0,.045)}\n.newsroom-status>a,.newsroom-status-main{min-height:72px;padding:13px 16px;border-right:1px solid var(--news-line);display:flex;flex-direction:column;justify-content:center}\n.newsroom-status>a:last-child{border-right:0}\n.newsroom-status-main{position:relative;padding-left:44px;background:linear-gradient(110deg,rgba(227,24,55,.05),transparent 70%)}\n.newsroom-live-dot{position:absolute;left:17px;top:50%;width:12px;height:12px;border-radius:50%;background:#35c56e;transform:translateY(-50%);box-shadow:0 0 0 6px rgba(53,197,110,.12)}\n.newsroom-status small{display:block;color:#858d95;font-size:8px;font-weight:900;letter-spacing:.13em;text-transform:uppercase}\n.newsroom-status strong{display:block;margin-top:4px;font-family:var(--news-display);font-size:18px;font-style:italic;letter-spacing:-.01em;text-transform:uppercase}\n.newsroom-status>a:hover{background:#f8f9fa;color:var(--news-red)}\n\n.category-rail{margin-top:14px!important;border:1px solid var(--news-line)!important;box-shadow:0 4px 14px rgba(0,0,0,.03)}\n.category-rail a{font-family:var(--news-display)!important;font-size:14px!important;font-style:italic!important;letter-spacing:0!important;padding:15px 21px!important}\n.category-rail a:first-child,.category-rail a.selected{background:#111318!important;color:#fff!important}\n\n.feature-wrap{padding:22px 0 32px!important}\n.feature-grid{gap:16px!important}\n.feature-main,.side-story{border-radius:0!important;box-shadow:0 12px 30px rgba(0,0,0,.12)}\n.feature-main{min-height:570px!important}\n.feature-main img{min-height:570px!important;filter:saturate(.95) contrast(1.03)}\n.feature-main:after{background:linear-gradient(180deg,rgba(0,0,0,.05) 18%,rgba(0,0,0,.15) 48%,rgba(0,0,0,.94) 100%)!important}\n.feature-copy{padding:38px 40px!important}\n.eyebrow{font-family:var(--news-display)!important;font-size:14px!important;font-style:italic!important;letter-spacing:.03em!important}\n.feature-copy h2,.feature-copy h3{font-family:var(--news-display)!important;font-style:italic!important}\n.feature-copy h2{font-size:clamp(42px,4.8vw,68px)!important}\n.side-story .feature-copy h3{font-size:31px!important}\n.side-story{min-height:276px!important}\n.side-story .big-word{font-family:var(--news-display)!important;font-size:82px!important}\n.side-story:first-child .visual{background:radial-gradient(circle at 76% 28%,rgba(227,24,55,.5),transparent 25%),linear-gradient(132deg,#24262b,#08090b 70%)!important}\n.side-story.alt .visual{background:radial-gradient(circle at 82% 28%,rgba(255,212,0,.18),transparent 25%),repeating-linear-gradient(135deg,#15171a 0 34px,#1b1d20 34px 68px)!important}\n\n.latest-head{margin-top:6px!important;border-bottom:1px solid #cfd3d7!important;padding-bottom:14px!important}\n.latest-title{font-family:var(--news-display)!important;font-size:44px!important;font-style:italic!important}\n.latest-title:after{height:4px!important;background:linear-gradient(90deg,var(--news-yellow) 0 28%,var(--news-red) 28% 100%)!important}\n.promo-grid{grid-template-columns:repeat(4,1fr)!important;gap:12px!important}\n.promo-card{grid-template-columns:88px 1fr!important;min-height:116px!important;border-color:var(--news-line)!important;transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease}\n.promo-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,0,0,.08);border-color:#c7cbd0!important}\n.promo-art{font-family:var(--news-display)!important;font-size:42px!important;background:#111318!important}\n.promo-card:nth-child(2) .promo-art{background:var(--news-red)!important}\n.promo-card:nth-child(3) .promo-art{background:#282b30!important}\n.promo-card:nth-child(4) .promo-art{background:#20252a!important;color:var(--news-yellow)!important}\n.promo-label{font-size:8px!important;letter-spacing:.12em!important}\n.promo-copy h3{font-family:var(--news-display)!important;font-size:21px!important;font-style:italic!important}\n\n.feed-shell{border-color:var(--news-line)!important;box-shadow:0 14px 40px rgba(0,0,0,.07)!important}\n.feed-top{min-height:64px!important;padding:0 22px!important;background:linear-gradient(180deg,#fff,#fafafa)!important}\n.feed-top strong{font-family:var(--news-display)!important;font-size:18px!important;font-style:italic!important}\n.feed-live{color:#6d757d!important}\n.frame-wrap{border-top:4px solid #111318!important}\n.announcements-panel{padding-top:22px!important}\n#hlrnAnnouncementsFrame{border:1px solid var(--news-line)!important;box-shadow:0 12px 34px rgba(0,0,0,.06)!important;background:#fff!important}\n.footer-note{padding:24px 0 46px!important;font-size:9px!important;font-weight:800!important;letter-spacing:.12em!important}\n\n@media(max-width:1180px){\n  .newsroom-status{grid-template-columns:1fr 1fr 1fr}\n  .newsroom-status-main{grid-column:1/-1;border-bottom:1px solid var(--news-line)}\n  .newsroom-status>a:nth-of-type(3){border-right:0}\n  .promo-grid{grid-template-columns:1fr 1fr!important}\n}\n@media(max-width:760px){\n  .page-shell{width:min(100% - 20px,1520px)!important}\n  .title-row{padding-top:8px!important}\n  .page-title{font-size:54px!important}\n  .newsroom-status{grid-template-columns:1fr 1fr}\n  .newsroom-status-main{grid-column:1/-1}\n  .newsroom-status>a{min-height:60px;padding:10px 12px}\n  .feature-main,.feature-main img{min-height:440px!important}\n  .feature-copy{padding:24px!important}\n  .side-story{min-height:230px!important}\n  .promo-grid{grid-template-columns:1fr!important}\n  .promo-card{grid-template-columns:76px 1fr!important}\n  .category-rail{margin-left:-10px!important;margin-right:-10px!important;border-left:0!important;border-right:0!important}\n}\n</style>\n
+\n\n
 
 <meta name="theme-color" content="#07090d">
 </head>
 
-<body>
-<div class="hlrn-news">
-
-  <main class="page-shell">
-    <div class="breadcrumb">
-      <span>HLRN</span><i>/</i> News <i>/</i> High Line Racing Network
-    </div>
-
-    <div class="title-row">
-      <h1 class="page-title">HLRN <span>NEWS</span></h1>
-      <p class="title-sub">
-        Latest league coverage, driver stories, championship movement, announcements
-        and everything happening across High Line Racing Network.
-      </p>
-    </div>
-
-    <section class="newsroom-status" aria-label="HLRN Newsroom status">
-      <div class="newsroom-status-main">
-        <span class="newsroom-live-dot"></span>
-        <div><small>HLRN NEWSROOM</small><strong>NETWORK DESK ONLINE</strong></div>
+<body class="newsroom-v10">
+<div class="nr-newsroom">
+  <header class="nr-mast">
+    <div class="nr-shell nr-mast-inner">
+      <div>
+        <div class="nr-kicker">HLRN // OFFICIAL NETWORK DESK</div>
+        <h1 class="nr-title">HLRN <span>NEWSROOM</span></h1>
+        <p class="nr-sub">Race results, championship movement, official announcements, driver stories and everything happening across High Line Racing Network.</p>
       </div>
-      <a href="#latest"><small>Latest Coverage</small><strong>NEWS FEED</strong></a>
-      <a href="../standings/"><small>Championship</small><strong>STANDINGS</strong></a>
-      <a href="../drivers/"><small>Roster</small><strong>DRIVERS</strong></a>
-      <a href="../live/"><small>Race Night</small><strong>LIVE CENTER</strong></a>
-    </section>
 
-    <nav class="category-rail" aria-label="News categories">
-      <a href="#latest">Latest</a>
-      <a href="#latest">Sunday League</a>
-      <a href="#latest">Monday League</a>
-      <a href="#latest">Hosted Racing</a>
-      <a href="#latest">Driver News</a>
-      <a href="race-recaps/">Race Recaps</a>
+      <aside class="nr-desk-card" aria-label="HLRN network desk">
+        <div class="nr-desk-head">
+          <div><span class="nr-live-dot"></span><small>NETWORK DESK ONLINE</small></div>
+          <span id="nrUpdated">LIVE HLRN DATA</span>
+        </div>
+        <div class="nr-desk-grid">
+          <a class="sunday" href="../standings/sunday.html"><small>SUNDAY LEADER</small><strong id="nrSundayLeader">CONNECTING</strong><small id="nrSundayMeta">STANDINGS</small></a>
+          <a class="monday" href="../standings/monday.html"><small>MONDAY LEADER</small><strong id="nrMondayLeader">CONNECTING</strong><small id="nrMondayMeta">STANDINGS</small></a>
+          <a href="race-recaps/"><small>POST-RACE ARCHIVE</small><strong id="nrRecapCount">CHECKING</strong><small>FROZEN RECORDS</small></a>
+          <a href="../live/"><small>RACE NIGHT</small><strong>LIVE RACE CENTER</strong><small>TIMING + CONTROL</small></a>
+        </div>
+      </aside>
+    </div>
+  </header>
+
+  <div class="nr-category-wrap">
+    <nav class="category-rail" aria-label="HLRN Newsroom sections">
+      <a class="selected" href="#latest">Latest</a>
+      <a href="#recaps">Race Recaps</a>
+      <a href="../race-preview/?league=sunday">Sunday Desk</a>
+      <a href="../race-preview/?league=monday">Monday Desk</a>
+      <a href="../standings/hosted.html">Hosted Racing</a>
       <a href="#announcements" id="announcementsTab" aria-controls="announcementsPanel">Announcements</a>
-      <a href="../standings/">Standings</a>
-      <a href="../drivers/">Drivers</a>
+      <a href="../adventures/">Adventures</a>
     </nav>
+  </div>
 
-    <div id="newsLatestContent">
-    <section class="feature-wrap" aria-label="Featured HLRN news">
-      <div class="feature-grid">
-
-        <article class="feature-main">
-          <img src="inside-the-garage.png" alt="HLRN Inside the Garage" loading="eager" decoding="async" fetchpriority="high">
-          <div class="feature-copy">
-            <div class="eyebrow">Featured HLRN Story</div>
-            <h2>Inside the Garage</h2>
-            <p>
-              Race-night stories, league headlines and the people behind High Line Racing Network.
-            </p>
-            <a class="feature-link" href="#latest">Latest HLRN coverage →</a>
+  <main class="nr-main">
+    <div class="nr-shell">
+      <div id="newsLatestContent">
+        <section id="latest" aria-label="Latest HLRN coverage">
+          <div class="nr-section-head">
+            <div><small>TOP STORY</small><h2>THE LATEST FROM HLRN</h2></div>
+            <a href="#all-news">ALL HLRN NEWS →</a>
           </div>
-        </article>
 
-        <div class="side-stack">
-          <article class="side-story">
-            <div class="visual"></div>
-            <div class="big-word">RACE</div>
-            <div class="feature-copy">
-              <div class="eyebrow">Race Week</div>
-              <h3>Sunday & Monday coverage</h3>
-              <p>Winners, championship movement, race-night headlines and league stories.</p>
+          <div class="nr-lead-grid">
+            <article class="nr-lead">
+              <img src="inside-the-garage.png" alt="High Line Racing Network newsroom feature" loading="eager" decoding="async" fetchpriority="high">
+              <div class="nr-lead-shade"></div>
+              <div class="nr-lead-copy">
+                <div class="nr-story-tag" id="nrLeadTag">FEATURED HLRN STORY</div>
+                <h2 id="nrLeadTitle">INSIDE THE GARAGE</h2>
+                <p id="nrLeadExcerpt">Race-night stories, league headlines and the people behind High Line Racing Network.</p>
+                <div class="nr-lead-meta">
+                  <span id="nrLeadDate">HLRN NEWSROOM</span>
+                  <span id="nrLeadSeries">NETWORK FEATURE</span>
+                  <span id="nrLeadStats">WHERE THE RACING NEVER STOPS</span>
+                </div>
+                <a class="nr-lead-link" id="nrLeadLink" href="#all-news">READ THE LATEST <b>→</b></a>
+              </div>
+            </article>
+
+            <div class="nr-side-stack">
+              <a class="nr-side-story" href="../race-preview/">
+                <span>RACE</span><small>RACE WEEK</small><strong>SUNDAY + MONDAY PREVIEW</strong>
+                <p>Upcoming track, championship battle, recent form and race-week intelligence.</p><b>OPEN PREVIEW →</b>
+              </a>
+              <a class="nr-side-story" href="#announcements" id="nrAnnouncementShortcut">
+                <span>HLRN</span><small>OFFICIAL NETWORK</small><strong>ANNOUNCEMENTS</strong>
+                <p>League notices, official updates and information from the HLRN admin team.</p><b>OPEN ANNOUNCEMENTS →</b>
+              </a>
+              <a class="nr-side-story" href="../adventures/">
+                <span>STORY</span><small>HLRN ORIGINAL</small><strong>ADVENTURES OF HIGH LINE</strong>
+                <p>The personalities, chaos and stories that happen beyond the race track.</p><b>ENTER THE ADVENTURE →</b>
+              </a>
             </div>
-          </article>
+          </div>
+        </section>
 
-          <article class="side-story alt">
-            <div class="visual"></div>
-            <div class="big-word">HLRN</div>
-            <div class="feature-copy">
-              <div class="eyebrow">League News</div>
-              <h3>Announcements & driver headlines</h3>
-              <p>Official HLRN updates, roster news and network announcements.</p>
+        <section id="recaps" style="scroll-margin-top:60px" aria-label="HLRN Post-Race Recaps">
+          <div class="nr-section-head" style="margin-top:34px">
+            <div><small>CHECKERED-FLAG COVERAGE</small><h2>POST-RACE RECAPS</h2></div>
+            <a href="race-recaps/">FULL RECAP ARCHIVE →</a>
+          </div>
+          <section id="newsRaceRecaps" class="hlrn-recap-section" aria-label="HLRN Race Recaps">
+            <div class="hlrn-recap-section-head">
+              <div><small>POST-RACE COVERAGE</small><h2>Race Recaps</h2></div>
+              <a href="race-recaps/">VIEW ALL RACE RECAPS →</a>
             </div>
-          </article>
+            <div id="newsRaceRecapsGrid" class="hlrn-recap-grid">
+              <div class="hlrn-recap-empty" data-race-recaps-loading>Race recaps will appear here automatically after the next completed HLRN race.</div>
+            </div>
+          </section>
+        </section>
+
+        <section class="nr-shortcuts" aria-label="HLRN newsroom desks">
+          <a href="../results/"><small>RACE DESK</small><strong>RESULTS + REPORTS</strong><span>Finishing orders, race reports and permanent frozen records →</span></a>
+          <a href="../standings/"><small>CHAMPIONSHIP DESK</small><strong>STANDINGS</strong><span>Sunday, Monday and Hosted championship movement →</span></a>
+          <a href="../drivers/"><small>PADDOCK</small><strong>DRIVER STORIES</strong><span>Profiles, numbers, photos and performance history →</span></a>
+          <a href="../race-intelligence/"><small>DATA DESK</small><strong>RACE INTELLIGENCE</strong><span>Championship trends and data-driven analysis →</span></a>
+        </section>
+
+        <section class="nr-feed" id="all-news" aria-label="All HLRN News">
+          <div class="nr-section-head">
+            <div><small>HLRN NETWORK FEED</small><h2>ALL HLRN NEWS</h2></div>
+            <a href="#latest">BACK TO TOP →</a>
+          </div>
+          <div class="feed-shell">
+            <div class="feed-top">
+              <strong>HLRN NEWS FEED</strong>
+              <div class="feed-live"><i></i> LIVE NEWSROOM CONNECTION</div>
+            </div>
+            <div class="frame-wrap">
+              <div class="loading" id="loadingCover"><b></b> LOADING HLRN NEWSROOM</div>
+              <iframe
+                id="hlrnNewsFrame"
+                class="news-frame"
+                src="https://script.google.com/macros/s/AKfycbzZNqyaeOEHulw4_FwaLNvmGBaxje_mFVRMGYciprURszAV6dmKuBk-b_MXx4CDhkba/exec"
+                title="High Line Racing Network News and Blogs"
+                width="100%"
+                height="1500"
+                frameborder="0"
+                scrolling="yes"
+                loading="lazy"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section id="announcementsPanel" class="announcements-panel" hidden aria-label="Official HLRN Announcements">
+        <div class="nr-announcements-head">
+          <div><small>OFFICIAL HLRN</small><h2>NETWORK ANNOUNCEMENTS</h2></div>
+          <a href="#latest">RETURN TO NEWSROOM →</a>
         </div>
+        <iframe id="hlrnAnnouncementsFrame" title="HLRN Official Announcements" loading="lazy"></iframe>
+      </section>
 
-      </div>
-    </section>
-
-    <section id="newsRaceRecaps" class="hlrn-recap-section" aria-label="HLRN Race Recaps">
-      <div class="hlrn-recap-section-head">
-        <div><small>POST-RACE COVERAGE</small><h2>Race Recaps</h2></div>
-        <a href="race-recaps/">VIEW ALL RACE RECAPS →</a>
-      </div>
-      <div id="newsRaceRecapsGrid" class="hlrn-recap-grid">
-        <div class="hlrn-recap-empty" data-race-recaps-loading>Race recaps will appear here automatically after the next completed HLRN race.</div>
-      </div>
-    </section>
-
-    <section id="latest">
-      <div class="latest-head">
-        <h2 class="latest-title">Latest HLRN News</h2>
-        <p class="latest-note">Official stories • newest first</p>
-      </div>
-
-      <div class="promo-grid">
-        <a class="promo-card" href="../results/">
-          <div class="promo-art">R</div>
-          <div class="promo-copy">
-            <div class="promo-label">Results</div>
-            <h3>Latest race results</h3>
-            <p>Review the latest HLRN finishing orders and race results.</p>
-          </div>
-        </a>
-
-        <a class="promo-card" href="../standings/">
-          <div class="promo-art">P</div>
-          <div class="promo-copy">
-            <div class="promo-label">Championship</div>
-            <h3>Current standings</h3>
-            <p>Follow Sunday, Monday and Hosted championship movement.</p>
-          </div>
-        </a>
-
-        <a class="promo-card" href="../drivers/">
-          <div class="promo-art">D</div>
-          <div class="promo-copy">
-            <div class="promo-label">Drivers</div>
-            <h3>Driver directory</h3>
-            <p>Profiles, numbers, photos, wins and current HLRN statistics.</p>
-          </div>
-        </a>
-
-        <a class="promo-card" href="../live/">
-          <div class="promo-art">L</div>
-          <div class="promo-copy">
-            <div class="promo-label">Race Night</div>
-            <h3>Live Race Center</h3>
-            <p>Follow HLRN race-night timing, status and live competition.</p>
-          </div>
-        </a>
-      </div>
-
-      <div class="feed-shell">
-        <div class="feed-top">
-          <strong>HLRN News Feed</strong>
-          <div class="feed-live"><i></i> Live newsroom connection</div>
-        </div>
-
-        <div class="frame-wrap">
-          <div class="loading" id="loadingCover"><b></b> Loading HLRN Newsroom</div>
-          <iframe
-            id="hlrnNewsFrame"
-            class="news-frame"
-            src="https://script.google.com/macros/s/AKfycbzZNqyaeOEHulw4_FwaLNvmGBaxje_mFVRMGYciprURszAV6dmKuBk-b_MXx4CDhkba/exec"
-            title="High Line Racing Network News and Blogs"
-            width="100%"
-            height="1500"
-            frameborder="0"
-            scrolling="yes"
-            loading="eager"
-            allowfullscreen
-          ></iframe>
-        </div>
-      </div>
-    </section>
-
-    </div><!-- /newsLatestContent -->
-    <section id="announcementsPanel" class="announcements-panel" hidden aria-label="Official HLRN Announcements">
-      <iframe id="hlrnAnnouncementsFrame" title="HLRN Official Announcements" loading="lazy"></iframe>
-    </section>
-
-    <div class="footer-note">
-      HIGH LINE RACING NETWORK • NEWSROOM • DRIVER STORIES • CHAMPIONSHIP COVERAGE • NETWORK UPDATES
+      <div class="nr-footer-note">HIGH LINE RACING NETWORK • NEWSROOM • RACE COVERAGE • DRIVER STORIES • OFFICIAL ANNOUNCEMENTS</div>
     </div>
   </main>
 </div>
@@ -649,7 +201,16 @@ button,input{font:inherit}
  if(location.hash==='#announcements')showAnnouncements();else showLatest();
 })();
 </script>
-<script src="../assets/site-shell.js?v=20260929myhlrn1"></script>
+<script src="../assets/hlrn-core.js?v=newsroom10"></script>
+<script src="../assets/news/newsroom-v10.js?v=20260929n10a1"></script>
+<script>
+document.addEventListener("DOMContentLoaded",()=>{
+  const shortcut=document.getElementById("nrAnnouncementShortcut");
+  const tab=document.getElementById("announcementsTab");
+  shortcut?.addEventListener("click",e=>{e.preventDefault();tab?.click();});
+});
+</script>
+<script src="../assets/site-shell.js?v=20260929newsroom10"></script>
 <script src="../assets/race-recaps.js?v=1"></script>
 </body>
 </html>
