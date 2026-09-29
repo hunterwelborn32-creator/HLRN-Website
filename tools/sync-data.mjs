@@ -94,26 +94,46 @@ export function parseStageBonusBreakdownHtml(html) {
   const out = new Map();
   const source = String(html || '');
   const form = source.match(/<form\b[^>]*id=['"]bonus_form['"][^>]*>([\s\S]*?)<\/form>/i);
-  if (!form) return out;
+  // SimRacerHub normally keeps awards in #bonus_form, but falling back to the
+  // whole page prevents a harmless markup change from silently deleting stages.
+  const scope = form ? form[1] : source;
 
   let currentDriverId = '';
   let currentDriverName = '';
-  for (const row of form[1].matchAll(/<tr\b[^>]*class=['"][^'"]*jsTableRow[^'"]*['"][^>]*>([\s\S]*?)<\/tr>/gi)) {
+  for (const row of scope.matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)) {
     const body = row[1];
-    const driver = body.match(/driver_stats\.php\?driver_id=(\d+)[^'"]*['"][^>]*>([\s\S]*?)<\/a>/i);
+    const driver = body.match(/driver_stats\.php\?[^"'<>]*driver_id=(\d+)[^"'<>]*['"][^>]*>([\s\S]*?)<\/a>/i)
+      || body.match(/driver_stats\.php\?driver_id=(\d+)[^'"]*['"][^>]*>([\s\S]*?)<\/a>/i);
     if (driver) {
       currentDriverId = String(driver[1]);
       currentDriverName = stripHtml(driver[2]);
     }
-    const pointsMatch = body.match(/<td\b[^>]*class=['"][^'"]*text-success[^'"]*['"][^>]*>\s*(?:<span[^>]*>)?\s*([+-]?\d+(?:\.\d+)?)\s*(?:<\/span>)?/i);
-    const labelMatch = body.match(/<td\b[^>]*class=['"][^'"]*wrap[^'"]*['"][^>]*>([\s\S]*?)<\/td>/i);
-    if (!currentDriverId || !pointsMatch || !labelMatch) continue;
+    if (!currentDriverId) continue;
 
-    const label = stripHtml(labelMatch[1]);
-    const stageMatch = label.match(/^Stage\s+(\d+)(?:st|nd|rd|th)\s+Place$/i);
+    const cells = [...body.matchAll(/<td\b([^>]*)>([\s\S]*?)<\/td>/gi)].map(match => ({
+      attrs: match[1] || '',
+      html: match[2] || '',
+      text: stripHtml(match[2] || '')
+    }));
+    const labelIndex = cells.findIndex(cell => /\bStage\s+\d+(?:st|nd|rd|th)\s+Place\b/i.test(cell.text));
+    if (labelIndex < 0) continue;
+
+    const label = cells[labelIndex].text;
+    const stageMatch = label.match(/\bStage\s+(\d+)(?:st|nd|rd|th)\s+Place\b/i);
     if (!stageMatch) continue;
 
-    const points = num(pointsMatch[1]) ?? 0;
+    let points = null;
+    const successCell = cells.find(cell => /text-success/i.test(cell.attrs) && /^[+]?\d+(?:\.\d+)?$/.test(cell.text));
+    if (successCell) points = num(successCell.text);
+    if (points === null) {
+      for (let i = labelIndex - 1; i >= 0; i--) {
+        if (/^[+]?\d+(?:\.\d+)?$/.test(cells[i].text)) {
+          points = num(cells[i].text);
+          break;
+        }
+      }
+    }
+    points = points ?? 0;
     if (points <= 0) continue;
 
     const existing = out.get(currentDriverId) || {
@@ -200,14 +220,24 @@ export function applyStageBonusReclassification(drivers, stageTotals) {
     const award = stageTotals.get(driverId);
     if (!award) return driver;
 
-    const stagePoints = num(award.points) ?? 0;
-    const stageWins = num(award.wins) ?? 0;
+    const parsedStage = num(award.points) ?? 0;
+    const parsedWins = num(award.wins) ?? 0;
     const nativeStage = num(driver?.stagePoints) ?? 0;
-    if (nativeStage > 0) return driver;
+    const nativeWins = num(driver?.stageWins) ?? 0;
+
+    // Some Monday races arrive with stage awards inside BNS PTS, while newer
+    // SimRacerHub responses may already expose part/all of them in STG PTS.
+    // Keep the larger verified stage total, reclassify only the missing amount
+    // out of bonus points, and always retain the most complete stage-win count.
+    const stagePoints = Math.max(nativeStage, parsedStage);
+    const stageWins = Math.max(nativeWins, parsedWins);
+    const reclassified = Math.max(0, stagePoints - nativeStage);
 
     const merged = { ...driver, stagePoints, stageWins };
     const bonus = num(driver?.bonus);
-    if (bonus !== null && stagePoints > 0) merged.bonus = Math.max(0, bonus - stagePoints);
+    if (bonus !== null && reclassified > 0) {
+      merged.bonus = Math.max(0, bonus - reclassified);
+    }
     return merged;
   });
 }
