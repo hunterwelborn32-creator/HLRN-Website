@@ -178,47 +178,17 @@
 <div class="next-events-grid" id="nextEventsGrid"></div>
 </section>
 
-<section class="hlrn-archive" id="raceArchive" aria-label="HLRN race archive">
-  <div class="archive-head">
-    <div>
-      <small>HLRN // COMPLETED EVENTS</small>
-      <h2>RACE ARCHIVE</h2>
-      <p>Every completed Sunday and Monday league race in one place. Open a race for the full finishing order, key stats, movement and automatic post-race report.</p>
-    </div>
-    <div class="archive-status"><span class="archive-live-dot"></span><b id="archiveUpdated">LOADING RACE DATA</b></div>
-  </div>
-
-  <div class="archive-controls">
-    <div class="archive-tabs" role="tablist" aria-label="Race archive league filter">
-      <button class="archive-tab active" type="button" data-archive-league="all">ALL RACES</button>
-      <button class="archive-tab sunday" type="button" data-archive-league="sunday">SUNDAY</button>
-      <button class="archive-tab monday" type="button" data-archive-league="monday">MONDAY</button>
-    </div>
-    <div class="archive-summary">
-      <span><b id="archiveRaceCount">--</b> RACES</span>
-      <span><b id="archiveWinnerCount">--</b> WINNERS</span>
-      <span><b id="archiveDriverCount">--</b> DRIVERS</span>
-    </div>
-  </div>
-
-  <div class="archive-grid" id="archiveGrid">
-    <div class="archive-loading">BUILDING HLRN RACE ARCHIVE…</div>
-  </div>
-</section>
-
-<section class="hlrn-recorder-archive" id="recorderArchive" aria-label="HLRN frozen race records">
-  <div class="recorder-archive-head">
-    <div>
-      <small>HLRN // CHECKERED-FLAG PRESERVATION</small>
-      <h2>FROZEN RACE RECORDS</h2>
-      <p>Permanent race-night records captured by the HLRN recorder at checkered. Recorder facts are kept separate from official championship scoring.</p>
-    </div>
-    <div class="recorder-archive-status"><span></span><b id="recorderArchiveStatus">LOADING RECORDER ARCHIVE</b></div>
-  </div>
-  <div class="recorder-archive-grid" id="recorderArchiveGrid">
-    <div class="recorder-archive-empty">Checking for published frozen race records…</div>
-  </div>
-</section>
+<div id="raceArchive" hidden aria-hidden="true">
+  <div id="archiveGrid"></div>
+  <span id="archiveUpdated"></span>
+  <span id="archiveRaceCount"></span>
+  <span id="archiveWinnerCount"></span>
+  <span id="archiveDriverCount"></span>
+</div>
+<div id="recorderArchive" hidden aria-hidden="true">
+  <div id="recorderArchiveGrid"></div>
+  <span id="recorderArchiveStatus"></span>
+</div>
 
 <section class="race-report-view" id="raceReportView" aria-live="polite">
   <button class="report-back" id="reportBack" type="button">← BACK TO RACE ARCHIVE</button>
@@ -279,7 +249,7 @@
 
 <script src="../assets/results/results-schedule-v1.js?v=20260929m1"></script>
 <script src="../assets/hlrn-core.js?v=results-archive-1"></script>
-<script src="../assets/results/results-archive-v1.js?v=20260929classic2"></script>
+<script src="../assets/results/results-archive-v1.js?v=20260929classic3"></script>
 
 <script src="../assets/site-shell.js?v=20260929teams1"></script>
 </body></html>
