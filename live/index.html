@@ -348,6 +348,17 @@
     cursor:pointer;
   }
   .copy-btn:hover{background:#252f3a}
+  .report-actions{display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+  .story-btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    min-height:35px;padding:9px 12px;border:1px solid #cfd5dc;background:#fff;color:#69727d;
+    font-size:9px;font-weight:1000;letter-spacing:.65px;text-decoration:none;white-space:nowrap;
+  }
+  .story-btn[hidden]{display:none!important}
+  .story-btn[aria-disabled="true"]{pointer-events:none;opacity:.65}
+  .story-btn.ready{background:#e31837;border-color:#e31837;color:#fff}
+  .story-btn.ready:hover{background:#c91430}
+
   .report-status{font-size:10px;font-weight:900;color:#68717d}
   .report-box{
     margin:0;
@@ -1242,7 +1253,10 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
         </div>
         <div class="report-toolbar">
           <div id="reportStatus" class="report-status">Waiting for race-night data</div>
-          <button id="copyReportBtn" class="copy-btn">COPY FULL REPORT</button>
+          <div class="report-actions">
+            <a id="postRaceStoryBtn" class="story-btn" href="/news/race-recaps/" hidden aria-disabled="true">STORY PUBLISHING…</a>
+            <button id="copyReportBtn" class="copy-btn">COPY FULL REPORT</button>
+          </div>
         </div>
         <div id="raceReplay" class="race-replay">
           <div class="race-replay-head">
@@ -1352,6 +1366,9 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
   let liveTickerSignature = "";
   let replaySelectedIndex = null;
   let replayRaceKey = null;
+  let recapLookupRaceKey = null;
+  let recapLookupAt = 0;
+  let recapLookupBusy = false;
 
   // Strict race-leader validation. We intentionally do NOT trust raw lead-change
   // events from the bridge because pit-exit scoring can briefly make several cars P1.
@@ -2851,8 +2868,65 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
     return lines.join("\n");
   }
 
+  function recapIdentityFor(race){
+    if(!race) return "";
+    if(race.subSessionId != null) return "subsession:"+String(race.subSessionId);
+    if(race.sessionId != null) return "session:"+String(race.sessionId)+":"+String(race.sessionNum ?? "");
+    return String(race.track||"")+"|"+String(race.raceFrozenAt||"");
+  }
+
+  async function updatePostRaceStoryLink(race){
+    const btn=$("postRaceStoryBtn");
+    if(!btn) return;
+
+    const complete=!!race && (race.raceFrozen || raceFinished(race));
+    if(!complete){
+      btn.hidden=true;
+      return;
+    }
+
+    btn.hidden=false;
+    btn.classList.remove("ready");
+    btn.setAttribute("aria-disabled","true");
+    btn.textContent="STORY PUBLISHING…";
+    btn.href="/news/race-recaps/";
+
+    const key=recapIdentityFor(race);
+    const now=Date.now();
+    if(recapLookupBusy) return;
+    if(key===recapLookupRaceKey && now-recapLookupAt<30000) return;
+
+    recapLookupRaceKey=key;
+    recapLookupAt=now;
+    recapLookupBusy=true;
+    try{
+      const res=await fetch("/data/race-recaps/index.json?v="+now,{cache:"no-store"});
+      if(!res.ok) throw new Error("recap index unavailable");
+      const data=await res.json();
+      const items=Array.isArray(data?.recaps)?data.recaps:[];
+      const sub=String(race.subSessionId ?? "");
+      const sid=String(race.sessionId ?? "");
+      const match=items.find(item=>{
+        if(sub && String(item.subSessionId ?? "")===sub) return true;
+        if(!sub && sid && String(item.sessionId ?? "")===sid) return true;
+        return false;
+      });
+      if(match?.url){
+        btn.href=match.url;
+        btn.textContent="READ POST-RACE STORY →";
+        btn.classList.add("ready");
+        btn.removeAttribute("aria-disabled");
+      }
+    }catch(err){
+      // The article publisher may still be waiting for the next GitHub sync.
+    }finally{
+      recapLookupBusy=false;
+    }
+  }
+
   function renderReport(){
     const race = getPhaseState("race");
+    updatePostRaceStoryLink(race);
     renderRaceReplay(race);
     renderLapRecap(race);
 
