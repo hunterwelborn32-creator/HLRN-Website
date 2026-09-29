@@ -2,7 +2,6 @@
 """Build HLRN sitemap.xml from real public routes and current data."""
 from __future__ import annotations
 import json
-import urllib.parse
 from pathlib import Path
 from xml.sax.saxutils import escape
 
@@ -46,25 +45,17 @@ def add(urls, route):
     urls.add(url)
 
 def driver_urls(urls):
-    path = ROOT / "data" / "hlrn.json"
-    if not path.exists():
+    manifest = ROOT / "data" / "driver-pages.json"
+    if not manifest.exists():
         return
     try:
-        data = json.loads(path.read_text(encoding="utf-8"))
+        data = json.loads(manifest.read_text(encoding="utf-8"))
     except Exception:
         return
-    leagues = data.get("leagues") or {}
-    for league in ("sunday", "monday"):
-        block = leagues.get(league) or {}
-        for row in block.get("drivers") or []:
-            name = pretty_name(row.get("driver"))
-            if not name:
-                continue
-            params = {"league": league, "driver": name}
-            if row.get("driverId") not in (None, ""):
-                params["driverId"] = str(row.get("driverId"))
-            query = urllib.parse.urlencode(params)
-            add(urls, f"/drivers/?{query}")
+    for row in data.get("drivers") or []:
+        route = row.get("url")
+        if route:
+            add(urls, route)
 
 def adventure_urls(urls):
     root = ROOT / "adventures"
