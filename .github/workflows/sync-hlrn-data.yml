@@ -36,10 +36,13 @@ jobs:
         env:
           HLRN_RECAP_URL: https://hlrn-live-feed.onrender.com/api/recap
         run: python tools/publish-race-recap.py
-      - name: Commit verified data, reports and race recaps only when changed
+      - name: Rebuild public sitemap
+        run: python tools/build-sitemap.py
+      - name: Commit verified data, reports, recaps and sitemap only when changed
         run: |
           git add data/hlrn.json data/derived data/race-recaps
           if [ -d news/race-recaps ]; then git add news/race-recaps; fi
+          if [ -f sitemap.xml ]; then git add sitemap.xml; fi
           if ! git diff --cached --quiet; then
             git config user.name "hlrn-data-bot"
             git config user.email "actions@users.noreply.github.com"
