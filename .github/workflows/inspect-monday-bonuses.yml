@@ -1,4 +1,4 @@
-name: Inspect Monday Bonus Breakdown
+name: Inspect SimRacerHub Standings Fields
 
 on:
   push:
@@ -12,20 +12,22 @@ jobs:
   inspect:
     runs-on: ubuntu-latest
     steps:
-      - name: Inspect Texas bonus page
+      - name: Print standings driver fields
         run: |
           python - <<'PY'
-          import urllib.request,re,html
-          url="https://simracerhub.com/season_race.php?race_id=382159&scbp=y"
-          req=urllib.request.Request(url,headers={"User-Agent":"Mozilla/5.0"})
-          with urllib.request.urlopen(req,timeout=30) as r:
-              page=r.read().decode("utf-8","replace")
-          print("BYTES",len(page))
-          low=page.lower()
-          for needle in ["driver bonuses","stage 1st place","stage 2nd place","stage 3rd place","stage 4th place","stage 5th place"]:
-              i=low.find(needle)
-              print("NEEDLE",needle,"AT",i)
-              if i>=0:
-                  print(page[max(0,i-1800):i+3500])
-                  print("-----")
+          import json, urllib.request
+          for season,label in [(29832,"SUNDAY"),(30442,"MONDAY")]:
+              url=f"https://simracerhub.com/get_standings.php?season_id={season}&_fields=1"
+              req=urllib.request.Request(url,headers={"User-Agent":"Mozilla/5.0","Accept":"application/json"})
+              with urllib.request.urlopen(req,timeout=30) as r:
+                  d=json.loads(r.read().decode())
+              rps=d.get("rps") or {}
+              rows=sorted(rps.items(),key=lambda kv: float((kv[1] or {}).get("pos2") or (kv[1] or {}).get("pos1") or 9999))
+              print("===",label,"===")
+              for did,x in rows[:3]:
+                  print("DRIVER_ID",did)
+                  for k in sorted(x.keys()):
+                      if k=="races": continue
+                      print(k,"=",repr(x.get(k)))
+                  break
           PY
