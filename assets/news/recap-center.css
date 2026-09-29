@@ -1,0 +1,79 @@
+
+.nr-recap-center{margin-top:8px}
+.nr-recap-feature{display:grid;grid-template-columns:minmax(0,1.25fr) 390px;gap:10px;margin-bottom:12px}
+.nr-recap-hero,.nr-recap-stats,.nr-recap-card{border:1px solid #303a45;background:#10151b}
+.nr-recap-hero{position:relative;overflow:hidden;min-height:330px;padding:24px;display:flex;flex-direction:column;justify-content:space-between}
+.nr-recap-hero:after{content:"CHECKERED";position:absolute;right:-16px;bottom:-26px;color:rgba(255,255,255,.025);font:1000 italic 94px/.8 var(--nr-display);pointer-events:none}
+.nr-recap-hero.sunday{box-shadow:inset 5px 0 0 var(--nr-red)}
+.nr-recap-hero.monday{box-shadow:inset 5px 0 0 var(--nr-green)}
+.nr-recap-eyebrow{display:flex;align-items:center;gap:8px;color:#8b96a2;font-size:6px;font-weight:1000;letter-spacing:.13em;text-transform:uppercase}
+.nr-recap-eyebrow i{width:24px;height:4px;background:var(--nr-yellow)}
+.nr-recap-hero h3{position:relative;z-index:1;margin:10px 0 0;max-width:920px;font:1000 italic clamp(38px,4.7vw,66px)/.87 var(--nr-display);letter-spacing:-.04em;text-transform:uppercase}
+.nr-recap-hero p{position:relative;z-index:1;max-width:800px;margin:10px 0 0;color:#9ba6b2;font-size:9px;line-height:1.55;font-weight:700}
+.nr-recap-winner{position:relative;z-index:1;margin-top:22px;padding-top:14px;border-top:1px solid #303a45}
+.nr-recap-winner small{display:block;color:#798591;font-size:6px;font-weight:1000;letter-spacing:.11em}
+.nr-recap-winner strong{display:block;margin-top:4px;font:1000 italic 27px/.95 var(--nr-display);text-transform:uppercase}
+.nr-recap-actions{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:6px;margin-top:17px}
+.nr-recap-btn{display:inline-flex;min-height:34px;align-items:center;justify-content:center;padding:0 11px;border:1px solid #46515d;color:#fff;font-size:6px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase}
+.nr-recap-btn.primary{border-color:var(--nr-red);background:var(--nr-red)}
+.nr-recap-btn:hover{background:#fff;border-color:#fff;color:#111}
+.nr-recap-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#303a45}
+.nr-recap-stat{min-height:104px;display:flex;flex-direction:column;justify-content:center;padding:14px;background:#10151b}
+.nr-recap-stat small{color:#73808d;font-size:5px;font-weight:1000;letter-spacing:.1em;text-transform:uppercase}
+.nr-recap-stat b{display:block;margin-top:6px;font:1000 italic 27px/.9 var(--nr-display);text-transform:uppercase}
+.nr-recap-stat span{display:block;margin-top:5px;color:#7f8b97;font-size:6px;line-height:1.4}
+
+.nr-recap-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:14px 0 10px}
+.nr-recap-filters{display:flex;gap:6px}
+.nr-recap-filter{appearance:none;border:1px solid #38434f;background:#0e1319;color:#9ba5b0;padding:8px 12px;cursor:pointer;font-size:6px;font-weight:1000;letter-spacing:.1em;text-transform:uppercase}
+.nr-recap-filter.active{background:#fff;border-color:#fff;color:#111}
+.nr-recap-filter[data-filter="sunday"].active{background:var(--nr-red);border-color:var(--nr-red);color:#fff}
+.nr-recap-filter[data-filter="monday"].active{background:var(--nr-green);border-color:var(--nr-green);color:#07130c}
+.nr-recap-count{color:#74808c;font-size:6px;font-weight:1000;letter-spacing:.1em;text-transform:uppercase}
+
+.nr-recap-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.nr-recap-card{overflow:hidden}
+.nr-recap-card.sunday{border-top:3px solid var(--nr-red)}
+.nr-recap-card.monday{border-top:3px solid var(--nr-green)}
+.nr-recap-card-head{display:flex;justify-content:space-between;gap:12px;padding:9px 11px;border-bottom:1px solid #303a45;background:#0b0f14}
+.nr-recap-card-head span,.nr-recap-card-head b{font-size:5px;font-weight:1000;letter-spacing:.1em;text-transform:uppercase}
+.nr-recap-card-head span{color:#7b8793}.nr-recap-card-head b{color:#fff}
+.nr-recap-card-main{padding:14px}
+.nr-recap-card-main small{display:block;color:#77838f;font-size:5px;font-weight:1000;letter-spacing:.09em;text-transform:uppercase}
+.nr-recap-card-main h3{margin:6px 0 7px;font:1000 italic 23px/.9 var(--nr-display);text-transform:uppercase}
+.nr-recap-card-main p{margin:0;color:#8e99a5;font-size:7px;line-height:1.5}
+.nr-recap-card-winner{margin-top:11px;padding-top:10px;border-top:1px solid #2b3540}
+.nr-recap-card-winner span{display:block;color:#77838f;font-size:5px;font-weight:1000;letter-spacing:.1em;text-transform:uppercase}
+.nr-recap-card-winner strong{display:block;margin-top:3px;font:1000 italic 17px/.95 var(--nr-display);text-transform:uppercase}
+.nr-recap-card-stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:11px}
+.nr-recap-card-stats div{text-align:center;padding:0 6px;border-right:1px solid #2d3742}
+.nr-recap-card-stats div:last-child{border-right:0}
+.nr-recap-card-stats b{display:block;font:1000 15px/1 var(--nr-display)}
+.nr-recap-card-stats span{display:block;margin-top:4px;color:#707c88;font-size:5px;font-weight:1000;text-transform:uppercase}
+.nr-recap-card-actions{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #303a45}
+.nr-recap-card-actions a{min-height:34px;display:flex;align-items:center;justify-content:center;padding:0 6px;border-right:1px solid #303a45;color:#9aa5b0;font-size:5px;font-weight:1000;letter-spacing:.06em;text-transform:uppercase}
+.nr-recap-card-actions a:last-child{border-right:0}
+.nr-recap-card-actions a:hover{background:#fff;color:#111}
+.nr-recap-empty{grid-column:1/-1;padding:26px;border:1px dashed #3a4550;background:#10151b;color:#7e8995;font-size:7px;font-weight:800;text-align:center}
+
+@media(max-width:1050px){
+ .nr-recap-feature{grid-template-columns:1fr}
+ .nr-recap-stats{grid-template-columns:repeat(4,1fr)}
+ .nr-recap-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:760px){
+ .nr-recap-hero{min-height:300px;padding:18px}
+ .nr-recap-hero h3{font-size:36px}
+ .nr-recap-stats{grid-template-columns:1fr 1fr}
+ .nr-recap-toolbar{align-items:flex-start;flex-direction:column}
+ .nr-recap-filters{width:100%;display:grid;grid-template-columns:repeat(3,1fr)}
+ .nr-recap-filter{padding:9px 5px}
+ .nr-recap-grid{grid-template-columns:1fr}
+}
+@media(max-width:430px){
+ .nr-recap-actions{display:grid;grid-template-columns:1fr 1fr}
+ .nr-recap-btn.primary{grid-column:1/-1}
+ .nr-recap-card-actions{grid-template-columns:1fr}
+ .nr-recap-card-actions a{border-right:0;border-bottom:1px solid #303a45}
+ .nr-recap-card-actions a:last-child{border-bottom:0}
+}
