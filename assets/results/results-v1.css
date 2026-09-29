@@ -4893,3 +4893,602 @@ body{
   .race-preview-launch-actions{display:grid;grid-template-columns:1fr 1fr}
   .race-preview-launch-actions a{min-width:0}
 }
+
+
+/* =========================================================
+   HLRN RESULTS MOBILE CENTER FINAL
+   Phone-only schedule, race archive and post-race report UX.
+========================================================= */
+.archive-podium,
+.report-mobile-finishing{display:none}
+
+@media(max-width:620px){
+  /* Modern Results shell */
+  .ns-schedule-app{
+    background:linear-gradient(180deg,#080b0f 0 230px,#e9edf1 230px 100%)!important;
+  }
+  .ns-top{
+    width:calc(100% - 12px)!important;
+    height:42px!important;
+    margin:6px auto 0!important;
+    padding:0 9px!important;
+    border-left-width:3px!important;
+    border-radius:7px 7px 0 0!important;
+  }
+  .ns-mark{font-size:19px!important}
+  .ns-brand-copy{display:none!important}
+
+  /* Sunday / Monday switcher */
+  .ns-subnav{
+    width:calc(100% - 12px)!important;
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+    gap:4px!important;
+    margin:0 auto!important;
+    padding:4px!important;
+    border-radius:0 0 8px 8px!important;
+    background:#11161c!important;
+  }
+  .ns-league-tab{
+    min-width:0!important;
+    min-height:38px!important;
+    padding:0 6px!important;
+    border:1px solid #303842!important;
+    border-radius:6px!important;
+    background:#171d25!important;
+    color:#9ba5af!important;
+    font-size:8px!important;
+    letter-spacing:.05em!important;
+  }
+  .ns-league-tab.active{
+    padding-bottom:0!important;
+    border-bottom-width:1px!important;
+    background:#fff!important;
+    color:#11151a!important;
+  }
+  .ns-league-tab[data-league="sunday"].active{
+    box-shadow:inset 0 -3px 0 #68bd2d!important;
+  }
+  .ns-league-tab[data-league="monday"].active{
+    box-shadow:inset 0 -3px 0 #e31837!important;
+  }
+
+  .ns-wrap{
+    width:calc(100% - 12px)!important;
+  }
+  .ns-titlebar{
+    min-height:0!important;
+    padding:22px 6px 17px!important;
+  }
+  .ns-eyebrow{font-size:7px!important}
+  .ns-titlebar h1{
+    margin-top:5px!important;
+    font-size:32px!important;
+    line-height:.94!important;
+  }
+  .ns-titlebar p{
+    margin-top:9px!important;
+    font-size:9px!important;
+    line-height:1.45!important;
+  }
+
+  /* Previous / next event cards */
+  .ns-race-summary{
+    grid-template-columns:1fr!important;
+    gap:7px!important;
+    margin-top:10px!important;
+  }
+  .ns-summary-card{
+    border-radius:8px!important;
+  }
+  .ns-summary-head{
+    min-height:34px!important;
+    padding:0 10px!important;
+    font-size:7px!important;
+  }
+  .ns-summary-body{
+    padding:12px!important;
+  }
+  .ns-race-name{
+    font-size:23px!important;
+  }
+  .ns-race-meta{
+    margin-top:6px!important;
+    font-size:8px!important;
+    line-height:1.45!important;
+  }
+  .ns-summary-winner{
+    margin-top:8px!important;
+    padding-top:8px!important;
+    font-size:8px!important;
+  }
+  .ns-countdown{
+    display:grid!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    gap:4px!important;
+    margin-top:9px!important;
+  }
+  .ns-countdown div{
+    min-width:0!important;
+    padding:7px 3px!important;
+  }
+  .ns-countdown strong{font-size:16px!important}
+  .ns-countdown span{font-size:5px!important}
+
+  /* Big next-race feature becomes concise. */
+  .ns-feature{
+    grid-template-columns:1fr!important;
+    margin-top:8px!important;
+    border-radius:8px!important;
+    overflow:hidden!important;
+  }
+  .ns-feature-main{
+    min-height:0!important;
+    padding:17px 13px!important;
+  }
+  .ns-feature-kicker{font-size:7px!important}
+  .ns-feature-track{
+    margin-top:6px!important;
+    font-size:31px!important;
+  }
+  .ns-feature-date{
+    margin-top:8px!important;
+    font-size:9px!important;
+  }
+  .ns-feature-desc{
+    margin-top:8px!important;
+    font-size:8px!important;
+    line-height:1.45!important;
+  }
+  .ns-race-actions{margin-top:10px!important}
+  .ns-btn{
+    min-height:36px!important;
+    padding:0 10px!important;
+    font-size:7px!important;
+  }
+  .ns-feature-info{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  .ns-detail{
+    min-height:66px!important;
+    padding:10px!important;
+  }
+  .ns-detail small{font-size:5px!important}
+  .ns-detail strong{
+    margin-top:5px!important;
+    font-size:11px!important;
+  }
+  .ns-detail.wide strong{font-size:10px!important}
+
+  .ns-controls{
+    display:grid!important;
+    grid-template-columns:auto minmax(0,1fr)!important;
+    align-items:center!important;
+    gap:8px!important;
+    padding:9px!important;
+    margin-top:8px!important;
+  }
+  .ns-season{
+    gap:5px!important;
+  }
+  .ns-season-label{display:none!important}
+  .ns-select{
+    min-width:76px!important;
+    height:35px!important;
+    padding:0 24px 0 8px!important;
+    font-size:9px!important;
+  }
+  .ns-toggle{
+    justify-self:end!important;
+    gap:6px!important;
+  }
+  .ns-toggle-text{
+    font-size:7px!important;
+    letter-spacing:.04em!important;
+  }
+  .ns-switch{
+    width:34px!important;
+    height:18px!important;
+  }
+  .ns-switch:after{
+    width:12px!important;
+    height:12px!important;
+  }
+  .ns-toggle input:checked+.ns-switch:after{left:19px!important}
+
+  /* Schedule rows read like compact race cards. */
+  .ns-schedule{padding-bottom:24px!important}
+  .ns-month{
+    margin-top:10px!important;
+    border-radius:8px!important;
+  }
+  .ns-month-title{
+    padding:10px 11px 8px!important;
+    font-size:17px!important;
+  }
+  .ns-race-row{
+    grid-template-columns:52px minmax(0,1fr) auto!important;
+    gap:8px!important;
+    min-height:88px!important;
+    padding:9px!important;
+  }
+  .ns-date{
+    padding-right:7px!important;
+  }
+  .ns-date b{font-size:21px!important}
+  .ns-date span{font-size:6px!important}
+  .ns-row-week{font-size:6px!important}
+  .ns-row-track{
+    margin-top:3px!important;
+    font-size:17px!important;
+  }
+  .ns-row-location{
+    margin-top:4px!important;
+    font-size:7px!important;
+  }
+  .ns-row-spec{display:none!important}
+  .ns-row-status{
+    grid-column:3!important;
+    grid-row:1!important;
+    text-align:right!important;
+  }
+  .ns-chip{
+    padding:5px 6px!important;
+    font-size:5px!important;
+  }
+  .ns-winner{
+    min-height:45px!important;
+    gap:6px!important;
+    margin-top:6px!important;
+  }
+  .ns-winner-photo{
+    width:38px!important;
+    height:46px!important;
+    flex-basis:38px!important;
+  }
+  .ns-winner-name{font-size:8px!important}
+
+  /* Race Archive now belongs to the visible modern page. */
+  .hlrn-archive{
+    width:100%!important;
+    margin:10px 0 20px!important;
+    padding:10px!important;
+    border-left-width:3px!important;
+    border-radius:8px!important;
+    box-shadow:0 10px 28px rgba(0,0,0,.20)!important;
+  }
+  .archive-head{
+    display:block!important;
+    padding-bottom:10px!important;
+  }
+  .archive-head small{font-size:6px!important}
+  .archive-head h2{
+    margin:5px 0!important;
+    font-size:31px!important;
+  }
+  .archive-head p{
+    max-width:none!important;
+    font-size:7px!important;
+    line-height:1.45!important;
+  }
+  .archive-status{
+    min-height:30px!important;
+    margin-top:9px!important;
+    padding:0 8px!important;
+    font-size:6px!important;
+  }
+
+  .archive-controls{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:7px!important;
+    margin:9px 0!important;
+  }
+  .archive-tabs{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:4px!important;
+  }
+  .archive-tab{
+    min-height:36px!important;
+    padding:0 4px!important;
+    font-size:7px!important;
+    letter-spacing:.04em!important;
+    border-radius:6px!important;
+  }
+  .archive-summary{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:1px!important;
+    margin:0!important;
+    background:#2b333a!important;
+  }
+  .archive-summary span{
+    padding:7px 4px!important;
+    background:#090b0d!important;
+    text-align:center!important;
+    font-size:6px!important;
+  }
+  .archive-summary b{
+    display:block!important;
+    margin-bottom:2px!important;
+    font-size:11px!important;
+  }
+
+  .archive-grid{
+    grid-template-columns:1fr!important;
+    gap:7px!important;
+  }
+  .archive-card{
+    border-top-width:3px!important;
+    border-radius:7px!important;
+  }
+  .archive-card:hover{transform:none!important}
+  .archive-card-top{
+    min-height:32px!important;
+    padding:0 9px!important;
+  }
+  .archive-series,.archive-date{font-size:6px!important}
+  .archive-card-body{padding:10px!important}
+  .archive-race-no{font-size:6px!important}
+  .archive-track{
+    margin-top:4px!important;
+    font-size:23px!important;
+  }
+
+  /* Winner/P2/P3 immediately visible on phone. */
+  .archive-winner{display:none!important}
+  .archive-podium{
+    display:grid!important;
+    gap:1px!important;
+    margin-top:9px!important;
+    border:1px solid #2b333a!important;
+    background:#2b333a!important;
+  }
+  .archive-podium-row{
+    display:grid!important;
+    grid-template-columns:34px minmax(0,1fr)!important;
+    align-items:center!important;
+    min-height:34px!important;
+    background:#0b0e11!important;
+  }
+  .archive-podium-row b{
+    display:grid!important;
+    place-items:center!important;
+    align-self:stretch!important;
+    color:#fff!important;
+    background:#151a20!important;
+    font-size:10px!important;
+  }
+  .archive-podium-row.p1 b{
+    color:#080a0c!important;
+    background:var(--league)!important;
+  }
+  .archive-podium-row span{
+    min-width:0!important;
+    padding:0 8px!important;
+    overflow:hidden!important;
+    color:#f2f4f6!important;
+    font-size:9px!important;
+    font-weight:900!important;
+    text-overflow:ellipsis!important;
+    text-transform:uppercase!important;
+    white-space:nowrap!important;
+  }
+
+  .archive-card-stats{
+    margin-top:7px!important;
+  }
+  .archive-card-stats div{padding:6px!important}
+  .archive-card-stats b{font-size:9px!important}
+  .archive-card-stats span{font-size:5px!important}
+  .archive-open{
+    min-height:34px!important;
+    padding:0 9px!important;
+    font-size:6px!important;
+  }
+
+  /* Full post-race report */
+  .race-report-view{
+    width:100%!important;
+    margin:10px 0 20px!important;
+    padding:8px!important;
+    border-left-width:3px!important;
+    border-radius:8px!important;
+  }
+  .report-back{
+    position:sticky!important;
+    top:5px!important;
+    z-index:50!important;
+    min-height:36px!important;
+    padding:0 10px!important;
+    border-radius:7px!important;
+    background:rgba(12,15,18,.96)!important;
+    font-size:7px!important;
+    backdrop-filter:blur(8px)!important;
+    -webkit-backdrop-filter:blur(8px)!important;
+  }
+  .report-hero{
+    margin-top:7px!important;
+    padding:14px 11px!important;
+    border-top-width:3px!important;
+    border-radius:7px!important;
+  }
+  .report-kicker{font-size:6px!important}
+  .report-track{
+    margin-top:5px!important;
+    font-size:34px!important;
+    line-height:.88!important;
+  }
+  .report-meta{
+    margin-top:8px!important;
+    font-size:6px!important;
+    line-height:1.4!important;
+  }
+  .report-hero-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:4px!important;
+    margin-top:11px!important;
+  }
+  .report-hero-main{
+    grid-column:1/-1!important;
+    padding:10px!important;
+  }
+  .report-hero-stat{padding:9px 6px!important}
+  .report-hero-main span,.report-hero-stat span{font-size:5px!important}
+  .report-hero-main strong{
+    margin-top:4px!important;
+    font-size:19px!important;
+  }
+  .report-hero-stat strong{
+    margin-top:4px!important;
+    font-size:14px!important;
+  }
+
+  .report-section-title{
+    margin:16px 1px 7px!important;
+    font-size:15px!important;
+  }
+  .report-story{
+    padding:10px!important;
+    border-left-width:3px!important;
+    font-size:8px!important;
+    line-height:1.55!important;
+  }
+  .report-feature-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:5px!important;
+  }
+  .report-feature{
+    min-height:76px!important;
+    padding:9px!important;
+  }
+  .report-feature span{font-size:5px!important}
+  .report-feature strong{
+    margin-top:4px!important;
+    font-size:12px!important;
+  }
+  .report-feature small{
+    margin-top:4px!important;
+    font-size:6px!important;
+  }
+
+  /* No sideways finishing-order table on phones. */
+  .report-table-shell{display:none!important}
+  .report-mobile-finishing{
+    display:grid!important;
+    gap:5px!important;
+  }
+  .report-mobile-driver{
+    overflow:hidden!important;
+    border:1px solid #303840!important;
+    border-radius:7px!important;
+    background:#0b0d10!important;
+  }
+  .report-mobile-driver.winner{
+    border-left:4px solid var(--rc-yellow)!important;
+    background:linear-gradient(90deg,rgba(255,212,0,.055),#0b0d10 28%)!important;
+  }
+  .report-mobile-main{
+    display:grid!important;
+    grid-template-columns:38px minmax(0,1fr) 38px!important;
+    gap:6px!important;
+    align-items:center!important;
+    min-height:48px!important;
+    padding:6px 7px!important;
+  }
+  .report-mobile-finish{
+    color:#fff!important;
+    font-size:14px!important;
+    font-weight:1000!important;
+    text-align:center!important;
+  }
+  .report-mobile-driver-copy{
+    min-width:0!important;
+  }
+  .report-mobile-driver-copy strong{
+    display:block!important;
+    min-width:0!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+  .report-mobile-driver-copy .report-driver-link{
+    font-size:9px!important;
+    text-transform:uppercase!important;
+  }
+  .report-mobile-driver-copy span{
+    display:block!important;
+    margin-top:3px!important;
+    overflow:hidden!important;
+    color:#7f8992!important;
+    font-size:6px!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+  .report-mobile-gain{
+    color:#c2c8ce!important;
+    font-size:10px!important;
+    font-weight:1000!important;
+    text-align:center!important;
+  }
+  .report-mobile-gain small{
+    display:block!important;
+    margin-top:2px!important;
+    color:#6f7982!important;
+    font-size:5px!important;
+  }
+  .report-mobile-stats{
+    display:grid!important;
+    grid-template-columns:repeat(5,minmax(0,1fr))!important;
+    border-top:1px solid #293139!important;
+    background:#080a0c!important;
+  }
+  .report-mobile-stats span{
+    min-width:0!important;
+    padding:6px 2px!important;
+    border-right:1px solid #293139!important;
+    text-align:center!important;
+  }
+  .report-mobile-stats span:last-child{border-right:0!important}
+  .report-mobile-stats b{
+    display:block!important;
+    overflow:hidden!important;
+    color:#e8ebee!important;
+    font-size:8px!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+  .report-mobile-stats small{
+    display:block!important;
+    margin-top:3px!important;
+    color:#68727b!important;
+    font-size:5px!important;
+    font-weight:900!important;
+  }
+
+  .report-team-grid{
+    grid-template-columns:1fr!important;
+    gap:5px!important;
+  }
+  .report-team-card{
+    padding:10px!important;
+    border-radius:7px!important;
+  }
+  .report-team-card span{font-size:5px!important}
+  .report-team-card strong{
+    margin-top:4px!important;
+    font-size:13px!important;
+  }
+  .report-team-card small{
+    margin-top:4px!important;
+    font-size:6px!important;
+  }
+
+  .ns-footer{
+    width:calc(100% - 12px)!important;
+    margin-bottom:7px!important;
+    padding:14px 11px!important;
+    font-size:6px!important;
+  }
+}
