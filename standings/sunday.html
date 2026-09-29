@@ -1986,14 +1986,19 @@ Last Race
 DRIVER
 </th>
 <th>SEASON PTS</th>
+<th>RACE PTS</th>
 <th>STAGE PTS</th>
+<th>BONUS</th>
+<th>PENALTY</th>
 <th>BEHIND</th>
 <th>STARTS</th>
 <th>WINS</th>
 <th>TOP 5s</th>
 <th class="top10-head">TOP 10s</th>
 <th>DNFs</th>
+<th>LAPS</th>
 <th>LAPS LED</th>
+<th>INC</th>
 </tr>
 </thead>
 <tbody id="driverBody"></tbody>
@@ -2877,10 +2882,12 @@ const driverAhead=
 index>0 ? sorted[index-1] : null;
 const behind=
 driverAhead ? Math.max(0,num(driverAhead.points)-num(driver.points)) : 0;
-const stagePoints=
-(driver.stagePoints===undefined || driver.stagePoints===null || driver.stagePoints==="")
-? "—"
-: formatNumber(driver.stagePoints);
+const seasonMetrics=hlrnDriverSeasonMetrics(driver);
+const stagePoints=hlrnMetricText(seasonMetrics.stagePoints);
+const racePoints=hlrnMetricText(seasonMetrics.racePoints);
+const bonusPoints=hlrnMetricText(seasonMetrics.bonus);
+const penaltyPoints=hlrnMetricText(seasonMetrics.penalty);
+const seasonLaps=hlrnMetricText(seasonMetrics.laps);
 return `
 <tr>
 <td>
@@ -2895,14 +2902,19 @@ ${movementHTML(driver.change)}
 ${hLrnNameWithPhoto(driver.driver)}
 </td>
 <td class="points">${formatNumber(driver.points)}</td>
+<td>${racePoints}</td>
 <td class="stage-points">${stagePoints}</td>
+<td>${bonusPoints}</td>
+<td class="penalty-points">${penaltyPoints}</td>
 <td class="behind ${index===0?'leader':''}">${index===0?'0':'-'+formatNumber(behind)}</td>
 <td>${formatNumber(driver.starts)}</td>
 <td>${formatNumber(driver.wins)}</td>
 <td>${formatNumber(driver.top5)}</td>
 <td>${formatNumber(driver.top10)}</td>
 <td>${formatNumber(totals.dnf)}</td>
+<td>${seasonLaps}</td>
 <td>${formatNumber(totals.led)}</td>
+<td>${formatNumber(totals.inc)}</td>
 </tr>
 `;
 })
