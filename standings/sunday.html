@@ -2551,6 +2551,173 @@ html,body,.page-wrap{
   }
 }
 </style>
+
+<style id="HLRN_TEAM_STANDINGS_FINAL">
+#teams{
+  --team-accent:#d71920;
+  --team-accent-soft:#fff5f5;
+}
+#teams .table-shell{
+  width:100%!important;
+  max-width:100%!important;
+  overflow-x:auto!important;
+  overflow-y:visible!important;
+  -webkit-overflow-scrolling:touch!important;
+  border:1px solid #dfe3e6!important;
+  border-radius:16px!important;
+  background:#fff!important;
+  box-shadow:0 8px 24px rgba(17,18,20,.05)!important;
+  scrollbar-width:thin!important;
+  scrollbar-color:#b9bec4 #f2f4f5!important;
+}
+#teams .table-shell::-webkit-scrollbar{height:10px!important}
+#teams .table-shell::-webkit-scrollbar-track{background:#f2f4f5!important}
+#teams .table-shell::-webkit-scrollbar-thumb{
+  background:#b9bec4!important;
+  border-radius:999px!important;
+  border:2px solid #f2f4f5!important;
+}
+#teams table{
+  width:100%!important;
+  min-width:1180px!important;
+  table-layout:fixed!important;
+  border-collapse:separate!important;
+  border-spacing:0!important;
+  margin:0!important;
+  background:#fff!important;
+}
+#teams th,
+#teams td,
+#teams:not(.show-advanced) th,
+#teams:not(.show-advanced) td,
+#teams.show-advanced th,
+#teams.show-advanced td{
+  display:table-cell!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+#teams th,
+#teams td{
+  min-width:0!important;
+  padding-left:7px!important;
+  padding-right:7px!important;
+  border-right:1px solid #edf0f2!important;
+}
+#teams th:last-child,
+#teams td:last-child{border-right:0!important}
+#teams thead th{
+  height:44px!important;
+  padding-top:10px!important;
+  padding-bottom:10px!important;
+  background:#f4f6f7!important;
+  color:#4f565d!important;
+  font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
+  font-size:10px!important;
+  font-weight:800!important;
+  font-style:normal!important;
+  line-height:1.05!important;
+  letter-spacing:.075em!important;
+  text-align:center!important;
+  text-transform:uppercase!important;
+  vertical-align:middle!important;
+  white-space:nowrap!important;
+}
+#teams thead th.name-col{text-align:left!important}
+#teams tbody td{
+  height:64px!important;
+  padding-top:9px!important;
+  padding-bottom:9px!important;
+  background:#fff!important;
+  color:#111214!important;
+  border-bottom:1px solid #dfe3e6!important;
+  font-family:"Inter","Segoe UI",Arial,sans-serif!important;
+  font-size:12px!important;
+  font-weight:600!important;
+  font-style:normal!important;
+  line-height:1.1!important;
+  letter-spacing:0!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+  font-variant-numeric:tabular-nums lining-nums!important;
+}
+#teams tbody tr:nth-child(even) td{background:#fafafa!important}
+#teams tbody tr:hover td{background:#f6f8fa!important}
+#teams tbody tr:first-child td{background:var(--team-accent-soft)!important}
+#teams tbody tr:first-child td:first-child{
+  border-left:4px solid var(--team-accent)!important;
+}
+#teams th:nth-child(1),#teams td:nth-child(1){width:58px!important}
+#teams th:nth-child(2),#teams td:nth-child(2){width:70px!important}
+#teams th:nth-child(3),#teams td:nth-child(3){width:230px!important}
+#teams th:nth-child(n+4),#teams td:nth-child(n+4){width:66px!important}
+#teams tbody td:first-child,
+#teams .position{
+  font-family:"Inter","Segoe UI",Arial,sans-serif!important;
+  font-size:12px!important;
+  font-weight:700!important;
+  font-style:normal!important;
+}
+#teams .movement,
+#teams .movement.up,
+#teams .movement.down,
+#teams .movement.same{
+  font-family:"Inter","Segoe UI",Arial,sans-serif!important;
+  font-size:12px!important;
+  font-weight:600!important;
+  font-style:normal!important;
+}
+#teams td.name-col{
+  text-align:left!important;
+}
+#teams .hlrn-team-profile-link{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:8px!important;
+  max-width:100%!important;
+  color:#111214!important;
+  font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
+  font-size:18px!important;
+  font-weight:800!important;
+  font-style:italic!important;
+  line-height:1!important;
+  letter-spacing:-.015em!important;
+  text-transform:uppercase!important;
+  text-decoration:none!important;
+}
+#teams .hlrn-team-profile-arrow{
+  width:22px!important;
+  height:22px!important;
+  flex:0 0 22px!important;
+  font:700 18px/1 "Inter","Segoe UI",Arial,sans-serif!important;
+}
+#teams td.points,
+#teams td.stage-points{
+  font-family:"Inter","Segoe UI",Arial,sans-serif!important;
+  font-size:12px!important;
+  font-weight:900!important;
+  font-style:normal!important;
+}
+#teams .race-points,
+#teams .bonus-points,
+#teams .penalty-points{
+  font-family:"Inter","Segoe UI",Arial,sans-serif!important;
+  font-size:12px!important;
+  font-weight:600!important;
+}
+#teams .penalty-points{color:#c9202b!important}
+#teams .read-more-stats{display:none!important}
+@media(max-width:900px){
+  #teams table{min-width:1080px!important}
+  #teams thead th{font-size:9px!important}
+  #teams tbody td,
+  #teams td.points,
+  #teams td.stage-points,
+  #teams .race-points,
+  #teams .bonus-points,
+  #teams .penalty-points{font-size:11px!important}
+  #teams .hlrn-team-profile-link{font-size:16px!important}
+}
+</style>
 </head>
 <body>
 <div class="page-wrap">
@@ -2672,16 +2839,16 @@ TEAM
 <th>STARTS</th>
 <th>COUNTED</th>
 <th>WINS</th>
-<th>TOP 5</th>
-<th>TOP 10</th>
-<th>POINTS</th>
-<th>RACE PTS</th>
-<th>STAGE PTS</th>
-<th>BONUS</th>
-<th>PENALTY</th>
+<th>T-5</th>
+<th>T-10</th>
+<th>TOT<br>PTS</th>
+<th>STG<br>PTS</th>
+<th>RACE<br>PTS</th>
+<th>BNS<br>PTS</th>
+<th>PEN<br>PTS</th>
 <th>LAPS</th>
-<th>LED</th>
-<th>INC</th>
+<th>LAPS<br>LED</th>
+<th>INCS</th>
 </tr>
 </thead>
 <tbody id="teamBody"></tbody>
@@ -3647,10 +3814,10 @@ ${hLrnTeamProfileLink(team.team)}
 <td class="points">
 ${formatNumber(team.points,1)}
 </td>
-<td>${formatNumber(team.racePoints,1)}</td>
-<td>${formatNumber(team.stagePoints,1)}</td>
-<td>${formatNumber(team.bonus,1)}</td>
-<td>${formatNumber(team.penalty,1)}</td>
+<td class="stage-points">${formatNumber(team.stagePoints,1)}</td>
+<td class="race-points">${formatNumber(team.racePoints,1)}</td>
+<td class="bonus-points">${formatNumber(team.bonus,1)}</td>
+<td class="penalty-points">${formatNumber(team.penalty,1)}</td>
 <td>${formatNumber(team.laps,1)}</td>
 <td>${formatNumber(team.lapsLed,1)}</td>
 <td>${formatNumber(team.incidents,1)}</td>
