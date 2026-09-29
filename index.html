@@ -3848,7 +3848,7 @@ body.rd-v5{background:#fff!important;color:#111317!important}
 
   <main>
     <section class="v7-hero">
-      <img class="v7-hero-image" src="https://drive.google.com/thumbnail?id=1p9xE92IXmLMfGRN0P8sE-SVjf0tWmBgg&sz=w2000" alt="High Line Racing Network racing">
+      <img class="v7-hero-image" src="https://drive.google.com/thumbnail?id=1p9xE92IXmLMfGRN0P8sE-SVjf0tWmBgg&sz=w2000" alt="High Line Racing Network racing" loading="eager" decoding="async" fetchpriority="high">
       <div class="v7-hero-overlay"></div>
       <div class="v7-hero-lines"></div>
 
@@ -4085,7 +4085,7 @@ body.rd-v5{background:#fff!important;color:#111317!important}
 
         alt="High Line Racing Network"
 
-    >
+     loading="lazy" decoding="async">
 
 
     <div class="hlrn-hero-overlay"></div>
@@ -8416,7 +8416,7 @@ function decorateNameElement(el){
     el.dataset.hlrnPhotoName=name;
     el.innerHTML=
         '<span class="hlrn-photo-name-wrap">'+
-            '<img class="hlrn-photo-inline'+(useFullPhoto?' hlrn-photo-original':'')+'" src="'+escHTML(url)+'" alt="" loading="lazy" decoding="async" onerror="if(!this.dataset.fallback){this.dataset.fallback=\'1\';this.src=\''+escHTML(fallbackUrl)+'\';}else{this.style.display=\'none\';}">'+
+            '<img class="hlrn-photo-inline'+(useFullPhoto?' hlrn-photo-original':'')+'" src="'+escHTML(url)+'" alt="" onerror="if(!this.dataset.fallback){this.dataset.fallback=\'1\';this.src=\''+escHTML(fallbackUrl)+'\';}else{this.style.display=\'none\';}" loading="lazy" decoding="async">'+
             '<span class="hlrn-photo-name-text">'+escHTML(name)+'</span>'+
         '</span>';
     el.dataset.hlrnPhotoBusy="0";
@@ -8457,7 +8457,7 @@ function decorateStoryElement(el){
     el.dataset.hlrnPhotoStory=text;
     el.innerHTML=
         '<span class="hlrn-photo-story-wrap">'+
-            '<img class="hlrn-photo-inline" src="'+escHTML(found.url)+'" alt="" loading="lazy" decoding="async" onerror="this.style.display=\'none\'">'+
+            '<img class="hlrn-photo-inline" src="'+escHTML(found.url)+'" alt="" onerror="this.style.display=\'none\'" loading="lazy" decoding="async">'+
             '<span class="hlrn-photo-story-text">'+escHTML(text)+'</span>'+
         '</span>';
     el.dataset.hlrnPhotoBusy="0";
