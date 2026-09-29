@@ -355,7 +355,7 @@ def render_page(driver):
   </div>
   <div class="updated">Profile data generated from the current HLRN verified league snapshot.</div>
 </main>
-<script src="/assets/site-shell.js?v=20260928v6"></script>
+<script src="/assets/site-shell.js?v=20260929myhlrn1"></script>
 </body>
 </html>
 """
