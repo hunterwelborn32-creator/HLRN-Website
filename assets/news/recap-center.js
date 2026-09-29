@@ -83,7 +83,7 @@ function render(){
   const shown=filter==="all"?allRecaps:allRecaps.filter(x=>seriesKey(x.series)===filter);
   const grid=$("#nrRecapGrid"),count=$("#nrRecapFilterCount");
   if(count)count.textContent=shown.length+" PUBLISHED RECAP"+(shown.length===1?"":"S");
-  if(grid)grid.innerHTML=shown.length?shown.map(card).join(""):'<div class="nr-recap-empty">No '+(filter==="all"?"published":filter)+" race recaps are in the permanent archive yet.</div>';
+  if(grid)grid.innerHTML=shown.length?shown.map(card).join(""):'<div class="nr-recap-empty">No '+(filter==="all"?"published":filter)+' race recaps are in the permanent archive yet.</div>';
   $$(".nr-recap-filter").forEach(b=>b.classList.toggle("active",b.dataset.filter===filter));
 }
 async function load(){
