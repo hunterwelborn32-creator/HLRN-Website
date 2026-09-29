@@ -1,5 +1,10 @@
 name: Sync HLRN data
 on:
+  push:
+    paths:
+      - 'tools/**'
+      - 'tests/**'
+      - '.github/workflows/sync-hlrn-data.yml'
   schedule:
     - cron: '*/15 * * * *'
   workflow_dispatch:
