@@ -2226,6 +2226,7 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
       const raceFast = fastestDriver(rDrivers);
       const qDrivers = qualifying && Array.isArray(qualifying.drivers) ? qualifying.drivers : [];
       const events = accurateRaceEvents(race);
+      const lapSnapshots = raceLapSnapshots(race);
 
       const rc = race.raceControl || {};
       const rs = race.raceStats || {};
@@ -2233,7 +2234,7 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
       const leadChanges = Number(rs.leadChanges ?? events.filter(e => e.type === "lead").length);
       const cautionLaps = Number(rc.totalCautionLaps || 0);
       const longestGreen = Number(rc.longestGreenRun || 0);
-      const penalties = events.filter(e => e.type === "penalty" && e.title === "Black Flag");
+      const penalties = penaltyRecordsFor(race, events);
       const dqs = rDrivers.filter(d => d.disqualified || String(d.status || "").toUpperCase() === "DQ");
       const disconnects = rDrivers.filter(d => String(d.status || "").includes("DISCONNECTED"));
 
@@ -2250,7 +2251,29 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
       lines.push(`Black Flags Logged: ${penalties.length}`);
       lines.push(`Disqualifications: ${dqs.length}`);
       lines.push(`Disconnected / Out: ${disconnects.length}`);
+      const recorder = race.raceRecorder || {};
+      const capturedLaps = Number(recorder.completedLapsCaptured || (Array.isArray(race.lapSnapshots) ? race.lapSnapshots.length : 0) || 0);
+      lines.push(`Lap Snapshots Captured: ${capturedLaps}`);
+      if(race.raceFrozen){
+        lines.push(`Recorder Status: FINAL / FROZEN AT ${race.raceFrozenAt || race.updatedAt || "CHECKERED"}`);
+      }else{
+        lines.push("Recorder Status: LIVE");
+      }
       lines.push("");
+
+      if(lapSnapshots.length){
+        lines.push("LAP-BY-LAP RUNNING ORDER");
+        lines.push("------------------------");
+        lapSnapshots.forEach(snap => {
+          const order = Array.isArray(snap.order) ? snap.order : [];
+          const orderText = order.map(entry => snapshotEntryLabel(entry, rDrivers)).join(" | ");
+          lines.push(`Lap ${snap.lap ?? "—"} [${String(snap.flag || "SCORING").toUpperCase()}] — ${orderText || "No scored order captured"}`);
+        });
+        if(!race.raceFrozen && lapSnapshots.length===1){
+          lines.push("NOTE: During the live race, the server retains the complete lap archive and sends only the newest snapshot to viewers. The full lap-by-lap archive is delivered when the checkered flag freezes the session.");
+        }
+        lines.push("");
+      }
 
       lines.push("FULL RACE RESULTS");
       lines.push("-----------------");
@@ -2296,15 +2319,19 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
         lines.push("CAUTION / RESTART HISTORY");
         lines.push("-------------------------");
         cautionHistory.forEach(c => {
-          lines.push(`Caution #${c.number ?? "—"} — Lap ${c.startLap ?? "—"}${c.restartLap != null ? ` → Restart Lap ${c.restartLap}` : " → Restart pending"}`);
+          const reason = c.reason || "Reason not supplied by iRacing telemetry";
+          const source = c.reasonSource && String(c.reasonSource).toUpperCase() !== "UNAVAILABLE"
+            ? ` [${String(c.reasonSource).toUpperCase()}]`
+            : "";
+          lines.push(`Caution #${c.number ?? "—"} — Lap ${c.startLap ?? "—"}${c.restartLap != null ? ` → Restart Lap ${c.restartLap}` : " → Restart pending"} — Reason: ${reason}${source}`);
         });
         lines.push("");
       }
 
       if(penalties.length){
-        lines.push("PENALTIES");
-        lines.push("---------");
-        penalties.forEach(e => lines.push(formatEventLine(e)));
+        lines.push("BLACK FLAGS / PENALTIES");
+        lines.push("-----------------------");
+        penalties.forEach(e => lines.push(penaltyRecordLine(e)));
         lines.push("");
       }
 
@@ -2339,16 +2366,19 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
   }
 
   function renderReport(){
+    const race = getPhaseState("race");
+    renderLapRecap(race);
+
     const report = buildPostRaceReport();
     $("reportText").textContent = report;
 
-    const race = getPhaseState("race");
     if(race){
-      const complete = String(race.flag || "").toUpperCase() === "CHECKERED"
-        || ["CHECKERED","COOL DOWN"].includes(String(race.sessionState || "").toUpperCase());
-      $("reportStatus").textContent = complete
-        ? "FINAL REPORT READY TO COPY"
-        : "LIVE REPORT — UPDATES THROUGHOUT THE RACE";
+      const complete = raceFinished(race);
+      $("reportStatus").textContent = race.raceFrozen
+        ? "FINAL REPORT • FROZEN AT CHECKERED"
+        : complete
+          ? "FINAL REPORT READY TO COPY"
+          : "LIVE REPORT • SERVER RECORDER ACTIVE";
     }else{
       $("reportStatus").textContent = "BUILDING RACE-NIGHT REPORT";
     }
