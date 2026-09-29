@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-29T01:51:53.479Z",
+  "generatedAt": "2026-09-29T02:11:17.035Z",
   "leagues": {
     "sunday": {
       "drivers": [
@@ -7472,7 +7472,215 @@
           "incidents": 12,
           "status": "Disconnected"
         }
-      ]
+      ],
+      "teamRosters": {
+        "DHR": [
+          {
+            "driverId": "55541",
+            "driver": "Haley, Trevor"
+          },
+          {
+            "driverId": "95192",
+            "driver": "Baumann, Nicholas"
+          },
+          {
+            "driverId": "77498",
+            "driver": "Moreno, Ethan"
+          },
+          {
+            "driverId": "99085",
+            "driver": "Escamilla, Juan"
+          },
+          {
+            "driverId": "130000",
+            "driver": "Tyler3, Timothy"
+          }
+        ],
+        "Helix": [
+          {
+            "driverId": "135679",
+            "driver": "Welborn, Hunter"
+          },
+          {
+            "driverId": "127180",
+            "driver": "Campoli, Ross"
+          },
+          {
+            "driverId": "105882",
+            "driver": "Hinton2, Bryce"
+          },
+          {
+            "driverId": "82788",
+            "driver": "Cox, Keaton"
+          },
+          {
+            "driverId": "101291",
+            "driver": "Fletcher, Charles"
+          },
+          {
+            "driverId": "87070",
+            "driver": "Eckert, Ethan"
+          }
+        ],
+        "HLR": [
+          {
+            "driverId": "96425",
+            "driver": "Segredo, Jim"
+          },
+          {
+            "driverId": "93056",
+            "driver": "Hayden, Eric"
+          },
+          {
+            "driverId": "56823",
+            "driver": "Stamper, Shawn"
+          },
+          {
+            "driverId": "114989",
+            "driver": "Micheals, Sebastian"
+          },
+          {
+            "driverId": "109390",
+            "driver": "Hayes4, Brian"
+          }
+        ],
+        "LBS": [
+          {
+            "driverId": "33901",
+            "driver": "James, Chris"
+          },
+          {
+            "driverId": "55068",
+            "driver": "McKinney2, Joshua"
+          },
+          {
+            "driverId": "120507",
+            "driver": "Boyer, Larkin"
+          },
+          {
+            "driverId": "139594",
+            "driver": "Ramsey, Kenwood"
+          },
+          {
+            "driverId": "126849",
+            "driver": "Piper, Brock"
+          },
+          {
+            "driverId": "81845",
+            "driver": "Wells, Joe"
+          }
+        ],
+        "PrimeX": [
+          {
+            "driverId": "98282",
+            "driver": "Showers, Brandon"
+          },
+          {
+            "driverId": "101093",
+            "driver": "Showers, Randy"
+          },
+          {
+            "driverId": "109391",
+            "driver": "Wilson21, Ryan"
+          },
+          {
+            "driverId": "106245",
+            "driver": "Kammeron, Kyle"
+          },
+          {
+            "driverId": "51327",
+            "driver": "Rowe, Craig"
+          }
+        ],
+        "Rowdy": [
+          {
+            "driverId": "109865",
+            "driver": "Spragg, Joshua"
+          },
+          {
+            "driverId": "126078",
+            "driver": "Ceballos, Darrel"
+          },
+          {
+            "driverId": "140056",
+            "driver": "Graham20, Matthew"
+          },
+          {
+            "driverId": "126021",
+            "driver": "Treubig, Aaron"
+          },
+          {
+            "driverId": "125222",
+            "driver": "Gothard, Tyler"
+          }
+        ],
+        "SMT": [
+          {
+            "driverId": "103956",
+            "driver": "Parry, Evan"
+          },
+          {
+            "driverId": "118360",
+            "driver": "Beach, Donny"
+          },
+          {
+            "driverId": "9726",
+            "driver": "Crowe, Justin"
+          },
+          {
+            "driverId": "47514",
+            "driver": "Jeffries, Jeremy"
+          },
+          {
+            "driverId": "34773",
+            "driver": "Wessley2, Grant"
+          }
+        ],
+        "TWM": [
+          {
+            "driverId": "116507",
+            "driver": "Brown49, Matthew"
+          },
+          {
+            "driverId": "137126",
+            "driver": "Hatfield, Shane"
+          },
+          {
+            "driverId": "48128",
+            "driver": "Branch, Jason"
+          },
+          {
+            "driverId": "38810",
+            "driver": "Wise, Scott"
+          },
+          {
+            "driverId": "107035",
+            "driver": "Harry, Zach"
+          }
+        ],
+        "VRX": [
+          {
+            "driverId": "65049",
+            "driver": "Guerrero2, Vicente"
+          },
+          {
+            "driverId": "76649",
+            "driver": "Hennings, Brian"
+          },
+          {
+            "driverId": "66005",
+            "driver": "Neagles, Kody"
+          },
+          {
+            "driverId": "115869",
+            "driver": "Philpott, Jared"
+          },
+          {
+            "driverId": "63510",
+            "driver": "Richards, Benjamin"
+          }
+        ]
+      }
     },
     "monday": {
       "drivers": [
@@ -10464,7 +10672,125 @@
           "incidents": 7,
           "status": "Running"
         }
-      ]
+      ],
+      "teamRosters": {
+        "AWR": [
+          {
+            "driverId": "88906",
+            "driver": "Bergeron, Gerry"
+          },
+          {
+            "driverId": "109391",
+            "driver": "Wilson21, Ryan"
+          },
+          {
+            "driverId": "116496",
+            "driver": "Fassett, Jerry"
+          },
+          {
+            "driverId": "106245",
+            "driver": "Kammeron, Kyle"
+          },
+          {
+            "driverId": "49145",
+            "driver": "Jacobs, Derek"
+          }
+        ],
+        "Gen X": [],
+        "Helix": [],
+        "HLR": [
+          {
+            "driverId": "56823",
+            "driver": "Stamper, Shawn"
+          },
+          {
+            "driverId": "135679",
+            "driver": "Welborn, Hunter"
+          },
+          {
+            "driverId": "112020",
+            "driver": "Hebbard2, Brian"
+          },
+          {
+            "driverId": "93056",
+            "driver": "Hayden, Eric"
+          },
+          {
+            "driverId": "109389",
+            "driver": "Rogers, Tommy"
+          },
+          {
+            "driverId": "109390",
+            "driver": "Hayes4, Brian"
+          }
+        ],
+        "JSR": [
+          {
+            "driverId": "87070",
+            "driver": "Eckert, Ethan"
+          },
+          {
+            "driverId": "10188",
+            "driver": "Aswarnauth, Trevor"
+          },
+          {
+            "driverId": "84782",
+            "driver": "Freeman, Carson"
+          },
+          {
+            "driverId": "98668",
+            "driver": "Karlbon, Evan"
+          },
+          {
+            "driverId": "76958",
+            "driver": "Reel, Kenny"
+          }
+        ],
+        "LBS": [
+          {
+            "driverId": "33901",
+            "driver": "James, Chris"
+          },
+          {
+            "driverId": "139594",
+            "driver": "Ramsey, Kenwood"
+          },
+          {
+            "driverId": "55068",
+            "driver": "McKinney2, Joshua"
+          },
+          {
+            "driverId": "132994",
+            "driver": "Fuqua, Evan"
+          },
+          {
+            "driverId": "120507",
+            "driver": "Boyer, Larkin"
+          }
+        ],
+        "SMT Racing": [
+          {
+            "driverId": "115120",
+            "driver": "Moody, Nicholas"
+          },
+          {
+            "driverId": "118360",
+            "driver": "Beach, Donny"
+          },
+          {
+            "driverId": "137810",
+            "driver": "Konen, Joe"
+          },
+          {
+            "driverId": "137126",
+            "driver": "Hatfield, Shane"
+          },
+          {
+            "driverId": "118777",
+            "driver": "Lunn, Tj"
+          }
+        ]
+      }
     }
   },
   "hosted": {
