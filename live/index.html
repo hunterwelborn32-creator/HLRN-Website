@@ -828,6 +828,133 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
     .lap-recap-row{grid-template-columns:1fr}
     .lap-recap-head{align-items:flex-start;flex-direction:column}
   }
+
+  /* ===== HLRN RACE REPLAY ===== */
+  .race-replay{
+    border-bottom:1px solid var(--line);
+    background:#f4f6f8;
+  }
+  .race-replay-head{
+    min-height:78px;
+    padding:15px 16px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+    color:#fff;
+    background:
+      linear-gradient(110deg,rgba(227,24,55,.14),transparent 42%),
+      #0b1016;
+    border-bottom:1px solid #2b333d;
+  }
+  .race-replay-head>div{display:grid;gap:3px}
+  .race-replay-head small{font-size:7px;font-weight:1000;letter-spacing:1.2px;color:#e31837}
+  .race-replay-head strong{font-size:24px;font-weight:1000;font-style:italic;letter-spacing:-.7px}
+  .race-replay-head span{font-size:8px;font-weight:800;color:#9ca7b4}
+  .race-replay-state{
+    padding:7px 9px;
+    border:1px solid #46515d;
+    background:#161d25;
+    color:#aeb8c3!important;
+    font-size:7px!important;
+    font-weight:1000!important;
+    letter-spacing:.7px;
+    white-space:nowrap;
+  }
+  .race-replay-state.ready{border-color:#1f7444;background:#102b1c;color:#8df0b1!important}
+  .race-replay-controls{
+    display:grid;
+    grid-template-columns:auto minmax(0,1fr) auto;
+    gap:12px;
+    align-items:center;
+    padding:15px 16px 11px;
+    background:#fff;
+  }
+  .replay-step,.replay-jumps button{
+    border:1px solid #ccd2d9;
+    background:#fff;
+    color:#333b45;
+    min-height:34px;
+    padding:7px 10px;
+    font-size:8px;
+    font-weight:1000;
+    letter-spacing:.55px;
+    cursor:pointer;
+  }
+  .replay-step:hover,.replay-jumps button:hover{border-color:#777f89;background:#f4f6f8}
+  .replay-step:disabled,.replay-jumps button:disabled{opacity:.38;cursor:not-allowed}
+  .replay-slider-wrap{min-width:0}
+  .replay-slider-labels{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:7px}
+  .replay-slider-labels span{font-size:7px;font-weight:900;color:#8a939e}
+  .replay-slider-labels strong{font-size:11px;font-weight:1000;color:#161b22}
+  .replay-slider-rail{position:relative;height:31px;display:flex;align-items:center}
+  #replayLapSlider{
+    position:relative;z-index:3;width:100%;margin:0;accent-color:#e31837;cursor:pointer;
+  }
+  #replayLapSlider:disabled{cursor:not-allowed}
+  .replay-markers{
+    position:absolute;z-index:2;left:7px;right:7px;top:0;height:13px;pointer-events:none;
+  }
+  .replay-marker{
+    position:absolute;top:0;width:7px;height:7px;border:0;border-radius:50%;
+    transform:translateX(-50%);padding:0;pointer-events:auto;cursor:pointer;
+    background:#6f7883;box-shadow:0 0 0 2px #fff;
+  }
+  .replay-marker.caution{background:#e4b500}
+  .replay-marker.restart{background:#1d9b55}
+  .replay-marker.penalty{background:#e31837}
+  .replay-marker.lead{background:#356fd1}
+  .replay-marker.checkered{width:9px;height:9px;background:#111}
+  .replay-jumps{
+    display:flex;flex-wrap:wrap;gap:6px;
+    padding:0 16px 14px;background:#fff;border-bottom:1px solid #e0e4e8;
+  }
+  .replay-summary{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    border-bottom:1px solid #dde2e7;background:#fafbfc;
+  }
+  .replay-summary>div{padding:12px 14px;border-right:1px solid #dde2e7}
+  .replay-summary>div:last-child{border-right:0}
+  .replay-summary small{display:block;color:#7b8490;font-size:7px;font-weight:1000;letter-spacing:.65px;text-transform:uppercase}
+  .replay-summary strong{display:block;margin-top:5px;font-size:13px;font-weight:1000;color:#171c23}
+  .replay-lap-events{
+    display:flex;gap:6px;flex-wrap:wrap;padding:10px 14px;background:#fff;border-bottom:1px solid #e0e4e8;
+  }
+  .replay-event{
+    display:inline-flex;align-items:center;gap:5px;
+    min-height:26px;padding:4px 7px;border:1px solid #d7dce2;background:#f7f8fa;
+    color:#444d57;font-size:7px;font-weight:1000;letter-spacing:.35px;
+  }
+  .replay-event.caution{border-color:#dfc34c;background:#fff9dc;color:#725c00}
+  .replay-event.penalty{border-color:#e2a0aa;background:#fff0f2;color:#a6122b}
+  .replay-event.lead{border-color:#9bb6ea;background:#eef4ff;color:#2356aa}
+  .replay-event.restart{border-color:#9bd4b3;background:#effbf4;color:#176f3e}
+  .replay-event.checkered{border-color:#333;background:#111;color:#fff}
+  .replay-event.empty{color:#8b949e}
+  .replay-order{background:#fff;overflow-x:auto}
+  .replay-table{width:100%;border-collapse:collapse;min-width:760px}
+  .replay-table th{
+    position:static;background:#f1f3f5;color:#6f7783;font-size:8px;letter-spacing:.8px;
+    text-transform:uppercase;padding:9px;text-align:left;border-bottom:1px solid #d8dce2;
+  }
+  .replay-table td{padding:9px;border-bottom:1px solid #e4e7eb;font-size:10px}
+  .replay-table tr:first-child td{background:#fff8f8}
+  .replay-pos{font-size:16px!important;font-weight:1000;text-align:center;width:48px}
+  .replay-delta{font-weight:1000;width:65px}
+  .replay-delta.up{color:#118948}
+  .replay-delta.down{color:#d6273e}
+  .replay-delta.same{color:#8a919c}
+  .replay-driver{display:flex;align-items:center;gap:8px;font-weight:1000}
+  .replay-driver .hlrn-driver-inline{width:34px;height:34px}
+  .replay-status{font-size:8px;font-weight:1000;color:#6f7883}
+  @media(max-width:760px){
+    .race-replay-head{align-items:flex-start;flex-direction:column}
+    .race-replay-controls{grid-template-columns:1fr 1fr}
+    .replay-slider-wrap{grid-column:1/-1;grid-row:1}
+    .replay-summary{grid-template-columns:1fr 1fr}
+    .replay-summary>div:nth-child(2){border-right:0}
+    .replay-summary>div:nth-child(-n+2){border-bottom:1px solid #dde2e7}
+  }
 </style>
 
 </head>
@@ -1117,8 +1244,53 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
           <div id="reportStatus" class="report-status">Waiting for race-night data</div>
           <button id="copyReportBtn" class="copy-btn">COPY FULL REPORT</button>
         </div>
+        <div id="raceReplay" class="race-replay">
+          <div class="race-replay-head">
+            <div>
+              <small>HLRN POST-RACE</small>
+              <strong>RACE REPLAY</strong>
+              <span id="replayCoverage">Waiting for completed-lap snapshots</span>
+            </div>
+            <span id="replayState" class="race-replay-state">RECORDER WAITING</span>
+          </div>
+
+          <div class="race-replay-controls">
+            <button id="replayPrevLap" class="replay-step" type="button">← PREV LAP</button>
+            <div class="replay-slider-wrap">
+              <div class="replay-slider-labels"><span id="replayMinLap">LAP —</span><strong id="replaySelectedLap">LAP —</strong><span id="replayMaxLap">LAP —</span></div>
+              <div class="replay-slider-rail">
+                <input id="replayLapSlider" type="range" min="0" max="0" value="0" step="1" disabled aria-label="Race replay lap">
+                <div id="replayMarkers" class="replay-markers" aria-label="Race replay event markers"></div>
+              </div>
+            </div>
+            <button id="replayNextLap" class="replay-step" type="button">NEXT LAP →</button>
+          </div>
+
+          <div class="replay-jumps">
+            <button id="replayPrevCaution" type="button">← CAUTION</button>
+            <button id="replayNextCaution" type="button">CAUTION →</button>
+            <button id="replayPrevLead" type="button">← LEAD CHANGE</button>
+            <button id="replayNextLead" type="button">LEAD CHANGE →</button>
+          </div>
+
+          <div class="replay-summary">
+            <div><small>Selected Lap</small><strong id="replayLapStat">—</strong></div>
+            <div><small>Leader</small><strong id="replayLeader">—</strong></div>
+            <div><small>Race Status</small><strong id="replayFlag">—</strong></div>
+            <div><small>Cars Scored</small><strong id="replayField">—</strong></div>
+          </div>
+
+          <div id="replayLapEvents" class="replay-lap-events">
+            <span class="replay-event empty">No replay events yet</span>
+          </div>
+
+          <div id="replayOrder" class="replay-order">
+            <div class="archive-empty"><strong>Race Replay waiting</strong>The full replay becomes available as completed-lap snapshots are recorded.</div>
+          </div>
+        </div>
+
         <div class="lap-recap-head">
-          <div><strong>LAP-BY-LAP RUNNING ORDER</strong><span id="lapRecapCoverage">Waiting for the race recorder</span></div>
+          <div><strong>FULL LAP-BY-LAP ARCHIVE</strong><span id="lapRecapCoverage">Waiting for the race recorder</span></div>
           <span id="lapRecapFreeze" class="lap-recap-freeze">LIVE RECORDER</span>
         </div>
         <div id="lapRecap" class="lap-recap"><div class="archive-empty"><strong>No completed laps recorded yet</strong>The server will capture the scored running order after each completed leader lap.</div></div>
