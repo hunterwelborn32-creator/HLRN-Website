@@ -2430,7 +2430,7 @@ Loading...
 <th>CHG</th>
 <th class="name-col">DRIVER</th>
 <th>STARTS</th>
-<th>RACES<br>COUNTED</th>
+<th>STG<br>PTS</th>
 <th>WINS</th>
 <th>T-5</th>
 <th>T-10</th>
@@ -2445,14 +2445,13 @@ Loading...
 <th>LAPS<br>LED</th>
 <th>POLES</th>
 <th>AVG<br>RATING</th>
-<th>STG<br>PTS</th>
 <th>STG<br>WINS</th>
 <th>TEAM</th>
 </tr>
 </thead>
 <tbody id="driverBody">
 <tr>
-<td colspan="22" class="message">
+<td colspan="21" class="message">
 Loading Monday driver standings...
 </td>
 </tr>
@@ -3351,7 +3350,7 @@ function renderDrivers(){
 <td>${movementHTML(driver.change)}</td>
 <td class="name-col">${hLrnNameWithPhoto(driver.driver,driver.driverId)}</td>
 <td>${formatNumber(starts)}</td>
-<td>${formatNumber(counted)}</td>
+<td class="stage-points">${formatNumber(stagePoints)}</td>
 <td>${formatNumber(wins)}</td>
 <td>${formatNumber(top5)}</td>
 <td>${formatNumber(top10)}</td>
@@ -3366,7 +3365,6 @@ function renderDrivers(){
 <td>${formatNumber(lapsLed)}</td>
 <td>${formatNumber(poles)}</td>
 <td>${avgRating===null?'—':avgRating.toFixed(2)}</td>
-<td class="stage-points">${formatNumber(stagePoints)}</td>
 <td class="stage-wins">${formatNumber(stageWins)}</td>
 <td class="team-name">${team?escapeHTML(team):'—'}</td>
 </tr>`;
