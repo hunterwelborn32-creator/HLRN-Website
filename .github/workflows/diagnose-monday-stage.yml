@@ -12,44 +12,44 @@ jobs:
   diagnose:
     runs-on: ubuntu-latest
     steps:
-      - name: Compare Sunday and Monday scoring configuration
+      - name: Compare scoring config only
         run: |
           python - <<'PY'
           import json, urllib.request
 
           def get(season):
-              url=f"https://simracerhub.com/get_standings.php?season_id={season}&_diag=3"
+              url=f"https://simracerhub.com/get_standings.php?season_id={season}&_diag=4"
               req=urllib.request.Request(url,headers={"User-Agent":"Mozilla/5.0","Accept":"application/json,text/javascript,*/*"})
               with urllib.request.urlopen(req,timeout=30) as r:
                   return json.loads(r.read().decode("utf-8","replace"))
 
-          def stageish(obj):
+          def primitives(obj,prefix=""):
               out={}
               if isinstance(obj,dict):
                   for k,v in obj.items():
-                      lk=str(k).lower()
-                      if any(t in lk for t in ("stage","segment","points","score","bonus","session","split","heat","race")):
-                          if isinstance(v,(str,int,float,bool,type(None))):
-                              out[k]=v
-                          elif isinstance(v,(list,dict)):
-                              out[k]=v
+                      p=f"{prefix}.{k}" if prefix else str(k)
+                      if isinstance(v,(str,int,float,bool,type(None))):
+                          out[p]=v
+                      elif isinstance(v,dict):
+                          out.update(primitives(v,p))
               return out
 
-          for season,label in [(29832,"SUNDAY"),(30442,"MONDAY")]:
-              d=get(season)
-              print("===",label,"===")
-              print("SEASONS_TYPE",type(d.get("seasons")).__name__)
-              print("SEASONS",json.dumps(d.get("seasons"),separators=(",",":"))[:20000])
-              print("LSS_TYPE",type(d.get("lss")).__name__)
-              print("LSS",json.dumps(d.get("lss"),separators=(",",":"))[:30000])
-              print("DISP",json.dumps(d.get("disp"),separators=(",",":"))[:12000])
-              sched=d.get("schedules") or []
-              if isinstance(sched,dict): sched=list(sched.values())
-              for i,s in enumerate(sched):
-                  if isinstance(s,dict):
-                      print("SCHED",i,json.dumps(s,separators=(",",":"))[:8000])
-              # print any stage-related values found under top-level objects
-              for topk in ("seasons","lss","disp"):
-                  val=d.get(topk)
-                  print("STAGEISH",topk,json.dumps(stageish(val),separators=(",",":"))[:15000])
+          sun=get(29832)
+          mon=get(30442)
+
+          for top in ("seasons","lss","disp"):
+              a=primitives(sun.get(top))
+              b=primitives(mon.get(top))
+              keys=sorted(set(a)|set(b))
+              print("===",top.upper(),"DIFFS===")
+              for k in keys:
+                  av=a.get(k,"<MISSING>"); bv=b.get(k,"<MISSING>")
+                  if av!=bv:
+                      print(k,"| SUN=",repr(av),"| MON=",repr(bv))
+
+          print("===RACE MAP SHAPES===")
+          for label,d in (("SUN",sun),("MON",mon)):
+              for s in d.get("schedules") or []:
+                  if not isinstance(s,dict): continue
+                  print(label,s.get("schedule_id"),json.dumps(s.get("race_id"),sort_keys=True), "config",s.get("config_id"))
           PY
