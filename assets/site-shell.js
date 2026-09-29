@@ -4,6 +4,19 @@
 function start(){
   if(!document.body){document.addEventListener("DOMContentLoaded",start,{once:true});return;}
 
+  // Load the unified driver identity layer on every HLRN page before any early return.
+  // This keeps permanent driver profiles working even on pages that render their own nav.
+  if(!document.querySelector("script[data-hlrn-driver-system]")){
+    const shellSelf=[...document.scripts].slice().reverse().find(s=>/(?:^|\/)site-shell\.js(?:\?|$)/i.test(s.src||""));
+    let driverRoot;
+    try{driverRoot=new URL("../",shellSelf&&shellSelf.src?shellSelf.src:location.href);}catch(e){driverRoot=new URL("/",location.origin);}
+    const driverScript=document.createElement("script");
+    driverScript.src=new URL("assets/driver-system.js?v=20260929v1",driverRoot).href;
+    driverScript.defer=true;
+    driverScript.setAttribute("data-hlrn-driver-system","");
+    document.head.appendChild(driverScript);
+  }
+
   // Keep only one shared HLRN navigation instance.
   document.querySelectorAll("#hlrn-global-nav").forEach((el,i)=>{if(i>0)el.remove();});
   if(document.getElementById("hlrn-global-nav")) return;
