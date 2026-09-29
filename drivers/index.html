@@ -1346,6 +1346,8 @@ function searchDrivers(){const q=document.getElementById("search").value.toLower
 
 function openProfile(name,options={}){
   const clean=prettyName(name);
+  const resolved=window.HLRNDrivers?.profileUrl?.(clean)||window.HLRNDrivers?.profileUrl?.(name);
+  if(resolved){location.href=resolved;return;}
   location.href="/drivers/"+driverPageSlug(clean)+"/";
 }
 function leagueStatCards(d){
