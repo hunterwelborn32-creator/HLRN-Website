@@ -60,6 +60,7 @@ function start(){
     /^live\//.test(relPath) ||
     /^standings\//.test(relPath) ||
     /^results\//.test(relPath) ||
+    /^my-hlrn\//.test(relPath) ||
     driverDirectory;
   document.documentElement.classList.toggle("hlrn-mobile-specialized",specializedMobile);
   document.documentElement.classList.toggle("hlrn-mobile-global",!specializedMobile);
@@ -69,6 +70,7 @@ function start(){
   else if(path.includes("/standings/")) active="standings";
   else if(path.includes("/intelligence/")||path.includes("/race-intelligence/")) active="intelligence";
   else if(path.includes("/results/")||path.includes("/schedule/")) active="results";
+  else if(path.includes("/my-hlrn/")) active="my-hlrn";
   else if(path.includes("/drivers/")) active="drivers";
   else if(path.includes("/news/")) active="news";
   else if(path.includes("/adventures/")) active="adventures";
@@ -123,6 +125,7 @@ function start(){
         <div class="hgn-account-title">DRIVER ACCOUNT</div>
         <div class="hgn-account-name"></div>
         <div class="hgn-account-discord"></div>
+        <button type="button" class="hgn-account-dashboard">MY HLRN</button>
         <button type="button" class="hgn-account-profile">MY PROFILE</button>
         <button type="button" class="hgn-account-signout">SIGN OUT</button>
       </div>
@@ -183,6 +186,12 @@ function start(){
     location.href=url("")+"#hlrnDriverSignIn";
   }));
   accountPanel.addEventListener("click",e=>e.stopPropagation());
+  accountPanel.querySelector(".hgn-account-dashboard").addEventListener("click",()=>{
+    const d=readLogin();
+    closeAccount();
+    if(d) location.href=url("my-hlrn/");
+    else location.href=url("")+"#hlrnDriverSignIn";
+  });
   accountPanel.querySelector(".hgn-account-profile").addEventListener("click",()=>{
     const d=readLogin();
     closeAccount();
