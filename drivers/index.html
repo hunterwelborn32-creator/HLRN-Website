@@ -4,6 +4,57 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HLRN Drivers | High Line Racing Network</title>
+<meta id="hlrnMetaDescription" name="description" content="Explore High Line Racing Network driver profiles, numbers, league statistics, race history and current performance.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link id="hlrnCanonical" rel="canonical" href="https://highlineracingnetwork.com/drivers/">
+<meta property="og:type" content="website">
+<meta id="hlrnOgTitle" property="og:title" content="HLRN Drivers | High Line Racing Network">
+<meta id="hlrnOgDescription" property="og:description" content="Explore High Line Racing Network driver profiles, numbers, league statistics, race history and current performance.">
+<meta id="hlrnOgUrl" property="og:url" content="https://highlineracingnetwork.com/drivers/">
+<script>
+(() => {
+  const q=new URLSearchParams(location.search);
+  const driver=String(q.get("driver")||"").trim();
+  const league=["sunday","monday"].includes(String(q.get("league")||"").toLowerCase())
+    ?String(q.get("league")).toLowerCase():"sunday";
+  const driverId=String(q.get("driverId")||"").trim();
+  const canonical=new URL("/drivers/","https://highlineracingnetwork.com");
+  if(driver){
+    canonical.searchParams.set("league",league);
+    if(driverId)canonical.searchParams.set("driverId",driverId);
+    canonical.searchParams.set("driver",driver);
+  }
+  const leagueLabel=league==="monday"?"Monday":"Sunday";
+  const title=driver ? `${driver} | HLRN ${leagueLabel} Driver Profile` : "HLRN Drivers | High Line Racing Network";
+  const description=driver
+    ? `View ${driver}'s High Line Racing Network ${leagueLabel} League driver profile, current statistics, race history and performance.`
+    : "Explore High Line Racing Network driver profiles, numbers, league statistics, race history and current performance.";
+  document.title=title;
+  document.getElementById("hlrnCanonical")?.setAttribute("href",canonical.href);
+  document.getElementById("hlrnMetaDescription")?.setAttribute("content",description);
+  document.getElementById("hlrnOgTitle")?.setAttribute("content",title);
+  document.getElementById("hlrnOgDescription")?.setAttribute("content",description);
+  document.getElementById("hlrnOgUrl")?.setAttribute("content",canonical.href);
+
+  const schema=document.createElement("script");
+  schema.type="application/ld+json";
+  schema.id="hlrnDriverSchema";
+  schema.textContent=JSON.stringify(driver ? {
+    "@context":"https://schema.org",
+    "@type":"Person",
+    "name":driver,
+    "url":canonical.href,
+    "memberOf":{"@type":"Organization","name":"High Line Racing Network","url":"https://highlineracingnetwork.com/"}
+  } : {
+    "@context":"https://schema.org",
+    "@type":"CollectionPage",
+    "name":"HLRN Drivers",
+    "url":"https://highlineracingnetwork.com/drivers/",
+    "isPartOf":{"@type":"WebSite","name":"High Line Racing Network","url":"https://highlineracingnetwork.com/"}
+  });
+  document.head.appendChild(schema);
+})();
+</script>
 <link rel="stylesheet" href="../assets/site-shell.css">
 <style>
 :root{
