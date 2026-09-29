@@ -1787,6 +1787,37 @@ iframe{background:#fff!important;color-scheme:light!important}
   transform:translateX(2px)!important;background:#d71920!important;color:#fff!important;
 }
 </style>
+<style id="HLRN_CHAMPIONSHIP_BATTLE_DASHBOARD_V2">
+.cc-dashboard{grid-template-columns:1.25fr repeat(4,.75fr)!important}
+.cc-card{min-height:92px!important}
+.cc-card-value{font-size:clamp(20px,2.1vw,28px)!important}
+.cc-momentum-row{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:-6px 0 16px;
+}
+.cc-momentum-card{
+  position:relative;overflow:hidden;padding:12px 14px;border:1px solid #2b2b2b;
+  background:linear-gradient(180deg,#101010,#070707);min-width:0;
+}
+.cc-momentum-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:#55b932}
+.cc-momentum-card span{display:block;color:#6f6f6f;font-size:6px;font-weight:1000;letter-spacing:.16em;text-transform:uppercase}
+.cc-momentum-card strong{display:block;margin-top:5px;color:#fff;font-family:Impact,"Arial Narrow",Arial,sans-serif;font-size:20px;line-height:1;font-style:italic;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cc-momentum-card small{display:block;margin-top:5px;color:#8c8c8c;font-size:7px;font-weight:900;letter-spacing:.06em;text-transform:uppercase}
+.cc-dashboard .cc-card:nth-child(4) .cc-card-value a{color:#fff!important;text-decoration:none!important}
+.cc-dashboard .cc-card:nth-child(4) .cc-card-value a:hover{text-decoration:underline!important}
+@media(max-width:1050px){
+  .cc-dashboard{grid-template-columns:repeat(2,1fr)!important}
+  .cc-card:first-child{grid-column:1/-1!important}
+}
+@media(max-width:760px){
+  .cc-dashboard{grid-template-columns:1fr 1fr!important}
+  .cc-card:first-child{grid-column:1/-1!important}
+  .cc-momentum-row{grid-template-columns:1fr!important}
+}
+@media(max-width:480px){
+  .cc-dashboard{grid-template-columns:1fr!important}
+  .cc-card:first-child{grid-column:auto!important}
+}
+</style>
 </head>') : tag+markup;
 }
 </script>
@@ -2190,14 +2221,19 @@ iframe{background:#fff!important;color-scheme:light!important}
     </aside>
   </div>
 </section>
-<div class="cc-dashboard" aria-label="Sunday championship metrics">
-  <div class="cc-card"><div class="cc-card-label">Championship Battle</div><div class="cc-card-value" id="ccBattleText">Loading standings</div><div class="cc-card-sub" id="ccBattleSub">Top contenders</div></div>
-  <div class="cc-card"><div class="cc-card-label">Most Wins</div><div class="cc-card-value" id="ccWinsLeader">--</div><div class="cc-card-sub" id="ccWinsValue">-- wins</div></div>
-  <div class="cc-card"><div class="cc-card-label">Most Top 5s</div><div class="cc-card-value" id="ccTop5Leader">--</div><div class="cc-card-sub" id="ccTop5Value">-- top 5s</div></div>
-  <div class="cc-card"><div class="cc-card-label">Biggest Mover</div><div class="cc-card-value" id="ccMoverLeader">--</div><div class="cc-card-sub" id="ccMoverValue">No change yet</div></div>
-  <div class="cc-card"><div class="cc-card-label">Incident Watch</div><div class="cc-card-value" id="ccIncLeader">--</div><div class="cc-card-sub" id="ccIncValue">-- incidents</div></div>
+<div class="cc-dashboard" aria-label="Sunday championship battle dashboard">
+  <div class="cc-card"><div class="cc-card-label">P1 vs P2 Battle</div><div class="cc-card-value" id="ccBattleText">Loading standings</div><div class="cc-card-sub" id="ccBattleSub">Championship gap</div></div>
+  <div class="cc-card"><div class="cc-card-label">Hottest Driver</div><div class="cc-card-value" id="ccHotLeader">--</div><div class="cc-card-sub" id="ccHotValue">Recent form loading</div></div>
+  <div class="cc-card"><div class="cc-card-label">Biggest Mover</div><div class="cc-card-value" id="ccMoverLeader">--</div><div class="cc-card-sub" id="ccMoverValue">Standings movement</div></div>
+  <div class="cc-card"><div class="cc-card-label">Team Leader</div><div class="cc-card-value" id="ccTeamBattleLeader">--</div><div class="cc-card-sub" id="ccTeamBattleValue">Team championship</div></div>
+  <div class="cc-card"><div class="cc-card-label">Last 3 Points</div><div class="cc-card-value" id="ccMomentumLeader">--</div><div class="cc-card-sub" id="ccMomentumValue">Recent points leader</div></div>
 </div>
 <div class="cc-battle" id="ccTopFive"></div>
+<div class="cc-momentum-row" id="ccMomentumRow" aria-label="Recent championship momentum">
+  <div class="cc-momentum-card"><span>Recent Form</span><strong id="ccRecentForm">--</strong><small id="ccRecentFormSub">Waiting for race results</small></div>
+  <div class="cc-momentum-card"><span>Top 5 Cutline</span><strong id="ccCutline">--</strong><small id="ccCutlineSub">P5 vs P6</small></div>
+  <div class="cc-momentum-card"><span>Team Battle</span><strong id="ccTeamGap">--</strong><small id="ccTeamGapSub">P1 vs P2 teams</small></div>
+</div>
 <section class="sunday-ticker" aria-label="Sunday Night League championship ticker">
   <div class="ticker-label"><span>Sunday Series</span></div>
   <div class="ticker-window">
@@ -3638,6 +3674,19 @@ value
   setInterval(clock,1000);clock();
   function safeNum(v){const n=Number(v);return Number.isFinite(n)?n:0}
   function topBy(arr,key){return (arr||[]).slice().sort((a,b)=>safeNum(b[key])-safeNum(a[key]))[0]||null}
+  function recentRowsFor(driverId,limit=3){
+    return (results||[])
+      .filter(r=>String(r.driverId)===String(driverId)&&safeNum(r.finish)>0)
+      .sort((a,b)=>safeNum(b.raceNumber)-safeNum(a.raceNumber))
+      .slice(0,limit);
+  }
+  function recentDriverStats(d){
+    const rows=recentRowsFor(d.driverId,3);
+    if(!rows.length)return null;
+    const avg=rows.reduce((t,r)=>t+safeNum(r.finish),0)/rows.length;
+    const points=rows.reduce((t,r)=>t+safeNum(r.points),0);
+    return {...d,_recent:rows,_avgFinish:avg,_recentPoints:points};
+  }
   function updateCommand(){
     if(!Array.isArray(drivers) || !drivers.length)return;
     const sorted=drivers.slice().sort((a,b)=>safeNum(a.rank)-safeNum(b.rank)||safeNum(b.points)-safeNum(a.points));
@@ -3648,15 +3697,69 @@ value
       const gap=second?safeNum(leader.points)-safeNum(second.points):0;
       document.getElementById('ccLeaderGap').innerHTML=second?'<b>'+escapeHTML(second.driver)+'</b> trails by <b>'+formatNumber(gap)+'</b> points.':'No second-place driver available.';
     }
-    const wins=topBy(sorted,'wins'); if(wins){document.getElementById('ccWinsLeader').textContent=wins.driver;document.getElementById('ccWinsValue').textContent=formatNumber(wins.wins)+' wins'}
-    const t5=topBy(sorted,'top5'); if(t5){document.getElementById('ccTop5Leader').textContent=t5.driver;document.getElementById('ccTop5Value').textContent=formatNumber(t5.top5)+' top 5s'}
-    const mover=sorted.slice().sort((a,b)=>safeNum(b.change)-safeNum(a.change))[0]; if(mover){document.getElementById('ccMoverLeader').textContent=mover.driver;document.getElementById('ccMoverValue').textContent=(safeNum(mover.change)>0?'+':'')+safeNum(mover.change)+' positions'}
-    const totals=sorted.map(d=>{const t=getDriverTotals(d.driverId);return {...d,_inc:t.inc}}).sort((a,b)=>b._inc-a._inc)[0]; if(totals){document.getElementById('ccIncLeader').textContent=totals.driver;document.getElementById('ccIncValue').textContent=formatNumber(totals._inc)+' incidents'}
-    if(second){document.getElementById('ccBattleText').textContent=(leader.driver||'P1')+' vs '+(second.driver||'P2');document.getElementById('ccBattleSub').textContent=formatNumber(safeNum(leader.points)-safeNum(second.points))+' point gap'}
+    if(second){
+      document.getElementById('ccBattleText').textContent=(leader.driver||'P1')+' vs '+(second.driver||'P2');
+      document.getElementById('ccBattleSub').textContent=formatNumber(safeNum(leader.points)-safeNum(second.points))+' point championship gap';
+    }
+    const mover=sorted.slice().sort((a,b)=>safeNum(b.change)-safeNum(a.change)||safeNum(a.rank)-safeNum(b.rank))[0];
+    if(mover){
+      document.getElementById('ccMoverLeader').textContent=mover.driver||'--';
+      document.getElementById('ccMoverValue').textContent=(safeNum(mover.change)>0?'+':'')+safeNum(mover.change)+' spots since last update';
+    }
+
+    const recent=sorted.map(recentDriverStats).filter(Boolean);
+    const eligible=recent.filter(d=>d._recent.length>=Math.min(3,Math.max(2,Math.min(...recent.map(x=>x._recent.length)))));
+    const hot=(eligible.length?eligible:recent).slice().sort((a,b)=>a._avgFinish-b._avgFinish||b._recentPoints-a._recentPoints)[0];
+    const momentum=(eligible.length?eligible:recent).slice().sort((a,b)=>b._recentPoints-a._recentPoints||a._avgFinish-b._avgFinish)[0];
+    if(hot){
+      document.getElementById('ccHotLeader').textContent=hot.driver||'--';
+      document.getElementById('ccHotValue').textContent=hot._recent.length+'-race avg finish '+hot._avgFinish.toFixed(1);
+      document.getElementById('ccRecentForm').textContent=hot.driver||'--';
+      document.getElementById('ccRecentFormSub').textContent=hot._recent.map(r=>'P'+safeNum(r.finish)).join(' • ')+' • latest '+hot._recent.length+' starts';
+    }
+    if(momentum){
+      document.getElementById('ccMomentumLeader').textContent=momentum.driver||'--';
+      document.getElementById('ccMomentumValue').textContent=formatNumber(momentum._recentPoints)+' pts in last '+momentum._recent.length+' starts';
+    }
+
     const top5=document.getElementById('ccTopFive');
-    if(top5){const lp=safeNum(leader?.points);top5.innerHTML=sorted.slice(0,5).map((d,i)=>{const gap=lp-safeNum(d.points);return '<div class="cc-battle-item"><div class="cc-battle-pos">P'+(i+1)+'</div><div class="cc-battle-name">'+escapeHTML(d.driver)+'</div><div class="cc-battle-pts">'+formatNumber(d.points)+' PTS</div><div class="cc-battle-gap">'+(i===0?'LEADER':'-'+formatNumber(gap))+'</div></div>'}).join('')}
-    if(Array.isArray(teams)&&teams.length){const ts=teams.slice().sort((a,b)=>safeNum(a.rank)-safeNum(b.rank)||safeNum(b.points)-safeNum(a.points));const t=ts[0];if(t){document.getElementById('ccTeamLeader').textContent=t.team||'Unknown';document.getElementById('ccTeamLeaderPts').textContent=formatNumber(t.points,1)+' points'}}
-    if(Array.isArray(results)&&results.length){let latest=0;results.forEach(r=>latest=Math.max(latest,safeNum(r.raceNumber)));const rr=results.filter(r=>safeNum(r.raceNumber)===latest).sort((a,b)=>safeNum(a.finish)-safeNum(b.finish));const w=rr.find(r=>safeNum(r.finish)===1);if(w){const d=driverMap[String(w.driverId)];document.getElementById('ccLatestWinner').textContent=d?d.driver:'Unknown Driver';document.getElementById('ccLatestRace').textContent=(rr[0]?.track||'Last Race')+' • Race '+latest}}
+    if(top5){
+      const lp=safeNum(leader?.points);
+      top5.innerHTML=sorted.slice(0,5).map((d,i)=>{
+        const gap=lp-safeNum(d.points);
+        return '<div class="cc-battle-item"><div class="cc-battle-pos">P'+(i+1)+'</div><div class="cc-battle-name">'+escapeHTML(d.driver)+'</div><div class="cc-battle-pts">'+formatNumber(d.points)+' PTS</div><div class="cc-battle-gap">'+(i===0?'LEADER':'-'+formatNumber(gap))+'</div></div>';
+      }).join('');
+    }
+    const p5=sorted[4],p6=sorted[5];
+    if(p5){
+      document.getElementById('ccCutline').textContent='P5 '+(p5.driver||'--');
+      document.getElementById('ccCutlineSub').textContent=p6?formatNumber(Math.max(0,safeNum(p5.points)-safeNum(p6.points)))+' pts over P6 '+(p6.driver||''):'No P6 driver available';
+    }
+
+    if(Array.isArray(teams)&&teams.length){
+      const ts=teams.slice().sort((a,b)=>safeNum(a.rank)-safeNum(b.rank)||safeNum(b.points)-safeNum(a.points));
+      const t=ts[0],t2=ts[1];
+      if(t){
+        const teamLink='../teams/?league=sunday&team='+encodeURIComponent(t.team||'');
+        document.getElementById('ccTeamBattleLeader').innerHTML='<a href="'+teamLink+'" target="_top">'+escapeHTML(t.team||'Unknown')+'</a>';
+        document.getElementById('ccTeamBattleValue').textContent=formatNumber(t.points,1)+' team points';
+        document.getElementById('ccTeamLeader').textContent=t.team||'Unknown';
+        document.getElementById('ccTeamLeaderPts').textContent=formatNumber(t.points,1)+' points';
+        document.getElementById('ccTeamGap').textContent=t.team||'--';
+        document.getElementById('ccTeamGapSub').textContent=t2?formatNumber(Math.max(0,safeNum(t.points)-safeNum(t2.points)),1)+' pts over '+(t2.team||'P2'):'No P2 team available';
+      }
+    }
+
+    if(Array.isArray(results)&&results.length){
+      let latest=0;results.forEach(r=>latest=Math.max(latest,safeNum(r.raceNumber)));
+      const rr=results.filter(r=>safeNum(r.raceNumber)===latest).sort((a,b)=>safeNum(a.finish)-safeNum(b.finish));
+      const w=rr.find(r=>safeNum(r.finish)===1);
+      if(w){
+        const d=driverMap[String(w.driverId)];
+        document.getElementById('ccLatestWinner').textContent=d?d.driver:'Unknown Driver';
+        document.getElementById('ccLatestRace').textContent=(rr[0]?.track||'Last Race')+' • Race '+latest;
+      }
+    }
     if(typeof window.hlrnApplyLeagueStatus==='function') window.hlrnApplyLeagueStatus();
   }
   window.updateChaseDashboard=updateCommand;
