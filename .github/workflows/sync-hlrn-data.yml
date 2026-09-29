@@ -23,6 +23,8 @@ jobs:
           node-version: '20'
       - name: Test expansion scripts
         run: node --test tests/*.test.mjs
+      - name: Test race recap publisher
+        run: python -m unittest tests/test_race_recap_publisher.py
       - name: Refresh leagues and optional Hosted snapshot
         env:
           HLRN_LEAGUE_WEBAPP_URL: ${{ secrets.HLRN_LEAGUE_WEBAPP_URL }}
@@ -30,9 +32,13 @@ jobs:
         run: node tools/sync-data.mjs
       - name: Build published reports and profiles
         run: node tools/build-derived.mjs
-      - name: Commit verified data and reports only when changed
+      - name: Publish frozen post-race recap when available
+        env:
+          HLRN_RECAP_URL: https://hlrn-live-feed.onrender.com/api/recap
+        run: python tools/publish-race-recap.py
+      - name: Commit verified data, reports and race recaps only when changed
         run: |
-          git add data/hlrn.json data/derived
+          git add data/hlrn.json data/derived data/race-recaps news/race-recaps
           if ! git diff --cached --quiet; then
             git config user.name "hlrn-data-bot"
             git config user.email "actions@users.noreply.github.com"
