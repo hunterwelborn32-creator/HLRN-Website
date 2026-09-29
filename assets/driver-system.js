@@ -55,7 +55,7 @@
     const rec={...driver,rawName:raw,displayName:display,url:absolute(driver.url||("drivers/"+driver.slug+"/"))};
     records.push(rec);
     bySlug.set(String(driver.slug||"").toLowerCase(),rec);
-    [raw,display].forEach(n=>{ const k=normalize(n); if(k&&!byName.has(k)) byName.set(k,rec); });
+    [raw,display,commaName(raw),commaName(display)].forEach(n=>{ const k=normalize(n); if(k&&!byName.has(k)) byName.set(k,rec); });
     const photo=String(driver.photoSlug||"").replace(/-/g," ");
     if(photo){const k=normalize(photo); if(k&&!byName.has(k)) byName.set(k,rec);}
     Object.values(driver.ids||{}).forEach(id=>{const k=String(id||"").trim();if(k)byId.set(k,rec);});
@@ -81,8 +81,8 @@
   function buildRegex(){
     const names=[];
     records.forEach(r=>{
-      if(r.rawName) names.push(r.rawName);
-      if(r.displayName&&r.displayName!==r.rawName) names.push(r.displayName);
+      if(r.rawName){names.push(r.rawName);names.push(commaName(r.rawName));}
+      if(r.displayName&&r.displayName!==r.rawName){names.push(r.displayName);names.push(commaName(r.displayName));}
     });
     const unique=[...new Set(names)].sort((a,b)=>b.length-a.length);
     nameRegex=unique.length?new RegExp("(^|[^A-Za-z0-9])("+unique.map(escRe).join("|")+")(?![A-Za-z0-9])","gi"):null;
@@ -185,16 +185,34 @@
     nodes.forEach(linkTextNode);
   }
 
-  function queueScan(){
+  const pendingScopes=new Set();
+  function queueScan(scope){
+    if(scope){
+      const el=scope.nodeType===3?scope.parentElement:scope;
+      if(el&&el.nodeType===1&&!el.closest?.("#hlrn-global-nav,#hlrn-global-footer")) pendingScopes.add(el);
+    }
     if(scanQueued) return;
     scanQueued=true;
-    requestAnimationFrame(()=>{scanQueued=false;scan(document.body);enhanceProfile();});
+    requestAnimationFrame(()=>{
+      scanQueued=false;
+      const scopes=[...pendingScopes];pendingScopes.clear();
+      if(!scopes.length) scopes.push(document.body);
+      // If a parent scope is already queued, skip its descendants.
+      const roots=scopes.filter((el,i,arr)=>!arr.some((other,j)=>j!==i&&other.contains?.(el)));
+      roots.slice(0,40).forEach(scan);
+      enhanceProfile();
+    });
   }
 
   function installObserver(){
     if(observer||!document.body) return;
     observer=new MutationObserver(muts=>{
-      if(muts.some(m=>(m.addedNodes&&m.addedNodes.length)||m.type==="characterData")) queueScan();
+      muts.forEach(m=>{
+        if(m.type==="characterData"){queueScan(m.target);return;}
+        [...(m.addedNodes||[])].forEach(node=>{
+          if(node.nodeType===1||node.nodeType===3) queueScan(node);
+        });
+      });
     });
     observer.observe(document.body,{childList:true,subtree:true,characterData:true});
   }
@@ -228,6 +246,8 @@
 
     document.body.dataset.hlrnProfileEnhanced="1";
     document.title=document.title.replace(rec.rawName,rec.displayName);
+    document.querySelectorAll(".hero h1,.crumb").forEach(el=>{el.childNodes.forEach(n=>{if(n.nodeType===3)n.nodeValue=n.nodeValue.replace(rec.rawName,rec.displayName);});});
+    const heroImg=document.querySelector(".hero-photo");if(heroImg)heroImg.alt=rec.displayName;
 
     const info=historyRows.map(rowRaceInfo).filter(Boolean);
     const bestList=info.filter(x=>x.finish>0).map(x=>x.finish);
