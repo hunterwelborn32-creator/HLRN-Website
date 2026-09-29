@@ -179,19 +179,29 @@ function currentRosterTeams(race){
 
 function cardHtml(race){
   const s=raceStats(race);
+  const podium=[...race.rows]
+    .filter(r=>num(r.finish)>=1&&num(r.finish)<=3)
+    .sort((a,b)=>num(a.finish)-num(b.finish));
+  const podiumHtml=podium.map(row=>
+    '<div class="archive-podium-row p'+num(row.finish)+'">'+
+      '<b>P'+esc(row.finish)+'</b>'+
+      '<span>'+esc(driverName(race.league,row.driverId))+'</span>'+
+    '</div>'
+  ).join('');
   return '<button class="archive-card '+race.league+'" type="button" data-race-key="'+esc(race.key)+'">'+
     '<div class="archive-card-top"><span class="archive-series">'+leagueShort(race.league)+' NIGHT</span><span class="archive-date">'+esc(formatDate(race.date))+'</span></div>'+
     '<div class="archive-card-body">'+
       '<div class="archive-race-no">RACE '+esc(race.raceNumber)+' • '+esc(s.field)+' STARTERS</div>'+
       '<div class="archive-track">'+esc(race.track)+'</div>'+
       '<div class="archive-winner"><div class="archive-winner-pos">01</div><div><small>RACE WINNER</small><strong>'+esc(s.winnerName)+'</strong></div></div>'+
+      '<div class="archive-podium">'+podiumHtml+'</div>'+
       '<div class="archive-card-stats">'+
         '<div><b>'+esc(s.poleName)+'</b><span>POLE</span></div>'+
         '<div><b>'+fmt(s.led?.lapsLed)+'</b><span>MOST LAPS LED</span></div>'+
         '<div><b>+'+fmt(Math.max(0,s.moverGain))+'</b><span>BIGGEST MOVER</span></div>'+
       '</div>'+
     '</div>'+
-    '<div class="archive-open"><span>OPEN POST-RACE REPORT</span><b>→</b></div>'+
+    '<div class="archive-open"><span>OPEN FULL RESULTS</span><b>→</b></div>'+
   '</button>';
 }
 
@@ -259,6 +269,28 @@ function renderReport(race,updateUrl=true){
     '</tr>';
   }).join('');
 
+  const mobileFinishCards=rows.map(row=>{
+    const id=String(row.driverId),after=progress.after.get(id),before=progress.before.get(id);
+    const move=after&&before?before.rank-after.rank:null;
+    const gain=rawNum(row.positionGain)!==null?num(row.positionGain):num(row.start)-num(row.finish);
+    const gainText=(gain>0?'+':'')+String(gain);
+    const moveText=move===null?'NEW':(move>0?'+':'')+String(move);
+    return '<article class="report-mobile-driver '+(num(row.finish)===1?'winner':'')+'">'+
+      '<div class="report-mobile-main">'+
+        '<div class="report-mobile-finish">P'+esc(row.finish||'—')+'</div>'+
+        '<div class="report-mobile-driver-copy"><strong>'+driverAnchor(race.league,row)+'</strong><span>START P'+esc(row.start||'—')+' • '+esc(row.status||'—')+'</span></div>'+
+        '<div class="report-mobile-gain '+(gain>0?'report-positive':gain<0?'report-negative':'')+'">'+esc(gainText)+'<small>+/-</small></div>'+
+      '</div>'+
+      '<div class="report-mobile-stats">'+
+        '<span><b>'+esc(row.points??'—')+'</b><small>PTS</small></span>'+
+        '<span><b>'+esc(row.lapsLed??'—')+'</b><small>LED</small></span>'+
+        '<span><b>'+esc(row.incidents??'—')+'</b><small>INC</small></span>'+
+        '<span><b>'+(after?'P'+esc(after.rank):'—')+'</b><small>EVT RANK</small></span>'+
+        '<span class="'+(move>0?'report-positive':move<0?'report-negative':'')+'"><b>'+esc(moveText)+'</b><small>MOVE</small></span>'+
+      '</div>'+
+    '</article>';
+  }).join('');
+
   const teamRows=currentRosterTeams(race);
   const teamHtml=teamRows.length?teamRows.map((t,i)=>
     '<a class="report-team-card" href="'+esc(teamLink(race.league,t.name))+'">'+
@@ -299,6 +331,7 @@ function renderReport(race,updateUrl=true){
     '</div>'+
     '<h3 class="report-section-title">Finishing Order & Event-Points Movement</h3>'+
     '<div class="report-story">Movement below is reconstructed from the <strong>published points in each completed event</strong>. It is not labeled as an official historical championship snapshot because Sunday season totals can also include stage/bonus components not preserved per event.</div>'+
+    '<div class="report-mobile-finishing">'+mobileFinishCards+'</div>'+
     '<div class="report-table-shell"><table class="report-table"><thead><tr>'+
       '<th>FIN</th><th>DRIVER</th><th>START</th><th>+/-</th><th>PTS</th><th>LED</th><th>INC</th><th>STATUS</th><th>EVT PTS RANK</th><th>MOVE</th>'+
     '</tr></thead><tbody>'+table+'</tbody></table></div>'+
