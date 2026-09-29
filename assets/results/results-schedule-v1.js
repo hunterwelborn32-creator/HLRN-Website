@@ -23,6 +23,14 @@
     <footer class="ns-footer"><div><b>HIGH LINE RACING NETWORK</b> • 2026 SCHEDULE</div><div>SUNDAY <span>•</span> MONDAY <span>•</span> 8:30 PM EASTERN</div></footer>`;
   root.appendChild(app);
 
+  // Bring the completed-race archive into the modern Results/Schedule shell.
+  // These nodes already exist in the page and are populated by results-archive-v1.js.
+  const nsWrap=app.querySelector('.ns-wrap');
+  const raceArchive=document.getElementById('raceArchive');
+  const raceReportView=document.getElementById('raceReportView');
+  if(nsWrap&&raceArchive) nsWrap.appendChild(raceArchive);
+  if(nsWrap&&raceReportView) nsWrap.appendChild(raceReportView);
+
   let league='sunday';
   const showPast=document.getElementById('nsShowPast');
   const raceEnd=(start)=>typeof getLocalRaceEnd==='function'?getLocalRaceEnd(start):new Date(start.getTime()+4*60*60*1000);
@@ -218,7 +226,7 @@
     if(winner){
       if(compact) return `<div class="ns-summary-winner">Race Winner • <span>${esc(winner)}</span></div>`;
       const photo=winnerPhotoUrl(winner);
-      return `<div class="ns-winner"><b>Winner</b>${photo?`<img class="ns-winner-photo" src="${esc(photo)}" alt="${esc(winner)}" onerror="this.remove()" loading="eager" decoding="async" fetchpriority="high">`:''}<span class="ns-winner-name">${esc(winner)}</span></div>`;
+      return `<div class="ns-winner"><b>Winner</b>${photo?`<img class="ns-winner-photo" src="${esc(photo)}" alt="${esc(winner)}" onerror="this.remove()" loading="lazy" decoding="async" fetchpriority="low">`:''}<span class="ns-winner-name">${esc(winner)}</span></div>`;
     }
     if(!winnerFeedLoaded) return compact
       ? `<div class="ns-summary-winner">Race Winner • <span>Loading league result…</span></div>`
