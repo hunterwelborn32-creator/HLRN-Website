@@ -30,6 +30,85 @@
   .hlrn-foundation-mobile-status{display:none!important;}
   @media(max-width:760px){.hlrn-foundation-mobile-status{display:block!important;margin-top:9px!important}.hlrn-foundation-mobile-status [data-hlrn-data-status]{font-size:11px!important;}}
 </style>
+
+<style id="HLRN_MOBILE_SERIES_NAV_FINAL">
+@media(max-width:760px){
+  .hlrn > .tabs{
+    position:sticky!important;
+    top:0!important;
+    z-index:999!important;
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:4px!important;
+    width:100%!important;
+    margin:0!important;
+    padding:5px 6px!important;
+    border:0!important;
+    border-bottom:1px solid #d9dde1!important;
+    background:rgba(255,255,255,.97)!important;
+    box-shadow:0 5px 16px rgba(17,18,20,.09)!important;
+    backdrop-filter:blur(12px)!important;
+    -webkit-backdrop-filter:blur(12px)!important;
+  }
+  .hlrn > .tabs .tab{
+    position:relative!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    min-width:0!important;
+    min-height:40px!important;
+    height:40px!important;
+    margin:0!important;
+    padding:0 6px!important;
+    overflow:hidden!important;
+    border:1px solid #d9dde1!important;
+    border-radius:8px!important;
+    background:#fff!important;
+    background-image:none!important;
+    box-shadow:none!important;
+    transform:none!important;
+    text-align:center!important;
+  }
+  .hlrn > .tabs .tab:before{
+    content:""!important;
+    position:absolute!important;
+    left:0!important;
+    right:0!important;
+    top:auto!important;
+    bottom:0!important;
+    width:auto!important;
+    height:3px!important;
+    background:#c7ccd1!important;
+  }
+  .hlrn > .tabs .tab small{display:none!important}
+  .hlrn > .tabs .tab strong{
+    display:block!important;
+    margin:0!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+    color:#4f565d!important;
+    font-family:"Inter","Segoe UI",Arial,sans-serif!important;
+    font-size:11px!important;
+    font-weight:800!important;
+    font-style:normal!important;
+    line-height:1!important;
+    letter-spacing:.01em!important;
+    text-transform:uppercase!important;
+  }
+  .hlrn > .tabs .tab.active{
+    border-color:#bfc5ca!important;
+    background:#f5f6f7!important;
+  }
+  .hlrn > .tabs .tab.active:after{display:none!important}
+  .hlrn > .tabs .tab[data-page="hosted"]:before{background:#c89c00!important}
+  .hlrn > .tabs .tab[data-page="sunday"]:before{background:#d71920!important}
+  .hlrn > .tabs .tab[data-page="monday"]:before{background:#55b932!important}
+  .hlrn > .tabs .tab[data-page="hosted"].active strong{color:#8b6b00!important}
+  .hlrn > .tabs .tab[data-page="sunday"].active strong{color:#d71920!important}
+  .hlrn > .tabs .tab[data-page="monday"].active strong{color:#3d8e26!important}
+}
+</style>
 </head>
 <body>
 <div class="hlrn">
