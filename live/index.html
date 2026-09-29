@@ -2743,6 +2743,7 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
     state = s || {};
     const online = !!state.online;
     const frozen = !!state.raceFrozen;
+    const available = online || frozen;
 
     if(state.phase !== lastPhase){
       firstSeenPosition.clear();
@@ -2760,13 +2761,13 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
     $("liveBadgeText").textContent = frozen ? "FINAL • FROZEN" : (online ? "LIVE NOW" : "OFFLINE");
     if(frozen) $("connectionText").textContent = "Final race data frozen at checkered";
     $("series").textContent = state.series || "HIGH LINE RACING NETWORK";
-    $("track").textContent = online ? (state.track || "IRACING LIVE") : "WAITING FOR IRACING";
+    $("track").textContent = available ? (state.track || "IRACING LIVE") : "WAITING FOR IRACING";
 
     const phase = state.phase || "other";
     renderSessionFlow(state);
     autoNavigateSession(state);
-    $("phaseBadge").textContent = online ? phaseLabel(phase) : "WAITING";
-    $("phaseBadge").className = `phase-badge ${online ? phase : ""}`;
+    $("phaseBadge").textContent = frozen ? "FINAL" : (online ? phaseLabel(phase) : "WAITING");
+    $("phaseBadge").className = `phase-badge ${available ? phase : ""}`;
 
     const liveTitles = {
       practice: "Practice Timing",
@@ -2786,11 +2787,11 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
     const sessionBits = [];
     if(state.sessionName) sessionBits.push(state.sessionName);
     if(state.sessionState) sessionBits.push(state.sessionState);
-    $("sessionName").textContent = online
+    $("sessionName").textContent = available
       ? sessionBits.join(" • ") + (frozen ? " • DATA FROZEN" : "")
       : "No active session";
 
-    const flag = online ? normalizeFlag(state.flag) : "OFFLINE";
+    const flag = available ? normalizeFlag(state.flag) : "OFFLINE";
     $("flag").textContent = flag;
     $("flag").className = "status-value " + flagClass(flag);
     $("flagHero").textContent = flag;
@@ -2831,16 +2832,16 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
       $("feedAge").textContent = "—";
     }
 
-    renderLeaderboard(drivers, online);
+    renderLeaderboard(drivers, available);
     renderScanner(drivers);
-    renderLiveTicker(online, drivers);
-    renderBattleTracker(drivers, online);
-    renderCrownHero(drivers, online);
-    renderFastestPage(drivers, online);
-    renderBattlesPage(drivers, online);
-    renderRaceControl(drivers, online);
-    renderLiveStats(online);
-    renderFlagsPage(drivers, online);
+    renderLiveTicker(available, drivers);
+    renderBattleTracker(drivers, available);
+    renderCrownHero(drivers, available);
+    renderFastestPage(drivers, available);
+    renderBattlesPage(drivers, available);
+    renderRaceControl(drivers, available);
+    renderLiveStats(available);
+    renderFlagsPage(drivers, available);
     renderRadioFeed();
 
     renderSessionResults("practiceResults", getPhaseState("practice"), "practice");
@@ -2849,7 +2850,7 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
     const raceState = getPhaseState("race");
     renderTimeline(accurateRaceEvents(raceState));
     renderRacePulse(raceState);
-    renderRaceStorylines(drivers, online);
+    renderRaceStorylines(drivers, available);
 
     renderReport();
     $("rawFeed").textContent = JSON.stringify(state, null, 2);
