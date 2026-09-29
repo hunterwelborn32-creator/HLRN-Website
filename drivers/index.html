@@ -210,6 +210,345 @@ table{width:100%;border-collapse:collapse;min-width:840px}th,td{padding:13px 14p
 @media(max-width:620px){.driver-heading-inner{width:calc(100% - 22px)!important;padding:38px 0 34px!important}.driver-heading h1{font-size:52px!important}.driver-hero-side{grid-template-columns:1fr 1fr}.driver-hero-side div{padding:14px}.driver-command{width:calc(100% - 22px)!important}.league-tab{min-height:52px!important;padding:10px!important;text-align:center!important;font-size:12px!important}.driver-metrics{grid-template-columns:1fr 1fr}.driver-metric{padding:14px}.driver-metric strong{font-size:17px}.roster-tools{grid-template-columns:1fr!important}.roster-tools>div:first-child{grid-column:auto}.driver-grid{width:calc(100% - 22px)!important}.driver-media{height:350px!important}}
 </style>
 
+
+<style id="HLRN_DRIVERS_MOBILE_DIRECTORY_FINAL">
+.driver-mobile-meta,
+.driver-mobile-points{display:none}
+
+@media(max-width:620px){
+  .driver-page{
+    padding-bottom:44px!important;
+    background:#f3f4f5!important;
+  }
+
+  /* Compact hero, still unmistakably HLRN. */
+  .driver-heading-inner{
+    width:calc(100% - 22px)!important;
+    padding:25px 0 21px!important;
+    display:block!important;
+  }
+  .driver-heading .eyebrow{
+    margin-bottom:7px!important;
+    font-size:8px!important;
+    line-height:1.25!important;
+  }
+  .driver-heading h1{
+    font-size:42px!important;
+    line-height:.92!important;
+  }
+  .driver-heading p{
+    margin-top:9px!important;
+    max-width:340px!important;
+    font-size:11px!important;
+    line-height:1.45!important;
+  }
+  .driver-hero-side{
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+    gap:1px!important;
+    width:100%!important;
+    max-width:none!important;
+    min-width:0!important;
+    margin-top:17px!important;
+  }
+  .driver-hero-side div{
+    min-width:0!important;
+    padding:10px 11px!important;
+  }
+  .driver-hero-side small{font-size:6px!important}
+  .driver-hero-side strong{
+    margin-top:4px!important;
+    font-size:13px!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
+
+  /* League selector and filters become a compact mobile control center. */
+  .driver-command{
+    width:calc(100% - 18px)!important;
+    margin:10px auto 0!important;
+    border-radius:11px!important;
+    overflow:hidden!important;
+  }
+  .league-tabs{
+    padding:4px!important;
+    gap:4px!important;
+    border-bottom:1px solid #e0e3e6!important;
+    background:#f1f3f4!important;
+  }
+  .league-tab{
+    min-height:40px!important;
+    height:40px!important;
+    padding:0 5px!important;
+    border:1px solid transparent!important;
+    border-radius:7px!important;
+    background:transparent!important;
+    text-align:center!important;
+    font-size:0!important;
+    letter-spacing:0!important;
+  }
+  .league-tab:before{
+    display:block!important;
+    color:#666e76!important;
+    font-family:"Inter","Segoe UI",Arial,sans-serif!important;
+    font-size:10px!important;
+    font-weight:800!important;
+    line-height:1!important;
+    letter-spacing:.02em!important;
+  }
+  #sundayTab:before{content:"SUNDAY"!important}
+  #mondayTab:before{content:"MONDAY"!important}
+  .league-tab:after{
+    left:8px!important;
+    right:8px!important;
+    height:3px!important;
+  }
+  .league-tab.active{
+    border-color:#d8dcdf!important;
+    background:#fff!important;
+    box-shadow:0 2px 7px rgba(17,18,20,.07)!important;
+  }
+
+  .driver-metrics{
+    grid-template-columns:1fr 1fr!important;
+  }
+  .driver-metric{
+    min-height:61px!important;
+    padding:10px 11px!important;
+  }
+  .driver-metric small{font-size:6px!important}
+  .driver-metric strong{
+    margin-top:4px!important;
+    font-size:15px!important;
+  }
+
+  .roster-tools{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) 96px!important;
+    gap:8px!important;
+    padding:10px!important;
+  }
+  .roster-tools>div:first-child{
+    grid-column:1/-1!important;
+    display:flex!important;
+    align-items:baseline!important;
+    justify-content:space-between!important;
+    gap:10px!important;
+  }
+  .roster-title{font-size:14px!important}
+  .roster-count{
+    margin:0!important;
+    font-size:9px!important;
+    white-space:nowrap!important;
+  }
+  .search-wrap{
+    grid-column:1!important;
+    min-width:0!important;
+  }
+  .search-wrap input,
+  .driver-sort{
+    height:40px!important;
+    border-radius:7px!important;
+    font-size:11px!important;
+  }
+  .search-wrap input{
+    padding-left:11px!important;
+    padding-right:32px!important;
+  }
+  .search-wrap input::placeholder{
+    color:#858b91!important;
+    font-size:10px!important;
+  }
+  .search-wrap:after{
+    right:10px!important;
+    font-size:18px!important;
+  }
+  .driver-sort{
+    grid-column:2!important;
+    padding:0 6px!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    text-transform:none!important;
+    letter-spacing:0!important;
+  }
+
+  /* NASCAR-style mobile roster cards. */
+  .driver-grid{
+    width:calc(100% - 18px)!important;
+    margin-top:10px!important;
+    grid-template-columns:1fr!important;
+    gap:9px!important;
+  }
+  .driver-card{
+    display:grid!important;
+    grid-template-columns:118px minmax(0,1fr)!important;
+    min-height:142px!important;
+    border:1px solid #d7dade!important;
+    border-radius:10px!important;
+    overflow:hidden!important;
+    background:#fff!important;
+    box-shadow:0 3px 10px rgba(17,18,20,.045)!important;
+    text-align:left!important;
+    transform:none!important;
+  }
+  .driver-card:hover{transform:none!important}
+  .driver-card:active{
+    background:#fafbfc!important;
+    transform:scale(.995)!important;
+  }
+  .driver-media{
+    grid-column:1!important;
+    grid-row:1!important;
+    height:142px!important;
+    min-height:142px!important;
+    overflow:hidden!important;
+    background:linear-gradient(160deg,#e3e6e8 0%,#fafafa 63%,#dce0e3 100%)!important;
+    border-right:1px solid #d9dde0!important;
+  }
+  .driver-media:after{height:42%!important}
+  .driver-cutout{
+    height:97%!important;
+    max-width:108%!important;
+    bottom:-2px!important;
+  }
+  .driver-fallback{font-size:38px!important}
+  .number-badge{
+    min-width:52px!important;
+    height:43px!important;
+    padding:0 9px 0 7px!important;
+    font-size:23px!important;
+  }
+  .number-badge:after{height:4px!important}
+  .status-chip,
+  .rank-chip{display:none!important}
+
+  .driver-info{
+    grid-column:2!important;
+    grid-row:1!important;
+    min-width:0!important;
+    min-height:142px!important;
+    padding:12px 11px 10px!important;
+    border-top:0!important;
+    display:flex!important;
+    flex-direction:column!important;
+    justify-content:center!important;
+  }
+  .driver-name{
+    min-width:0!important;
+    font-size:18px!important;
+    line-height:1!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+  .driver-mobile-meta{
+    display:flex!important;
+    align-items:center!important;
+    gap:7px!important;
+    min-width:0!important;
+    margin-top:6px!important;
+  }
+  .driver-mobile-rank{
+    flex:0 0 auto!important;
+    padding:3px 5px!important;
+    border-radius:4px!important;
+    background:#111!important;
+    color:#fff!important;
+    font-size:8px!important;
+    font-weight:900!important;
+    letter-spacing:.04em!important;
+  }
+  .driver-mobile-team{
+    min-width:0!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+    color:#737a81!important;
+    font-size:8px!important;
+    font-weight:800!important;
+    letter-spacing:.04em!important;
+    text-transform:uppercase!important;
+  }
+  .driver-mobile-points{
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+    gap:5px!important;
+    margin-top:9px!important;
+  }
+  .driver-mobile-points span{
+    display:flex!important;
+    align-items:baseline!important;
+    justify-content:space-between!important;
+    min-width:0!important;
+    padding:6px 7px!important;
+    border:1px solid #e1e4e7!important;
+    border-radius:6px!important;
+    background:#f7f8f9!important;
+  }
+  .driver-mobile-points b{
+    color:#111214!important;
+    font-size:14px!important;
+    line-height:1!important;
+    font-weight:900!important;
+  }
+  .driver-mobile-points small{
+    color:#7a8188!important;
+    font-size:7px!important;
+    font-weight:900!important;
+    letter-spacing:.05em!important;
+  }
+  body:not(.monday-league) .driver-mobile-points span:first-child{
+    border-left:3px solid var(--v8-red,#ed1c24)!important;
+  }
+  body.monday-league .driver-mobile-points span:first-child{
+    border-left:3px solid var(--v8-green,#1c8b4b)!important;
+  }
+
+  .driver-sub{display:none!important}
+  .driver-stats{
+    margin-top:8px!important;
+    padding-top:8px!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    gap:3px!important;
+  }
+  .mini-stat{
+    padding-right:2px!important;
+    border-right:1px solid #e6e8ea!important;
+  }
+  .mini-stat:last-child{border-right:0!important}
+  .mini-stat b{
+    font-size:12px!important;
+    line-height:1!important;
+  }
+  .mini-stat span{
+    margin-top:3px!important;
+    font-size:6px!important;
+    letter-spacing:.04em!important;
+  }
+
+  .loading-card,.error-card,.no-card{
+    padding:32px 15px!important;
+    border-radius:10px!important;
+    font-size:11px!important;
+  }
+}
+
+@media(max-width:390px){
+  .driver-card{grid-template-columns:105px minmax(0,1fr)!important}
+  .driver-media{
+    height:138px!important;
+    min-height:138px!important;
+  }
+  .driver-info{
+    min-height:138px!important;
+    padding-left:9px!important;
+    padding-right:9px!important;
+  }
+  .driver-name{font-size:16px!important}
+  .driver-mobile-points b{font-size:13px!important}
+}
+</style>
 </head>
 <body>
 <div id="directoryView" class="driver-page">
@@ -661,6 +1000,7 @@ function enrichDriverFromShared(league,driver){
   };
   const s=driver.leagueStats[league];
   driver.points=num(s.points);driver.starts=num(s.starts);driver.wins=num(s.wins);driver.top5=num(s.top5);driver.top10=num(s.top10);
+  if(shared.team!==undefined&&shared.team!==null&&String(shared.team).trim())driver.team=String(shared.team).trim();
   if(s.averageFinish!==undefined&&s.averageFinish!==null&&s.averageFinish!=="")driver.averageFinish=s.averageFinish;
   if(s.lapsLed!==undefined&&s.lapsLed!==null)driver.lapsLed=num(s.lapsLed);
   return driver;
@@ -778,19 +1118,32 @@ function initializeDrivers(){
   document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){refreshLeague("sunday");refreshLeague("monday");}});
 }
 
-function card(d){
+function card(d,index=0){
  const name=prettyName(d.driver), n=getDriverNumber(name,d.carNumber), photo=photoUrl(name), wins=num(d.wins);
  const right=d._fallback?"STATS SYNCING":`${wins} ${wins===1?'Win':'Wins'}`;
  const car=n==="—"?"HLRN DRIVER":`Car <strong>#${esc(n)}</strong>`;
- const leagueRank=d.leagueStats&&d.leagueStats[activeLeague]&&d.leagueStats[activeLeague].rank!=null?d.leagueStats[activeLeague].rank:(d.rank??"—");
+ const leagueStats=d.leagueStats&&d.leagueStats[activeLeague]?d.leagueStats[activeLeague]:{};
+ const leagueRank=leagueStats.rank!=null?leagueStats.rank:(d.rank??"—");
+ const points=leagueStats.points!=null?leagueStats.points:(d.points??"—");
+ const stagePoints=leagueStats.stagePoints!=null?leagueStats.stagePoints:"—";
+ const team=String(d.team||leagueStats.team||"").trim();
+ const eager=index<4;
  return `<button class="driver-card" type="button" data-driver="${esc(name)}" aria-label="Open ${esc(name)} profile">
    <div class="driver-media">
      <div class="number-badge">${esc(n)}</div><div class="status-chip">HLRN DRIVER</div><div class="rank-chip">CHAMP <b>P${esc(leagueRank)}</b></div>
      <div class="driver-fallback">${n==="—"?"HLRN":"#"+esc(n)}</div>
-     ${photo?`<img class="driver-cutout" src="${esc(photo)}" alt="${esc(name)}" onerror="this.remove()" loading="eager" decoding="async" fetchpriority="high">`:``}
+     ${photo?`<img class="driver-cutout" src="${esc(photo)}" alt="${esc(name)}" onerror="this.remove()" loading="${eager?"eager":"lazy"}" decoding="async" ${eager?'fetchpriority="high"':'fetchpriority="low"'}>`:``}
    </div>
    <div class="driver-info">
      <div class="driver-name">${esc(name)}</div>
+     <div class="driver-mobile-meta">
+       <span class="driver-mobile-rank">P${esc(leagueRank)}</span>
+       <span class="driver-mobile-team">${team?esc(team):"HLRN Driver"}</span>
+     </div>
+     <div class="driver-mobile-points">
+       <span><b>${esc(points)}</b><small>PTS</small></span>
+       <span><b>${esc(stagePoints)}</b><small>STG</small></span>
+     </div>
      <div class="driver-sub"><span>${car}</span><span class="win-mark">${right}</span></div>
      <div class="driver-stats">
        <div class="mini-stat"><b>${esc(d.starts)}</b><span>Starts</span></div>
@@ -816,7 +1169,7 @@ function renderDrivers(list){
   if(wins)wins.textContent=list.reduce((t,d)=>t+num(d.wins),0);
   if(starts)starts.textContent=list.reduce((t,d)=>t+num(d.starts),0);
   if(leader){const lead=[...list].sort((a,b)=>driverRankValue(a)-driverRankValue(b))[0];leader.textContent=lead&&driverRankValue(lead)<9999?prettyName(lead.driver):"--";}
-  document.getElementById("driverGrid").innerHTML=sorted.length?sorted.map(card).join(""):`<div class="no-card">No drivers found.</div>`
+  document.getElementById("driverGrid").innerHTML=sorted.length?sorted.map((d,index)=>card(d,index)).join(""):`<div class="no-card">No drivers found.</div>`
 }
 function showError(msg){document.getElementById("driverGrid").innerHTML=`<div class="error-card"><strong>DRIVER DATABASE CONNECTION ERROR</strong><br><br>${esc(msg)}</div>`}
 function searchDrivers(){const q=document.getElementById("search").value.toLowerCase().trim();renderDrivers(drivers.filter(d=>prettyName(d.driver).toLowerCase().includes(q)||String(d.carNumber).toLowerCase().includes(q)))}
