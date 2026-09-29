@@ -153,7 +153,7 @@
       <section id="announcementsPanel" class="announcements-panel" hidden aria-label="Official HLRN Announcements">
         <div class="nr-announcements-head">
           <div><small>OFFICIAL HLRN</small><h2>NETWORK ANNOUNCEMENTS</h2></div>
-          <a href="#latest">RETURN TO NEWSROOM →</a>
+          <a href="#latest" id="nrReturnLatest">RETURN TO NEWSROOM →</a>
         </div>
         <iframe id="hlrnAnnouncementsFrame" title="HLRN Official Announcements" loading="lazy"></iframe>
       </section>
@@ -202,12 +202,15 @@
 })();
 </script>
 <script src="../assets/hlrn-core.js?v=newsroom10"></script>
-<script src="../assets/news/newsroom-v10.js?v=20260929n10a1"></script>
+<script src="../assets/news/newsroom-v10.js?v=20260929n10a2"></script>
 <script>
 document.addEventListener("DOMContentLoaded",()=>{
   const shortcut=document.getElementById("nrAnnouncementShortcut");
   const tab=document.getElementById("announcementsTab");
+  const back=document.getElementById("nrReturnLatest");
+  const latestTab=document.querySelector('.category-rail a[href="#latest"]');
   shortcut?.addEventListener("click",e=>{e.preventDefault();tab?.click();});
+  back?.addEventListener("click",e=>{e.preventDefault();history.replaceState(null,"","#latest");latestTab?.click();});
 });
 </script>
 <script src="../assets/site-shell.js?v=20260929newsroom10"></script>
