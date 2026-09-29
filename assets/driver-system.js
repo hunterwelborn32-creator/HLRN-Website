@@ -9,7 +9,7 @@
   "use strict";
   if(global.HLRNDrivers && global.HLRNDrivers.version) return;
 
-  const VERSION="20260929v1";
+  const VERSION="20260929v2";
   const script=document.currentScript;
   let root;
   try{ root=new URL("../",script&&script.src?script.src:location.href); }
@@ -94,7 +94,11 @@
   }
 
   function rewriteLegacyAnchors(scope){
-    (scope||document).querySelectorAll?.("a[href]").forEach(a=>{
+    const base=scope||document;
+    const anchors=[];
+    if(base.nodeType===1&&base.matches?.("a[href]")) anchors.push(base);
+    base.querySelectorAll?.("a[href]").forEach(a=>anchors.push(a));
+    anchors.forEach(a=>{
       let u;try{u=new URL(a.getAttribute("href"),location.href);}catch(_){return;}
       const sameOrigin=u.origin===location.origin;
       const p=u.pathname.toLowerCase();
