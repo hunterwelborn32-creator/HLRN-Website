@@ -27,8 +27,10 @@
   // These nodes already exist in the page and are populated by results-archive-v1.js.
   const nsWrap=app.querySelector('.ns-wrap');
   const raceArchive=document.getElementById('raceArchive');
+  const recorderArchive=document.getElementById('recorderArchive');
   const raceReportView=document.getElementById('raceReportView');
   if(nsWrap&&raceArchive) nsWrap.appendChild(raceArchive);
+  if(nsWrap&&recorderArchive) nsWrap.appendChild(recorderArchive);
   if(nsWrap&&raceReportView) nsWrap.appendChild(raceReportView);
 
   let league='sunday';
