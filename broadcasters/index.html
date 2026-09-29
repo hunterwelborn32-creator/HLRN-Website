@@ -63,6 +63,12 @@
 
         <div class="bc-player-wrap">
           <iframe id="bcMainPlayer" title="HLRN broadcast player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <a class="bc-channel-panel" id="bcSundayMainFallback" href="https://www.youtube.com/@High_Line_Racing" target="_blank" rel="noopener noreferrer" hidden>
+            <span>SUNDAY REPLAY SYNCING</span>
+            <strong>HIGH LINE RACING</strong>
+            <small>@High_Line_Racing</small>
+            <b>OPEN HLRN YOUTUBE →</b>
+          </a>
         </div>
 
         <div class="bc-player-meta">
@@ -126,11 +132,19 @@
       <div class="bc-replay-grid">
         <article class="bc-replay-card" data-series="sunday">
           <div class="bc-replay-head">
-            <div><small>HIGH LINE RACING NETWORK</small><strong>Sunday Replays</strong></div>
+            <div><small>HIGH LINE RACING NETWORK</small><strong id="bcSundayReplayTitle">Sunday Replays</strong></div>
             <a href="https://www.youtube.com/@High_Line_Racing" target="_blank" rel="noopener noreferrer">FULL CHANNEL ↗</a>
           </div>
-          <div class="bc-replay-frame"><iframe data-replay-frame="sunday" title="HLRN Sunday previous race and recent uploads" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
-          <div class="bc-replay-foot">Sunday loads the newest videos from the official High Line Racing channel so the previous broadcast stays available here.</div>
+          <div class="bc-replay-frame">
+            <iframe data-replay-frame="sunday" title="HLRN Sunday previous race" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <a class="bc-channel-panel bc-channel-panel-static" id="bcSundayReplayFallback" href="https://www.youtube.com/@High_Line_Racing" target="_blank" rel="noopener noreferrer">
+              <span>FINDING THE LATEST SUNDAY RACE</span>
+              <strong>HIGH LINE RACING</strong>
+              <small>@High_Line_Racing</small>
+              <b>OPEN SUNDAY CHANNEL →</b>
+            </a>
+          </div>
+          <div class="bc-replay-foot" id="bcSundayReplayFoot">The latest completed Sunday broadcast will load here automatically.</div>
         </article>
 
         <article class="bc-replay-card" data-series="monday">
@@ -195,7 +209,7 @@
   </div>
 </main>
 
-<script src="../assets/broadcast-center/broadcast-center.js?v=20260929bc3"></script>
+<script src="../assets/broadcast-center/broadcast-center.js?v=20260929bc4"></script>
 <script src="../assets/site-shell.js?v=20260929watch1"></script>
 </body>
 </html>
