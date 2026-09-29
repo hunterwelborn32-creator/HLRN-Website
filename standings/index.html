@@ -1236,6 +1236,145 @@ main{
 })();
 </script>
 
+
+<style id="HLRN_MOBILE_PINNED_COLUMNS_OUTER">
+/* Marker only — actual frozen-column CSS is injected into Sunday/Monday frames below. */
+</style>
+<script id="HLRN_MOBILE_PINNED_COLUMNS_ENGINE">
+(function(){
+  const PIN_CSS = `
+@media(max-width:760px){
+  html,body{
+    overflow-x:hidden!important;
+  }
+
+  #drivers .table-shell,
+  #teams .table-shell,
+  #lastRace .table-shell{
+    display:block!important;
+    width:100%!important;
+    max-width:100%!important;
+    position:relative!important;
+    overflow-x:auto!important;
+    overflow-y:visible!important;
+    -webkit-overflow-scrolling:touch!important;
+    overscroll-behavior-x:contain!important;
+    touch-action:pan-x pan-y!important;
+    isolation:isolate!important;
+  }
+
+  #drivers table,
+  #teams table,
+  #lastRace table{
+    border-collapse:separate!important;
+    border-spacing:0!important;
+  }
+
+  #drivers thead th.name-col,
+  #drivers tbody td.name-col,
+  #teams thead th.name-col,
+  #teams tbody td.name-col,
+  #lastRace thead th.name-col,
+  #lastRace tbody td.name-col{
+    position:-webkit-sticky!important;
+    position:sticky!important;
+    left:0!important;
+    right:auto!important;
+    z-index:50!important;
+    opacity:1!important;
+    visibility:visible!important;
+    transform:translateZ(0)!important;
+    backface-visibility:hidden!important;
+    box-shadow:8px 0 12px -11px rgba(0,0,0,.65)!important;
+  }
+
+  #drivers thead th.name-col,
+  #teams thead th.name-col,
+  #lastRace thead th.name-col{
+    z-index:70!important;
+    background:#f4f6f7!important;
+  }
+
+  #drivers tbody tr:nth-child(odd) td.name-col,
+  #teams tbody tr:nth-child(odd) td.name-col,
+  #lastRace tbody tr:nth-child(odd) td.name-col{
+    background:#fff!important;
+  }
+  #drivers tbody tr:nth-child(even) td.name-col,
+  #teams tbody tr:nth-child(even) td.name-col,
+  #lastRace tbody tr:nth-child(even) td.name-col{
+    background:#fafafa!important;
+  }
+
+  #drivers th.name-col,#drivers td.name-col{
+    width:205px!important;min-width:205px!important;max-width:205px!important;
+  }
+  #teams th.name-col,#teams td.name-col{
+    width:190px!important;min-width:190px!important;max-width:190px!important;
+  }
+  #lastRace th.name-col,#lastRace td.name-col{
+    width:205px!important;min-width:205px!important;max-width:205px!important;
+  }
+
+  #drivers tbody tr:first-child td.name-col{
+    background:var(--driver-accent-soft,#f6f7f8)!important;
+  }
+  #teams tbody tr:first-child td.name-col{
+    background:var(--team-accent-soft,#f6f7f8)!important;
+  }
+  #lastRace tbody tr.winner-row td.name-col{
+    background:var(--race-accent-soft,#f6f7f8)!important;
+  }
+}
+`;
+
+  function install(frame){
+    try{
+      const doc=frame && frame.contentDocument;
+      if(!doc || !doc.head) return;
+      let style=doc.getElementById('HLRN_MOBILE_PINNED_COLUMNS_RUNTIME');
+      if(!style){
+        style=doc.createElement('style');
+        style.id='HLRN_MOBILE_PINNED_COLUMNS_RUNTIME';
+        doc.head.appendChild(style);
+      }else if(style !== doc.head.lastElementChild){
+        doc.head.appendChild(style);
+      }
+      style.textContent=PIN_CSS;
+    }catch(e){}
+  }
+
+  function bind(id){
+    const frame=document.getElementById(id);
+    if(!frame) return;
+    const apply=()=>{
+      install(frame);
+      setTimeout(()=>install(frame),80);
+      setTimeout(()=>install(frame),350);
+      setTimeout(()=>install(frame),1000);
+    };
+    if(!frame.__hlrnPinnedColumnsBound){
+      frame.__hlrnPinnedColumnsBound=true;
+      frame.addEventListener('load',apply);
+    }
+    apply();
+  }
+
+  function run(){
+    bind('page-sunday');
+    bind('page-monday');
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',run,{once:true});
+  }else{
+    run();
+  }
+  window.addEventListener('load',()=>{run();setTimeout(run,500);setTimeout(run,1500)},{once:true});
+  window.addEventListener('resize',()=>setTimeout(run,80));
+  document.addEventListener('click',()=>setTimeout(run,120),true);
+})();
+</script>
 <script src="../assets/site-shell.js"></script>
 </body>
 </html>
