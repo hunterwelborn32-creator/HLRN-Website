@@ -6,7 +6,7 @@
   "discord_open_id": "1533100633115066438",
   "discord_close_id": "1533174031979642942",
   "date": "2026-08-01T13:14:34.567000+00:00",
-  "cover": "special-vrx-land/images/001.png",
+  "cover": "special-vrx-land/images/001.webp",
   "blocks": [
     {
       "type": "text",
@@ -15,7 +15,7 @@
     },
     {
       "type": "image",
-      "src": "images/001.png",
+      "src": "images/001.webp",
       "alt": "Adventure illustration"
     },
     {
@@ -25,12 +25,12 @@
     },
     {
       "type": "image",
-      "src": "images/002.png",
+      "src": "images/002.webp",
       "alt": "Adventure illustration"
     },
     {
       "type": "image",
-      "src": "images/003.png",
+      "src": "images/003.webp",
       "alt": "Adventure illustration"
     },
     {
@@ -40,7 +40,7 @@
     },
     {
       "type": "image",
-      "src": "images/004.png",
+      "src": "images/004.webp",
       "alt": "Adventure illustration"
     },
     {
@@ -50,7 +50,7 @@
     },
     {
       "type": "image",
-      "src": "images/005.png",
+      "src": "images/005.webp",
       "alt": "Adventure illustration"
     },
     {
@@ -60,7 +60,7 @@
     },
     {
       "type": "image",
-      "src": "images/006.png",
+      "src": "images/006.webp",
       "alt": "Adventure illustration"
     },
     {
@@ -70,7 +70,7 @@
     },
     {
       "type": "image",
-      "src": "images/007.png",
+      "src": "images/007.webp",
       "alt": "Adventure illustration"
     },
     {
@@ -80,7 +80,7 @@
     },
     {
       "type": "image",
-      "src": "images/008.png",
+      "src": "images/008.webp",
       "alt": "Adventure illustration"
     },
     {
@@ -90,7 +90,7 @@
     },
     {
       "type": "image",
-      "src": "images/009.png",
+      "src": "images/009.webp",
       "alt": "Adventure illustration"
     },
     {
@@ -100,27 +100,27 @@
     },
     {
       "type": "image",
-      "src": "images/010.png",
+      "src": "images/010.webp",
       "alt": "Adventure illustration"
     },
     {
       "type": "image",
-      "src": "images/011.png",
+      "src": "images/011.webp",
       "alt": "Adventure illustration"
     },
     {
       "type": "image",
-      "src": "images/012.png",
+      "src": "images/012.webp",
       "alt": "Adventure illustration"
     },
     {
       "type": "image",
-      "src": "images/013.png",
+      "src": "images/013.webp",
       "alt": "Adventure illustration"
     },
     {
       "type": "image",
-      "src": "images/014.png",
+      "src": "images/014.webp",
       "alt": "Adventure illustration"
     },
     {
@@ -130,12 +130,12 @@
     },
     {
       "type": "image",
-      "src": "images/015.png",
+      "src": "images/015.webp",
       "alt": "Adventure illustration"
     },
     {
       "type": "image",
-      "src": "images/016.png",
+      "src": "images/016.webp",
       "alt": "Adventure illustration"
     },
     {
@@ -145,7 +145,7 @@
     },
     {
       "type": "image",
-      "src": "images/017.png",
+      "src": "images/017.webp",
       "alt": "Adventure illustration"
     }
   ]
