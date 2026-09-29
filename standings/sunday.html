@@ -1715,7 +1715,61 @@ input,select,button{color:#111!important}
 iframe{background:#fff!important;color-scheme:light!important}
 `;
   const tag='<style id="HLRN_STATIC_LIGHT_INNER">'+css+'</style>';
-  return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'</head>') : tag+markup;
+  return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'<style id="HLRN_DRIVER_PROFILE_LINKS_V1">
+#drivers .hlrn-driver-profile-link{
+  display:inline-flex!important;
+  max-width:100%!important;
+  color:#111214!important;
+  text-decoration:none!important;
+  border-radius:8px!important;
+  outline:none!important;
+}
+#drivers .hlrn-driver-profile-inner{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:10px!important;
+  min-height:58px!important;
+  max-width:100%!important;
+  vertical-align:middle!important;
+}
+#drivers .hlrn-driver-profile-name{
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+  border-bottom:2px solid transparent!important;
+  transition:border-color .15s ease,color .15s ease!important;
+}
+#drivers .hlrn-driver-profile-arrow{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:22px!important;
+  height:22px!important;
+  flex:0 0 22px!important;
+  border-radius:50%!important;
+  background:#eef1f3!important;
+  color:#596168!important;
+  font-family:Arial,sans-serif!important;
+  font-size:20px!important;
+  font-style:normal!important;
+  line-height:1!important;
+  transition:transform .15s ease,background .15s ease,color .15s ease!important;
+}
+#drivers .hlrn-driver-profile-link:hover .hlrn-driver-profile-name,
+#drivers .hlrn-driver-profile-link:focus-visible .hlrn-driver-profile-name{
+  border-bottom-color:var(--driver-accent,#d71920)!important;
+}
+#drivers .hlrn-driver-profile-link:hover .hlrn-driver-profile-arrow,
+#drivers .hlrn-driver-profile-link:focus-visible .hlrn-driver-profile-arrow{
+  transform:translateX(2px)!important;
+  background:var(--driver-accent,#d71920)!important;
+  color:#fff!important;
+}
+#drivers .hlrn-driver-profile-link:focus-visible{
+  box-shadow:0 0 0 3px rgba(17,18,20,.12)!important;
+}
+</style>
+</head>') : tag+markup;
 }
 </script>
 
@@ -3080,7 +3134,7 @@ ${pos}
 ${movementHTML(driver.change)}
 </td>
 <td class="name-col">
-${hLrnNameWithPhoto(driver.driver)}
+${hLrnNameWithPhoto(driver.driver,driver.driverId)}
 </td>
 <td class="points">${formatNumber(driver.points)}</td>
 <td>${racePoints}</td>
@@ -3421,7 +3475,7 @@ year:"numeric"
 }
 );
 }
-function hLrnNameWithPhoto(name){
+function hLrnNameWithPhoto(name,driverId){
 const shown=String(name||"").trim();
 let n=shown;
 if(n.indexOf(",")>-1){
@@ -3454,11 +3508,20 @@ const safe=shown
  .replace(/'/g,"&#039;");
 if(!slug) return safe;
 const url="https://hunterwelborn32-creator.github.io/HLRN-App/driver-photos/cutout/"+slug+".webp";
-return '<span style="display:inline-flex;align-items:center;gap:10px;min-height:58px;vertical-align:middle">'
+const params=new URLSearchParams();
+params.set("league","sunday");
+if(driverId!==undefined&&driverId!==null&&String(driverId)!=="")params.set("driverId",String(driverId));
+params.set("driver",shown);
+const profileUrl="../drivers/?"+params.toString();
+return '<a class="hlrn-driver-profile-link" href="'+profileUrl+'" target="_top" '
++'aria-label="Open '+safe+' driver profile" title="View '+safe+' profile">'
++'<span class="hlrn-driver-profile-inner">'
 +'<img src="'+url+'" alt="" loading="lazy" decoding="async" onerror="this.remove()" '
 +'style="display:block;width:50px;height:58px;flex:0 0 50px;object-fit:contain;object-position:center bottom;'
 +'margin:-7px 0 -6px;background:transparent;border:0;outline:0;box-shadow:none">'
-+'<span>'+safe+'</span></span>';
++'<span class="hlrn-driver-profile-name">'+safe+'</span>'
++'<span class="hlrn-driver-profile-arrow" aria-hidden="true">›</span>'
++'</span></a>';
 }
 function escapeHTML(value){
 return String(
