@@ -635,7 +635,7 @@ function card(d){
    <div class="driver-media">
      <div class="number-badge">${esc(n)}</div><div class="status-chip">HLRN DRIVER</div><div class="rank-chip">CHAMP <b>P${esc(leagueRank)}</b></div>
      <div class="driver-fallback">${n==="—"?"HLRN":"#"+esc(n)}</div>
-     ${photo?`<img class="driver-cutout" src="${esc(photo)}" alt="${esc(name)}" loading="lazy" decoding="async" onerror="this.remove()">`:``}
+     ${photo?`<img class="driver-cutout" src="${esc(photo)}" alt="${esc(name)}" onerror="this.remove()" loading="eager" decoding="async" fetchpriority="high">`:``}
    </div>
    <div class="driver-info">
      <div class="driver-name">${esc(name)}</div>
@@ -767,7 +767,7 @@ function renderProfile(d){
         <div class="profile-identity-number">${esc(d.carNumber)}</div>
       </div>
       <div class="profile-photo">
-        ${photo?`<img class="profile-cutout" decoding="async" src="${esc(photo)}" alt="${esc(d.driver)}" onerror="this.remove()">`:`<div class="profile-missing">#${esc(d.carNumber)}</div>`}
+        ${photo?`<img class="profile-cutout" src="${esc(photo)}" alt="${esc(d.driver)}" onerror="this.remove()" loading="lazy" decoding="async">`:`<div class="profile-missing">#${esc(d.carNumber)}</div>`}
       </div>
       <aside class="profile-hero-stats"><h3>Driver Statistics</h3><div class="profile-hero-stat-grid">
         ${lead("League rank",league.rank!=null&&league.rank!=="—"?"#"+league.rank:"—")}
