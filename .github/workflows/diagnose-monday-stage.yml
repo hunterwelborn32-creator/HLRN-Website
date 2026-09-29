@@ -12,51 +12,44 @@ jobs:
   diagnose:
     runs-on: ubuntu-latest
     steps:
-      - name: Compare Sunday and Monday stage feeds
+      - name: Compare Sunday and Monday scoring configuration
         run: |
           python - <<'PY'
           import json, urllib.request
 
-          def get_json(url):
+          def get(season):
+              url=f"https://simracerhub.com/get_standings.php?season_id={season}&_diag=3"
               req=urllib.request.Request(url,headers={"User-Agent":"Mozilla/5.0","Accept":"application/json,text/javascript,*/*"})
               with urllib.request.urlopen(req,timeout=30) as r:
                   return json.loads(r.read().decode("utf-8","replace"))
 
-          def summarize(label,url):
-              d=get_json(url)
-              rps=d.get("rps") or {}
-              nonzero=[]
-              for did,x in rps.items():
-                  sp=x.get("spts")
-                  if sp not in (None,0,"0",0.0):
-                      nonzero.append((did,x.get("name"),sp))
-              stage_races=[]
-              for did,x in rps.items():
-                  for rid,r in ((x or {}).get("races") or {}).items():
-                      if isinstance(r,dict) and r.get("stage_points") not in (None,0,"0",0.0):
-                          stage_races.append((did,x.get("name"),rid,r.get("stage_points"),r.get("session")))
-              print("SUMMARY",label,"drivers",len(rps),"nonzero_spts",len(nonzero),"nonzero_race_stage",len(stage_races))
-              print("TOP_SPTS",nonzero[:12])
-              print("TOP_RACE_STAGE",stage_races[:12])
-              sched=d.get("schedules")
-              print("SCHEDULE_TYPE",label,type(sched).__name__)
-              if isinstance(sched,dict):
-                  vals=list(sched.values())
-              elif isinstance(sched,list):
-                  vals=sched
-              else:
-                  vals=[]
-              for s in vals[:10]:
+          def stageish(obj):
+              out={}
+              if isinstance(obj,dict):
+                  for k,v in obj.items():
+                      lk=str(k).lower()
+                      if any(t in lk for t in ("stage","segment","points","score","bonus","session","split","heat","race")):
+                          if isinstance(v,(str,int,float,bool,type(None))):
+                              out[k]=v
+                          elif isinstance(v,(list,dict)):
+                              out[k]=v
+              return out
+
+          for season,label in [(29832,"SUNDAY"),(30442,"MONDAY")]:
+              d=get(season)
+              print("===",label,"===")
+              print("SEASONS_TYPE",type(d.get("seasons")).__name__)
+              print("SEASONS",json.dumps(d.get("seasons"),separators=(",",":"))[:20000])
+              print("LSS_TYPE",type(d.get("lss")).__name__)
+              print("LSS",json.dumps(d.get("lss"),separators=(",",":"))[:30000])
+              print("DISP",json.dumps(d.get("disp"),separators=(",",":"))[:12000])
+              sched=d.get("schedules") or []
+              if isinstance(sched,dict): sched=list(sched.values())
+              for i,s in enumerate(sched):
                   if isinstance(s,dict):
-                      interesting={k:v for k,v in s.items() if any(t in str(k).lower() for t in ("stage","schedule","race","segment","session","track","lap"))}
-                      print("SCHED",label,json.dumps(interesting,separators=(",",":")))
-              return d
-
-          summarize("SUNDAY_GENERIC","https://simracerhub.com/get_standings.php?season_id=29832&_diag=2")
-          summarize("SUNDAY_SCHEDULE_371358","https://simracerhub.com/get_standings.php?season_id=29832&schedule_id=371358&_diag=2")
-          summarize("MONDAY_GENERIC","https://simracerhub.com/get_standings.php?season_id=30442&_diag=2")
-
-          monday_ids=[372311,373089,373875,375457,376281,377200]
-          for sid in monday_ids:
-              summarize(f"MONDAY_SCHEDULE_{sid}",f"https://simracerhub.com/get_standings.php?season_id=30442&schedule_id={sid}&_diag=2")
+                      print("SCHED",i,json.dumps(s,separators=(",",":"))[:8000])
+              # print any stage-related values found under top-level objects
+              for topk in ("seasons","lss","disp"):
+                  val=d.get(topk)
+                  print("STAGEISH",topk,json.dumps(stageish(val),separators=(",",":"))[:15000])
           PY
