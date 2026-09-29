@@ -759,6 +759,75 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
 @media(max-width:1180px){.event-head{grid-template-columns:1fr!important}.event-status{max-width:none!important}.metric-strip{grid-template-columns:repeat(3,1fr)!important}.metric:nth-child(3){border-right:0!important}.race-layout{grid-template-columns:1fr!important}.side-stack{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important}.side-stack>.panel:first-child{grid-column:1/-1!important}}
 @media(max-width:760px){.page{padding:7px 6px 20px!important}.event-shell{border-radius:5px!important}.brand-sub{display:none!important}.event-head{padding:19px 14px 16px!important}.event-head:before{display:none!important}.event-title{font-size:38px!important}.event-meta{font-size:8px!important}.event-status{grid-template-columns:repeat(2,1fr)!important}.status-box{min-height:62px!important}.session-flow{grid-template-columns:repeat(2,1fr)!important}.flow-step{min-height:56px!important;padding:8px 10px!important}.metric-strip{grid-template-columns:repeat(2,1fr)!important}.metric{min-height:70px!important;padding:11px!important}.metric:nth-child(even){border-right:0!important}.rc-crown{grid-template-columns:1fr!important;padding:8px!important}.primary-tabs,.session-tools{padding-left:4px!important;padding-right:4px!important}.tab{padding:10px 11px 8px!important;font-size:9px!important}.section{padding:8px!important}.side-stack{grid-template-columns:1fr!important}.side-stack>.panel:first-child{grid-column:auto!important}.event-status{width:100%!important}.rc-leader-number{font-size:58px!important}.rc-leader-name{font-size:25px!important}.panel{border-radius:5px!important}}
 @media(max-width:480px){.brand{font-size:19px!important}.live-badge{padding:6px 9px!important}.event-title{font-size:33px!important}.metric strong{font-size:14px!important}.flow-step strong{font-size:11px!important}.session-flow{grid-template-columns:1fr 1fr!important}.rc-crown{padding:6px!important}.live-ticker-count{display:none!important}}
+
+  /* ===== HLRN AUTHORITATIVE POST-RACE RECORDER ===== */
+  .lap-recap-head{
+    min-height:58px;
+    padding:11px 14px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    border-bottom:1px solid var(--line);
+    background:#111820;
+    color:#fff;
+  }
+  .lap-recap-head>div{display:grid;gap:4px}
+  .lap-recap-head strong{font-size:10px;letter-spacing:.8px}
+  .lap-recap-head span{color:#929daa;font-size:8px;font-weight:800}
+  .lap-recap-freeze{
+    flex:0 0 auto;
+    padding:6px 8px;
+    border:1px solid #46515d;
+    background:#181f27;
+    color:#b8c2cd!important;
+    font-size:7px!important;
+    font-weight:1000!important;
+    letter-spacing:.7px;
+  }
+  .lap-recap-freeze.frozen{
+    border-color:#1f7444;
+    background:#102b1c;
+    color:#8df0b1!important;
+  }
+  .lap-recap{
+    max-height:660px;
+    overflow:auto;
+    background:#f7f8fa;
+    border-bottom:1px solid var(--line);
+  }
+  .lap-recap-row{
+    display:grid;
+    grid-template-columns:92px minmax(0,1fr);
+    gap:12px;
+    padding:12px 14px;
+    border-bottom:1px solid #dfe3e8;
+    background:#fff;
+  }
+  .lap-recap-row:last-child{border-bottom:0}
+  .lap-recap-meta{display:grid;align-content:start;gap:4px}
+  .lap-recap-meta strong{font-size:15px;font-weight:1000}
+  .lap-recap-meta span{font-size:7px;font-weight:1000;color:#7d8791;letter-spacing:.65px}
+  .lap-recap-order{display:flex;flex-wrap:wrap;gap:5px;min-width:0}
+  .lap-recap-driver{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    min-height:28px;
+    padding:4px 7px;
+    border:1px solid #d7dce2;
+    background:#f8f9fa;
+    color:#242b33;
+    font-size:8px;
+    font-weight:900;
+    white-space:nowrap;
+  }
+  .lap-recap-driver b{color:#111;font-size:9px}
+  .lap-recap-driver.down{color:#7a828c}
+  @media(max-width:650px){
+    .lap-recap-row{grid-template-columns:1fr}
+    .lap-recap-head{align-items:flex-start;flex-direction:column}
+  }
 </style>
 
 </head>
@@ -1048,6 +1117,11 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
           <div id="reportStatus" class="report-status">Waiting for race-night data</div>
           <button id="copyReportBtn" class="copy-btn">COPY FULL REPORT</button>
         </div>
+        <div class="lap-recap-head">
+          <div><strong>LAP-BY-LAP RUNNING ORDER</strong><span id="lapRecapCoverage">Waiting for the race recorder</span></div>
+          <span id="lapRecapFreeze" class="lap-recap-freeze">LIVE RECORDER</span>
+        </div>
+        <div id="lapRecap" class="lap-recap"><div class="archive-empty"><strong>No completed laps recorded yet</strong>The server will capture the scored running order after each completed leader lap.</div></div>
         <pre id="reportText" class="report-box">Waiting for session data…</pre>
       </div>
     </section>
