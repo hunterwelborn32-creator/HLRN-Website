@@ -2859,7 +2859,26 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
     const savedTableScrollLeft = oldTableShell ? oldTableShell.scrollLeft : 0;
 
     if(!online){
-      const mobileCards = shown.map(driver => {
+    el.innerHTML = `<div class="offline"><strong>Live timing is offline</strong>Start the HLRN iRacing bridge to populate the leaderboard.</div>`;
+      return;
+    }
+
+    if(!drivers.length){
+      el.innerHTML = `<div class="offline"><strong>Connected to iRacing</strong>Waiting for scored cars to appear in the session.</div>`;
+      return;
+    }
+
+    const shown = showFullField ? drivers : drivers.slice(0,10);
+    const gapHeading = state && state.phase === "race" ? "BEHIND" : "GAP";
+    const hotBattleKeys = new Set();
+    if(state && state.phase === "race"){
+      getBattles(drivers).filter(b => b.interval <= .75).forEach(b => {
+        hotBattleKeys.add(driverKey(b.ahead));
+        hotBattleKeys.add(driverKey(b.behind));
+      });
+    }
+
+    const mobileCards = shown.map(driver => {
       const delta = positionDelta(driver);
       const photo=hLrnDriverPhotoUrl(driver.name);
       const status=driverStatus(driver);
@@ -2886,25 +2905,6 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
         ${driver.blackFlag||driver.disqualified?`<div class="mobile-timing-alert penalty-alert">${driver.disqualified?"DISQUALIFIED":"BLACK FLAG"}${penaltyText?` • ${esc(penaltyText)}`:""}</div>`:""}
       </article>`;
     }).join("");
-
-    el.innerHTML = `<div class="offline"><strong>Live timing is offline</strong>Start the HLRN iRacing bridge to populate the leaderboard.</div>`;
-      return;
-    }
-
-    if(!drivers.length){
-      el.innerHTML = `<div class="offline"><strong>Connected to iRacing</strong>Waiting for scored cars to appear in the session.</div>`;
-      return;
-    }
-
-    const shown = showFullField ? drivers : drivers.slice(0,10);
-    const gapHeading = state && state.phase === "race" ? "BEHIND" : "GAP";
-    const hotBattleKeys = new Set();
-    if(state && state.phase === "race"){
-      getBattles(drivers).filter(b => b.interval <= .75).forEach(b => {
-        hotBattleKeys.add(driverKey(b.ahead));
-        hotBattleKeys.add(driverKey(b.behind));
-      });
-    }
 
     el.innerHTML = `
       <div class="mobile-live-board">${mobileCards}</div>
