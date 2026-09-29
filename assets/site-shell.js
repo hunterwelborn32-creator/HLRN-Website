@@ -74,6 +74,7 @@ function start(){
   else if(path.includes("/results/")||path.includes("/schedule/")) active="results";
   else if(path.includes("/my-hlrn/")) active="my-hlrn";
   else if(path.includes("/drivers/")) active="drivers";
+  else if(path.includes("/teams/")) active="teams";
   else if(path.includes("/news/")) active="news";
   else if(path.includes("/adventures/")) active="adventures";
   else if(path.includes("/meet-the-admins/")) active="admins";
@@ -88,6 +89,7 @@ function start(){
     ["intelligence","Intelligence","race-intelligence/"],
     ["results","Results","results/"],
     ["drivers","Drivers","drivers/"],
+    ["teams","Teams","teams/"],
     ["news","News","news/"]
   ];
   const more=[
