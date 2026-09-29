@@ -858,3 +858,113 @@ footer.hlrn-shared-footer-existing{padding-top:3px!important}
     gap:5px!important;
   }
 }
+
+
+/* =========================================================
+   HLRN GLOBAL MOBILE COVERAGE V1
+   Remaining page families using the shared shell.
+   ========================================================= */
+@media(max-width:620px){
+  /* Fantasy */
+  html.hlrn-mobile-global[data-hlrn-route="fantasy"] .shell{
+    width:calc(100% - 12px)!important;
+    max-width:none!important;
+    margin-inline:auto!important;
+    overflow-x:hidden!important;
+  }
+  html.hlrn-mobile-global[data-hlrn-route="fantasy"] :where(.statgrid,.cardstats){
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  html.hlrn-mobile-global[data-hlrn-route="fantasy"] :where(.grid,.formrow){
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+  html.hlrn-mobile-global[data-hlrn-route="fantasy"] .modalbox{
+    width:calc(100% - 14px)!important;
+    max-width:none!important;
+    max-height:90dvh!important;
+    overflow-y:auto!important;
+  }
+  html.hlrn-mobile-global[data-hlrn-route="fantasy"] .tablewrap{
+    max-width:100%!important;
+    overflow-x:auto!important;
+    -webkit-overflow-scrolling:touch!important;
+  }
+
+  /* Broadcasters */
+  html.hlrn-mobile-global[data-hlrn-route="broadcasters"] .wrap{
+    width:calc(100% - 12px)!important;
+    max-width:none!important;
+    margin-inline:auto!important;
+  }
+  html.hlrn-mobile-global[data-hlrn-route="broadcasters"] :where(.stage,.duo,.shows,.lineup){
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+  html.hlrn-mobile-global[data-hlrn-route="broadcasters"] :where(.stage-actions,.nav){
+    flex-wrap:wrap!important;
+    gap:6px!important;
+  }
+  html.hlrn-mobile-global[data-hlrn-route="broadcasters"] :where(.person,.show,.slot){
+    min-width:0!important;
+    max-width:100%!important;
+  }
+
+  /* Race Reports */
+  html.hlrn-mobile-global[data-hlrn-route="race-reports"] .wrap{
+    width:calc(100% - 12px)!important;
+    max-width:none!important;
+    margin-inline:auto!important;
+  }
+  html.hlrn-mobile-global[data-hlrn-route="race-reports"] .grid{
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+  html.hlrn-mobile-global[data-hlrn-route="race-reports"] :where(.mastinner,.toolbar){
+    flex-wrap:wrap!important;
+    gap:8px!important;
+    max-width:100%!important;
+  }
+
+  /* Adventure landing + individual story episodes */
+  html.hlrn-mobile-global[data-hlrn-route="adventures"] .story{
+    width:100%!important;
+    max-width:100%!important;
+    overflow-wrap:anywhere!important;
+  }
+  html.hlrn-mobile-global[data-hlrn-route="adventures"] :where(.story img,.episode-art img){
+    max-width:100%!important;
+  }
+
+  /* Static individual driver pages */
+  html.hlrn-mobile-global[data-hlrn-route="drivers"] :where(.hero,.series-grid){
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+  html.hlrn-mobile-global[data-hlrn-route="drivers"] :where(.stats-grid,.form-grid,.career-strip){
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  html.hlrn-mobile-global[data-hlrn-route="drivers"] :where(.hero-media,.hero-copy,.series-card){
+    min-width:0!important;
+    max-width:100%!important;
+  }
+  html.hlrn-mobile-global[data-hlrn-route="drivers"] .history-wrap{
+    max-width:100%!important;
+    overflow-x:auto!important;
+    -webkit-overflow-scrolling:touch!important;
+  }
+
+  /* News recap subpages */
+  html.hlrn-mobile-global[data-hlrn-route="news"] :where(.page,.hlrn-recap-section){
+    max-width:100%!important;
+  }
+
+  /* Search/filter inputs used across admin, teams, store and rules pages. */
+  html.hlrn-mobile-global :where(
+    .team-search,
+    .rc-search,
+    .search,
+    .search-input,
+    input[type="search"]
+  ){
+    width:100%!important;
+    max-width:100%!important;
+    min-height:40px!important;
+  }
+}
