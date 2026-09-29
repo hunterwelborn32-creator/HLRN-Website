@@ -643,7 +643,7 @@ table{{width:100%;border-collapse:collapse}}th{{background:#11161d;color:#fff;te
     </section>
   </article>
 </main>
-<script src="/assets/site-shell.js?v=20260929health1"></script>
+<script src="/assets/site-shell.js?v=20260929myhlrn1"></script>
 </body>
 </html>
 """
