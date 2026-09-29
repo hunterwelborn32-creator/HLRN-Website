@@ -3023,6 +3023,126 @@ html,body,.page-wrap{
   #lastRace table{min-width:820px!important}
 }
 </style>
+
+<style id="HLRN_MOBILE_STANDINGS_FIX_FINAL">
+.hlrn-mobile-scroll-hint{display:none}
+
+#teams:not(.show-advanced) th:nth-child(n),
+#teams:not(.show-advanced) td:nth-child(n),
+#teams.show-advanced th:nth-child(n),
+#teams.show-advanced td:nth-child(n){
+  display:table-cell!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+
+@media(max-width:760px){
+  .hlrn-mobile-scroll-hint{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-end!important;
+    min-height:30px!important;
+    padding:5px 4px 7px!important;
+    color:#6b7279!important;
+    font-family:"Inter","Segoe UI",Arial,sans-serif!important;
+    font-size:9px!important;
+    font-weight:700!important;
+    letter-spacing:.02em!important;
+  }
+
+  #drivers .table-shell,
+  #teams .table-shell,
+  #lastRace .table-shell{
+    position:relative!important;
+    overflow-x:auto!important;
+    overflow-y:visible!important;
+    -webkit-overflow-scrolling:touch!important;
+    touch-action:pan-x pan-y!important;
+    scrollbar-width:thin!important;
+  }
+
+  /* Keep the identity column visible while the user swipes through stats. */
+  #drivers thead th.name-col,
+  #drivers tbody td.name-col,
+  #teams thead th.name-col,
+  #teams tbody td.name-col,
+  #lastRace thead th.name-col,
+  #lastRace tbody td.name-col{
+    position:sticky!important;
+    left:0!important;
+    z-index:7!important;
+    box-shadow:8px 0 14px -12px rgba(0,0,0,.55)!important;
+  }
+  #drivers thead th.name-col,
+  #teams thead th.name-col,
+  #lastRace thead th.name-col{
+    z-index:10!important;
+    background:#f4f6f7!important;
+  }
+
+  #drivers th.name-col,
+  #drivers td.name-col{
+    width:205px!important;
+    min-width:205px!important;
+    max-width:205px!important;
+  }
+  #teams th.name-col,
+  #teams td.name-col{
+    width:190px!important;
+    min-width:190px!important;
+    max-width:190px!important;
+  }
+  #lastRace th.name-col,
+  #lastRace td.name-col{
+    width:205px!important;
+    min-width:205px!important;
+    max-width:205px!important;
+  }
+
+  #drivers tbody tr:nth-child(odd) td.name-col,
+  #teams tbody tr:nth-child(odd) td.name-col,
+  #lastRace tbody tr:nth-child(odd) td.name-col{background:#fff!important}
+  #drivers tbody tr:nth-child(even) td.name-col,
+  #teams tbody tr:nth-child(even) td.name-col,
+  #lastRace tbody tr:nth-child(even) td.name-col{background:#fafafa!important}
+  #drivers tbody tr:first-child td.name-col,
+  #teams tbody tr:first-child td.name-col,
+  #lastRace tbody tr.winner-row td.name-col{
+    background:var(--driver-accent-soft,var(--team-accent-soft,var(--race-accent-soft,#f6f7f8)))!important;
+  }
+
+  #drivers td.name-col img,
+  #lastRace td.name-col img{
+    width:40px!important;
+    height:50px!important;
+    flex:0 0 40px!important;
+    margin:-4px 0 -4px!important;
+  }
+  #drivers .hlrn-driver-profile-inner,
+  #lastRace .hlrn-driver-profile-inner{
+    gap:7px!important;
+  }
+  #drivers .hlrn-driver-profile-arrow,
+  #lastRace .hlrn-driver-profile-arrow{
+    display:none!important;
+  }
+  #drivers .hlrn-driver-profile-name,
+  #lastRace .hlrn-driver-profile-name{
+    font-size:14px!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+  #teams .hlrn-team-profile-link{
+    font-size:15px!important;
+    max-width:100%!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+  #teams .hlrn-team-profile-arrow{display:none!important}
+}
+</style>
 </head>
 <body>
 <div class="page-wrap">
@@ -3096,6 +3216,7 @@ Last Race
 <h2>DRIVER STANDINGS</h2>
 <div id="driverCount" class="count"></div>
 </div>
+<div class="hlrn-mobile-scroll-hint">Swipe for more stats → Driver stays pinned</div>
 <div class="table-shell">
 <table>
 <thead>
@@ -3132,6 +3253,7 @@ Last Race
 <h2>TEAM STANDINGS</h2>
 <div id="teamCount" class="count"></div>
 </div>
+<div class="hlrn-mobile-scroll-hint">Swipe for more stats → Team stays pinned</div>
 <div class="table-shell">
 <table>
 <thead>
@@ -3175,6 +3297,7 @@ class="last-race-card">
 Loading race...
 </div>
 </div>
+<div class="hlrn-mobile-scroll-hint">Swipe for full race results → Driver stays pinned</div>
 <div class="table-shell">
 <table>
 <thead>
@@ -3817,10 +3940,10 @@ document
 .forEach(function(btn){
 btn.classList.remove("active");
 });
-document
-.getElementById(id)
-.classList.add("active");
-button.classList.add("active");
+const panel=document.getElementById(id);
+if(panel) panel.classList.add("active");
+if(button) button.classList.add("active");
+try{sessionStorage.setItem("hlrn-sunday-standings-tab",id);}catch(e){}
 }
 
 // HLRN SHARED DATA V1: one published snapshot and one connection/cache status.
@@ -4601,6 +4724,22 @@ document.addEventListener("DOMContentLoaded",function(){
 
   addToggle("teams");
 });
+</script>
+
+<script id="HLRN_RESTORE_SUNDAY_INNER_TAB">
+(function(){
+  function restore(){
+    let saved="";
+    try{saved=sessionStorage.getItem("hlrn-sunday-standings-tab")||"";}catch(e){}
+    if(!["drivers","teams","lastRace"].includes(saved)) return;
+    const btn=[...document.querySelectorAll(".tab-btn")].find(function(b){
+      return String(b.getAttribute("onclick")||"").includes("'"+saved+"'");
+    });
+    if(btn && document.getElementById(saved)) showTab(saved,btn);
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",restore,{once:true});
+  else restore();
+})();
 </script>
 </body>
 </html>
