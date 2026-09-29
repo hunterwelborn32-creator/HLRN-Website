@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { validateAction, buildSnapshot, sameData, seasonDriverTotals, mergeSeasonDriverTotals } from '../tools/sync-data.mjs';
+import { validateAction, buildSnapshot, sameData, seasonDriverTotals, mergeSeasonDriverTotals, parseTeamRostersHtml } from '../tools/sync-data.mjs';
 const payloads = Object.fromEntries(['sunday','monday'].map(l => [l, {
   drivers: { success:true, drivers:[{driverId:l+'-1',name:'Example'}] },
   teams: { success:true, teams:[] },
@@ -36,4 +36,16 @@ test('SimRacerHub aggregate driver totals are merged without replacing verified 
 });
 test('seasonDriverTotals tolerates missing season data', () => {
  assert.equal(seasonDriverTotals(null).size,0);
+});
+
+test('team roster parser matches known drivers inside each team section', () => {
+ const html='<h4>VRX</h4><div>Trevor Haley</div><div>Brian Hennings</div><h4>DHR</h4><div>Ethan Moreno</div>';
+ const drivers=[
+  {driverId:'1',driver:'Haley, Trevor'},
+  {driverId:'2',driver:'Hennings, Brian'},
+  {driverId:'3',driver:'Moreno, Ethan'}
+ ];
+ const roster=parseTeamRostersHtml(html,drivers);
+ assert.deepEqual(roster.VRX.map(x=>x.driverId),['1','2']);
+ assert.deepEqual(roster.DHR.map(x=>x.driverId),['3']);
 });
