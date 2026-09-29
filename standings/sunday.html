@@ -2402,6 +2402,98 @@ html,body,.page-wrap{
   #drivers td.name-col{font-size:16px!important}
 }
 </style>
+
+<style id="HLRN_MOMENTUM_CARDS_FINAL">
+.cc-momentum-row{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:12px!important;
+  margin:14px 0 20px!important;
+  width:100%!important;
+  align-items:stretch!important;
+}
+.cc-momentum-card{
+  position:relative!important;
+  display:grid!important;
+  grid-template-rows:auto auto 1fr!important;
+  min-width:0!important;
+  min-height:104px!important;
+  padding:15px 17px 14px 20px!important;
+  overflow:hidden!important;
+  border:1px solid #dfe3e7!important;
+  border-radius:12px!important;
+  background:linear-gradient(180deg,#ffffff 0%,#fafbfc 100%)!important;
+  box-shadow:0 5px 16px rgba(17,18,20,.055)!important;
+}
+.cc-momentum-card:before{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;
+  top:0!important;
+  bottom:0!important;
+  width:5px!important;
+  background:#d71920!important;
+}
+.cc-momentum-card:after{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  top:0!important;
+  height:1px!important;
+  background:#fff5f5!important;
+}
+.cc-momentum-card > span{
+  display:block!important;
+  margin:0 0 5px!important;
+  color:#7a828a!important;
+  font-family:"Inter","Segoe UI",Arial,sans-serif!important;
+  font-size:9px!important;
+  font-weight:800!important;
+  line-height:1.1!important;
+  letter-spacing:.12em!important;
+  text-transform:uppercase!important;
+  white-space:normal!important;
+}
+.cc-momentum-card > strong{
+  display:block!important;
+  margin:0!important;
+  min-width:0!important;
+  color:#111214!important;
+  font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
+  font-size:24px!important;
+  font-weight:900!important;
+  font-style:italic!important;
+  line-height:1!important;
+  letter-spacing:-.025em!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+.cc-momentum-card > small{
+  display:block!important;
+  align-self:end!important;
+  margin:7px 0 0!important;
+  color:#606870!important;
+  font-family:"Inter","Segoe UI",Arial,sans-serif!important;
+  font-size:10px!important;
+  font-weight:650!important;
+  line-height:1.3!important;
+  letter-spacing:0!important;
+  text-transform:none!important;
+  white-space:normal!important;
+}
+.cc-momentum-card:hover{
+  border-color:#cfd5da!important;
+  box-shadow:0 8px 22px rgba(17,18,20,.08)!important;
+}
+@media(max-width:900px){
+  .cc-momentum-row{grid-template-columns:1fr!important;gap:9px!important}
+  .cc-momentum-card{min-height:88px!important}
+  .cc-momentum-card > strong{font-size:22px!important}
+}
+</style>
 </head>
 <body>
 <div class="page-wrap">
