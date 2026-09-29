@@ -1167,6 +1167,8 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
   let showFullField = false;
   let selectedCarIdx = null;
   let lastPhase = null;
+  let localFrozenRaceState = null;
+  let localFrozenRaceKey = null;
   let lastAutoSessionKey = null;
 
   const firstSeenPosition = new Map();
@@ -2535,7 +2537,11 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
 
     const history=Array.isArray(rc.history) ? [...rc.history].reverse().slice(0,8) : [];
     $("rc2HistoryMeta").textContent=`${rc.cautionCount || history.length || 0} CAUTIONS`;
-    $("rc2CautionHistory").innerHTML=history.length ? history.map(c=>`<div class="rc2-history-row"><strong>Caution #${esc(c.number??"—")} • Lap ${esc(c.startLap??"—")}</strong><span>${c.restartLap!=null?`Restarted lap ${esc(c.restartLap)}`:"Restart pending"}</span></div>`).join("") : `<div class="offline"><strong>No completed cautions yet</strong>Each caution and restart lap will be stored here.</div>`;
+    $("rc2CautionHistory").innerHTML=history.length ? history.map(c=>{
+      const reason=c.reason || "Reason not supplied by iRacing telemetry";
+      const source=String(c.reasonSource||"UNAVAILABLE").toUpperCase();
+      return `<div class="rc2-history-row"><strong>Caution #${esc(c.number??"—")} • Lap ${esc(c.startLap??"—")}</strong><span>${c.restartLap!=null?`Restarted lap ${esc(c.restartLap)}`:"Restart pending"} • Reason: ${esc(reason)}${source!=="UNAVAILABLE"?` [${esc(source)}]`:""}</span></div>`;
+    }).join("") : `<div class="offline"><strong>No completed cautions yet</strong>Each caution and restart lap will be stored here.</div>`;
   }
 
   function renderLiveStats(online){
@@ -2579,7 +2585,7 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
     if(!$("rcActiveFlags")) return;
     const raceState=getPhaseState("race");
     const events=raceControlEvents(raceState);
-    const penaltyEvents=events.filter(e=>String(e?.type||"").toLowerCase()==="penalty" || String(e?.title||"").toUpperCase().includes("BLACK FLAG"));
+    const penaltyEvents=penaltyRecordsFor(raceState,events);
     const blackFlags=penaltyEvents.filter(e=>String(e?.title||"").toUpperCase().includes("BLACK FLAG")).length;
     const active=drivers.filter(d=>d.blackFlag || d.disqualified || d.dqFlag);
     const current=online ? normalizeFlag(state?.flag) : "OFFLINE";
@@ -2590,7 +2596,7 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
     $("rcFlagCautions").textContent=blackFlags;
     $("rcFlagPenalties").textContent=penaltyEvents.length;
     $("rcActiveFlagsCount").textContent=active.length;
-    $("rcFlagsMeta").textContent=online ? "AUTO CAPTURE ARMED" : "OFFLINE";
+    $("rcFlagsMeta").textContent=raceState?.raceFrozen ? "FINAL • FROZEN" : (online ? "AUTO CAPTURE ARMED" : "OFFLINE");
 
     const captureFile=state?.penaltyCaptureFile || "penalty_captures.json";
     if($("rcPenaltyCaptureStatus")){
@@ -2612,8 +2618,13 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
       return `<div class="rc-active-penalty">${url?`<img src="${esc(url)}" alt="" onerror="this.remove()" loading="lazy" decoding="async">`:`<div></div>`}<div><strong>#${esc(d.number||"—")} ${esc(d.name||"Unknown")}<span class="rc-source-badge ${esc(sourceClass)}">${esc(source.replace("_"," "))}${esc(captured)}</span></strong><div class="rc-penalty-category">${esc(category)}</div><p><b>${esc(reason)}</b><br>${esc(detail)}</p></div><span class="rc-flag-badge">${esc(label)}</span></div>`;
     }).join("") : `<div class="offline"><strong>No active penalties</strong>Every new black flag is detected from iRacing's per-car flag state and captured automatically for reason analysis.</div>`;
 
-    const recent=penaltyEvents.slice(-16).reverse();
-    $("rcFlagTimeline").innerHTML=recent.length ? recent.map(e=>`<div class="rc-feed-item ${esc(eventTone(e))}"><div class="rc-feed-lap">${e.lap!=null&&Number(e.lap)>=0?`LAP ${esc(e.lap)}`:"SESSION"}</div><div class="rc-feed-dot"></div><div><div class="rc-feed-title">${esc(e.title||"Penalty")}</div><div class="rc-feed-copy">${esc(e.text||"")}</div></div></div>`).join("") : `<div class="offline"><strong>No penalty events yet</strong>Black flags, clears and disqualifications will appear here automatically.</div>`;
+    const recent=penaltyEvents.slice(-24).reverse();
+    $("rcFlagTimeline").innerHTML=recent.length ? recent.map(e=>{
+      const reason=e.reason || "Reason not supplied by iRacing telemetry";
+      const source=String(e.reasonSource||"UNAVAILABLE").toUpperCase();
+      const who=e.name || e.number ? `#${esc(e.number||"—")} ${esc(e.name||"Unknown Driver")} • ` : "";
+      return `<div class="rc-feed-item penalty"><div class="rc-feed-lap">${e.lap!=null&&Number(e.lap)>=0?`LAP ${esc(e.lap)}`:"SESSION"}</div><div class="rc-feed-dot"></div><div><div class="rc-feed-title">${esc(e.title||"Black Flag")}</div><div class="rc-feed-copy">${who}Reason: ${esc(reason)}${source!=="UNAVAILABLE"?` [${esc(source)}]`:""}</div></div></div>`;
+    }).join("") : `<div class="offline"><strong>No penalty events yet</strong>Black flags and disqualifications will appear here automatically when the producer exposes them.</div>`;
   }
 
   function renderRadioFeed(){
@@ -2692,9 +2703,46 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
 
   }
 
+  function incomingRaceIdentity(s){
+    return String(s?.subSessionId ?? s?.sessionId ?? ((s?.series||"HLRN")+"|"+(s?.track||"UNKNOWN")+"|"+(s?.sessionName||"SESSION")));
+  }
+
+  function isRacePayload(s){
+    return String(s?.phase||"").toLowerCase()==="race"
+      || /race/i.test(String(s?.sessionName||""));
+  }
+
+  function acceptIncomingState(incoming){
+    const next=incoming && typeof incoming==="object" ? incoming : {};
+    const key=incomingRaceIdentity(next);
+
+    if(localFrozenRaceState){
+      if(key===localFrozenRaceKey){
+        return false;
+      }
+      if(isRacePayload(next) && key!==localFrozenRaceKey){
+        localFrozenRaceState=null;
+        localFrozenRaceKey=null;
+      }
+    }
+
+    if(isRacePayload(next) && (next.raceFrozen || raceFinished(next))){
+      localFrozenRaceState=JSON.parse(JSON.stringify(next));
+      localFrozenRaceKey=key;
+      localFrozenRaceState.raceFrozen=true;
+      localFrozenRaceState.raceFrozenAt=localFrozenRaceState.raceFrozenAt || localFrozenRaceState.updatedAt || new Date().toISOString();
+      render(localFrozenRaceState);
+      return true;
+    }
+
+    render(next);
+    return true;
+  }
+
   function render(s){
     state = s || {};
     const online = !!state.online;
+    const frozen = !!state.raceFrozen;
 
     if(state.phase !== lastPhase){
       firstSeenPosition.clear();
@@ -2708,8 +2756,9 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
       return ap - bp;
     });
 
-    $("liveBadge").classList.toggle("on", online);
-    $("liveBadgeText").textContent = online ? "LIVE NOW" : "OFFLINE";
+    $("liveBadge").classList.toggle("on", online && !frozen);
+    $("liveBadgeText").textContent = frozen ? "FINAL • FROZEN" : (online ? "LIVE NOW" : "OFFLINE");
+    if(frozen) $("connectionText").textContent = "Final race data frozen at checkered";
     $("series").textContent = state.series || "HIGH LINE RACING NETWORK";
     $("track").textContent = online ? (state.track || "IRACING LIVE") : "WAITING FOR IRACING";
 
@@ -2722,7 +2771,7 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
     const liveTitles = {
       practice: "Practice Timing",
       qualifying: "Qualifying Timing",
-      race: "Live Race Leaderboard",
+      race: frozen ? "Final Race Classification" : "Live Race Leaderboard",
       other: "Live Session"
     };
     const leaderLabels = {
@@ -2737,7 +2786,9 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
     const sessionBits = [];
     if(state.sessionName) sessionBits.push(state.sessionName);
     if(state.sessionState) sessionBits.push(state.sessionState);
-    $("sessionName").textContent = online ? sessionBits.join(" • ") : "No active session";
+    $("sessionName").textContent = online
+      ? sessionBits.join(" • ") + (frozen ? " • DATA FROZEN" : "")
+      : "No active session";
 
     const flag = online ? normalizeFlag(state.flag) : "OFFLINE";
     $("flag").textContent = flag;
@@ -2774,7 +2825,7 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
       const updated = new Date(state.updatedAt);
       $("lastUpdate").textContent = updated.toLocaleTimeString([], {hour:"numeric",minute:"2-digit",second:"2-digit"});
       const age = Math.max(0, Date.now() - updated.getTime());
-      $("feedAge").textContent = `${(age/1000).toFixed(1)}s`;
+      $("feedAge").textContent = frozen ? "FROZEN" : `${(age/1000).toFixed(1)}s`;
     }else{
       $("lastUpdate").textContent = "—";
       $("feedAge").textContent = "—";
@@ -2889,7 +2940,7 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
     ws.onmessage = event => {
       try{
         const msg = JSON.parse(event.data);
-        if(msg.type === "state") render(msg.data);
+        if(msg.type === "state") acceptIncomingState(msg.data);
       }catch(err){
         console.error("Bad feed message", err);
       }
@@ -2985,7 +3036,7 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
     if(state && state.updatedAt){
       const updated = new Date(state.updatedAt);
       const age = Math.max(0, Date.now() - updated.getTime());
-      $("feedAge").textContent = `${(age/1000).toFixed(1)}s`;
+      $("feedAge").textContent = state.raceFrozen ? "FROZEN" : `${(age/1000).toFixed(1)}s`;
     }
   }, 1000);
 })();
