@@ -52,6 +52,11 @@ function driverUrl(series,row){
   return "../drivers/?league="+encodeURIComponent(series)+"&driverId="+encodeURIComponent(row&&row.id||"")+"&driver="+encodeURIComponent(row&&row.name||"");
 }
 
+function recorderCount(r,key){
+  if(!(r&&r.permanent&&r.recorder))return "—";
+  var list=Array.isArray(r[key])?r[key]:[];
+  return fmt(list.length)
+}
 function reportStats(r){
   var rows=Array.isArray(r&&r.results)?r.results:[];
   var withStart=rows.filter(function(x){return finite(x.start)!=null});
@@ -241,8 +246,8 @@ function hero(r){
     '<div class="rc-stat feature"><small>POLE / FIRST RECORDED</small><b>'+esc(pole.name||"—")+'</b><span>'+(pole.start!=null?"Started P"+esc(pole.start):"Starting position unavailable")+'</span></div>'+
     '<div class="rc-stat feature"><small>BIGGEST MOVER</small><b>'+esc(big.name||"—")+'</b><span>'+(big.name?((num(big.gain)>=0?"+":"")+fmt(big.gain)+" positions"):"Movement unavailable")+'</span></div>'+
     '<div class="rc-stat"><small>LAPS LED RECORDED</small><b>'+fmt(st.lapsLed)+'</b><span>Published / captured race rows</span></div>'+
-    '<div class="rc-stat"><small>CAUTIONS PRESERVED</small><b>'+fmt((r.cautions||[]).length)+'</b><span>'+((r.permanent&&r.recorder)?"Frozen recorder":"When available")+'</span></div>'+
-    '<div class="rc-stat"><small>BLACK FLAGS / PENALTIES</small><b>'+fmt((r.penalties||[]).length)+'</b><span>'+((r.permanent&&r.recorder)?"Frozen recorder":"When available")+'</span></div>'+
+    '<div class="rc-stat"><small>CAUTIONS PRESERVED</small><b>'+recorderCount(r,"cautions")+'</b><span>'+((r.permanent&&r.recorder)?"Frozen recorder":"Not recorded in this source")+'</span></div>'+
+    '<div class="rc-stat"><small>BLACK FLAGS / PENALTIES</small><b>'+recorderCount(r,"penalties")+'</b><span>'+((r.permanent&&r.recorder)?"Frozen recorder":"Not recorded in this source")+'</span></div>'+
   '</aside>';
   var open=$("#rcOpenLatest");if(open)open.addEventListener("click",function(){openReport(r,true)})
 }
@@ -254,7 +259,7 @@ function raceCard(r){
       '<div class="rc-race-top"><span class="rc-race-series">'+esc(seriesLabel(r.series))+(r.permanent?" • FROZEN":"")+'</span><b class="rc-race-week">'+(r.raceNumber?"W"+esc(r.raceNumber):"FINAL")+'</b></div>'+
       '<div class="rc-race-track">'+esc(r.track||"HLRN Race")+'</div><div class="rc-race-date">'+esc(displayDate(r.date))+'</div>'+
       '<div class="rc-race-winner"><small>WINNER</small><strong>'+esc(winner.name||"—")+'</strong></div>'+
-      '<div class="rc-race-mini"><div><b>'+fmt(r.classified)+'</b><span>Drivers</span></div><div><b>'+fmt((r.cautions||[]).length)+'</b><span>Cautions</span></div><div><b>'+(big.name?((num(big.gain)>=0?"+":"")+fmt(big.gain)):"—")+'</b><span>Big Move</span></div></div>'+
+      '<div class="rc-race-mini"><div><b>'+fmt(r.classified)+'</b><span>Drivers</span></div><div><b>'+recorderCount(r,"cautions")+'</b><span>Cautions</span></div><div><b>'+(big.name?((num(big.gain)>=0?"+":"")+fmt(big.gain)):"—")+'</b><span>Big Move</span></div></div>'+
     '</div></button>'
 }
 function archive(){
@@ -341,7 +346,7 @@ function openReport(r,push){
     '<div class="rc-report-hero '+esc(r.series)+'"><div class="rc-report-kicker">'+esc(seriesLabel(r.series))+(r.raceNumber?" // WEEK "+esc(r.raceNumber):"")+' // '+(r.permanent?"PERMANENT CHECKERED RECORD":"FINAL RESULTS")+'</div>'+
     '<h2>'+esc(r.track||"HLRN Race")+'</h2><p>'+esc(displayDate(r.date))+' • Winner: '+esc(winner.name||"—")+'</p>'+
     '<div class="rc-report-stats">'+
-      statBox("Winner",winner.name||"—")+statBox("Pole",pole.name||"—")+statBox("Classified",fmt(r.classified))+statBox("Biggest Mover",big.name?((num(big.gain)>=0?"+":"")+fmt(big.gain)):"—")+statBox("Cautions",fmt((r.cautions||[]).length))+statBox("Penalties",fmt((r.penalties||[]).length))+
+      statBox("Winner",winner.name||"—")+statBox("Pole",pole.name||"—")+statBox("Classified",fmt(r.classified))+statBox("Biggest Mover",big.name?((num(big.gain)>=0?"+":"")+fmt(big.gain)):"—")+statBox("Cautions",recorderCount(r,"cautions"))+statBox("Penalties",recorderCount(r,"penalties"))+
     '</div></div>'+
     '<div class="rc-report-grid"><section class="rc-panel"><div class="rc-panel-head"><h3>Full Finishing Order</h3><span>'+fmt(r.classified)+' CLASSIFIED</span></div>'+
       '<div class="rc-table-shell"><table class="rc-table"><thead><tr><th>Finish</th><th>Driver</th><th>Start</th><th>+/-</th><th>Points</th><th>Laps Led</th><th>Inc</th><th>Status</th></tr></thead><tbody>'+resultRows(r)+'</tbody></table></div></section>'+
