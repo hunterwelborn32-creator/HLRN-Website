@@ -1188,3 +1188,89 @@ body.rd-v5.home-v8-page{
   .home8-online-dot{animation:none}
   .home8-network-card{transition:none}
 }
+
+
+/* V8 race recap card integration */
+.home8-recap .hlrn-recap-grid{
+  grid-template-columns:1fr!important;
+  gap:8px!important;
+}
+.home8-recap .hlrn-recap-card{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 210px!important;
+  border:1px solid #313a45!important;
+  border-left:4px solid var(--h8-yellow)!important;
+  background:#10151b!important;
+  box-shadow:none!important;
+  color:#fff!important;
+}
+.home8-recap .hlrn-recap-card:hover{
+  transform:none!important;
+  border-color:#4a5561!important;
+  border-left-color:var(--h8-yellow)!important;
+  box-shadow:none!important;
+}
+.home8-recap .hlrn-recap-card-top{
+  grid-column:1/-1!important;
+  padding:9px 13px!important;
+  border-bottom:1px solid #303944!important;
+  background:#0c1015!important;
+  font-size:6px!important;
+}
+.home8-recap .hlrn-recap-card-main{
+  min-width:0!important;
+  padding:18px!important;
+}
+.home8-recap .hlrn-recap-card-main small{
+  color:#74808c!important;
+  font-size:5px!important;
+}
+.home8-recap .hlrn-recap-card-main h3{
+  margin:7px 0 8px!important;
+  color:#fff!important;
+  font-size:30px!important;
+  line-height:.9!important;
+}
+.home8-recap .hlrn-recap-card-main p{
+  max-width:850px!important;
+  color:#929da8!important;
+  font-size:8px!important;
+  line-height:1.55!important;
+}
+.home8-recap .hlrn-recap-card-foot{
+  grid-column:2!important;
+  grid-row:2!important;
+  grid-template-columns:1fr!important;
+  align-content:center!important;
+  gap:9px!important;
+  padding:15px!important;
+  border-top:0!important;
+  border-left:1px solid #303944!important;
+  background:#141a21!important;
+  color:#9ca6b0!important;
+  font-size:6px!important;
+}
+.home8-recap .hlrn-recap-card-foot b{color:var(--h8-yellow)!important}
+.home8-recap .hlrn-recap-empty{
+  padding:22px!important;
+  border:1px dashed #3a4550!important;
+  background:#10151b!important;
+  color:#7f8a95!important;
+  font-size:7px!important;
+}
+@media(max-width:620px){
+  .home8-recap .hlrn-recap-card{grid-template-columns:1fr!important}
+  .home8-recap .hlrn-recap-card-top{grid-column:1!important}
+  .home8-recap .hlrn-recap-card-main{padding:12px!important}
+  .home8-recap .hlrn-recap-card-main h3{font-size:21px!important}
+  .home8-recap .hlrn-recap-card-main p{font-size:6px!important}
+  .home8-recap .hlrn-recap-card-foot{
+    grid-column:1!important;
+    grid-row:auto!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    padding:9px!important;
+    border-left:0!important;
+    border-top:1px solid #303944!important;
+    font-size:5px!important;
+  }
+}
