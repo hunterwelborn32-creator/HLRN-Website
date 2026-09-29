@@ -23,8 +23,8 @@ jobs:
           node-version: '20'
       - name: Test expansion scripts
         run: node --test tests/*.test.mjs
-      - name: Test race recap publisher
-        run: python -m unittest tests/test_race_recap_publisher.py
+      - name: Test Python publishers
+        run: python -m unittest tests/test_race_recap_publisher.py tests/test_driver_pages.py
       - name: Refresh leagues and optional Hosted snapshot
         env:
           HLRN_LEAGUE_WEBAPP_URL: ${{ secrets.HLRN_LEAGUE_WEBAPP_URL }}
@@ -32,6 +32,8 @@ jobs:
         run: node tools/sync-data.mjs
       - name: Build published reports and profiles
         run: node tools/build-derived.mjs
+      - name: Build permanent driver profile pages
+        run: python tools/build-driver-pages.py
       - name: Publish frozen post-race recap when available
         env:
           HLRN_RECAP_URL: https://hlrn-live-feed.onrender.com/api/recap
@@ -41,6 +43,8 @@ jobs:
       - name: Commit verified data, reports, recaps and sitemap only when changed
         run: |
           git add data/hlrn.json data/derived data/race-recaps
+          if [ -f data/driver-pages.json ]; then git add data/driver-pages.json; fi
+          if [ -d drivers ]; then git add drivers; fi
           if [ -d news/race-recaps ]; then git add news/race-recaps; fi
           if [ -f sitemap.xml ]; then git add sitemap.xml; fi
           if ! git diff --cached --quiet; then
