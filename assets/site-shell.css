@@ -446,3 +446,415 @@ footer.hlrn-shared-footer-existing{padding-top:3px!important}
 @media(prefers-reduced-motion:reduce){
   #hlrn-global-nav *,#hlrn-global-footer *{scroll-behavior:auto!important;transition:none!important;animation:none!important}
 }
+
+
+/* =========================================================
+   HLRN GLOBAL MOBILE LAYER V1
+   Shared phone fixes for the entire website.
+   Purpose-built mobile pages keep their own content layouts.
+   ========================================================= */
+@media(max-width:620px){
+  html{
+    width:100%!important;
+    max-width:100%!important;
+    overflow-x:hidden!important;
+  }
+  body{
+    width:100%!important;
+    max-width:100%!important;
+    overflow-x:hidden!important;
+    -webkit-text-size-adjust:100%!important;
+  }
+
+  /* ---------- GLOBAL NAV: compact, touch-friendly, no giant dropdown ---------- */
+  #hlrn-global-nav{
+    --nav-h:56px!important;
+    min-height:56px!important;
+  }
+  #hlrn-global-nav .hgn-inner{
+    min-height:53px!important;
+    padding:0 9px!important;
+    gap:8px!important;
+  }
+  #hlrn-global-nav .hgn-brand{gap:8px!important}
+  #hlrn-global-nav .hgn-mark{
+    width:40px!important;
+    height:30px!important;
+    font-size:17px!important;
+  }
+  #hlrn-global-nav .hgn-name{
+    max-width:190px!important;
+    overflow:hidden!important;
+    font-size:8px!important;
+    text-overflow:ellipsis!important;
+  }
+  #hlrn-global-nav .hgn-name small{
+    margin-top:3px!important;
+    font-size:5px!important;
+  }
+  #hlrn-global-nav .hgn-menu{
+    width:40px!important;
+    height:38px!important;
+    flex:0 0 40px!important;
+    border-radius:5px!important;
+    font-size:19px!important;
+  }
+  #hlrn-global-nav .hgn-mobile.open{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:5px!important;
+    max-height:calc(100dvh - 56px)!important;
+    padding:7px!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    overscroll-behavior:contain!important;
+    -webkit-overflow-scrolling:touch!important;
+  }
+  #hlrn-global-nav .hgn-mobile>a,
+  #hlrn-global-nav .hgn-mobile-more,
+  #hlrn-global-nav .hgn-mobile-login{
+    min-height:40px!important;
+    padding:6px!important;
+    border-radius:5px!important;
+    font-size:8px!important;
+    letter-spacing:.035em!important;
+  }
+  #hlrn-global-nav .hgn-mobile-more-menu.open{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:5px!important;
+  }
+  #hlrn-global-nav .hgn-mobile-more-menu a{
+    min-height:39px!important;
+    padding:5px!important;
+    border-radius:5px!important;
+    font-size:7px!important;
+    letter-spacing:.035em!important;
+  }
+  #hlrn-global-nav .hgn-account-panel{
+    left:6px!important;
+    right:6px!important;
+    top:100%!important;
+    width:auto!important;
+    max-width:none!important;
+    padding:11px!important;
+  }
+
+  /* ---------- GLOBAL FOOTER ---------- */
+  #hlrn-global-footer .hgf-inner{
+    width:calc(100% - 18px)!important;
+    padding:20px 0 18px!important;
+    grid-template-columns:1fr!important;
+    gap:15px!important;
+  }
+  #hlrn-global-footer .hgf-brand{
+    justify-content:center!important;
+  }
+  #hlrn-global-footer .hgf-mark{
+    width:42px!important;
+    height:31px!important;
+  }
+  #hlrn-global-footer .hgf-brand strong{font-size:10px!important}
+  #hlrn-global-footer .hgf-brand small{font-size:6px!important}
+  #hlrn-global-footer .hgf-links{
+    width:100%!important;
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:4px!important;
+  }
+  #hlrn-global-footer .hgf-links a{
+    min-height:38px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    padding:6px!important;
+    border:1px solid #242c35!important;
+    background:#0d1117!important;
+    font-size:7px!important;
+  }
+  #hlrn-global-footer .hgf-copy{
+    font-size:6px!important;
+    line-height:1.55!important;
+  }
+
+  /* ---------- UNIVERSAL SAFETY ---------- */
+  html.hlrn-mobile-global :where(main,section,article,header,aside,nav,form,fieldset){
+    min-width:0!important;
+    max-width:100%!important;
+  }
+  html.hlrn-mobile-global :where(img,video,canvas){
+    max-width:100%!important;
+  }
+  html.hlrn-mobile-global :where(iframe,embed,object){
+    max-width:100%!important;
+  }
+  html.hlrn-mobile-global :where(p,li){
+    overflow-wrap:anywhere!important;
+  }
+  html.hlrn-mobile-global :where(pre){
+    max-width:100%!important;
+    overflow-x:auto!important;
+    white-space:pre-wrap!important;
+    overflow-wrap:anywhere!important;
+  }
+  html.hlrn-mobile-global :where(input:not([type="checkbox"]):not([type="radio"]),select,textarea){
+    min-width:0!important;
+    max-width:100%!important;
+  }
+  html.hlrn-mobile-global :where(button,a,[role="button"]){
+    -webkit-tap-highlight-color:transparent!important;
+  }
+
+  /* Prevent oversized desktop typography from spilling off phones. */
+  html.hlrn-mobile-global h1{
+    max-width:100%!important;
+    font-size:clamp(30px,10vw,52px)!important;
+    line-height:.96!important;
+    overflow-wrap:anywhere!important;
+  }
+  html.hlrn-mobile-global h2{
+    max-width:100%!important;
+    font-size:clamp(23px,7.5vw,36px)!important;
+    line-height:1!important;
+    overflow-wrap:anywhere!important;
+  }
+  html.hlrn-mobile-global h3{
+    max-width:100%!important;
+    font-size:clamp(18px,5.8vw,28px)!important;
+    overflow-wrap:anywhere!important;
+  }
+
+  /* Any real wide table gets this class from site-shell.js. */
+  html.hlrn-mobile-global .hlrn-mobile-table-host{
+    max-width:100%!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    overscroll-behavior-inline:contain!important;
+    -webkit-overflow-scrolling:touch!important;
+    scrollbar-width:thin!important;
+  }
+  html.hlrn-mobile-global .hlrn-mobile-table-host>table{
+    max-width:none!important;
+  }
+
+  /* ---------- COMMON LAYOUTS: one clean content column ---------- */
+  html.hlrn-mobile-global :where(
+    .feature-grid,
+    .promo-grid,
+    .hlrn-recap-grid,
+    .content-grid,
+    .card-grid,
+    .news-grid,
+    .admin-grid,
+    .store-grid,
+    .product-grid,
+    .products-grid,
+    .broadcast-grid,
+    .rules-grid,
+    .preview-grid,
+    .team-grid,
+    .roster-grid,
+    .cc-command-deck,
+    .rp-hero-grid,
+    .rp-two-col,
+    .rp-champ-grid,
+    .rp-watch-grid,
+    .rp-history-grid,
+    .rp-past-grid,
+    .series-intro-inner,
+    .episode-shelf
+  ){
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+
+  /* Small metric groups stay compact instead of turning into a giant list. */
+  html.hlrn-mobile-global :where(
+    .stats-grid,
+    .hero-stats,
+    .live-control-strip,
+    .cc-meter-band,
+    .quick,
+    .rp-track-facts,
+    .filter-row,
+    .summary-grid,
+    .metrics-grid
+  ){
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+
+  /* Common toolbars/actions must wrap instead of forcing horizontal overflow. */
+  html.hlrn-mobile-global :where(
+    .toolbar,
+    .team-tools,
+    .title-row,
+    .latest-head,
+    .section-top,
+    .rp-hero-actions,
+    .intro-actions,
+    .archive-controls,
+    .controls,
+    .filters,
+    .filter-bar,
+    .button-row,
+    .actions
+  ){
+    flex-wrap:wrap!important;
+    max-width:100%!important;
+    gap:8px!important;
+  }
+
+  /* ---------- PAGE FAMILIES THAT SHARE THE SHELL ---------- */
+  /* News */
+  html.hlrn-mobile-global .page-shell{
+    width:calc(100% - 14px)!important;
+    max-width:none!important;
+    margin-inline:auto!important;
+  }
+  html.hlrn-mobile-global :where(.side-stack,.feed-shell,.announcements-panel){
+    min-width:0!important;
+    max-width:100%!important;
+  }
+
+  /* Race Intelligence */
+  html.hlrn-mobile-global[data-hlrn-route="race-intelligence"] .shell{
+    width:calc(100% - 12px)!important;
+    max-width:none!important;
+    margin-inline:auto!important;
+  }
+  html.hlrn-mobile-global[data-hlrn-route="race-intelligence"] .league-tabs{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:4px!important;
+  }
+  html.hlrn-mobile-global[data-hlrn-route="race-intelligence"] .league-btn{
+    min-width:0!important;
+    min-height:40px!important;
+    padding:6px!important;
+  }
+
+  /* Race Preview */
+  html.hlrn-mobile-global[data-hlrn-route="race-preview"] .rp-shell{
+    width:calc(100% - 12px)!important;
+    max-width:none!important;
+    margin-inline:auto!important;
+  }
+  html.hlrn-mobile-global[data-hlrn-route="race-preview"] .rp-tabs{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:4px!important;
+  }
+  html.hlrn-mobile-global[data-hlrn-route="race-preview"] .rp-tab{
+    min-width:0!important;
+    min-height:40px!important;
+  }
+
+  /* Teams */
+  html.hlrn-mobile-global[data-hlrn-route="teams"] .page{
+    width:100%!important;
+    max-width:100%!important;
+    overflow-x:hidden!important;
+  }
+  html.hlrn-mobile-global[data-hlrn-route="teams"] .league-tabs{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:4px!important;
+  }
+  html.hlrn-mobile-global[data-hlrn-route="teams"] .toolbar{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+  }
+  html.hlrn-mobile-global[data-hlrn-route="teams"] .modal-card{
+    width:calc(100% - 14px)!important;
+    max-width:none!important;
+    max-height:90dvh!important;
+    overflow-y:auto!important;
+    grid-template-columns:1fr!important;
+  }
+
+  /* Meet the Admins */
+  html.hlrn-mobile-global[data-hlrn-route="meet-the-admins"] .team-tools{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+  }
+  html.hlrn-mobile-global[data-hlrn-route="meet-the-admins"] .team-summary{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  html.hlrn-mobile-global[data-hlrn-route="meet-the-admins"] .modal-card{
+    width:calc(100% - 14px)!important;
+    max-width:none!important;
+    max-height:90dvh!important;
+    overflow-y:auto!important;
+    grid-template-columns:1fr!important;
+  }
+
+  /* Rules */
+  html.hlrn-mobile-global[data-hlrn-route="rules"] .tabs{
+    max-width:100%!important;
+    overflow-x:auto!important;
+    overscroll-behavior-inline:contain!important;
+    -webkit-overflow-scrolling:touch!important;
+    scrollbar-width:none!important;
+  }
+  html.hlrn-mobile-global[data-hlrn-route="rules"] .tabs::-webkit-scrollbar{display:none!important}
+  html.hlrn-mobile-global[data-hlrn-route="rules"] .tab{
+    flex:0 0 auto!important;
+    min-height:40px!important;
+  }
+
+  /* Store */
+  html.hlrn-mobile-global[data-hlrn-route="store"] .page{
+    width:100%!important;
+    max-width:100%!important;
+    overflow-x:hidden!important;
+  }
+  html.hlrn-mobile-global[data-hlrn-route="store"] :where(.swatch-scroll,.filter-row){
+    max-width:100%!important;
+    overflow-x:auto!important;
+    -webkit-overflow-scrolling:touch!important;
+  }
+  html.hlrn-mobile-global[data-hlrn-route="store"] .product{
+    min-width:0!important;
+    max-width:100%!important;
+  }
+
+  /* Adventures */
+  html.hlrn-mobile-global[data-hlrn-route="adventures"] .wrap{
+    width:calc(100% - 14px)!important;
+    max-width:none!important;
+    margin-inline:auto!important;
+  }
+  html.hlrn-mobile-global[data-hlrn-route="adventures"] :where(.intro-actions,.episode-bottom){
+    flex-wrap:wrap!important;
+    gap:7px!important;
+  }
+
+  /* Static driver profile pages (the dynamic Drivers directory has its own mobile layout). */
+  html.hlrn-mobile-global[data-hlrn-route="drivers"] :where(.profile-hero,.profile-grid,.driver-grid,.stats-grid){
+    max-width:100%!important;
+  }
+
+  /* Any page-owned footer should also stay inside the phone. */
+  footer.hlrn-shared-footer-existing{
+    max-width:100%!important;
+    overflow-x:hidden!important;
+  }
+}
+
+@media(max-width:390px){
+  #hlrn-global-nav .hgn-name{display:none!important}
+  #hlrn-global-nav .hgn-mobile.open,
+  #hlrn-global-nav .hgn-mobile-more-menu.open{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  html.hlrn-mobile-global :where(
+    .stats-grid,
+    .hero-stats,
+    .live-control-strip,
+    .cc-meter-band,
+    .quick,
+    .rp-track-facts,
+    .filter-row,
+    .summary-grid,
+    .metrics-grid
+  ){
+    gap:5px!important;
+  }
+}
