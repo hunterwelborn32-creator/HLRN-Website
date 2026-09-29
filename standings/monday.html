@@ -1818,6 +1818,24 @@ iframe{background:#fff!important;color-scheme:light!important}
   box-shadow:0 0 0 3px rgba(17,18,20,.12)!important;
 }
 </style>
+<style id="HLRN_TEAM_PROFILE_LINKS_V1">
+#teams .hlrn-team-profile-link{
+  display:inline-flex!important;align-items:center!important;gap:8px!important;
+  color:#111214!important;text-decoration:none!important;font-weight:900!important;
+  border-bottom:2px solid transparent!important;transition:.15s ease!important;
+}
+#teams .hlrn-team-profile-arrow{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  width:22px!important;height:22px!important;border-radius:50%!important;background:#eef1f3!important;
+  color:#596168!important;font:900 20px/1 Arial!important;transition:.15s ease!important;
+}
+#teams .hlrn-team-profile-link:hover,#teams .hlrn-team-profile-link:focus-visible{
+  border-bottom-color:var(--driver-accent,#55b932)!important;
+}
+#teams .hlrn-team-profile-link:hover .hlrn-team-profile-arrow,#teams .hlrn-team-profile-link:focus-visible .hlrn-team-profile-arrow{
+  transform:translateX(2px)!important;background:#55b932!important;color:#fff!important;
+}
+</style>
 </head>') : tag+markup;
 }
 </script>
@@ -3261,6 +3279,16 @@ dnf:dnf
 /* =========================
    TEAM STANDINGS
 ========================= */
+function hLrnTeamProfileLink(teamName){
+const shown=String(teamName||"").trim();
+const safe=escapeHTML(shown);
+const params=new URLSearchParams();
+params.set("league","monday");
+params.set("team",shown);
+return '<a class="hlrn-team-profile-link" href="../teams/?'+params.toString()+'" target="_top" '
++'aria-label="Open '+safe+' team profile" title="View '+safe+' team profile">'
++'<span>'+safe+'</span><span class="hlrn-team-profile-arrow" aria-hidden="true">›</span></a>';
+}
 function renderTeams(){
 const body =
 document.getElementById(
@@ -3336,9 +3364,7 @@ team.change
 )}
 </td>
 <td class="name-col">
-${escapeHTML(
-team.team
-)}
+${hLrnTeamProfileLink(team.team)}
 </td>
 <td>
 ${formatNumber(
