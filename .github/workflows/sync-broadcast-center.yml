@@ -36,7 +36,7 @@ jobs:
 
       - name: Save broadcast data
         run: |
-          if git diff --quiet -- data/broadcasts.json; then
+          if [ -z "$(git status --porcelain -- data/broadcasts.json)" ]; then
             echo "Broadcast data already current."
             exit 0
           fi
