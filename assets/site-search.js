@@ -110,10 +110,9 @@ function boot(){
     return out;
   }
   function driverUrl(league,d){
-    var q=new URLSearchParams({league:league});
-    if(d.driverId!=null)q.set("driverId",String(d.driverId));
-    if(d.driver)q.set("driver",pretty(d.driver));
-    return u("drivers/")+"?"+q.toString();
+    var name=pretty(d.driver||"");
+    var slug=String(name||"driver").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"")||"driver";
+    return u("drivers/"+slug+"/");
   }
   function teamUrl(league,name){
     return u("teams/")+"?"+new URLSearchParams({league:league,team:name}).toString();
