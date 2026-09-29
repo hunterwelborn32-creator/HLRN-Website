@@ -6560,7 +6560,7 @@ body{
     if(winner){
       if(compact) return `<div class="ns-summary-winner">Race Winner • <span>${esc(winner)}</span></div>`;
       const photo=winnerPhotoUrl(winner);
-      return `<div class="ns-winner"><b>Winner</b>${photo?`<img class="ns-winner-photo" src="${esc(photo)}" alt="${esc(winner)}" loading="lazy" decoding="async" onerror="this.remove()">`:''}<span class="ns-winner-name">${esc(winner)}</span></div>`;
+      return `<div class="ns-winner"><b>Winner</b>${photo?`<img class="ns-winner-photo" src="${esc(photo)}" alt="${esc(winner)}" onerror="this.remove()" loading="eager" decoding="async" fetchpriority="high">`:''}<span class="ns-winner-name">${esc(winner)}</span></div>`;
     }
     if(!winnerFeedLoaded) return compact
       ? `<div class="ns-summary-winner">Race Winner • <span>Loading league result…</span></div>`
