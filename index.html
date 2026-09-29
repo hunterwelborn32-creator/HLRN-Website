@@ -49,7 +49,7 @@ content="width=device-width, initial-scale=1.0">
 </script>
 
 
-<link rel="stylesheet" href="assets/home/home-v1.min.css?v=20260929h1?v=20260929p2">
+<link rel="stylesheet" href="assets/home/home-v1.min.css?v=20260929h1">
 
 
 
@@ -82,13 +82,14 @@ content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="assets/site-shell.css?v=RESET0921">
 <link rel="stylesheet" href="assets/home/home-race-night.css?v=20260928p1">
 <link rel="stylesheet" href="assets/race-recaps.css?v=1">
+<link rel="stylesheet" href="assets/home/home-v8.css?v=20260929v8a1">
 
 
 <meta name="theme-color" content="#07090d">
 </head>
 
 
-<body class="hlrn-v3 rd-v5">
+<body class="hlrn-v3 rd-v5 home-v8-page">
 
 <!-- =====================================================
      HLRN V5 — RACE DAY EDITORIAL HOME
@@ -96,177 +97,180 @@ content="width=device-width, initial-scale=1.0">
      Existing home/data DOM stays below, hidden, so all current feeds keep running.
 ===================================================== -->
 
-<div id="hlrnRaceDayHome" class="rd-home v7-home">
+<div id="hlrnRaceDayHome" class="rd-home home8">
 
-  <section class="v7-status" aria-label="HLRN network status">
-    <div class="v7-shell v7-status-inner">
-      <div class="v7-status-brand"><span class="v7-live-dot"></span><div><small>HLRN NETWORK</small><strong>RACE CENTER</strong></div></div>
-      <div class="v7-status-stat"><small>LATEST WINNER</small><strong id="rdLatestWinner">CONNECTING</strong></div>
-      <div class="v7-status-stat"><small>TOP HOSTED DRIVER</small><strong id="rdTopDriver">CONNECTING</strong></div>
-      <div class="v7-status-stat sunday"><small>NEXT SUNDAY</small><strong id="rdSunday">--</strong></div>
-      <div class="v7-status-stat monday"><small>NEXT MONDAY</small><strong id="rdMonday">--</strong></div>
+  <section class="home8-pulse" aria-label="HLRN network pulse">
+    <div class="home8-shell home8-pulse-grid">
+      <div class="home8-pulse-brand">
+        <span class="home8-online-dot"></span>
+        <div><small>HLRN NETWORK</small><strong>ON AIR</strong></div>
+      </div>
+      <div class="home8-pulse-item"><small>LATEST WINNER</small><strong id="rdLatestWinner">CONNECTING</strong></div>
+      <div class="home8-pulse-item"><small>TOP HOSTED</small><strong id="rdTopDriver">CONNECTING</strong></div>
+      <div class="home8-pulse-item sunday"><small>NEXT SUNDAY</small><strong id="rdSunday">--</strong></div>
+      <div class="home8-pulse-item monday"><small>NEXT MONDAY</small><strong id="rdMonday">--</strong></div>
     </div>
   </section>
 
   <main>
-    <section class="v7-hero">
-      <img class="v7-hero-image" src="https://drive.google.com/thumbnail?id=1p9xE92IXmLMfGRN0P8sE-SVjf0tWmBgg&sz=w2000" alt="High Line Racing Network racing" loading="eager" decoding="async" fetchpriority="high">
-      <div class="v7-hero-overlay"></div>
-      <div class="v7-hero-lines"></div>
+    <section class="home8-hero">
+      <img class="home8-hero-image" src="https://drive.google.com/thumbnail?id=1p9xE92IXmLMfGRN0P8sE-SVjf0tWmBgg&sz=w2000" alt="High Line Racing Network racing" loading="eager" decoding="async" fetchpriority="high">
+      <div class="home8-hero-shade"></div>
+      <div class="home8-hero-gridlines"></div>
 
-      <div class="v7-shell v7-hero-inner">
-        <div class="v7-hero-copy">
-          <div class="v7-kicker"><span>HLRN</span> // WHERE THE RACING NEVER STOPS</div>
-          <h1 id="rdLeadHeadline">HIGH LINE RACING NETWORK</h1>
-          <p id="rdLeadSub">Sunday and Monday night competition. Hosted racing. Live broadcasts.</p>
+      <div class="home8-shell home8-hero-inner">
+        <div class="home8-hero-copy">
+          <div class="home8-kicker"><span></span> HIGH LINE RACING NETWORK</div>
+          <div class="home8-brand-lockup" aria-label="HLRN">
+            <strong>HIGH LINE</strong>
+            <b>RACING NETWORK</b>
+          </div>
 
-          <div class="v7-hero-actions">
-            <a class="v7-btn primary" href="live/">OPEN LIVE RACE CENTER <b>→</b></a>
-            <a class="v7-btn light" href="standings/">CHAMPIONSHIP STANDINGS</a>
-            <a class="v7-btn ghost" href="broadcast/">WATCH HLRN <b>▶</b></a>
+          <div class="home8-lead">
+            <small>THE LATEST FROM HLRN</small>
+            <h1 id="rdLeadHeadline">HIGH LINE RACING NETWORK</h1>
+            <p id="rdLeadSub">Sunday and Monday night competition. Hosted racing. Live broadcasts.</p>
+          </div>
+
+          <div class="home8-hero-actions">
+            <a class="primary" href="live/"><span class="home8-live-dot"></span> LIVE RACE CENTER <b>→</b></a>
+            <a href="race-preview/">RACE PREVIEW <b>→</b></a>
+            <a href="my-hlrn/">MY HLRN <b>→</b></a>
           </div>
         </div>
 
-        <aside class="v7-race-card" aria-label="HLRN race nights">
-          <div class="v7-race-card-head"><span class="v7-live-dot"></span><strong>RACE WEEK</strong><small>8:30 PM EASTERN</small></div>
-          <a class="v7-race-row sunday" href="race-preview/?league=sunday">
-            <span class="v7-day">SUN</span>
-            <div><small>SUNDAY NIGHT SERIES</small><strong id="v7SundayDate">SEE SCHEDULE</strong></div>
+        <aside class="home8-raceweek" aria-label="HLRN race week">
+          <div class="home8-raceweek-head">
+            <div><small>THIS WEEK ON HLRN</small><strong>RACE WEEK</strong></div>
+            <span>8:30 PM ET</span>
+          </div>
+
+          <a class="home8-raceweek-row sunday" href="race-preview/?league=sunday">
+            <div class="home8-day"><strong>SUN</strong><span>SUNDAY NIGHT</span></div>
+            <div class="home8-raceweek-copy"><small>NEXT EVENT</small><strong id="v7SundayDate">SEE SCHEDULE</strong></div>
             <b>→</b>
           </a>
-          <a class="v7-race-row monday" href="race-preview/?league=monday">
-            <span class="v7-day">MON</span>
-            <div><small>MONDAY NIGHT SERIES</small><strong id="v7MondayDate">SEE SCHEDULE</strong></div>
+
+          <a class="home8-raceweek-row monday" href="race-preview/?league=monday">
+            <div class="home8-day"><strong>MON</strong><span>MONDAY NIGHT</span></div>
+            <div class="home8-raceweek-copy"><small>NEXT EVENT</small><strong id="v7MondayDate">SEE SCHEDULE</strong></div>
             <b>→</b>
           </a>
-          <a class="v7-race-row live" href="live/">
-            <span class="v7-day"><i></i>LIVE</span>
-            <div><small>RACE NIGHT COMMAND</small><strong>LIVE TIMING + RACE FEED</strong></div>
+
+          <a class="home8-live-command" href="live/">
+            <span class="home8-live-dot"></span>
+            <div><small>WHEN THE GREEN DROPS</small><strong>LIVE TIMING • FLAGS • RACE CONTROL</strong></div>
             <b>↗</b>
           </a>
         </aside>
       </div>
 
-      <div class="v7-hero-strip">
-        <div class="v7-shell"><span>LEAGUE RACING</span><i></i><span>HOSTED RACING</span><i></i><span>LIVE BROADCASTS</span><i></i><span>DRIVER STATISTICS</span></div>
-      </div>
-    </section>
-
-    <section class="v7-championship-center" aria-label="HLRN Championship Center">
-      <div class="v7-shell">
-        <div class="v7-section-head v7-champ-head">
-          <div><small>LIVE LEAGUE DATA</small><h2>CHAMPIONSHIP CENTER</h2></div>
-          <a href="standings/">FULL STANDINGS →</a>
-        </div>
-
-        <div class="v7-champ-grid">
-          <article class="v7-series-battle sunday">
-            <div class="v7-series-top">
-              <div><small>SUNDAY NIGHT LEAGUE</small><strong>CHAMPIONSHIP BATTLE</strong></div>
-              <span>8:30 PM ET</span>
-            </div>
-            <div class="v7-series-leader">
-              <div class="v7-series-rank">P1</div>
-              <div class="v7-series-driver">
-                <small>CHAMPIONSHIP LEADER</small>
-                <a id="homeSundayLeaderLink" href="standings/"><strong id="homeSundayLeader">CONNECTING</strong></a>
-                <span><b id="homeSundayPoints">--</b> PTS</span>
-              </div>
-            </div>
-            <div class="v7-series-gap"><span>P2 GAP</span><strong id="homeSundayGap">--</strong><small id="homeSundaySecond">Loading second place…</small></div>
-            <div class="v7-series-details">
-              <a id="homeSundayTeamLink" href="teams/?league=sunday"><span>TEAM LEADER</span><strong id="homeSundayTeam">--</strong></a>
-              <a id="homeSundayWinnerLink" href="drivers/?league=sunday"><span>LATEST WINNER</span><strong id="homeSundayWinner">--</strong></a>
-            </div>
-            <a class="v7-series-open" href="standings/">OPEN SUNDAY STANDINGS <b>→</b></a>
-          </article>
-
-          <article class="v7-series-battle monday">
-            <div class="v7-series-top">
-              <div><small>MONDAY NIGHT LEAGUE</small><strong>CHAMPIONSHIP BATTLE</strong></div>
-              <span>8:30 PM ET</span>
-            </div>
-            <div class="v7-series-leader">
-              <div class="v7-series-rank">P1</div>
-              <div class="v7-series-driver">
-                <small>CHAMPIONSHIP LEADER</small>
-                <a id="homeMondayLeaderLink" href="standings/"><strong id="homeMondayLeader">CONNECTING</strong></a>
-                <span><b id="homeMondayPoints">--</b> PTS</span>
-              </div>
-            </div>
-            <div class="v7-series-gap"><span>P2 GAP</span><strong id="homeMondayGap">--</strong><small id="homeMondaySecond">Loading second place…</small></div>
-            <div class="v7-series-details">
-              <a id="homeMondayTeamLink" href="teams/?league=monday"><span>TEAM LEADER</span><strong id="homeMondayTeam">--</strong></a>
-              <a id="homeMondayWinnerLink" href="drivers/?league=monday"><span>LATEST WINNER</span><strong id="homeMondayWinner">--</strong></a>
-            </div>
-            <a class="v7-series-open" href="standings/">OPEN MONDAY STANDINGS <b>→</b></a>
-          </article>
-
-          <aside class="v7-champ-intel">
-            <div class="v7-intel-head"><small>HLRN LIVE INTELLIGENCE</small><strong>RACE WEEK PULSE</strong></div>
-            <a class="v7-intel-item hot" id="homeHotLink" href="drivers/">
-              <span>HOTTEST DRIVER</span>
-              <strong id="homeHotDriver">CONNECTING</strong>
-              <small id="homeHotDetail">Calculating recent form…</small>
-            </a>
-            <div class="v7-intel-item next">
-              <span>NEXT HLRN RACE</span>
-              <strong id="homeNextRace">--</strong>
-              <small id="homeNextRaceDetail">8:30 PM EASTERN</small>
-            </div>
-            <div class="v7-intel-split">
-              <a href="teams/?league=sunday"><span>SUNDAY TEAM</span><strong id="homeSundayTeamMini">--</strong></a>
-              <a href="teams/?league=monday"><span>MONDAY TEAM</span><strong id="homeMondayTeamMini">--</strong></a>
-            </div>
-            <div class="v7-intel-update"><span class="v7-live-dot"></span><span id="homeChampUpdated">LIVE DATA CONNECTING</span></div>
-          </aside>
+      <div class="home8-hero-rail">
+        <div class="home8-shell">
+          <span>COMPETE</span><i></i><span>RACE</span><i></i><span>BROADCAST</span><i></i><span>ANALYZE</span><i></i><span>REPEAT</span>
         </div>
       </div>
     </section>
 
-    <section class="v7-latest">
-      <div class="v7-shell">
-        <div class="v7-section-head">
-          <div><small>HLRN // MOST RECENT SESSION</small><h2>LATEST RESULT</h2></div>
-          <a href="results/">ALL RESULTS →</a>
+    <section class="home8-board">
+      <div class="home8-shell">
+        <div class="home8-section-head">
+          <div><small>HLRN // SCOREBOARD</small><h2>RACE WEEK DASHBOARD</h2></div>
+          <div class="home8-section-actions"><span id="homeChampUpdated">LIVE DATA CONNECTING</span><a href="standings/">FULL STANDINGS →</a></div>
         </div>
 
-        <div class="v7-latest-grid">
-          <article class="v7-result-card">
-            <div class="v7-result-top"><span><b>FINAL</b> HLRN RESULT</span><time id="rdLastDate">--</time></div>
-            <div class="v7-track" id="rdLastTrack">LATEST HLRN RESULT</div>
-            <div class="v7-winner-row">
-              <div class="v7-pos">01</div>
-              <div class="v7-winner-copy"><small>RACE WINNER</small><strong id="rdLastWinner">--</strong></div>
-              <div class="v7-checkers" aria-hidden="true"></div>
+        <div class="home8-board-grid">
+          <article class="home8-result">
+            <div class="home8-card-label"><span>FINAL</span><small id="rdLastDate">--</small></div>
+            <div class="home8-result-track" id="rdLastTrack">LATEST HLRN RESULT</div>
+            <div class="home8-result-winner">
+              <div class="home8-result-pos">01</div>
+              <div><small>RACE WINNER</small><strong id="rdLastWinner">--</strong></div>
             </div>
-            <div class="v7-metrics">
+            <div class="home8-result-stats">
               <div><strong id="rdLastDrivers">--</strong><span>DRIVERS</span></div>
               <div><strong id="rdLastLaps">--</strong><span>LAPS</span></div>
               <div><strong id="rdLastCautions">--</strong><span>CAUTIONS</span></div>
             </div>
-            <div class="v7-result-actions">
-              <a href="results/">FULL RESULTS <span>→</span></a>
-              <a href="standings/">STANDINGS <span>→</span></a>
+            <div class="home8-result-links">
+              <a href="results/">FULL RESULTS <b>→</b></a>
+              <a href="news/race-recaps/">RACE RECAPS <b>→</b></a>
             </div>
           </article>
 
-          <aside class="v7-quick-panel">
-            <div class="v7-quick-title"><small>RIGHT NOW</small><h3>HLRN RACE WEEK</h3></div>
-            <div class="v7-quick-stat"><span>SUNDAY</span><strong id="v7SundayMirror">--</strong></div>
-            <div class="v7-quick-stat"><span>MONDAY</span><strong id="v7MondayMirror">--</strong></div>
-            <div class="v7-quick-stat"><span>TOP HOSTED</span><strong id="v7TopDriverMirror">CONNECTING</strong></div>
-            <a class="v7-quick-live" href="live/"><span class="v7-live-dot"></span><div><small>ON RACE NIGHT</small><strong>OPEN LIVE RACE CENTER</strong></div><b>↗</b></a>
-          </aside>
+          <div class="home8-champ-stack">
+            <article class="home8-champ sunday">
+              <div class="home8-champ-top"><div><small>SUNDAY NIGHT</small><strong>CHAMPIONSHIP</strong></div><span>8:30 PM ET</span></div>
+              <div class="home8-champ-main">
+                <div class="home8-rank">P1</div>
+                <div class="home8-champ-driver">
+                  <small>POINTS LEADER</small>
+                  <a id="homeSundayLeaderLink" href="standings/"><strong id="homeSundayLeader">CONNECTING</strong></a>
+                  <span><b id="homeSundayPoints">--</b> POINTS</span>
+                </div>
+                <div class="home8-gap"><small>P2 GAP</small><strong id="homeSundayGap">--</strong><span id="homeSundaySecond">Loading second place…</span></div>
+              </div>
+              <div class="home8-champ-bottom">
+                <a id="homeSundayTeamLink" href="teams/?league=sunday"><small>TEAM LEADER</small><strong id="homeSundayTeam">--</strong></a>
+                <a id="homeSundayWinnerLink" href="drivers/?league=sunday"><small>LATEST WINNER</small><strong id="homeSundayWinner">--</strong></a>
+              </div>
+            </article>
+
+            <article class="home8-champ monday">
+              <div class="home8-champ-top"><div><small>MONDAY NIGHT</small><strong>CHAMPIONSHIP</strong></div><span>8:30 PM ET</span></div>
+              <div class="home8-champ-main">
+                <div class="home8-rank">P1</div>
+                <div class="home8-champ-driver">
+                  <small>POINTS LEADER</small>
+                  <a id="homeMondayLeaderLink" href="standings/"><strong id="homeMondayLeader">CONNECTING</strong></a>
+                  <span><b id="homeMondayPoints">--</b> POINTS</span>
+                </div>
+                <div class="home8-gap"><small>P2 GAP</small><strong id="homeMondayGap">--</strong><span id="homeMondaySecond">Loading second place…</span></div>
+              </div>
+              <div class="home8-champ-bottom">
+                <a id="homeMondayTeamLink" href="teams/?league=monday"><small>TEAM LEADER</small><strong id="homeMondayTeam">--</strong></a>
+                <a id="homeMondayWinnerLink" href="drivers/?league=monday"><small>LATEST WINNER</small><strong id="homeMondayWinner">--</strong></a>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="home8-intel-strip">
+          <a id="homeHotLink" href="drivers/" class="home8-intel hot">
+            <small>HOTTEST DRIVER</small><strong id="homeHotDriver">CONNECTING</strong><span id="homeHotDetail">Calculating recent form…</span>
+          </a>
+          <div class="home8-intel next">
+            <small>NEXT HLRN RACE</small><strong id="homeNextRace">--</strong><span id="homeNextRaceDetail">8:30 PM EASTERN</span>
+          </div>
+          <a href="teams/?league=sunday" class="home8-intel sunday"><small>SUNDAY TEAM LEADER</small><strong id="homeSundayTeamMini">--</strong><span>OPEN TEAM STANDINGS →</span></a>
+          <a href="teams/?league=monday" class="home8-intel monday"><small>MONDAY TEAM LEADER</small><strong id="homeMondayTeamMini">--</strong><span>OPEN TEAM STANDINGS →</span></a>
         </div>
       </div>
     </section>
 
-    <section id="hlrnLatestRaceRecapSection" class="hlrn-recap-section" hidden aria-label="Latest HLRN Race Recap">
-      <div class="v7-shell">
-        <div class="hlrn-recap-section-head">
-          <div><small>HLRN NEWSROOM // POST-RACE</small><h2>LATEST RACE RECAP</h2></div>
-          <a href="news/race-recaps/">ALL RACE RECAPS →</a>
+    <section class="home8-now">
+      <div class="home8-shell">
+        <div class="home8-now-grid">
+          <div class="home8-now-copy">
+            <small>RIGHT NOW // HLRN</small>
+            <h2>THE NETWORK NEVER STOPS.</h2>
+            <p>Follow race week from championship battles to the checkered flag, then jump straight into results, driver data and the stories behind the league.</p>
+            <a href="race-intelligence/">OPEN RACE INTELLIGENCE <b>→</b></a>
+          </div>
+          <div class="home8-now-stats">
+            <div><small>SUNDAY</small><strong id="v7SundayMirror">--</strong></div>
+            <div><small>MONDAY</small><strong id="v7MondayMirror">--</strong></div>
+            <div><small>TOP HOSTED DRIVER</small><strong id="v7TopDriverMirror">CONNECTING</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="hlrnLatestRaceRecapSection" class="hlrn-recap-section home8-recap" hidden aria-label="Latest HLRN Race Recap">
+      <div class="home8-shell">
+        <div class="home8-section-head">
+          <div><small>HLRN NEWSROOM // POST-RACE</small><h2>LATEST RACE STORY</h2></div>
+          <div class="home8-section-actions"><a href="news/race-recaps/">ALL RACE RECAPS →</a></div>
         </div>
         <div id="hlrnLatestRaceRecap" class="hlrn-recap-grid">
           <div class="hlrn-recap-empty" data-race-recaps-loading>Loading latest HLRN race recap…</div>
@@ -274,37 +278,41 @@ content="width=device-width, initial-scale=1.0">
       </div>
     </section>
 
-    <section class="v7-explore">
-      <div class="v7-shell">
-        <div class="v7-section-head compact">
-          <div><small>HIGH LINE RACING NETWORK</small><h2>EXPLORE HLRN</h2></div>
-          <span>EVERYTHING HLRN IN ONE PLACE</span>
+    <section class="home8-network">
+      <div class="home8-shell">
+        <div class="home8-section-head light">
+          <div><small>YOUR HLRN</small><h2>ENTER THE NETWORK</h2></div>
+          <div class="home8-section-actions"><span>EVERYTHING HLRN • ONE HOME</span></div>
         </div>
 
-        <div class="v7-explore-grid">
-          <a class="v7-tile standings" href="standings/"><small>CHAMPIONSHIP</small><h3>STANDINGS</h3><p>Sunday, Monday and Hosted championship data.</p><b>OPEN →</b></a>
-          <a class="v7-tile drivers" href="drivers/"><small>THE GRID</small><h3>DRIVERS</h3><p>Driver profiles, numbers, photos and statistics.</p><b>MEET THE GRID →</b></a>
-          <a class="v7-tile adventures" href="adventures/"><small>HLRN ORIGINAL</small><h3>ADVENTURES</h3><p>The Adventures of High Line story universe.</p><b>WATCH THE STORY →</b></a>
-          <a class="v7-tile news" href="news/"><small>NETWORK DESK</small><h3>NEWS</h3><p>Stories, updates and race-week coverage.</p><b>READ MORE →</b></a>
-          <a class="v7-tile live" href="live/"><small>RACE NIGHT</small><h3>LIVE CENTER</h3><p>Timing, battles, flags, penalties and race feed.</p><b>GO LIVE ↗</b></a>
-          <a class="v7-tile broadcast" href="broadcast/"><small>WATCH HLRN</small><h3>BROADCASTS</h3><p>Live broadcasts, replays and network coverage.</p><b>WATCH ▶</b></a>
+        <div class="home8-network-grid">
+          <a class="home8-network-card live" href="live/"><span>01</span><small>RACE NIGHT</small><h3>LIVE CENTER</h3><p>Timing, flags, battles, penalties and Race Control.</p><b>GO LIVE ↗</b></a>
+          <a class="home8-network-card personal" href="my-hlrn/"><span>02</span><small>DRIVER ACCOUNT</small><h3>MY HLRN</h3><p>Your championship position, form, schedule and race history.</p><b>OPEN DASHBOARD →</b></a>
+          <a class="home8-network-card standings" href="standings/"><span>03</span><small>CHAMPIONSHIP</small><h3>STANDINGS</h3><p>Sunday, Monday and Hosted competition data.</p><b>VIEW STANDINGS →</b></a>
+          <a class="home8-network-card drivers" href="drivers/"><span>04</span><small>THE GRID</small><h3>DRIVERS</h3><p>Numbers, photos, profiles and performance history.</p><b>MEET THE GRID →</b></a>
+          <a class="home8-network-card results" href="results/"><span>05</span><small>THE RECORD</small><h3>RESULTS</h3><p>Completed races, reports and frozen race records.</p><b>OPEN ARCHIVE →</b></a>
+          <a class="home8-network-card intel" href="race-intelligence/"><span>06</span><small>DATA DESK</small><h3>INTELLIGENCE</h3><p>Championship trends and data-driven race analysis.</p><b>OPEN INTELLIGENCE →</b></a>
         </div>
       </div>
     </section>
 
-    <section class="v7-feature">
-      <div class="v7-shell v7-feature-inner">
-        <div><small>HLRN ORIGINAL SERIES</small><h2>THE ADVENTURES OF HIGH LINE</h2><p>Race-week chaos, HLRN personalities and the stories that happen when the helmets come off.</p></div>
-        <a href="adventures/">ENTER THE ADVENTURE <span>→</span></a>
+    <section class="home8-adventure">
+      <div class="home8-adventure-shade"></div>
+      <div class="home8-shell home8-adventure-inner">
+        <div>
+          <small>HLRN ORIGINAL SERIES</small>
+          <h2>THE ADVENTURES<br>OF HIGH LINE</h2>
+          <p>The racing ends. The chaos does not.</p>
+        </div>
+        <a href="adventures/">ENTER THE ADVENTURE <b>→</b></a>
       </div>
     </section>
   </main>
 
-  <footer class="v7-footer">
-    <div class="v7-shell v7-footer-inner">
-      <div><strong>HLRN</strong><span>HIGH LINE RACING NETWORK</span></div>
-      <p>WHERE THE RACING NEVER STOPS</p>
-      <nav><a href="standings/">STANDINGS</a><a href="drivers/">DRIVERS</a><a href="news/">NEWS</a><a href="live/">LIVE</a><a href="broadcast/">WATCH</a></nav>
+  <footer class="home8-footer">
+    <div class="home8-shell home8-footer-inner">
+      <div class="home8-footer-brand"><strong>HLRN</strong><span>HIGH LINE RACING NETWORK<small>WHERE THE RACING NEVER STOPS</small></span></div>
+      <nav><a href="live/">LIVE</a><a href="standings/">STANDINGS</a><a href="results/">RESULTS</a><a href="drivers/">DRIVERS</a><a href="news/">NEWS</a><a href="broadcast/">WATCH</a></nav>
     </div>
   </footer>
 </div>
