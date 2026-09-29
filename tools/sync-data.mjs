@@ -415,7 +415,15 @@ export async function sync({
       const url = new URL(endpoint);
       url.searchParams.set('action', action);
       url.searchParams.set('league', league);
-      payloads[league][action] = await request(url, `${league}/${action}`);
+      try {
+        payloads[league][action] = await request(url, `${league}/${action}`);
+      } catch (e) {
+        const prior = old?.leagues?.[league]?.[action];
+        const usable = Array.isArray(prior) && (action !== 'drivers' || prior.length > 0);
+        if (!usable) throw e;
+        payloads[league][action] = { success: true, [action]: prior };
+        console.warn(`${league}/${action} refresh failed; prior published rows retained:`, e.message);
+      }
     }
   }
 
