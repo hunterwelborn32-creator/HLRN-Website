@@ -29,6 +29,8 @@ let snapshot=null;
 let races=[];
 let activeFilter='all';
 let currentKey='';
+let recapItems=[];
+let recapArchives=new Map();
 
 function leagueLabel(key){return key==='sunday'?'Sunday Night League':'Monday Night League'}
 function leagueShort(key){return key==='sunday'?'SUNDAY':'MONDAY'}
@@ -61,6 +63,28 @@ function raceKey(key,raceNumber,raceId){return key+'|'+String(raceNumber)+'|'+St
 function raceUrl(r){
   return '?'+new URLSearchParams({league:r.league,race:String(r.raceNumber)}).toString();
 }
+function recapSeries(value){
+  const s=String(value||'').toLowerCase();
+  if(s.includes('sunday'))return 'sunday';
+  if(s.includes('monday'))return 'monday';
+  return '';
+}
+function trackKey(value){
+  return String(value||'').toLowerCase()
+    .replace(/\b(international|motor|speedway|raceway|motorspeedway|the|oval)\b/g,' ')
+    .replace(/[^a-z0-9]+/g,' ').trim().replace(/\s+/g,' ');
+}
+function sameTrack(a,b){
+  const x=trackKey(a),y=trackKey(b);
+  return !!x&&!!y&&(x===y||x.includes(y)||y.includes(x));
+}
+function recapRawUrl(item){
+  if(item?.rawUrl)return String(item.rawUrl).startsWith('/')?'..'+item.rawUrl:item.rawUrl;
+  const s=String(item?.slug||'').replace(/[^a-z0-9-]/gi,'');
+  return s?'../data/race-recaps/'+encodeURIComponent(s)+'.json':'';
+}
+function recapStoryUrl(item){return item?.url||'../news/race-recaps/'}
+function recapResultsUrl(item){return item?.resultsUrl||(item?.slug?'./?recap='+encodeURIComponent(item.slug):'./#recorderArchive')}
 
 function buildRaces(){
   const out=[];
@@ -92,6 +116,25 @@ function buildRaces(){
     return db-da||b.raceNumber-a.raceNumber;
   });
   races=out;
+}
+
+function linkRecapsToRaces(){
+  races.forEach(r=>{delete r.recap});
+  recapItems.forEach(item=>{
+    const archive=recapArchives.get(String(item.slug||'')); if(!archive)return;
+    const series=recapSeries(item.series||archive?.article?.series||archive?.recorder?.race?.series);
+    const track=item.track||archive?.article?.track||archive?.recorder?.race?.track||'';
+    const when=dateValue(item.raceFrozenAt||archive?.article?.raceFrozenAt||item.publishedAt||archive?.article?.publishedAt)?.getTime()||0;
+    const candidates=races.filter(r=>r.league===series&&sameTrack(r.track,track)).sort((a,b)=>{
+      const da=Math.abs((dateValue(a.date)?.getTime()||0)-when),db=Math.abs((dateValue(b.date)?.getTime()||0)-when);
+      return da-db;
+    });
+    const match=candidates[0];
+    if(match){
+      const diff=Math.abs((dateValue(match.date)?.getTime()||0)-when);
+      if(!when||diff<=48*60*60*1000)match.recap={summary:item,archive};
+    }
+  });
 }
 
 function raceStats(race){
@@ -222,8 +265,50 @@ function renderArchive(){
 function feature(label,value,detail,unavailable=false){
   return '<div class="report-feature"><span>'+esc(label)+'</span><strong class="'+(unavailable?'report-unavailable':'')+'">'+esc(value)+'</strong><small>'+esc(detail)+'</small></div>';
 }
+function rowName(key,row){
+  return pretty(row?.displayName||row?.name||driverName(key,row?.driverId));
+}
 function driverAnchor(key,row){
-  return '<a class="report-driver-link" href="'+esc(driverLink(key,row.driverId))+'">'+esc(driverName(key,row.driverId))+'</a>';
+  const name=rowName(key,row);
+  const known=driverMap(key).has(String(row?.driverId??''));
+  return known
+    ? '<a class="report-driver-link" href="'+esc(driverLink(key,row.driverId))+'">'+esc(name)+'</a>'
+    : '<span class="report-driver-link">'+esc(name)+'</span>';
+}
+function recapLists(race){
+  const article=race?.recap?.archive?.article||{},recorder=race?.recap?.archive?.recorder||{};
+  const cautions=Array.isArray(article.cautions)?article.cautions:(Array.isArray(recorder.cautionHistory)?recorder.cautionHistory:[]);
+  const penalties=Array.isArray(article.penalties)?article.penalties:(Array.isArray(recorder.penaltyHistory)?recorder.penaltyHistory:[]);
+  return{
+    article,recorder,cautions,penalties,
+    leadChanges:rawNum(article.leadChanges),
+    snapshots:rawNum(article.completedLapsCaptured)??(Array.isArray(recorder.lapSnapshots)?recorder.lapSnapshots.length:null)
+  };
+}
+function raceControlLog(race){
+  const x=recapLists(race); if(!race?.recap)return '';
+  if(!x.cautions.length&&!x.penalties.length)return '<div class="report-story"><strong>Recorder note:</strong> The race was frozen at checkered with no caution or penalty records in the published recorder archive.</div>';
+  let html='<div class="report-team-grid">';
+  x.cautions.forEach(c=>{
+    const lap=first(c,['startLap','lap','raceLap']),restart=first(c,['restartLap','greenLap']);
+    const reason=first(c,['reason','cause','description'])||'Exact iRacing caution cause was not exposed.';
+    html+='<div class="report-team-card"><span>CAUTION #'+esc(c.number??'—')+(lap!==null?' • LAP '+esc(lap):'')+'</span><strong>'+esc(reason)+'</strong><small>'+(restart!==null?'Restart lap '+esc(restart)+' • ':'')+esc(c.reasonSource||c.source||'Recorder')+'</small></div>';
+  });
+  x.penalties.forEach(p=>{
+    const lap=first(p,['lap','raceLap']),name=first(p,['driverName','name'])||'Driver';
+    const reason=first(p,['reason','penaltyReason','description'])||'Exact iRacing black-flag reason was not exposed.';
+    html+='<div class="report-team-card"><span>BLACK FLAG / PENALTY'+(lap!==null?' • LAP '+esc(lap):'')+'</span><strong>'+esc(name)+'</strong><small>'+esc(reason)+(p.reasonSource?' • '+esc(p.reasonSource):'')+'</small></div>';
+  });
+  return html+'</div>';
+}
+function recapButtons(race){
+  const item=race?.recap?.summary;if(!item)return '';
+  const raw=recapRawUrl(item),story=recapStoryUrl(item);
+  return '<div class="recorder-card-actions" style="margin:14px 0 22px">'+
+    '<a href="'+esc(story)+'">READ POST-RACE STORY →</a>'+
+    (raw?'<a class="secondary" href="'+esc(raw)+'">PERMANENT RECORDER JSON</a>':'')+
+    '<a class="secondary" href="../broadcasters/?league='+esc(race.league)+'">WATCH HLRN</a>'+
+  '</div>';
 }
 
 function reportNarrative(race,s){
@@ -300,9 +385,12 @@ function renderReport(race,updateUrl=true){
     '</a>'
   ).join(''):'<div class="report-team-card"><span>TEAM DATA</span><strong class="report-unavailable">ROSTER SYNC UNAVAILABLE</strong><small>Team totals will appear once current roster mappings are available.</small></div>';
 
+  const rx=recapLists(race);
   const fastestText=s.fastest!==null&&s.fastest!==undefined?String(s.fastest):'Not in feed';
-  const cautionText=s.cautions!==null&&s.cautions!==undefined?String(s.cautions):'Not in feed';
-  const penaltyText=s.penalties!==null?fmt(s.penalties):'Not in feed';
+  const cautionValue=race.recap?rx.cautions.length:s.cautions;
+  const penaltyValue=race.recap?rx.penalties.length:s.penalties;
+  const cautionText=cautionValue!==null&&cautionValue!==undefined?String(cautionValue):'Not in feed';
+  const penaltyText=penaltyValue!==null&&penaltyValue!==undefined?fmt(penaltyValue):'Not in feed';
 
   $('raceReportContent').innerHTML=
     '<section class="report-hero '+race.league+'">'+
@@ -325,10 +413,13 @@ function renderReport(race,updateUrl=true){
       feature('Biggest Mover',s.moverName,s.mover?('P'+fmt(s.mover.start)+' → P'+fmt(s.mover.finish)+' • '+(s.moverGain>=0?'+':'')+fmt(s.moverGain)):'Unavailable',!s.mover)+
       feature('Event-Points Leader',standingsLeaderName,standingsLeader?fmt(standingsLeaderPts)+' cumulative published event pts':'Unavailable',!standingsLeader)+
       feature('Fastest Lap',fastestText,s.fastest!==null&&s.fastest!==undefined?'Published race-feed value':'This field is not currently published',s.fastest===null||s.fastest===undefined)+
-      feature('Cautions',cautionText,s.cautions!==null&&s.cautions!==undefined?'Published race-feed value':'This field is not currently published',s.cautions===null||s.cautions===undefined)+
-      feature('Penalties',penaltyText,s.penalties!==null?'Published race-feed total':'This field is not currently published',s.penalties===null)+
+      feature('Cautions',cautionText,race.recap?'Permanent frozen recorder':(s.cautions!==null&&s.cautions!==undefined?'Published race-feed value':'This field is not currently published'),cautionValue===null||cautionValue===undefined)+
+      feature('Penalties',penaltyText,race.recap?'Permanent frozen recorder':(s.penalties!==null?'Published race-feed total':'This field is not currently published'),penaltyValue===null||penaltyValue===undefined)+
+      feature('Lead Changes',race.recap?(rx.leadChanges??'—'):'—',race.recap?'Calculated from completed-lap snapshots':'Available after recorder publication',!race.recap||rx.leadChanges===null)+
+      feature('Lap Snapshots',race.recap?(rx.snapshots??'—'):'—',race.recap?'Completed laps preserved at checkered':'Available after recorder publication',!race.recap||rx.snapshots===null)+
       feature('Incidents / Driver',s.avgInc.toFixed(1),fmt(s.totalInc)+' total across '+fmt(s.field)+' starters')+
     '</div>'+
+    (race.recap?'<h3 class="report-section-title">Permanent Checkered Record</h3>'+recapButtons(race)+'<h3 class="report-section-title">Race Control Log</h3>'+raceControlLog(race):'')+
     '<h3 class="report-section-title">Finishing Order & Event-Points Movement</h3>'+
     '<div class="report-story">Movement below is reconstructed from the <strong>published points in each completed event</strong>. It is not labeled as an official historical championship snapshot because Sunday season totals can also include stage/bonus components not preserved per event.</div>'+
     '<div class="report-mobile-finishing">'+mobileFinishCards+'</div>'+
@@ -354,8 +445,70 @@ function closeReport(updateUrl=true){
   setTimeout(()=>$('raceArchive').scrollIntoView({behavior:'smooth',block:'start'}),10);
 }
 
+function finalRecorderRows(archive){
+  const recorder=archive?.recorder||{},snaps=Array.isArray(recorder.lapSnapshots)?recorder.lapSnapshots:[];
+  const last=snaps.slice().sort((a,b)=>num(b.lap)-num(a.lap))[0];
+  const live=Array.isArray(recorder?.race?.drivers)?recorder.race.drivers:[];
+  const liveByIdx=new Map(live.filter(d=>d.carIdx!==undefined&&d.carIdx!==null).map(d=>[String(d.carIdx),d]));
+  const order=Array.isArray(last?.order)&&last.order.length?last.order:live;
+  return order.map((o,i)=>{
+    const more=o?.carIdx!==undefined&&o?.carIdx!==null?liveByIdx.get(String(o.carIdx)):null;
+    const x=Object.assign({},more||{},o||{});
+    return{
+      driverId:x.userId||x.driverId||x.customerId||x.carIdx||('rec-'+i),
+      displayName:x.name||('Driver '+(i+1)),
+      start:null,
+      finish:rawNum(x.position)??(i+1),
+      positionGain:null,
+      points:null,
+      lapsLed:0,
+      incidents:rawNum(x.incidents),
+      status:x.status||(x.disqualified?'DQ':'FINAL'),
+      lapsCompleted:rawNum(x.lapsCompleted),
+      lapsDown:rawNum(x.lapsDown)
+    };
+  }).sort((a,b)=>num(a.finish)-num(b.finish));
+}
+function renderFrozenOnlyReport(item,archive){
+  const article=archive?.article||{},rows=finalRecorderRows(archive),winner=article.winner||item?.winner||{};
+  const fake={
+    key:'recap:'+String(item?.slug||''),league:recapSeries(item?.series||article.series)||'sunday',
+    raceId:String(article.subSessionId||article.sessionId||item?.subSessionId||item?.sessionId||'RECORDER'),
+    raceNumber:rawNum(article.raceNumber)||'—',
+    track:article.track||item?.track||archive?.recorder?.race?.track||'HLRN Race',
+    date:article.raceFrozenAt||item?.raceFrozenAt||article.publishedAt||item?.publishedAt||new Date().toISOString(),
+    rows,recap:{summary:item,archive}
+  };
+  const rx=recapLists(fake);
+  const table=rows.map(row=>'<tr><td class="finish">P'+esc(row.finish||'—')+'</td><td>'+driverAnchor(fake.league,row)+'</td><td>—</td><td>—</td><td>—</td><td>'+esc(row.lapsLed??'—')+'</td><td>'+esc(row.incidents??'—')+'</td><td>'+esc(row.status||'—')+'</td><td>—</td><td>—</td></tr>').join('');
+  const mobile=rows.map(row=>'<article class="report-mobile-driver '+(num(row.finish)===1?'winner':'')+'"><div class="report-mobile-main"><div class="report-mobile-finish">P'+esc(row.finish||'—')+'</div><div class="report-mobile-driver-copy"><strong>'+driverAnchor(fake.league,row)+'</strong><span>'+esc(row.status||'FINAL')+'</span></div><div class="report-mobile-gain">—<small>+/-</small></div></div><div class="report-mobile-stats"><span><b>—</b><small>PTS</small></span><span><b>'+esc(row.lapsCompleted??'—')+'</b><small>LAPS</small></span><span><b>'+esc(row.incidents??'—')+'</b><small>INC</small></span></div></article>').join('');
+  $('raceReportContent').innerHTML=
+    '<section class="report-hero '+fake.league+'"><div class="report-kicker">'+leagueShort(fake.league)+' NIGHT LEAGUE • PERMANENT CHECKERED RECORD</div><div class="report-track">'+esc(fake.track)+'</div><div class="report-meta">'+esc(formatDate(fake.date))+' • '+esc(fake.raceId)+'</div><div class="report-hero-grid"><div class="report-hero-main"><span>RECORDED WINNER</span><strong>'+esc(winner.name||rows[0]?.displayName||'—')+'</strong></div><div class="report-hero-stat"><span>FIELD</span><strong>'+fmt(rows.length)+'</strong></div><div class="report-hero-stat"><span>CAUTIONS</span><strong>'+fmt(rx.cautions.length)+'</strong></div><div class="report-hero-stat"><span>PENALTIES</span><strong>'+fmt(rx.penalties.length)+'</strong></div></div></section>'+
+    '<h3 class="report-section-title">Permanent Checkered Record</h3><div class="report-story">This record was frozen by the HLRN Live Race Center at checkered and published before official league scoring was available. Official championship points will replace recorder-only fields when the normal results sync catches up.</div>'+
+    recapButtons(fake)+
+    '<div class="report-feature-grid">'+
+      feature('Cautions',rx.cautions.length,'Permanent frozen recorder')+
+      feature('Penalties',rx.penalties.length,'Black flags / penalties preserved')+
+      feature('Lead Changes',rx.leadChanges??'—','Calculated from completed-lap snapshots',rx.leadChanges===null)+
+      feature('Lap Snapshots',rx.snapshots??'—','Completed laps preserved',rx.snapshots===null)+
+    '</div>'+
+    '<h3 class="report-section-title">Race Control Log</h3>'+raceControlLog(fake)+
+    '<h3 class="report-section-title">Recorded Final Order</h3>'+
+    '<div class="report-mobile-finishing">'+mobile+'</div>'+
+    '<div class="report-table-shell"><table class="report-table"><thead><tr><th>FIN</th><th>DRIVER</th><th>START</th><th>+/-</th><th>PTS</th><th>LED</th><th>INC</th><th>STATUS</th><th>EVT PTS RANK</th><th>MOVE</th></tr></thead><tbody>'+table+'</tbody></table></div>';
+  $('raceArchive').style.display='none';$('raceReportView').classList.add('active');currentKey=fake.key;
+  window.scrollTo({top:$('raceReportView').offsetTop-20,behavior:'smooth'});
+}
 function openFromQuery(){
-  const q=new URLSearchParams(location.search),key=String(q.get('league')||'').toLowerCase(),raceNo=num(q.get('race'));
+  const q=new URLSearchParams(location.search),recapSlug=String(q.get('recap')||'').trim();
+  if(recapSlug){
+    const race=races.find(r=>String(r?.recap?.summary?.slug||'')===recapSlug);
+    if(race){renderReport(race,false);return true}
+    const item=recapItems.find(x=>String(x?.slug||'')===recapSlug),archive=recapArchives.get(recapSlug);
+    if(item&&archive){renderFrozenOnlyReport(item,archive);return true}
+    return false;
+  }
+  const key=String(q.get('league')||'').toLowerCase(),raceNo=num(q.get('race'));
   if(!['sunday','monday'].includes(key)||!raceNo)return false;
   const race=races.find(r=>r.league===key&&r.raceNumber===raceNo);
   if(!race)return false;
@@ -366,8 +519,9 @@ function openFromQuery(){
 function recorderCard(item){
   const winner=item?.winner||{};
   const slug=String(item?.slug||'').replace(/[^a-z0-9-]/gi,'');
-  const story=item?.url||'../news/race-recaps/';
-  const raw=slug?'../data/race-recaps/'+encodeURIComponent(slug)+'.json':'../data/race-recaps/index.json';
+  const story=recapStoryUrl(item);
+  const raw=recapRawUrl(item)||'../data/race-recaps/index.json';
+  const results=recapResultsUrl(item);
   const frozen=item?.raceFrozenAt ? new Date(item.raceFrozenAt) : null;
   const frozenText=frozen&&!Number.isNaN(frozen.getTime())
     ? frozen.toLocaleString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'})
@@ -386,7 +540,8 @@ function recorderCard(item){
       '</div>'+
     '</div>'+
     '<div class="recorder-card-actions">'+
-      '<a href="'+esc(story)+'">POST-RACE REPORT →</a>'+
+      '<a href="'+esc(results)+'">OPEN PERMANENT RESULTS →</a>'+
+      '<a class="secondary" href="'+esc(story)+'">POST-RACE STORY</a>'+
       '<a class="secondary" href="'+esc(raw)+'">RAW RECORDER JSON</a>'+
     '</div>'+
   '</article>';
@@ -399,12 +554,19 @@ async function loadRecorderArchive(){
     const res=await fetch('../data/race-recaps/index.json?v='+Date.now(),{cache:'no-store'});
     if(!res.ok)throw new Error('recorder archive unavailable');
     const data=await res.json();
-    const items=Array.isArray(data?.recaps)?data.recaps:[];
-    if(status)status.textContent=items.length
-      ? items.length+' FROZEN RACE'+(items.length===1?'':'S')+' PUBLISHED'
+    recapItems=Array.isArray(data?.recaps)?data.recaps:[];
+    const loaded=await Promise.all(recapItems.map(async item=>{
+      const url=recapRawUrl(item);if(!url)return null;
+      try{const r=await fetch(url+(url.includes('?')?'&':'?')+'v='+Date.now(),{cache:'no-store'});if(!r.ok)return null;return[item.slug,await r.json()]}catch(_){return null}
+    }));
+    recapArchives=new Map(loaded.filter(Boolean));
+    linkRecapsToRaces();
+    renderArchive();
+    if(status)status.textContent=recapItems.length
+      ? recapItems.length+' FROZEN RACE'+(recapItems.length===1?'':'S')+' PUBLISHED'
       : 'RECORDER READY';
-    grid.innerHTML=items.length
-      ? items.map(recorderCard).join('')
+    grid.innerHTML=recapItems.length
+      ? recapItems.map(recorderCard).join('')
       : '<div class="recorder-archive-empty">No frozen race records have been published yet. The next real race frozen at checkered will appear here automatically.</div>';
   }catch(err){
     if(status)status.textContent='ARCHIVE TEMPORARILY UNAVAILABLE';
@@ -418,7 +580,7 @@ async function load(){
     snapshot=await HLRNData.load();
     buildRaces();
     renderArchive();
-    loadRecorderArchive();
+    await loadRecorderArchive();
     if(snapshot.generatedAt){
       const d=new Date(snapshot.generatedAt);
       $('archiveUpdated').textContent='DATA UPDATED '+d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}).toUpperCase();
