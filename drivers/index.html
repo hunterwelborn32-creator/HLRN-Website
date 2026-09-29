@@ -717,6 +717,8 @@ table{width:100%;border-collapse:collapse;min-width:840px}th,td{padding:13px 14p
   .profile-hero-stat b{font-size:15px!important}
 }
 </style>
+
+<meta name="theme-color" content="#07090d">
 </head>
 <body>
 <div id="directoryView" class="driver-page">
@@ -1525,6 +1527,6 @@ window.addEventListener("popstate",()=>{
 
 document.addEventListener("DOMContentLoaded",()=>{document.getElementById("search").addEventListener("input",searchDrivers);document.getElementById("driverSort").addEventListener("change",e=>{currentDriverSort=e.target.value;searchDrivers()});document.getElementById("driverGrid").addEventListener("click",e=>{const c=e.target.closest(".driver-card");if(c)openProfile(c.dataset.driver)});document.getElementById("backToDirectory").addEventListener("click",showDirectory);document.querySelectorAll(".league-tab").forEach(btn=>btn.addEventListener("click",()=>setLeague(btn.dataset.league)));initializeDrivers()});
 </script>
-<script src="../assets/site-shell.js"></script>
+<script src="../assets/site-shell.js?v=20260929health1"></script>
 </body>
 </html>
