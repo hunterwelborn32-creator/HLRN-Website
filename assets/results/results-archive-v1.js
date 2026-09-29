@@ -363,12 +363,62 @@ function openFromQuery(){
   return true;
 }
 
+function recorderCard(item){
+  const winner=item?.winner||{};
+  const slug=String(item?.slug||'').replace(/[^a-z0-9-]/gi,'');
+  const story=item?.url||'../news/race-recaps/';
+  const raw=slug?'../data/race-recaps/'+encodeURIComponent(slug)+'.json':'../data/race-recaps/index.json';
+  const frozen=item?.raceFrozenAt ? new Date(item.raceFrozenAt) : null;
+  const frozenText=frozen&&!Number.isNaN(frozen.getTime())
+    ? frozen.toLocaleString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'})
+    : (item?.displayDate||'Frozen at checkered');
+  return '<article class="recorder-card">'+
+    '<div class="recorder-card-top"><span>FINAL • FROZEN</span><b>'+esc(item?.series||'HLRN')+'</b></div>'+
+    '<div class="recorder-card-body">'+
+      '<small>'+esc(frozenText)+'</small>'+
+      '<h3>'+esc(item?.track||'HLRN Race')+'</h3>'+
+      '<div class="recorder-winner"><span>WINNER</span><strong>#'+esc(winner.number||'—')+' '+esc(winner.name||'Unknown Driver')+'</strong></div>'+
+      '<div class="recorder-facts">'+
+        '<span><b>'+esc(item?.completedLapsCaptured??'—')+'</b><small>LAPS SAVED</small></span>'+
+        '<span><b>'+esc(item?.cautions??'—')+'</b><small>CAUTIONS</small></span>'+
+        '<span><b>'+esc(item?.penalties??'—')+'</b><small>PENALTIES</small></span>'+
+        '<span><b>'+esc(item?.leadChanges??'—')+'</b><small>LEAD CHANGES</small></span>'+
+      '</div>'+
+    '</div>'+
+    '<div class="recorder-card-actions">'+
+      '<a href="'+esc(story)+'">POST-RACE REPORT →</a>'+
+      '<a class="secondary" href="'+esc(raw)+'">RAW RECORDER JSON</a>'+
+    '</div>'+
+  '</article>';
+}
+
+async function loadRecorderArchive(){
+  const grid=$('recorderArchiveGrid'),status=$('recorderArchiveStatus');
+  if(!grid)return;
+  try{
+    const res=await fetch('../data/race-recaps/index.json?v='+Date.now(),{cache:'no-store'});
+    if(!res.ok)throw new Error('recorder archive unavailable');
+    const data=await res.json();
+    const items=Array.isArray(data?.recaps)?data.recaps:[];
+    if(status)status.textContent=items.length
+      ? items.length+' FROZEN RACE'+(items.length===1?'':'S')+' PUBLISHED'
+      : 'RECORDER READY';
+    grid.innerHTML=items.length
+      ? items.map(recorderCard).join('')
+      : '<div class="recorder-archive-empty">No frozen race records have been published yet. The next real race frozen at checkered will appear here automatically.</div>';
+  }catch(err){
+    if(status)status.textContent='ARCHIVE TEMPORARILY UNAVAILABLE';
+    grid.innerHTML='<div class="recorder-archive-empty">Frozen race records will appear here after the recorder publisher completes its next sync.</div>';
+  }
+}
+
 async function load(){
   if(!window.HLRNData)return;
   try{
     snapshot=await HLRNData.load();
     buildRaces();
     renderArchive();
+    loadRecorderArchive();
     if(snapshot.generatedAt){
       const d=new Date(snapshot.generatedAt);
       $('archiveUpdated').textContent='DATA UPDATED '+d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}).toUpperCase();
