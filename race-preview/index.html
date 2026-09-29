@@ -3,128 +3,168 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>HLRN Race Week Preview | High Line Racing Network</title>
-<meta name="description" content="Automatic High Line Racing Network race week preview with championship standings, recent form, track history, team battles and drivers to watch.">
+<title>HLRN Race Preview Center | Race Week</title>
+<meta name="description" content="High Line Racing Network race-week preview with the next track, car, laps, championship battle, teams, recent form, strategy, history, broadcast and Live Race Center links.">
+<meta name="robots" content="index,follow,max-image-preview:large">
 <link rel="canonical" href="https://highlineracingnetwork.com/race-preview/">
-<link rel="icon" type="image/x-icon" href="/favicon.ico?v=3">
-<link rel="stylesheet" href="../assets/race-preview/preview-v1.css?v=20260928p1">
-<link rel="stylesheet" href="../assets/site-shell.css?v=20260928v6">
-
 <meta name="theme-color" content="#07090d">
+<link rel="icon" href="../favicon.ico">
+<link rel="stylesheet" href="../assets/site-shell.css?v=20260929mobile2">
+<link rel="stylesheet" href="../assets/race-preview/preview-v2.css?v=20260929pv2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
-<body>
-<main class="rp-page">
-  <section class="rp-network-bar">
-    <div class="rp-shell rp-network-inner">
-      <div class="rp-brand"><span class="rp-live-dot"></span><div><small>HIGH LINE RACING NETWORK</small><strong>RACE WEEK PREVIEW</strong></div></div>
-      <div class="rp-network-stat"><small>DATA SOURCE</small><strong>CONFIRMED HLRN RESULTS</strong></div>
-      <div class="rp-network-stat"><small>GREEN FLAG</small><strong>8:30 PM EASTERN</strong></div>
-      <div class="rp-network-stat"><small>UPDATED</small><strong id="rpUpdated">CONNECTING</strong></div>
+<body class="pv-page">
+
+<header class="pv-mast">
+  <div class="pv-shell pv-mast-grid">
+    <div>
+      <div class="pv-kicker"><span>HLRN //</span> RACE WEEK COMMAND CENTER</div>
+      <h1>RACE <span>PREVIEW</span></h1>
+      <p>Everything to know before the green flag: the next track, car, distance, championship battle, team leaders, recent form, previous winner, track history, race strategy, broadcast and live-race links.</p>
     </div>
-  </section>
 
-  <section class="rp-hero">
-    <div class="rp-hero-grid"></div>
-    <div class="rp-shell rp-hero-inner">
-      <div class="rp-hero-copy">
-        <div class="rp-kicker" id="rpKicker">HLRN // NEXT RACE</div>
-        <h1 id="rpTrack">LOADING RACE WEEK</h1>
-        <p id="rpDescription">Building the next HLRN race preview from confirmed league results.</p>
-        <div class="rp-race-meta">
-          <div><small>SERIES</small><strong id="rpSeries">--</strong></div>
-          <div><small>WEEK</small><strong id="rpWeek">--</strong></div>
-          <div><small>DATE</small><strong id="rpDate">--</strong></div>
-          <div><small>CAR</small><strong id="rpCar">--</strong></div>
-          <div><small>LAPS</small><strong id="rpLaps">--</strong></div>
-          <div><small>TRACK</small><strong id="rpTrackType">--</strong></div>
-        </div>
-        <div class="rp-hero-actions">
-          <a id="rpStandingsLink" href="../standings/">OPEN STANDINGS <b>→</b></a>
-          <a href="../results/">RESULTS &amp; SCHEDULE</a>
-          <a href="../race-intelligence/">RACE INTELLIGENCE</a>
-        </div>
+    <aside class="pv-count" aria-label="Countdown to green flag">
+      <div class="pv-count-head"><strong id="pvCountStatus">CONNECTING</strong><span id="pvUpdated">LIVE HLRN DATA</span></div>
+      <div class="pv-count-grid">
+        <div><b id="pvDays">--</b><span>Days</span></div>
+        <div><b id="pvHours">--</b><span>Hours</span></div>
+        <div><b id="pvMinutes">--</b><span>Min</span></div>
+        <div><b id="pvSeconds">--</b><span>Sec</span></div>
       </div>
+      <div class="pv-count-meta" id="pvCountMeta">CALCULATING NEXT HLRN GREEN FLAG</div>
+    </aside>
+  </div>
+</header>
 
-      <aside class="rp-countdown-card">
-        <div class="rp-count-head"><span class="rp-live-dot"></span><div><small id="rpCountdownLabel">TIME TO GREEN</small><strong id="rpCountdownStatus">RACE WEEK</strong></div></div>
-        <div class="rp-countdown">
-          <div><strong id="rpDays">00</strong><span>DAYS</span></div>
-          <div><strong id="rpHours">00</strong><span>HRS</span></div>
-          <div><strong id="rpMinutes">00</strong><span>MIN</span></div>
-          <div><strong id="rpSeconds">00</strong><span>SEC</span></div>
+<main class="pv-main">
+  <div class="pv-shell">
+
+    <nav class="pv-tabs" aria-label="HLRN race preview league">
+      <button class="pv-tab sunday" type="button" data-league="sunday">Sunday Preview</button>
+      <button class="pv-tab monday" type="button" data-league="monday">Monday Preview</button>
+    </nav>
+
+    <section class="pv-race-hero">
+      <article class="pv-race-card">
+        <div>
+          <div class="pv-race-label"><i></i><span id="pvRaceLabel">NEXT HLRN RACE</span></div>
+          <div class="pv-track" id="pvTrack">LOADING RACE WEEK</div>
+          <p class="pv-race-desc" id="pvDescription">Building the next race preview from the shared HLRN schedule and published results.</p>
+
+          <div class="pv-race-meta">
+            <div><span>Week</span><b id="pvWeek">--</b></div>
+            <div><span>Date</span><b id="pvDate">--</b></div>
+            <div><span>Car</span><b id="pvCar">--</b></div>
+            <div><span>Distance</span><b id="pvLaps">--</b></div>
+            <div><span>Track Type</span><b id="pvType">--</b></div>
+          </div>
         </div>
-        <div class="rp-track-facts">
-          <div><span>LOCATION</span><strong id="rpLocation">--</strong></div>
-          <div><span>DISTANCE</span><strong id="rpMiles">--</strong></div>
-          <div><span>BANKING</span><strong id="rpBanking">--</strong></div>
-          <div><span>TIRES</span><strong id="rpTires">--</strong></div>
+
+        <div class="pv-actions">
+          <a class="pv-btn primary" id="pvWatchLink" href="../broadcasters/">WATCH HLRN →</a>
+          <a class="pv-btn" id="pvLiveLink" href="../live/">LIVE RACE CENTER →</a>
+          <a class="pv-btn" href="../standings/">STANDINGS →</a>
+          <a class="pv-btn" href="../teams/">TEAMS →</a>
         </div>
+      </article>
+
+      <aside class="pv-facts">
+        <div class="pv-fact"><small>Location</small><b id="pvLocation">--</b><span>Race venue</span></div>
+        <div class="pv-fact"><small>Length</small><b id="pvMiles">--</b><span>Track distance</span></div>
+        <div class="pv-fact"><small>Banking</small><b id="pvBanking">--</b><span>Published schedule</span></div>
+        <div class="pv-fact"><small>Tire Sets</small><b id="pvTires">--</b><span>Race allocation</span></div>
+        <div class="pv-fact"><small>Driver Leader</small><b id="pvChampLeader">--</b><span>Entering race week</span></div>
+        <div class="pv-fact"><small>Team Leader</small><b id="pvTeamLeader">--</b><span>Entering race week</span></div>
+        <div class="pv-fact"><small>Previous Winner</small><b id="pvPrevWinner">--</b><span>Selected league</span></div>
+        <div class="pv-fact"><small>Green Flag</small><b>8:30 PM ET</b><span>HLRN race-night target</span></div>
       </aside>
-    </div>
-  </section>
+    </section>
 
-  <section class="rp-league-switch">
-    <div class="rp-shell rp-switch-inner">
-      <div><small>CHOOSE PREVIEW</small><strong>RACE WEEK BOARD</strong></div>
-      <div class="rp-tabs">
-        <button class="rp-tab sunday active" type="button" data-league="sunday">SUNDAY</button>
-        <button class="rp-tab monday" type="button" data-league="monday">MONDAY</button>
+    <section class="pv-section">
+      <div class="pv-section-head">
+        <div><div class="pv-section-kicker">CHAMPIONSHIP PICTURE</div><h2>Battle Entering Race Week</h2></div>
+        <span id="pvChampGap">CURRENT STANDINGS</span>
       </div>
-    </div>
-  </section>
-
-  <section class="rp-main">
-    <div class="rp-shell">
-      <div class="rp-section-head">
-        <div><small>CHAMPIONSHIP</small><h2>THE BATTLE ENTERING RACE WEEK</h2></div>
-        <span id="rpChampGap">LIVE STANDINGS</span>
+      <div class="pv-overview">
+        <article class="pv-card">
+          <div class="pv-card-head"><h3>Driver Championship</h3><span>TOP 5</span></div>
+          <div class="pv-champ-list" id="pvChampList"><div class="pv-empty">Loading driver standings…</div></div>
+        </article>
+        <article class="pv-card">
+          <div class="pv-card-head"><h3>Team Championship</h3><span>TOP 5</span></div>
+          <div class="pv-team-list" id="pvTeamList"><div class="pv-empty">Loading team standings…</div></div>
+        </article>
       </div>
-      <div class="rp-champ-grid" id="rpChampGrid"><div class="rp-loading">LOADING CHAMPIONSHIP…</div></div>
+    </section>
 
-      <div class="rp-section-head rp-space">
-        <div><small>PERFORMANCE</small><h2>DRIVERS TO WATCH</h2></div>
-        <span>RANK + RECENT FORM + TRACK HISTORY</span>
+    <section class="pv-section">
+      <div class="pv-section-head">
+        <div><div class="pv-section-kicker">CURRENT FORM</div><h2>Drivers to Watch</h2></div>
+        <span>CHAMPIONSHIP POSITION + RECENT PUBLISHED FINISHES</span>
       </div>
-      <div class="rp-watch-grid" id="rpWatchGrid"><div class="rp-loading">BUILDING DATA-BASED WATCH LIST…</div></div>
+      <div class="pv-watch-grid" id="pvWatchGrid"><div class="pv-empty">Building the current watch list…</div></div>
+    </section>
 
-      <div class="rp-two-col rp-space">
-        <section class="rp-panel">
-          <div class="rp-panel-head"><small>TRACK HISTORY</small><h3 id="rpHistoryTitle">HLRN AT THIS TRACK</h3></div>
-          <div class="rp-history-hero" id="rpHistoryHero"></div>
-          <div class="rp-history-grid" id="rpHistoryGrid"></div>
-        </section>
+    <section class="pv-section">
+      <div class="pv-grid-2">
+        <article class="pv-previous" id="pvPrevious">
+          <small>PREVIOUS RACE</small><h3>LOADING LAST RESULT</h3>
+          <div class="pv-previous-winner"><span>WINNER</span><strong>--</strong></div>
+        </article>
 
-        <section class="rp-panel">
-          <div class="rp-panel-head"><small>MOMENTUM</small><h3>FORM &amp; STREAKS</h3></div>
-          <div class="rp-form-list" id="rpFormList"></div>
-        </section>
+        <article class="pv-panel">
+          <div class="pv-card-head"><h3>Recent Form Board</h3><span>LAST 4 MAX</span></div>
+          <div class="pv-form-list" id="pvFormList"><div class="pv-empty">Loading recent form…</div></div>
+        </article>
       </div>
+    </section>
 
-      <div class="rp-two-col rp-space">
-        <section class="rp-panel">
-          <div class="rp-panel-head"><small>TEAM CHAMPIONSHIP</small><h3>TEAM BATTLE</h3></div>
-          <div class="rp-team-list" id="rpTeamList"></div>
-        </section>
-
-        <section class="rp-panel">
-          <div class="rp-panel-head"><small>RACE WEEK NOTES</small><h3>WHAT TO KNOW</h3></div>
-          <div class="rp-notes" id="rpNotes"></div>
-        </section>
+    <section class="pv-section">
+      <div class="pv-section-head">
+        <div><div class="pv-section-kicker">RACE CRAFT</div><h2>Track Strategy</h2></div>
+        <span>GENERAL RACE-WEEK GUIDANCE BASED ON TRACK TYPE</span>
       </div>
+      <div class="pv-strategy" id="pvStrategy"><div class="pv-empty">Building track strategy…</div></div>
+    </section>
 
-      <section class="rp-previous rp-space">
-        <div class="rp-section-head">
-          <div><small>RECENT HISTORY</small><h2>PAST HLRN RACES HERE</h2></div>
-          <a id="rpArchiveLink" href="../results/#raceArchive">OPEN RACE ARCHIVE →</a>
-        </div>
-        <div class="rp-past-grid" id="rpPastGrid"></div>
-      </section>
-    </div>
-  </section>
+    <section class="pv-section">
+      <div class="pv-grid-2">
+        <article class="pv-panel">
+          <div class="pv-card-head"><h3 id="pvHistoryTitle">HLRN Track History</h3><span>PRIOR STORED RESULTS</span></div>
+          <div class="pv-history-list" id="pvHistoryList"><div class="pv-empty">Checking prior HLRN races…</div></div>
+        </article>
+
+        <article class="pv-panel">
+          <div class="pv-card-head"><h3>What to Know</h3><span>RACE WEEK NOTES</span></div>
+          <div class="pv-form-list" id="pvNotes"><div class="pv-empty">Building race-week notes…</div></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="pv-section">
+      <div class="pv-section-head">
+        <div><div class="pv-section-kicker">FROM PREVIEW TO POST-RACE</div><h2>HLRN Race-Week Flow</h2></div>
+      </div>
+      <div class="pv-flow">
+        <a class="current" href="../race-preview/"><small>01 • BEFORE GREEN</small><strong>Race Preview</strong></a>
+        <a href="../broadcasters/"><small>02 • WATCH</small><strong>Watch HLRN</strong></a>
+        <a href="../live/"><small>03 • FOLLOW LIVE</small><strong>Live Race Center</strong></a>
+        <a href="../results/"><small>04 • CHECKERED</small><strong>Results Center</strong></a>
+        <a href="../news/"><small>05 • AFTER RACE</small><strong>Newsroom</strong></a>
+      </div>
+    </section>
+
+    <footer class="pv-footer">
+      <span>HIGH LINE RACING NETWORK • RACE PREVIEW CENTER</span>
+      <span>PREVIEW → WATCH → LIVE → RESULTS → NEWSROOM</span>
+    </footer>
+  </div>
 </main>
 
-<script src="../assets/hlrn-core.js?v=race-preview-1"></script>
-<script src="../assets/race-preview/preview-v1.js?v=20260928p1"></script>
-<script src="../assets/site-shell.js?v=20260929myhlrn1"></script>
+<script src="../assets/hlrn-core.js?v=race-preview-center2"></script>
+<script src="../assets/race-preview/preview-v2.js?v=20260929pv2"></script>
+<script src="../assets/site-shell.js?v=20260929teams1"></script>
 </body>
 </html>
