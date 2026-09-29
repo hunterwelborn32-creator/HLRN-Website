@@ -52,6 +52,8 @@ export function buildDerived(snapshot, mappings={drivers:[]}, oldReports={report
       drivers.push({series,id,name:displayName(d.driver),sourceName:str(d.driver),
         photoSlug:str(mapping?.photoSlug)||slug(d.driver),rank:num(d.rank),points:num(d.points),
         change:num(d.change),races:num(d.races),wins:num(d.wins),top5:num(d.top5),top10:num(d.top10),
+        racePoints:num(d.racePoints),stagePoints:num(d.stagePoints),bonus:num(d.bonus),penalty:num(d.penalty),
+        laps:num(d.laps),lapsLed:num(d.lapsLed),incidents:num(d.incidents),
         avgFinish:num(d.avgFinish),results:races.map(r=>({raceId:str(r.raceId),raceNumber:num(r.raceNumber),track:str(r.track),date:dateValue(r.date),start:num(r.start),finish:num(r.finish),points:num(r.points),lapsLed:num(r.lapsLed),incidents:num(r.incidents),status:str(r.status)}))});
     }
     for(const [raceId,entries] of byRace){
