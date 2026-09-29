@@ -58,6 +58,7 @@ function start(){
   const driverDirectory=/^drivers\/?(?:index\.html)?$/.test(relPath);
   const specializedMobile=
     route==="home" ||
+    /^news\//.test(relPath) ||
     /^live\//.test(relPath) ||
     /^standings\//.test(relPath) ||
     /^results\//.test(relPath) ||
