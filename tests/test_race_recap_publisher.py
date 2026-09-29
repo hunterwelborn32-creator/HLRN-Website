@@ -93,6 +93,18 @@ class PublisherTests(unittest.TestCase):
         index2 = json.loads(pub.INDEX_PATH.read_text(encoding="utf-8"))
         self.assertEqual(len(index2["recaps"]), 1)
 
+    def test_archive_envelope_exposes_every_recap(self):
+        older = fixture()
+        newer = fixture()
+        older["raceFrozenAt"] = "2026-09-29T02:30:00Z"
+        newer["raceFrozenAt"] = "2026-09-30T02:30:00Z"
+        newer["race"]["subSessionId"] = 333
+        batch = pub.extract_recaps({"schemaVersion": 1, "recaps": [newer, older]})
+        self.assertEqual(len(batch), 2)
+        ordered = sorted(batch, key=pub.recap_sort_key)
+        self.assertEqual(ordered[0]["race"]["subSessionId"], 222)
+        self.assertEqual(ordered[1]["race"]["subSessionId"], 333)
+
     def test_demo_is_never_published(self):
         recap = fixture(source="DEMO")
         ok, reason = pub.is_publishable(recap)
