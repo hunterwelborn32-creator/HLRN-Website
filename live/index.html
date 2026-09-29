@@ -1595,7 +1595,16 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
       const top3 = order.slice(0,3).map(d=>`#${d.number || "—"} ${d.name || "Unknown"}`).join(" • ");
       let controlItem = null;
 
-      if(rc.oneToGreen){
+      if(raceFinished(state)){
+        controlItem = {
+          type:"flag", lap:state?.lap,
+          title:"CHECKERED • FINAL RESULTS FROZEN",
+          text:leader
+            ? `#${leader.number || "—"} ${leader.name} is the recorded winner. Race data is locked.`
+            : "The checkered flag has fallen. Final race data is locked.",
+          exact:true
+        };
+      }else if(rc.oneToGreen){
         controlItem = {
           type:"flag", lap:state?.lap,
           title:`ONE TO GREEN • CAUTION #${rc.cautionCount || "—"}`,
@@ -1839,9 +1848,16 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
 
   function renderRacePulse(raceState){
     const events = accurateRaceEvents(raceState);
-    const cautions = Number(raceState?.raceControl?.cautionCount ?? events.filter(e => String(e?.title || "").toUpperCase().includes("CAUTION")).length);
-    const leadChanges = Number(raceState?.raceStats?.leadChanges ?? events.filter(e => String(e?.type || "").toLowerCase() === "lead").length);
-    const penalties = events.filter(e => String(e?.type || "").toLowerCase() === "penalty").length;
+    const cautionCount = Number(raceState?.raceControl?.cautionCount);
+    const cautions = Number.isFinite(cautionCount)
+      ? cautionCount
+      : events.filter(e => String(e?.title || "").toUpperCase().includes("CAUTION")).length;
+    const leadCount = Number(raceState?.raceStats?.leadChanges);
+    const leadChanges = Number.isFinite(leadCount)
+      ? leadCount
+      : events.filter(e => String(e?.type || "").toLowerCase() === "lead").length;
+    const penaltyRecords = penaltyRecordsFor(raceState, events);
+    const penalties = penaltyRecords.length;
     const raceDrivers = raceState && Array.isArray(raceState.drivers) ? raceState.drivers : [];
     const closeBattles = getBattles(raceDrivers).filter(b => b.interval <= 0.75).length;
 
@@ -1853,8 +1869,19 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
     const el = $("racePulseList");
     if(!el) return;
 
-    const important = events
-      .filter(e => ["flag","lead","penalty","fastest"].includes(String(e?.type || "").toLowerCase()))
+    const nonPenaltyImportant = events.filter(e => {
+      const type = String(e?.type || "").toLowerCase();
+      return ["flag","lead","fastest"].includes(type);
+    });
+    const penaltyImportant = penaltyRecords.map(p => ({
+      ...p,
+      type:"penalty",
+      severity:"warning",
+      exact:String(p.reasonSource || "").toUpperCase() !== "INFERRED",
+      text:p.text || `#${p.number || "—"} ${p.name || "Unknown Driver"} — ${p.reason || "Reason not supplied by iRacing telemetry"}`
+    }));
+    const important = [...nonPenaltyImportant, ...penaltyImportant]
+      .sort((a,b) => Number(a.capturedAt || a.createdAt || 0) - Number(b.capturedAt || b.createdAt || 0))
       .slice(-5)
       .reverse();
 
