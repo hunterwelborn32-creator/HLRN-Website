@@ -181,13 +181,13 @@ function boot(){
           });
         });
       });
-      index=[].slice.call(map.values());
+      index=Array.from(map.values());
       ready=true;
       status.textContent="SEARCH INDEX ONLINE";
       overlay.querySelector(".hgs-status-dot").classList.add("ready");
     }catch(err){
       console.warn("HLRN site search:",err);
-      index=[].slice.call(map.values());
+      index=Array.from(map.values());
       ready=true;
       status.textContent="SITE SEARCH ONLINE • LIVE DATA LIMITED";
     }
