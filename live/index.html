@@ -1930,6 +1930,7 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
         <div class="report-toolbar">
           <div id="reportStatus" class="report-status">Waiting for race-night data</div>
           <div class="report-actions">
+            <a id="postRaceResultsBtn" class="story-btn" href="/results/" hidden aria-disabled="true">RESULTS PUBLISHING…</a>
             <a id="postRaceStoryBtn" class="story-btn" href="/news/race-recaps/" hidden aria-disabled="true">STORY PUBLISHING…</a>
             <button id="copyReportBtn" class="copy-btn">COPY FULL REPORT</button>
           </div>
@@ -3582,11 +3583,13 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
 
   async function updatePostRaceStoryLink(race){
     const btn=$("postRaceStoryBtn");
+    const resultsBtn=$("postRaceResultsBtn");
     if(!btn) return;
 
     const complete=!!race && (race.raceFrozen || raceFinished(race));
     if(!complete){
       btn.hidden=true;
+      if(resultsBtn) resultsBtn.hidden=true;
       return;
     }
 
@@ -3595,6 +3598,13 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
     btn.setAttribute("aria-disabled","true");
     btn.textContent="STORY PUBLISHING…";
     btn.href="/news/race-recaps/";
+    if(resultsBtn){
+      resultsBtn.hidden=false;
+      resultsBtn.classList.remove("ready");
+      resultsBtn.setAttribute("aria-disabled","true");
+      resultsBtn.textContent="RESULTS PUBLISHING…";
+      resultsBtn.href="/results/";
+    }
 
     const key=recapIdentityFor(race);
     const now=Date.now();
@@ -3621,6 +3631,12 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
         btn.textContent="READ POST-RACE STORY →";
         btn.classList.add("ready");
         btn.removeAttribute("aria-disabled");
+        if(resultsBtn){
+          resultsBtn.href=match.resultsUrl || (match.slug ? "/results/?recap="+encodeURIComponent(match.slug) : "/results/");
+          resultsBtn.textContent="VIEW PERMANENT RESULTS →";
+          resultsBtn.classList.add("ready");
+          resultsBtn.removeAttribute("aria-disabled");
+        }
       }
     }catch(err){
       // The article publisher may still be waiting for the next GitHub sync.
