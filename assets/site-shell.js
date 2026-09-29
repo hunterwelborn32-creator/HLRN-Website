@@ -22,6 +22,11 @@ function start(){
     }else root=new URL("/",location.origin);
   }
   const url=(path="")=>new URL(path,root).href;
+  function hgnDriverSlug(name){
+    let text=String(name||"").trim();
+    if(text.includes(",")){const parts=text.split(",");const last=(parts.shift()||"").trim();const first=parts.join(" ").trim();text=(first+" "+last).trim();}
+    return text.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"")||"driver";
+  }
 
   const path=(location.pathname||"").toLowerCase();
   let active="home";
@@ -146,7 +151,7 @@ function start(){
   accountPanel.querySelector(".hgn-account-profile").addEventListener("click",()=>{
     const d=readLogin();
     closeAccount();
-    if(d) location.href=url("drivers/")+"?driver="+encodeURIComponent(d.driver);
+    if(d) location.href=url("drivers/"+hgnDriverSlug(d.driver)+"/");
     else location.href=url("drivers/");
   });
   accountPanel.querySelector(".hgn-account-signout").addEventListener("click",()=>{
