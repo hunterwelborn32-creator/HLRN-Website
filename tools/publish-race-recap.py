@@ -489,6 +489,31 @@ def render_article(model):
 
     canonical = f'{SITE_ORIGIN}/news/race-recaps/{model["slug"]}/'
     raw_url = f'/data/race-recaps/{model["slug"]}.json'
+    schema_json = json.dumps({
+        "@context": "https://schema.org",
+        "@type": "NewsArticle",
+        "headline": model["title"],
+        "description": model["subtitle"],
+        "datePublished": model["publishedAt"],
+        "dateModified": model["publishedAt"],
+        "mainEntityOfPage": {"@type": "WebPage", "@id": canonical},
+        "articleSection": "HLRN Race Recap",
+        "isAccessibleForFree": True,
+        "author": {
+            "@type": "Organization",
+            "name": "High Line Racing Network",
+            "url": SITE_ORIGIN + "/",
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "High Line Racing Network",
+            "url": SITE_ORIGIN + "/",
+        },
+        "about": [
+            {"@type": "SportsEvent", "name": f'{model["series"]} at {model["track"]}'},
+            {"@type": "SportsOrganization", "name": "High Line Racing Network"},
+        ],
+    }, ensure_ascii=False).replace("</", "<\\/")
 
     return f"""<!doctype html>
 <html lang="en">
@@ -502,6 +527,7 @@ def render_article(model):
 <meta property="og:title" content="{escape(model["title"])}">
 <meta property="og:description" content="{escape(model["subtitle"])}">
 <meta property="og:url" content="{escape(canonical)}">
+<script type="application/ld+json">{schema_json}</script>
 <link rel="stylesheet" href="/assets/site-shell.css?v=20260928v6">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
