@@ -1,128 +1,285 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>HLRN Results Center | Race Results & Schedule</title>
-<meta name="description" content="High Line Racing Network Sunday and Monday race results, full finishing orders, winners, race stats, schedules, replays and frozen race records.">
-<meta name="robots" content="index,follow,max-image-preview:large">
-<link rel="canonical" href="https://highlineracingnetwork.com/results/">
-<meta name="theme-color" content="#07090d">
-<link rel="icon" href="../favicon.ico">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>HLRN Results & Schedule | High Line Racing Network</title>
+<meta name="description" content="High Line Racing Network race results, previous winners, upcoming events and the complete Sunday and Monday league schedule.">
+<link rel="canonical" href="https://highlineracingnetwork.com/results/"><link rel="stylesheet" href="../assets/results/results-v1.min.css?v=20260929freeze1">
+<link rel="preload" as="script" href="../assets/results/results-core-v1.js?v=20260929p3">
+<link rel="preload" as="script" href="../assets/results/results-schedule-v1.js?v=20260929freeze1">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <link rel="stylesheet" href="../assets/site-shell.css?v=20260929mobile2">
-<link rel="stylesheet" href="../assets/results/results-center-v2.css?v=20260929rc2">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-</head>
-<body class="rc-page">
 
-<header class="rc-mast">
-  <div class="rc-shell rc-mast-grid">
-    <div>
-      <div class="rc-kicker"><span>HLRN //</span> OFFICIAL RACE ARCHIVE</div>
-      <h1>RESULTS <span>CENTER</span></h1>
-      <p>Every completed HLRN race in one place. Open the latest result, review the full finishing order, track the biggest movers and race stats, then jump straight to the replay or Newsroom coverage.</p>
-    </div>
 
-    <aside class="rc-next" aria-label="Next HLRN event">
-      <div class="rc-next-head">
-        <strong>NEXT HLRN EVENT</strong>
-        <span id="rcUpdated">CONNECTING</span>
-      </div>
-      <div class="rc-next-main">
-        <small id="rcNextSeries">CALCULATING SCHEDULE</small>
-        <strong id="rcNextTrack">CONNECTING</strong>
-        <p id="rcNextMeta">Checking the 2026 HLRN schedule…</p>
-      </div>
-      <div class="rc-next-actions">
-        <a id="rcNextPreview" href="../race-preview/">RACE PREVIEW →</a>
-        <a href="../live/">LIVE RACE CENTER →</a>
-      </div>
-    </aside>
-  </div>
+
+
+<meta name="theme-color" content="#07090d">
+<meta name="robots" content="index, follow, max-image-preview:large">
+</head><body>
+<div class="hlrn-race-center">
+<div class="ultra-scan"></div><div class="ultra-orb one"></div><div class="ultra-orb two"></div>
+<div class="ultra-topbar">
+  <div class="ultra-brand"><i class="ultra-live-dot" id="ultraLiveDot"></i><span class="ultra-hlrn">HLR<span class="n">N</span></span><b>RACE CONTROL</b></div>
+  <div class="ultra-center-status" id="ultraCenterStatus">SYSTEM <span>ONLINE</span> • AUTOMATIC RACE CENTER</div>
+  <div class="ultra-clock"><span id="ultraClock">--:--:--</span><small>EASTERN TIME</small></div>
+</div>
+
+<div class="background-mark">HLRN</div>
+
+<header class="race-header">
+<div class="hlrn-logo"><span style="color:#fff">HLR</span><span>N</span></div>
+<h1>RACE <span>CENTER</span></h1>
+<p>HIGH LINE RACING NETWORK</p>
+<div class="header-line"></div>
 </header>
 
-<main class="rc-main">
-  <div class="rc-shell">
+<div class="hlrn-race-ticker" aria-hidden="true"><div class="hlrn-race-ticker-track"><span><b>■</b> HIGH LINE RACING NETWORK</span><span><b>■</b> SUNDAY NIGHT LEAGUE</span><span><b>■</b> MONDAY NIGHT LEAGUE</span><span><b>■</b> GREEN FLAG • 8:30 PM EASTERN</span><span><b>■</b> HIGH LINE RACING NETWORK</span><span><b>■</b> SUNDAY NIGHT LEAGUE</span><span><b>■</b> MONDAY NIGHT LEAGUE</span><span><b>■</b> GREEN FLAG • 8:30 PM EASTERN</span></div></div>
 
-    <nav class="rc-tabs" aria-label="Results league filter">
-      <button class="rc-tab all" type="button" data-filter="all">All Results</button>
-      <button class="rc-tab sunday" type="button" data-filter="sunday">Sunday</button>
-      <button class="rc-tab monday" type="button" data-filter="monday">Monday</button>
-    </nav>
+<section class="ultra-raceboard" aria-label="Race operations overview">
+ <div class="ultra-board-main"><div class="ultra-board-kicker" id="ultraNextKicker">NEXT HLRN EVENT</div><div class="ultra-board-event" id="ultraNextEvent">CALCULATING RACE WEEK...</div><div class="ultra-board-meta" id="ultraNextMeta">AUTOMATIC SCHEDULE SYSTEM</div></div>
+ <div class="ultra-board-cell"><div class="ultra-board-label">SUNDAY</div><div class="ultra-board-value lime" id="ultraSundayWeek">W--</div></div>
+ <div class="ultra-board-cell"><div class="ultra-board-label">MONDAY</div><div class="ultra-board-value red" id="ultraMondayWeek">W--</div></div>
+ <div class="ultra-board-cell"><div class="ultra-board-label">RACE TIME</div><div class="ultra-board-value yellow">8:30</div></div>
+</section>
 
-    <section id="rcDirectory">
-      <section class="rc-hero" id="rcHero" aria-label="Latest HLRN result">
-        <div class="rc-empty">Loading the latest completed race…</div>
-      </section>
-
-      <section class="rc-section">
-        <div class="rc-section-head">
-          <div><div class="rc-section-kicker">CHECKERED FLAG ARCHIVE</div><h2>Completed Races</h2></div>
-          <span id="rcArchiveCount">LOADING RESULTS</span>
-        </div>
-        <div class="rc-race-grid" id="rcRaceGrid">
-          <div class="rc-empty">Building the HLRN race archive…</div>
-        </div>
-      </section>
-
-      <section class="rc-section">
-        <div class="rc-section-head">
-          <div><div class="rc-section-kicker">2026 RACE CALENDAR</div><h2>Schedule + Completed Events</h2></div>
-          <a href="../race-preview/">OPEN RACE WEEK PREVIEW →</a>
-        </div>
-
-        <div class="rc-schedule-grid">
-          <article class="rc-schedule-card">
-            <div class="rc-schedule-title"><strong>Sunday Night</strong><span>8:30 PM ET</span></div>
-            <div class="rc-schedule-list" id="rcSundaySchedule"><div class="rc-empty">Loading Sunday schedule…</div></div>
-          </article>
-          <article class="rc-schedule-card">
-            <div class="rc-schedule-title"><strong>Monday Night</strong><span>8:30 PM ET</span></div>
-            <div class="rc-schedule-list" id="rcMondaySchedule"><div class="rc-empty">Loading Monday schedule…</div></div>
-          </article>
-        </div>
-      </section>
-
-      <section class="rc-section">
-        <div class="rc-section-head">
-          <div><div class="rc-section-kicker">CHECKERED-FLAG PRESERVATION</div><h2>Frozen Race Records</h2></div>
-          <span id="rcRecorderState">CHECKING RECORDER</span>
-        </div>
-        <div class="rc-recorder">
-          <div class="rc-recorder-status"><strong>HLRN Race Recorder</strong><span>Recorder facts stay separate from official scoring</span></div>
-          <div class="rc-recorder-list" id="rcRecorderList"><div class="rc-empty">Checking for frozen race records…</div></div>
-        </div>
-      </section>
-
-      <section class="rc-section">
-        <div class="rc-section-head">
-          <div><div class="rc-section-kicker">FOLLOW THE FULL STORY</div><h2>Race-Night Flow</h2></div>
-        </div>
-        <div class="rc-flow">
-          <a href="../broadcasters/"><small>01 • WATCH</small><strong>Watch HLRN</strong></a>
-          <a href="../live/"><small>02 • FOLLOW LIVE</small><strong>Live Race Center</strong></a>
-          <a class="current" href="../results/"><small>03 • CHECKERED</small><strong>Results Center</strong></a>
-          <a href="../news/"><small>04 • AFTER THE RACE</small><strong>Newsroom</strong></a>
-        </div>
-      </section>
-    </section>
-
-    <section class="rc-report" id="rcReport" aria-live="polite">
-      <button class="rc-back" id="rcBack" type="button">← Back to Results Center</button>
-      <div id="rcReportContent"></div>
-    </section>
-
-    <footer class="rc-footer">
-      <span>HIGH LINE RACING NETWORK • RESULTS CENTER</span>
-      <span>WATCH → LIVE → RESULTS → NEWSROOM</span>
-    </footer>
+<section class="race-preview-launch" aria-label="HLRN race week previews">
+  <div class="race-preview-launch-copy">
+    <small>PRE-RACE INTELLIGENCE</small>
+    <strong>RACE WEEK PREVIEW</strong>
+    <span>Championship battle • recent form • track history • teams • drivers to watch</span>
   </div>
+  <div class="race-preview-launch-actions">
+    <a class="sunday" href="../race-preview/?league=sunday">SUNDAY PREVIEW <b>→</b></a>
+    <a class="monday" href="../race-preview/?league=monday">MONDAY PREVIEW <b>→</b></a>
+  </div>
+</section>
+
+<section class="bx-statusbar" aria-label="HLRN operations status">
+  <div class="bx-status"><b id="bxSystem">ONLINE</b><span>Schedule Engine</span></div>
+  <div class="bx-status"><b id="bxSunWeek">WEEK --</b><span>Sunday Program</span></div>
+  <div class="bx-status"><b id="bxMonWeek">WEEK --</b><span>Monday Program</span></div>
+  <div class="bx-status"><b>2</b><span>League Nights</span></div>
+  <div class="bx-status"><b id="bxLiveState">STANDBY</b><span>Broadcast State</span></div>
+</section>
+
+<main class="league-grid">
+
+<section class="league-column">
+<div class="league-title">HLRN SUNDAY NIGHT LEAGUE</div>
+<div class="race-card">
+<div class="league-name">HIGH LINE RACING NETWORK</div>
+<div class="week-number" id="sundayWeek">WEEK 6</div>
+<div class="track-name" id="sundayTrack">TEXAS</div>
+<div class="race-date" id="sundayDate">Sunday, August 16, 2026</div>
+<div class="race-time" id="sundayTime">8:30 PM EDT</div>
+<div class="race-summary" id="sundaySummary">TRUCKS • 175 LAPS • 5 SETS</div>
+<div class="countdown-section" id="sundayCountdownSection">
+<div class="countdown-title">RACE STARTS IN</div>
+<div class="countdown">
+<div class="time-box"><span class="time-number" id="sundayDays">00</span><span class="time-label">DAYS</span></div>
+<div class="time-box"><span class="time-number" id="sundayHours">00</span><span class="time-label">HOURS</span></div>
+<div class="time-box"><span class="time-number" id="sundayMinutes">00</span><span class="time-label">MINUTES</span></div>
+<div class="time-box"><span class="time-number" id="sundaySeconds">00</span><span class="time-label">SECONDS</span></div>
+</div>
+</div>
+<div class="live-container" id="sundayLive">
+<div class="live-label">THE RACE IS LIVE</div>
+<a class="live-button" href="https://www.youtube.com/@High_Line_Racing/streams" target="_blank" rel="noopener noreferrer">🔴 LIVE NOW — WATCH LIVE</a>
+</div>
+<div class="track-information">
+<div class="section-title"><span>///</span> TRACK INFORMATION <span>///</span></div>
+<div class="track-body">
+<div class="track-description" id="sundayDescription">Texas Motor Speedway</div>
+<div class="stats">
+<div class="stat"><strong id="sundayMiles">—</strong><span>MILES</span></div>
+<div class="stat"><strong id="sundayBanking">—</strong><span>BANKING</span></div>
+<div class="stat"><strong id="sundayLocation">—</strong><span>LOCATION</span></div>
+<div class="stat"><strong id="sundayType">—</strong><span>TRACK TYPE</span></div>
+</div>
+<div class="race-info">
+<div class="info-box"><span class="info-label">CAR</span><span class="info-value" id="sundayCar">—</span></div>
+<div class="info-box"><span class="info-label">LAPS</span><span class="info-value" id="sundayLaps">—</span></div>
+<div class="info-box"><span class="info-label">TIRES</span><span class="info-value" id="sundayTires">—</span></div>
+</div>
+</div>
+</div>
+<div class="season-complete" id="sundayComplete"><h2>SUNDAY SEASON COMPLETE</h2><p>Thank you for racing with HLRN.</p></div>
+</div>
+</section>
+
+<section class="league-column">
+<div class="league-title">HLRN MONDAY NIGHT LEAGUE</div>
+<div class="race-card">
+<div class="league-name">HIGH LINE RACING NETWORK</div>
+<div class="week-number" id="mondayWeek">WEEK 1</div>
+<div class="track-name" id="mondayTrack">DAYTONA</div>
+<div class="race-date" id="mondayDate">Monday, August 17, 2026</div>
+<div class="race-time" id="mondayTime">8:30 PM EDT</div>
+<div class="race-summary" id="mondaySummary">GEN 7 • 100 LAPS • 4 SETS</div>
+<div class="countdown-section" id="mondayCountdownSection">
+<div class="countdown-title">RACE STARTS IN</div>
+<div class="countdown">
+<div class="time-box"><span class="time-number" id="mondayDays">00</span><span class="time-label">DAYS</span></div>
+<div class="time-box"><span class="time-number" id="mondayHours">00</span><span class="time-label">HOURS</span></div>
+<div class="time-box"><span class="time-number" id="mondayMinutes">00</span><span class="time-label">MINUTES</span></div>
+<div class="time-box"><span class="time-number" id="mondaySeconds">00</span><span class="time-label">SECONDS</span></div>
+</div>
+</div>
+<div class="live-container" id="mondayLive">
+<div class="live-label">THE RACE IS LIVE</div>
+<a class="live-button" href="https://www.youtube.com/@rsibroadcasting/streams" target="_blank" rel="noopener noreferrer">🔴 LIVE NOW — WATCH LIVE</a>
+</div>
+<div class="track-information">
+<div class="section-title"><span>///</span> TRACK INFORMATION <span>///</span></div>
+<div class="track-body">
+<div class="track-description" id="mondayDescription">Daytona International Speedway</div>
+<div class="stats">
+<div class="stat"><strong id="mondayMiles">—</strong><span>MILES</span></div>
+<div class="stat"><strong id="mondayBanking">—</strong><span>BANKING</span></div>
+<div class="stat"><strong id="mondayLocation">—</strong><span>LOCATION</span></div>
+<div class="stat"><strong id="mondayType">—</strong><span>TRACK TYPE</span></div>
+</div>
+<div class="race-info">
+<div class="info-box"><span class="info-label">CAR</span><span class="info-value" id="mondayCar">—</span></div>
+<div class="info-box"><span class="info-label">LAPS</span><span class="info-value" id="mondayLaps">—</span></div>
+<div class="info-box"><span class="info-label">TIRES</span><span class="info-value" id="mondayTires">—</span></div>
+</div>
+</div>
+</div>
+<div class="season-complete" id="mondayComplete"><h2>MONDAY SEASON COMPLETE</h2><p>Thank you for racing with HLRN.</p></div>
+</div>
+</section>
+
 </main>
 
-<script src="../assets/hlrn-core.js?v=results-center2"></script>
-<script src="../assets/results/results-center-v2.js?v=20260929rc4"></script>
+
+<section class="ultra-telemetry" aria-label="HLRN race telemetry">
+ <div class="ultra-tel"><b>2</b><span>League Nights</span></div>
+ <div class="ultra-tel"><b>8:30</b><span>Eastern Green</span></div>
+ <div class="ultra-tel"><b>LIVE</b><span>Countdown</span></div>
+ <div class="ultra-tel"><b>AUTO</b><span>Schedule</span></div>
+ <div class="ultra-tel"><b>4</b><span>Next Events</span></div>
+ <div class="ultra-tel"><b>HLRN</b><span>Race Network</span></div>
+</section>
+<section class="next-events-section">
+<div class="next-events-heading">NEXT <span>4</span> HLRN EVENTS</div>
+<div class="next-events-grid" id="nextEventsGrid"></div>
+</section>
+
+<section class="hlrn-archive" id="raceArchive" aria-label="HLRN race archive">
+  <div class="archive-head">
+    <div>
+      <small>HLRN // COMPLETED EVENTS</small>
+      <h2>RACE ARCHIVE</h2>
+      <p>Every completed Sunday and Monday league race in one place. Open a race for the full finishing order, key stats, movement and automatic post-race report.</p>
+    </div>
+    <div class="archive-status"><span class="archive-live-dot"></span><b id="archiveUpdated">LOADING RACE DATA</b></div>
+  </div>
+
+  <div class="archive-controls">
+    <div class="archive-tabs" role="tablist" aria-label="Race archive league filter">
+      <button class="archive-tab active" type="button" data-archive-league="all">ALL RACES</button>
+      <button class="archive-tab sunday" type="button" data-archive-league="sunday">SUNDAY</button>
+      <button class="archive-tab monday" type="button" data-archive-league="monday">MONDAY</button>
+    </div>
+    <div class="archive-summary">
+      <span><b id="archiveRaceCount">--</b> RACES</span>
+      <span><b id="archiveWinnerCount">--</b> WINNERS</span>
+      <span><b id="archiveDriverCount">--</b> DRIVERS</span>
+    </div>
+  </div>
+
+  <div class="archive-grid" id="archiveGrid">
+    <div class="archive-loading">BUILDING HLRN RACE ARCHIVE…</div>
+  </div>
+</section>
+
+<section class="hlrn-recorder-archive" id="recorderArchive" aria-label="HLRN frozen race records">
+  <div class="recorder-archive-head">
+    <div>
+      <small>HLRN // CHECKERED-FLAG PRESERVATION</small>
+      <h2>FROZEN RACE RECORDS</h2>
+      <p>Permanent race-night records captured by the HLRN recorder at checkered. Recorder facts are kept separate from official championship scoring.</p>
+    </div>
+    <div class="recorder-archive-status"><span></span><b id="recorderArchiveStatus">LOADING RECORDER ARCHIVE</b></div>
+  </div>
+  <div class="recorder-archive-grid" id="recorderArchiveGrid">
+    <div class="recorder-archive-empty">Checking for published frozen race records…</div>
+  </div>
+</section>
+
+<section class="race-report-view" id="raceReportView" aria-live="polite">
+  <button class="report-back" id="reportBack" type="button">← BACK TO RACE ARCHIVE</button>
+  <div id="raceReportContent"></div>
+</section>
+
+<section class="bottom-area">
+<div class="sponsor-box">
+<div class="sponsor-heading">HLRN RACING PARTNERS</div>
+<div class="sponsors">
+<div class="sponsor admin">ADMIN BOX</div>
+<div class="sponsor">PEDLEY'S GARAGE</div>
+<div class="sponsor rsi">RSI<small>BROADCASTING</small></div>
+<div class="sponsor twrs">TWRS</div>
+<div class="sponsor bsm">BSM<small>BLIND SQUIRL MEDIA</small></div>
+</div>
+</div>
+</section>
+
+<section class="hlrn-promo">
+<div class="promo-watermark">HLRN</div>
+<div class="promo-stripe"></div>
+<div class="promo-content">
+<div class="promo-logo">HLRN</div>
+<div class="promo-network">HIGH LINE RACING NETWORK</div>
+<div class="promo-slogan"><span class="checkered">◆</span> RACE <b>•</b> BROADCAST <b>•</b> COMPETE <span class="checkered">◆</span></div>
+<div class="promo-leagues">SUNDAY NIGHT LEAGUE <span>•</span> MONDAY NIGHT LEAGUE <span>•</span> HOSTED RACING</div>
+<div class="promo-follow">FOLLOW HLRN FOR RACE UPDATES &amp; BROADCASTS</div>
+<div class="promo-socials">
+<a href="https://www.youtube.com/@High_Line_Racing" target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="YouTube"><span class="promo-social youtube"><svg viewBox="0 0 24 24"><path fill="#ff0000" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.8 31.8 0 0 0 0 12a31.8 31.8 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.8 31.8 0 0 0 24 12a31.8 31.8 0 0 0-.5-5.8Z"/><path fill="#fff" d="M9.6 15.9V8.1l6.5 3.9-6.5 3.9Z"/></svg></span></a>
+<a href="https://www.facebook.com/search/top?q=high%20line%20racing%20network" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook"><span class="promo-social facebook"><svg viewBox="0 0 24 24"><path fill="#1877f2" d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.6 1.7-1.6h1.8V3.8c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3V10H7.5v3h2.8v8h3.2Z"/></svg></span></a>
+<a href="https://discord.gg/6sRg57RAy" target="_blank" rel="noopener noreferrer" aria-label="Discord" title="Discord"><span class="promo-social discord"><svg viewBox="0 0 24 24"><path fill="#5865f2" d="M19.5 5.2A16.2 16.2 0 0 0 15.7 4l-.5 1a14.7 14.7 0 0 0-6.4 0l-.5-1a16.2 16.2 0 0 0-3.8 1.2C2.1 8.1 1.5 12.9 1.8 17.6a16.4 16.4 0 0 0 4.7 2.4l1.1-1.5a10.4 10.4 0 0 1-1.8-.9l.4-.3c3.5 1.6 7.3 1.6 10.8 0l.4.3c-.6.4-1.2.7-1.8.9l1.1 1.5a16.4 16.4 0 0 0 4.7-2.4c.4-5.5-.7-10.3-1.9-12.4ZM8.3 15.2c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Zm7.4 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8 2 1.8 2Z"/></svg></span></a>
+</div>
+</div>
+<div class="promo-race-week sunday"><div class="race-week-title">SUNDAY RACE WEEK</div><div class="race-week-value">WEEK <span id="promoSundayWeek">7</span></div></div>
+<div class="promo-race-week monday"><div class="race-week-title">MONDAY RACE WEEK</div><div class="race-week-value">WEEK <span id="promoMondayWeek">1</span></div></div>
+</section>
+
+
+
+
+<div class="ultra-bottom-bar"><div><b>HIGH LINE RACING NETWORK</b> • RACE CENTER</div><div>DATA: <span>AUTOMATIC</span> • TIME ZONE: <b>AMERICA/NEW_YORK</b></div></div>
+<div class="footer-line">COMPETE. <span>RESPECT.</span> HAVE FUN.</div>
+<div class="checkers"></div>
+
+</div>
+<script src="../assets/results/results-core-v1.js?v=20260929p3"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script src="../assets/results/results-schedule-v1.js?v=20260929m1"></script>
+<script src="../assets/hlrn-core.js?v=results-archive-1"></script>
+<script src="../assets/results/results-archive-v1.js?v=20260929classic2"></script>
+
 <script src="../assets/site-shell.js?v=20260929teams1"></script>
-</body>
-</html>
+</body></html>
