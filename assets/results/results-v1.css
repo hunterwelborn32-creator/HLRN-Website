@@ -4848,3 +4848,48 @@ body{
   .report-hero-grid{grid-template-columns:1fr 1fr}
   .report-feature-grid,.report-team-grid{grid-template-columns:1fr}
 }
+
+
+/* HLRN RACE WEEK PREVIEW LAUNCHER */
+.race-preview-launch{
+  width:100%;
+  margin:7px 0;
+  min-height:74px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:center;
+  gap:18px;
+  padding:12px 15px;
+  border:1px solid #303941;
+  border-left:5px solid var(--rc-yellow);
+  background:linear-gradient(90deg,rgba(255,212,0,.045),transparent 30%),#080a0c;
+}
+.race-preview-launch-copy{display:grid;gap:3px}
+.race-preview-launch-copy small{color:var(--rc-yellow);font-size:6px;font-weight:1000;letter-spacing:.14em}
+.race-preview-launch-copy strong{color:#fff;font-family:var(--rc-font);font-size:19px;font-style:italic}
+.race-preview-launch-copy span{color:#7b858e;font-size:7px}
+.race-preview-launch-actions{display:flex;gap:5px}
+.race-preview-launch-actions a{
+  min-height:39px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  min-width:150px;
+  padding:0 12px;
+  border:1px solid #394149;
+  background:#0c0f12;
+  color:#fff;
+  font-family:var(--rc-font);
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.08em;
+}
+.race-preview-launch-actions a.sunday{border-left:4px solid var(--rc-red)}
+.race-preview-launch-actions a.monday{border-left:4px solid var(--rc-green)}
+.race-preview-launch-actions a:hover{background:#15191d}
+@media(max-width:700px){
+  .race-preview-launch{grid-template-columns:1fr}
+  .race-preview-launch-actions{display:grid;grid-template-columns:1fr 1fr}
+  .race-preview-launch-actions a{min-width:0}
+}
