@@ -1167,6 +1167,8 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
   let showFullField = false;
   let selectedCarIdx = null;
   let lastPhase = null;
+  let manualTabSelection = false;
+  let manualTabPhase = null;
   let localFrozenRaceState = null;
   let localFrozenRaceKey = null;
   let lastAutoSessionKey = null;
@@ -1487,8 +1489,14 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
   }
 
   function autoNavigateSession(s){
-    if(!s?.online) return;
+    if(!s?.online && !s?.raceFrozen) return;
     const phase=s.phase||"other";
+
+    if(manualTabSelection && manualTabPhase === phase) return;
+    if(manualTabPhase !== phase){
+      manualTabSelection = false;
+      manualTabPhase = phase;
+    }
     let target=null;
     let key=phase;
     if(phase==="practice") target="practice";
@@ -3010,7 +3018,11 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
   }
 
   document.querySelectorAll(".tab").forEach(btn => {
-    btn.addEventListener("click", () => activateTab(btn.dataset.tab));
+    btn.addEventListener("click", () => {
+      manualTabSelection = true;
+      manualTabPhase = state?.phase || "other";
+      activateTab(btn.dataset.tab);
+    });
   });
 
   $("top10Btn").addEventListener("click", () => {
@@ -3043,7 +3055,7 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
       btn.classList.add("active");
       timelineFilter = btn.dataset.filter || "all";
       const raceState = getPhaseState("race");
-      renderTimeline((raceState && raceState.events) || []);
+      renderTimeline(accurateRaceEvents(raceState));
     });
   });
 
