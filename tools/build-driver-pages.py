@@ -32,8 +32,16 @@ DRIVERS_ROOT = ROOT / "drivers"
 ORIGIN = "https://highlineracingnetwork.com"
 PHOTO_BASE = "https://hunterwelborn32-creator.github.io/HLRN-App/driver-photos/cutout/"
 
-SERIES_LABEL = {"sunday": "Sunday Night League", "monday": "Monday Night League"}
-SERIES_SHORT = {"sunday": "Sunday", "monday": "Monday"}
+SERIES_LABEL = {
+    "sunday": "Sunday Night League",
+    "monday": "Monday Night League",
+    "hosted": "Hosted Racing",
+}
+SERIES_SHORT = {"sunday": "Sunday", "monday": "Monday", "hosted": "Hosted"}
+SERIES_ORDER = ("sunday", "monday", "hosted")
+HOSTED_NAME_ALIASES = {
+    "ethanfonsecamoreno": "Ethan Moreno",
+}
 
 
 def esc(value):
@@ -100,23 +108,30 @@ def team_maps(hlrn):
     return out
 
 
-def record_number(name, number_map):
+def record_number(name, number_map, hosted_numbers=None):
     raw = keyify(name)
     if raw in number_map:
         return number_map[raw]
     raw2 = re.sub(r"\d+$", "", raw)
-    return number_map.get(raw2, "—")
+    if raw2 in number_map:
+        return number_map[raw2]
+    return (hosted_numbers or {}).get(name, "—")
 
 
 def fmt_date(value):
     if not value:
         return "—"
+    text = str(value).strip()
     try:
-        text = str(value).replace("Z", "+00:00")
-        dt = datetime.fromisoformat(text)
+        dt = datetime.fromisoformat(text.replace("Z", "+00:00"))
         return dt.strftime("%b %-d, %Y")
     except Exception:
-        return str(value)[:10]
+        pass
+    try:
+        dt = datetime.strptime(text, "%m/%d/%Y")
+        return dt.strftime("%b %-d, %Y")
+    except Exception:
+        return text[:10]
 
 
 def series_stats_block(series, rec, team):
@@ -229,7 +244,7 @@ def render_page(driver):
     avg_finish = weighted_finish_num / starts if starts else None
 
     canonical = f"{ORIGIN}/drivers/{slug}/"
-    series_names = " and ".join(SERIES_SHORT[s] for s in ("sunday", "monday") if s in records)
+    series_names = " and ".join(SERIES_SHORT[s] for s in SERIES_ORDER if s in records)
     description = (
         f"{name}'s official High Line Racing Network driver profile with {series_names or 'HLRN'} "
         "statistics, race history, team information and recent results."
@@ -253,7 +268,7 @@ def render_page(driver):
 
     series_html = "".join(
         series_stats_block(series, records[series], teams.get(series))
-        for series in ("sunday", "monday") if series in records
+        for series in SERIES_ORDER if series in records
     )
     combined_stats = [
         ("Starts", intish(starts)),
@@ -290,7 +305,7 @@ def render_page(driver):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,800;1,900&family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{{--red:#e31837;--yellow:#ffd400;--ink:#101318;--muted:#727a84;--line:#d9dde2;--paper:#fff;--bg:#f2f3f5;--sun:#e31837;--mon:#53a832}}
+:root{{--red:#e31837;--yellow:#ffd400;--ink:#101318;--muted:#727a84;--line:#d9dde2;--paper:#fff;--bg:#f2f3f5;--sun:#e31837;--mon:#53a832;--hosted:#c89c00}}
 *{{box-sizing:border-box}}html{{background:var(--bg)}}body{{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,sans-serif}}a{{color:inherit;text-decoration:none}}
 .page{{width:min(1380px,calc(100% - 30px));margin:0 auto;padding:26px 0 72px}}
 .crumb{{font-size:9px;font-weight:1000;letter-spacing:.1em;text-transform:uppercase;color:#747d87;margin:10px 0 18px}}.crumb a:hover{{color:var(--red)}}
@@ -307,10 +322,10 @@ def render_page(driver):
 .career-stat{{padding:14px 12px;border-right:1px solid var(--line);min-width:0}}.career-stat:last-child{{border-right:0}}.career-stat small,.stat small{{display:block;color:#7d8690;font-size:7px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase}}.career-stat strong{{display:block;margin-top:5px;font:900 22px/1 "Barlow Condensed",sans-serif}}
 .section-head{{display:flex;align-items:end;justify-content:space-between;gap:16px;margin:31px 0 12px;padding-bottom:9px;border-bottom:4px solid #111}}.section-head small{{display:block;color:var(--red);font-size:8px;font-weight:1000;letter-spacing:.11em}}.section-head h2{{margin:3px 0 0;font:900 italic 34px/1 "Barlow Condensed",sans-serif;text-transform:uppercase}}
 .series-grid{{display:grid;grid-template-columns:repeat({max(1,len(records))},minmax(0,1fr));gap:14px}}
-.series-card{{background:#fff;border:1px solid var(--line);border-top:5px solid #222}}.series-card.sunday{{border-top-color:var(--sun)}}.series-card.monday{{border-top-color:var(--mon)}}.series-head{{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:16px 18px;border-bottom:1px solid var(--line)}}.series-head small{{color:#7b848e;font-size:8px;font-weight:1000;letter-spacing:.1em;text-transform:uppercase}}.series-head h2{{margin:3px 0 0;font:900 italic 27px/1 "Barlow Condensed",sans-serif;text-transform:uppercase}}.team-badge{{text-align:right}}.team-badge strong{{display:block;margin-top:3px;font-size:13px}}
+.series-card{{background:#fff;border:1px solid var(--line);border-top:5px solid #222}}.series-card.sunday{{border-top-color:var(--sun)}}.series-card.monday{{border-top-color:var(--mon)}}.series-card.hosted{{border-top-color:var(--hosted)}}.series-head{{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:16px 18px;border-bottom:1px solid var(--line)}}.series-head small{{color:#7b848e;font-size:8px;font-weight:1000;letter-spacing:.1em;text-transform:uppercase}}.series-head h2{{margin:3px 0 0;font:900 italic 27px/1 "Barlow Condensed",sans-serif;text-transform:uppercase}}.team-badge{{text-align:right}}.team-badge strong{{display:block;margin-top:3px;font-size:13px}}
 .stats-grid{{display:grid;grid-template-columns:repeat(5,1fr)}}.stat{{padding:13px 14px;border-right:1px solid #e5e7ea;border-bottom:1px solid #e5e7ea}}.stat:nth-child(5n){{border-right:0}}.stat strong{{display:block;margin-top:4px;font:900 19px/1 "Barlow Condensed",sans-serif}}
 .form-grid{{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}}.form-item{{display:grid;grid-template-columns:auto 1fr;column-gap:10px;align-items:center;background:#fff;border:1px solid var(--line);padding:12px}}.form-item strong{{grid-row:1/3;font:900 italic 28px/1 "Barlow Condensed",sans-serif}}.form-item span{{font-size:10px;font-weight:1000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}.form-item small{{font-size:7px;font-weight:900;color:#7e8791;text-transform:uppercase}}.form-item.win{{border-left:4px solid var(--red)}}.form-item.top5{{border-left:4px solid #e5b900}}
-.history-wrap{{overflow:auto;background:#fff;border:1px solid var(--line)}}table{{width:100%;border-collapse:collapse;min-width:950px}}th{{padding:10px 9px;background:#11161d;color:#fff;text-align:left;font-size:8px;letter-spacing:.08em;text-transform:uppercase}}td{{padding:10px 9px;border-bottom:1px solid #e4e7ea;font-size:10px}}td.win{{background:#fff0f2;color:#b30c27;font-weight:1000}}td.top5{{font-weight:1000}}.series-pill{{display:inline-block;padding:4px 6px;background:#eee;font-size:7px;font-weight:1000;text-transform:uppercase}}.series-pill.sunday{{background:#fff0f2;color:#b30c27}}.series-pill.monday{{background:#eff9ea;color:#3d7f25}}
+.history-wrap{{overflow:auto;background:#fff;border:1px solid var(--line)}}table{{width:100%;border-collapse:collapse;min-width:950px}}th{{padding:10px 9px;background:#11161d;color:#fff;text-align:left;font-size:8px;letter-spacing:.08em;text-transform:uppercase}}td{{padding:10px 9px;border-bottom:1px solid #e4e7ea;font-size:10px}}td.win{{background:#fff0f2;color:#b30c27;font-weight:1000}}td.top5{{font-weight:1000}}.series-pill{{display:inline-block;padding:4px 6px;background:#eee;font-size:7px;font-weight:1000;text-transform:uppercase}}.series-pill.sunday{{background:#fff0f2;color:#b30c27}}.series-pill.monday{{background:#eff9ea;color:#3d7f25}}.series-pill.hosted{{background:#fff8df;color:#7b5d00}}
 .empty{{padding:22px;background:#fff;border:1px solid var(--line);color:#747d86;font-size:10px;font-weight:800}}
 .actions{{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}}.actions a{{padding:11px 14px;background:#11161d;color:#fff;font:900 italic 15px/1 "Barlow Condensed",sans-serif;text-transform:uppercase}}.actions a.primary{{background:var(--red)}}
 .updated{{margin-top:14px;color:#858d96;font-size:8px;font-weight:800;text-transform:uppercase}}
@@ -361,11 +376,95 @@ def render_page(driver):
 """
 
 
+
+def canonical_hosted_name(name):
+    raw = str(name or "").strip()
+    return HOSTED_NAME_ALIASES.get(keyify(raw), raw)
+
+
+def hosted_profile_records(hlrn):
+    """Build verified Hosted profile summaries from the shared Hosted snapshot."""
+    hosted = (hlrn or {}).get("hosted") or {}
+    latest = hosted.get("latest") or {}
+    latest_results = latest.get("results") or []
+
+    latest_by_name = {}
+    hosted_numbers = {}
+    aliases = defaultdict(list)
+
+    for row in latest_results:
+        raw_name = str(row.get("driver") or "").strip()
+        if not raw_name:
+            continue
+        name = canonical_hosted_name(raw_name)
+        latest_by_name[keyify(name)] = row
+        car_number = str(row.get("carNumber") or "").strip()
+        if car_number:
+            hosted_numbers[name] = car_number
+        if raw_name != name and raw_name not in aliases[name]:
+            aliases[name].append(raw_name)
+
+    # Session rows are newest-first in the Hosted feed and give us a verified
+    # fallback car number when the driver did not compete in the latest race.
+    for row in hosted.get("sessions") or []:
+        raw_name = str(row.get("driver") or "").strip()
+        if not raw_name:
+            continue
+        name = canonical_hosted_name(raw_name)
+        car_number = str(row.get("carNumber") or "").strip()
+        if car_number and name not in hosted_numbers:
+            hosted_numbers[name] = car_number
+        if raw_name != name and raw_name not in aliases[name]:
+            aliases[name].append(raw_name)
+
+    records = {}
+    for row in hosted.get("rankings") or []:
+        raw_name = str(row.get("driver") or "").strip()
+        if not raw_name:
+            continue
+        name = canonical_hosted_name(raw_name)
+        if raw_name != name and raw_name not in aliases[name]:
+            aliases[name].append(raw_name)
+
+        rec = {
+            "rank": row.get("rank"),
+            "points": None,
+            "races": row.get("races"),
+            "wins": row.get("wins"),
+            "top5": row.get("top5"),
+            "top10": row.get("top10"),
+            "avgFinish": row.get("averageFinish"),
+            "laps": None,
+            "lapsLed": None,
+            "incidents": None,
+            "results": [],
+        }
+
+        latest_row = latest_by_name.get(keyify(name))
+        if latest_row:
+            rec["results"].append({
+                "raceNumber": None,
+                "track": latest.get("track"),
+                "date": latest.get("date"),
+                "start": latest_row.get("start"),
+                "finish": latest_row.get("position"),
+                "points": None,
+                "lapsLed": latest_row.get("lapsLed"),
+                "incidents": latest_row.get("incidents"),
+                "status": None,
+            })
+
+        records[name] = rec
+
+    return records, hosted_numbers, aliases
+
+
 def main():
     profiles = load_json(PROFILES_PATH)
     hlrn = load_json(HLRN_PATH)
     number_map = extract_existing_number_map()
     teams_by_series = team_maps(hlrn)
+    hosted_records, hosted_numbers, hosted_aliases = hosted_profile_records(hlrn)
 
     grouped = defaultdict(dict)
     photo_slug_by_name = {}
@@ -379,6 +478,9 @@ def main():
         if rec.get("photoSlug"):
             photo_slug_by_name.setdefault(name, str(rec.get("photoSlug")))
         id_by_series_name[(series, name)] = str(rec.get("id") or "")
+
+    for name, rec in hosted_records.items():
+        grouped[name]["hosted"] = rec
 
     pages = []
     slugs_seen = {}
@@ -399,7 +501,7 @@ def main():
         driver = {
             "name": name,
             "slug": slug,
-            "number": record_number(name, number_map),
+            "number": record_number(name, number_map, hosted_numbers),
             "photoSlug": photo_slug_by_name.get(name, slug),
             "records": records,
             "teams": teams,
@@ -418,6 +520,7 @@ def main():
             "series": sorted(records.keys()),
             "ids": {s: str(records[s].get("id") or "") for s in records},
             "teams": {s: teams.get(s) for s in records},
+            "aliases": hosted_aliases.get(name, []),
         })
 
     manifest = {
