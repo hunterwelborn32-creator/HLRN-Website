@@ -301,6 +301,110 @@ def build_episode(spec,messages):
         (directory/'index.html').write_text(page,encoding='utf8')
     return {k:data[k] for k in ('id','title','kind','number','cover','date')}
 
+def episode_home_cover(entry):
+    """Prefer Hunter's custom shelf covers when present, otherwise use the episode's published cover."""
+    number = entry.get('number')
+    if entry.get('kind') == 'main' and number in {3, 4, 5, 6, 7, 8}:
+        custom = DEST / f"episode-{number:02d}-cover.webp"
+        if custom.exists():
+            return custom.name
+    return str(entry.get('cover') or f"{entry['id']}/images/001.webp")
+
+
+def episode_home_card(entry, in_progress=False):
+    title = html.escape(str(entry.get('title') or 'HLRN Adventure'))
+    slug = html.escape(str(entry.get('id') or ''), quote=True)
+    special = entry.get('kind') == 'special'
+    number = entry.get('number')
+    badge = 'SPECIAL' if special else str(number or '').zfill(2)
+
+    if in_progress:
+        ghost = '★' if special else str(number or '?').zfill(2)
+        return (
+            f'<article aria-label="{title} in progress" class="episode-tile coming" '
+            f'data-adventure-static="true" data-adventure-progress="true" data-adventure-id="{slug}">'
+            f'<div class="episode-art placeholder-art"><span class="ghost-number">{ghost}</span>'
+            f'<span class="episode-numeral">{badge}</span></div>'
+            f'<div class="episode-details"><span class="episode-status">🟢 IN PROGRESS</span>'
+            f'<h3>{title}</h3><p>A new HLRN adventure is underway. The complete story will appear '
+            f'after the final installment is approved.</p>'
+            f'<div class="episode-bottom"><span>STORY IN PROGRESS</span><b>COMING SOON</b></div></div></article>'
+        )
+
+    cover = html.escape(episode_home_cover(entry), quote=True)
+    status = 'SPECIAL EPISODE' if special else 'AVAILABLE NOW'
+    aria = f'Read special episode: {title}' if special else f'Read Episode {number}: {title}'
+    extra = ' special' if special else ''
+    return (
+        f'<a aria-label="{aria}" class="episode-tile ready{extra}" href="{slug}/" '
+        f'data-adventure-static="true" data-adventure-id="{slug}">'
+        f'<div class="episode-art"><img alt="{title} artwork" src="{cover}" loading="lazy" decoding="async">'
+        f'<div class="play-symbol">▶</div><span class="episode-numeral">{badge}</span></div>'
+        f'<div class="episode-details"><span class="episode-status available">{status}</span>'
+        f'<h3>{title}</h3><p>Read the complete illustrated Adventure of High Line from opening scene '
+        f'through the final installment.</p>'
+        f'<div class="episode-bottom"><span>COMPLETE STORY</span><b>READ EPISODE ↗</b></div></div></a>'
+    )
+
+
+def render_home_library(entries, in_progress):
+    """Pre-render the Adventures shelf so published stories exist in raw HTML."""
+    page = DEST / 'index.html'
+    if not page.exists():
+        raise RuntimeError('Missing adventures/index.html; cannot render episode library.')
+
+    content = page.read_text(encoding='utf8')
+    start_marker = '<!-- ADVENTURES_EPISODE_SHELF_START -->'
+    end_marker = '<!-- ADVENTURES_EPISODE_SHELF_END -->'
+    start = content.find(start_marker)
+    end = content.find(end_marker)
+    if start < 0 or end < 0 or end < start:
+        raise RuntimeError('Adventures homepage is missing static episode shelf markers.')
+
+    episode_one = (
+        '<a aria-label="Read Episode 1: EchoPark Speedway" class="episode-tile ready" '
+        'href="episode-01/index.html" data-adventure-static="true" data-adventure-id="episode-01">'
+        '<div class="episode-art"><img alt="Episode 1 artwork: Lark at EchoPark Speedway" '
+        'src="episode-01/images/01-01.webp" loading="lazy" decoding="async">'
+        '<div class="play-symbol">▶</div><span class="episode-numeral">01</span></div>'
+        '<div class="episode-details"><span class="episode-status available">AVAILABLE NOW</span>'
+        '<h3>EchoPark Speedway</h3><p>A missing phone, Nark the seal, the blind squirrel, paddock pranks, '
+        'a tribute to David Boyer, and the race-night finale.</p>'
+        '<div class="episode-bottom"><span>15 ILLUSTRATED CHAPTERS</span><b>READ EPISODE ↗</b></div></div></a>'
+    )
+
+    published = sorted(
+        [e for e in entries if e.get('id') != 'episode-01'],
+        key=lambda e: (0 if e.get('kind') == 'main' else 1, e.get('number') or 999, e.get('date') or '')
+    )
+    pending = sorted(
+        [e for e in in_progress if e.get('id') not in {x.get('id') for x in entries}],
+        key=lambda e: (0 if e.get('kind') == 'main' else 1, e.get('number') or 999, e.get('date') or '')
+    )
+
+    cards = [episode_one]
+    cards.extend(episode_home_card(e) for e in published)
+    cards.extend(episode_home_card(e, True) for e in pending)
+    rendered = start_marker + '\n' + '\n'.join(cards) + '\n' + end_marker
+    content = content[:start] + rendered + content[end + len(end_marker):]
+
+    main_count = 1 + sum(1 for e in published if e.get('kind') == 'main')
+    special_count = sum(1 for e in published if e.get('kind') == 'special')
+    count_text = f'{main_count} MAIN EPISODES · {special_count} SPECIAL' + ('S' if special_count != 1 else '')
+    if pending:
+        count_text += f' · {len(pending)} IN PROGRESS'
+    content = re.sub(
+        r'(<span class="episode-total">).*?(</span>)',
+        lambda m: m.group(1) + html.escape(count_text) + m.group(2),
+        content,
+        count=1,
+        flags=re.S,
+    )
+
+    page.write_text(content, encoding='utf8')
+    print('Static Adventures homepage rendered:', main_count, 'main |', special_count, 'special |', len(pending), 'in progress', flush=True)
+
+
 def inject_home_script():
     page=DEST/'index.html'
     if not page.exists():raise RuntimeError('Missing adventures/index.html. Upload the existing Netflix-style homepage first.')
@@ -373,6 +477,7 @@ def main():
     save(PROGRESS, in_progress)
     state['published_ids'] = sorted(set(state['published_ids']))
     save(STATE, state)
+    render_home_library(entries, in_progress)
     print('Published manifest:', len(entries), '| In-progress cards:', len(in_progress))
 
 if __name__=='__main__':main()
