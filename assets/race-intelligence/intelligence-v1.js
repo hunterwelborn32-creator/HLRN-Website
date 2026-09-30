@@ -105,6 +105,21 @@ function hLrnDriverProfileUrl(driverOrName){
   return window.HLRNDrivers?.profileUrl?.(driverOrName) || "../drivers/";
 }
 
+function hLrnDriverNameMarkup(driverOrName,label){
+  const name=label || (typeof driverOrName==="string"
+    ? formatDriverName(driverOrName)
+    : formatDriverName(driverOrName?.name || driverOrName?.driver || "Driver"));
+  const url=driverOrName?.profileUrl || hLrnDriverProfileUrl(driverOrName);
+  return `<a data-hlrn-ri-profile="1" href="${esc(url)}" style="color:inherit;text-decoration:none">${esc(name)}</a>`;
+}
+
+function hLrnStoryTitleMarkup(story){
+  const name=String(story?.driver?.name||"").trim();
+  const title=String(story?.title||"").trim();
+  if(!name || !title.startsWith(name)) return esc(title);
+  return hLrnDriverNameMarkup(story.driver,name)+esc(title.slice(name.length));
+}
+
 function hLrnPhotoMarkup(driverOrName,type,className){
   const src = hLrnDriverPhoto(driverOrName,type);
   if(!src) return "";
@@ -640,7 +655,7 @@ function renderBoard(){
           <div class="card-tag">${esc(cfg.tag)}</div>
         </div>
                 <div class="card-title">${esc(cfg.title)}</div>
-        <div class="card-driver">${esc(cat.driver.name)}</div>
+        <div class="card-driver">${hLrnDriverNameMarkup(cat.driver)}</div>
         <div class="card-reason">${esc(cat.reason)}</div>
         <div class="card-stat">${esc(cat.stat)}</div>
       </article>
@@ -660,7 +675,7 @@ function renderBoard(){
         showCategoryDeepDive(cat);
       }
     };
-    card.addEventListener("click",openCard);
+    card.addEventListener("click",e=>{ if(e.target.closest("a")) return; openCard(); });
     card.addEventListener("keydown",e=>{
       if(e.key==="Enter" || e.key===" "){
         e.preventDefault();
@@ -789,7 +804,7 @@ function renderStorylines(){
     <article class="story-card ${hLrnDriverPhoto(story.driver,"cutout") ? "has-driver-photo" : ""}">
       ${hLrnPhotoMarkup(story.driver,"cutout","hlrn-story-cutout")}
       <div class="story-kicker">${esc(story.kicker)}</div>
-      <h3>${esc(story.title)}</h3>
+      <h3>${hLrnStoryTitleMarkup(story)}</h3>
       <p>${esc(story.body)}</p>
       <div class="story-stat">${esc(story.stat)}</div>
     </article>
@@ -991,7 +1006,7 @@ function showCategoryDeepDive(category){
   }
 
   document.getElementById("deepLabel").textContent = (cfg.title || "Situation") + " Deep Dive";
-  document.getElementById("deepTitle").textContent = d.name;
+  document.getElementById("deepTitle").innerHTML = hLrnDriverNameMarkup(d);
   document.getElementById("deepDriverPhoto").innerHTML = hLrnPhotoMarkup(d,"cutout","hlrn-feature-cutout");
   document.getElementById("deepSummary").textContent = summary;
   document.getElementById("deepPill").textContent = pill || "Live Analysis";
@@ -1026,7 +1041,7 @@ function showDriver(category){
 
   document.getElementById("detailWrap").style.display="block";
   document.getElementById("detailEyebrow").textContent = cfg.title;
-  document.getElementById("detailName").textContent = d.name;
+  document.getElementById("detailName").innerHTML = hLrnDriverNameMarkup(d);
   document.getElementById("detailDriverPhoto").innerHTML = hLrnPhotoMarkup(d,"cutout","hlrn-feature-cutout");
   document.getElementById("detailCategory").textContent = category.reason;
   document.getElementById("detailScore").textContent = Math.round(d.overall);
@@ -1459,7 +1474,7 @@ document.addEventListener('DOMContentLoaded', function(){
     list=list.filter(d=>d&&Number(d.races?.length||0)>0).sort((a,b)=>Number(b.overall)-Number(a.overall)).slice(0,3);
     grid.innerHTML=list.length?list.map((d,i)=>{
       const rating=clamp(d.overall);
-      return `<article class="v3-contender">${hLrnPhotoMarkup(d,"full","hlrn-contender-full-photo")}<div class="v3-contender-label">${i===0?'Performance Leader':'Contender '+(i+1)}</div><div class="v3-contender-name">${String(d.name||'Driver').replace(/</g,'&lt;')}</div><div class="v3-contender-meta"><span>Rating ${rating.toFixed(0)}</span><span>${Number(d.top5Rate||0).toFixed(0)}% Top 5</span></div><div class="v3-contender-meter"><span style="width:${rating}%"></span></div></article>`;
+      return `<article class="v3-contender">${hLrnPhotoMarkup(d,"full","hlrn-contender-full-photo")}<div class="v3-contender-label">${i===0?'Performance Leader':'Contender '+(i+1)}</div><div class="v3-contender-name">${hLrnDriverNameMarkup(d)}</div><div class="v3-contender-meta"><span>Rating ${rating.toFixed(0)}</span><span>${Number(d.top5Rate||0).toFixed(0)}% Top 5</span></div><div class="v3-contender-meter"><span style="width:${rating}%"></span></div></article>`;
     }).join(''):'<div style="padding:18px;color:#7f8992;font-size:10px">Waiting for enough race history to build the contender board.</div>';
   }
 
