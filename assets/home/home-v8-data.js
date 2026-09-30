@@ -16,26 +16,32 @@
     el.textContent=v||fallback;
   };
   const setDriverPhoto=(id,value)=>{
-    const el=$(id);if(!el)return;
-    const src=window.HLRNDrivers?.photoUrl?.(value,"cutout")||"";
-    if(!src){el.hidden=true;el.removeAttribute("src");return}
-    const rec=window.HLRNDrivers?.resolve?.(value);
-    el.dataset.hlrnFallbackTried="";
-    el.src=src;
-    el.alt=(rec?.displayName||pretty(value?.driver||value?.name||value||"Driver"))+" driver photo";
-    el.hidden=false;
-    el.onerror=()=>{
-      if(!el.dataset.hlrnFallbackTried){
-        el.dataset.hlrnFallbackTried="1";
-        const rec=window.HLRNDrivers?.resolve?.(value);
-        const slug=String(rec?.photoSlug||"").trim();
-        if(slug){
-          el.src="https://hunterwelborn32-creator.github.io/HLRN-App/driver-photos/cutout/"+encodeURIComponent(slug)+".webp";
-          return;
-        }
-      }
-      el.hidden=true;
+    const el=$(id);
+    if(!el)return;
+
+    // Keep the server-rendered fallback photo visible unless a replacement
+    // image has successfully loaded. Never erase a valid homepage photo just
+    // because the driver manifest is late or temporarily unavailable.
+    const system=window.HLRNDrivers;
+    const src=system?.photoUrl?.(value,"cutout")||"";
+    if(!src){
+      el.hidden=false;
+      return;
+    }
+
+    const rec=system?.resolve?.(value);
+    const nextAlt=(rec?.displayName||pretty(value?.driver||value?.name||value||"Driver"))+" driver photo";
+    const probe=new Image();
+    probe.onload=()=>{
+      el.src=src;
+      el.alt=nextAlt;
+      el.hidden=false;
     };
+    probe.onerror=()=>{
+      // Leave the already-rendered local fallback untouched.
+      el.hidden=false;
+    };
+    probe.src=src;
   };
   const setDriverLink=(id,value,fallback)=>{
     const el=$(id);if(!el)return;
