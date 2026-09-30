@@ -125,8 +125,9 @@ function compareSide(t){
 }
 function renderCompare(){q("#tcCompareGrid").innerHTML=compareSide(teamByName(q("#tcCompareA").value))+compareSide(teamByName(q("#tcCompareB").value))}
 function driverCard(d){
-  var name=pretty(d.driver),url="../drivers/?league="+encodeURIComponent(activeLeague)+"&driverId="+encodeURIComponent(d.driverId||"")+"&driver="+encodeURIComponent(name);
-  return '<a class="tc-driver" href="'+url+'"><img src="'+esc(photo(name))+'" alt="" onerror="this.remove()"><div><strong>'+esc(name)+'</strong><span>P'+esc(d.rank==null?"—":d.rank)+' • <b>'+fmt(d.points)+' PTS</b> • '+fmt(d.wins)+' WINS</span></div></a>'
+  var name=pretty(d.driver),url=window.HLRNDrivers&&window.HLRNDrivers.profileUrl?window.HLRNDrivers.profileUrl({driverId:d.driverId,driver:name}):null;
+  if(!url)url="../drivers/";
+  return '<a class="tc-driver" href="'+esc(url)+'"><img src="'+esc(photo(name))+'" alt="" onerror="this.remove()"><div><strong>'+esc(name)+'</strong><span>P'+esc(d.rank==null?"—":d.rank)+' • <b>'+fmt(d.points)+' PTS</b> • '+fmt(d.wins)+' WINS</span></div></a>'
 }
 function profileForm(teamName){
   var f=recentForm(teamName,5);if(!f.length)return '<div class="tc-empty">Recent linked team results are not available yet.</div>';
@@ -164,7 +165,7 @@ function bind(){
 }
 async function init(){
   bind();
-  try{snapshot=await HLRNData.load();setLeagueUi();updateSummary();var t=requestedTeam&&teamByName(requestedTeam);if(t)renderProfile(t);else renderDirectory()}
+  try{if(window.HLRNDrivers?.load)await window.HLRNDrivers.load();snapshot=await HLRNData.load();setLeagueUi();updateSummary();var t=requestedTeam&&teamByName(requestedTeam);if(t)renderProfile(t);else renderDirectory()}
   catch(err){console.error(err);q("#tcTeamGrid").innerHTML='<div class="tc-empty">HLRN team data could not be loaded right now.</div>';q("#tcUpdated").textContent="DATA TEMPORARILY UNAVAILABLE"}
 }
 document.addEventListener("DOMContentLoaded",init);
