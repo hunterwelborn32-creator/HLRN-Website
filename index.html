@@ -71,8 +71,15 @@ content="width=device-width, initial-scale=1.0">
   <section class="h9-scorestrip" aria-label="HLRN live network information">
     <div class="h9-shell h9-scoregrid">
       <div class="h9-score-brand">
-        <span class="h9-score-dot" id="h9NetworkDot"></span>
-        <div><small>HIGH LINE RACING NETWORK</small><strong id="h9NetworkStatus">HLRN NETWORK</strong></div>
+        <div class="h9-network-mark" aria-hidden="true">HLRN</div>
+        <div class="h9-network-copy">
+          <small>HIGH LINE RACING NETWORK</small>
+          <strong>RACE NETWORK</strong>
+        </div>
+        <div class="h9-network-state" id="h9NetworkState">
+          <span class="h9-score-dot" id="h9NetworkDot"></span>
+          <b id="h9NetworkStatus">OFF AIR</b>
+        </div>
       </div>
       <a class="h9-score-item driver-score" id="rdLatestWinnerLink" href="drivers/">
   <img id="rdLatestWinnerPhoto" class="h9-score-driver-photo" src="assets/driver-photos/cutout/ethan-eckert.webp" alt="Ethan Eckert driver photo">
