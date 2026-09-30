@@ -84,3 +84,13 @@
     display:block!important;
   }
 }
+/* HLRN_RI_DAY_LOGO_DARK_20260930 */
+html[data-hlrn-theme="light"] .header .logo:before{
+  color:#111820!important;
+  text-shadow:none!important;
+  opacity:1!important;
+}
+html[data-hlrn-theme="light"] .header .logo:after{
+  background:#e31837!important;
+  opacity:1!important;
+}
