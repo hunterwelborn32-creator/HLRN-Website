@@ -52,6 +52,9 @@ body.rd-v5.home-v8-page{
   padding:0 16px 0 4px;
   overflow:hidden;
 }
+.h9-score-driver-photo[hidden],
+.h9-series-driver-photo[hidden],
+.h9-race-winner-photo[hidden]{display:none!important}
 .h9-score-driver-photo{
   display:block;
   width:58px;
