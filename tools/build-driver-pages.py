@@ -309,15 +309,15 @@ def render_page(driver):
 *{{box-sizing:border-box}}html{{background:var(--bg)}}body{{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,sans-serif}}a{{color:inherit;text-decoration:none}}
 .page{{width:min(1380px,calc(100% - 30px));margin:0 auto;padding:26px 0 72px}}
 .crumb{{font-size:9px;font-weight:1000;letter-spacing:.1em;text-transform:uppercase;color:#747d87;margin:10px 0 18px}}.crumb a:hover{{color:var(--red)}}
-.hero{{position:relative;display:grid;grid-template-columns:minmax(330px,.82fr) minmax(0,1.18fr);min-height:500px;background:#0c1016;color:#fff;overflow:hidden;border-bottom:6px solid var(--red)}}
-.hero-media{{position:relative;min-height:500px;background:radial-gradient(circle at 50% 30%,#3c4653 0,#1c232c 42%,#0c1016 75%);overflow:hidden}}
-.hero-media:after{{content:"";position:absolute;inset:auto 0 0;height:35%;background:linear-gradient(transparent,#0c1016)}}
+.hero{{position:relative;display:grid;grid-template-columns:minmax(330px,.82fr) minmax(0,1.18fr);min-height:500px;background:#fff;color:var(--ink);overflow:hidden;border:1px solid var(--line);border-bottom:6px solid var(--red)}}
+.hero-media{{position:relative;min-height:500px;background:#fff;overflow:hidden;border-right:1px solid var(--line)}}
+.hero-media:after{{content:"";display:none}}
 .hero-photo{{position:absolute;z-index:2;left:50%;bottom:-2px;transform:translateX(-50%);height:95%;max-width:94%;object-fit:contain;filter:drop-shadow(0 14px 15px rgba(0,0,0,.35))}}
-.hero-fallback{{position:absolute;inset:0;display:grid;place-items:center;color:rgba(255,255,255,.08);font:900 italic 210px/1 "Barlow Condensed",sans-serif}}
-.hero-copy{{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:center;padding:48px 48px 42px;background:linear-gradient(120deg,rgba(227,24,55,.12),transparent 42%)}}
-.kicker{{font-size:10px;font-weight:1000;letter-spacing:.16em;color:var(--yellow);text-transform:uppercase}}
-.hero h1{{margin:10px 0 4px;font:900 italic clamp(56px,7vw,98px)/.82 "Barlow Condensed",sans-serif;letter-spacing:-.045em;text-transform:uppercase}}
-.carline{{display:flex;align-items:center;gap:14px;margin-top:14px}}.car-number{{font:900 italic 55px/1 "Barlow Condensed",sans-serif;color:#fff}}.series-list{{color:#aeb8c4;font-size:10px;font-weight:900;line-height:1.6;text-transform:uppercase}}
+.hero-fallback{{position:absolute;inset:0;display:grid;place-items:center;color:rgba(17,22,28,.05);font:900 italic 210px/1 "Barlow Condensed",sans-serif}}
+.hero-copy{{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:center;padding:48px 48px 42px;background:#fff}}
+.kicker{{font-size:10px;font-weight:1000;letter-spacing:.16em;color:#68737f;text-transform:uppercase}}
+.hero h1{{margin:10px 0 4px;color:#11161c;font:900 italic clamp(56px,7vw,98px)/.82 "Barlow Condensed",sans-serif;letter-spacing:-.045em;text-transform:uppercase}}
+.carline{{display:flex;align-items:center;gap:14px;margin-top:14px}}.car-number{{font:900 italic 55px/1 "Barlow Condensed",sans-serif;color:#11161c}}.series-list{{color:#4f5a66;font-size:10px;font-weight:900;line-height:1.6;text-transform:uppercase}}
 .career-strip{{display:grid;grid-template-columns:repeat(8,1fr);background:#fff;border:1px solid var(--line);border-top:0}}
 .career-stat{{padding:14px 12px;border-right:1px solid var(--line);min-width:0}}.career-stat:last-child{{border-right:0}}.career-stat small,.stat small{{display:block;color:#7d8690;font-size:7px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase}}.career-stat strong{{display:block;margin-top:5px;font:900 22px/1 "Barlow Condensed",sans-serif}}
 .section-head{{display:flex;align-items:end;justify-content:space-between;gap:16px;margin:31px 0 12px;padding-bottom:9px;border-bottom:4px solid #111}}.section-head small{{display:block;color:var(--red);font-size:8px;font-weight:1000;letter-spacing:.11em}}.section-head h2{{margin:3px 0 0;font:900 italic 34px/1 "Barlow Condensed",sans-serif;text-transform:uppercase}}
@@ -329,6 +329,18 @@ def render_page(driver):
 .empty{{padding:22px;background:#fff;border:1px solid var(--line);color:#747d86;font-size:10px;font-weight:800}}
 .actions{{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}}.actions a{{padding:11px 14px;background:#11161d;color:#fff;font:900 italic 15px/1 "Barlow Condensed",sans-serif;text-transform:uppercase}}.actions a.primary{{background:var(--red)}}
 .updated{{margin-top:14px;color:#858d96;font-size:8px;font-weight:800;text-transform:uppercase}}
+
+html[data-hlrn-theme="dark"] body{{background:#07090d;color:#f7f8fa}}
+html[data-hlrn-theme="dark"] .hero{{background:#0c1016;color:#fff;border-color:#2b333e}}
+html[data-hlrn-theme="dark"] .hero-media{{background:radial-gradient(circle at 50% 30%,#3c4653 0,#1c232c 42%,#0c1016 75%);border-right-color:#2b333e}}
+html[data-hlrn-theme="dark"] .hero-media:after{{display:block;background:linear-gradient(transparent,#0c1016)}}
+html[data-hlrn-theme="dark"] .hero-fallback{{color:rgba(255,255,255,.08)}}
+html[data-hlrn-theme="dark"] .hero-copy{{background:linear-gradient(120deg,rgba(227,24,55,.12),transparent 42%)}}
+html[data-hlrn-theme="dark"] .kicker{{color:var(--yellow)}}
+html[data-hlrn-theme="dark"] .hero h1,
+html[data-hlrn-theme="dark"] .car-number{{color:#fff}}
+html[data-hlrn-theme="dark"] .series-list{{color:#aeb8c4}}
+
 @media(max-width:900px){{.hero{{grid-template-columns:1fr}}.hero-media{{min-height:390px}}.hero-copy{{padding:34px 25px}}.career-strip{{grid-template-columns:repeat(4,1fr)}}.career-stat:nth-child(4n){{border-right:0}}.series-grid{{grid-template-columns:1fr}}.form-grid{{grid-template-columns:1fr 1fr}}}}
 @media(max-width:560px){{.page{{width:min(100% - 18px,1380px)}}.hero-media{{min-height:330px}}.hero h1{{font-size:54px}}.career-strip{{grid-template-columns:repeat(2,1fr)}}.career-stat:nth-child(2n){{border-right:0}}.stats-grid{{grid-template-columns:repeat(2,1fr)}}.stat{{border-right:1px solid #e5e7ea!important}}.stat:nth-child(2n){{border-right:0!important}}.form-grid{{grid-template-columns:1fr}}}}
 </style>
