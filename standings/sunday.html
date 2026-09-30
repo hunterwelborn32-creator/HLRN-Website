@@ -1694,6 +1694,7 @@ input,select,button{color:#111!important}
 .loading,.message,.empty,.placeholder{background:#fff!important;color:#6f747a!important}
 iframe{background:#fff!important;color-scheme:light!important}
 </style>
+<script src="../assets/driver-system.js?v=20260930v3"></script>
 <script>
 function hlrnLightRaceReport(markup){
   if(!markup) return markup;
@@ -4805,12 +4806,10 @@ const safe=n
  .replace(/'/g,"&#039;");
 if(!slug) return safe;
 const url="https://hunterwelborn32-creator.github.io/HLRN-App/driver-photos/cutout/"+slug+".webp";
-const params=new URLSearchParams();
-params.set("league","sunday");
-if(driverId!==undefined&&driverId!==null&&String(driverId)!=="")params.set("driverId",String(driverId));
-params.set("driver",shown);
-const profileUrl="../drivers/?"+params.toString();
-return '<a class="hlrn-driver-profile-link" href="'+profileUrl+'" target="_top" '
+const profileUrl=window.HLRNDrivers?.profileUrl?.({driverId:driverId,driver:shown})||"../drivers/";
+const profileNameAttr=encodeURIComponent(shown);
+const profileIdAttr=encodeURIComponent(driverId==null?"":String(driverId));
+return '<a class="hlrn-driver-profile-link" href="'+profileUrl+'" target="_top" data-hlrn-driver-name="'+profileNameAttr+'" data-hlrn-driver-id="'+profileIdAttr+'" '
 +'aria-label="Open '+safe+' driver profile" title="View '+safe+' profile">'
 +'<span class="hlrn-driver-profile-inner">'
 +'<img src="'+url+'" alt="" loading="lazy" decoding="async" onerror="this.remove()" '
@@ -4819,6 +4818,28 @@ return '<a class="hlrn-driver-profile-link" href="'+profileUrl+'" target="_top" 
 +'<span class="hlrn-driver-profile-name">'+safe+'</span>'
 +'<span class="hlrn-driver-profile-arrow" aria-hidden="true">›</span>'
 +'</span></a>';
+}
+function hLrnUpgradeDriverProfileLinks(){
+  const system=window.HLRNDrivers;
+  if(!system||typeof system.load!=="function")return;
+  system.load().then(function(){
+    document.querySelectorAll("a.hlrn-driver-profile-link[data-hlrn-driver-name]").forEach(function(a){
+      const name=decodeURIComponent(a.dataset.hlrnDriverName||"");
+      const driverId=decodeURIComponent(a.dataset.hlrnDriverId||"");
+      const url=system.profileUrl({driverId:driverId,driver:name});
+      if(url)a.href=url;
+    });
+  }).catch(function(){});
+}
+let hLrnProfileUpgradeTimer=0;
+function hLrnQueueDriverProfileUpgrade(){
+  clearTimeout(hLrnProfileUpgradeTimer);
+  hLrnProfileUpgradeTimer=setTimeout(hLrnUpgradeDriverProfileLinks,25);
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",hLrnUpgradeDriverProfileLinks,{once:true});
+else hLrnUpgradeDriverProfileLinks();
+if("MutationObserver" in window){
+  new MutationObserver(hLrnQueueDriverProfileUpgrade).observe(document.documentElement,{childList:true,subtree:true});
 }
 function escapeHTML(value){
 return String(
