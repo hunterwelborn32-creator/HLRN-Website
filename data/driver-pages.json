@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-29T20:55:22Z",
-  "count": 79,
+  "generatedAt": "2026-09-30T14:06:12Z",
+  "count": 83,
   "drivers": [
     {
       "name": "Aaron Treubig",
@@ -17,7 +17,8 @@
       },
       "teams": {
         "sunday": "Rowdy"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Alex Leebaw",
@@ -33,7 +34,8 @@
       },
       "teams": {
         "monday": null
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Benjamin Richards",
@@ -49,7 +51,8 @@
       },
       "teams": {
         "sunday": "VRX"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Bill Daniels",
@@ -68,7 +71,8 @@
       "teams": {
         "sunday": null,
         "monday": null
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Brandon Beyke",
@@ -84,7 +88,8 @@
       },
       "teams": {
         "sunday": null
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Brandon Showers",
@@ -100,7 +105,8 @@
       },
       "teams": {
         "sunday": "PrimeX"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Brian Hayes4",
@@ -119,7 +125,8 @@
       "teams": {
         "sunday": "HLR",
         "monday": "HLR"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Brian Hebbard2",
@@ -138,7 +145,8 @@
       "teams": {
         "sunday": null,
         "monday": "HLR"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Brian Hennings",
@@ -154,7 +162,8 @@
       },
       "teams": {
         "sunday": "VRX"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Brock Piper",
@@ -170,7 +179,8 @@
       },
       "teams": {
         "sunday": "LBS"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Bryce Hinton2",
@@ -189,7 +199,8 @@
       "teams": {
         "sunday": "Helix",
         "monday": null
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Carson Freeman",
@@ -205,7 +216,8 @@
       },
       "teams": {
         "monday": "JSR"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Charles Fletcher",
@@ -221,7 +233,8 @@
       },
       "teams": {
         "sunday": "Helix"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Chris James",
@@ -230,17 +243,21 @@
       "number": "82",
       "photoSlug": "chris-james",
       "series": [
+        "hosted",
         "monday",
         "sunday"
       ],
       "ids": {
         "sunday": "33901",
-        "monday": "33901"
+        "monday": "33901",
+        "hosted": ""
       },
       "teams": {
         "sunday": "LBS",
-        "monday": "LBS"
-      }
+        "monday": "LBS",
+        "hosted": null
+      },
+      "aliases": []
     },
     {
       "name": "Cori Cooke",
@@ -256,7 +273,8 @@
       },
       "teams": {
         "sunday": null
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Craig Rowe",
@@ -265,14 +283,18 @@
       "number": "24",
       "photoSlug": "craig-rowe",
       "series": [
+        "hosted",
         "sunday"
       ],
       "ids": {
-        "sunday": "51327"
+        "sunday": "51327",
+        "hosted": ""
       },
       "teams": {
-        "sunday": "PrimeX"
-      }
+        "sunday": "PrimeX",
+        "hosted": null
+      },
+      "aliases": []
     },
     {
       "name": "Darrel Ceballos",
@@ -288,7 +310,8 @@
       },
       "teams": {
         "sunday": "Rowdy"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "David Durand Jr",
@@ -304,7 +327,8 @@
       },
       "teams": {
         "monday": null
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Derek Jacobs",
@@ -320,7 +344,8 @@
       },
       "teams": {
         "monday": "AWR"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Donny Beach",
@@ -339,7 +364,8 @@
       "teams": {
         "sunday": "SMT",
         "monday": "SMT Racing"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Dylan Jones",
@@ -355,7 +381,8 @@
       },
       "teams": {
         "sunday": null
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Easton Collins",
@@ -371,7 +398,8 @@
       },
       "teams": {
         "sunday": null
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Eric Hayden",
@@ -380,17 +408,21 @@
       "number": "100",
       "photoSlug": "eric-hayden",
       "series": [
+        "hosted",
         "monday",
         "sunday"
       ],
       "ids": {
         "sunday": "93056",
-        "monday": "93056"
+        "monday": "93056",
+        "hosted": ""
       },
       "teams": {
         "sunday": "HLR",
-        "monday": "HLR"
-      }
+        "monday": "HLR",
+        "hosted": null
+      },
+      "aliases": []
     },
     {
       "name": "Ethan Eckert",
@@ -409,7 +441,8 @@
       "teams": {
         "sunday": "Helix",
         "monday": "JSR"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Ethan Moreno",
@@ -418,14 +451,20 @@
       "number": "88",
       "photoSlug": "ethan-moreno",
       "series": [
+        "hosted",
         "sunday"
       ],
       "ids": {
-        "sunday": "77498"
+        "sunday": "77498",
+        "hosted": ""
       },
       "teams": {
-        "sunday": "DHR"
-      }
+        "sunday": "DHR",
+        "hosted": null
+      },
+      "aliases": [
+        "Ethan Fonseca Moreno"
+      ]
     },
     {
       "name": "Evan Fuqua",
@@ -441,7 +480,8 @@
       },
       "teams": {
         "monday": "LBS"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Evan Karlbon",
@@ -457,7 +497,8 @@
       },
       "teams": {
         "monday": "JSR"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Evan Parry",
@@ -476,7 +517,8 @@
       "teams": {
         "sunday": "SMT",
         "monday": null
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Gerry Bergeron",
@@ -485,17 +527,21 @@
       "number": "1",
       "photoSlug": "gerry-bergeron",
       "series": [
+        "hosted",
         "monday",
         "sunday"
       ],
       "ids": {
         "sunday": "88906",
-        "monday": "88906"
+        "monday": "88906",
+        "hosted": ""
       },
       "teams": {
         "sunday": null,
-        "monday": "AWR"
-      }
+        "monday": "AWR",
+        "hosted": null
+      },
+      "aliases": []
     },
     {
       "name": "Grant Wessley2",
@@ -511,7 +557,8 @@
       },
       "teams": {
         "sunday": "SMT"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Greg Speicher",
@@ -527,7 +574,8 @@
       },
       "teams": {
         "sunday": null
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Hunter Welborn",
@@ -536,17 +584,21 @@
       "number": "66",
       "photoSlug": "hunter-welborn",
       "series": [
+        "hosted",
         "monday",
         "sunday"
       ],
       "ids": {
         "sunday": "135679",
-        "monday": "135679"
+        "monday": "135679",
+        "hosted": ""
       },
       "teams": {
         "sunday": "Helix",
-        "monday": "HLR"
-      }
+        "monday": "HLR",
+        "hosted": null
+      },
+      "aliases": []
     },
     {
       "name": "Jared Philpott",
@@ -562,7 +614,8 @@
       },
       "teams": {
         "sunday": "VRX"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Jason Branch",
@@ -578,7 +631,8 @@
       },
       "teams": {
         "sunday": "TWM"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Javone Thompson",
@@ -597,7 +651,8 @@
       "teams": {
         "sunday": null,
         "monday": null
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Jeremy Jeffries",
@@ -613,7 +668,8 @@
       },
       "teams": {
         "sunday": "SMT"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Jerry Fassett",
@@ -622,14 +678,18 @@
       "number": "71",
       "photoSlug": "jerry-fassett",
       "series": [
+        "hosted",
         "monday"
       ],
       "ids": {
-        "monday": "116496"
+        "monday": "116496",
+        "hosted": ""
       },
       "teams": {
-        "monday": "AWR"
-      }
+        "monday": "AWR",
+        "hosted": null
+      },
+      "aliases": []
     },
     {
       "name": "Jim Segredo",
@@ -638,14 +698,18 @@
       "number": "21",
       "photoSlug": "jim-segredo",
       "series": [
+        "hosted",
         "sunday"
       ],
       "ids": {
-        "sunday": "96425"
+        "sunday": "96425",
+        "hosted": ""
       },
       "teams": {
-        "sunday": "HLR"
-      }
+        "sunday": "HLR",
+        "hosted": null
+      },
+      "aliases": []
     },
     {
       "name": "Joe Konen",
@@ -661,7 +725,8 @@
       },
       "teams": {
         "monday": "SMT Racing"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Joe Wells",
@@ -677,7 +742,8 @@
       },
       "teams": {
         "sunday": "LBS"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "John Miles4",
@@ -693,7 +759,8 @@
       },
       "teams": {
         "monday": null
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Jordan Whiting",
@@ -709,26 +776,31 @@
       },
       "teams": {
         "monday": null
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Joshua McKinney2",
       "slug": "joshua-mckinney2",
       "url": "/drivers/joshua-mckinney2/",
-      "number": "—",
+      "number": "3",
       "photoSlug": "josh-mckinney",
       "series": [
+        "hosted",
         "monday",
         "sunday"
       ],
       "ids": {
         "sunday": "55068",
-        "monday": "55068"
+        "monday": "55068",
+        "hosted": ""
       },
       "teams": {
         "sunday": "LBS",
-        "monday": "LBS"
-      }
+        "monday": "LBS",
+        "hosted": null
+      },
+      "aliases": []
     },
     {
       "name": "Joshua Spragg",
@@ -744,7 +816,8 @@
       },
       "teams": {
         "sunday": "Rowdy"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Juan Escamilla",
@@ -753,14 +826,18 @@
       "number": "99",
       "photoSlug": "juan-escamilla",
       "series": [
+        "hosted",
         "sunday"
       ],
       "ids": {
-        "sunday": "99085"
+        "sunday": "99085",
+        "hosted": ""
       },
       "teams": {
-        "sunday": "DHR"
-      }
+        "sunday": "DHR",
+        "hosted": null
+      },
+      "aliases": []
     },
     {
       "name": "Justin Crowe",
@@ -776,7 +853,25 @@
       },
       "teams": {
         "sunday": "SMT"
-      }
+      },
+      "aliases": []
+    },
+    {
+      "name": "Justin Lee Pearson",
+      "slug": "justin-lee-pearson",
+      "url": "/drivers/justin-lee-pearson/",
+      "number": "58",
+      "photoSlug": "justin-lee-pearson",
+      "series": [
+        "hosted"
+      ],
+      "ids": {
+        "hosted": ""
+      },
+      "teams": {
+        "hosted": null
+      },
+      "aliases": []
     },
     {
       "name": "Keaton Cox",
@@ -792,7 +887,8 @@
       },
       "teams": {
         "sunday": "Helix"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Kenny Reel",
@@ -808,7 +904,8 @@
       },
       "teams": {
         "monday": "JSR"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Kenwood Ramsey",
@@ -827,7 +924,8 @@
       "teams": {
         "sunday": "LBS",
         "monday": "LBS"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Knox Thompson",
@@ -843,7 +941,8 @@
       },
       "teams": {
         "monday": null
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Kody Neagles",
@@ -862,7 +961,8 @@
       "teams": {
         "sunday": "VRX",
         "monday": null
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Kyle Kammeron",
@@ -871,17 +971,21 @@
       "number": "55",
       "photoSlug": "kyle-kammeron",
       "series": [
+        "hosted",
         "monday",
         "sunday"
       ],
       "ids": {
         "sunday": "106245",
-        "monday": "106245"
+        "monday": "106245",
+        "hosted": ""
       },
       "teams": {
         "sunday": "PrimeX",
-        "monday": "AWR"
-      }
+        "monday": "AWR",
+        "hosted": null
+      },
+      "aliases": []
     },
     {
       "name": "Larkin Boyer",
@@ -890,17 +994,21 @@
       "number": "10",
       "photoSlug": "larkin-boyer",
       "series": [
+        "hosted",
         "monday",
         "sunday"
       ],
       "ids": {
         "sunday": "120507",
-        "monday": "120507"
+        "monday": "120507",
+        "hosted": ""
       },
       "teams": {
         "sunday": "LBS",
-        "monday": "LBS"
-      }
+        "monday": "LBS",
+        "hosted": null
+      },
+      "aliases": []
     },
     {
       "name": "Larry Fairman2",
@@ -916,7 +1024,8 @@
       },
       "teams": {
         "sunday": null
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Matthew Brown49",
@@ -932,7 +1041,8 @@
       },
       "teams": {
         "sunday": "TWM"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Matthew Graham20",
@@ -948,7 +1058,8 @@
       },
       "teams": {
         "sunday": "Rowdy"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Max Dynda",
@@ -964,7 +1075,25 @@
       },
       "teams": {
         "monday": null
-      }
+      },
+      "aliases": []
+    },
+    {
+      "name": "Michael Tokarz",
+      "slug": "michael-tokarz",
+      "url": "/drivers/michael-tokarz/",
+      "number": "10",
+      "photoSlug": "michael-tokarz",
+      "series": [
+        "hosted"
+      ],
+      "ids": {
+        "hosted": ""
+      },
+      "teams": {
+        "hosted": null
+      },
+      "aliases": []
     },
     {
       "name": "Nate Blasdell",
@@ -980,7 +1109,8 @@
       },
       "teams": {
         "monday": null
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Nicholas Baumann",
@@ -989,14 +1119,18 @@
       "number": "97",
       "photoSlug": "nicholas-baumann",
       "series": [
+        "hosted",
         "sunday"
       ],
       "ids": {
-        "sunday": "95192"
+        "sunday": "95192",
+        "hosted": ""
       },
       "teams": {
-        "sunday": "DHR"
-      }
+        "sunday": "DHR",
+        "hosted": null
+      },
+      "aliases": []
     },
     {
       "name": "Nicholas Moody",
@@ -1015,7 +1149,8 @@
       "teams": {
         "sunday": null,
         "monday": "SMT Racing"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Randy Schweitzer",
@@ -1031,7 +1166,8 @@
       },
       "teams": {
         "sunday": null
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Randy Showers",
@@ -1047,7 +1183,8 @@
       },
       "teams": {
         "sunday": "PrimeX"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Ricky Miles",
@@ -1063,7 +1200,8 @@
       },
       "teams": {
         "monday": null
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Ross Campoli",
@@ -1079,7 +1217,25 @@
       },
       "teams": {
         "sunday": "Helix"
-      }
+      },
+      "aliases": []
+    },
+    {
+      "name": "Rusty Chancey",
+      "slug": "rusty-chancey",
+      "url": "/drivers/rusty-chancey/",
+      "number": "8",
+      "photoSlug": "rusty-chancey",
+      "series": [
+        "hosted"
+      ],
+      "ids": {
+        "hosted": ""
+      },
+      "teams": {
+        "hosted": null
+      },
+      "aliases": []
     },
     {
       "name": "Ryan Wilson21",
@@ -1088,17 +1244,21 @@
       "number": "23",
       "photoSlug": "ryan-wilson",
       "series": [
+        "hosted",
         "monday",
         "sunday"
       ],
       "ids": {
         "sunday": "109391",
-        "monday": "109391"
+        "monday": "109391",
+        "hosted": ""
       },
       "teams": {
         "sunday": "PrimeX",
-        "monday": "AWR"
-      }
+        "monday": "AWR",
+        "hosted": null
+      },
+      "aliases": []
     },
     {
       "name": "Scott Wise",
@@ -1114,13 +1274,14 @@
       },
       "teams": {
         "sunday": "TWM"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Sebastian Micheals",
       "slug": "sebastian-micheals",
       "url": "/drivers/sebastian-micheals/",
-      "number": "—",
+      "number": "26",
       "photoSlug": "sebastian-michaels",
       "series": [
         "monday",
@@ -1133,7 +1294,8 @@
       "teams": {
         "sunday": "HLR",
         "monday": null
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Shane Hatfield",
@@ -1152,7 +1314,8 @@
       "teams": {
         "sunday": "TWM",
         "monday": "SMT Racing"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Shawn Stamper",
@@ -1171,7 +1334,8 @@
       "teams": {
         "sunday": "HLR",
         "monday": "HLR"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Timothy Tyler3",
@@ -1187,7 +1351,8 @@
       },
       "teams": {
         "sunday": "DHR"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Tj Lunn",
@@ -1206,7 +1371,8 @@
       "teams": {
         "sunday": null,
         "monday": "SMT Racing"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Tommy Rogers",
@@ -1215,14 +1381,18 @@
       "number": "34",
       "photoSlug": "tommy-rogers",
       "series": [
+        "hosted",
         "monday"
       ],
       "ids": {
-        "monday": "109389"
+        "monday": "109389",
+        "hosted": ""
       },
       "teams": {
-        "monday": "HLR"
-      }
+        "monday": "HLR",
+        "hosted": null
+      },
+      "aliases": []
     },
     {
       "name": "Trace McDowell",
@@ -1238,7 +1408,8 @@
       },
       "teams": {
         "sunday": null
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Trevor Aswarnauth",
@@ -1254,7 +1425,8 @@
       },
       "teams": {
         "monday": "JSR"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Trevor Haley",
@@ -1263,14 +1435,18 @@
       "number": "12",
       "photoSlug": "trevor-haley",
       "series": [
+        "hosted",
         "sunday"
       ],
       "ids": {
-        "sunday": "55541"
+        "sunday": "55541",
+        "hosted": ""
       },
       "teams": {
-        "sunday": "DHR"
-      }
+        "sunday": "DHR",
+        "hosted": null
+      },
+      "aliases": []
     },
     {
       "name": "Tyler Gothard",
@@ -1286,7 +1462,8 @@
       },
       "teams": {
         "sunday": "Rowdy"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Vicente Guerrero2",
@@ -1302,7 +1479,8 @@
       },
       "teams": {
         "sunday": "VRX"
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Victor Rivera",
@@ -1318,7 +1496,8 @@
       },
       "teams": {
         "sunday": null
-      }
+      },
+      "aliases": []
     },
     {
       "name": "Zach Harry",
@@ -1334,7 +1513,25 @@
       },
       "teams": {
         "sunday": "TWM"
-      }
+      },
+      "aliases": []
+    },
+    {
+      "name": "Zachary Cato",
+      "slug": "zachary-cato",
+      "url": "/drivers/zachary-cato/",
+      "number": "6",
+      "photoSlug": "zachary-cato",
+      "series": [
+        "hosted"
+      ],
+      "ids": {
+        "hosted": ""
+      },
+      "teams": {
+        "hosted": null
+      },
+      "aliases": []
     }
   ]
 }
