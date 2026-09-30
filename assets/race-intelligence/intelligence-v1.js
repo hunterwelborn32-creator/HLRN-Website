@@ -1,5 +1,5 @@
 /* HLRN Race Intelligence script block 3 */
-const API_BASE = "https://script.google.com/macros/s/AKfycbwo4C9RyV-H-F4ekKFcgmrYVpyOUsh9dmFf2jVhJwvieCTKpKzAR_k6lNcppBuehj58/exec";
+const INTELLIGENCE_DATA_SOURCE = "HLRN shared snapshot";
 
 let currentLeague = "sunday";
 let drivers = [];
@@ -27,8 +27,8 @@ function normalizeDriverName(name){
 }
 
 function isExcludedDriverName(name){
-  const normalized = normalizeDriverName(name);
-  return EXCLUDED_DRIVERS.some(excluded => normalized === normalizeDriverName(excluded));
+  const normalized = normalizeDriverName(formatDriverName(name));
+  return EXCLUDED_DRIVERS.some(excluded => normalized === normalizeDriverName(formatDriverName(excluded)));
 }
 
 const categoryConfig = [
@@ -92,44 +92,26 @@ function formatDriverName(name){
 }
 
 
-/* HLRN DRIVER PHOTO MATCHER */
-/* ============================================================
-   HLRN DRIVER PHOTO SYSTEM — LIGHT VERSION
-   Upload the driver-photos folder to the ROOT of HLRN-App.
-   ============================================================ */
-const HLRN_DRIVER_PHOTO_BASE = "https://hunterwelborn32-creator.github.io/HLRN-App/driver-photos/";
-const HLRN_DRIVER_FULL_PHOTOS = {"aarontruebig":"aaron-truebig.webp","alexleebaw":"alex-leebaw.webp","benjaminrichards":"benjamin-richards.webp","billdaniels":"bill-daniels.webp","brandonbeyke":"brandon-beyke.webp","brandonshowers":"brandon-showers.webp","brianhayes":"brian-hayes.webp","brianhebbard":"brian-hebbard.webp","brianhennings":"brian-hennings.webp","brockpiper":"brock-piper.webp","brycehinton":"bryce-hinton.webp","carsonfreeman":"carson-freeman.webp","charlesfletcher":"charles-fletcher.webp","chrisjames":"chris-james.webp","coricooke":"cori-cooke.webp","craigrowe":"craig-rowe.webp","darrelceballos":"darrel-ceballos.webp","daviddurand":"david-durand.webp","derekjacobs":"derek-jacobs.webp","donnybeach":"donny-beach.webp","dylanjones":"dylan-jones.webp","erichayden":"eric-hayden.webp","ethaneckert":"ethan-eckert.webp","ethanmoreno":"ethan-moreno.webp","evanfuqua":"evan-fuqua.webp","evankarlbon":"evan-karlbon.webp","evanparry":"evan-parry.webp","gerrybergeron":"gerry-bergeron.webp","grantwessley":"grant-wessley.webp","hunterwelborn":"hunter-welborn.webp","jaredphilpott":"jared-philpott.webp","jasonbranch":"jason-branch.webp","javonethompson":"javone-thompson.webp","jeremyjeffries":"jeremy-jeffries.webp","jerryfassett":"jerry-fassett.webp","jimsegredo":"jim-segredo.webp","joekonen":"joe-konen.webp","johnmiles":"john-miles.webp","joshmckinney":"josh-mckinney.webp","joshuaspragg":"joshua-spragg.webp","juanescamilla":"juan-escamilla.webp","justincrowe":"justin-crowe.webp","justincrowetransparent":"justin-crowe-transparent.webp","keatoncox":"keaton-cox.webp","kennyreel":"kenny-reel.webp","kenwoodramsey":"kenwood-ramsey.webp","kodyneagles":"kody-neagles.webp","kylekammeron":"kyle-kammeron.webp","larkinboyer":"larkin-boyer.webp","matthewbrown":"matthew-brown.webp","matthewgraham":"matthew-graham.webp","nicholasbaumann":"nicholas-baumann.webp","nicholasmoody":"nicholas-moody.webp","randyschweitzer":"randy-schweitzer.webp","randyshowers":"randy-showers.webp","rickymiles":"ricky-miles.webp","rosscampoli":"ross-campoli.webp","ryanwilson":"ryan-wilson.webp","scottwise":"scott-wise.webp","sebastianmichaels":"sebastian-michaels.webp","shanehatfield":"shane-hatfield.webp","shawnstamper":"shawn-stamper.webp","timothytyler":"timothy-tyler.webp","tjlunn":"tj-lunn.webp","tommyrogers":"tommy-rogers.webp","trevoraswarnauth":"trevor-aswarnauth.webp","trevorhaley":"trevor-haley.webp","vincenteguerrero":"vincente-guerrero.webp","zackharry":"zack-harry.webp"};
-const HLRN_DRIVER_CUTOUT_PHOTOS = {"aarontruebig":"aaron-truebig.webp","alexleebaw":"alex-leebaw.webp","benjaminrichards":"benjamin-richards.webp","billdaniels":"bill-daniels.webp","brandonbeyke":"brandon-beyke.webp","brandonshowers":"brandon-showers.webp","brianhayes":"brian-hayes.webp","brianhebbard":"brian-hebbard.webp","brianhennings":"brian-hennings.webp","brockpiper":"brock-piper.webp","brycehinton":"bryce-hinton.webp","carsonfreeman":"carson-freeman.webp","charlesfletcher":"charles-fletcher.webp","chrisjames":"chris-james.webp","coricooke":"cori-cooke.webp","craigrowe":"craig-rowe.webp","darrelceballos":"darrel-ceballos.webp","daviddurand":"david-durand.webp","derekjacobs":"derek-jacobs.webp","donnybeach":"donny-beach.webp","dylanjones":"dylan-jones.webp","erichayden":"eric-hayden.webp","ethaneckert":"ethan-eckert.webp","ethanmoreno":"ethan-moreno.webp","evanfuqua":"evan-fuqua.webp","evankarlbon":"evan-karlbon.webp","evanparry":"evan-parry.webp","gerrybergeron":"gerry-bergeron.webp","grantwessley":"grant-wessley.webp","hunterwelborn":"hunter-welborn.webp","jaredphilpott":"jared-philpott.webp","jasonbranch":"jason-branch.webp","javonethompson":"javone-thompson.webp","jeremyjeffries":"jeremy-jeffries.webp","jerryfassett":"jerry-fassett.webp","jimsegredo":"jim-segredo.webp","joekonen":"joe-konen.webp","johnmiles":"john-miles.webp","joshmckinney":"josh-mckinney.webp","joshuaspragg":"joshua-spragg.webp","juanescamilla":"juan-escamilla.webp","justincrowe":"justin-crowe.webp","justincrowetransparent":"justin-crowe-transparent.webp","keatoncox":"keaton-cox.webp","kennyreel":"kenny-reel.webp","kenwoodramsey":"kenwood-ramsey.webp","kodyneagles":"kody-neagles.webp","kylekammeron":"kyle-kammeron.webp","larkinboyer":"larkin-boyer.webp","matthewbrown":"matthew-brown.webp","matthewgraham":"matthew-graham.webp","nicholasbaumann":"nicholas-baumann.webp","nicholasmoody":"nicholas-moody.webp","randyschweitzer":"randy-schweitzer.webp","randyshowers":"randy-showers.webp","rickymiles":"ricky-miles.webp","rosscampoli":"ross-campoli.webp","ryanwilson":"ryan-wilson.webp","scottwise":"scott-wise.webp","sebastianmichaels":"sebastian-michaels.webp","shanehatfield":"shane-hatfield.webp","shawnstamper":"shawn-stamper.webp","timothytyler":"timothy-tyler.webp","tjlunn":"tj-lunn.webp","tommyrogers":"tommy-rogers.webp","trevoraswarnauth":"trevor-aswarnauth.webp","trevorhaley":"trevor-haley.webp","vincenteguerrero":"vincente-guerrero.webp","zackharry":"zack-harry.webp"};
-const HLRN_DRIVER_PHOTO_ALIASES = {"sebastianmicheals":"sebastianmichaels","ericpedleyhayden":"erichayden","randyschweitzerrsi":"randyschweitzer","dyalnjones":"dylanjones","nicholasbaumann2":"nicholasbaumann"};
-
-function hLrnPhotoKey(name){
-  let k = String(name || "").trim().toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9]/g,"");
-  if(HLRN_DRIVER_PHOTO_ALIASES[k]) k = HLRN_DRIVER_PHOTO_ALIASES[k];
-
-  if(!HLRN_DRIVER_FULL_PHOTOS[k] && !HLRN_DRIVER_CUTOUT_PHOTOS[k]){
-    const stripped = k.replace(/\d+/g,"");
-    if(HLRN_DRIVER_PHOTO_ALIASES[stripped]) k = HLRN_DRIVER_PHOTO_ALIASES[stripped];
-    else if(HLRN_DRIVER_FULL_PHOTOS[stripped] || HLRN_DRIVER_CUTOUT_PHOTOS[stripped]) k = stripped;
-  }
-  return k;
+/* HLRN DRIVER IDENTITY + SHARED DATA */
+function hLrnDriverIdentity(driverOrName){
+  return window.HLRNDrivers?.resolve?.(driverOrName) || null;
 }
 
 function hLrnDriverPhoto(driverOrName,type="cutout"){
-  const name = typeof driverOrName === "string"
-    ? driverOrName
-    : (driverOrName?.name || driverOrName?.driver || driverOrName?.displayName || driverOrName?.display_name || "");
+  return window.HLRNDrivers?.photoUrl?.(driverOrName,type) || "";
+}
 
-  const k = hLrnPhotoKey(name);
-  const file = type === "full" ? HLRN_DRIVER_FULL_PHOTOS[k] : HLRN_DRIVER_CUTOUT_PHOTOS[k];
-  return file ? HLRN_DRIVER_PHOTO_BASE + type + "/" + file : "";
+function hLrnDriverProfileUrl(driverOrName){
+  return window.HLRNDrivers?.profileUrl?.(driverOrName) || "../drivers/";
 }
 
 function hLrnPhotoMarkup(driverOrName,type,className){
   const src = hLrnDriverPhoto(driverOrName,type);
   if(!src) return "";
-  const name = typeof driverOrName === "string"
-    ? driverOrName
-    : (driverOrName?.name || driverOrName?.driver || "Driver");
+  const rec=hLrnDriverIdentity(driverOrName);
+  const name = rec?.displayName || (typeof driverOrName === "string"
+    ? formatDriverName(driverOrName)
+    : formatDriverName(driverOrName?.name || driverOrName?.driver || "Driver"));
   return `<img class="${className}" src="${esc(src)}" alt="${esc(name)}" loading="lazy" decoding="async" onerror="this.style.display='none'">`;
 }
 
@@ -137,39 +119,37 @@ function hLrnDriverPhotoMarkup(driverOrName,className){
   return hLrnPhotoMarkup(driverOrName,"cutout",className);
 }
 
-function jsonp(action,league){
-  return new Promise((resolve,reject)=>{
-    const callback = "hlrn_cb_" + Date.now() + "_" + Math.floor(Math.random()*100000);
-    const script = document.createElement("script");
-    const timer = setTimeout(()=>{
-      cleanup();
-      reject(new Error("HLRN data request timed out."));
-    },15000);
+async function sharedLeagueData(league){
+  if(!window.HLRNData?.load){
+    throw new Error("HLRN shared data system is unavailable.");
+  }
+  const tasks=[window.HLRNData.load()];
+  if(window.HLRNDrivers?.load) tasks.push(window.HLRNDrivers.load());
+  const loaded=await Promise.all(tasks);
+  const snapshot=loaded[0];
+  const block=snapshot?.leagues?.[league];
+  if(!block || !Array.isArray(block.drivers) || !Array.isArray(block.results)){
+    throw new Error("HLRN "+league+" league data is unavailable.");
+  }
+  return {
+    drivers:block.drivers,
+    results:block.results,
+    generatedAt:snapshot.generatedAt || null
+  };
+}
 
-    function cleanup(){
-      clearTimeout(timer);
-      try{ delete window[callback]; }catch(e){ window[callback]=undefined; }
-      script.remove();
-    }
-
-    window[callback] = data=>{
-      cleanup();
-      resolve(data);
-    };
-
-    script.onerror = ()=>{
-      cleanup();
-      reject(new Error("Unable to connect to the HLRN Apps Script."));
-    };
-
-    script.src = API_BASE +
-      "?action=" + encodeURIComponent(action) +
-      "&league=" + encodeURIComponent(league) +
-      "&callback=" + encodeURIComponent(callback) +
-      "&_=" + Date.now();
-
-    document.head.appendChild(script);
-  });
+function sharedDataTimeLabel(value){
+  if(!value) return "Shared HLRN Data";
+  const d=new Date(value);
+  if(!Number.isFinite(d.getTime())) return "Shared HLRN Data";
+  try{
+    return "Updated "+new Intl.DateTimeFormat("en-US",{
+      timeZone:"America/New_York",
+      month:"short",day:"numeric",hour:"numeric",minute:"2-digit"
+    }).format(d)+" ET";
+  }catch(_){
+    return "Updated "+d.toLocaleString();
+  }
 }
 
 function latestCompletedRaceInfo(list){
@@ -261,23 +241,12 @@ async function loadLeague(league,options={}){
     league === "monday" ? "Monday League" : "Sunday League";
 
   try{
-    const [driverData,resultData] = await Promise.all([
-      jsonp("drivers",league),
-      jsonp("results",league)
-    ]);
+    const shared = await sharedLeagueData(league);
 
     if(requestId!==loadRequestId) return;
 
-    if(!driverData || driverData.success === false){
-      throw new Error(driverData?.error || "Driver data was not returned.");
-    }
-
-    if(!resultData || resultData.success === false){
-      throw new Error(resultData?.error || "Results data was not returned.");
-    }
-
-    const rawDrivers = Array.isArray(driverData.drivers) ? driverData.drivers : [];
-    const rawResults = Array.isArray(resultData.results) ? resultData.results : [];
+    const rawDrivers = Array.isArray(shared.drivers) ? shared.drivers : [];
+    const rawResults = Array.isArray(shared.results) ? shared.results : [];
 
     /* Remove banned / excluded drivers from the intelligence model itself. */
     const excludedDriverIds = new Set(
@@ -303,7 +272,7 @@ async function loadLeague(league,options={}){
       maxRace ? "Through Race " + maxRace : "Waiting For Results";
 
     document.getElementById("liveText").textContent =
-      driverData.lastUpdated ? "Updated " + driverData.lastUpdated + " • Auto 60s" : "Auto Sync • 60s";
+      sharedDataTimeLabel(shared.generatedAt) + " • Auto 60s";
 
     const preferred = categories.find(c=>c.key===selectedCategoryKey) || categories.find(c=>c.key==="favorite") || categories[0];
     if(preferred){
@@ -442,10 +411,14 @@ function buildAnalytics(){
       dataCompleteness*.42 + consistency*.20 + cleanScore*.16 + Math.min(100,lastFive.length*20)*.22
     ));
 
+    const displayName=formatDriverName(d.driver || d.name || "Unknown Driver");
+    const identity=hLrnDriverIdentity({driverId:id,driver:displayName});
     return {
       ...d,
       id,
-      name:formatDriverName(d.driver || d.name || "Unknown Driver"),
+      name:identity?.displayName || displayName,
+      profileUrl:identity?.url || hLrnDriverProfileUrl({driverId:id,driver:displayName}),
+      photoSlug:identity?.photoSlug || d.photoSlug || "",
       rank:number(d.rank),
       starts,
       wins,
