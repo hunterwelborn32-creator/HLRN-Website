@@ -601,6 +601,7 @@ function resizeHostedFrame(key){
     );
 
     frame.style.setProperty("height",Math.ceil(h+8)+"px","important");
+    setTimeout(()=>window.__hlrnHostedReportHeight?.(),0);
   }catch(e){}
 }
 function installHostedResize(key){
@@ -740,5 +741,46 @@ switchHostedTab("racing");
   },150);
 })();
 </script>
+
+<script id="HLRN_REPORT_HOSTED_HEIGHT_20260930">
+(function(){
+  let t=0,last=0;
+  function realHeight(){
+    const b=document.body,d=document.documentElement;
+    if(!b||!d)return 300;
+    d.style.setProperty("height","auto","important");
+    d.style.setProperty("min-height","0","important");
+    d.style.setProperty("max-height","none","important");
+    d.style.setProperty("overflow-y","visible","important");
+    b.style.setProperty("height","auto","important");
+    b.style.setProperty("min-height","0","important");
+    b.style.setProperty("max-height","none","important");
+    b.style.setProperty("overflow-y","visible","important");
+    return Math.max(300,b.scrollHeight||0,b.offsetHeight||0,d.scrollHeight||0,d.offsetHeight||0);
+  }
+  function send(){
+    clearTimeout(t);
+    t=setTimeout(()=>{
+      const h=Math.min(30000,Math.ceil(realHeight()+10));
+      last=h;
+      try{parent.postMessage({type:"hlrn-standings-height",series:"hosted",height:h},"*")}catch(e){}
+    },35);
+  }
+  window.__hlrnHostedReportHeight=send;
+  window.addEventListener("message",e=>{
+    if(e.data&&e.data.type==="hlrn-request-standings-height") send();
+  });
+  window.addEventListener("load",()=>{send();setTimeout(send,250);setTimeout(send,900);setTimeout(send,1800);setTimeout(send,3200)});
+  window.addEventListener("resize",send);
+  document.addEventListener("click",()=>setTimeout(send,80),true);
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",send,{once:true});else send();
+  try{
+    const ro=new ResizeObserver(send);
+    ro.observe(document.body);
+    ro.observe(document.documentElement);
+  }catch(e){}
+})();
+</script>
+
 </body>
 </html>
