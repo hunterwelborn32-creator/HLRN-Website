@@ -150,9 +150,9 @@
   </nav>
   <main class="viewport">
     <div class="cn-series-ribbon"><i></i><span id="cnRibbonText">Hosted Racing Active</span></div>
-    <iframe class="page active" id="page-hosted" title="HLRN Hosted Racing" scrolling="auto" src="hosted.html?v=20260930wholepage1"></iframe>
-    <iframe class="page" id="page-sunday" loading="lazy" title="HLRN Sunday Championship" scrolling="auto" src="sunday.html?v=20260930wholepage1"></iframe>
-    <iframe class="page" id="page-monday" loading="lazy" title="HLRN Monday Championship" scrolling="auto" src="monday.html?v=20260930wholepage1"></iframe>
+    <iframe class="page active" id="page-hosted" title="HLRN Hosted Racing" scrolling="auto" src="hosted.html?v=20260930heightreport1"></iframe>
+    <iframe class="page" id="page-sunday" loading="lazy" title="HLRN Sunday Championship" scrolling="auto" src="sunday.html?v=20260930heightreport1"></iframe>
+    <iframe class="page" id="page-monday" loading="lazy" title="HLRN Monday Championship" scrolling="auto" src="monday.html?v=20260930heightreport1"></iframe>
   </main>
 </div>
 <script>
@@ -1477,188 +1477,117 @@ main{
 </script>
 
 
-<style id="HLRN_WHOLE_PAGE_SCROLL_FINAL_20260930">
-  /* Whole-page scrolling: series frames grow to content; browser owns the scrollbar. */
-  html,body{
-    width:100%!important;
-    height:auto!important;
-    min-height:100%!important;
-    max-height:none!important;
-    margin:0!important;
-    overflow-x:hidden!important;
-    overflow-y:auto!important;
-    background:#fff!important;
-  }
-  body.nascar-standings-hub{
-    height:auto!important;
-    min-height:100vh!important;
-    max-height:none!important;
-    overflow-y:auto!important;
-  }
-  .hlrn{
-    display:block!important;
-    width:100%!important;
-    height:auto!important;
-    min-height:100vh!important;
-    max-height:none!important;
-    overflow:visible!important;
-    background:#fff!important;
-  }
-  .viewport{
-    position:relative!important;
-    display:block!important;
-    width:100%!important;
-    height:auto!important;
-    min-height:0!important;
-    max-height:none!important;
-    overflow:visible!important;
-    background:#fff!important;
-  }
-  iframe.page{
-    display:none!important;
-    width:100%!important;
-    height:1px!important;
-    min-height:0!important;
-    max-height:none!important;
-    border:0!important;
-    overflow:hidden!important;
-    background:#fff!important;
-  }
-  iframe.page.active{
-    display:block!important;
-  }
+
+<style id="HLRN_CHILD_REPORTED_WHOLE_PAGE_SCROLL_20260930">
+html,body{
+  width:100%!important;
+  height:auto!important;
+  min-height:100%!important;
+  max-height:none!important;
+  margin:0!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  background:#fff!important;
+}
+body.nascar-standings-hub{
+  height:auto!important;
+  min-height:100vh!important;
+  max-height:none!important;
+  overflow-y:auto!important;
+}
+.hlrn{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:100vh!important;
+  max-height:none!important;
+  overflow:visible!important;
+  background:#fff!important;
+}
+.viewport{
+  position:relative!important;
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow:visible!important;
+  background:#fff!important;
+}
+iframe.page{
+  display:none!important;
+  width:100%!important;
+  height:1px!important;
+  min-height:0!important;
+  max-height:none!important;
+  border:0!important;
+  overflow:hidden!important;
+  background:#fff!important;
+}
+iframe.page.active{display:block!important}
 </style>
-<script id="HLRN_WHOLE_PAGE_SCROLL_FINAL_20260930_JS">
+<script id="HLRN_CHILD_REPORTED_WHOLE_PAGE_SCROLL_20260930_JS">
 (function(){
-  let timer=0;
+  const frames={
+    hosted:document.getElementById("page-hosted"),
+    sunday:document.getElementById("page-sunday"),
+    monday:document.getElementById("page-monday")
+  };
+  const fallback={hosted:1800,sunday:2600,monday:2600};
 
-  function visible(el){
-    try{
-      const cs=el.ownerDocument.defaultView.getComputedStyle(el);
-      return cs.display!=="none" && cs.visibility!=="hidden";
-    }catch(e){ return true; }
+  function apply(series,height){
+    const frame=frames[series];
+    if(!frame) return;
+    let h=Number(height);
+    if(!Number.isFinite(h)||h<300) h=fallback[series]||1800;
+    h=Math.min(30000,Math.ceil(h));
+    frame.setAttribute("scrolling","no");
+    frame.style.setProperty("height",h+"px","important");
+    frame.style.setProperty("min-height",h+"px","important");
+    frame.style.setProperty("max-height","none","important");
+    frame.style.setProperty("overflow","hidden","important");
   }
 
-  function measureDoc(doc){
-    if(!doc || !doc.body || !doc.documentElement) return 180;
+  window.addEventListener("message",e=>{
+    const d=e.data||{};
+    if(d.type!=="hlrn-standings-height") return;
+    const frame=frames[d.series];
+    if(!frame || e.source!==frame.contentWindow) return;
+    apply(d.series,d.height);
+  });
 
-    doc.documentElement.style.setProperty("height","auto","important");
-    doc.documentElement.style.setProperty("min-height","0","important");
-    doc.documentElement.style.setProperty("max-height","none","important");
-    doc.documentElement.style.setProperty("overflow","visible","important");
-    doc.body.style.setProperty("height","auto","important");
-    doc.body.style.setProperty("min-height","0","important");
-    doc.body.style.setProperty("max-height","none","important");
-    doc.body.style.setProperty("overflow","visible","important");
-
-    const top=doc.body.getBoundingClientRect().top;
-    let bottom=Math.max(
-      doc.body.getBoundingClientRect().bottom,
-      doc.documentElement.getBoundingClientRect().bottom
-    );
-
-    for(const el of doc.body.querySelectorAll("*")){
-      if(!visible(el)) continue;
-      const cs=doc.defaultView.getComputedStyle(el);
-      if(cs.position==="fixed") continue;
-      const r=el.getBoundingClientRect();
-      if(!Number.isFinite(r.bottom) || (r.width===0 && r.height===0)) continue;
-      bottom=Math.max(bottom,r.bottom);
-    }
-
-    return Math.max(
-      180,
-      doc.body.scrollHeight||0,
-      doc.body.offsetHeight||0,
-      doc.documentElement.scrollHeight||0,
-      doc.documentElement.offsetHeight||0,
-      Math.ceil(bottom-top)+8
-    );
+  function request(series){
+    const frame=frames[series];
+    if(!frame)return;
+    if(!frame.style.height || parseFloat(frame.style.height)<300) apply(series,fallback[series]);
+    try{frame.contentWindow.postMessage({type:"hlrn-request-standings-height"},"*")}catch(e){}
+    setTimeout(()=>{try{frame.contentWindow.postMessage({type:"hlrn-request-standings-height"},"*")}catch(e){}},250);
+    setTimeout(()=>{try{frame.contentWindow.postMessage({type:"hlrn-request-standings-height"},"*")}catch(e){}},900);
   }
 
-  function fit(frame){
-    if(!frame || !frame.classList.contains("active")) return;
-    try{
-      frame.setAttribute("scrolling","no");
-      frame.style.setProperty("overflow","hidden","important");
-      frame.style.setProperty("max-height","none","important");
+  Object.entries(frames).forEach(([series,frame])=>{
+    if(!frame)return;
+    frame.addEventListener("load",()=>request(series));
+  });
 
-      const doc=frame.contentDocument;
-      if(!doc || !doc.body) return;
-
-      // Give Hosted a moment to resize its own nested active panel first.
-      try{
-        if(frame.id==="page-hosted" && typeof frame.contentWindow.resizeHostedFrame==="function"){
-          const active=doc.querySelector(".hosted-hub-frame.active");
-          const key=active ? String(active.id||"").replace("hostedFrame-","") : "racing";
-          frame.contentWindow.resizeHostedFrame(key||"racing");
-        }
-      }catch(e){}
-
-      const h=measureDoc(doc);
-      frame.style.setProperty("height",Math.ceil(h)+"px","important");
-      frame.style.setProperty("min-height",Math.ceil(h)+"px","important");
-
-      if(!frame.__hlrnWholePageBound){
-        frame.__hlrnWholePageBound=true;
-        frame.addEventListener("load",()=>schedule(true));
-
-        try{
-          const mo=new MutationObserver(()=>schedule(false));
-          mo.observe(doc.body,{childList:true,subtree:true,characterData:true});
-          frame.__hlrnWholePageMO=mo;
-        }catch(e){}
-
-        try{
-          if("ResizeObserver" in window){
-            const ro=new ResizeObserver(()=>schedule(false));
-            ro.observe(doc.body);
-            ro.observe(doc.documentElement);
-            frame.__hlrnWholePageRO=ro;
-          }
-        }catch(e){}
-
-        doc.addEventListener("load",()=>schedule(false),true);
-        doc.addEventListener("click",()=>schedule(true),true);
-        doc.addEventListener("change",()=>schedule(true),true);
+  document.addEventListener("click",()=>{
+    setTimeout(()=>{
+      const active=document.querySelector("iframe.page.active");
+      if(active){
+        const series=String(active.id||"").replace("page-","");
+        request(series);
       }
-    }catch(e){}
-  }
+    },50);
+  },true);
 
-  function fitActive(){
+  function init(){
     document.documentElement.style.setProperty("overflow-y","auto","important");
     document.body.style.setProperty("overflow-y","auto","important");
-    document.body.style.setProperty("height","auto","important");
-
-    document.querySelectorAll("iframe.page").forEach(frame=>{
-      if(frame.classList.contains("active")) fit(frame);
-      else{
-        frame.style.setProperty("height","1px","important");
-        frame.style.setProperty("min-height","0","important");
-      }
-    });
+    const active=document.querySelector("iframe.page.active");
+    if(active) request(String(active.id||"").replace("page-",""));
   }
-
-  function schedule(burst){
-    clearTimeout(timer);
-    timer=setTimeout(fitActive,40);
-    if(burst){
-      setTimeout(fitActive,160);
-      setTimeout(fitActive,450);
-      setTimeout(fitActive,900);
-      setTimeout(fitActive,1800);
-      setTimeout(fitActive,3200);
-    }
-  }
-
-  document.addEventListener("click",()=>schedule(true),true);
-  window.addEventListener("resize",()=>schedule(true));
-  if(document.readyState==="loading"){
-    document.addEventListener("DOMContentLoaded",()=>schedule(true),{once:true});
-  }else{
-    schedule(true);
-  }
-  window.addEventListener("load",()=>schedule(true),{once:true});
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});else init();
+  window.addEventListener("load",()=>setTimeout(init,100),{once:true});
 })();
 </script>
 
