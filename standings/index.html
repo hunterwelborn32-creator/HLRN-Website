@@ -1609,6 +1609,24 @@ iframe.page.active{display:block!important}
         fitFrame(child,depth+1);
       }
 
+      if(!frame.__hlrnStableEventsBound){
+        frame.__hlrnStableEventsBound=true;
+        try{
+          doc.addEventListener("click",()=>{
+            delete frame.dataset.hlrnStableHeight;
+            schedule(true);
+          },true);
+          doc.addEventListener("change",()=>{
+            delete frame.dataset.hlrnStableHeight;
+            schedule(true);
+          },true);
+          doc.addEventListener("load",()=>{
+            delete frame.dataset.hlrnStableHeight;
+            schedule(true);
+          },true);
+        }catch(e){}
+      }
+
       const h=measure(doc);
       const current=parseFloat(frame.dataset.hlrnStableHeight||"0")||0;
       const next=current>0 ? Math.max(current,h) : h;
