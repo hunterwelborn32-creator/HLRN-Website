@@ -401,6 +401,44 @@ def render_home_library(entries, in_progress):
         flags=re.S,
     )
 
+    main_numbers = [1] + [
+        int(e.get('number')) for e in published
+        if e.get('kind') == 'main' and str(e.get('number') or '').isdigit()
+    ]
+    latest_main = max(main_numbers)
+    range_text = f'EPISODES 01–{latest_main:02d} AVAILABLE'
+    hero_text = f'{main_count} MAIN EPISODES + {special_count} SPECIAL' + ('S' if special_count != 1 else '')
+    description = (
+        f'The Adventures of High Line, an HLRN original illustrated racing series. '
+        f'Browse Episodes 1 through {latest_main}'
+        + (f' plus {special_count} special episode' + ('s' if special_count != 1 else '') if special_count else '')
+        + '.'
+    )
+    content = re.sub(
+        r'(<meta content=").*?(" name="description"/>)',
+        lambda m: m.group(1) + html.escape(description, quote=True) + m.group(2),
+        content,
+        count=1,
+    )
+    content = re.sub(
+        r'(<span class="hero-bottomline-right">).*?( <b>↘</b></span>)',
+        lambda m: m.group(1) + html.escape(hero_text) + m.group(2),
+        content,
+        count=1,
+    )
+    content = re.sub(
+        r'<span>EPISODES \d{2}–\d{2} AVAILABLE</span>',
+        '<span>' + html.escape(range_text) + '</span>',
+        content,
+        count=1,
+    )
+    content = re.sub(
+        r'<span>\d+ SPECIALS?</span>',
+        '<span>' + str(special_count) + ' SPECIAL' + ('S' if special_count != 1 else '') + '</span>',
+        content,
+        count=1,
+    )
+
     page.write_text(content, encoding='utf8')
     print('Static Adventures homepage rendered:', main_count, 'main |', special_count, 'special |', len(pending), 'in progress', flush=True)
 
