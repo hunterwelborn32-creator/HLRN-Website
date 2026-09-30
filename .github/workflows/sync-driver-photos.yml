@@ -1,0 +1,45 @@
+name: Sync Driver Photos
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 7 * * *"
+  push:
+    paths:
+      - ".github/workflows/sync-driver-photos.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-driver-photos
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout HLRN Website
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch HLRN driver photos
+        run: |
+          rm -rf /tmp/hlrn-app
+          git clone --depth 1 https://github.com/hunterwelborn32-creator/HLRN-App.git /tmp/hlrn-app
+          mkdir -p assets/driver-photos/cutout assets/driver-photos/full
+          rsync -a --delete /tmp/hlrn-app/driver-photos/cutout/ assets/driver-photos/cutout/
+          rsync -a --delete /tmp/hlrn-app/driver-photos/full/ assets/driver-photos/full/
+
+      - name: Publish photo library
+        run: |
+          if git diff --quiet -- assets/driver-photos; then
+            echo "Driver photo library already current."
+            exit 0
+          fi
+          git config user.name "hlrn-driver-photo-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add assets/driver-photos
+          git commit -m "Sync HLRN driver photo library"
+          git push
