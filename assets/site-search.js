@@ -99,7 +99,7 @@ function boot(){
       ["Adventures of High Line","HLRN original illustrated racing series","adventures/","adventures high line episode series"],
       ["Meet the Admins","Meet the HLRN administration team","meet-the-admins/","admins administration team"],
       ["Rules","HLRN league rules","rules/","rules regulations penalties"],
-      ["Broadcasters","HLRN broadcast partners and streams","broadcast/","broadcast broadcasters youtube rsi"],
+      ["Watch HLRN","HLRN broadcasts, replays and network coverage","broadcasters/","broadcast broadcasters watch hlrn youtube rsi"],
       ["Store","HLRN store","store/","store merchandise shop"]
     ];
     var out=pages.map(function(p){return {type:"page",title:p[0],subtitle:p[1],url:u(p[2]),keywords:p[3],meta:"PAGE"}});
