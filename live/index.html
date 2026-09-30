@@ -2046,6 +2046,7 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
   let recapLookupRaceKey = null;
   let recapLookupAt = 0;
   let recapLookupBusy = false;
+  let permanentRecapRaceKey = null;
 
   // Strict race-leader validation. We intentionally do NOT trust raw lead-change
   // events from the bridge because pit-exit scoring can briefly make several cars P1.
@@ -3588,6 +3589,7 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
 
     const complete=!!race && (race.raceFrozen || raceFinished(race));
     if(!complete){
+      permanentRecapRaceKey=null;
       btn.hidden=true;
       if(resultsBtn) resultsBtn.hidden=true;
       return;
@@ -3627,6 +3629,7 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
         return false;
       });
       if(match?.url){
+        permanentRecapRaceKey=key;
         btn.href=match.url;
         btn.textContent="READ POST-RACE STORY →";
         btn.classList.add("ready");
@@ -3656,11 +3659,14 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
 
     if(race){
       const complete = raceFinished(race);
-      $("reportStatus").textContent = race.raceFrozen
-        ? "FINAL REPORT • FROZEN AT CHECKERED"
-        : complete
-          ? "FINAL REPORT READY TO COPY"
-          : "LIVE REPORT • SERVER RECORDER ACTIVE";
+      const permanent = recapIdentityFor(race) === permanentRecapRaceKey;
+      $("reportStatus").textContent = permanent
+        ? "FINAL • FROZEN • PERMANENT ARCHIVE PUBLISHED"
+        : race.raceFrozen
+          ? "FINAL REPORT • FROZEN AT CHECKERED • PUBLISHING ARCHIVE"
+          : complete
+            ? "FINAL REPORT READY TO COPY"
+            : "LIVE REPORT • SERVER RECORDER ACTIVE";
     }else{
       $("reportStatus").textContent = "BUILDING RACE-NIGHT REPORT";
     }
