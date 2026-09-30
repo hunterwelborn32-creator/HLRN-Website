@@ -1,6 +1,52 @@
 (function(){
 "use strict";
 
+/* HLRN shared theme foundation.
+   Light is the current default. The API is ready for a future Night Mode control. */
+const HLRN_THEME_KEY="hlrn_site_theme_v2";
+
+function normalizeTheme(value){
+  return String(value||"").toLowerCase()==="dark" ? "dark" : "light";
+}
+
+function readTheme(){
+  try{return normalizeTheme(localStorage.getItem(HLRN_THEME_KEY)||"light");}
+  catch(e){return "light";}
+}
+
+function applyTheme(value,{persist=false}={}){
+  const theme=normalizeTheme(value);
+  document.documentElement.dataset.hlrnTheme=theme;
+  document.documentElement.style.colorScheme=theme;
+  if(persist){
+    try{localStorage.setItem(HLRN_THEME_KEY,theme);}catch(e){}
+  }
+  try{
+    document.querySelectorAll("iframe").forEach(frame=>{
+      const doc=frame.contentDocument;
+      if(doc&&doc.documentElement)doc.documentElement.dataset.hlrnTheme=theme;
+    });
+  }catch(e){}
+  window.dispatchEvent(new CustomEvent("hlrn-theme-change",{detail:{theme}}));
+  return theme;
+}
+
+applyTheme(readTheme());
+
+window.HLRNTheme=Object.freeze({
+  get:readTheme,
+  set(theme){return applyTheme(theme,{persist:true});},
+  toggle(){return applyTheme(readTheme()==="dark"?"light":"dark",{persist:true});},
+  reset(){
+    try{localStorage.removeItem(HLRN_THEME_KEY);}catch(e){}
+    return applyTheme("light");
+  }
+});
+
+window.addEventListener("storage",e=>{
+  if(e.key===HLRN_THEME_KEY)applyTheme(e.newValue||"light");
+});
+
 function start(){
   if(!document.body){document.addEventListener("DOMContentLoaded",start,{once:true});return;}
 
@@ -38,7 +84,7 @@ function start(){
 
   // Always use the current shared shell stylesheet. This gives every page
   // the same global mobile layer without requiring page-by-page CSS edits.
-  const SHELL_CSS_VERSION="20260929mobile2";
+  const SHELL_CSS_VERSION="20260930theme1";
   let shellCss=[...document.querySelectorAll('link[rel="stylesheet"]')].find(link=>/\/site-shell\.css(?:\?|$)/i.test(link.getAttribute("href")||""));
   if(!shellCss){
     shellCss=document.createElement("link");
