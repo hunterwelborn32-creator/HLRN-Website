@@ -1514,9 +1514,9 @@ document.addEventListener('DOMContentLoaded', function(){
   function renderVerification(){
     const m=backtest();
     window.HLRN_MODEL_METRICS=m;
-    if($('v3Top5'))$('v3Top5').textContent=fmt(m.top5Capture);
-    if($('v3Top3'))$('v3Top3').textContent=fmt(m.top3Capture);
-    if($('v3Exact'))$('v3Exact').textContent=fmt(m.exactHit);
+    if($('v3Top5'))$('v3Top5') && ($('v3Top5').textContent=fmt(m.top5Capture));
+    if($('v3Top3'))$('v3Top3') && ($('v3Top3').textContent=fmt(m.top3Capture));
+    if($('v3Exact'))$('v3Exact') && ($('v3Exact').textContent=fmt(m.exactHit));
     if($('v3ValidationBar'))$('v3ValidationBar').style.width=Number.isFinite(m.top5Capture)?clamp(m.top5Capture)+'%':'0%';
     if($('v3VerifyCopy')){
       if(m.tested<3){
@@ -1606,15 +1606,6 @@ document.addEventListener('DOMContentLoaded', function(){
       <div class="compact-overview-stat"><span>Hot Driver</span><b id="compactHot">—</b></div>
       <div class="compact-overview-stat"><span>Risk Watch</span><b id="compactRisk">—</b></div>
       <div class="compact-overview-stat"><span>Through</span><b id="compactRace">—</b></div>
-    </section>
-    <section class="v3-verification v3-accuracy-line" id="v3Verification" aria-label="HLRN model accuracy check">
-      <div class="v3-accuracy-label"><span class="v3-live-pulse"></span><strong>Accuracy Check</strong><span>Walk-forward verified</span></div>
-      <div class="v3-accuracy-stat"><span>Top 3</span><b id="v3Top3">—</b></div>
-      <div class="v3-accuracy-stat"><span>Top 5</span><b id="v3Top5">—</b></div>
-      <div class="v3-accuracy-stat"><span>Exact Pick</span><b id="v3Exact">—</b></div>
-      <div class="v3-accuracy-stat goal"><span>Goal</span><b>95.8%</b></div>
-      <div id="v3VerifyCopy" class="v3-verify-copy" hidden></div>
-      <div class="v3-validation-bar" hidden><span id="v3ValidationBar"></span></div>
     </section>
     <nav class="compact-tabs" aria-label="Race Intelligence sections">
       <button class="compact-tab active" data-panel="board">Intelligence Board</button>
