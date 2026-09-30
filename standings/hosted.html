@@ -371,45 +371,46 @@ html,body,.hosted-hub{background:#fff!important;color:#111214!important;height:a
 </style>`;
   const tag='<style id="HLRN_STATIC_LIGHT_INNER">'+css+'</style>'+rescue;
   return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'
-<style id="HLRN_HOSTED_RELIABLE_SCROLL_20260930">
-  html,body{
-    width:100%!important;
-    height:100%!important;
-    min-height:0!important;
-    overflow:hidden!important;
-  }
-  .hosted-hub{
-    width:100%!important;
-    height:100%!important;
-    min-height:0!important;
-    display:flex!important;
-    flex-direction:column!important;
-    overflow:hidden!important;
-    background:#fff!important;
-  }
-  .hosted-hub-tabs{
-    flex:0 0 auto!important;
-  }
-  .hosted-hub-stage{
-    position:relative!important;
-    flex:1 1 auto!important;
+
+<style id="HLRN_HOSTED_WHOLE_PAGE_AUTOHEIGHT_20260930">
+  html,body,.hosted-hub{
     width:100%!important;
     height:auto!important;
     min-height:0!important;
     max-height:none!important;
-    overflow:hidden!important;
+    overflow:visible!important;
+    background:#fff!important;
+  }
+  .hosted-hub{
+    display:block!important;
+  }
+  .hosted-hub-stage{
+    position:relative!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow:visible!important;
     background:#fff!important;
   }
   .hosted-hub-frame{
-    position:absolute!important;
-    inset:0!important;
+    position:relative!important;
+    inset:auto!important;
+    display:none!important;
     width:100%!important;
-    height:100%!important;
+    height:1px!important;
     min-height:0!important;
     max-height:none!important;
-    overflow:auto!important;
+    overflow:hidden!important;
     border:0!important;
     background:#fff!important;
+  }
+  .hosted-hub-frame.active{
+    display:block!important;
+    visibility:visible!important;
+    opacity:1!important;
+    pointer-events:auto!important;
+    z-index:1!important;
   }
 </style>
 
@@ -556,24 +557,50 @@ function resizeHostedFrame(key){
   const frame=hostedFrame(key);
   if(!frame) return;
   try{
-    frame.setAttribute("scrolling","yes");
+    frame.setAttribute("scrolling","no");
     frame.style.setProperty("width","100%","important");
-    frame.style.setProperty("height","100%","important");
     frame.style.setProperty("min-height","0","important");
     frame.style.setProperty("max-height","none","important");
-    frame.style.setProperty("position","absolute","important");
-    frame.style.setProperty("inset","0","important");
-    frame.style.setProperty("overflow","auto","important");
+    frame.style.setProperty("position","relative","important");
+    frame.style.setProperty("inset","auto","important");
+    frame.style.setProperty("overflow","hidden","important");
 
     const doc=frame.contentDocument;
     if(!doc || !doc.body || !doc.documentElement) return;
+
     doc.documentElement.style.setProperty("height","auto","important");
-    doc.documentElement.style.setProperty("min-height","100%","important");
-    doc.documentElement.style.setProperty("overflow-y","auto","important");
+    doc.documentElement.style.setProperty("min-height","0","important");
+    doc.documentElement.style.setProperty("max-height","none","important");
+    doc.documentElement.style.setProperty("overflow","visible","important");
     doc.body.style.setProperty("height","auto","important");
-    doc.body.style.setProperty("min-height","100%","important");
-    doc.body.style.setProperty("overflow-x","hidden","important");
-    doc.body.style.setProperty("overflow-y","auto","important");
+    doc.body.style.setProperty("min-height","0","important");
+    doc.body.style.setProperty("max-height","none","important");
+    doc.body.style.setProperty("overflow","visible","important");
+
+    const top=doc.body.getBoundingClientRect().top;
+    let bottom=Math.max(
+      doc.body.getBoundingClientRect().bottom,
+      doc.documentElement.getBoundingClientRect().bottom
+    );
+
+    for(const el of doc.body.querySelectorAll("*")){
+      const cs=doc.defaultView.getComputedStyle(el);
+      if(cs.display==="none" || cs.visibility==="hidden" || cs.position==="fixed") continue;
+      const r=el.getBoundingClientRect();
+      if(!Number.isFinite(r.bottom) || (r.width===0 && r.height===0)) continue;
+      bottom=Math.max(bottom,r.bottom);
+    }
+
+    const h=Math.max(
+      doc.body.scrollHeight||0,
+      doc.body.offsetHeight||0,
+      doc.documentElement.scrollHeight||0,
+      doc.documentElement.offsetHeight||0,
+      Math.ceil(bottom-top),
+      180
+    );
+
+    frame.style.setProperty("height",Math.ceil(h+8)+"px","important");
   }catch(e){}
 }
 function installHostedResize(key){
