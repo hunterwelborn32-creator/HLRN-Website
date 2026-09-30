@@ -113,7 +113,7 @@ function ensurePanel(){
         '<h2 id="rnTrack">--</h2>'+
         '<p id="rnMessage">The HLRN race-night system is preparing today’s event.</p>'+
         '<div class="rn-actions">'+
-          '<a class="rn-btn primary" href="broadcast/"><span class="rn-btn-icon">▶</span><span><small>WATCH</small><strong>WATCH BROADCAST</strong></span><b>↗</b></a>'+
+          '<a class="rn-btn primary" href="broadcasters/"><span class="rn-btn-icon">▶</span><span><small>WATCH</small><strong>WATCH BROADCAST</strong></span><b>↗</b></a>'+
           '<a class="rn-btn live" href="live/"><span class="rn-btn-icon">●</span><span><small>RACE CONTROL</small><strong>LIVE RACE CENTER</strong></span><b>→</b></a>'+
           '<a class="rn-btn" id="rnPreview" href="race-preview/"><span class="rn-btn-icon">P</span><span><small>PRE-RACE</small><strong>RACE PREVIEW</strong></span><b>→</b></a>'+
           '<a class="rn-btn" href="standings/"><span class="rn-btn-icon">#</span><span><small>CHAMPIONSHIP</small><strong>STANDINGS</strong></span><b>→</b></a>'+
