@@ -45,6 +45,94 @@ class DriverPageTests(unittest.TestCase):
         self.assertIn("HLR", html)
         self.assertIn('"@type": "Person"', html)
 
+    def test_hosted_alias_and_records(self):
+        hlrn = {
+            "hosted": {
+                "latest": {
+                    "track": "Talladega Superspeedway",
+                    "date": "9/26/2026",
+                    "results": [
+                        {
+                            "position": "25",
+                            "driver": "Justin Lee Pearson",
+                            "carNumber": "58",
+                            "start": "10",
+                            "lapsLed": "0",
+                            "incidents": "18",
+                        }
+                    ],
+                },
+                "sessions": [
+                    {
+                        "date": "7/16/2026",
+                        "track": "EchoPark Speedway (Atlanta)",
+                        "carNumber": "19",
+                        "driver": "Ethan Fonseca Moreno",
+                    }
+                ],
+                "rankings": [
+                    {
+                        "rank": "3",
+                        "driver": "Ethan Fonseca Moreno",
+                        "races": "18",
+                        "wins": "6",
+                        "top5": "12",
+                        "top10": "13",
+                        "averageFinish": "10.5",
+                    },
+                    {
+                        "rank": "7",
+                        "driver": "Justin Lee Pearson",
+                        "races": "51",
+                        "wins": "5",
+                        "top5": "13",
+                        "top10": "14",
+                        "averageFinish": "19.47",
+                    },
+                ],
+            }
+        }
+
+        records, numbers, aliases = mod.hosted_profile_records(hlrn)
+        self.assertIn("Ethan Moreno", records)
+        self.assertNotIn("Ethan Fonseca Moreno", records)
+        self.assertEqual(aliases["Ethan Moreno"], ["Ethan Fonseca Moreno"])
+        self.assertEqual(numbers["Ethan Moreno"], "19")
+        self.assertEqual(records["Ethan Moreno"]["rank"], "3")
+
+        self.assertIn("Justin Lee Pearson", records)
+        self.assertEqual(numbers["Justin Lee Pearson"], "58")
+        self.assertEqual(records["Justin Lee Pearson"]["results"][0]["finish"], "25")
+        self.assertEqual(records["Justin Lee Pearson"]["results"][0]["track"], "Talladega Superspeedway")
+
+    def test_render_supports_hosted_series(self):
+        driver = {
+            "name": "Justin Lee Pearson",
+            "slug": "justin-lee-pearson",
+            "number": "58",
+            "photoSlug": "justin-lee-pearson",
+            "teams": {"hosted": None},
+            "records": {
+                "hosted": {
+                    "rank": 7,
+                    "points": None,
+                    "races": 51,
+                    "wins": 5,
+                    "top5": 13,
+                    "top10": 14,
+                    "avgFinish": 19.47,
+                    "laps": None,
+                    "lapsLed": None,
+                    "incidents": None,
+                    "results": [],
+                }
+            },
+        }
+        html = mod.render_page(driver)
+        self.assertIn("Hosted Racing", html)
+        self.assertIn("series-card hosted", html)
+        self.assertIn("Justin Lee Pearson", html)
+
 
 if __name__ == "__main__":
     unittest.main()
