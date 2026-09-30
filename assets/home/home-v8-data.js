@@ -15,6 +15,20 @@
     const v=String(value==null?"":value).trim();
     el.textContent=v||fallback;
   };
+  const setDriverPhoto=(id,value)=>{
+    const el=$(id);if(!el)return;
+    const src=window.HLRNDrivers?.photoUrl?.(value,"cutout")||"";
+    if(!src){el.hidden=true;el.removeAttribute("src");return}
+    const rec=window.HLRNDrivers?.resolve?.(value);
+    el.src=src;
+    el.alt=(rec?.displayName||pretty(value?.driver||value?.name||value||"Driver"))+" driver photo";
+    el.hidden=false;
+    el.onerror=()=>{el.hidden=true};
+  };
+  const setDriverLink=(id,value,fallback)=>{
+    const el=$(id);if(!el)return;
+    el.href=window.HLRNDrivers?.profileUrl?.(value)||fallback||"drivers/";
+  };
   const pretty=name=>{
     const raw=String(name||"").trim();
     if(!raw)return "";
@@ -78,8 +92,13 @@
   function renderSnapshot(snapshot){
     const hosted=Array.isArray(snapshot?.hosted?.rankings)?snapshot.hosted.rankings:[];
     const top=hosted[0];
-    put("rdTopDriver",pretty(top?.driver||top?.name||top?.driverName),"CONNECTING");
-    put("v7TopDriverMirror",pretty(top?.driver||top?.name||top?.driverName),"CONNECTING");
+    const topName=pretty(top?.driver||top?.name||top?.driverName);
+    put("rdTopDriver",topName,"CONNECTING");
+    put("v7TopDriverMirror",topName,"CONNECTING");
+    if(topName){
+      setDriverPhoto("rdTopDriverPhoto",topName);
+      setDriverLink("rdTopDriverLink",topName,"standings/");
+    }
   }
   function renderLatest(report,schedule){
     if(!report)return;
@@ -89,6 +108,11 @@
     const drivers=Number(report.classified||report.driverCount||0);
     put("rdLatestWinner",winner,"HLRN");
     put("rdLastWinner",winner,"--");
+    if(winner){
+      setDriverPhoto("rdLatestWinnerPhoto",winner);
+      setDriverLink("rdLatestWinnerLink",winner,"results/");
+      setDriverPhoto("rdLastWinnerPhoto",winner);
+    }
     put("rdLastTrack",track,"LATEST HLRN RESULT");
     put("rdLastDate",longDate(report.date));
     put("rdLastDrivers",drivers>0?String(drivers):"--");
@@ -148,6 +172,7 @@
 
   async function refresh(){
     try{
+      if(window.HLRNDrivers?.load)await window.HLRNDrivers.load();
       const snapshot=window.HLRNData?await window.HLRNData.load():await json("data/hlrn.json");
       renderSnapshot(snapshot);
       const [schedule,reports]=await Promise.all([
