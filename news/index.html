@@ -16,6 +16,114 @@
 \n\n
 
 <meta name="theme-color" content="#07090d">
+
+<style id="HLRN_NEWS_DAY_RECAP_FIX_20260930">
+/* News page Day Mode fixes */
+
+/* 1) Keep READ THE LATEST white on the dark feature image/button. */
+html[data-hlrn-theme="light"] .nr-lead-link,
+html[data-hlrn-theme="light"] .nr-lead-link b{
+  color:#fff!important;
+}
+html[data-hlrn-theme="light"] .nr-lead-link:hover,
+html[data-hlrn-theme="light"] .nr-lead-link:hover b{
+  color:#111!important;
+}
+
+/* 2) Race Recap Center becomes white with dark text. */
+html[data-hlrn-theme="light"] #recaps,
+html[data-hlrn-theme="light"] .nr-recap-center,
+html[data-hlrn-theme="light"] .nr-recap-feature,
+html[data-hlrn-theme="light"] .nr-recap-hero,
+html[data-hlrn-theme="light"] .nr-recap-stats,
+html[data-hlrn-theme="light"] .nr-recap-toolbar,
+html[data-hlrn-theme="light"] .nr-recap-grid,
+html[data-hlrn-theme="light"] .nr-recap-card,
+html[data-hlrn-theme="light"] .nr-recap-card-head,
+html[data-hlrn-theme="light"] .nr-recap-card-main,
+html[data-hlrn-theme="light"] .nr-recap-card-actions,
+html[data-hlrn-theme="light"] .nr-recap-empty{
+  background:#fff!important;
+  background-image:none!important;
+  color:#11161c!important;
+  border-color:#d8dee5!important;
+  box-shadow:none!important;
+}
+
+/* remove dark decorative text/overlays */
+html[data-hlrn-theme="light"] .nr-recap-hero:after{
+  color:rgba(17,22,28,.035)!important;
+}
+
+/* recap headings, labels, values */
+html[data-hlrn-theme="light"] #recaps :where(
+  h1,h2,h3,h4,strong,b,.nr-recap-winner strong,.nr-recap-card-winner strong,
+  .nr-recap-card-stats b,.nr-recap-count
+){
+  color:#11161c!important;
+  text-shadow:none!important;
+}
+html[data-hlrn-theme="light"] #recaps :where(
+  p,small,span,.nr-recap-eyebrow,.nr-recap-winner small,
+  .nr-recap-card-main small,.nr-recap-card-main p,
+  .nr-recap-card-winner span,.nr-recap-card-stats span,
+  .nr-recap-empty
+){
+  color:#66717d!important;
+}
+
+/* recap filters all white with black text */
+html[data-hlrn-theme="light"] .nr-recap-filter,
+html[data-hlrn-theme="light"] .nr-recap-filter.active,
+html[data-hlrn-theme="light"] .nr-recap-filter[data-filter="sunday"].active,
+html[data-hlrn-theme="light"] .nr-recap-filter[data-filter="monday"].active{
+  background:#fff!important;
+  color:#11161c!important;
+  border-color:#cfd6de!important;
+  box-shadow:none!important;
+}
+html[data-hlrn-theme="light"] .nr-recap-filter.active{
+  border-color:#11161c!important;
+}
+
+/* recap buttons */
+html[data-hlrn-theme="light"] .nr-recap-btn,
+html[data-hlrn-theme="light"] .nr-recap-card-actions a{
+  background:#fff!important;
+  color:#11161c!important;
+  border-color:#cfd6de!important;
+}
+html[data-hlrn-theme="light"] .nr-recap-btn.primary{
+  background:#e31837!important;
+  color:#fff!important;
+  border-color:#e31837!important;
+}
+
+/* four bottom desk cards */
+html[data-hlrn-theme="light"] .nr-shortcuts{
+  background:#fff!important;
+}
+html[data-hlrn-theme="light"] .nr-shortcuts a{
+  background:#fff!important;
+  background-image:none!important;
+  color:#11161c!important;
+  border-color:#d8dee5!important;
+  box-shadow:none!important;
+}
+html[data-hlrn-theme="light"] .nr-shortcuts a strong{
+  color:#11161c!important;
+}
+html[data-hlrn-theme="light"] .nr-shortcuts a small,
+html[data-hlrn-theme="light"] .nr-shortcuts a span{
+  color:#66717d!important;
+}
+
+/* section heading/archive link */
+html[data-hlrn-theme="light"] #recaps .nr-section-head,
+html[data-hlrn-theme="light"] #recaps .nr-section-head a{
+  color:#11161c!important;
+}
+</style>
 </head>
 
 <body class="newsroom-v10">
