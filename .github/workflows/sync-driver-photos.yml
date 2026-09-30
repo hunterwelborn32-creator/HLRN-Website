@@ -34,7 +34,7 @@ jobs:
 
       - name: Publish photo library
         run: |
-          if git diff --quiet -- assets/driver-photos; then
+          if [ -z "$(git status --porcelain -- assets/driver-photos)" ]; then
             echo "Driver photo library already current."
             exit 0
           fi
