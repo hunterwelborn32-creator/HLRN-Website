@@ -84,10 +84,7 @@ function leagueData(key){return snapshot?.leagues?.[key]||{drivers:[],results:[]
 function driverMap(key){return new Map((leagueData(key).drivers||[]).map(d=>[String(d.driverId),d]))}
 function driverName(key,id){return pretty(driverMap(key).get(String(id))?.driver||('Driver '+id))}
 function driverUrl(key,d){
-  const p=new URLSearchParams({league:key});
-  if(d?.driverId!==undefined)p.set('driverId',String(d.driverId));
-  if(d?.driver)p.set('driver',pretty(d.driver));
-  return '../drivers/?'+p.toString();
+  return window.HLRNDrivers?.profileUrl?.({driverId:d?.driverId,driver:pretty(d?.driver||"")}) || '../drivers/';
 }
 function teamUrl(key,name){return '../teams/?'+new URLSearchParams({league:key,team:String(name||'')}).toString()}
 function resultUrl(key,raceNumber){return '../results/?'+new URLSearchParams({league:key,race:String(raceNumber)}).toString()}
