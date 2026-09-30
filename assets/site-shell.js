@@ -380,6 +380,289 @@ function installThemeReadabilityLayer(){
       border-color:#d9dee5!important;
     }
 
+
+    /* DAY MODE SCREENSHOT FIXES V2 */
+
+    /* HOME: keep text readable over deliberate photo heroes. */
+    html[data-hlrn-route="home"][data-hlrn-theme="light"] .h9-lead-copy :where(h1,h2,h3,.h9-lead-kicker,.h9-result-meta,.h9-lead-meta){
+      color:#fff!important;
+      text-shadow:0 2px 12px rgba(0,0,0,.72)!important;
+    }
+    html[data-hlrn-route="home"][data-hlrn-theme="light"] .h9-lead-copy :where(p,small,span:not(.h9-btn)){
+      color:#e7ebef!important;
+    }
+    html[data-hlrn-route="home"][data-hlrn-theme="light"] .h9-media-copy :where(h2,h3,p,small,strong){
+      color:#fff!important;
+      text-shadow:0 2px 10px rgba(0,0,0,.7)!important;
+    }
+
+    /* LIVE: command-center surfaces should be light in Day Mode. */
+    html[data-hlrn-route="live"][data-hlrn-theme="light"] :where(
+      .brandbar,.session-flow,.flow-step,.metric-strip,.metric,.rc-front-battle,
+      .rc-front-head,.live-ticker-bar,.standby,.tabs,.session-tools,.panel,
+      .flag-box,.tracker-card,.tracker-row,.race-pulse-stat,.rc2-summary,
+      .rc2-stat,.rc2-banner,.rc-flag-summary,.rc-flag-stat,.rc-capture-strip,
+      .timeline-toolbar,.report-toolbar,.race-replay,.report-box,.json-box
+    ){
+      background:#fff!important;
+      background-image:none!important;
+      color:#11161c!important;
+      border-color:#d6dde5!important;
+      box-shadow:none!important;
+    }
+    html[data-hlrn-route="live"][data-hlrn-theme="light"] :where(
+      .flow-step,.rc-front-head,.tracker-card,.flag-box,.live-ticker-bar
+    ) :where(h1,h2,h3,strong,b,span,div){
+      color:#17202a!important;
+      text-shadow:none!important;
+    }
+    html[data-hlrn-route="live"][data-hlrn-theme="light"] :where(
+      .rc-front-empty,.storyline-empty,.battle-empty,.panel-mini-meta,.storyline-meta
+    ){color:#687482!important}
+    html[data-hlrn-route="live"][data-hlrn-theme="light"] .offline,
+    html[data-hlrn-route="live"][data-hlrn-theme="light"] .phase-badge,
+    html[data-hlrn-route="live"][data-hlrn-theme="light"] .status-value{
+      background:#f1f4f7!important;
+      color:#26313c!important;
+      border-color:#cfd6de!important;
+    }
+
+    /* RACE INTELLIGENCE: remove black analytics bands in Day Mode. */
+    html[data-hlrn-route="race-intelligence"][data-hlrn-theme="light"] :where(
+      .cc-command-deck,.cc-command-main,.cc-command-stat,.cc-meter-band,.cc-meter-card,
+      .hlrn-live-rail,.live-control-strip,.live-control-cell,.toolbar,.intel-card,
+      .category-deep,.deep-head,.deep-box,.deep-metric,.story-section,.story-card,
+      .detail-wrap,.detail-head,.stat,.detail-box
+    ){
+      background:#fff!important;
+      background-image:none!important;
+      color:#11161c!important;
+      border-color:#d8dee5!important;
+      box-shadow:none!important;
+    }
+    html[data-hlrn-route="race-intelligence"][data-hlrn-theme="light"] :where(
+      .cc-command-title,.cc-command-kicker,.cc-command-stat,.cc-meter-card,
+      .cc-meter-head,.hlrn-live-rail-title,.stat-value,.score-num
+    ){
+      color:#11161c!important;
+      text-shadow:none!important;
+    }
+    html[data-hlrn-route="race-intelligence"][data-hlrn-theme="light"] .cc-meter{
+      background:#e6ebf0!important;
+    }
+
+    /* RESULTS: fully convert the old race-control shell to Day Mode. */
+    html[data-hlrn-route="results"][data-hlrn-theme="light"] .hlrn-race-center{
+      background:#f3f5f7!important;
+      background-image:none!important;
+      color:#11161c!important;
+    }
+    html[data-hlrn-route="results"][data-hlrn-theme="light"] .hlrn-race-center:after{
+      display:none!important;
+    }
+    html[data-hlrn-route="results"][data-hlrn-theme="light"] :where(
+      .ultra-topbar,.race-header,.ultra-board-main,.ultra-board-cell,
+      .race-preview-launch,.bx-statusbar,.race-card,.track-information,
+      .section-title,.info-box,.time-box,.bottom-area,.sponsor-box,.hlrn-promo,
+      .ultra-bottom-bar,.race-report-view,.next-events-section
+    ){
+      background:#fff!important;
+      background-image:none!important;
+      color:#11161c!important;
+      border-color:#d5dce4!important;
+      box-shadow:none!important;
+    }
+    html[data-hlrn-route="results"][data-hlrn-theme="light"] :where(
+      .race-header h1,.hlrn-logo,.ultra-brand,.ultra-center-status,.ultra-clock,
+      .ultra-board-event,.track-name,.week-number,.race-time,.race-summary,
+      .countdown-title,.time-number,.info-value,.promo-network,.promo-slogan,
+      .promo-leagues,.race-preview-launch-copy strong
+    ){
+      color:#11161c!important;
+      text-shadow:none!important;
+    }
+    html[data-hlrn-route="results"][data-hlrn-theme="light"] :where(
+      .race-header p,.ultra-board-meta,.ultra-board-label,.bx-status span,
+      .track-description,.stat span,.info-label,.promo-follow,
+      .race-preview-launch-copy span
+    ){color:#66717d!important}
+    html[data-hlrn-route="results"][data-hlrn-theme="light"] .race-preview-launch-actions a{
+      background:#fff!important;
+      color:#11161c!important;
+      border-color:#cfd6dd!important;
+    }
+    html[data-hlrn-route="results"][data-hlrn-theme="light"] .background-mark,
+    html[data-hlrn-route="results"][data-hlrn-theme="light"] .promo-watermark{
+      color:rgba(15,22,29,.035)!important;
+    }
+
+    /* DRIVERS: white hero + readable profile surfaces. */
+    html[data-hlrn-route="drivers"][data-hlrn-theme="light"] .driver-heading{
+      background:#fff!important;
+      color:#11161c!important;
+      border-bottom:1px solid #d8dee5!important;
+    }
+    html[data-hlrn-route="drivers"][data-hlrn-theme="light"] .driver-heading:before{
+      display:none!important;
+    }
+    html[data-hlrn-route="drivers"][data-hlrn-theme="light"] .driver-heading:after{
+      color:rgba(17,22,28,.035)!important;
+    }
+    html[data-hlrn-route="drivers"][data-hlrn-theme="light"] .driver-heading :where(h1,h1 span,strong){
+      color:#11161c!important;
+    }
+    html[data-hlrn-route="drivers"][data-hlrn-theme="light"] .driver-heading :where(p,.eyebrow){
+      color:#66717d!important;
+    }
+    html[data-hlrn-route="drivers"][data-hlrn-theme="light"] .driver-hero-side{
+      background:#d8dee5!important;
+      border-color:#d8dee5!important;
+    }
+    html[data-hlrn-route="drivers"][data-hlrn-theme="light"] .driver-hero-side div{
+      background:#fff!important;
+    }
+    html[data-hlrn-route="drivers"][data-hlrn-theme="light"] .driver-hero-side small{
+      color:#6b7580!important;
+    }
+    html[data-hlrn-route="drivers"][data-hlrn-theme="light"] .driver-hero-side strong{
+      color:#11161c!important;
+    }
+    html[data-hlrn-route="drivers"][data-hlrn-theme="light"] :where(
+      .profile-view,.profile-hero,.profile-copy,.profile-hero-stats,.profile-stat,
+      .profile-insight,.history-wrap,.history-head
+    ){
+      background:#fff!important;
+      background-image:none!important;
+      color:#11161c!important;
+      border-color:#d8dee5!important;
+    }
+    html[data-hlrn-route="drivers"][data-hlrn-theme="light"] :where(
+      .profile-hero-stats h3,.profile-hero-stat b,.profile-section-heading,.history-head
+    ){color:#11161c!important}
+    html[data-hlrn-route="drivers"][data-hlrn-theme="light"] .profile-hero-stat span{
+      color:#66717d!important;
+    }
+
+    /* TEAMS: all metric/stat/profile boxes white. */
+    html[data-hlrn-route="teams"][data-hlrn-theme="light"] :where(
+      .tc-summary,.tc-summary-head,.tc-summary-main,.tc-summary-stats,
+      .tc-leader-card,.tc-side-stats,.tc-stat-card,.tc-section,.tc-team-card,
+      .tc-compare,.tc-compare-side,.tc-profile-hero,.tc-panel,.tc-driver,
+      .tc-form-race,.tc-table-shell
+    ){
+      background:#fff!important;
+      background-image:none!important;
+      color:#11161c!important;
+      border-color:#d8dee5!important;
+      box-shadow:none!important;
+    }
+    html[data-hlrn-route="teams"][data-hlrn-theme="light"] :where(
+      .tc-stat-card b,.tc-team-gap b,.tc-profile-copy b,.tc-compare-line b
+    ){color:#11161c!important}
+    html[data-hlrn-route="teams"][data-hlrn-theme="light"] :where(
+      .tc-stat-card span,.tc-team-gap,.tc-team-points,.tc-profile-copy,
+      .tc-compare-line span
+    ){color:#66717d!important}
+
+    /* NEWS: native cards light; keep overlay text readable on image stories. */
+    html[data-hlrn-route="news"][data-hlrn-theme="light"] :where(
+      .nr-desk-card,.nr-category-wrap,.nr-main,.nr-side-story,.nr-recap-center,
+      .nr-recap-feature,.nr-recap-toolbar,.nr-shortcuts,.nr-feed,.nr-footer-note
+    ){
+      background:#fff!important;
+      background-image:none!important;
+      color:#11161c!important;
+      border-color:#d8dee5!important;
+      box-shadow:none!important;
+    }
+    html[data-hlrn-route="news"][data-hlrn-theme="light"] .nr-lead-copy :where(h1,h2,h3,p,strong,.nr-lead-meta){
+      color:#fff!important;
+      text-shadow:0 2px 12px rgba(0,0,0,.72)!important;
+    }
+    html[data-hlrn-route="news"][data-hlrn-theme="light"] .feed-shell{
+      display:none!important;
+    }
+
+    /* ADMINS: remaining dark informational boxes to white. */
+    html[data-hlrn-route="meet-the-admins"][data-hlrn-theme="light"] :where(
+      .team-status,.team-hero,.team-summary,.summary-card,.team-tools,
+      .team-closing,.closing-panel,.closing-stat,.modal-card,.modal-copy
+    ){
+      background:#fff!important;
+      background-image:none!important;
+      color:#11161c!important;
+      border-color:#d8dee5!important;
+      box-shadow:none!important;
+    }
+    html[data-hlrn-route="meet-the-admins"][data-hlrn-theme="light"] :where(
+      .closing-panel h3,.closing-stat strong,.summary-value
+    ){color:#11161c!important}
+    html[data-hlrn-route="meet-the-admins"][data-hlrn-theme="light"] :where(
+      .closing-panel p,.summary-label,.summary-sub
+    ){color:#66717d!important}
+
+    /* RULES: white hero, tabs, sections and penalty boxes in Day Mode. */
+    html[data-hlrn-route="rules"][data-hlrn-theme="light"] body{
+      background:#fff!important;
+      background-image:none!important;
+      color:#11161c!important;
+    }
+    html[data-hlrn-route="rules"][data-hlrn-theme="light"] body:before,
+    html[data-hlrn-route="rules"][data-hlrn-theme="light"] body:after{
+      display:none!important;
+    }
+    html[data-hlrn-route="rules"][data-hlrn-theme="light"] :where(
+      .rc-ops-brand,.rc-ops-pill,.hero,.quick-card,.notice,.rc-rule-tools,
+      .tabs,.tab,.tab-content,.section-header,.section-body,.rule,.penalties,
+      .penalty,.escalation,.footer
+    ){
+      background:#fff!important;
+      background-image:none!important;
+      color:#11161c!important;
+      border-color:#d8dee5!important;
+      box-shadow:none!important;
+    }
+    html[data-hlrn-route="rules"][data-hlrn-theme="light"] .hero:before,
+    html[data-hlrn-route="rules"][data-hlrn-theme="light"] .hero:after{
+      opacity:.06!important;
+    }
+    html[data-hlrn-route="rules"][data-hlrn-theme="light"] .hero :where(h1,p,.logo){
+      color:#11161c!important;
+      text-shadow:none!important;
+    }
+    html[data-hlrn-route="rules"][data-hlrn-theme="light"] .tab.active{
+      background:#e31837!important;
+      color:#fff!important;
+      border-color:#e31837!important;
+    }
+    html[data-hlrn-route="rules"][data-hlrn-theme="light"] .section-header{
+      border-left:5px solid #e31837!important;
+    }
+
+    /* STORE: only the white storefront should remain in Day Mode. */
+    html[data-hlrn-route="store"][data-hlrn-theme="light"] body,
+    html[data-hlrn-route="store"][data-hlrn-theme="light"] .page{
+      background:#fff!important;
+      background-image:none!important;
+      color:#11161c!important;
+    }
+    html[data-hlrn-route="store"][data-hlrn-theme="light"] :where(
+      .mh-network,.hero,.store-ticker,.mh-dashboard,.mh-featured,.notice,.section-heading
+    ){
+      display:none!important;
+    }
+    html[data-hlrn-route="store"][data-hlrn-theme="light"] :where(
+      .hlrn-shop-shell,.hlrn-shop-utility,.hlrn-shop-mainbar,.hlrn-shop-nav,
+      .hlrn-shop-promo,.hlrn-shop-hero,.hlrn-shop-hero-box,.hlrn-shop-cat,
+      .product,.product-info
+    ){
+      background:#fff!important;
+      background-image:none!important;
+      color:#11161c!important;
+      border-color:#d8dee5!important;
+      box-shadow:none!important;
+    }
+
     html[data-hlrn-theme="dark"] body{
       background:#07090d!important;
       color:#f7f8fa!important;
