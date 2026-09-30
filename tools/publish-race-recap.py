@@ -402,6 +402,17 @@ def build_model(recap):
             }
             for d in podium
         ],
+        "finalOrder": [
+            {
+                "position": safe_int(d.get("position")),
+                "name": d.get("name") or "Unknown Driver",
+                "number": d.get("number") or "—",
+                "lapsCompleted": d.get("lapsCompleted"),
+                "lapsDown": d.get("lapsDown"),
+                "status": d.get("status") or ("DQ" if d.get("disqualified") else "ACTIVE"),
+            }
+            for d in order
+        ],
         "top10": [
             {
                 "position": safe_int(d.get("position")),
@@ -771,6 +782,15 @@ def publish(recap):
         "subSessionId": model["subSessionId"],
         "sessionId": model["sessionId"],
         "winner": model["winner"],
+        "drivers": [
+            {
+                "position": d.get("position"),
+                "name": d.get("name"),
+                "number": d.get("number"),
+                "status": d.get("status"),
+            }
+            for d in model.get("finalOrder", [])
+        ],
         "cautions": len(model["cautions"]),
         "penalties": len(model["penalties"]),
         "leadChanges": model["leadChanges"],
