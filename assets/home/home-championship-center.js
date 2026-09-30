@@ -31,10 +31,7 @@
     return rows.filter(r=>num(r.raceNumber)===latest).sort((a,b)=>num(a.finish)-num(b.finish));
   }
   function driverLink(leagueKey,d){
-    const p=new URLSearchParams({league:leagueKey});
-    if(d?.driverId!=null)p.set('driverId',String(d.driverId));
-    if(d?.driver)p.set('driver',pretty(d.driver));
-    return 'drivers/?'+p.toString();
+    return window.HLRNDrivers?.profileUrl?.({driverId:d?.driverId,driver:pretty(d?.driver)}) || 'drivers/';
   }
   function teamLink(leagueKey,t){
     const p=new URLSearchParams({league:leagueKey,team:String(t?.team||'')});
@@ -161,6 +158,7 @@
   async function load(){
     if(!window.HLRNData)return;
     try{
+      if(window.HLRNDrivers?.load) await window.HLRNDrivers.load();
       const snapshot=await HLRNData.load();
       renderLeague(snapshot,'sunday','Sunday');
       renderLeague(snapshot,'monday','Monday');
