@@ -55,8 +55,8 @@ button{cursor:pointer}
   border:1px solid var(--line);
   border-left:4px solid var(--red);
   border-radius:7px;
-  background:linear-gradient(180deg,#151b22,#0d1116);
-  box-shadow:0 12px 30px rgba(0,0,0,.22);
+  background:#fff;
+  box-shadow:none;
   overflow:auto;
   scrollbar-width:none;
 }
@@ -64,7 +64,7 @@ button{cursor:pointer}
 .team-status-brand{
   flex:0 0 auto;
   padding:0 10px 0 6px;
-  color:#fff;
+  color:#11161c;
   font-size:13px;
   font-weight:1000;
   font-style:italic;
@@ -74,7 +74,7 @@ button{cursor:pointer}
 }
 .team-status-brand span{
   margin-left:6px;
-  color:#87919c;
+  color:#66717d;
   font-size:8px;
   font-style:normal;
   letter-spacing:.14em;
@@ -86,17 +86,17 @@ button{cursor:pointer}
   align-items:center;
   gap:6px;
   padding:0 10px;
-  border:1px solid #333d47;
+  border:1px solid #cfd6de;
   border-radius:999px;
-  background:#171d25;
-  color:#aeb7c1;
+  background:#fff;
+  color:#11161c;
   font-size:8px;
   font-weight:900;
   letter-spacing:.08em;
   text-transform:uppercase;
   white-space:nowrap;
 }
-.team-pill strong{color:#fff}
+.team-pill strong{color:#11161c}
 .team-pill.live:before{
   content:"";
   width:7px;
@@ -181,33 +181,33 @@ button{cursor:pointer}
   display:inline-flex;
   align-items:center;
   padding:0 10px;
-  border:1px solid #3a4450;
+  border:1px solid #cfd6de;
   border-radius:999px;
-  background:#171d25;
-  color:#aeb7c1;
+  background:#fff;
+  color:#11161c;
   font-size:8px;
   font-weight:900;
   letter-spacing:.08em;
   text-transform:uppercase;
 }
-.hero-kicker.red{border-color:rgba(227,24,55,.5);background:rgba(227,24,55,.12);color:#fff}
+.hero-kicker.red{border-color:#e31837;background:#fff;color:#11161c}
 
 /* ticker */
 .team-ticker{
   display:grid;
   grid-template-columns:auto minmax(0,1fr) auto;
   min-height:39px;
-  border:1px solid #20262e;
+  border:1px solid #d8dee5;
   border-top:0;
-  background:#0d1116;
+  background:#fff;
   overflow:hidden;
 }
 .ticker-label,.ticker-network{
   display:flex;
   align-items:center;
   padding:0 15px;
-  background:#151b22;
-  color:#fff;
+  background:#fff;
+  color:#11161c;
   font-size:8px;
   font-weight:900;
   letter-spacing:.12em;
@@ -215,7 +215,7 @@ button{cursor:pointer}
   white-space:nowrap;
 }
 .ticker-label{border-right:1px solid #2a323b}
-.ticker-network{border-left:1px solid #2a323b;color:#89939e}
+.ticker-network{border-left:1px solid #d8dee5;color:#66717d}
 .ticker-window{min-width:0;overflow:hidden}
 .ticker-track{
   min-height:39px;
@@ -223,13 +223,13 @@ button{cursor:pointer}
   align-items:center;
   gap:14px;
   padding:0 18px;
-  color:#aeb7c2;
+  color:#11161c;
   font-size:8px;
   font-weight:800;
   letter-spacing:.09em;
   white-space:nowrap;
 }
-.ticker-track b{color:#fff}
+.ticker-track b{color:#11161c}
 .ticker-track em{color:var(--red);font-style:normal}
 
 /* summary */
@@ -318,22 +318,22 @@ button{cursor:pointer}
 .filter-btn{
   min-height:48px;
   padding:0 14px;
-  border:1px solid #343e49;
+  border:1px solid #cfd6de;
   border-radius:5px;
-  background:#171d25;
-  color:#9ea8b3;
+  background:#fff;
+  color:#11161c;
   font-size:9px;
   font-weight:1000;
   letter-spacing:.06em;
   text-transform:uppercase;
   transition:.16s ease;
 }
-.filter-btn:hover{border-color:#65717d;color:#fff;background:#1c242d}
+.filter-btn:hover{border-color:#9ea8b3;color:#11161c;background:#f5f7f9}
 .filter-btn.active{
-  border-color:#ff4c68;
-  background:linear-gradient(180deg,#f12645,#d71432);
-  color:#fff;
-  box-shadow:0 8px 20px rgba(227,24,55,.18);
+  border-color:#e31837;
+  background:#fff;
+  color:#11161c;
+  box-shadow:inset 0 -3px 0 #e31837;
 }
 
 /* section heading */
@@ -974,6 +974,68 @@ html[data-hlrn-theme="light"] .close-btn{
 /* Keep red/gold/green/blue accents as accents, not dark surfaces. */
 html[data-hlrn-theme="light"] .team-hero:after{
   opacity:1!important;
+}
+</style>
+
+<style id="HLRN_ADMINS_NIGHT_COMPONENTS_20260930">
+html[data-hlrn-theme="dark"] .team-status{
+  background:linear-gradient(180deg,#151b22,#0d1116)!important;
+  border-color:#2b333d!important;
+  border-left-color:#e31837!important;
+}
+html[data-hlrn-theme="dark"] .team-status-brand{color:#fff!important}
+html[data-hlrn-theme="dark"] .team-status-brand span{color:#87919c!important}
+html[data-hlrn-theme="dark"] .team-pill{
+  background:#171d25!important;
+  color:#aeb7c1!important;
+  border-color:#333d47!important;
+}
+html[data-hlrn-theme="dark"] .team-pill strong{color:#fff!important}
+
+html[data-hlrn-theme="dark"] .team-ticker,
+html[data-hlrn-theme="dark"] .ticker-window{
+  background:#0d1116!important;
+  border-color:#20262e!important;
+}
+html[data-hlrn-theme="dark"] .ticker-label{
+  background:#151b22!important;
+  color:#fff!important;
+  border-color:#2a323b!important;
+}
+html[data-hlrn-theme="dark"] .ticker-network{
+  background:#151b22!important;
+  color:#89939e!important;
+  border-color:#2a323b!important;
+}
+html[data-hlrn-theme="dark"] .ticker-track{color:#aeb7c2!important}
+html[data-hlrn-theme="dark"] .ticker-track b{color:#fff!important}
+
+html[data-hlrn-theme="dark"] .hero-kicker{
+  background:#171d25!important;
+  color:#aeb7c1!important;
+  border-color:#3a4450!important;
+}
+html[data-hlrn-theme="dark"] .hero-kicker.red{
+  background:rgba(227,24,55,.12)!important;
+  color:#fff!important;
+  border-color:rgba(227,24,55,.5)!important;
+}
+
+html[data-hlrn-theme="dark"] .filter-btn{
+  background:#171d25!important;
+  color:#9ea8b3!important;
+  border-color:#343e49!important;
+}
+html[data-hlrn-theme="dark"] .filter-btn:hover{
+  background:#1c242d!important;
+  color:#fff!important;
+  border-color:#65717d!important;
+}
+html[data-hlrn-theme="dark"] .filter-btn.active{
+  background:linear-gradient(180deg,#f12645,#d71432)!important;
+  color:#fff!important;
+  border-color:#ff4c68!important;
+  box-shadow:0 8px 20px rgba(227,24,55,.18)!important;
 }
 </style>
 </head>
