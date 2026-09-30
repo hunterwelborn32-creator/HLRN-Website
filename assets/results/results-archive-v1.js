@@ -42,10 +42,7 @@ function driverName(key,id){
 }
 function driverLink(key,id){
   const d=driverMap(key).get(String(id));
-  const p=new URLSearchParams({league:key});
-  if(id!==undefined&&id!==null)p.set('driverId',String(id));
-  if(d?.driver)p.set('driver',pretty(d.driver));
-  return '../drivers/?'+p.toString();
+  return window.HLRNDrivers?.profileUrl?.({driverId:id,driver:pretty(d?.driver||"")}) || '../drivers/';
 }
 function teamLink(key,name){
   return '../teams/?'+new URLSearchParams({league:key,team:String(name||'')}).toString();
@@ -577,6 +574,7 @@ async function loadRecorderArchive(){
 async function load(){
   if(!window.HLRNData)return;
   try{
+    if(window.HLRNDrivers?.load)await window.HLRNDrivers.load();
     snapshot=await HLRNData.load();
     buildRaces();
     renderArchive();
