@@ -66,7 +66,7 @@ body.rd-v5.home-v8-page{
   pointer-events:none;
 }
 .h9-score-driver-copy{min-width:0;display:grid;align-content:center}
-.h9-score-driver-copy strong{display:block;max-width:100%;font-size:17px;line-height:1.02;white-space:normal;overflow:visible;text-overflow:clip}
+.h9-score-driver-copy strong{display:block;max-width:100%;font-size:17px;line-height:1.02;white-space:normal;overflow:visible;text-overflow:clip;word-break:normal;overflow-wrap:normal}
 
 /* TOP STORIES */
 .h9-top{padding:34px 0 38px;background:#fff;border-bottom:1px solid var(--h9-line)}
@@ -142,7 +142,8 @@ body.rd-v5.home-v8-page{
 .h9-series-driver-copy strong{
   max-width:100%;
   white-space:normal;
-  overflow-wrap:anywhere;
+  overflow-wrap:normal;
+  word-break:normal;
   line-height:.92;
 }
 .h9-series-driver-photo{
@@ -183,22 +184,25 @@ body.rd-v5.home-v8-page{
 .h9-winner-pos{font-family:var(--h9-display);font-size:44px;font-weight:1000;color:var(--h9-red)}
 .h9-winner div:last-child small{display:block;color:var(--h9-muted);font-size:7px;font-weight:1000;text-transform:uppercase}
 .h9-winner div:last-child strong{display:block;margin-top:2px;font-family:var(--h9-display);font-size:28px;font-weight:1000;text-transform:uppercase}
-.h9-winner{display:grid;grid-template-columns:auto 86px minmax(0,1fr);align-items:end}
+.h9-winner{display:flex;align-items:flex-end;gap:14px;min-width:0}
 .h9-race-winner-photo{
   display:block;
-  width:86px;
-  height:96px;
+  flex:0 0 92px;
+  width:92px;
+  height:102px;
   object-fit:contain;
   object-position:center bottom;
   filter:drop-shadow(0 5px 9px rgba(0,0,0,.16));
 }
 .h9-race-winner-copy{
   min-width:0;
+  flex:1 1 auto;
   align-self:center;
 }
 .h9-race-winner-copy strong{
   white-space:normal;
-  overflow-wrap:anywhere;
+  overflow-wrap:normal;
+  word-break:normal;
   line-height:.92!important;
 }
 .h9-result-stats{display:grid;align-content:stretch;border-left:1px solid var(--h9-line);background:#f7f7f8}
@@ -311,8 +315,8 @@ body.rd-v5.home-v8-page{
   .h9-series-cell.driver-feature strong{font-size:23px}
   .h9-series-cell.driver-feature.leader strong{font-size:26px}
   .h9-result-card{grid-template-columns:1fr}
-  .h9-winner{grid-template-columns:auto 70px minmax(0,1fr);gap:10px}
-  .h9-race-winner-photo{width:70px;height:82px}
+  .h9-winner{display:flex;gap:10px;align-items:flex-end}
+  .h9-race-winner-photo{flex:0 0 68px;width:68px;height:82px}
   .h9-race-winner-copy strong{font-size:23px!important}
   .h9-result-stats{grid-template-columns:repeat(3,1fr);border-left:0;border-top:1px solid var(--h9-line)}
   .h9-result-stats div{min-height:74px;border-bottom:0;border-right:1px solid var(--h9-line)}
