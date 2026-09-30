@@ -21,12 +21,7 @@ function applyTheme(value,{persist=false}={}){
   if(persist){
     try{localStorage.setItem(HLRN_THEME_KEY,theme);}catch(e){}
   }
-  try{
-    document.querySelectorAll("iframe").forEach(frame=>{
-      const doc=frame.contentDocument;
-      if(doc&&doc.documentElement)doc.documentElement.dataset.hlrnTheme=theme;
-    });
-  }catch(e){}
+  try{ syncThemeIntoFrames(document,theme); }catch(e){}
   window.dispatchEvent(new CustomEvent("hlrn-theme-change",{detail:{theme}}));
   return theme;
 }
@@ -84,7 +79,11 @@ function installThemeReadabilityLayer(){
     html[data-hlrn-theme="light"] body :where(
       p,li,dd,dt,label,.sub,.subtitle,.description,.copy,.meta,.muted,
       .card-reason,.card-stat,.story-sub,.detail-category,.stat-label,
-      .small,.helper,.caption
+      .small,.helper,.caption,.hero-copy,.hero-sub,.hero-meta,.brand-sub,
+      .section-kicker,.kicker,.eyebrow,.card-copy,.card-meta,.body-copy,
+      .metric-label,.record-label,.driver-meta,.team-meta,.race-meta,.news-meta,
+      .story-kicker,.story-stat,.detail-eyebrow,.deep-label,.deep-summary,
+      .live-control-label,.cc-command-sub,.cc-meter-head,.footer
     ){
       color:#4f5a66!important;
       text-shadow:none!important;
@@ -137,6 +136,51 @@ function installThemeReadabilityLayer(){
 }
 
 installThemeReadabilityLayer();
+
+function syncThemeIntoFrames(rootDoc=document,theme=readTheme()){
+  try{
+    rootDoc.querySelectorAll("iframe").forEach(frame=>{
+      const apply=()=>{
+        try{
+          const doc=frame.contentDocument;
+          if(!doc||!doc.documentElement)return;
+          doc.documentElement.dataset.hlrnTheme=theme;
+          let style=doc.getElementById("hlrn-iframe-theme-colors");
+          if(!style){
+            style=doc.createElement("style");
+            style.id="hlrn-iframe-theme-colors";
+            (doc.head||doc.documentElement).appendChild(style);
+          }
+          style.textContent=theme==="dark"
+            ? `
+              html,body{background:#07090d!important;color:#f7f8fa!important}
+              :where(.page,.wrap,.wrapper,.container,.content,.section,.panel,.card,.box,.tile,.table-wrap,.table-shell,.hosted-hub,.hosted-hub-stage){background-color:#0d1117!important;color:#f7f8fa!important;border-color:#2b333e!important}
+              :where(h1,h2,h3,h4,h5,h6,.title,.heading,.name,.driver-name,strong,b){color:#f7f8fa!important;text-shadow:none!important}
+              :where(p,li,label,.sub,.subtitle,.description,.copy,.meta,.muted,.small,.caption){color:#aeb8c4!important}
+              table,tbody td{background:#0d1117!important;color:#f4f6f8!important;border-color:#2b333e!important}
+              thead th{background:#171d25!important;color:#f7f8fa!important;border-color:#34404d!important}
+              tbody tr:nth-child(even) td{background:#11171f!important}
+            `
+            : `
+              html,body{background:#fff!important;color:#12171d!important}
+              :where(.page,.wrap,.wrapper,.container,.content,.section,.panel,.card,.box,.tile,.table-wrap,.table-shell,.hosted-hub,.hosted-hub-stage){background-color:#fff!important;color:#12171d!important;border-color:#d9dee5!important}
+              :where(h1,h2,h3,h4,h5,h6,.title,.heading,.name,.driver-name,strong,b){color:#11161c!important;text-shadow:none!important}
+              :where(p,li,label,.sub,.subtitle,.description,.copy,.meta,.muted,.small,.caption){color:#4f5a66!important}
+              table,tbody td{background:#fff!important;color:#1d232a!important;border-color:#d9dee5!important}
+              thead th{background:#f2f4f7!important;color:#242a31!important;border-color:#d9dee5!important}
+              tbody tr:nth-child(even) td{background:#fafbfc!important}
+            `;
+          syncThemeIntoFrames(doc,theme);
+        }catch(e){}
+      };
+      if(!frame.__hlrnThemeBound){
+        frame.__hlrnThemeBound=true;
+        frame.addEventListener("load",()=>setTimeout(apply,0));
+      }
+      apply();
+    });
+  }catch(e){}
+}
 
 function start(){
   if(!document.body){document.addEventListener("DOMContentLoaded",start,{once:true});return;}
