@@ -74,10 +74,16 @@ content="width=device-width, initial-scale=1.0">
         <span class="h9-score-dot" id="h9NetworkDot"></span>
         <div><small>HIGH LINE RACING NETWORK</small><strong id="h9NetworkStatus">HLRN NETWORK</strong></div>
       </div>
-      <div class="h9-score-item"><small>Latest Winner</small><strong id="rdLatestWinner">CONNECTING</strong></div>
+      <a class="h9-score-item driver-score" id="rdLatestWinnerLink" href="drivers/">
+  <img id="rdLatestWinnerPhoto" class="h9-score-driver-photo" alt="" hidden>
+  <div class="h9-score-driver-copy"><small>Latest Winner</small><strong id="rdLatestWinner">CONNECTING</strong></div>
+</a>
       <div class="h9-score-item sunday"><small>Next Sunday</small><strong id="rdSunday">--</strong></div>
       <div class="h9-score-item monday"><small>Next Monday</small><strong id="rdMonday">--</strong></div>
-      <div class="h9-score-item hosted"><small>Hosted Leader</small><strong id="rdTopDriver">CONNECTING</strong></div>
+      <a class="h9-score-item hosted driver-score" id="rdTopDriverLink" href="standings/">
+  <img id="rdTopDriverPhoto" class="h9-score-driver-photo" alt="" hidden>
+  <div class="h9-score-driver-copy"><small>Hosted Leader</small><strong id="rdTopDriver">CONNECTING</strong></div>
+</a>
     </div>
   </section>
 
@@ -173,20 +179,26 @@ content="width=device-width, initial-scale=1.0">
             <a href="standings/">Full Sunday Standings →</a>
           </div>
           <div class="h9-series-grid">
-            <div class="h9-series-cell leader">
-              <small>Points Leader</small>
-              <a id="homeSundayLeaderLink" href="standings/"><strong id="homeSundayLeader">CONNECTING</strong></a>
-              <span><b id="homeSundayPoints">--</b> points</span>
+            <div class="h9-series-cell leader driver-feature">
+              <img id="homeSundayLeaderPhoto" class="h9-series-driver-photo" alt="" hidden>
+              <div class="h9-series-driver-copy">
+                <small>Points Leader</small>
+                <a id="homeSundayLeaderLink" href="standings/"><strong id="homeSundayLeader">CONNECTING</strong></a>
+                <span><b id="homeSundayPoints">--</b> points</span>
+              </div>
             </div>
             <div class="h9-series-cell">
               <small>P2 Gap</small>
               <strong id="homeSundayGap">--</strong>
               <span id="homeSundaySecond">Loading second place…</span>
             </div>
-            <a class="h9-series-cell" id="homeSundayWinnerLink" href="drivers/">
-              <small>Latest Winner</small>
-              <strong id="homeSundayWinner">--</strong>
-              <span>Open driver profile →</span>
+            <a class="h9-series-cell driver-feature winner" id="homeSundayWinnerLink" href="drivers/">
+              <img id="homeSundayWinnerPhoto" class="h9-series-driver-photo" alt="" hidden>
+              <div class="h9-series-driver-copy">
+                <small>Latest Winner</small>
+                <strong id="homeSundayWinner">--</strong>
+                <span>Open driver profile →</span>
+              </div>
             </a>
             <a class="h9-series-cell" id="homeSundayTeamLink" href="teams/?league=sunday">
               <small>Team Leader</small>
@@ -202,20 +214,26 @@ content="width=device-width, initial-scale=1.0">
             <a href="standings/">Full Monday Standings →</a>
           </div>
           <div class="h9-series-grid">
-            <div class="h9-series-cell leader">
-              <small>Points Leader</small>
-              <a id="homeMondayLeaderLink" href="standings/"><strong id="homeMondayLeader">CONNECTING</strong></a>
-              <span><b id="homeMondayPoints">--</b> points</span>
+            <div class="h9-series-cell leader driver-feature">
+              <img id="homeMondayLeaderPhoto" class="h9-series-driver-photo" alt="" hidden>
+              <div class="h9-series-driver-copy">
+                <small>Points Leader</small>
+                <a id="homeMondayLeaderLink" href="standings/"><strong id="homeMondayLeader">CONNECTING</strong></a>
+                <span><b id="homeMondayPoints">--</b> points</span>
+              </div>
             </div>
             <div class="h9-series-cell">
               <small>P2 Gap</small>
               <strong id="homeMondayGap">--</strong>
               <span id="homeMondaySecond">Loading second place…</span>
             </div>
-            <a class="h9-series-cell" id="homeMondayWinnerLink" href="drivers/">
-              <small>Latest Winner</small>
-              <strong id="homeMondayWinner">--</strong>
-              <span>Open driver profile →</span>
+            <a class="h9-series-cell driver-feature winner" id="homeMondayWinnerLink" href="drivers/">
+              <img id="homeMondayWinnerPhoto" class="h9-series-driver-photo" alt="" hidden>
+              <div class="h9-series-driver-copy">
+                <small>Latest Winner</small>
+                <strong id="homeMondayWinner">--</strong>
+                <span>Open driver profile →</span>
+              </div>
             </a>
             <a class="h9-series-cell" id="homeMondayTeamLink" href="teams/?league=monday">
               <small>Team Leader</small>
@@ -241,7 +259,8 @@ content="width=device-width, initial-scale=1.0">
               <div class="h9-result-track" id="rdLastTrack">LATEST HLRN RESULT</div>
               <div class="h9-winner">
                 <div class="h9-winner-pos">01</div>
-                <div><small>Race Winner</small><strong id="rdLastWinner">--</strong></div>
+                <img id="rdLastWinnerPhoto" class="h9-race-winner-photo" alt="" hidden>
+                <div class="h9-race-winner-copy"><small>Race Winner</small><strong id="rdLastWinner">--</strong></div>
               </div>
             </div>
             <div class="h9-result-stats">
