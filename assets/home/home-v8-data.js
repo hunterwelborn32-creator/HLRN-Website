@@ -174,8 +174,10 @@
   function setNetworkLive(isLive){
     const label=$("h9NetworkStatus");
     const dot=$("h9NetworkDot");
-    if(label) label.textContent=isLive?"HLRN LIVE":"HLRN NETWORK";
+    const state=$("h9NetworkState");
+    if(label) label.textContent=isLive?"LIVE NOW":"OFF AIR";
     if(dot) dot.classList.toggle("is-live",!!isLive);
+    if(state) state.classList.toggle("is-live",!!isLive);
   }
 
   function connectLiveStatus(){
