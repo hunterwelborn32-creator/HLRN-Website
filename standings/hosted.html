@@ -370,51 +370,7 @@ html,body,.hosted-hub{background:#fff!important;color:#111214!important;height:a
 .hosted-loading{background:#fff!important;color:#111214!important;min-height:56px!important}
 </style>`;
   const tag='<style id="HLRN_STATIC_LIGHT_INNER">'+css+'</style>'+rescue;
-  return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'
-
-<style id="HLRN_HOSTED_WHOLE_PAGE_AUTOHEIGHT_20260930">
-  html,body,.hosted-hub{
-    width:100%!important;
-    height:auto!important;
-    min-height:0!important;
-    max-height:none!important;
-    overflow:visible!important;
-    background:#fff!important;
-  }
-  .hosted-hub{
-    display:block!important;
-  }
-  .hosted-hub-stage{
-    position:relative!important;
-    width:100%!important;
-    height:auto!important;
-    min-height:0!important;
-    max-height:none!important;
-    overflow:visible!important;
-    background:#fff!important;
-  }
-  .hosted-hub-frame{
-    position:relative!important;
-    inset:auto!important;
-    display:none!important;
-    width:100%!important;
-    height:1px!important;
-    min-height:0!important;
-    max-height:none!important;
-    overflow:hidden!important;
-    border:0!important;
-    background:#fff!important;
-  }
-  .hosted-hub-frame.active{
-    display:block!important;
-    visibility:visible!important;
-    opacity:1!important;
-    pointer-events:auto!important;
-    z-index:1!important;
-  }
-</style>
-
-</head>') : tag+markup;
+  return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'</head>') : tag+markup;
 }
 </script>
 </head>
@@ -557,51 +513,25 @@ function resizeHostedFrame(key){
   const frame=hostedFrame(key);
   if(!frame) return;
   try{
-    frame.setAttribute("scrolling","no");
-    frame.style.setProperty("width","100%","important");
-    frame.style.setProperty("min-height","0","important");
-    frame.style.setProperty("max-height","none","important");
-    frame.style.setProperty("position","relative","important");
-    frame.style.setProperty("inset","auto","important");
-    frame.style.setProperty("overflow","hidden","important");
-
     const doc=frame.contentDocument;
     if(!doc || !doc.body || !doc.documentElement) return;
-
     doc.documentElement.style.setProperty("height","auto","important");
     doc.documentElement.style.setProperty("min-height","0","important");
-    doc.documentElement.style.setProperty("max-height","none","important");
-    doc.documentElement.style.setProperty("overflow","visible","important");
     doc.body.style.setProperty("height","auto","important");
     doc.body.style.setProperty("min-height","0","important");
-    doc.body.style.setProperty("max-height","none","important");
-    doc.body.style.setProperty("overflow","visible","important");
-
-    const top=doc.body.getBoundingClientRect().top;
-    let bottom=Math.max(
-      doc.body.getBoundingClientRect().bottom,
-      doc.documentElement.getBoundingClientRect().bottom
-    );
-
-    for(const el of doc.body.querySelectorAll("*")){
-      const cs=doc.defaultView.getComputedStyle(el);
-      if(cs.display==="none" || cs.visibility==="hidden" || cs.position==="fixed") continue;
-      const r=el.getBoundingClientRect();
-      if(!Number.isFinite(r.bottom) || (r.width===0 && r.height===0)) continue;
-      bottom=Math.max(bottom,r.bottom);
-    }
-
+    doc.body.style.setProperty("overflow-x","hidden","important");
+    doc.body.style.setProperty("overflow-y","visible","important");
     const h=Math.max(
       doc.body.scrollHeight||0,
       doc.body.offsetHeight||0,
       doc.documentElement.scrollHeight||0,
       doc.documentElement.offsetHeight||0,
-      Math.ceil(bottom-top),
       180
     );
-
-    frame.style.setProperty("height",Math.ceil(h+8)+"px","important");
-    setTimeout(()=>window.__hlrnHostedReportHeight?.(),0);
+    frame.style.setProperty("height",Math.ceil(h+2)+"px","important");
+    frame.style.setProperty("min-height","0","important");
+    frame.style.setProperty("position","relative","important");
+    frame.style.setProperty("inset","auto","important");
   }catch(e){}
 }
 function installHostedResize(key){
@@ -741,46 +671,5 @@ switchHostedTab("racing");
   },150);
 })();
 </script>
-
-<script id="HLRN_REPORT_HOSTED_HEIGHT_20260930">
-(function(){
-  let t=0,last=0;
-  function realHeight(){
-    const b=document.body,d=document.documentElement;
-    if(!b||!d)return 300;
-    d.style.setProperty("height","auto","important");
-    d.style.setProperty("min-height","0","important");
-    d.style.setProperty("max-height","none","important");
-    d.style.setProperty("overflow-y","visible","important");
-    b.style.setProperty("height","auto","important");
-    b.style.setProperty("min-height","0","important");
-    b.style.setProperty("max-height","none","important");
-    b.style.setProperty("overflow-y","visible","important");
-    return Math.max(300,b.scrollHeight||0,b.offsetHeight||0,d.scrollHeight||0,d.offsetHeight||0);
-  }
-  function send(){
-    clearTimeout(t);
-    t=setTimeout(()=>{
-      const h=Math.min(30000,Math.ceil(realHeight()+10));
-      last=h;
-      try{parent.postMessage({type:"hlrn-standings-height",series:"hosted",height:h},"*")}catch(e){}
-    },35);
-  }
-  window.__hlrnHostedReportHeight=send;
-  window.addEventListener("message",e=>{
-    if(e.data&&e.data.type==="hlrn-request-standings-height") send();
-  });
-  window.addEventListener("load",()=>{send();setTimeout(send,250);setTimeout(send,900);setTimeout(send,1800);setTimeout(send,3200)});
-  window.addEventListener("resize",send);
-  document.addEventListener("click",()=>setTimeout(send,80),true);
-  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",send,{once:true});else send();
-  try{
-    const ro=new ResizeObserver(send);
-    ro.observe(document.body);
-    ro.observe(document.documentElement);
-  }catch(e){}
-})();
-</script>
-
 </body>
 </html>
