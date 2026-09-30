@@ -37,7 +37,7 @@ body.rd-v5.home-v8-page{
 .h9-scoregrid{min-height:72px;display:grid;grid-template-columns:1.1fr repeat(4,1fr)}
 .h9-score-brand,.h9-score-item{min-width:0;padding:13px 18px;border-right:1px solid rgba(255,255,255,.12);display:grid;align-content:center}
 .h9-score-brand{display:flex;align-items:center;gap:10px}
-.h9-score-dot{width:8px;height:8px;border-radius:50%;background:#41cf6d;box-shadow:0 0 0 4px rgba(65,207,109,.12)}
+.h9-score-dot{width:8px;height:8px;border-radius:50%;background:#6f7781;box-shadow:none}.h9-score-dot.is-live{background:#41cf6d;box-shadow:0 0 0 4px rgba(65,207,109,.12),0 0 14px rgba(65,207,109,.45)}
 .h9-score-brand small,.h9-score-item small{font-size:8px;font-weight:900;letter-spacing:.12em;color:#9097a1;text-transform:uppercase}
 .h9-score-brand strong,.h9-score-item strong{margin-top:4px;font-family:var(--h9-display);font-size:17px;line-height:1;font-weight:1000;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .h9-score-item.sunday{border-top:3px solid var(--h9-red)}
