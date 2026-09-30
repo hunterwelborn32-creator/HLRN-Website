@@ -47,6 +47,97 @@ window.addEventListener("storage",e=>{
   if(e.key===HLRN_THEME_KEY)applyTheme(e.newValue||"light");
 });
 
+
+function installThemeReadabilityLayer(){
+  let style=document.getElementById("hlrn-theme-runtime-readability");
+  if(!style){
+    style=document.createElement("style");
+    style.id="hlrn-theme-runtime-readability";
+    (document.head||document.documentElement).appendChild(style);
+  }
+  style.textContent=`
+    html[data-hlrn-theme="light"] body{
+      background:#fff!important;
+      color:#12171d!important;
+    }
+    html[data-hlrn-theme="light"] body :where(
+      .shell,.page,.page-wrap,.wrap,.wrapper,.container,.content,.content-wrap,
+      .main,.main-content,.app,.hub,.stage,.viewport,.section,.panel,.card,.box,
+      .tile,.module,.widget,.toolbar,.subnav,.table-wrap,.table-shell,.table-container,
+      .story-card,.intel-card,.detail-wrap,.detail-box,.deep-box,.stat,.stat-card,
+      .metric-card,.summary-card,.record-card,.record-box,.leader-card,.driver-card,
+      .comparison-card,.race-card,.report-card,.result-card,.news-card,.team-card,
+      .admin-card,.broadcast-card,.episode-card,.adventure-card,.profile-card
+    ){
+      background-color:#fff!important;
+      color:#12171d!important;
+      border-color:#d9dee5!important;
+    }
+    html[data-hlrn-theme="light"] body :where(
+      h1,h2,h3,h4,h5,h6,.title,.heading,.headline,.name,.driver-name,
+      .section-title,.card-title,.story-title,.detail-name,.deep-title,
+      .brand-title,.stat-value,.score-num,strong,b
+    ){
+      color:#11161c!important;
+      text-shadow:none!important;
+    }
+    html[data-hlrn-theme="light"] body :where(
+      p,li,dd,dt,label,.sub,.subtitle,.description,.copy,.meta,.muted,
+      .card-reason,.card-stat,.story-sub,.detail-category,.stat-label,
+      .small,.helper,.caption
+    ){
+      color:#4f5a66!important;
+      text-shadow:none!important;
+    }
+    html[data-hlrn-theme="light"] body :where(
+      table,thead,tbody,tr,th,td
+    ){
+      color:#12171d!important;
+      border-color:#d9dee5!important;
+    }
+    html[data-hlrn-theme="light"] body thead th{
+      background:#f2f4f7!important;
+      color:#242a31!important;
+    }
+    html[data-hlrn-theme="light"] body tbody td{
+      background:#fff!important;
+      color:#1d232a!important;
+    }
+    html[data-hlrn-theme="light"] body tbody tr:nth-child(even) td{
+      background:#fafbfc!important;
+    }
+    html[data-hlrn-theme="light"] body :where(input,select,textarea){
+      background:#fff!important;
+      color:#12171d!important;
+      border-color:#cbd2da!important;
+    }
+    html[data-hlrn-theme="light"] body :where(input,textarea)::placeholder{
+      color:#737e8a!important;
+    }
+
+    /* Re-apply important HLRN accents after readability overrides. */
+    html[data-hlrn-theme] body :where(
+      .red,.accent-red,.hlrn-red,.series-red,.status-red,.error,.danger
+    ){color:#e31837!important}
+    html[data-hlrn-theme] body :where(
+      .yellow,.accent-yellow,.hlrn-yellow,.series-yellow
+    ){color:#c59c00!important}
+    html[data-hlrn-theme] body :where(
+      .green,.accent-green,.hlrn-green,.series-green,.success
+    ){color:#168742!important}
+    html[data-hlrn-theme] body :where(
+      .blue,.accent-blue,.hlrn-blue,.series-blue
+    ){color:#216ac0!important}
+
+    html[data-hlrn-theme="dark"] body{
+      background:#07090d!important;
+      color:#f7f8fa!important;
+    }
+  `;
+}
+
+installThemeReadabilityLayer();
+
 function start(){
   if(!document.body){document.addEventListener("DOMContentLoaded",start,{once:true});return;}
 
@@ -84,7 +175,7 @@ function start(){
 
   // Always use the current shared shell stylesheet. This gives every page
   // the same global mobile layer without requiring page-by-page CSS edits.
-  const SHELL_CSS_VERSION="20260930theme1";
+  const SHELL_CSS_VERSION="20260930theme2";
   let shellCss=[...document.querySelectorAll('link[rel="stylesheet"]')].find(link=>/\/site-shell\.css(?:\?|$)/i.test(link.getAttribute("href")||""));
   if(!shellCss){
     shellCss=document.createElement("link");
@@ -182,6 +273,7 @@ function start(){
         </div>
       </div>
       <button class="hgn-login" type="button" aria-label="HLRN Driver Login">DRIVER LOGIN</button>
+      <button class="hgn-theme-toggle" type="button" aria-label="Switch HLRN theme"><span class="hgn-theme-icon">☾</span><span class="hgn-theme-label">NIGHT</span></button>
       <a class="hgn-live" href="${url("live/")}"><i></i> RACE CENTER</a>
       <button class="hgn-menu" type="button" aria-expanded="false" aria-label="Open HLRN navigation">☰</button>
       <div class="hgn-account-panel" hidden>
@@ -196,11 +288,38 @@ function start(){
     <div class="hgn-mobile">
       ${mobilePrimary}
       <button class="hgn-mobile-login" type="button">DRIVER LOGIN</button>
+      <button class="hgn-mobile-theme" type="button"><span class="hgn-theme-icon">☾</span><span class="hgn-theme-label">NIGHT MODE</span></button>
       <button class="hgn-mobile-more" type="button" aria-expanded="false">MORE <span>▾</span></button>
       <div class="hgn-mobile-more-menu">${mobileMore}</div>
     </div>`;
 
   document.body.insertBefore(nav,document.body.firstChild);
+
+
+  // -----------------------------
+  // Site theme toggle
+  // -----------------------------
+  const themeButtons=[...nav.querySelectorAll(".hgn-theme-toggle,.hgn-mobile-theme")];
+
+  function syncThemeButtons(){
+    const theme=readTheme();
+    themeButtons.forEach(btn=>{
+      const icon=btn.querySelector(".hgn-theme-icon");
+      const label=btn.querySelector(".hgn-theme-label");
+      if(icon) icon.textContent=theme==="dark"?"☀":"☾";
+      if(label) label.textContent=theme==="dark"?(btn.classList.contains("hgn-mobile-theme")?"LIGHT MODE":"LIGHT"):(btn.classList.contains("hgn-mobile-theme")?"NIGHT MODE":"NIGHT");
+      btn.setAttribute("aria-pressed",String(theme==="dark"));
+      btn.setAttribute("aria-label",theme==="dark"?"Switch to light mode":"Switch to night mode");
+    });
+  }
+
+  themeButtons.forEach(btn=>btn.addEventListener("click",()=>{
+    window.HLRNTheme.toggle();
+    syncThemeButtons();
+  }));
+  window.addEventListener("hlrn-theme-change",syncThemeButtons);
+  window.addEventListener("pageshow",syncThemeButtons);
+  syncThemeButtons();
 
   // -----------------------------
   // Persistent driver login display
