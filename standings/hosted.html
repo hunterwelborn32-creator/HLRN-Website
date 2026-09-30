@@ -318,11 +318,12 @@ html,body,.hosted-hub{background:#fff!important;color:#111214!important;height:a
 .hosted-loading{background:#fff!important;color:#111214!important;min-height:56px!important}
 </style>`;
   const tag='<style id="HLRN_STATIC_LIGHT_INNER">'+css+'</style>'+rescue;
-  return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'</head>') : tag+markup;
+  return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'<link rel="stylesheet" href="../assets/standings/nascar-standings-v1.css?v=20260930n1">
+</head>') : tag+markup;
 }
 </script>
 </head>
-<body>
+<body class="nascar-hosted-page">
 <div class="hosted-hub">
   <nav class="hosted-hub-tabs" aria-label="Hosted Racing sections">
     <button class="hosted-hub-tab active" data-hosted-tab="racing">
