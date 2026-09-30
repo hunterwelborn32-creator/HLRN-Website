@@ -968,3 +968,266 @@ footer.hlrn-shared-footer-existing{padding-top:3px!important}
     min-height:40px!important;
   }
 }
+/* =========================================================
+   HLRN GLOBAL THEME FOUNDATION V1
+   Light is the default. Dark variables are ready for Night Mode.
+   ========================================================= */
+
+:root,
+html[data-hlrn-theme="light"]{
+  color-scheme:light;
+  --hlrn-theme-bg:#ffffff;
+  --hlrn-theme-surface:#ffffff;
+  --hlrn-theme-surface-2:#f6f7f9;
+  --hlrn-theme-surface-3:#eef1f4;
+  --hlrn-theme-ink:#12171d;
+  --hlrn-theme-muted:#68727e;
+  --hlrn-theme-line:#d9dee5;
+  --hlrn-theme-line-strong:#c7cdd5;
+  --hlrn-theme-shadow:0 10px 28px rgba(20,28,38,.08);
+  --hlrn-theme-input:#ffffff;
+  --hlrn-theme-nav:#ffffff;
+  --hlrn-theme-nav-hover:#f4f6f8;
+  --hlrn-theme-footer:#ffffff;
+
+  /* Remap older HLRN shared variables onto the light foundation. */
+  --hlrn-black:#ffffff;
+  --hlrn-black-2:#ffffff;
+  --hlrn-panel:#ffffff;
+  --hlrn-panel-2:#f6f7f9;
+  --hlrn-line:#d9dee5;
+  --hlrn-text:#12171d;
+  --hlrn-muted:#68727e;
+  --hlrn-paper:#ffffff;
+  --hlrn-paper-soft:#f6f7f9;
+  --hlrn-ink:#12171d;
+}
+
+html[data-hlrn-theme="dark"]{
+  color-scheme:dark;
+  --hlrn-theme-bg:#07090d;
+  --hlrn-theme-surface:#0d1117;
+  --hlrn-theme-surface-2:#12171e;
+  --hlrn-theme-surface-3:#181e27;
+  --hlrn-theme-ink:#f7f8fa;
+  --hlrn-theme-muted:#9ba5b2;
+  --hlrn-theme-line:#2b333e;
+  --hlrn-theme-line-strong:#3a4552;
+  --hlrn-theme-shadow:0 14px 34px rgba(0,0,0,.30);
+  --hlrn-theme-input:#0f141b;
+  --hlrn-theme-nav:#080b0f;
+  --hlrn-theme-nav-hover:#151b23;
+  --hlrn-theme-footer:#080b0f;
+
+  --hlrn-black:#07090d;
+  --hlrn-black-2:#0d1117;
+  --hlrn-panel:#12171e;
+  --hlrn-panel-2:#181e27;
+  --hlrn-line:#2b333e;
+  --hlrn-text:#f7f8fa;
+  --hlrn-muted:#9ba5b2;
+  --hlrn-paper:#12171e;
+  --hlrn-paper-soft:#181e27;
+  --hlrn-ink:#f7f8fa;
+}
+
+/* ---------- Page canvas ---------- */
+html[data-hlrn-theme]{
+  background:var(--hlrn-theme-bg)!important;
+}
+html[data-hlrn-theme] body{
+  background:var(--hlrn-theme-bg)!important;
+  color:var(--hlrn-theme-ink)!important;
+}
+
+/* ---------- Common site surfaces ---------- */
+html[data-hlrn-theme] :where(
+  .shell,.page,.page-wrap,.wrap,.wrapper,.container,.content,.content-wrap,
+  .main,.main-content,.app,.hub,.stage,.viewport,.dashboard,.dashboard-grid,
+  .section,.panel,.card,.box,.tile,.module,.widget,.toolbar,.subnav,
+  .table-wrap,.table-shell,.table-container,.list-card,.story-card,.intel-card,
+  .detail-wrap,.detail-box,.deep-box,.deep-metric,.stat,.stat-card,.metric-card,
+  .summary-card,.record-card,.record-box,.leader-card,.driver-card,.comparison-card,
+  .edge-card,.race-card,.report-card,.result-card,.news-card,.team-card,
+  .admin-card,.broadcast-card,.episode-card,.adventure-card,.profile-card,
+  .command-card,.cc-card,.cc-meter-card,.cc-battle-item,.cc-spotlight-card
+){
+  background-color:var(--hlrn-theme-surface)!important;
+  color:var(--hlrn-theme-ink)!important;
+  border-color:var(--hlrn-theme-line)!important;
+}
+
+/* Boxes/cards should be genuinely white in light mode, not dark gradients. */
+html[data-hlrn-theme="light"] :where(
+  .panel,.card,.box,.tile,.module,.widget,.table-wrap,.table-shell,.table-container,
+  .list-card,.story-card,.intel-card,.detail-wrap,.detail-box,.deep-box,.deep-metric,
+  .stat,.stat-card,.metric-card,.summary-card,.record-card,.record-box,.leader-card,
+  .driver-card,.comparison-card,.edge-card,.race-card,.report-card,.result-card,
+  .news-card,.team-card,.admin-card,.broadcast-card,.episode-card,.adventure-card,
+  .profile-card,.command-card,.cc-card,.cc-meter-card,.cc-battle-item,.cc-spotlight-card
+){
+  background-image:none!important;
+  box-shadow:var(--hlrn-theme-shadow)!important;
+}
+
+/* Large layout wrappers should stay flat, not look like giant cards. */
+html[data-hlrn-theme] :where(
+  .shell,.page,.page-wrap,.wrap,.wrapper,.container,.content,.content-wrap,
+  .main,.main-content,.app,.hub,.stage,.viewport
+){
+  box-shadow:none!important;
+}
+
+/* ---------- Typography on light surfaces ---------- */
+html[data-hlrn-theme] :where(
+  h1,h2,h3,h4,h5,h6,.title,.heading,.headline,.name,.driver-name,
+  .section-title,.card-title,.story-title,.detail-name,.deep-title
+){
+  color:var(--hlrn-theme-ink)!important;
+  text-shadow:none!important;
+}
+html[data-hlrn-theme] :where(
+  p,.sub,.subtitle,.description,.copy,.meta,.muted,.label,.eyebrow,
+  .card-reason,.card-stat,.story-sub,.detail-category
+){
+  color:var(--hlrn-theme-muted)!important;
+}
+
+/* Keep brand/series/status accents available. */
+html[data-hlrn-theme] :where(
+  .red,.accent-red,.hlrn-red,.series-red,.status-red,.error
+){color:var(--hlrn-red)!important}
+html[data-hlrn-theme] :where(
+  .yellow,.accent-yellow,.hlrn-yellow,.series-yellow
+){color:var(--hlrn-yellow)!important}
+html[data-hlrn-theme] :where(
+  .green,.accent-green,.hlrn-green,.series-green,.success
+){color:var(--hlrn-green)!important}
+
+/* ---------- Tables ---------- */
+html[data-hlrn-theme] table{
+  background:var(--hlrn-theme-surface)!important;
+  color:var(--hlrn-theme-ink)!important;
+  border-color:var(--hlrn-theme-line)!important;
+}
+html[data-hlrn-theme] thead,
+html[data-hlrn-theme] thead tr,
+html[data-hlrn-theme] thead th{
+  background:var(--hlrn-theme-surface-2)!important;
+  color:var(--hlrn-theme-ink)!important;
+  border-color:var(--hlrn-theme-line)!important;
+}
+html[data-hlrn-theme] tbody tr,
+html[data-hlrn-theme] tbody td{
+  background-color:var(--hlrn-theme-surface)!important;
+  color:var(--hlrn-theme-ink)!important;
+  border-color:var(--hlrn-theme-line)!important;
+}
+html[data-hlrn-theme="light"] tbody tr:nth-child(even) td{
+  background-color:#fafbfc!important;
+}
+html[data-hlrn-theme="dark"] tbody tr:nth-child(even) td{
+  background-color:#10151b!important;
+}
+
+/* ---------- Forms / controls ---------- */
+html[data-hlrn-theme] :where(
+  input,select,textarea,.search,.search-input,.filter,.filter-input
+){
+  background:var(--hlrn-theme-input)!important;
+  color:var(--hlrn-theme-ink)!important;
+  border-color:var(--hlrn-theme-line-strong)!important;
+}
+html[data-hlrn-theme] :where(input,textarea)::placeholder{
+  color:var(--hlrn-theme-muted)!important;
+}
+
+/* Normal secondary controls follow the theme; colored CTA buttons keep their page styling. */
+html[data-hlrn-theme] :where(
+  button:not(.hlrn-btn--red):not(.primary):not(.danger):not(.success),
+  .tab,.tab-btn,.filter-btn,.sort-btn
+){
+  border-color:var(--hlrn-theme-line)!important;
+}
+
+/* ---------- Global navigation: light now, same variables can go dark later ---------- */
+html[data-hlrn-theme] #hlrn-global-nav{
+  background:var(--hlrn-theme-nav)!important;
+  color:var(--hlrn-theme-ink)!important;
+  border-bottom-color:var(--hlrn-theme-line)!important;
+  box-shadow:0 6px 22px rgba(20,28,38,.08)!important;
+}
+html[data-hlrn-theme] #hlrn-global-nav .hgn-brand,
+html[data-hlrn-theme] #hlrn-global-nav .hgn-name,
+html[data-hlrn-theme] #hlrn-global-nav .hgn-link,
+html[data-hlrn-theme] #hlrn-global-nav .hgn-more-item{
+  color:var(--hlrn-theme-ink)!important;
+}
+html[data-hlrn-theme] #hlrn-global-nav .hgn-name small{
+  color:var(--hlrn-theme-muted)!important;
+}
+html[data-hlrn-theme] #hlrn-global-nav .hgn-link:hover,
+html[data-hlrn-theme] #hlrn-global-nav .hgn-link:focus-visible,
+html[data-hlrn-theme] #hlrn-global-nav .hgn-link.active,
+html[data-hlrn-theme] #hlrn-global-nav .hgn-more-item:hover,
+html[data-hlrn-theme] #hlrn-global-nav .hgn-more-item:focus-visible,
+html[data-hlrn-theme] #hlrn-global-nav .hgn-more-item.active{
+  background:var(--hlrn-theme-nav-hover)!important;
+  color:var(--hlrn-theme-ink)!important;
+}
+html[data-hlrn-theme] #hlrn-global-nav .hgn-more-menu,
+html[data-hlrn-theme] #hlrn-global-nav .hgn-account-panel,
+html[data-hlrn-theme] #hlrn-global-nav .hgn-mobile.open,
+html[data-hlrn-theme] #hlrn-global-nav .hgn-mobile-more-menu{
+  background:var(--hlrn-theme-surface)!important;
+  color:var(--hlrn-theme-ink)!important;
+  border-color:var(--hlrn-theme-line)!important;
+}
+html[data-hlrn-theme] #hlrn-global-nav .hgn-login,
+html[data-hlrn-theme] #hlrn-global-nav .hgn-mobile-login,
+html[data-hlrn-theme] #hlrn-global-nav .hgn-live,
+html[data-hlrn-theme] #hlrn-global-nav .hgn-menu,
+html[data-hlrn-theme] #hlrn-global-nav .hgn-account-panel button,
+html[data-hlrn-theme] #hlrn-global-nav .hgn-mobile>a,
+html[data-hlrn-theme] #hlrn-global-nav .hgn-mobile-more,
+html[data-hlrn-theme] #hlrn-global-nav .hgn-mobile-more-menu a{
+  background:var(--hlrn-theme-surface)!important;
+  color:var(--hlrn-theme-ink)!important;
+  border-color:var(--hlrn-theme-line-strong)!important;
+}
+
+/* ---------- Global footer ---------- */
+html[data-hlrn-theme] #hlrn-global-footer,
+html[data-hlrn-theme] footer.hlrn-shared-footer-existing{
+  background:var(--hlrn-theme-footer)!important;
+  color:var(--hlrn-theme-muted)!important;
+  border-color:var(--hlrn-theme-line)!important;
+}
+html[data-hlrn-theme] #hlrn-global-footer .hgf-brand strong,
+html[data-hlrn-theme] #hlrn-global-footer .hgf-links a{
+  color:var(--hlrn-theme-ink)!important;
+}
+html[data-hlrn-theme] #hlrn-global-footer .hgf-brand small,
+html[data-hlrn-theme] #hlrn-global-footer .hgf-copy{
+  color:var(--hlrn-theme-muted)!important;
+}
+html[data-hlrn-theme] #hlrn-global-footer .hgf-links a:hover{
+  background:var(--hlrn-theme-surface-2)!important;
+  color:var(--hlrn-theme-ink)!important;
+}
+
+/* ---------- Generic separators / scrollbars ---------- */
+html[data-hlrn-theme] hr{
+  border-color:var(--hlrn-theme-line)!important;
+}
+html[data-hlrn-theme]{
+  scrollbar-color:var(--hlrn-theme-line-strong) var(--hlrn-theme-bg);
+}
+
+/* Preserve deliberate media/background art. Actual IMG elements are never recolored. */
+html[data-hlrn-theme] img,
+html[data-hlrn-theme] video,
+html[data-hlrn-theme] canvas,
+html[data-hlrn-theme] svg{
+  color-scheme:normal;
+}
