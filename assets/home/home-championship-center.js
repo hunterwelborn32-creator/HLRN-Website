@@ -13,6 +13,16 @@
   };
   const setText=(id,value)=>{const el=$(id);if(el)el.textContent=value};
   const setHref=(id,value)=>{const el=$(id);if(el)el.href=value};
+  const setDriverPhoto=(id,value)=>{
+    const el=$(id);if(!el)return;
+    const src=window.HLRNDrivers?.photoUrl?.(value,"cutout")||"";
+    if(!src){el.hidden=true;el.removeAttribute("src");return}
+    const rec=window.HLRNDrivers?.resolve?.(value);
+    el.src=src;
+    el.alt=(rec?.displayName||pretty(value?.driver||value?.name||value||"Driver"))+" driver photo";
+    el.hidden=false;
+    el.onerror=()=>{el.hidden=true};
+  };
 
   function sortedDrivers(league){
     return [...(league?.drivers||[])].sort((a,b)=>num(a.rank)-num(b.rank)||num(b.points)-num(a.points));
@@ -52,6 +62,7 @@
       setText('home'+prefix+'Leader',pretty(leader.driver));
       setText('home'+prefix+'Points',Math.round(num(leader.points)).toLocaleString('en-US'));
       setHref('home'+prefix+'LeaderLink',driverLink(key,leader));
+      setDriverPhoto('home'+prefix+'LeaderPhoto',{driverId:leader.driverId,driver:pretty(leader.driver)});
     }
     if(second&&leader){
       const gap=Math.max(0,num(leader.points)-num(second.points));
@@ -69,6 +80,7 @@
     if(winner){
       setText('home'+prefix+'Winner',pretty(winner.driver));
       setHref('home'+prefix+'WinnerLink',driverLink(key,winner));
+      setDriverPhoto('home'+prefix+'WinnerPhoto',{driverId:winner.driverId,driver:pretty(winner.driver)});
     }else if(winnerRow){
       setText('home'+prefix+'Winner','Race '+num(winnerRow.raceNumber)+' winner');
     }
