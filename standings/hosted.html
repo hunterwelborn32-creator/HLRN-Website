@@ -370,7 +370,50 @@ html,body,.hosted-hub{background:#fff!important;color:#111214!important;height:a
 .hosted-loading{background:#fff!important;color:#111214!important;min-height:56px!important}
 </style>`;
   const tag='<style id="HLRN_STATIC_LIGHT_INNER">'+css+'</style>'+rescue;
-  return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'</head>') : tag+markup;
+  return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'
+<style id="HLRN_HOSTED_RELIABLE_SCROLL_20260930">
+  html,body{
+    width:100%!important;
+    height:100%!important;
+    min-height:0!important;
+    overflow:hidden!important;
+  }
+  .hosted-hub{
+    width:100%!important;
+    height:100%!important;
+    min-height:0!important;
+    display:flex!important;
+    flex-direction:column!important;
+    overflow:hidden!important;
+    background:#fff!important;
+  }
+  .hosted-hub-tabs{
+    flex:0 0 auto!important;
+  }
+  .hosted-hub-stage{
+    position:relative!important;
+    flex:1 1 auto!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow:hidden!important;
+    background:#fff!important;
+  }
+  .hosted-hub-frame{
+    position:absolute!important;
+    inset:0!important;
+    width:100%!important;
+    height:100%!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow:auto!important;
+    border:0!important;
+    background:#fff!important;
+  }
+</style>
+
+</head>') : tag+markup;
 }
 </script>
 </head>
@@ -513,25 +556,24 @@ function resizeHostedFrame(key){
   const frame=hostedFrame(key);
   if(!frame) return;
   try{
+    frame.setAttribute("scrolling","yes");
+    frame.style.setProperty("width","100%","important");
+    frame.style.setProperty("height","100%","important");
+    frame.style.setProperty("min-height","0","important");
+    frame.style.setProperty("max-height","none","important");
+    frame.style.setProperty("position","absolute","important");
+    frame.style.setProperty("inset","0","important");
+    frame.style.setProperty("overflow","auto","important");
+
     const doc=frame.contentDocument;
     if(!doc || !doc.body || !doc.documentElement) return;
     doc.documentElement.style.setProperty("height","auto","important");
-    doc.documentElement.style.setProperty("min-height","0","important");
+    doc.documentElement.style.setProperty("min-height","100%","important");
+    doc.documentElement.style.setProperty("overflow-y","auto","important");
     doc.body.style.setProperty("height","auto","important");
-    doc.body.style.setProperty("min-height","0","important");
+    doc.body.style.setProperty("min-height","100%","important");
     doc.body.style.setProperty("overflow-x","hidden","important");
-    doc.body.style.setProperty("overflow-y","visible","important");
-    const h=Math.max(
-      doc.body.scrollHeight||0,
-      doc.body.offsetHeight||0,
-      doc.documentElement.scrollHeight||0,
-      doc.documentElement.offsetHeight||0,
-      180
-    );
-    frame.style.setProperty("height",Math.ceil(h+2)+"px","important");
-    frame.style.setProperty("min-height","0","important");
-    frame.style.setProperty("position","relative","important");
-    frame.style.setProperty("inset","auto","important");
+    doc.body.style.setProperty("overflow-y","auto","important");
   }catch(e){}
 }
 function installHostedResize(key){
