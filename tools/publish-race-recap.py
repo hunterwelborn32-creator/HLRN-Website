@@ -105,6 +105,38 @@ def recap_sort_key(recap):
     )
 
 
+def recap_quality(recap):
+    """Score a frozen record so a later, richer PC backup can upgrade the same race."""
+    race = (recap or {}).get("race") or {}
+    snapshots = list((recap or {}).get("lapSnapshots") or [])
+    cautions = list((recap or {}).get("cautionHistory") or [])
+    penalties = list((recap or {}).get("penaltyHistory") or [])
+    timeline = list((recap or {}).get("timelineEvents") or [])
+    drivers = list(race.get("drivers") or [])
+
+    def exact_reason_count(items):
+        total = 0
+        for item in items:
+            source = str((item or {}).get("reasonSource") or "UNAVAILABLE").upper()
+            reason = str((item or {}).get("reason") or "").strip()
+            if source not in ("", "UNAVAILABLE", "INFERRED") and reason and "not supplied" not in reason.lower():
+                total += 1
+        return total
+
+    # Completed-lap coverage is most important, then final classification,
+    # then race-control detail. Exact reason text can upgrade an otherwise
+    # same-sized archive.
+    return (
+        len(snapshots) * 1_000_000
+        + len(drivers) * 10_000
+        + len(cautions) * 1_000
+        + len(penalties) * 500
+        + exact_reason_count(cautions) * 200
+        + exact_reason_count(penalties) * 200
+        + len(timeline)
+    )
+
+
 def identity(entry):
     if entry.get("carIdx") is not None:
         return f"idx:{entry.get('carIdx')}"
@@ -420,7 +452,9 @@ def render_cautions(model):
         reason = c.get("reason") or "Reason not supplied by iRacing telemetry"
         restart = c.get("restartLap")
         detail = f"Lap {c.get('startLap','—')}"
-        if restart is not None:
+        if c.get("endedUnderYellow"):
+            detail += " → Finished under caution"
+        elif restart is not None:
             detail += f" → Restart Lap {restart}"
         cards.append(
             '<div class="moment caution">'
@@ -512,7 +546,7 @@ def render_article(model):
         "headline": model["title"],
         "description": model["subtitle"],
         "datePublished": model["publishedAt"],
-        "dateModified": model["publishedAt"],
+        "dateModified": model.get("updatedAt") or model["publishedAt"],
         "mainEntityOfPage": {"@type": "WebPage", "@id": canonical},
         "articleSection": "HLRN Race Recap",
         "isAccessibleForFree": True,
@@ -671,21 +705,53 @@ def publish(recap):
 
     model = build_model(recap)
     index = load_index()
-    if any(str(x.get("raceKey")) == model["raceKey"] for x in index["recaps"]):
-        print(f"[HLRN recap] Already published: {model['raceKey']}")
-        return False
+    existing_pos = next(
+        (i for i, item in enumerate(index["recaps"]) if str(item.get("raceKey")) == model["raceKey"]),
+        None,
+    )
+    existing = index["recaps"][existing_pos] if existing_pos is not None else None
 
+    existing_recorder = None
+    if existing:
+        existing_slug = str(existing.get("slug") or "").strip()
+        existing_path = DATA_DIR / f"{existing_slug}.json" if existing_slug else None
+        if existing_path and existing_path.exists():
+            try:
+                existing_archive = load_json(existing_path)
+                if isinstance(existing_archive, dict):
+                    existing_recorder = existing_archive.get("recorder")
+            except Exception:
+                existing_recorder = None
+
+        incoming_quality = recap_quality(recap)
+        existing_quality = recap_quality(existing_recorder) if isinstance(existing_recorder, dict) else -1
+        if incoming_quality <= existing_quality:
+            print(
+                f"[HLRN recap] Already published at equal/better quality: {model['raceKey']} "
+                f"({existing_quality} >= {incoming_quality})"
+            )
+            return False
+
+        # Preserve the permanent URL and original publication timestamp while
+        # refreshing the article/raw archive with the richer frozen record.
+        model["slug"] = existing.get("slug") or model["slug"]
+        model["publishedAt"] = existing.get("publishedAt") or model["publishedAt"]
+        model["updatedAt"] = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
+    else:
+        model["updatedAt"] = model["publishedAt"]
+
+    quality = recap_quality(recap)
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     article_path = ARTICLE_DIR / model["slug"] / "index.html"
     article_path.parent.mkdir(parents=True, exist_ok=True)
 
     archive = {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
+        "archiveQuality": quality,
         "article": model,
         "recorder": recap,
     }
     save_json(DATA_DIR / f"{model['slug']}.json", archive)
-
     article_path.write_text(render_article(model), encoding="utf-8")
 
     summary = {
@@ -697,6 +763,7 @@ def publish(recap):
         "title": model["title"],
         "subtitle": model["subtitle"],
         "publishedAt": model["publishedAt"],
+        "updatedAt": model["updatedAt"],
         "raceFrozenAt": model["raceFrozenAt"],
         "displayDate": model["displayDate"],
         "series": model["series"],
@@ -708,13 +775,24 @@ def publish(recap):
         "penalties": len(model["penalties"]),
         "leadChanges": model["leadChanges"],
         "completedLapsCaptured": model["completedLapsCaptured"],
+        "archiveQuality": quality,
     }
-    index["recaps"].append(summary)
-    index["recaps"].sort(key=lambda x: str(x.get("raceFrozenAt") or x.get("publishedAt") or ""), reverse=True)
+
+    if existing_pos is None:
+        index["recaps"].append(summary)
+        action = "Published"
+    else:
+        index["recaps"][existing_pos] = summary
+        action = "Enriched"
+
+    index["recaps"].sort(
+        key=lambda x: str(x.get("raceFrozenAt") or x.get("publishedAt") or ""),
+        reverse=True,
+    )
     index["updatedAt"] = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
     save_json(INDEX_PATH, index)
 
-    print(f"[HLRN recap] Published {summary['url']}")
+    print(f"[HLRN recap] {action} {summary['url']} • quality {quality}")
     return True
 
 
