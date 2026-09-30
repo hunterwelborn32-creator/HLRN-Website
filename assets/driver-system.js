@@ -9,13 +9,13 @@
   "use strict";
   if(global.HLRNDrivers && global.HLRNDrivers.version) return;
 
-  const VERSION="20260930v5";
+  const VERSION="20260930v6";
   const script=document.currentScript;
   let root;
   try{ root=new URL("../",script&&script.src?script.src:location.href); }
   catch(_){ root=new URL("/",location.origin); }
   const manifestUrl=new URL("data/driver-pages.json?v="+VERSION,root).href;
-  const PHOTO_BASE="https://hunterwelborn32-creator.github.io/HLRN-App/driver-photos/";
+  const PHOTO_BASE="https://raw.githubusercontent.com/hunterwelborn32-creator/HLRN-App/main/driver-photos/";
   const absolute=(path)=>new URL(String(path||"").replace(/^\//,""),root).href;
   const normalize=(value)=>String(value||"").toLowerCase().replace(/[^a-z0-9]/g,"");
   const cleanDisplay=(value)=>String(value||"").trim().replace(/([A-Za-z])\d+$/,"$1");
