@@ -1819,6 +1819,7 @@ iframe{background:#fff!important;color-scheme:light!important}
   .cc-card:first-child{grid-column:auto!important}
 }
 </style>
+<link rel="stylesheet" href="../assets/standings/nascar-standings-v1.css?v=20260930n1">
 </head>') : tag+markup;
 }
 </script>
@@ -3476,7 +3477,7 @@ html,body,.page-wrap{
 }
 </style>
 </head>
-<body>
+<body class="nascar-standings-series sunday">
 <div class="page-wrap">
 <div class="cc-topline">
   <div class="cc-brand">HLRN <b>Sunday Championship</b></div>
@@ -4805,7 +4806,7 @@ const safe=n
  .replace(/"/g,"&quot;")
  .replace(/'/g,"&#039;");
 if(!slug) return safe;
-const url="https://hunterwelborn32-creator.github.io/HLRN-App/driver-photos/cutout/"+slug+".webp";
+const url="../assets/driver-photos/cutout/"+slug+".webp";
 const profileUrl=window.HLRNDrivers?.profileUrl?.({driverId:driverId,driver:shown})||"../drivers/";
 const profileNameAttr=encodeURIComponent(shown);
 const profileIdAttr=encodeURIComponent(driverId==null?"":String(driverId));
