@@ -1473,96 +1473,177 @@ main{
 </script>
 
 
-<style id="HLRN_STANDINGS_SCROLL_ARCHITECTURE_V2">
-  /* One scroll system only: the standings iframe scrolls; the outer hub stays stable. */
+
+<style id="HLRN_STANDINGS_FULL_PAGE_SCROLL_V3">
+  /* Final standings scroll model: the browser page scrolls; frames expand to content. */
   html,body{
     width:100%!important;
+    height:auto!important;
     min-height:100%!important;
+    max-height:none!important;
     margin:0!important;
     overflow-x:hidden!important;
-    overflow-y:auto!important;
+    overflow-y:visible!important;
     background:#fff!important;
   }
   body.nascar-standings-hub{
     height:auto!important;
+    min-height:100vh!important;
     max-height:none!important;
+    overflow-y:auto!important;
+    overscroll-behavior-y:auto!important;
+    touch-action:pan-y!important;
   }
   .hlrn{
+    display:block!important;
     width:100%!important;
-    height:calc(100dvh - 70px)!important;
-    min-height:560px!important;
+    height:auto!important;
+    min-height:100vh!important;
     max-height:none!important;
-    display:grid!important;
-    grid-template-rows:auto auto minmax(0,1fr)!important;
-    overflow:hidden!important;
+    overflow:visible!important;
     background:#fff!important;
   }
   .viewport{
     position:relative!important;
+    display:block!important;
     width:100%!important;
-    height:100%!important;
+    height:auto!important;
     min-height:0!important;
     max-height:none!important;
-    overflow:hidden!important;
+    overflow:visible!important;
     background:#fff!important;
   }
   iframe.page{
     display:none!important;
     width:100%!important;
-    height:100%!important;
-    min-height:0!important;
+    height:1px!important;
+    min-height:1px!important;
     max-height:none!important;
     border:0!important;
-    overflow:auto!important;
+    overflow:hidden!important;
     background:#fff!important;
   }
-  iframe.page.active{display:block!important}
-  @media(max-width:620px){
-    .hlrn{
-      height:calc(100dvh - 56px)!important;
-      min-height:460px!important;
-    }
+  iframe.page.active{
+    display:block!important;
   }
 </style>
-<script id="HLRN_STANDINGS_SCROLL_ARCHITECTURE_V2_JS">
+<script id="HLRN_STANDINGS_FULL_PAGE_SCROLL_V3_JS">
 (function(){
-  const INNER_ID='HLRN_IFRAME_VERTICAL_SCROLL_V2';
-  function enable(frame){
-    if(!frame) return;
+  const INNER_ID='HLRN_FULL_PAGE_INNER_SCROLL_RESET_V3';
+  let timer=0;
+
+  function visible(el){
     try{
-      frame.setAttribute('scrolling','yes');
-      frame.style.setProperty('height','100%','important');
-      frame.style.setProperty('overflow','auto','important');
-      const doc=frame.contentDocument;
-      if(!doc || !doc.head || !doc.body) return;
-      let style=doc.getElementById(INNER_ID);
-      if(!style){
-        style=doc.createElement('style');
-        style.id=INNER_ID;
-        doc.head.appendChild(style);
-      }
-      style.textContent=
-        'html,body{height:auto!important;min-height:100%!important;max-height:none!important;overflow-x:hidden!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-y:auto!important;touch-action:pan-y!important;}'+
-        'body{position:relative!important;}';
-      doc.documentElement.style.setProperty('overflow-y','auto','important');
-      doc.body.style.setProperty('overflow-y','auto','important');
-      doc.body.style.setProperty('height','auto','important');
-      doc.body.style.setProperty('max-height','none','important');
-    }catch(e){}
+      const s=el.ownerDocument.defaultView.getComputedStyle(el);
+      return s.display!=='none' && s.visibility!=='hidden';
+    }catch(e){ return true; }
   }
-  function run(){
-    document.querySelectorAll('iframe.page').forEach(frame=>{
-      if(!frame.__hlrnScrollV2Bound){
-        frame.__hlrnScrollV2Bound=true;
-        frame.addEventListener('load',()=>{enable(frame);setTimeout(()=>enable(frame),150);setTimeout(()=>enable(frame),700)});
+
+  function normalizeDoc(doc){
+    if(!doc || !doc.head || !doc.body) return;
+    let st=doc.getElementById(INNER_ID);
+    if(!st){
+      st=doc.createElement('style');
+      st.id=INNER_ID;
+      doc.head.appendChild(st);
+    }
+    st.textContent=
+      'html,body{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;}'+
+      'body{position:relative!important;}';
+    doc.documentElement.style.setProperty('height','auto','important');
+    doc.documentElement.style.setProperty('min-height','0','important');
+    doc.documentElement.style.setProperty('max-height','none','important');
+    doc.documentElement.style.setProperty('overflow','visible','important');
+    doc.body.style.setProperty('height','auto','important');
+    doc.body.style.setProperty('min-height','0','important');
+    doc.body.style.setProperty('max-height','none','important');
+    doc.body.style.setProperty('overflow','visible','important');
+  }
+
+  function measure(doc){
+    if(!doc || !doc.body || !doc.documentElement) return 0;
+    const b=doc.body, d=doc.documentElement;
+    let h=Math.max(
+      b.scrollHeight||0,b.offsetHeight||0,b.clientHeight||0,
+      d.scrollHeight||0,d.offsetHeight||0,d.clientHeight||0
+    );
+    try{
+      const top=b.getBoundingClientRect().top;
+      let bottom=b.getBoundingClientRect().bottom;
+      Array.from(b.children).forEach(el=>{
+        if(!visible(el)) return;
+        const r=el.getBoundingClientRect();
+        bottom=Math.max(bottom,r.bottom);
+      });
+      h=Math.max(h,Math.ceil(bottom-top));
+    }catch(e){}
+    return Math.max(180,Math.ceil(h+4));
+  }
+
+  function fit(frame,depth){
+    if(!frame || depth>4) return 0;
+    try{
+      frame.setAttribute('scrolling','no');
+      frame.style.setProperty('overflow','hidden','important');
+      frame.style.setProperty('max-height','none','important');
+
+      const doc=frame.contentDocument;
+      if(!doc || !doc.body) return 0;
+      normalizeDoc(doc);
+
+      Array.from(doc.querySelectorAll('iframe')).forEach(child=>{
+        if(visible(child)) fit(child,depth+1);
+      });
+
+      const h=measure(doc);
+      frame.style.setProperty('height',h+'px','important');
+      frame.style.setProperty('min-height',h+'px','important');
+
+      if(!frame.__hlrnV3Load){
+        frame.__hlrnV3Load=true;
+        frame.addEventListener('load',()=>schedule(true));
       }
-      enable(frame);
+      return h;
+    }catch(e){
+      return 0;
+    }
+  }
+
+  function fitActive(){
+    document.documentElement.style.setProperty('overflow-y','visible','important');
+    document.body.style.setProperty('overflow-y','auto','important');
+    document.body.style.setProperty('height','auto','important');
+    document.body.style.setProperty('max-height','none','important');
+
+    document.querySelectorAll('iframe.page').forEach(frame=>{
+      if(frame.classList.contains('active')){
+        fit(frame,0);
+      }else{
+        frame.style.setProperty('height','1px','important');
+        frame.style.setProperty('min-height','1px','important');
+      }
     });
   }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run,{once:true});
-  else run();
-  window.addEventListener('load',()=>{run();setTimeout(run,600)},{once:true});
-  document.addEventListener('click',()=>setTimeout(run,80),true);
+
+  function schedule(burst){
+    clearTimeout(timer);
+    timer=setTimeout(fitActive,30);
+    if(burst){
+      setTimeout(fitActive,150);
+      setTimeout(fitActive,450);
+      setTimeout(fitActive,1000);
+      setTimeout(fitActive,2000);
+    }
+  }
+
+  document.addEventListener('click',()=>schedule(true),true);
+  window.addEventListener('resize',()=>schedule(true));
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',()=>schedule(true),{once:true});
+  }else{
+    schedule(true);
+  }
+  window.addEventListener('load',()=>schedule(true),{once:true});
 })();
 </script>
 
