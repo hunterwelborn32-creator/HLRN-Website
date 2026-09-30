@@ -351,6 +351,8 @@ tbody tr:first-child td{background:linear-gradient(90deg,#fff8d9,#fff 72%)!impor
 tbody tr:first-child td:first-child{box-shadow:inset 5px 0 0 #f3c800!important}
 .rank{font-family:"Arial Narrow","Roboto Condensed","Helvetica Neue",Arial,sans-serif!important;font-size:22px!important;font-weight:1000!important;color:#111318!important}
 .driver-link{color:#111318!important;font-family:"Arial Narrow","Roboto Condensed","Helvetica Neue",Arial,sans-serif!important;font-size:17px!important;font-weight:1000!important;text-decoration:none!important}
+.hlrn-hosted-driver-photo-link{display:inline-flex!important;align-items:center!important;gap:10px!important;color:#111318!important;text-decoration:none!important;font-family:"Arial Narrow","Roboto Condensed","Helvetica Neue",Arial,sans-serif!important;font-size:17px!important;font-weight:1000!important;text-transform:uppercase!important}
+.hlrn-hosted-driver-photo{display:block!important;width:54px!important;height:62px!important;flex:0 0 54px!important;object-fit:contain!important;object-position:center bottom!important;filter:drop-shadow(0 3px 6px rgba(0,0,0,.12))!important}
 .car-number-cell{font-weight:1000!important;color:#111318!important}
 @media(max-width:700px){
   .container,.content{padding:10px 8px 24px!important}
@@ -473,10 +475,28 @@ async function linkHostedDriverNames(key){
       const url=rec&&system.profileUrl?system.profileUrl(rec):null;
       if(url){
         const a=doc.createElement("a");
-        a.href=url;a.target="_top";a.textContent=rec.displayName||rec.name||matched;
+        a.href=url;a.target="_top";
         a.dataset.hlrnDriverLinked="1";
         a.title="View "+(rec.displayName||rec.name||matched)+"'s HLRN driver profile";
-        a.style.color="inherit";a.style.textDecoration="none";a.style.borderBottom="1px solid rgba(227,24,55,.45)";
+        const inRankings=!!node.parentElement?.closest?.("#rankingsResults");
+        if(inRankings){
+          a.className="hlrn-hosted-driver-photo-link";
+          const src=system.photoUrl?system.photoUrl(rec,"cutout"):"";
+          if(src){
+            const img=doc.createElement("img");
+            img.src=src;img.alt="";img.loading="lazy";img.decoding="async";
+            img.className="hlrn-hosted-driver-photo";
+            img.onerror=()=>img.remove();
+            a.appendChild(img);
+          }
+          const span=doc.createElement("span");
+          span.textContent=rec.displayName||rec.name||matched;
+          a.appendChild(span);
+        }else{
+          a.textContent=rec.displayName||rec.name||matched;
+          a.style.borderBottom="1px solid rgba(227,24,55,.45)";
+        }
+        a.style.color="inherit";a.style.textDecoration="none";
         frag.appendChild(a);
       }else frag.appendChild(doc.createTextNode(matched));
       last=nameIndex+matched.length;
