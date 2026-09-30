@@ -1705,6 +1705,110 @@ main{
   document.addEventListener('click',()=>setTimeout(run,120),true);
 })();
 </script>
+
+<!-- HLRN_STANDINGS_SCROLL_RESTORE_20260930 -->
+<style id="HLRN_STANDINGS_SCROLL_RESTORE_20260930">
+  html,body{
+    height:auto!important;
+    min-height:100%!important;
+    max-height:none!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+  }
+  body.nascar-standings-hub{
+    overscroll-behavior-y:auto!important;
+    touch-action:pan-y!important;
+  }
+  .hlrn{
+    height:auto!important;
+    min-height:100vh!important;
+    max-height:none!important;
+    overflow:visible!important;
+  }
+  .viewport{
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow:visible!important;
+  }
+</style>
+<script id="HLRN_STANDINGS_SCROLL_RESTORE_20260930_JS">
+(function(){
+  const FLAG='__hlrnScrollRelayInstalled';
+
+  function canScrollY(start,dy){
+    let el=start;
+    while(el && el.nodeType===1){
+      try{
+        const cs=el.ownerDocument.defaultView.getComputedStyle(el);
+        const oy=cs.overflowY;
+        if((oy==='auto'||oy==='scroll') && el.scrollHeight>el.clientHeight+2){
+          if(dy>0 && el.scrollTop+el.clientHeight<el.scrollHeight-1) return true;
+          if(dy<0 && el.scrollTop>1) return true;
+        }
+      }catch(e){}
+      el=el.parentElement;
+    }
+    return false;
+  }
+
+  function install(frame){
+    try{
+      const doc=frame.contentDocument;
+      if(!doc || !doc.body || doc[FLAG]) return;
+      doc[FLAG]=true;
+
+      let sx=0, sy=0;
+      doc.addEventListener('wheel',function(e){
+        if(canScrollY(e.target,e.deltaY)) return;
+        window.scrollBy({top:e.deltaY,left:0,behavior:'auto'});
+      },{passive:true});
+
+      doc.addEventListener('touchstart',function(e){
+        if(!e.touches || !e.touches.length) return;
+        sx=e.touches[0].clientX;
+        sy=e.touches[0].clientY;
+      },{passive:true});
+
+      doc.addEventListener('touchmove',function(e){
+        if(!e.touches || !e.touches.length) return;
+        const x=e.touches[0].clientX;
+        const y=e.touches[0].clientY;
+        const dx=x-sx;
+        const dy=y-sy;
+        sx=x; sy=y;
+        if(Math.abs(dy)<=Math.abs(dx)) return;
+        if(canScrollY(e.target,-dy)) return;
+        window.scrollBy(0,-dy);
+        if(e.cancelable) e.preventDefault();
+      },{passive:false});
+    }catch(e){}
+  }
+
+  function bind(frame){
+    if(!frame) return;
+    const apply=()=>{install(frame);setTimeout(()=>install(frame),120);setTimeout(()=>install(frame),600)};
+    if(!frame.__hlrnScrollRelayLoadBound){
+      frame.__hlrnScrollRelayLoadBound=true;
+      frame.addEventListener('load',apply);
+    }
+    apply();
+  }
+
+  function run(){
+    document.documentElement.style.setProperty('overflow-y','auto','important');
+    document.body.style.setProperty('overflow-y','auto','important');
+    document.body.style.setProperty('height','auto','important');
+    document.querySelectorAll('iframe.page').forEach(bind);
+  }
+
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run,{once:true});
+  else run();
+  window.addEventListener('load',()=>{run();setTimeout(run,700)},{once:true});
+  document.addEventListener('click',()=>setTimeout(run,80),true);
+})();
+</script>
+
 <script src="../assets/site-shell.js?v=20260929myhlrn1"></script>
 </body>
 </html>
