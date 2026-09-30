@@ -286,6 +286,7 @@ input,select,button{color:#111!important}
 .loading,.message,.empty,.placeholder{background:#fff!important;color:#6f747a!important}
 iframe{background:#fff!important;color-scheme:light!important}
 </style>
+<link rel="stylesheet" href="../assets/standings/nascar-standings-v1.css?v=20260930n1">
 <script data-hlrn-driver-system src="../assets/driver-system.js?v=20260930v7"></script>
 <script>
 function hlrnLightHostedDoc(markup){
@@ -310,154 +311,55 @@ tbody tr:nth-child(even) td{background:#fafafa!important}
 .loading,.message,.empty,.placeholder,.hosted-loading{background:#fff!important;color:#111214!important}
 iframe{background:#fff!important;color-scheme:light!important}
 
-/* Match Sunday / Monday standings presentation */
-body{
-  background:#fff!important;
-  color:#111214!important;
-  font-family:"Inter","Segoe UI",Arial,sans-serif!important;
-}
-.container,.content{
-  width:100%!important;
-  max-width:1500px!important;
-  margin:0 auto!important;
-  padding:0 28px 48px!important;
-  background:#fff!important;
-}
-.header,.top-grid,.hosted-ticker{
-  display:none!important;
-}
+/* NASCAR-style Hosted inner view */
+body{padding:0!important;background:#fff!important}
+.container,.content{width:100%!important;max-width:none!important;margin:0!important;padding:20px 24px 38px!important}
+.header,.hosted-ticker,.ops-topbar,.ops-hero,.ops-dashboard,.hx-telemetry,.hx-intel,.hx-podium,.hx-pulse-grid{display:none!important}
 .nav{
-  display:flex!important;
-  gap:0!important;
-  margin:0 -28px 28px!important;
-  padding:0 28px!important;
-  border:0!important;
-  border-bottom:1px solid #d8dade!important;
-  background:#fff!important;
-  box-shadow:none!important;
+  display:flex!important;gap:24px!important;margin:0 0 22px!important;padding:0!important;
+  border:0!important;border-bottom:1px solid #d9dde2!important;background:#fff!important
 }
 .nav button{
-  min-height:58px!important;
-  padding:13px 20px 10px!important;
-  border:0!important;
-  border-right:1px solid #eceeef!important;
-  border-radius:0!important;
-  background:#fff!important;
-  color:#6f747a!important;
-  font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
-  font-size:14px!important;
-  font-style:normal!important;
-  font-weight:800!important;
-  letter-spacing:.01em!important;
-  text-transform:uppercase!important;
-  box-shadow:none!important;
+  min-height:52px!important;padding:14px 0 11px!important;border:0!important;border-bottom:4px solid transparent!important;
+  border-radius:0!important;background:transparent!important;color:#6f7781!important;box-shadow:none!important;
+  font-family:"Arial Narrow","Roboto Condensed","Helvetica Neue",Arial,sans-serif!important;font-size:16px!important;font-style:normal!important;font-weight:1000!important
 }
-.nav button:first-child{border-left:1px solid #eceeef!important}
-.nav button:hover,.nav button.active{
-  position:relative!important;
-  background:#f7f7f7!important;
-  color:#111!important;
-}
-.nav button.active:after{
-  content:""!important;
-  position:absolute!important;
-  left:16px!important;
-  right:16px!important;
-  bottom:0!important;
-  height:4px!important;
-  background:#ffd400!important;
-}
+.nav button.active{border-bottom-color:#f3c800!important;background:transparent!important;color:#111318!important}
+.top-grid{display:none!important}
 .section{
-  margin:0 0 22px!important;
-  border:0!important;
-  border-radius:0!important;
-  background:#fff!important;
-  box-shadow:none!important;
+  margin:0 0 22px!important;border:1px solid #d9dde2!important;border-radius:0!important;background:#fff!important;box-shadow:none!important
 }
 .section-title{
-  margin:0 0 17px!important;
-  padding:0 0 13px!important;
-  border:0!important;
-  border-bottom:2px solid #17191b!important;
-  background:#fff!important;
-  color:#111!important;
-  font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
-  font-size:clamp(30px,3.5vw,46px)!important;
-  line-height:.92!important;
-  font-style:normal!important;
-  font-weight:900!important;
-  letter-spacing:-.025em!important;
-  text-transform:uppercase!important;
+  padding:18px 18px 14px!important;border:0!important;border-bottom:1px solid #d9dde2!important;background:#fff!important;
+  color:#111318!important;font-family:"Arial Narrow","Roboto Condensed","Helvetica Neue",Arial,sans-serif!important;
+  font-size:28px!important;font-style:normal!important;font-weight:1000!important;letter-spacing:-.03em!important;text-transform:uppercase!important
 }
-.table-wrap{
-  width:100%!important;
-  overflow:auto!important;
-  border:0!important;
-  border-top:1px solid #cfd2d5!important;
-  background:#fff!important;
-}
-table{
-  width:100%!important;
-  min-width:1000px!important;
-  border-collapse:collapse!important;
-  border-spacing:0!important;
-  background:#fff!important;
-}
+.section-title:before,.section-title:after{display:none!important}
+.table-wrap{overflow:auto!important;border:0!important;background:#fff!important}
+table{width:100%!important;border-collapse:collapse!important;background:#fff!important}
 thead th,th{
-  position:static!important;
-  height:42px!important;
-  padding:10px 12px!important;
-  border:0!important;
-  border-bottom:2px solid #17191b!important;
-  background:#f3f4f5!important;
-  color:#363a3e!important;
-  font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
-  font-size:11px!important;
-  font-weight:800!important;
-  letter-spacing:.035em!important;
-  text-align:center!important;
-  text-transform:uppercase!important;
-  white-space:nowrap!important;
+  position:static!important;top:auto!important;padding:11px 10px!important;background:#f1f2f4!important;color:#343a40!important;
+  border:0!important;border-bottom:1px solid #cfd4d9!important;font-size:9px!important;font-weight:900!important;letter-spacing:.04em!important;text-transform:uppercase!important
 }
 tbody td,td{
-  height:56px!important;
-  padding:11px 12px!important;
-  border:0!important;
-  border-bottom:1px solid #dedfe1!important;
-  background:#fff!important;
-  color:#25282b!important;
-  font-family:"Inter","Segoe UI",Arial,sans-serif!important;
-  font-size:12px!important;
-  line-height:1.25!important;
-  font-weight:600!important;
-  text-align:center!important;
-  white-space:nowrap!important;
+  height:68px!important;padding:9px 10px!important;background:#fff!important;color:#202428!important;border:0!important;border-bottom:1px solid #e4e7ea!important;
+  font-size:12px!important;font-weight:700!important;vertical-align:middle!important
 }
-tbody tr:nth-child(even) td{background:#fafafa!important}
-tbody tr:hover td{background:#f1f2f3!important;color:#111!important}
-.rank{
-  color:#111!important;
-  font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
-  font-size:18px!important;
-  font-weight:900!important;
-}
-.driver-link{
-  color:#111!important;
-  font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
-  font-size:16px!important;
-  font-weight:800!important;
-  text-transform:uppercase!important;
-}
-.car-number-cell{
-  color:#111!important;
-  font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
-  font-size:16px!important;
-  font-weight:900!important;
-}
-@media(max-width:760px){
-  .container,.content{padding:0 10px 36px!important}
-  .nav{margin:0 -10px 20px!important;padding:0 10px!important;overflow-x:auto!important}
-  .nav button{min-width:135px!important;min-height:50px!important;padding:10px 12px!important;font-size:11px!important}
+tbody tr:nth-child(even) td{background:#fbfbfc!important}
+tbody tr:hover td{background:#fffbea!important}
+tbody tr:first-child td{background:linear-gradient(90deg,#fff8d9,#fff 72%)!important}
+tbody tr:first-child td:first-child{box-shadow:inset 5px 0 0 #f3c800!important}
+.rank{font-family:"Arial Narrow","Roboto Condensed","Helvetica Neue",Arial,sans-serif!important;font-size:22px!important;font-weight:1000!important;color:#111318!important}
+.driver-link{color:#111318!important;font-family:"Arial Narrow","Roboto Condensed","Helvetica Neue",Arial,sans-serif!important;font-size:17px!important;font-weight:1000!important;text-decoration:none!important}
+.hlrn-hosted-driver-photo-link{display:inline-flex!important;align-items:center!important;gap:10px!important;color:#111318!important;text-decoration:none!important;font-family:"Arial Narrow","Roboto Condensed","Helvetica Neue",Arial,sans-serif!important;font-size:17px!important;font-weight:1000!important;text-transform:uppercase!important}
+.hlrn-hosted-driver-photo{display:block!important;width:54px!important;height:62px!important;flex:0 0 54px!important;object-fit:contain!important;object-position:center bottom!important;filter:drop-shadow(0 3px 6px rgba(0,0,0,.12))!important}
+.car-number-cell{font-weight:1000!important;color:#111318!important}
+@media(max-width:700px){
+  .container,.content{padding:10px 8px 24px!important}
+  .nav{gap:16px!important;overflow-x:auto!important;flex-wrap:nowrap!important}
+  .nav button{flex:0 0 auto!important;white-space:nowrap!important;font-size:14px!important}
+  .section-title{font-size:24px!important}
+  table{min-width:860px!important}
 }
 `;
   const rescue=`<style id="HLRN_HOSTED_FRAME_RESCUE_V6">
@@ -468,14 +370,15 @@ html,body,.hosted-hub{background:#fff!important;color:#111214!important;height:a
 .hosted-loading{background:#fff!important;color:#111214!important;min-height:56px!important}
 </style>`;
   const tag='<style id="HLRN_STATIC_LIGHT_INNER">'+css+'</style>'+rescue;
-  return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'
-<style id="HLRN_HOSTED_MATCH_SERIES_20260930">
+  return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'</head>') : tag+markup;
+}
+</script>
+
+<style id="HLRN_HOSTED_MATCH_SERIES_SAFE_20260930">
 :root{
-  --host-accent:#ffd400;
+  --host-yellow:#ffd400;
   --host-ink:#111214;
-  --host-muted:#6d7278;
   --host-line:#d8dade;
-  --host-soft:#f4f5f6;
   --host-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
   --host-body:"Inter","Segoe UI",Arial,sans-serif;
 }
@@ -515,7 +418,6 @@ html,body,.hosted-hub{
   font-size:14px!important;
   font-style:normal!important;
   font-weight:800!important;
-  letter-spacing:.01em!important;
   text-transform:uppercase!important;
 }
 .hosted-hub-tab:hover,
@@ -533,7 +435,7 @@ html,body,.hosted-hub{
   right:16px!important;
   bottom:0!important;
   height:4px!important;
-  background:var(--host-accent)!important;
+  background:var(--host-yellow)!important;
 }
 .hosted-hub-stage{
   background:#fff!important;
@@ -541,7 +443,7 @@ html,body,.hosted-hub{
 }
 .hosted-loading{
   background:#fff!important;
-  color:#777c82!important;
+  color:#73787e!important;
 }
 @media(max-width:760px){
   .hosted-hub-tabs{
@@ -558,12 +460,8 @@ html,body,.hosted-hub{
   .hosted-hub-tab strong{font-size:12px!important}
 }
 </style>
-
-</head>') : tag+markup;
-}
-</script>
 </head>
-<body>
+<body class="nascar-hosted-page">
 <div class="hosted-hub">
   <nav class="hosted-hub-tabs" aria-label="Hosted Racing sections">
     <button class="hosted-hub-tab active" data-hosted-tab="racing">
@@ -664,10 +562,28 @@ async function linkHostedDriverNames(key){
       const url=rec&&system.profileUrl?system.profileUrl(rec):null;
       if(url){
         const a=doc.createElement("a");
-        a.href=url;a.target="_top";a.textContent=rec.displayName||rec.name||matched;
+        a.href=url;a.target="_top";
         a.dataset.hlrnDriverLinked="1";
         a.title="View "+(rec.displayName||rec.name||matched)+"'s HLRN driver profile";
-        a.style.color="inherit";a.style.textDecoration="none";a.style.borderBottom="1px solid rgba(227,24,55,.45)";
+        const inRankings=!!node.parentElement?.closest?.("#rankingsResults");
+        if(inRankings){
+          a.className="hlrn-hosted-driver-photo-link";
+          const src=system.photoUrl?system.photoUrl(rec,"cutout"):"";
+          if(src){
+            const img=doc.createElement("img");
+            img.src=src;img.alt="";img.loading="lazy";img.decoding="async";
+            img.className="hlrn-hosted-driver-photo";
+            img.onerror=()=>img.remove();
+            a.appendChild(img);
+          }
+          const span=doc.createElement("span");
+          span.textContent=rec.displayName||rec.name||matched;
+          a.appendChild(span);
+        }else{
+          a.textContent=rec.displayName||rec.name||matched;
+          a.style.borderBottom="1px solid rgba(227,24,55,.45)";
+        }
+        a.style.color="inherit";a.style.textDecoration="none";
         frag.appendChild(a);
       }else frag.appendChild(doc.createTextNode(matched));
       last=nameIndex+matched.length;
@@ -729,18 +645,209 @@ function installHostedResize(key){
     }
   }catch(e){}
 }
+
+const HLRN_HOSTED_MATCH_SERIES_CSS = `
+:root{
+  --host-yellow:#ffd400;
+  --host-ink:#111214;
+  --host-line:#d8dade;
+  --host-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --host-body:"Inter","Segoe UI",Arial,sans-serif;
+}
+html,body{
+  background:#fff!important;
+  color:var(--host-ink)!important;
+  font-family:var(--host-body)!important;
+}
+body{
+  overflow-x:hidden!important;
+}
+.container,.content{
+  width:100%!important;
+  max-width:1500px!important;
+  margin:0 auto!important;
+  padding:0 28px 48px!important;
+  background:#fff!important;
+  color:var(--host-ink)!important;
+}
+.header,.top-grid,.hosted-ticker{
+  display:none!important;
+}
+.nav{
+  display:flex!important;
+  gap:0!important;
+  margin:0 -28px 28px!important;
+  padding:0 28px!important;
+  border:0!important;
+  border-bottom:1px solid var(--host-line)!important;
+  background:#fff!important;
+  box-shadow:none!important;
+}
+.nav button{
+  min-height:58px!important;
+  padding:13px 20px 10px!important;
+  border:0!important;
+  border-right:1px solid #eceeef!important;
+  border-radius:0!important;
+  background:#fff!important;
+  color:#6f747a!important;
+  font-family:var(--host-display)!important;
+  font-size:14px!important;
+  font-style:normal!important;
+  font-weight:800!important;
+  text-transform:uppercase!important;
+  box-shadow:none!important;
+}
+.nav button:first-child{border-left:1px solid #eceeef!important}
+.nav button:hover,.nav button.active{
+  position:relative!important;
+  background:#f7f7f7!important;
+  color:#111!important;
+}
+.nav button.active:after{
+  content:""!important;
+  position:absolute!important;
+  left:16px!important;
+  right:16px!important;
+  bottom:0!important;
+  height:4px!important;
+  background:var(--host-yellow)!important;
+}
+.section{
+  margin:0 0 24px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:#fff!important;
+  box-shadow:none!important;
+}
+.section-title{
+  margin:0 0 17px!important;
+  padding:0 0 13px!important;
+  border:0!important;
+  border-bottom:2px solid #17191b!important;
+  background:#fff!important;
+  color:#111!important;
+  font-family:var(--host-display)!important;
+  font-size:clamp(30px,3.5vw,46px)!important;
+  line-height:.92!important;
+  font-style:normal!important;
+  font-weight:900!important;
+  letter-spacing:-.025em!important;
+  text-transform:uppercase!important;
+}
+.table-wrap{
+  width:100%!important;
+  overflow:auto!important;
+  border:0!important;
+  border-top:1px solid #cfd2d5!important;
+  background:#fff!important;
+}
+table{
+  width:100%!important;
+  min-width:1000px!important;
+  border-collapse:collapse!important;
+  border-spacing:0!important;
+  background:#fff!important;
+  color:#111!important;
+}
+thead th,th{
+  position:static!important;
+  top:auto!important;
+  height:42px!important;
+  padding:10px 12px!important;
+  border:0!important;
+  border-bottom:2px solid #17191b!important;
+  background:#f3f4f5!important;
+  color:#363a3e!important;
+  font-family:var(--host-display)!important;
+  font-size:11px!important;
+  font-weight:800!important;
+  letter-spacing:.035em!important;
+  text-align:center!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+}
+tbody td,td{
+  height:56px!important;
+  padding:11px 12px!important;
+  border:0!important;
+  border-bottom:1px solid #dedfe1!important;
+  background:#fff!important;
+  color:#25282b!important;
+  font-family:var(--host-body)!important;
+  font-size:12px!important;
+  line-height:1.25!important;
+  font-weight:600!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+}
+tbody tr:nth-child(even) td{background:#fafafa!important}
+tbody tr:hover td{background:#f1f2f3!important;color:#111!important}
+.rank{
+  color:#111!important;
+  font-family:var(--host-display)!important;
+  font-size:18px!important;
+  font-weight:900!important;
+}
+.driver-link{
+  color:#111!important;
+  font-family:var(--host-display)!important;
+  font-size:16px!important;
+  font-weight:800!important;
+  text-transform:uppercase!important;
+}
+.car-number-cell{
+  color:#111!important;
+  font-family:var(--host-display)!important;
+  font-size:16px!important;
+  font-weight:900!important;
+}
+.card,.panel,.box,.stat,.stat-card,.record-card,.comparison-card{
+  background:#fff!important;
+  color:#111!important;
+  border-color:#d9dde1!important;
+  box-shadow:none!important;
+}
+@media(max-width:760px){
+  .container,.content{padding:0 10px 36px!important}
+  .nav{margin:0 -10px 20px!important;padding:0 10px!important;overflow-x:auto!important}
+  .nav button{min-width:135px!important;min-height:50px!important;padding:10px 12px!important;font-size:11px!important}
+}
+`;
+
+function applyHostedSeriesMatch(frame){
+  try{
+    const doc=frame&&frame.contentDocument;
+    if(!doc||!doc.head)return;
+    let style=doc.getElementById("HLRN_HOSTED_MATCH_SERIES_CHILD_20260930");
+    if(!style){
+      style=doc.createElement("style");
+      style.id="HLRN_HOSTED_MATCH_SERIES_CHILD_20260930";
+      doc.head.appendChild(style);
+    }
+    style.textContent=HLRN_HOSTED_MATCH_SERIES_CSS;
+  }catch(e){}
+}
+
 function loadHostedTab(key){
   const frame=hostedFrame(key);
   const loading=document.getElementById("hostedLoading");
   if(!frame) return;
   const finish=()=>{
     hostedLoaded[key]=true;
+    applyHostedSeriesMatch(frame);
     if(loading) loading.style.display="none";
     installHostedResize(key);
     queueHostedDriverLinks(key);
     setTimeout(()=>{resizeHostedFrame(key);queueHostedDriverLinks(key)},80);
     setTimeout(()=>{resizeHostedFrame(key);queueHostedDriverLinks(key)},350);
     setTimeout(()=>{resizeHostedFrame(key);queueHostedDriverLinks(key)},900);
+    if(key==="racing" && !frame.dataset.hlrnNascarDefault){
+      frame.dataset.hlrnNascarDefault="1";
+      try{
+        if(typeof frame.contentWindow?.showPage==="function") frame.contentWindow.showPage("rankings");
+      }catch(e){}
+    }
     try{
       const doc=frame.contentDocument;
       if(doc&&doc.body&&!frame.__hlrnHostedDriverLinks){
