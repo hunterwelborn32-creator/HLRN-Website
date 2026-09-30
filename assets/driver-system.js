@@ -9,7 +9,7 @@
   "use strict";
   if(global.HLRNDrivers && global.HLRNDrivers.version) return;
 
-  const VERSION="20260929v2";
+  const VERSION="20260930v3";
   const script=document.currentScript;
   let root;
   try{ root=new URL("../",script&&script.src?script.src:location.href); }
@@ -52,10 +52,11 @@
   function register(driver){
     const raw=String(driver.name||"").trim();
     const display=cleanDisplay(raw);
-    const rec={...driver,rawName:raw,displayName:display,url:absolute(driver.url||("drivers/"+driver.slug+"/"))};
+    const aliases=Array.isArray(driver.aliases)?driver.aliases.map(v=>String(v||"").trim()).filter(Boolean):[];
+    const rec={...driver,aliases,rawName:raw,displayName:display,url:absolute(driver.url||("drivers/"+driver.slug+"/"))};
     records.push(rec);
     bySlug.set(String(driver.slug||"").toLowerCase(),rec);
-    [raw,display,commaName(raw),commaName(display)].forEach(n=>{ const k=normalize(n); if(k&&!byName.has(k)) byName.set(k,rec); });
+    [raw,display,commaName(raw),commaName(display),...aliases,...aliases.map(commaName)].forEach(n=>{ const k=normalize(n); if(k&&!byName.has(k)) byName.set(k,rec); });
     const photo=String(driver.photoSlug||"").replace(/-/g," ");
     if(photo){const k=normalize(photo); if(k&&!byName.has(k)) byName.set(k,rec);}
     Object.values(driver.ids||{}).forEach(id=>{const k=String(id||"").trim();if(k)byId.set(k,rec);});
@@ -83,6 +84,7 @@
     records.forEach(r=>{
       if(r.rawName){names.push(r.rawName);names.push(commaName(r.rawName));}
       if(r.displayName&&r.displayName!==r.rawName){names.push(r.displayName);names.push(commaName(r.displayName));}
+      (r.aliases||[]).forEach(alias=>{names.push(alias);names.push(commaName(alias));});
     });
     const unique=[...new Set(names)].sort((a,b)=>b.length-a.length);
     nameRegex=unique.length?new RegExp("(^|[^A-Za-z0-9])("+unique.map(escRe).join("|")+")(?![A-Za-z0-9])","gi"):null;
@@ -109,7 +111,7 @@
       if(!rec){
         const exact=String(a.textContent||"").trim();
         const candidate=resolve(exact);
-        if(candidate&&(normalize(exact)===normalize(candidate.rawName)||normalize(exact)===normalize(candidate.displayName))) rec=candidate;
+        if(candidate&&(normalize(exact)===normalize(candidate.rawName)||normalize(exact)===normalize(candidate.displayName)||(candidate.aliases||[]).some(alias=>normalize(exact)===normalize(alias)))) rec=candidate;
       }
       if(rec){
         a.href=rec.url;
