@@ -128,6 +128,258 @@ function installThemeReadabilityLayer(){
       .blue,.accent-blue,.hlrn-blue,.series-blue
     ){color:#216ac0!important}
 
+    /* DAY MODE PAGE-SPECIFIC CLEANUP V1 */
+
+    /* Home */
+    html[data-hlrn-theme="light"] body.rd-v5.home-v8-page{
+      background:#fff!important;
+      color:#11161c!important;
+    }
+    html[data-hlrn-theme="light"] :where(
+      .h9-scorestrip,.h9-series-header,.h9-desk-card,.h9-result-card,
+      .h9-race-action,.h9-recap .hlrn-recap-card-foot,.h9-footer
+    ){
+      background:#fff!important;
+      background-image:none!important;
+      color:#11161c!important;
+      border-color:#d9dee5!important;
+    }
+    html[data-hlrn-theme="light"] :where(
+      .h9-scorestrip,.h9-series-header,.h9-footer
+    ) :where(strong,b,span,a,div){
+      color:#11161c!important;
+    }
+    html[data-hlrn-theme="light"] .h9-scorestrip{
+      border-top-color:#e31837!important;
+      border-bottom:1px solid #d9dee5!important;
+    }
+
+    /* Newsroom */
+    html[data-hlrn-theme="light"] body.newsroom-v10{
+      --nr-black:#fff;
+      --nr-black2:#fff;
+      --nr-panel:#fff;
+      --nr-panel2:#f6f7f9;
+      --nr-line:#d9dee5;
+      --nr-muted:#68727e;
+      --nr-paper:#fff;
+      --nr-ink:#11161c;
+      background:#fff!important;
+      color:#11161c!important;
+    }
+    html[data-hlrn-theme="light"] :where(
+      .nr-newsroom,.nr-mast,.nr-main,.nr-desk-card,.nr-category-wrap,
+      .nr-section-head,.nr-side-story,.nr-recap-center,.nr-recap-feature,
+      .nr-recap-toolbar,.nr-recap-grid,.nr-shortcuts,.nr-feed,.nr-footer-note
+    ){
+      background:#fff!important;
+      background-image:none!important;
+      color:#11161c!important;
+      border-color:#d9dee5!important;
+    }
+    html[data-hlrn-theme="light"] :where(
+      .nr-sub,.nr-lead-meta,.nr-recap-count,.nr-footer-note
+    ){color:#59636f!important}
+
+    /* Race Preview */
+    html[data-hlrn-theme="light"] body.pv-page{
+      --pv-bg:#fff;
+      --pv-panel:#fff;
+      --pv-panel2:#f6f7f9;
+      --pv-line:#d9dee5;
+      --pv-text:#11161c;
+      --pv-muted:#68727e;
+      background:#fff!important;
+      color:#11161c!important;
+    }
+    html[data-hlrn-theme="light"] :where(
+      .pv-mast,.pv-count,.pv-main,.pv-race-card,.pv-race-meta,.pv-facts,.pv-fact,
+      .pv-section,.pv-card,.pv-previous,.pv-panel,.pv-watch,.pv-tip,
+      .pv-history-item,.pv-flow a,.pv-row
+    ){
+      background:#fff!important;
+      background-image:none!important;
+      color:#11161c!important;
+      border-color:#d9dee5!important;
+    }
+    html[data-hlrn-theme="light"] :where(
+      .pv-mast p,.pv-count-head span,.pv-count-grid span,.pv-count-meta,
+      .pv-row small,.pv-row .rank,.pv-watch .eyebrow,.pv-watch-reason,
+      .pv-tip small,.pv-tip p,.pv-history-item small,.pv-flow small
+    ){color:#5d6874!important}
+    html[data-hlrn-theme="light"] .pv-tab{
+      background:#fff!important;
+      color:#252c34!important;
+      border-color:#cfd5dc!important;
+    }
+
+    /* Results */
+    html[data-hlrn-theme="light"] body.rc-page{
+      --rc-bg:#fff;
+      --rc-panel:#fff;
+      --rc-panel2:#f6f7f9;
+      --rc-line:#d9dee5;
+      --rc-text:#11161c;
+      --rc-muted:#68727e;
+      background:#fff!important;
+      color:#11161c!important;
+    }
+    html[data-hlrn-theme="light"] :where(
+      .rc-mast,.rc-next,.rc-main,.rc-stat,.rc-schedule-row,.rc-report,
+      .rc-report-stat,.rc-table-shell,.rc-highlight,.rc-recorder,.rc-recorder-card,
+      .rc-flow a
+    ){
+      background:#fff!important;
+      background-image:none!important;
+      color:#11161c!important;
+      border-color:#d9dee5!important;
+    }
+    html[data-hlrn-theme="light"] .rc-schedule-row.next{background:#f7f9fb!important}
+    html[data-hlrn-theme="light"] .rc-tab,
+    html[data-hlrn-theme="light"] .rc-back{
+      background:#fff!important;
+      color:#252c34!important;
+      border-color:#cfd5dc!important;
+    }
+
+    /* Teams */
+    html[data-hlrn-theme="light"] body.tc-page{
+      --tc-bg:#fff;
+      --tc-panel:#fff;
+      --tc-panel2:#f6f7f9;
+      --tc-line:#d9dee5;
+      --tc-text:#11161c;
+      --tc-muted:#68727e;
+      background:#fff!important;
+      color:#11161c!important;
+    }
+    html[data-hlrn-theme="light"] :where(
+      .tc-mast,.tc-summary,.tc-main,.tc-leader-card,.tc-stat-card,.tc-section,
+      .tc-team-card,.tc-compare,.tc-compare-side,.tc-profile-hero,.tc-panel,
+      .tc-driver,.tc-form-race,.tc-table-shell
+    ){
+      background:#fff!important;
+      background-image:none!important;
+      color:#11161c!important;
+      border-color:#d9dee5!important;
+    }
+    html[data-hlrn-theme="light"] .tc-select,
+    html[data-hlrn-theme="light"] .tc-back,
+    html[data-hlrn-theme="light"] .tc-tab{
+      background:#fff!important;
+      color:#252c34!important;
+      border-color:#cfd5dc!important;
+    }
+    html[data-hlrn-theme="light"] :where(
+      .tc-team-gap,.tc-team-points,.tc-summary-main p,.tc-summary-main small,
+      .tc-summary-stats span,.tc-profile-copy,.tc-panel-title span,.tc-driver span
+    ){color:#59636f!important}
+
+    /* My HLRN */
+    html[data-hlrn-route="my-hlrn"][data-hlrn-theme="light"] body{
+      --myh-bg:#fff;
+      --myh-panel:#fff;
+      --myh-panel2:#f6f7f9;
+      --myh-line:#d9dee5;
+      --myh-paper:#11161c;
+      --myh-muted:#68727e;
+      background:#fff!important;
+      color:#11161c!important;
+    }
+    html[data-hlrn-route="my-hlrn"][data-hlrn-theme="light"] :where(
+      .myh-page,.myh-gate,.myh-gate-card,.myh-hero,.myh-overview,.myh-section,
+      .myh-champ,.myh-champ-stats,.myh-next,.myh-result,.myh-trend-grid>div,
+      .myh-track,.myh-hosted>div,.myh-penalty,.myh-quick a
+    ){
+      background:#fff!important;
+      background-image:none!important;
+      color:#11161c!important;
+      border-color:#d9dee5!important;
+    }
+    html[data-hlrn-route="my-hlrn"][data-hlrn-theme="light"] :where(
+      .myh-champ-top b,.myh-champ-rank strong,.myh-champ-stats b,
+      .myh-next-body h3,.myh-track-rank,.myh-quick a
+    ){color:#11161c!important}
+
+    /* Broadcast Center */
+    html[data-hlrn-theme="light"] body.bc-page{
+      --bc-bg:#fff;
+      --bc-panel:#fff;
+      --bc-panel2:#f6f7f9;
+      --bc-line:#d9dee5;
+      --bc-text:#11161c;
+      --bc-muted:#68727e;
+      background:#fff!important;
+      color:#11161c!important;
+    }
+    html[data-hlrn-theme="light"] :where(
+      .bc-mast,.bc-network-card,.bc-main,.bc-player-card,.bc-channel-panel,
+      .bc-sidecard,.bc-rail,.bc-section,.bc-replay-card,.bc-channel-panel-static,
+      .bc-person,.bc-flow-card,.bc-footer
+    ){
+      background:#fff!important;
+      background-image:none!important;
+      color:#11161c!important;
+      border-color:#d9dee5!important;
+    }
+    html[data-hlrn-theme="light"] :where(.bc-tab,.bc-filter){
+      background:#fff!important;
+      color:#252c34!important;
+      border-color:#cfd5dc!important;
+    }
+
+    /* Race Intelligence */
+    html[data-hlrn-route="race-intelligence"][data-hlrn-theme="light"] body{
+      --bg:#fff;
+      --panel:#fff;
+      --panel2:#f6f7f9;
+      --line:#d9dee5;
+      --text:#11161c;
+      --muted:#68727e;
+      background:#fff!important;
+      color:#11161c!important;
+    }
+    html[data-hlrn-route="race-intelligence"][data-hlrn-theme="light"] :where(
+      .shell,.header,.nascar-ticker,.live-control-strip,.live-control-cell,
+      .cc-command-deck,.cc-command-stat,.cc-meter-band,.cc-meter-card,.hlrn-live-rail,
+      .hero,.toolbar,.intel-card,.category-deep,.deep-head,.deep-box,.deep-metric,
+      .story-section,.story-card,.detail-wrap,.detail-head,.stat,.detail-box,.footer
+    ){
+      background:#fff!important;
+      background-image:none!important;
+      color:#11161c!important;
+      border-color:#d9dee5!important;
+    }
+    html[data-hlrn-route="race-intelligence"][data-hlrn-theme="light"] :where(
+      .brand-sub,.live-control-label,.cc-command-sub,.cc-meter-head,
+      .deep-summary,.story-sub,.detail-category,.stat-label
+    ){color:#59636f!important}
+
+    /* Live / Rules / Store / Admin / Drivers / Adventures — shared light surfaces */
+    html[data-hlrn-theme="light"] :where(
+      .brandbar,.event-shell,.event-head,.status-box,.session-flow,.metric-strip,.metric,
+      .rc-leader-hero,.rc-front-battle,.live-ticker-bar,.standby,.session-tools,
+      .mobile-live-command,.race-layout,.tracker-card,.race-pulse-stat,.rc2-summary,
+      .rc2-stat,.rc2-banner,.rc-flag-summary,.rc-flag-stat,.rc-capture-strip,
+      .archive-head,.timeline-toolbar,.report-toolbar,.race-replay,.report-box,.json-box,
+      .rc-opsbar-redesign,.quick-card,.notice,.rc-rule-tools,.tab-content,.section-body,
+      .rule,.penalties,.penalty,.escalation,
+      .mh-network,.mh-dashboard,.mh-dash-card,.mh-featured,.mh-mini,.mh-filterbar,
+      .notice,.product,.product-info,.hlrn-shop-utility,.hlrn-shop-mainbar,
+      .hlrn-shop-nav,.hlrn-shop-promo,.hlrn-shop-hero-box,.hlrn-shop-cat,
+      .admin-page,.team-status,.team-hero,.team-summary,.team-tools,.team-closing,
+      .closing-panel,.member-card,.modal-card,
+      .driver-page,.driver-heading,.driver-command,.driver-metrics,.driver-metric,
+      .roster-tools,.driver-card,.driver-info,.driver-stats,.mini-stat,.profile-shell,
+      .profile-hero,.profile-stat,.profile-insight,.history-wrap,
+      .series-intro,.intro-copy,.episode-tile,.episode-details,.about-show,.foot
+    ){
+      background-color:#fff!important;
+      background-image:none!important;
+      color:#11161c!important;
+      border-color:#d9dee5!important;
+    }
+
     html[data-hlrn-theme="dark"] body{
       background:#07090d!important;
       color:#f7f8fa!important;
