@@ -150,9 +150,9 @@
   </nav>
   <main class="viewport">
     <div class="cn-series-ribbon"><i></i><span id="cnRibbonText">Hosted Racing Active</span></div>
-    <iframe class="page active" id="page-hosted" title="HLRN Hosted Racing" scrolling="auto" src="hosted.html?v=20260930heightreport1"></iframe>
-    <iframe class="page" id="page-sunday" loading="lazy" title="HLRN Sunday Championship" scrolling="auto" src="sunday.html?v=20260930heightreport1"></iframe>
-    <iframe class="page" id="page-monday" loading="lazy" title="HLRN Monday Championship" scrolling="auto" src="monday.html?v=20260930heightreport1"></iframe>
+    <iframe class="page active" id="page-hosted" title="HLRN Hosted Racing" scrolling="auto" src="hosted.html?v=20260930nascar1"></iframe>
+    <iframe class="page" id="page-sunday" loading="lazy" title="HLRN Sunday Championship" scrolling="auto" src="sunday.html?v=20260930nascar1"></iframe>
+    <iframe class="page" id="page-monday" loading="lazy" title="HLRN Monday Championship" scrolling="auto" src="monday.html?v=20260930nascar1"></iframe>
   </main>
 </div>
 <script>
@@ -285,6 +285,236 @@ main{
 })();
 </script>
 <style id="HLRN_FINAL_CLEAN_LIGHT_V4">:root{--hlrn-red:#d71920;--hlrn-green:#47a900;--hlrn-yellow:#d7a900;--hlrn-ink:#111214;--hlrn-line:#d8dde2;--hlrn-soft:#f5f6f7}html,body,.hlrn,.viewport{background:#fff!important;color:#111214!important;min-height:0!important;height:auto!important;overflow:visible!important}body{overflow-x:hidden!important}.hlrn{display:block!important;background:#fff!important}.topline,.titlebar{position:relative!important;top:auto!important;background:#fff!important;background-image:none!important;color:#111214!important;border-color:#d8dde2!important;box-shadow:none!important}.titlebar:after,.hlrn:before{display:none!important}.titlebar *,.topline *{color:#111214!important;text-shadow:none!important}.tabs{position:relative!important;top:auto!important;background:#fff!important;border-color:#d8dde2!important;box-shadow:none!important}.tab,.tab.active,.tab:hover{background:#fff!important;background-image:none!important;color:#111214!important;border-color:#d8dde2!important;box-shadow:none!important;transform:none!important}.tab:before{background:#c9ced3!important}.tab.active:after{display:block!important;height:3px!important}.tab[data-page="hosted"] strong{color:#111214!important}.tab[data-page="sunday"] strong{color:#d71920!important}.tab[data-page="monday"] strong{color:#47a900!important}.viewport{width:100%!important;height:auto!important;min-height:0!important;overflow:visible!important;border:0!important}iframe.page{display:none!important;width:100%!important;height:1px;min-height:0!important;max-height:none!important;border:0!important;background:#fff!important;overflow:hidden!important}iframe.page.active{display:block!important}</style>
+<script id="HLRN_FINAL_CLEAN_LIGHT_ENGINE_V4">
+(function(){
+  const MAX_DEPTH=7;
+  let resizeTimer=0;
+  const INNER_CSS=`
+    :root{color-scheme:light!important;--f-red:#d71920;--f-green:#47a900;--f-yellow:#c89c00;--f-ink:#111214;--f-line:#d8dde2;--f-soft:#f5f6f7}
+    html,body{margin-top:0!important;margin-bottom:0!important;padding-bottom:0!important;background:#fff!important;color:#111214!important;min-height:0!important;height:auto!important;max-height:none!important;overflow:visible!important;color-scheme:light!important}
+    body:before,body:after{display:none!important}
+    /* Flatten all legacy dark surfaces. */
+    body div,body section,body article,body aside,body main,body header,body footer,body nav,body form,
+    body p,body span,body small,body strong,body b,body i,body label,body li,body dt,body dd{
+      background-color:transparent!important;background-image:none!important;box-shadow:none!important;text-shadow:none!important
+    }
+    body div:before,body div:after,body section:before,body section:after,body article:before,body article:after,
+    body header:before,body header:after,body footer:before,body footer:after{
+      background-color:transparent!important;background-image:none!important;box-shadow:none!important
+    }
+    body,body *{color:#111214!important;text-shadow:none!important}
+    a{color:#111214!important}
+    h1,h2,h3,h4,h5,h6,.title,.driver-name,.leader-name,.winner-name,.record-driver,.record-value,.stat-value,.metric-value,.points,.num,.carno{color:#111214!important;text-shadow:none!important}
+    /* Keep only meaningful text accents. */
+    .up,.gain,.positive,.move-up,.green{color:#47a900!important}
+    .down,.loss,.negative,.move-down,.red,.warning{color:#d71920!important}
+    .yellow,.accent,.leader-highlight{color:#a98000!important}
+    /* Tabs: white, outlined, no dark fills and never sticky. */
+    .tabs,.nav,.tab-bar,.inner-tabs,.league-tabs,.hosted-hub-tabs,.rr-tabs,
+    #sundayDirectRaceReport .tabs,#mondayDirectRaceReport .tabs{
+      position:relative!important;top:auto!important;background:#fff!important;background-image:none!important;border-color:#d8dde2!important;box-shadow:none!important;backdrop-filter:none!important
+    }
+    button,.tab,.tab-btn,.inner-tab,.hosted-hub-tab,.league-btn,.rr-tab,.nav button{
+      background:#fff!important;background-image:none!important;color:#111214!important;border-color:#d8dde2!important;box-shadow:none!important;text-shadow:none!important
+    }
+    button:hover,.tab:hover,.tab-btn:hover,.inner-tab:hover,.hosted-hub-tab:hover,.league-btn:hover,.rr-tab:hover,.nav button:hover,
+    button.active,.tab.active,.tab-btn.active,.inner-tab.active,.hosted-hub-tab.active,.league-btn.active,.rr-tab.active,.nav button.active{
+      background:#f5f6f7!important;color:#111214!important;border-color:#c7cdd2!important;transform:none!important
+    }
+    /* Tables stay white and readable. */
+    table{background:#fff!important;background-image:none!important;color:#111214!important;border-collapse:collapse!important}
+    thead,thead tr,th,thead th{position:static!important;top:auto!important;background:#f1f3f5!important;background-image:none!important;color:#111214!important;border-color:#d8dde2!important;box-shadow:none!important}
+    tbody,tbody tr,td,tbody td{background:#fff!important;background-image:none!important;color:#111214!important;border-color:#e0e3e6!important;box-shadow:none!important}
+    tbody tr:nth-child(even) td{background:#fafbfc!important}
+    tbody tr:hover td{background:#f4f6f7!important}
+    /* Card systems become lines on white, not blocks. */
+    .card,.panel,.box,.tile,.stat,.stat-card,.metric-card,.summary-card,.content-card,.record-card,.leader-card,
+    .driver-card,.story-block,.leader-card,.intel,.quote,.mini,.finish-list,.caution-card,.moment-card,.event-row,
+    .last-race-card,.cc-card,.cc-battle-item,.cc-spotlight-card,.matchup-card,.comparison-card,.prime-edge,
+    .incident-streak-card,.incident-average-table,.watch,.feature,.feature-box,.callout,.result-card,.overview-card{
+      background:#fff!important;background-image:none!important;color:#111214!important;border-color:#d8dde2!important;box-shadow:none!important;text-shadow:none!important
+    }
+    /* INCIDENT WATCH — completely remove the black ranking slabs. */
+    .incident-container{max-width:none!important}
+    .incident-title{margin-bottom:28px!important;text-align:left!important}
+    .incident-title h2{color:#d71920!important}
+    .incident-red-line{margin:12px 0 0!important;background:#d71920!important}
+    .incident-section-label{color:#111214!important;border-bottom:1px solid #d8dde2!important;padding-bottom:10px!important}
+    .incident-top10{gap:0!important;border-top:1px solid #d8dde2!important}
+    .incident-row,.incident-row.rank-1,.incident-row.rank-2,.incident-row.rank-3{
+      min-height:70px!important;padding:12px 6px!important;background:#fff!important;background-image:none!important;
+      border:0!important;border-bottom:1px solid #d8dde2!important;border-left:4px solid #d8dde2!important;
+      box-shadow:none!important;transform:none!important;animation:none!important
+    }
+    .incident-row.rank-1{border-left-color:#d71920!important}.incident-row.rank-2{border-left-color:#c89c00!important}.incident-row.rank-3{border-left-color:#b36b28!important}
+    .incident-row:hover{background:#fafbfc!important;transform:none!important;box-shadow:none!important}
+    .incident-rank,.incident-row.rank-1 .incident-rank,.incident-row.rank-2 .incident-rank,.incident-row.rank-3 .incident-rank{
+      width:54px!important;height:auto!important;min-height:44px!important;background:transparent!important;border:0!important;color:#111214!important;font-size:20px!important
+    }
+    .incident-driver{padding:0 10px!important}.incident-driver-name{color:#111214!important;background:transparent!important;font-size:18px!important}
+    .incident-driver-label,.incident-row.rank-1 .incident-driver-label,.incident-row.rank-2 .incident-driver-label,.incident-row.rank-3 .incident-driver-label{color:#111214!important}
+    .incident-points strong,.incident-row.rank-1 .incident-points strong{color:#111214!important}.incident-points span{color:#111214!important}
+    .incident-average-section{margin-top:38px!important}.incident-average-table{overflow:visible!important;border:1px solid #d8dde2!important}
+    .incident-average-header,.incident-average-item{background:#fff!important;color:#111214!important;border-color:#d8dde2!important}
+    .incident-average-item:nth-child(even){background:#fafbfc!important}
+    .incident-search{background:#fff!important;color:#111214!important;border-color:#cfd4d9!important;box-shadow:none!important}
+    .incident-search::placeholder{color:#111214!important;opacity:.55!important}
+    .incident-pagination{background:#fff!important;border-color:#d8dde2!important}.incident-pagination button{background:#fff!important;color:#111214!important;border-color:#cfd4d9!important}
+    #incidentAveragePageInfo,.incident-average-note,.incident-average-note strong{color:#111214!important}
+    /* Records / leaderboards: no emoji boxes, no black card headers. */
+    .record-card{min-height:0!important;padding:18px 14px!important}.record-icon{display:none!important}
+    .record-name,.record-driver,.record-sub{color:#111214!important}.record-card:before,.record-card:after{display:none!important}
+    .leader-card{min-height:0!important}.leader-card h3,.leader-name,.leader-value,.leader-sub{color:#111214!important}
+    /* Head-to-head dark edge strips become simple white stat rows. */
+    .prime-edge-board{gap:0!important;border:1px solid #d8dde2!important}
+    .prime-edge{min-height:78px!important;border:0!important;border-right:1px solid #d8dde2!important;background:#fff!important;padding:14px!important}
+    .prime-edge:last-child{border-right:0!important}.prime-edge:before{height:3px!important;background:#d71920!important}
+    .prime-edge-label,.prime-edge-value,.prime-edge-sub{color:#111214!important}
+    .matchup-card{background:#fff!important;border:1px solid #d8dde2!important;box-shadow:none!important}
+    /* Race report panels. */
+    #sundayDirectRaceReport,#mondayDirectRaceReport,#sundayDirectRaceReport .tab-content,#mondayDirectRaceReport .tab-content,
+    #sundayDirectRaceReport .driver-card,#mondayDirectRaceReport .driver-card,#sundayDirectRaceReport .finish-list,#mondayDirectRaceReport .finish-list,
+    #sundayDirectRaceReport table,#mondayDirectRaceReport table{
+      background:#fff!important;background-image:none!important;color:#111214!important;border-color:#d8dde2!important;box-shadow:none!important
+    }
+    /* Remove fixed/minimum heights that created giant empty bottoms. */
+    .container,.wrapper,.shell,.page,.page-wrap,.main,main,.content,.main-content,.content-area,.section,.panel,
+    .hosted-hub,.hosted-hub-stage,.league-hub,.standings-hub,.results-wrap,.race-results,.race-report,.report-section,
+    .table-shell,.table-wrap,.table-container,.standings-wrap,.content-scroll,.scroll-area,.scroll-container{
+      min-height:0!important;max-height:none!important;height:auto!important
+    }
+    .table-shell,.table-wrap,.table-container,.standings-wrap,.results-wrap,.content-scroll,.scroll-area,.scroll-container{overflow:visible!important}
+    .section{padding-bottom:24px!important}
+    .footer{margin-bottom:0!important;padding-bottom:14px!important;background:#fff!important;color:#111214!important;border-color:#d8dde2!important}
+    iframe{background:#fff!important;color-scheme:light!important;min-height:0!important;max-height:none!important;border:0!important}
+  `;
+  function inject(doc){
+    if(!doc||!doc.head) return;
+    let s=doc.getElementById('HLRN_FLAT_LIGHT_V4');
+    if(!s){s=doc.createElement('style');s.id='HLRN_FLAT_LIGHT_V4';doc.head.appendChild(s)}
+    s.textContent=INNER_CSS;
+    stripEmoji(doc);
+    bindDoc(doc);
+  }
+  function stripEmoji(doc){
+    if(!doc||!doc.body) return;
+    const emojiOnly=/^[\s\u2190-\u2BFF\u{1F000}-\u{1FAFF}\uFE0F\u200D]+$/u;
+    doc.querySelectorAll('.record-icon,.incident-streak-icon,.icon-badge,.emoji,.emoji-icon,.stat-icon,.card-icon').forEach(el=>{
+      el.style.setProperty('display','none','important');
+    });
+    [...doc.querySelectorAll('h1,h2,h3,.incident-section-label,.section-title h2,.leader-card h3')].forEach(el=>{
+      for(const node of [...el.childNodes]){
+        if(node.nodeType===3){
+          let t=node.nodeValue||'';
+          // Remove pictographs but keep words/punctuation.
+          t=t.replace(/[\u{1F000}-\u{1FAFF}\u2600-\u27BF]/gu,'').replace(/\uFE0F/g,'');
+          node.nodeValue=t.replace(/^\s+/,'');
+        }else if(node.nodeType===1 && emojiOnly.test((node.textContent||'').trim())){
+          node.style.display='none';
+        }
+      }
+    });
+    // Remove the generated STAT/WINS/TOP5 pills from the earlier patch.
+    doc.querySelectorAll('.icon-badge').forEach(el=>el.remove());
+  }
+  function isVisible(el){
+    try{const cs=el.ownerDocument.defaultView.getComputedStyle(el);return cs.display!=='none'&&cs.visibility!=='hidden'}catch(e){return true}
+  }
+  function measure(doc){
+    if(!doc||!doc.body||!doc.documentElement) return 0;
+    const b=doc.body,de=doc.documentElement;
+    let h=Math.max(b.scrollHeight,b.offsetHeight,de.scrollHeight,de.offsetHeight,0);
+    // scrollHeight can retain legacy minimums; visible-body geometry gives a safer lower target.
+    try{
+      const top=b.getBoundingClientRect().top;
+      let bottom=b.getBoundingClientRect().bottom;
+      [...b.children].forEach(el=>{if(isVisible(el)){const r=el.getBoundingClientRect();bottom=Math.max(bottom,r.bottom)}});
+      const geom=Math.ceil(bottom-top);
+      if(geom>50) h=Math.min(h,geom+2);
+    }catch(e){}
+    return Math.max(80,Math.ceil(h));
+  }
+  function fitFrame(frame,depth){
+    if(!frame||depth>MAX_DEPTH) return;
+    try{
+      frame.setAttribute('scrolling','no');
+      frame.style.setProperty('overflow','hidden','important');
+      frame.style.setProperty('background','#fff','important');
+      frame.style.setProperty('min-height','0','important');
+      frame.style.setProperty('max-height','none','important');
+      const doc=frame.contentDocument;
+      if(!doc||!doc.body) return;
+      inject(doc);
+      doc.documentElement.style.setProperty('height','auto','important');
+      doc.documentElement.style.setProperty('min-height','0','important');
+      doc.body.style.setProperty('height','auto','important');
+      doc.body.style.setProperty('min-height','0','important');
+      doc.body.style.setProperty('overflow','visible','important');
+      [...doc.querySelectorAll('iframe')].forEach(k=>{
+        if(isVisible(k)) fitFrame(k,depth+1);
+      });
+      const h=measure(doc);
+      const cur=parseFloat(frame.style.height)||0;
+      if(Math.abs(cur-h)>3) frame.style.setProperty('height',h+'px','important');
+      if(!frame.__hlrnV4LoadBound){
+        frame.__hlrnV4LoadBound=true;
+        frame.addEventListener('load',()=>{setTimeout(()=>fitFrame(frame,depth),20);setTimeout(()=>fitFrame(frame,depth),250);setTimeout(scheduleFit,650)});
+      }
+    }catch(e){}
+  }
+  function fitAll(){
+    clearTimeout(resizeTimer);
+    try{
+      document.querySelectorAll('iframe.page').forEach(frame=>{
+        if(frame.classList.contains('active')) fitFrame(frame,0);
+      });
+    }catch(e){}
+  }
+  function scheduleFit(){clearTimeout(resizeTimer);resizeTimer=setTimeout(fitAll,70)}
+  function bindDoc(doc){
+    if(!doc||doc.__hlrnV4Bound) return;
+    doc.__hlrnV4Bound=true;
+    doc.addEventListener('click',()=>{setTimeout(scheduleFit,30);setTimeout(scheduleFit,250)},true);
+    doc.addEventListener('input',scheduleFit,true);
+    doc.addEventListener('change',scheduleFit,true);
+    if('ResizeObserver' in window && doc.body){
+      let lock=false;
+      const ro=new ResizeObserver(()=>{if(lock)return;lock=true;setTimeout(()=>{lock=false;scheduleFit()},90)});
+      ro.observe(doc.body);
+      doc.__hlrnV4RO=ro;
+    }
+  }
+  function init(){
+    inject(document);
+    document.querySelectorAll('iframe').forEach(f=>{
+      if(!f.__hlrnV4RootLoad){f.__hlrnV4RootLoad=true;f.addEventListener('load',()=>{setTimeout(scheduleFit,30);setTimeout(scheduleFit,400)})}
+    });
+    fitAll();setTimeout(fitAll,180);setTimeout(fitAll,700);setTimeout(fitAll,1600);
+  }
+  document.addEventListener('click',()=>{setTimeout(scheduleFit,20);setTimeout(scheduleFit,300)},true);
+  window.addEventListener('resize',scheduleFit);
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true}); else init();
+  window.addEventListener('load',()=>{setTimeout(init,40);setTimeout(fitAll,900)},{once:true});
+})();
+</script>
+<style id="HLRN_V5_VISIBLE_CONTENT_RESCUE">iframe.page.active{display:block!important;background:#fff!important;min-height:180px!important}</style>
+<script id="HLRN_V5_PARENT_RESIZE_RESCUE">
+(function(){
+  function resizeTop(){
+    document.querySelectorAll('iframe.page.active').forEach(frame=>{
+      try{
+        const doc=frame.contentDocument;
+        if(!doc||!doc.body||!doc.documentElement)return;
+        const h=Math.max(doc.body.scrollHeight||0,doc.documentElement.scrollHeight||0,180);
+        frame.style.setProperty('height',Math.ceil(h+2)+'px','important');
+      }catch(e){}
+    });
+  }
+  document.addEventListener('click',()=>{setTimeout(resizeTop,80);setTimeout(resizeTop,450)},true);
+  window.addEventListener('load',()=>{setTimeout(resizeTop,150);setTimeout(resizeTop,900)},{once:true});
+  setTimeout(resizeTop,300);setTimeout(resizeTop,1200);
+})();
+</script>
 <style id="HLRN_REMOVE_BLACK_HEADER_BARS_OUTER">html,body,.hlrn,.viewport,.page{background:#f6f7f8!important;color:#111214!important}.viewport,.page{background:#fff!important}</style>
 <script id="HLRN_REMOVE_BLACK_HEADER_BARS_SCRIPT">
 (function(){
@@ -1475,122 +1705,6 @@ main{
   document.addEventListener('click',()=>setTimeout(run,120),true);
 })();
 </script>
-
-
-
-<style id="HLRN_CHILD_REPORTED_WHOLE_PAGE_SCROLL_20260930">
-html,body{
-  width:100%!important;
-  height:auto!important;
-  min-height:100%!important;
-  max-height:none!important;
-  margin:0!important;
-  overflow-x:hidden!important;
-  overflow-y:auto!important;
-  background:#fff!important;
-}
-body.nascar-standings-hub{
-  height:auto!important;
-  min-height:100vh!important;
-  max-height:none!important;
-  overflow-y:auto!important;
-}
-.hlrn{
-  display:block!important;
-  width:100%!important;
-  height:auto!important;
-  min-height:100vh!important;
-  max-height:none!important;
-  overflow:visible!important;
-  background:#fff!important;
-}
-.viewport{
-  position:relative!important;
-  display:block!important;
-  width:100%!important;
-  height:auto!important;
-  min-height:0!important;
-  max-height:none!important;
-  overflow:visible!important;
-  background:#fff!important;
-}
-iframe.page{
-  display:none!important;
-  width:100%!important;
-  height:1px!important;
-  min-height:0!important;
-  max-height:none!important;
-  border:0!important;
-  overflow:hidden!important;
-  background:#fff!important;
-}
-iframe.page.active{display:block!important}
-</style>
-<script id="HLRN_CHILD_REPORTED_WHOLE_PAGE_SCROLL_20260930_JS">
-(function(){
-  const frames={
-    hosted:document.getElementById("page-hosted"),
-    sunday:document.getElementById("page-sunday"),
-    monday:document.getElementById("page-monday")
-  };
-  const fallback={hosted:1800,sunday:2600,monday:2600};
-
-  function apply(series,height){
-    const frame=frames[series];
-    if(!frame) return;
-    let h=Number(height);
-    if(!Number.isFinite(h)||h<300) h=fallback[series]||1800;
-    h=Math.min(30000,Math.ceil(h));
-    frame.setAttribute("scrolling","no");
-    frame.style.setProperty("height",h+"px","important");
-    frame.style.setProperty("min-height",h+"px","important");
-    frame.style.setProperty("max-height","none","important");
-    frame.style.setProperty("overflow","hidden","important");
-  }
-
-  window.addEventListener("message",e=>{
-    const d=e.data||{};
-    if(d.type!=="hlrn-standings-height") return;
-    const frame=frames[d.series];
-    if(!frame || e.source!==frame.contentWindow) return;
-    apply(d.series,d.height);
-  });
-
-  function request(series){
-    const frame=frames[series];
-    if(!frame)return;
-    if(!frame.style.height || parseFloat(frame.style.height)<300) apply(series,fallback[series]);
-    try{frame.contentWindow.postMessage({type:"hlrn-request-standings-height"},"*")}catch(e){}
-    setTimeout(()=>{try{frame.contentWindow.postMessage({type:"hlrn-request-standings-height"},"*")}catch(e){}},250);
-    setTimeout(()=>{try{frame.contentWindow.postMessage({type:"hlrn-request-standings-height"},"*")}catch(e){}},900);
-  }
-
-  Object.entries(frames).forEach(([series,frame])=>{
-    if(!frame)return;
-    frame.addEventListener("load",()=>request(series));
-  });
-
-  document.addEventListener("click",()=>{
-    setTimeout(()=>{
-      const active=document.querySelector("iframe.page.active");
-      if(active){
-        const series=String(active.id||"").replace("page-","");
-        request(series);
-      }
-    },50);
-  },true);
-
-  function init(){
-    document.documentElement.style.setProperty("overflow-y","auto","important");
-    document.body.style.setProperty("overflow-y","auto","important");
-    const active=document.querySelector("iframe.page.active");
-    if(active) request(String(active.id||"").replace("page-",""));
-  }
-  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});else init();
-  window.addEventListener("load",()=>setTimeout(init,100),{once:true});
-})();
-</script>
-
 <script src="../assets/site-shell.js?v=20260929myhlrn1"></script>
 </body>
 </html>
