@@ -802,13 +802,41 @@ def main():
     parser.add_argument("--url", default=os.getenv("HLRN_RECAP_URL", DEFAULT_RECAP_URL))
     args = parser.parse_args()
 
-    try:
-        payload = load_json(args.input) if args.input else fetch_json(args.url)
-    except Exception as exc:
-        print(f"[HLRN recap] Recorder API unavailable; continuing without recap publication: {exc}")
-        return 0
+    if args.input:
+        try:
+            payload = load_json(args.input)
+        except Exception as exc:
+            print(f"[HLRN recap] Input archive unavailable: {exc}")
+            return 0
+    else:
+        try:
+            payload = fetch_json(args.url)
+        except Exception as primary_exc:
+            fallback_url = args.url.rsplit("/", 1)[0] + "/recap" if args.url.rstrip("/").endswith("/recaps") else None
+            if not fallback_url:
+                print(f"[HLRN recap] Recorder API unavailable; continuing without recap publication: {primary_exc}")
+                return 0
+            try:
+                payload = fetch_json(fallback_url)
+                print(f"[HLRN recap] Rolling archive unavailable; recovered newest frozen race from {fallback_url}")
+            except Exception as fallback_exc:
+                print(
+                    "[HLRN recap] Recorder API unavailable; continuing without recap publication: "
+                    f"{primary_exc}; fallback failed: {fallback_exc}"
+                )
+                return 0
 
     recaps = extract_recaps(payload)
+    if not recaps and not args.input and args.url.rstrip("/").endswith("/recaps"):
+        fallback_url = args.url.rsplit("/", 1)[0] + "/recap"
+        try:
+            fallback_payload = fetch_json(fallback_url)
+            recaps = extract_recaps(fallback_payload)
+            if recaps and any(x.get("raceFrozen") for x in recaps):
+                print(f"[HLRN recap] Rolling archive was empty; recovered newest frozen race from {fallback_url}")
+        except Exception:
+            pass
+
     if not recaps:
         print("[HLRN recap] No frozen recorder races available.")
         return 0
