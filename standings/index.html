@@ -1610,10 +1610,14 @@ iframe.page.active{display:block!important}
       }
 
       const h=measure(doc);
-      frame.style.setProperty("height",h+"px","important");
-      frame.style.setProperty("min-height",h+"px","important");
-
-      return h;
+      const current=parseFloat(frame.dataset.hlrnStableHeight||"0")||0;
+      const next=current>0 ? Math.max(current,h) : h;
+      if(Math.abs(next-current)>8){
+        frame.style.setProperty("height",next+"px","important");
+        frame.style.setProperty("min-height",next+"px","important");
+        frame.dataset.hlrnStableHeight=String(next);
+      }
+      return next;
     }catch(e){
       return 0;
     }
@@ -1647,6 +1651,7 @@ iframe.page.active{display:block!important}
         else{
           frame.style.setProperty("height","1px","important");
           frame.style.setProperty("min-height","0","important");
+          delete frame.dataset.hlrnStableHeight;
         }
       });
     }finally{
@@ -1658,7 +1663,7 @@ iframe.page.active{display:block!important}
     clearTimeout(timer);
     timer=setTimeout(fit,40);
     if(burst){
-      [150,350,700,1200,2200,4000,7000].forEach(ms=>setTimeout(fit,ms));
+      [150,450,1000,2200].forEach(ms=>setTimeout(fit,ms));
     }
   }
 
