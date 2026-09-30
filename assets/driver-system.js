@@ -9,12 +9,13 @@
   "use strict";
   if(global.HLRNDrivers && global.HLRNDrivers.version) return;
 
-  const VERSION="20260930v4";
+  const VERSION="20260930v5";
   const script=document.currentScript;
   let root;
   try{ root=new URL("../",script&&script.src?script.src:location.href); }
   catch(_){ root=new URL("/",location.origin); }
   const manifestUrl=new URL("data/driver-pages.json?v="+VERSION,root).href;
+  const PHOTO_BASE="https://hunterwelborn32-creator.github.io/HLRN-App/driver-photos/";
   const absolute=(path)=>new URL(String(path||"").replace(/^\//,""),root).href;
   const normalize=(value)=>String(value||"").toLowerCase().replace(/[^a-z0-9]/g,"");
   const cleanDisplay=(value)=>String(value||"").trim().replace(/([A-Za-z])\d+$/,"$1");
@@ -86,6 +87,14 @@
   function profileUrl(value){
     const rec=resolve(value);
     return rec?rec.url:null;
+  }
+
+  function photoUrl(value,type="cutout"){
+    const rec=resolve(value);
+    const slug=String(rec?.photoSlug||"").trim();
+    if(!slug) return "";
+    const folder=String(type||"cutout").toLowerCase()==="full"?"full":"cutout";
+    return PHOTO_BASE+folder+"/"+encodeURIComponent(slug)+".webp";
   }
 
   function buildRegex(){
@@ -425,6 +434,7 @@
     load,
     resolve,
     profileUrl,
+    photoUrl,
     go(value){const u=profileUrl(value);if(u)location.href=u;return !!u;},
     scan,
     getAll(){return records.slice();}
