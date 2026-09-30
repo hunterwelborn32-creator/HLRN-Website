@@ -70,22 +70,16 @@ body.rd-v5.home-v8-page{
   transform:skewX(-7deg);
   box-shadow:8px 0 0 var(--h9-red);
 }
-.h9-network-copy{min-width:0;display:grid;align-content:center}
+.h9-network-copy{min-width:0;display:flex;align-items:center}
 .h9-network-copy small{
-  color:#a6adb6!important;
-  font-size:7px!important;
-  letter-spacing:.16em!important;
+  color:#d5d9de!important;
+  font-size:8px!important;
+  line-height:1.15;
+  letter-spacing:.13em!important;
   white-space:nowrap;
 }
-.h9-network-copy strong{
-  margin-top:3px!important;
-  color:#fff!important;
-  font-size:18px!important;
-  letter-spacing:.01em;
-  overflow:visible!important;
-  text-overflow:clip!important;
-}
 .h9-network-state{
+  justify-self:end;
   display:inline-flex;
   align-items:center;
   gap:7px;
@@ -411,8 +405,8 @@ body.rd-v5.home-v8-page{
   .h9-scoregrid{grid-template-columns:1fr 1fr}
   .h9-score-brand{grid-column:1/-1;grid-template-columns:46px minmax(0,1fr) auto;gap:9px;padding-right:10px}
   .h9-network-mark{width:42px;height:38px;font-size:14px}
-  .h9-network-copy strong{font-size:15px!important}
-  .h9-network-state{min-height:24px;padding:0 7px}
+  .h9-network-copy small{font-size:7px!important;letter-spacing:.1em!important}
+  .h9-network-state{min-height:24px;padding:0 7px;margin-left:6px}
   .h9-score-item:first-of-type{grid-column:1/-1}
   .h9-score-item{padding:10px 12px}
   .h9-score-item.driver-score{grid-template-columns:48px minmax(0,1fr);min-height:66px;padding:0 10px 0 2px;gap:6px}
