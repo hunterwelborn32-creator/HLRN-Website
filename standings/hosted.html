@@ -396,10 +396,7 @@ async function linkHostedDriverNames(key){
   });
   names.sort((a,b)=>b.length-a.length);
   if(!names.length)return;
-  const escRe=v=>String(v).replace(/[|\\{}()[\]^$+*?.-]/g,"\\function hostedFrame(key){
-  return document.getElementById("hostedFrame-"+key);
-}
-");
+  const escRe=v=>String(v).replace(/[|\\{}()[\]^$+*?.-]/g,"\\$&");
   const rx=new RegExp("(^|[^A-Za-z0-9])("+names.map(escRe).join("|")+")(?![A-Za-z0-9])","gi");
   const nf=doc.defaultView&&doc.defaultView.NodeFilter?doc.defaultView.NodeFilter:NodeFilter;
   const walker=doc.createTreeWalker(doc.body,nf.SHOW_TEXT,{
