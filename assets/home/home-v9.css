@@ -470,3 +470,33 @@ html[data-hlrn-theme="light"] body.home-v8-page .h9-result-meta .h9-final-label{
   box-shadow:none!important;
   color:#111!important;
 }
+/* HLRN_HOME_DAY_SCORESTRIP_WHITE_20260930 */
+html[data-hlrn-theme="light"] .h9-scorestrip,
+html[data-hlrn-theme="light"] .h9-score-brand,
+html[data-hlrn-theme="light"] .h9-score-item{
+  background:#fff!important;
+  background-image:none!important;
+  color:#11161c!important;
+  border-color:#d8dee5!important;
+}
+html[data-hlrn-theme="light"] .h9-score-brand{
+  box-shadow:none!important;
+}
+html[data-hlrn-theme="light"] .h9-network-copy small,
+html[data-hlrn-theme="light"] .h9-score-brand small,
+html[data-hlrn-theme="light"] .h9-score-item small{
+  color:#66717d!important;
+}
+html[data-hlrn-theme="light"] .h9-score-brand strong,
+html[data-hlrn-theme="light"] .h9-score-item strong{
+  color:#11161c!important;
+}
+html[data-hlrn-theme="light"] .h9-network-state,
+html[data-hlrn-theme="light"] .h9-network-state.is-live{
+  background:#fff!important;
+  border-color:#cfd6de!important;
+}
+html[data-hlrn-theme="light"] #h9NetworkState #h9NetworkStatus,
+html[data-hlrn-theme="light"] #h9NetworkState.is-live #h9NetworkStatus{
+  color:#11161c!important;
+}
