@@ -455,3 +455,18 @@ body.rd-v5.home-v8-page{
 @media(prefers-reduced-motion:reduce){
   .h9-lead-card>img,.h9-media-card img{transition:none}
 }
+/* HLRN_HOME_DAY_FIX_STATUS_FINAL_20260930 */
+#h9NetworkState #h9NetworkStatus,
+#h9NetworkState.is-live #h9NetworkStatus{
+  color:#fff!important;
+}
+
+html[data-hlrn-theme="light"] body.home-v8-page .h9-result-meta .h9-final-label{
+  padding:0!important;
+  background:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  color:#111!important;
+}
