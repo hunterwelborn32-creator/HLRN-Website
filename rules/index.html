@@ -2484,10 +2484,10 @@ body{
   grid-template-columns:auto minmax(0,1fr) auto!important;
   min-height:38px!important;
   margin:0!important;
-  border:1px solid #20262e!important;
+  border:1px solid #d8dee5!important;
   border-top:0!important;
-  background:#0d1116!important;
-  color:#aeb7c2!important;
+  background:#fff!important;
+  color:#11161c!important;
   overflow:hidden!important;
 }
 .rules-ticker .ticker-label,
@@ -2495,15 +2495,15 @@ body{
   display:flex!important;
   align-items:center!important;
   padding:0 15px!important;
-  background:#151b22!important;
-  color:#fff!important;
+  background:#fff!important;
+  color:#11161c!important;
   font:900 8px/1 Arial,sans-serif!important;
   letter-spacing:.12em!important;
   text-transform:uppercase!important;
   white-space:nowrap!important;
 }
-.rules-ticker .ticker-label{border-right:1px solid #2a323b!important}
-.rules-ticker .ticker-network{border-left:1px solid #2a323b!important;color:#8f99a5!important}
+.rules-ticker .ticker-label{border-right:1px solid #d8dee5!important}
+.rules-ticker .ticker-network{border-left:1px solid #d8dee5!important;color:#66717d!important}
 .rules-ticker .ticker-window{
   min-width:0!important;
   overflow:hidden!important;
@@ -2514,12 +2514,12 @@ body{
   align-items:center!important;
   gap:14px!important;
   padding:0 18px!important;
-  color:#aeb7c2!important;
+  color:#11161c!important;
   font:800 8px/1 Arial,sans-serif!important;
   letter-spacing:.09em!important;
   white-space:nowrap!important;
 }
-.rules-ticker .ticker-track b{color:#fff!important}
+.rules-ticker .ticker-track b{color:#11161c!important}
 .rules-ticker .ticker-track em{color:var(--rules-red)!important}
 
 /* Summary row */
@@ -2616,14 +2616,14 @@ body{
 .rc-search-status{
   min-width:168px!important;
   min-height:48px!important;
-  border:1px solid #343c46!important;
+  border:1px solid #cfd6de!important;
   border-radius:5px!important;
-  background:#1b222b!important;
-  color:#aeb7c1!important;
+  background:#fff!important;
+  color:#11161c!important;
   font:900 8px/1.2 Arial,sans-serif!important;
   letter-spacing:.1em!important;
 }
-.rc-search-status strong{color:#fff!important}
+.rc-search-status strong{color:#11161c!important}
 
 /* Rule category selector */
 .tabs{
@@ -3029,6 +3029,41 @@ html[data-hlrn-theme="light"] .rule mark[data-rc-search]{
     background:#fff!important;
     background-image:none!important;
   }
+}
+</style>
+
+<style id="HLRN_RULES_NIGHT_EXACT_COMPONENTS_20260930">
+html[data-hlrn-theme="dark"] .rules-ticker{
+  background:#0d1116!important;
+  color:#aeb7c2!important;
+  border-color:#20262e!important;
+}
+html[data-hlrn-theme="dark"] .rules-ticker .ticker-label,
+html[data-hlrn-theme="dark"] .rules-ticker .ticker-network{
+  background:#151b22!important;
+  color:#fff!important;
+}
+html[data-hlrn-theme="dark"] .rules-ticker .ticker-label{
+  border-right-color:#2a323b!important;
+}
+html[data-hlrn-theme="dark"] .rules-ticker .ticker-network{
+  border-left-color:#2a323b!important;
+  color:#8f99a5!important;
+}
+html[data-hlrn-theme="dark"] .rules-ticker .ticker-track{
+  color:#aeb7c2!important;
+}
+html[data-hlrn-theme="dark"] .rules-ticker .ticker-track b{
+  color:#fff!important;
+}
+
+html[data-hlrn-theme="dark"] .rc-search-status{
+  background:#1b222b!important;
+  color:#aeb7c1!important;
+  border-color:#343c46!important;
+}
+html[data-hlrn-theme="dark"] .rc-search-status strong{
+  color:#fff!important;
 }
 </style>
 </head>
