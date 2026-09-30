@@ -1231,3 +1231,99 @@ html[data-hlrn-theme] canvas,
 html[data-hlrn-theme] svg{
   color-scheme:normal;
 }
+/* HLRN VISIBLE THEME TOGGLE V1 */
+#hlrn-global-nav .hgn-theme-toggle,
+#hlrn-global-nav .hgn-mobile-theme{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px!important;
+  min-height:38px!important;
+  padding:0 12px!important;
+  border:1px solid var(--hlrn-theme-line-strong)!important;
+  border-radius:5px!important;
+  background:var(--hlrn-theme-surface)!important;
+  color:var(--hlrn-theme-ink)!important;
+  font-family:var(--hlrn-body)!important;
+  font-size:8px!important;
+  font-weight:1000!important;
+  letter-spacing:.07em!important;
+  text-transform:uppercase!important;
+  cursor:pointer!important;
+  white-space:nowrap!important;
+}
+#hlrn-global-nav .hgn-theme-toggle:hover,
+#hlrn-global-nav .hgn-theme-toggle:focus-visible,
+#hlrn-global-nav .hgn-mobile-theme:hover,
+#hlrn-global-nav .hgn-mobile-theme:focus-visible{
+  background:var(--hlrn-theme-nav-hover)!important;
+  border-color:var(--hlrn-red)!important;
+  outline:none!important;
+}
+#hlrn-global-nav .hgn-theme-icon{
+  font-size:14px!important;
+  line-height:1!important;
+}
+#hlrn-global-nav .hgn-mobile-theme{display:none!important}
+
+@media(max-width:1280px){
+  #hlrn-global-nav .hgn-theme-toggle{display:none!important}
+  #hlrn-global-nav .hgn-mobile-theme{
+    display:flex!important;
+    min-height:43px!important;
+    padding:8px!important;
+    border:1px solid var(--hlrn-theme-line-strong)!important;
+    background:var(--hlrn-theme-surface)!important;
+    color:var(--hlrn-theme-ink)!important;
+    font-size:9px!important;
+  }
+}
+@media(max-width:620px){
+  #hlrn-global-nav .hgn-mobile-theme{
+    min-height:40px!important;
+    padding:6px!important;
+    font-size:8px!important;
+  }
+}
+
+/* Strong dark-mode pass for the same common surfaces used by light mode. */
+html[data-hlrn-theme="dark"] :where(
+  .shell,.page,.page-wrap,.wrap,.wrapper,.container,.content,.content-wrap,
+  .main,.main-content,.app,.hub,.stage,.viewport,.section,.panel,.card,.box,
+  .tile,.module,.widget,.toolbar,.subnav,.table-wrap,.table-shell,.table-container,
+  .story-card,.intel-card,.detail-wrap,.detail-box,.deep-box,.stat,.stat-card,
+  .metric-card,.summary-card,.record-card,.record-box,.leader-card,.driver-card,
+  .comparison-card,.race-card,.report-card,.result-card,.news-card,.team-card,
+  .admin-card,.broadcast-card,.episode-card,.adventure-card,.profile-card
+){
+  background-color:#0d1117!important;
+  color:#f7f8fa!important;
+  border-color:#2b333e!important;
+}
+html[data-hlrn-theme="dark"] :where(
+  h1,h2,h3,h4,h5,h6,.title,.heading,.headline,.name,.driver-name,
+  .section-title,.card-title,.story-title,.detail-name,.deep-title,strong,b
+){
+  color:#f7f8fa!important;
+  text-shadow:none!important;
+}
+html[data-hlrn-theme="dark"] :where(
+  p,li,dd,dt,label,.sub,.subtitle,.description,.copy,.meta,.muted,
+  .card-reason,.card-stat,.story-sub,.detail-category,.stat-label
+){
+  color:#aeb8c4!important;
+}
+html[data-hlrn-theme="dark"] table,
+html[data-hlrn-theme="dark"] tbody td{
+  background:#0d1117!important;
+  color:#f4f6f8!important;
+  border-color:#2b333e!important;
+}
+html[data-hlrn-theme="dark"] thead th{
+  background:#171d25!important;
+  color:#f7f8fa!important;
+  border-color:#34404d!important;
+}
+html[data-hlrn-theme="dark"] tbody tr:nth-child(even) td{
+  background:#11171f!important;
+}
