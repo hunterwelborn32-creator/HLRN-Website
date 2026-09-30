@@ -286,6 +286,7 @@ input,select,button{color:#111!important}
 .loading,.message,.empty,.placeholder{background:#fff!important;color:#6f747a!important}
 iframe{background:#fff!important;color-scheme:light!important}
 </style>
+<link rel="stylesheet" href="../assets/standings/nascar-standings-v1.css?v=20260930n1">
 <script data-hlrn-driver-system src="../assets/driver-system.js?v=20260930v7"></script>
 <script>
 function hlrnLightHostedDoc(markup){
@@ -309,6 +310,55 @@ tbody tr:nth-child(even) td{background:#fafafa!important}
 .card,.panel,.box,.tile,.stat,.stat-card,.metric-card,.summary-card,.record-card,.record-box,.leader-card,.driver-card,.comparison-card,.edge-card,.cc-card,.cc-battle-item,.cc-spotlight-card{background:#fff!important;background-image:none!important;color:#111214!important;border-color:#d9dde1!important;box-shadow:none!important}
 .loading,.message,.empty,.placeholder,.hosted-loading{background:#fff!important;color:#111214!important}
 iframe{background:#fff!important;color-scheme:light!important}
+
+/* NASCAR-style Hosted inner view */
+body{padding:0!important;background:#fff!important}
+.container,.content{width:100%!important;max-width:none!important;margin:0!important;padding:20px 24px 38px!important}
+.header,.hosted-ticker,.ops-topbar,.ops-hero,.ops-dashboard,.hx-telemetry,.hx-intel,.hx-podium,.hx-pulse-grid{display:none!important}
+.nav{
+  display:flex!important;gap:24px!important;margin:0 0 22px!important;padding:0!important;
+  border:0!important;border-bottom:1px solid #d9dde2!important;background:#fff!important
+}
+.nav button{
+  min-height:52px!important;padding:14px 0 11px!important;border:0!important;border-bottom:4px solid transparent!important;
+  border-radius:0!important;background:transparent!important;color:#6f7781!important;box-shadow:none!important;
+  font-family:"Arial Narrow","Roboto Condensed","Helvetica Neue",Arial,sans-serif!important;font-size:16px!important;font-style:normal!important;font-weight:1000!important
+}
+.nav button.active{border-bottom-color:#f3c800!important;background:transparent!important;color:#111318!important}
+.top-grid{display:none!important}
+.section{
+  margin:0 0 22px!important;border:1px solid #d9dde2!important;border-radius:0!important;background:#fff!important;box-shadow:none!important
+}
+.section-title{
+  padding:18px 18px 14px!important;border:0!important;border-bottom:1px solid #d9dde2!important;background:#fff!important;
+  color:#111318!important;font-family:"Arial Narrow","Roboto Condensed","Helvetica Neue",Arial,sans-serif!important;
+  font-size:28px!important;font-style:normal!important;font-weight:1000!important;letter-spacing:-.03em!important;text-transform:uppercase!important
+}
+.section-title:before,.section-title:after{display:none!important}
+.table-wrap{overflow:auto!important;border:0!important;background:#fff!important}
+table{width:100%!important;border-collapse:collapse!important;background:#fff!important}
+thead th,th{
+  position:static!important;top:auto!important;padding:11px 10px!important;background:#f1f2f4!important;color:#343a40!important;
+  border:0!important;border-bottom:1px solid #cfd4d9!important;font-size:9px!important;font-weight:900!important;letter-spacing:.04em!important;text-transform:uppercase!important
+}
+tbody td,td{
+  height:68px!important;padding:9px 10px!important;background:#fff!important;color:#202428!important;border:0!important;border-bottom:1px solid #e4e7ea!important;
+  font-size:12px!important;font-weight:700!important;vertical-align:middle!important
+}
+tbody tr:nth-child(even) td{background:#fbfbfc!important}
+tbody tr:hover td{background:#fffbea!important}
+tbody tr:first-child td{background:linear-gradient(90deg,#fff8d9,#fff 72%)!important}
+tbody tr:first-child td:first-child{box-shadow:inset 5px 0 0 #f3c800!important}
+.rank{font-family:"Arial Narrow","Roboto Condensed","Helvetica Neue",Arial,sans-serif!important;font-size:22px!important;font-weight:1000!important;color:#111318!important}
+.driver-link{color:#111318!important;font-family:"Arial Narrow","Roboto Condensed","Helvetica Neue",Arial,sans-serif!important;font-size:17px!important;font-weight:1000!important;text-decoration:none!important}
+.car-number-cell{font-weight:1000!important;color:#111318!important}
+@media(max-width:700px){
+  .container,.content{padding:10px 8px 24px!important}
+  .nav{gap:16px!important;overflow-x:auto!important;flex-wrap:nowrap!important}
+  .nav button{flex:0 0 auto!important;white-space:nowrap!important;font-size:14px!important}
+  .section-title{font-size:24px!important}
+  table{min-width:860px!important}
+}
 `;
   const rescue=`<style id="HLRN_HOSTED_FRAME_RESCUE_V6">
 html,body,.hosted-hub{background:#fff!important;color:#111214!important;height:auto!important;min-height:0!important;overflow:visible!important}
@@ -318,8 +368,7 @@ html,body,.hosted-hub{background:#fff!important;color:#111214!important;height:a
 .hosted-loading{background:#fff!important;color:#111214!important;min-height:56px!important}
 </style>`;
   const tag='<style id="HLRN_STATIC_LIGHT_INNER">'+css+'</style>'+rescue;
-  return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'<link rel="stylesheet" href="../assets/standings/nascar-standings-v1.css?v=20260930n1">
-</head>') : tag+markup;
+  return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'</head>') : tag+markup;
 }
 </script>
 </head>
@@ -501,6 +550,12 @@ function loadHostedTab(key){
     setTimeout(()=>{resizeHostedFrame(key);queueHostedDriverLinks(key)},80);
     setTimeout(()=>{resizeHostedFrame(key);queueHostedDriverLinks(key)},350);
     setTimeout(()=>{resizeHostedFrame(key);queueHostedDriverLinks(key)},900);
+    if(key==="racing" && !frame.dataset.hlrnNascarDefault){
+      frame.dataset.hlrnNascarDefault="1";
+      try{
+        if(typeof frame.contentWindow?.showPage==="function") frame.contentWindow.showPage("rankings");
+      }catch(e){}
+    }
     try{
       const doc=frame.contentDocument;
       if(doc&&doc.body&&!frame.__hlrnHostedDriverLinks){
