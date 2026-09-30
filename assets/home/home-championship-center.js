@@ -18,10 +18,22 @@
     const src=window.HLRNDrivers?.photoUrl?.(value,"cutout")||"";
     if(!src){el.hidden=true;el.removeAttribute("src");return}
     const rec=window.HLRNDrivers?.resolve?.(value);
+    el.dataset.hlrnFallbackTried="";
     el.src=src;
     el.alt=(rec?.displayName||pretty(value?.driver||value?.name||value||"Driver"))+" driver photo";
     el.hidden=false;
-    el.onerror=()=>{el.hidden=true};
+    el.onerror=()=>{
+      if(!el.dataset.hlrnFallbackTried){
+        el.dataset.hlrnFallbackTried="1";
+        const rec=window.HLRNDrivers?.resolve?.(value);
+        const slug=String(rec?.photoSlug||"").trim();
+        if(slug){
+          el.src="https://hunterwelborn32-creator.github.io/HLRN-App/driver-photos/cutout/"+encodeURIComponent(slug)+".webp";
+          return;
+        }
+      }
+      el.hidden=true;
+    };
   };
 
   function sortedDrivers(league){
