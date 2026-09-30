@@ -1,0 +1,571 @@
+/* =========================================================
+   HLRN STANDINGS — NASCAR-STYLE CHAMPIONSHIP PRESENTATION
+   Shared by Hosted, Sunday and Monday.
+   ========================================================= */
+
+:root{
+  --ns-ink:#111318;
+  --ns-muted:#6e7781;
+  --ns-line:#d9dde2;
+  --ns-soft:#f3f4f6;
+  --ns-paper:#ffffff;
+  --ns-red:#d71920;
+  --ns-green:#55b932;
+  --ns-gold:#f3c800;
+  --ns-font:Inter,"Segoe UI",Arial,sans-serif;
+  --ns-display:"Arial Narrow","Roboto Condensed","Helvetica Neue",Arial,sans-serif;
+}
+
+/* ---------- OUTER STANDINGS HUB ---------- */
+body.nascar-standings-hub{
+  margin:0!important;
+  background:#f2f3f5!important;
+  color:var(--ns-ink)!important;
+  font-family:var(--ns-font)!important;
+}
+body.nascar-standings-hub .hlrn{
+  height:100dvh!important;
+  min-height:0!important;
+  max-height:100dvh!important;
+  display:grid!important;
+  grid-template-rows:auto auto minmax(0,1fr)!important;
+  overflow:hidden!important;
+  background:#f2f3f5!important;
+}
+body.nascar-standings-hub .topline,
+body.nascar-standings-hub .cn-control,
+body.nascar-standings-hub .cn-series-ribbon{
+  display:none!important;
+}
+body.nascar-standings-hub .titlebar{
+  min-height:0!important;
+  padding:28px 42px 24px!important;
+  border:0!important;
+  border-bottom:1px solid var(--ns-line)!important;
+  background:#fff!important;
+  box-shadow:none!important;
+  color:var(--ns-ink)!important;
+  overflow:visible!important;
+}
+body.nascar-standings-hub .titlebar:before,
+body.nascar-standings-hub .titlebar:after{
+  display:none!important;
+}
+body.nascar-standings-hub .eyebrow{
+  margin:0 0 7px!important;
+  color:#7d858d!important;
+  font-size:8px!important;
+  font-style:normal!important;
+  font-weight:900!important;
+  letter-spacing:.15em!important;
+}
+body.nascar-standings-hub h1{
+  margin:0!important;
+  color:var(--ns-ink)!important;
+  font-family:var(--ns-display)!important;
+  font-size:clamp(42px,4.8vw,70px)!important;
+  font-style:normal!important;
+  font-weight:1000!important;
+  line-height:.94!important;
+  letter-spacing:-.045em!important;
+  text-shadow:none!important;
+}
+body.nascar-standings-hub h1 span{color:inherit!important}
+body.nascar-standings-hub .titlecopy{
+  max-width:620px!important;
+  color:var(--ns-muted)!important;
+  font-size:10px!important;
+  font-weight:650!important;
+  line-height:1.45!important;
+  text-align:right!important;
+}
+body.nascar-standings-hub .titlecopy b{
+  color:var(--ns-ink)!important;
+  font-size:11px!important;
+  font-style:normal!important;
+  text-transform:none!important;
+}
+body.nascar-standings-hub .tabs{
+  position:relative!important;
+  top:auto!important;
+  display:flex!important;
+  gap:30px!important;
+  min-height:0!important;
+  padding:0 42px!important;
+  border:0!important;
+  border-bottom:1px solid var(--ns-line)!important;
+  background:#fff!important;
+  box-shadow:none!important;
+}
+body.nascar-standings-hub .tab{
+  flex:0 0 auto!important;
+  min-height:64px!important;
+  padding:16px 1px 13px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:#727a82!important;
+  text-align:left!important;
+  overflow:visible!important;
+}
+body.nascar-standings-hub .tab:before{display:none!important}
+body.nascar-standings-hub .tab small{
+  display:block!important;
+  color:#9299a1!important;
+  font-size:7px!important;
+  font-style:normal!important;
+  letter-spacing:.12em!important;
+}
+body.nascar-standings-hub .tab strong{
+  margin-top:4px!important;
+  color:#555d66!important;
+  font-family:var(--ns-display)!important;
+  font-size:20px!important;
+  font-style:normal!important;
+  font-weight:1000!important;
+  letter-spacing:-.02em!important;
+  text-transform:uppercase!important;
+}
+body.nascar-standings-hub .tab.active{
+  background:transparent!important;
+  box-shadow:none!important;
+}
+body.nascar-standings-hub .tab.active strong{color:var(--ns-ink)!important}
+body.nascar-standings-hub .tab.active:after{
+  left:0!important;
+  right:0!important;
+  bottom:-1px!important;
+  height:4px!important;
+  border-radius:0!important;
+}
+body.nascar-standings-hub .tab[data-page="hosted"].active:after{background:var(--ns-gold)!important}
+body.nascar-standings-hub .tab[data-page="sunday"].active:after{background:var(--ns-red)!important}
+body.nascar-standings-hub .tab[data-page="monday"].active:after{background:var(--ns-green)!important}
+body.nascar-standings-hub .viewport{
+  height:100%!important;
+  min-height:0!important;
+  padding:22px 42px 34px!important;
+  overflow:hidden!important;
+  border:0!important;
+  background:#f2f3f5!important;
+}
+body.nascar-standings-hub iframe.page{
+  width:100%!important;
+  height:100%!important;
+  min-height:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:#fff!important;
+  box-shadow:none!important;
+}
+
+/* ---------- SUNDAY / MONDAY SERIES PAGES ---------- */
+body.nascar-standings-series{
+  margin:0!important;
+  padding:0!important;
+  background:#fff!important;
+  color:var(--ns-ink)!important;
+  font-family:var(--ns-font)!important;
+  overflow-x:hidden!important;
+}
+body.nascar-standings-series.sunday{--series-accent:var(--ns-red);--series-soft:#fff3f3}
+body.nascar-standings-series.monday{--series-accent:var(--ns-green);--series-soft:#f3faef}
+
+body.nascar-standings-series .page-wrap,
+body.nascar-standings-series .container,
+body.nascar-standings-series main{
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:22px 26px 44px!important;
+  background:#fff!important;
+}
+
+/* Remove the old dashboard-heavy presentation. */
+body.nascar-standings-series .cc-topline,
+body.nascar-standings-series .cc-hero,
+body.nascar-standings-series .cc-dashboard,
+body.nascar-standings-series .cc-battle,
+body.nascar-standings-series .cc-momentum-row,
+body.nascar-standings-series .monday-ticker,
+body.nascar-standings-series .sunday-ticker,
+body.nascar-standings-series .cc-footer,
+body.nascar-standings-series .command-center,
+body.nascar-standings-series .championship-command{
+  display:none!important;
+}
+
+/* NASCAR-like DRIVER / TEAM / LAST RACE tabs */
+body.nascar-standings-series .tabs{
+  position:relative!important;
+  top:auto!important;
+  display:flex!important;
+  align-items:flex-end!important;
+  gap:26px!important;
+  margin:0 0 22px!important;
+  padding:0!important;
+  border:0!important;
+  border-bottom:1px solid var(--ns-line)!important;
+  background:#fff!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+}
+body.nascar-standings-series .tab-btn{
+  min-height:52px!important;
+  padding:15px 0 12px!important;
+  border:0!important;
+  border-bottom:4px solid transparent!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:#78818a!important;
+  box-shadow:none!important;
+  font-family:var(--ns-display)!important;
+  font-size:17px!important;
+  font-style:normal!important;
+  font-weight:1000!important;
+  letter-spacing:-.01em!important;
+  text-transform:uppercase!important;
+}
+body.nascar-standings-series .tab-btn.active{
+  color:var(--ns-ink)!important;
+  border-bottom-color:var(--series-accent)!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+body.nascar-standings-series .tab-btn.active:before{display:none!important}
+
+body.nascar-standings-series .panel{
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:#fff!important;
+  box-shadow:none!important;
+}
+body.nascar-standings-series .section-header{
+  display:flex!important;
+  align-items:flex-end!important;
+  justify-content:space-between!important;
+  gap:20px!important;
+  margin:0!important;
+  padding:0 0 16px!important;
+  border:0!important;
+  background:#fff!important;
+}
+body.nascar-standings-series .section-header h2{
+  margin:0!important;
+  color:var(--ns-ink)!important;
+  font-family:var(--ns-display)!important;
+  font-size:32px!important;
+  font-style:normal!important;
+  font-weight:1000!important;
+  line-height:1!important;
+  letter-spacing:-.035em!important;
+}
+body.nascar-standings-series .count{
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:var(--ns-muted)!important;
+  font-size:9px!important;
+  font-weight:800!important;
+  text-transform:uppercase!important;
+}
+body.nascar-standings-series .hlrn-mobile-scroll-hint{
+  margin:0 0 8px!important;
+  color:#8a929a!important;
+  font-size:8px!important;
+  font-weight:800!important;
+  text-transform:uppercase!important;
+}
+
+/* Main NASCAR-style standings table */
+body.nascar-standings-series .table-shell{
+  max-height:none!important;
+  overflow:auto!important;
+  border:1px solid var(--ns-line)!important;
+  border-radius:0!important;
+  background:#fff!important;
+  box-shadow:none!important;
+}
+body.nascar-standings-series table{
+  width:100%!important;
+  min-width:1080px!important;
+  border-collapse:collapse!important;
+  border-spacing:0!important;
+  background:#fff!important;
+  color:var(--ns-ink)!important;
+}
+body.nascar-standings-series thead,
+body.nascar-standings-series thead tr,
+body.nascar-standings-series thead th{
+  position:static!important;
+  top:auto!important;
+  background:#f1f2f4!important;
+  color:#343a40!important;
+  box-shadow:none!important;
+}
+body.nascar-standings-series thead th{
+  height:44px!important;
+  padding:10px 11px!important;
+  border:0!important;
+  border-bottom:1px solid #cfd4d9!important;
+  font-size:9px!important;
+  font-style:normal!important;
+  font-weight:900!important;
+  line-height:1.05!important;
+  letter-spacing:.04em!important;
+  text-align:center!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+}
+body.nascar-standings-series thead th.name-col{text-align:left!important}
+
+body.nascar-standings-series tbody tr{background:#fff!important}
+body.nascar-standings-series tbody td{
+  height:76px!important;
+  padding:7px 11px!important;
+  border:0!important;
+  border-bottom:1px solid #e4e7ea!important;
+  background:#fff!important;
+  color:#202428!important;
+  font-size:12px!important;
+  font-weight:700!important;
+  text-align:center!important;
+  vertical-align:middle!important;
+}
+body.nascar-standings-series tbody tr:nth-child(even) td{background:#fbfbfc!important}
+body.nascar-standings-series tbody tr:hover td{background:var(--series-soft)!important}
+body.nascar-standings-series tbody tr:first-child td{
+  background:linear-gradient(90deg,var(--series-soft),#fff 68%)!important;
+  border-top:0!important;
+}
+body.nascar-standings-series tbody tr:first-child td:first-child{
+  box-shadow:inset 5px 0 0 var(--series-accent)!important;
+}
+
+body.nascar-standings-series .position,
+body.nascar-standings-series .position.top1,
+body.nascar-standings-series .position.top2,
+body.nascar-standings-series .position.top3{
+  display:inline-flex!important;
+  min-width:34px!important;
+  min-height:34px!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:var(--ns-ink)!important;
+  font-family:var(--ns-display)!important;
+  font-size:24px!important;
+  font-style:normal!important;
+  font-weight:1000!important;
+  line-height:1!important;
+}
+body.nascar-standings-series .points,
+body.nascar-standings-series td.points,
+body.nascar-standings-series .stage-points{
+  color:var(--ns-ink)!important;
+  font-family:var(--ns-display)!important;
+  font-size:16px!important;
+  font-weight:1000!important;
+}
+body.nascar-standings-series .behind.leader{color:#777f87!important}
+body.nascar-standings-series .up{color:#178d3d!important}
+body.nascar-standings-series .down{color:#c91e29!important}
+body.nascar-standings-series .even{color:#777f87!important}
+
+/* Driver identity cell */
+body.nascar-standings-series td.name-col{
+  min-width:260px!important;
+  text-align:left!important;
+  background:#fff!important;
+}
+body.nascar-standings-series tbody tr:nth-child(even) td.name-col{background:#fbfbfc!important}
+body.nascar-standings-series tbody tr:hover td.name-col{background:var(--series-soft)!important}
+body.nascar-standings-series .hlrn-driver-profile-link{
+  color:var(--ns-ink)!important;
+  text-decoration:none!important;
+}
+body.nascar-standings-series .hlrn-driver-profile-inner{
+  display:flex!important;
+  align-items:center!important;
+  gap:12px!important;
+}
+body.nascar-standings-series .hlrn-driver-profile-inner img{
+  width:58px!important;
+  height:68px!important;
+  flex:0 0 58px!important;
+  margin:0!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  filter:drop-shadow(0 4px 7px rgba(0,0,0,.12))!important;
+}
+body.nascar-standings-series .hlrn-driver-profile-name{
+  color:var(--ns-ink)!important;
+  font-family:var(--ns-display)!important;
+  font-size:18px!important;
+  font-weight:1000!important;
+  line-height:1!important;
+  text-transform:uppercase!important;
+}
+body.nascar-standings-series .hlrn-driver-profile-arrow{display:none!important}
+body.nascar-standings-series .team-name{
+  color:#5c646c!important;
+  font-weight:800!important;
+}
+
+/* Show the NASCAR-relevant desktop fields; keep richer data in the DOM. */
+@media(min-width:761px){
+  body.nascar-standings-series #drivers th:nth-child(10),
+  body.nascar-standings-series #drivers td:nth-child(10),
+  body.nascar-standings-series #drivers th:nth-child(11),
+  body.nascar-standings-series #drivers td:nth-child(11),
+  body.nascar-standings-series #drivers th:nth-child(12),
+  body.nascar-standings-series #drivers td:nth-child(12),
+  body.nascar-standings-series #drivers th:nth-child(15),
+  body.nascar-standings-series #drivers td:nth-child(15),
+  body.nascar-standings-series #drivers th:nth-child(16),
+  body.nascar-standings-series #drivers td:nth-child(16),
+  body.nascar-standings-series #drivers th:nth-child(18),
+  body.nascar-standings-series #drivers td:nth-child(18),
+  body.nascar-standings-series #drivers th:nth-child(19),
+  body.nascar-standings-series #drivers td:nth-child(19),
+  body.nascar-standings-series #drivers th:nth-child(20),
+  body.nascar-standings-series #drivers td:nth-child(20){
+    display:none!important;
+  }
+}
+
+/* ---------- HOSTED WRAPPER ---------- */
+body.nascar-hosted-page{
+  margin:0!important;
+  padding:0!important;
+  background:#fff!important;
+  color:var(--ns-ink)!important;
+  font-family:var(--ns-font)!important;
+}
+body.nascar-hosted-page .hosted-hub{
+  width:100%!important;
+  background:#fff!important;
+  color:var(--ns-ink)!important;
+}
+body.nascar-hosted-page .hosted-hub-tabs{
+  position:relative!important;
+  top:auto!important;
+  display:flex!important;
+  gap:24px!important;
+  margin:0!important;
+  padding:0 24px!important;
+  border:0!important;
+  border-bottom:1px solid var(--ns-line)!important;
+  background:#fff!important;
+  box-shadow:none!important;
+}
+body.nascar-hosted-page .hosted-hub-tab{
+  min-height:58px!important;
+  padding:14px 0 11px!important;
+  border:0!important;
+  border-bottom:4px solid transparent!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:#707982!important;
+  box-shadow:none!important;
+  text-align:left!important;
+}
+body.nascar-hosted-page .hosted-hub-tab small{
+  color:#939aa2!important;
+  font-size:7px!important;
+  font-weight:900!important;
+  letter-spacing:.08em!important;
+}
+body.nascar-hosted-page .hosted-hub-tab strong{
+  margin-top:4px!important;
+  color:#626a72!important;
+  font-family:var(--ns-display)!important;
+  font-size:16px!important;
+  font-style:normal!important;
+  font-weight:1000!important;
+  text-transform:uppercase!important;
+}
+body.nascar-hosted-page .hosted-hub-tab.active{
+  border-bottom-color:var(--ns-gold)!important;
+  background:transparent!important;
+}
+body.nascar-hosted-page .hosted-hub-tab.active strong{color:var(--ns-ink)!important}
+body.nascar-hosted-page .hosted-hub-stage{
+  padding:20px 24px 36px!important;
+  background:#fff!important;
+}
+body.nascar-hosted-page .hosted-hub-frame{
+  border:0!important;
+  background:#fff!important;
+}
+body.nascar-hosted-page .hosted-loading{
+  background:#fff!important;
+  color:#69717a!important;
+}
+
+/* ---------- MOBILE ---------- */
+@media(max-width:760px){
+  body.nascar-standings-hub .titlebar{
+    display:block!important;
+    padding:20px 14px 16px!important;
+  }
+  body.nascar-standings-hub h1{font-size:38px!important}
+  body.nascar-standings-hub .titlecopy{
+    margin-top:8px!important;
+    text-align:left!important;
+    font-size:8px!important;
+  }
+  body.nascar-standings-hub .tabs{
+    gap:16px!important;
+    padding:0 14px!important;
+  }
+  body.nascar-standings-hub .tab{
+    flex:1 1 0!important;
+    min-width:0!important;
+    min-height:54px!important;
+    padding:12px 0 9px!important;
+    text-align:center!important;
+  }
+  body.nascar-standings-hub .tab small{display:none!important}
+  body.nascar-standings-hub .tab strong{font-size:14px!important}
+  body.nascar-standings-hub .viewport{padding:10px 0 0!important}
+
+  body.nascar-standings-series .page-wrap,
+  body.nascar-standings-series .container,
+  body.nascar-standings-series main{
+    padding:12px 8px 28px!important;
+  }
+  body.nascar-standings-series .tabs{
+    gap:18px!important;
+    overflow-x:auto!important;
+    flex-wrap:nowrap!important;
+  }
+  body.nascar-standings-series .tab-btn{
+    flex:0 0 auto!important;
+    min-height:48px!important;
+    font-size:14px!important;
+    white-space:nowrap!important;
+  }
+  body.nascar-standings-series .section-header h2{font-size:26px!important}
+  body.nascar-standings-series .table-shell{border-left:0!important;border-right:0!important}
+  body.nascar-standings-series table{min-width:980px!important}
+
+  body.nascar-hosted-page .hosted-hub-tabs{
+    gap:16px!important;
+    padding:0 10px!important;
+    overflow-x:auto!important;
+    flex-wrap:nowrap!important;
+  }
+  body.nascar-hosted-page .hosted-hub-tab{
+    flex:0 0 auto!important;
+    min-height:52px!important;
+    white-space:nowrap!important;
+  }
+  body.nascar-hosted-page .hosted-hub-tab small{display:none!important}
+  body.nascar-hosted-page .hosted-hub-stage{padding:10px 0 24px!important}
+}
