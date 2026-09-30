@@ -298,7 +298,7 @@ function start(){
     if(u.hostname===location.hostname){
       let dest=null;
       if(lp.includes("/race-intelligence/"))dest="race-intelligence/";
-      else if(lp.includes("/broadcasters/"))dest="broadcasters/";
+      else if(lp.includes("/broadcast/"))dest="broadcasters/";
       else if(lp.includes("/schedule/"))dest="results/";
       if(dest){e.preventDefault();location.href=url(dest);return;}
     }
