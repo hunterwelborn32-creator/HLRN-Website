@@ -150,9 +150,9 @@
   </nav>
   <main class="viewport">
     <div class="cn-series-ribbon"><i></i><span id="cnRibbonText">Hosted Racing Active</span></div>
-    <iframe class="page active" id="page-hosted" title="HLRN Hosted Racing" scrolling="auto" src="hosted.html?v=20260930nascar1"></iframe>
-    <iframe class="page" id="page-sunday" loading="lazy" title="HLRN Sunday Championship" scrolling="auto" src="sunday.html?v=20260930nascar1"></iframe>
-    <iframe class="page" id="page-monday" loading="lazy" title="HLRN Monday Championship" scrolling="auto" src="monday.html?v=20260930nascar1"></iframe>
+    <iframe class="page active" id="page-hosted" title="HLRN Hosted Racing" scrolling="auto" src="hosted.html?v=20260930wholepage1"></iframe>
+    <iframe class="page" id="page-sunday" loading="lazy" title="HLRN Sunday Championship" scrolling="auto" src="sunday.html?v=20260930wholepage1"></iframe>
+    <iframe class="page" id="page-monday" loading="lazy" title="HLRN Monday Championship" scrolling="auto" src="monday.html?v=20260930wholepage1"></iframe>
   </main>
 </div>
 <script>
@@ -1476,104 +1476,189 @@ main{
 })();
 </script>
 
-<style id="HLRN_RELIABLE_IFRAME_SCROLL_20260930">
-  /* Reliable scroll model: each active series frame owns its vertical scroll. */
+
+<style id="HLRN_WHOLE_PAGE_SCROLL_FINAL_20260930">
+  /* Whole-page scrolling: series frames grow to content; browser owns the scrollbar. */
   html,body{
     width:100%!important;
+    height:auto!important;
     min-height:100%!important;
+    max-height:none!important;
     margin:0!important;
     overflow-x:hidden!important;
     overflow-y:auto!important;
-  }
-  .hlrn{
-    width:100%!important;
-    height:calc(100dvh - 70px)!important;
-    min-height:620px!important;
-    max-height:none!important;
-    display:grid!important;
-    grid-template-rows:auto auto minmax(0,1fr)!important;
-    overflow:hidden!important;
     background:#fff!important;
   }
-  .hlrn>.topline,
-  .hlrn>.cn-control,
-  .hlrn>.cn-series-ribbon{display:none!important}
-  .titlebar{grid-row:auto!important}
-  .hlrn>.tabs{grid-row:auto!important}
+  body.nascar-standings-hub{
+    height:auto!important;
+    min-height:100vh!important;
+    max-height:none!important;
+    overflow-y:auto!important;
+  }
+  .hlrn{
+    display:block!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:100vh!important;
+    max-height:none!important;
+    overflow:visible!important;
+    background:#fff!important;
+  }
   .viewport{
     position:relative!important;
     display:block!important;
     width:100%!important;
-    height:100%!important;
+    height:auto!important;
     min-height:0!important;
     max-height:none!important;
-    overflow:hidden!important;
+    overflow:visible!important;
     background:#fff!important;
   }
   iframe.page{
     display:none!important;
     width:100%!important;
-    height:100%!important;
+    height:1px!important;
     min-height:0!important;
     max-height:none!important;
     border:0!important;
-    overflow:auto!important;
+    overflow:hidden!important;
     background:#fff!important;
   }
   iframe.page.active{
     display:block!important;
-    height:100%!important;
-  }
-  @media(max-width:620px){
-    .hlrn{
-      height:calc(100dvh - 56px)!important;
-      min-height:520px!important;
-    }
   }
 </style>
-<script id="HLRN_RELIABLE_IFRAME_SCROLL_20260930_JS">
+<script id="HLRN_WHOLE_PAGE_SCROLL_FINAL_20260930_JS">
 (function(){
-  const INNER_ID='HLRN_SERIES_SCROLL_ENABLE_20260930';
-  function enable(frame){
-    if(!frame) return;
+  let timer=0;
+
+  function visible(el){
     try{
-      frame.setAttribute('scrolling','yes');
-      frame.style.setProperty('height','100%','important');
-      frame.style.setProperty('min-height','0','important');
-      frame.style.setProperty('overflow','auto','important');
+      const cs=el.ownerDocument.defaultView.getComputedStyle(el);
+      return cs.display!=="none" && cs.visibility!=="hidden";
+    }catch(e){ return true; }
+  }
+
+  function measureDoc(doc){
+    if(!doc || !doc.body || !doc.documentElement) return 180;
+
+    doc.documentElement.style.setProperty("height","auto","important");
+    doc.documentElement.style.setProperty("min-height","0","important");
+    doc.documentElement.style.setProperty("max-height","none","important");
+    doc.documentElement.style.setProperty("overflow","visible","important");
+    doc.body.style.setProperty("height","auto","important");
+    doc.body.style.setProperty("min-height","0","important");
+    doc.body.style.setProperty("max-height","none","important");
+    doc.body.style.setProperty("overflow","visible","important");
+
+    const top=doc.body.getBoundingClientRect().top;
+    let bottom=Math.max(
+      doc.body.getBoundingClientRect().bottom,
+      doc.documentElement.getBoundingClientRect().bottom
+    );
+
+    for(const el of doc.body.querySelectorAll("*")){
+      if(!visible(el)) continue;
+      const cs=doc.defaultView.getComputedStyle(el);
+      if(cs.position==="fixed") continue;
+      const r=el.getBoundingClientRect();
+      if(!Number.isFinite(r.bottom) || (r.width===0 && r.height===0)) continue;
+      bottom=Math.max(bottom,r.bottom);
+    }
+
+    return Math.max(
+      180,
+      doc.body.scrollHeight||0,
+      doc.body.offsetHeight||0,
+      doc.documentElement.scrollHeight||0,
+      doc.documentElement.offsetHeight||0,
+      Math.ceil(bottom-top)+8
+    );
+  }
+
+  function fit(frame){
+    if(!frame || !frame.classList.contains("active")) return;
+    try{
+      frame.setAttribute("scrolling","no");
+      frame.style.setProperty("overflow","hidden","important");
+      frame.style.setProperty("max-height","none","important");
+
       const doc=frame.contentDocument;
-      if(!doc || !doc.head || !doc.body) return;
+      if(!doc || !doc.body) return;
 
-      let st=doc.getElementById(INNER_ID);
-      if(!st){
-        st=doc.createElement('style');
-        st.id=INNER_ID;
-        doc.head.appendChild(st);
+      // Give Hosted a moment to resize its own nested active panel first.
+      try{
+        if(frame.id==="page-hosted" && typeof frame.contentWindow.resizeHostedFrame==="function"){
+          const active=doc.querySelector(".hosted-hub-frame.active");
+          const key=active ? String(active.id||"").replace("hostedFrame-","") : "racing";
+          frame.contentWindow.resizeHostedFrame(key||"racing");
+        }
+      }catch(e){}
+
+      const h=measureDoc(doc);
+      frame.style.setProperty("height",Math.ceil(h)+"px","important");
+      frame.style.setProperty("min-height",Math.ceil(h)+"px","important");
+
+      if(!frame.__hlrnWholePageBound){
+        frame.__hlrnWholePageBound=true;
+        frame.addEventListener("load",()=>schedule(true));
+
+        try{
+          const mo=new MutationObserver(()=>schedule(false));
+          mo.observe(doc.body,{childList:true,subtree:true,characterData:true,attributes:true});
+          frame.__hlrnWholePageMO=mo;
+        }catch(e){}
+
+        try{
+          if("ResizeObserver" in window){
+            const ro=new ResizeObserver(()=>schedule(false));
+            ro.observe(doc.body);
+            ro.observe(doc.documentElement);
+            frame.__hlrnWholePageRO=ro;
+          }
+        }catch(e){}
+
+        doc.addEventListener("load",()=>schedule(false),true);
+        doc.addEventListener("click",()=>schedule(true),true);
+        doc.addEventListener("change",()=>schedule(true),true);
       }
-      st.textContent=
-        'html,body{height:auto!important;min-height:100%!important;max-height:none!important;overflow-x:hidden!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-y:auto!important;}';
-
-      doc.documentElement.style.setProperty('overflow-y','auto','important');
-      doc.body.style.setProperty('overflow-y','auto','important');
-      doc.body.style.setProperty('height','auto','important');
-      doc.body.style.setProperty('max-height','none','important');
     }catch(e){}
   }
 
-  function run(){
-    document.querySelectorAll('iframe.page').forEach(frame=>{
-      if(!frame.__hlrnReliableScrollBound){
-        frame.__hlrnReliableScrollBound=true;
-        frame.addEventListener('load',()=>{enable(frame);setTimeout(()=>enable(frame),200);});
+  function fitActive(){
+    document.documentElement.style.setProperty("overflow-y","auto","important");
+    document.body.style.setProperty("overflow-y","auto","important");
+    document.body.style.setProperty("height","auto","important");
+
+    document.querySelectorAll("iframe.page").forEach(frame=>{
+      if(frame.classList.contains("active")) fit(frame);
+      else{
+        frame.style.setProperty("height","1px","important");
+        frame.style.setProperty("min-height","0","important");
       }
-      enable(frame);
     });
   }
 
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run,{once:true});
-  else run();
-  window.addEventListener('load',()=>{run();setTimeout(run,500)},{once:true});
-  document.addEventListener('click',()=>setTimeout(run,50),true);
+  function schedule(burst){
+    clearTimeout(timer);
+    timer=setTimeout(fitActive,40);
+    if(burst){
+      setTimeout(fitActive,160);
+      setTimeout(fitActive,450);
+      setTimeout(fitActive,900);
+      setTimeout(fitActive,1800);
+      setTimeout(fitActive,3200);
+    }
+  }
+
+  document.addEventListener("click",()=>schedule(true),true);
+  window.addEventListener("resize",()=>schedule(true));
+  if(document.readyState==="loading"){
+    document.addEventListener("DOMContentLoaded",()=>schedule(true),{once:true});
+  }else{
+    schedule(true);
+  }
+  window.addEventListener("load",()=>schedule(true),{once:true});
 })();
 </script>
 
