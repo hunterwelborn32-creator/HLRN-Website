@@ -110,9 +110,7 @@ function boot(){
     return out;
   }
   function driverUrl(league,d){
-    var name=pretty(d.driver||"");
-    var slug=String(name||"driver").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"")||"driver";
-    return u("drivers/"+slug+"/");
+    return window.HLRNDrivers?.profileUrl?.({driverId:d&&d.driverId,driver:d&&d.driver}) || u("drivers/");
   }
   function teamUrl(league,name){
     return u("teams/")+"?"+new URLSearchParams({league:league,team:name}).toString();
@@ -124,6 +122,7 @@ function boot(){
     var map=new Map();
     staticItems().forEach(function(x){add(map,x)});
     try{
+      if(window.HLRNDrivers?.load)await window.HLRNDrivers.load();
       var res=await fetch(u("data/hlrn.json"),{cache:"no-store"});
       if(!res.ok)throw new Error("data "+res.status);
       var data=await res.json();
@@ -180,6 +179,18 @@ function boot(){
           });
         });
       });
+      if(window.HLRNDrivers?.getAll){
+        window.HLRNDrivers.getAll().forEach(function(d){
+          add(map,{
+            type:"driver",
+            title:d.displayName||d.name||"HLRN Driver",
+            subtitle:(d.series||[]).map(function(x){return String(x).toUpperCase()}).join(" + ")+" DRIVER PROFILE",
+            url:d.url||u("drivers/"),
+            keywords:[d.rawName,d.displayName,d.name].concat(d.aliases||[]).concat(["driver","profile"].concat(d.series||[])).join(" "),
+            meta:"DRIVER PROFILE"
+          });
+        });
+      }
       index=Array.from(map.values());
       ready=true;
       status.textContent="SEARCH INDEX ONLINE";
