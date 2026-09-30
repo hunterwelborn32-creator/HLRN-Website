@@ -1600,7 +1600,12 @@ main{
         if(visible(child)) fit(child,depth+1);
       });
 
-      const h=measure(doc);
+      const measured=measure(doc);
+      const fallback =
+        frame.id==='page-hosted' ? 3000 :
+        frame.id==='page-sunday' ? 4300 :
+        frame.id==='page-monday' ? 4300 : 2600;
+      const h=Math.max(measured,fallback);
       frame.style.setProperty('height',h+'px','important');
       frame.style.setProperty('min-height',h+'px','important');
 
