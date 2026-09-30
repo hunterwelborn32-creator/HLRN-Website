@@ -113,6 +113,44 @@ class PublisherTests(unittest.TestCase):
         self.assertFalse(pub.publish(recap))
         self.assertFalse(pub.INDEX_PATH.exists())
 
+    def test_richer_frozen_copy_enriches_existing_race_without_new_url(self):
+        first = fixture()
+        first["lapSnapshots"] = first["lapSnapshots"][:2]
+        first["cautionHistory"][0]["reason"] = "Reason not supplied by iRacing telemetry"
+        first["cautionHistory"][0]["reasonSource"] = "UNAVAILABLE"
+
+        self.assertTrue(pub.publish(first))
+        index1 = json.loads(pub.INDEX_PATH.read_text(encoding="utf-8"))
+        self.assertEqual(len(index1["recaps"]), 1)
+        original = index1["recaps"][0]
+        original_slug = original["slug"]
+        original_published = original["publishedAt"]
+        original_quality = original["archiveQuality"]
+
+        richer = fixture()
+        richer["cautionHistory"][0]["endedUnderYellow"] = True
+        richer["cautionHistory"][0]["restartLap"] = None
+        self.assertTrue(pub.publish(richer))
+
+        index2 = json.loads(pub.INDEX_PATH.read_text(encoding="utf-8"))
+        self.assertEqual(len(index2["recaps"]), 1)
+        updated = index2["recaps"][0]
+        self.assertEqual(updated["slug"], original_slug)
+        self.assertEqual(updated["publishedAt"], original_published)
+        self.assertGreater(updated["archiveQuality"], original_quality)
+        self.assertIn("updatedAt", updated)
+
+        archive = json.loads((pub.DATA_DIR / f"{original_slug}.json").read_text(encoding="utf-8"))
+        self.assertEqual(archive["schemaVersion"], 2)
+        self.assertEqual(len(archive["recorder"]["lapSnapshots"]), 3)
+        self.assertTrue(archive["recorder"]["cautionHistory"][0]["endedUnderYellow"])
+
+        article = (pub.ARTICLE_DIR / original_slug / "index.html").read_text(encoding="utf-8")
+        self.assertIn("Finished under caution", article)
+
+        # Re-processing the exact same rich record is idempotent.
+        self.assertFalse(pub.publish(richer))
+
 
 if __name__ == "__main__":
     unittest.main()
