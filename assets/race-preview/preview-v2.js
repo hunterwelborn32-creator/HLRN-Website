@@ -48,7 +48,9 @@ function sameTrack(a,b){
   return !!x&&!!y&&(x===y||x.includes(y)||y.includes(x));
 }
 function leagueData(k){return state.snapshot?.leagues?.[k]||{drivers:[],teams:[],results:[]}}
-function driverUrl(k,d){return "../drivers/?"+new URLSearchParams({league:k,driverId:String(d?.driverId||d?.id||""),driver:pretty(d?.driver||d?.name||"")})}
+function driverUrl(k,d){
+  return window.HLRNDrivers?.profileUrl?.({driverId:d?.driverId||d?.id,driver:pretty(d?.driver||d?.name||"")}) || "../drivers/";
+}
 function teamUrl(k,name){return "../teams/?"+new URLSearchParams({league:k,team:String(name||"")})}
 function resultUrl(r){return "../results/?"+new URLSearchParams({league:r?.series||state.league,race:r?.key||""})}
 
@@ -236,6 +238,7 @@ async function json(url){
 async function init(){
   $$(".pv-tab").forEach(b=>b.addEventListener("click",()=>renderLeague(b.dataset.league,true)));
   try{
+    if(window.HLRNDrivers?.load)await window.HLRNDrivers.load();
     const loaded=await Promise.all([HLRNData.load(),json("../data/schedules-2026.json"),json("../data/derived/reports.json")]);
     state.snapshot=loaded[0];state.schedule=loaded[1];state.reports=loaded[2]?.reports||[];
     if(!params.get("league"))state.league=nearestLeague();
