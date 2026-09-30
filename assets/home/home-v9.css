@@ -500,3 +500,8 @@ html[data-hlrn-theme="light"] #h9NetworkState #h9NetworkStatus,
 html[data-hlrn-theme="light"] #h9NetworkState.is-live #h9NetworkStatus{
   color:#11161c!important;
 }
+/* HLRN_HOME_REMOVE_DAY_RED_DASH_20260930 */
+html[data-hlrn-theme="light"] .h9-score-brand:before{
+  display:none!important;
+  content:none!important;
+}
