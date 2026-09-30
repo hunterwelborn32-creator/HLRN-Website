@@ -286,6 +286,7 @@ input,select,button{color:#111!important}
 .loading,.message,.empty,.placeholder{background:#fff!important;color:#6f747a!important}
 iframe{background:#fff!important;color-scheme:light!important}
 </style>
+<script src="../assets/driver-system.js?v=20260930v3"></script>
 <script>
 function hlrnLightHostedDoc(markup){
   if(!markup) return markup;
@@ -365,6 +366,82 @@ function decodeHostedDoc(v){
 function hostedFrame(key){
   return document.getElementById("hostedFrame-"+key);
 }
+function hostedDriverSystem(){
+  if(window.HLRNDrivers)return window.HLRNDrivers;
+  try{if(window.parent&&window.parent.HLRNDrivers)return window.parent.HLRNDrivers;}catch(e){}
+  return null;
+}
+const hostedDriverLinkTimers={};
+async function linkHostedDriverNames(key){
+  const frame=hostedFrame(key),system=hostedDriverSystem();
+  if(!frame||!system||typeof system.load!=="function")return;
+  let doc;
+  try{doc=frame.contentDocument;}catch(e){return}
+  if(!doc||!doc.body)return;
+  await system.load();
+  const records=system.getAll?system.getAll():[];
+  const lookup=new Map(),names=[];
+  const add=(name,rec)=>{
+    const raw=String(name||"").trim();
+    if(!raw)return;
+    const k=raw.toLowerCase().replace(/[^a-z0-9]/g,"");
+    if(!k||lookup.has(k))return;
+    lookup.set(k,rec);
+    names.push(raw);
+  };
+  records.forEach(rec=>{
+    add(rec.rawName||rec.name,rec);
+    add(rec.displayName,rec);
+    (rec.aliases||[]).forEach(a=>add(a,rec));
+  });
+  names.sort((a,b)=>b.length-a.length);
+  if(!names.length)return;
+  const escRe=v=>String(v).replace(/[|\\{}()[\]^$+*?.-]/g,"\\function hostedFrame(key){
+  return document.getElementById("hostedFrame-"+key);
+}
+");
+  const rx=new RegExp("(^|[^A-Za-z0-9])("+names.map(escRe).join("|")+")(?![A-Za-z0-9])","gi");
+  const nf=doc.defaultView&&doc.defaultView.NodeFilter?doc.defaultView.NodeFilter:NodeFilter;
+  const walker=doc.createTreeWalker(doc.body,nf.SHOW_TEXT,{
+    acceptNode(node){
+      const p=node.parentElement;
+      if(!p||!String(node.nodeValue||"").trim())return nf.FILTER_REJECT;
+      if(p.closest("script,style,noscript,textarea,input,select,option,a,button,[contenteditable='true'],[data-hlrn-driver-linked]"))return nf.FILTER_REJECT;
+      return nf.FILTER_ACCEPT;
+    }
+  });
+  const nodes=[];
+  while(walker.nextNode())nodes.push(walker.currentNode);
+  nodes.forEach(node=>{
+    const text=String(node.nodeValue||"");
+    rx.lastIndex=0;
+    if(!rx.test(text))return;
+    rx.lastIndex=0;
+    const frag=doc.createDocumentFragment();
+    let last=0,m;
+    while((m=rx.exec(text))){
+      const prefix=m[1]||"",matched=m[2]||"",nameIndex=m.index+prefix.length;
+      if(nameIndex>last)frag.appendChild(doc.createTextNode(text.slice(last,nameIndex)));
+      const rec=lookup.get(matched.toLowerCase().replace(/[^a-z0-9]/g,""));
+      const url=rec&&system.profileUrl?system.profileUrl(rec):null;
+      if(url){
+        const a=doc.createElement("a");
+        a.href=url;a.target="_top";a.textContent=rec.displayName||rec.name||matched;
+        a.dataset.hlrnDriverLinked="1";
+        a.title="View "+(rec.displayName||rec.name||matched)+"'s HLRN driver profile";
+        a.style.color="inherit";a.style.textDecoration="none";a.style.borderBottom="1px solid rgba(227,24,55,.45)";
+        frag.appendChild(a);
+      }else frag.appendChild(doc.createTextNode(matched));
+      last=nameIndex+matched.length;
+    }
+    if(last<text.length)frag.appendChild(doc.createTextNode(text.slice(last)));
+    if(last>0)node.parentNode.replaceChild(frag,node);
+  });
+}
+function queueHostedDriverLinks(key){
+  clearTimeout(hostedDriverLinkTimers[key]);
+  hostedDriverLinkTimers[key]=setTimeout(()=>linkHostedDriverNames(key).catch(()=>{}),60);
+}
 function resizeHostedFrame(key){
   const frame=hostedFrame(key);
   if(!frame) return;
@@ -422,9 +499,17 @@ function loadHostedTab(key){
     hostedLoaded[key]=true;
     if(loading) loading.style.display="none";
     installHostedResize(key);
-    setTimeout(()=>resizeHostedFrame(key),80);
-    setTimeout(()=>resizeHostedFrame(key),350);
-    setTimeout(()=>resizeHostedFrame(key),900);
+    queueHostedDriverLinks(key);
+    setTimeout(()=>{resizeHostedFrame(key);queueHostedDriverLinks(key)},80);
+    setTimeout(()=>{resizeHostedFrame(key);queueHostedDriverLinks(key)},350);
+    setTimeout(()=>{resizeHostedFrame(key);queueHostedDriverLinks(key)},900);
+    try{
+      const doc=frame.contentDocument;
+      if(doc&&doc.body&&!frame.__hlrnHostedDriverLinks){
+        frame.__hlrnHostedDriverLinks=true;
+        new MutationObserver(()=>queueHostedDriverLinks(key)).observe(doc.body,{childList:true,subtree:true,characterData:true});
+      }
+    }catch(e){}
   };
   if(hostedLoaded[key]){
     finish();
