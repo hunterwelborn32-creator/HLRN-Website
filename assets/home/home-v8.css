@@ -1,6 +1,6 @@
 /* =========================================================
    HLRN HOME V8 — NETWORK / BROADCAST FRONT PAGE
-   Visible-home presentation only. Existing hidden data DOM remains intact.
+   Self-contained network / broadcast homepage. Legacy homepage DOM is no longer required.
    ========================================================= */
 :root{
   --h8-red:#e31837;
@@ -33,7 +33,7 @@ body.rd-v5.home-v8-page{
   font-family:var(--h8-body);
   overflow:hidden;
 }
-.home8 a{text-decoration:none}
+.home8 a{color:inherit;text-decoration:none}
 .home8-shell{width:min(1520px,calc(100% - 48px));margin:0 auto}
 
 /* NETWORK PULSE */
