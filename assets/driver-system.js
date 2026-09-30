@@ -9,7 +9,7 @@
   "use strict";
   if(global.HLRNDrivers && global.HLRNDrivers.version) return;
 
-  const VERSION="20260930v3";
+  const VERSION="20260930v4";
   const script=document.currentScript;
   let root;
   try{ root=new URL("../",script&&script.src?script.src:location.href); }
@@ -45,6 +45,15 @@
       .hlrn-race-deep-link{display:block;margin-top:4px;color:#e31837;font-size:7px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase}
       .hlrn-profile-team-link,.hlrn-profile-rank-link{color:inherit;text-decoration:none}
       .hlrn-profile-team-link:hover,.hlrn-profile-rank-link:hover{color:#e31837}
+      .hlrn-profile-frozen-records{margin-top:30px}
+      .hlrn-profile-frozen-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+      .hlrn-profile-frozen-card{display:block;background:#fff;border:1px solid #d9dde2;border-left:4px solid #e31837;padding:14px;color:#101318;text-decoration:none}
+      .hlrn-profile-frozen-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.08)}
+      .hlrn-profile-frozen-card small{display:block;color:#7d8690;font-size:7px;font-weight:1000;letter-spacing:.09em;text-transform:uppercase}
+      .hlrn-profile-frozen-card strong{display:block;margin-top:5px;font-size:13px;line-height:1.2}
+      .hlrn-profile-frozen-card span{display:block;margin-top:7px;color:#59616b;font-size:9px;font-weight:800}
+      .hlrn-profile-frozen-actions{display:flex;gap:10px;margin-top:8px;color:#e31837;font-size:8px;font-weight:1000;text-transform:uppercase}
+      @media(max-width:850px){.hlrn-profile-frozen-grid{grid-template-columns:1fr}}
     `;
     document.head.appendChild(el);
   }
@@ -244,6 +253,71 @@
     if(label&&value){label.textContent="Best Finish";value.textContent="P"+best;target.dataset.hlrnBestFinish="1";}
   }
 
+  async function enhanceFrozenProfileRecords(rec){
+    if(!rec||document.querySelector("[data-hlrn-frozen-records]")) return;
+    try{
+      const res=await fetch(absolute("data/race-recaps/index.json?v="+VERSION),{cache:"no-store"});
+      if(!res.ok)return;
+      const data=await res.json();
+      const items=Array.isArray(data?.recaps)?data.recaps:[];
+      if(!items.length)return;
+
+      const names=new Set(
+        [rec.rawName,rec.displayName,rec.name,...(rec.aliases||[])]
+          .map(normalize).filter(Boolean)
+      );
+      const matches=[];
+      for(const item of items){
+        const participants=Array.isArray(item?.drivers)?item.drivers:[];
+        let hit=participants.find(d=>names.has(normalize(typeof d==="string"?d:d?.name)));
+        if(!hit&&item?.winner&&names.has(normalize(item.winner.name))) hit={...item.winner,position:1};
+        if(!hit)continue;
+        matches.push({item,hit:typeof hit==="string"?{name:hit}:hit});
+        if(matches.length>=6)break;
+      }
+      if(!matches.length)return;
+
+      const section=document.createElement("section");
+      section.className="hlrn-profile-frozen-records";
+      section.dataset.hlrnFrozenRecords="1";
+
+      const head=document.createElement("div");
+      head.className="section-head";
+      head.innerHTML='<div><small>LIVE RECORDER ARCHIVE</small><h2>Frozen Race Records</h2></div><span>'+matches.length+' PERMANENT RECORD'+(matches.length===1?'':'S')+'</span>';
+
+      const grid=document.createElement("div");
+      grid.className="hlrn-profile-frozen-grid";
+      matches.forEach(({item,hit})=>{
+        const a=document.createElement("a");
+        a.className="hlrn-profile-frozen-card";
+        a.href=item.resultsUrl||absolute("results/?recap="+encodeURIComponent(item.slug||""));
+        const pos=Number(hit?.position);
+        const result=Number.isFinite(pos)&&pos>0?"P"+pos:"RECORDED";
+        const when=String(item.displayDate||"").trim();
+        const series=String(item.series||"HLRN").replace(/ Night Series$/i,"");
+        a.innerHTML='<small>'+escapeHtml(series)+(when?' • '+escapeHtml(when):'')+'</small>'+
+          '<strong>'+escapeHtml(item.track||"HLRN Race")+'</strong>'+
+          '<span>'+escapeHtml(result)+' • '+escapeHtml(item.winner?.name?"Winner: "+item.winner.name:"Frozen at checkered")+'</span>'+
+          '<div class="hlrn-profile-frozen-actions"><b>PERMANENT RESULTS →</b>'+(item.url?'<b>STORY AVAILABLE</b>':'')+'</div>';
+        grid.appendChild(a);
+      });
+
+      section.append(head,grid);
+      const actions=document.querySelector(".actions");
+      const main=document.querySelector("main.page")||document.querySelector("main")||document.body;
+      if(actions&&actions.parentNode)actions.parentNode.insertBefore(section,actions);
+      else main.appendChild(section);
+    }catch(err){
+      console.warn("HLRN frozen driver records unavailable",err);
+    }
+  }
+
+  function escapeHtml(value){
+    return String(value??"")
+      .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+  }
+
   function enhanceProfile(){
     const rec=currentProfile();
     if(!rec||!document.body||document.body.dataset.hlrnProfileEnhanced==="1") return;
@@ -311,6 +385,7 @@
     });
 
     scan(document.body);
+    enhanceFrozenProfileRecords(rec);
   }
 
   function activateInteractions(){
