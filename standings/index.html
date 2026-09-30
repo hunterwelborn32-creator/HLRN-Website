@@ -1569,15 +1569,20 @@ main{
     );
     try{
       const top=b.getBoundingClientRect().top;
-      let bottom=b.getBoundingClientRect().bottom;
-      Array.from(b.children).forEach(el=>{
-        if(!visible(el)) return;
+      let bottom=Math.max(b.getBoundingClientRect().bottom,d.getBoundingClientRect().bottom);
+      const all=Array.from(b.querySelectorAll('*'));
+      for(const el of all){
+        if(!visible(el)) continue;
+        const cs=doc.defaultView.getComputedStyle(el);
+        if(cs.position==='fixed') continue;
         const r=el.getBoundingClientRect();
+        if(!Number.isFinite(r.bottom) || (r.width===0 && r.height===0)) continue;
         bottom=Math.max(bottom,r.bottom);
-      });
-      h=Math.max(h,Math.ceil(bottom-top));
+      }
+      const geometry=Math.ceil(bottom-top);
+      if(Number.isFinite(geometry) && geometry>0) h=Math.max(h,geometry);
     }catch(e){}
-    return Math.max(180,Math.ceil(h+4));
+    return Math.max(180,Math.min(50000,Math.ceil(h+12)));
   }
 
   function fit(frame,depth){
@@ -1602,6 +1607,15 @@ main{
       if(!frame.__hlrnV3Load){
         frame.__hlrnV3Load=true;
         frame.addEventListener('load',()=>schedule(true));
+      }
+      if(!doc.__hlrnV3MutationWatch){
+        doc.__hlrnV3MutationWatch=true;
+        try{
+          const mo=new MutationObserver(()=>schedule(false));
+          mo.observe(doc.body,{childList:true,subtree:true,characterData:true});
+          doc.__hlrnV3MO=mo;
+        }catch(e){}
+        doc.addEventListener('load',()=>schedule(false),true);
       }
       return h;
     }catch(e){
@@ -1633,6 +1647,8 @@ main{
       setTimeout(fitActive,450);
       setTimeout(fitActive,1000);
       setTimeout(fitActive,2000);
+      setTimeout(fitActive,4000);
+      setTimeout(fitActive,7000);
     }
   }
 
