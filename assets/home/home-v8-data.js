@@ -90,6 +90,21 @@
     rows.sort((a,b)=>Date.parse(b.date||0)-Date.parse(a.date||0));
     return rows[0]||null;
   };
+  const matchingRecap=(report,index)=>{
+    if(!report)return null;
+    const rows=Array.isArray(index?.recaps)?index.recaps:[];
+    const track=String(report.track||"").trim().toLowerCase();
+    const series=String(report.series||"").trim().toLowerCase();
+    const reportDate=report.date?new Date(report.date):null;
+    return rows.find(r=>{
+      const sameSeries=!series||String(r.series||"").toLowerCase().includes(series);
+      const sameTrack=!track||String(r.track||"").trim().toLowerCase()===track;
+      if(!sameSeries||!sameTrack)return false;
+      if(!reportDate||!r.raceFrozenAt)return true;
+      const recapDate=new Date(r.raceFrozenAt);
+      return Number.isFinite(recapDate.getTime())&&Math.abs(recapDate-reportDate)<48*60*60*1000;
+    })||null;
+  };
   const reportLaps=(report,schedule)=>{
     if(!report||!report.series||report.raceNumber==null)return null;
     const rows=schedule?.leagues?.[report.series]||[];
@@ -118,7 +133,7 @@
       setDriverLink("rdTopDriverLink",topName,"standings/");
     }
   }
-  function renderLatest(report,schedule){
+  function renderLatest(report,schedule,recapIndex){
     if(!report)return;
     const winner=pretty(report.winner?.name||report.winnerName||"");
     const track=String(report.track||"LATEST HLRN RESULT").trim();
@@ -135,7 +150,12 @@
     put("rdLastDate",longDate(report.date));
     put("rdLastDrivers",drivers>0?String(drivers):"--");
     put("rdLastLaps",laps!=null?String(laps):"--");
-    put("rdLastCautions","--");
+    const recap=matchingRecap(report,recapIndex);
+    const cautionValue =
+      Number.isFinite(Number(report?.cautions)) ? Number(report.cautions) :
+      Number.isFinite(Number(recap?.cautions)) ? Number(recap.cautions) :
+      null;
+    put("rdLastCautions",cautionValue!=null?String(cautionValue):"N/A");
     put("rdLeadHeadline",winner?winner+" WINS AT "+track:"HIGH LINE RACING NETWORK");
     const bits=[];
     if(report.date)bits.push(longDate(report.date));
@@ -193,12 +213,13 @@
       if(window.HLRNDrivers?.load)await window.HLRNDrivers.load();
       const snapshot=window.HLRNData?await window.HLRNData.load():await json("data/hlrn.json");
       renderSnapshot(snapshot);
-      const [schedule,reports]=await Promise.all([
+      const [schedule,reports,recaps]=await Promise.all([
         json("data/schedules-2026.json"),
-        json("data/derived/reports.json")
+        json("data/derived/reports.json"),
+        json("data/race-recaps/index.json").catch(()=>({recaps:[]}))
       ]);
       renderSchedule(schedule);
-      renderLatest(latestReport(reports),schedule);
+      renderLatest(latestReport(reports),schedule,recaps);
       relinkDrivers();
     }catch(err){
       console.warn("HLRN homepage data unavailable",err);
