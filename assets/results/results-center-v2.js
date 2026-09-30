@@ -49,7 +49,7 @@ function filteredReports(){
   return state.filter==="all"?list:list.filter(function(r){return r.series===state.filter})
 }
 function driverUrl(series,row){
-  return "../drivers/?league="+encodeURIComponent(series)+"&driverId="+encodeURIComponent(row&&row.id||"")+"&driver="+encodeURIComponent(row&&row.name||"");
+  return window.HLRNDrivers?.profileUrl?.({driverId:row&&row.id,driver:row&&row.name}) || "../drivers/";
 }
 
 function recorderCount(r,key){
