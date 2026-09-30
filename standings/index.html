@@ -1605,7 +1605,7 @@ main{
 
         try{
           const mo=new MutationObserver(()=>schedule(false));
-          mo.observe(doc.body,{childList:true,subtree:true,characterData:true,attributes:true});
+          mo.observe(doc.body,{childList:true,subtree:true,characterData:true});
           frame.__hlrnWholePageMO=mo;
         }catch(e){}
 
