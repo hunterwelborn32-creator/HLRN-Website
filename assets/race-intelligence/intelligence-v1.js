@@ -97,8 +97,41 @@ function hLrnDriverIdentity(driverOrName){
   return window.HLRNDrivers?.resolve?.(driverOrName) || null;
 }
 
-function hLrnDriverPhoto(driverOrName,type="cutout"){
-  return window.HLRNDrivers?.photoUrl?.(driverOrName,type) || "";
+function hLrnPhotoSlug(driverOrName){
+  const rec=hLrnDriverIdentity(driverOrName);
+  let slug=String(
+    rec?.photoSlug ||
+    (driverOrName && typeof driverOrName==="object" ? driverOrName.photoSlug : "") ||
+    ""
+  ).trim();
+
+  if(!slug){
+    const raw=typeof driverOrName==="string"
+      ? formatDriverName(driverOrName)
+      : formatDriverName(driverOrName?.name || driverOrName?.driver || "");
+    slug=String(raw||"")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g,"-")
+      .replace(/^-+|-+$/g,"");
+  }
+
+  const fixes={
+    "aaron-treubig":"aaron-truebig",
+    "david-durand-jr":"david-durand",
+    "zach-harry":"zack-harry"
+  };
+  return fixes[slug] || slug;
+}
+
+function hLrnDriverPhoto(driverOrName,type="full"){
+  const slug=hLrnPhotoSlug(driverOrName);
+  if(!slug) return "";
+
+  if(String(type||"full").toLowerCase()==="full"){
+    return "/assets/driver-photos/full/"+encodeURIComponent(slug)+".webp";
+  }
+
+  return "/assets/driver-photos/full/"+encodeURIComponent(slug)+".webp";
 }
 
 function hLrnDriverProfileUrl(driverOrName){
@@ -131,7 +164,7 @@ function hLrnPhotoMarkup(driverOrName,type,className){
 }
 
 function hLrnDriverPhotoMarkup(driverOrName,className){
-  return hLrnPhotoMarkup(driverOrName,"cutout",className);
+  return hLrnPhotoMarkup(driverOrName,"full",className);
 }
 
 async function sharedLeagueData(league){
@@ -801,8 +834,8 @@ function renderStorylines(){
   }
 
   grid.innerHTML = unique.slice(0,6).map(story=>`
-    <article class="story-card ${hLrnDriverPhoto(story.driver,"cutout") ? "has-driver-photo" : ""}">
-      ${hLrnPhotoMarkup(story.driver,"cutout","hlrn-story-cutout")}
+    <article class="story-card ${hLrnDriverPhoto(story.driver,"full") ? "has-driver-photo" : ""}">
+      ${hLrnPhotoMarkup(story.driver,"full","hlrn-story-full-photo")}
       <div class="story-kicker">${esc(story.kicker)}</div>
       <h3>${hLrnStoryTitleMarkup(story)}</h3>
       <p>${esc(story.body)}</p>
@@ -1007,7 +1040,7 @@ function showCategoryDeepDive(category){
 
   document.getElementById("deepLabel").textContent = (cfg.title || "Situation") + " Deep Dive";
   document.getElementById("deepTitle").innerHTML = hLrnDriverNameMarkup(d);
-  document.getElementById("deepDriverPhoto").innerHTML = hLrnPhotoMarkup(d,"cutout","hlrn-feature-cutout");
+  document.getElementById("deepDriverPhoto").innerHTML = hLrnPhotoMarkup(d,"full","hlrn-feature-full-photo");
   document.getElementById("deepSummary").textContent = summary;
   document.getElementById("deepPill").textContent = pill || "Live Analysis";
 
@@ -1042,7 +1075,7 @@ function showDriver(category){
   document.getElementById("detailWrap").style.display="block";
   document.getElementById("detailEyebrow").textContent = cfg.title;
   document.getElementById("detailName").innerHTML = hLrnDriverNameMarkup(d);
-  document.getElementById("detailDriverPhoto").innerHTML = hLrnPhotoMarkup(d,"cutout","hlrn-feature-cutout");
+  document.getElementById("detailDriverPhoto").innerHTML = hLrnPhotoMarkup(d,"full","hlrn-feature-full-photo");
   document.getElementById("detailCategory").textContent = category.reason;
   document.getElementById("detailScore").textContent = Math.round(d.overall);
 
