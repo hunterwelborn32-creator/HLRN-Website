@@ -30,7 +30,7 @@ DRIVERS_INDEX = ROOT / "drivers" / "index.html"
 MANIFEST_PATH = ROOT / "data" / "driver-pages.json"
 DRIVERS_ROOT = ROOT / "drivers"
 ORIGIN = "https://highlineracingnetwork.com"
-PHOTO_BASE = "https://raw.githubusercontent.com/hunterwelborn32-creator/HLRN-App/main/driver-photos/cutout/"
+PHOTO_BASE = "/assets/driver-photos/cutout/"
 
 SERIES_LABEL = {
     "sunday": "Sunday Night League",
