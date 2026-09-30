@@ -156,7 +156,8 @@ async function init(){
   $("myhGate").hidden=true;$("myhDashboard").hidden=false;
   text("myhName",displayName(login.driver));
   text("myhDiscord",login.discordUsername?"SIGNED IN VIA DISCORD • @"+login.discordUsername:login.discordDisplayName?"SIGNED IN VIA DISCORD • "+login.discordDisplayName:"SIGNED-IN HLRN DRIVER ACCOUNT");
-  $("myhProfileLink").href="../drivers/?driver="+encodeURIComponent(displayName(login.driver));
+  if(window.HLRNDrivers?.load)await window.HLRNDrivers.load();
+  $("myhProfileLink").href=window.HLRNDrivers?.profileUrl?.(login.driver)||"../drivers/";
 
   try{
     const [profileData,numberData,scheduleData,snapshot]=await Promise.all([
