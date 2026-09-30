@@ -1631,6 +1631,36 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif!important}
 </style>
 
 <meta name="theme-color" content="#07090d">
+
+<style id="HLRN_LIVE_DAY_TEXT_FIX_20260930">
+/* 1) Session-flow circle numbers are always white. */
+.session-flow .flow-step .flow-num,
+.session-flow .flow-step.active .flow-num,
+.session-flow .flow-step.done .flow-num,
+.session-flow .flow-step.final .flow-num{
+  color:#fff!important;
+}
+
+/* 2) Day Mode Session Leader identity/details use readable black text. */
+html[data-hlrn-theme="light"] .rc-leader-hero .rc-leader-copy,
+html[data-hlrn-theme="light"] .rc-leader-hero .rc-kicker,
+html[data-hlrn-theme="light"] .rc-leader-hero .rc-leader-number,
+html[data-hlrn-theme="light"] .rc-leader-hero .rc-leader-name{
+  color:#111!important;
+  text-shadow:none!important;
+}
+html[data-hlrn-theme="light"] .rc-leader-hero .rc-pill{
+  background:#fff!important;
+  border-color:#cfd6de!important;
+  color:#111!important;
+}
+
+/* 3) Small HLRN LIVE label on the dark ticker stays white. */
+#liveTickerBar .live-ticker-kicker,
+#liveTickerBar #liveTickerLabel{
+  color:#fff!important;
+}
+</style>
 </head>
 <body>
 
