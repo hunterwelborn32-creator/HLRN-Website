@@ -298,7 +298,7 @@ function start(){
     if(u.hostname===location.hostname){
       let dest=null;
       if(lp.includes("/race-intelligence/"))dest="race-intelligence/";
-      else if(lp.includes("/broadcasters/"))dest="broadcast/";
+      else if(lp.includes("/broadcasters/"))dest="broadcasters/";
       else if(lp.includes("/schedule/"))dest="results/";
       if(dest){e.preventDefault();location.href=url(dest);return;}
     }
@@ -311,7 +311,7 @@ function start(){
       else if(lp.includes("schedule")||lp.includes("results"))dest="results/";
       else if(lp.includes("news"))dest="news/";
       else if(lp.includes("rules"))dest="rules/";
-      else if(lp.includes("broadcast"))dest="broadcast/";
+      else if(lp.includes("broadcast"))dest="broadcasters/";
       else if(lp.includes("store"))dest="store/";
       else if(lp.includes("driver"))dest="drivers/";
       else if(lp.includes("adventure"))dest="adventures/";
@@ -369,7 +369,7 @@ function start(){
       <div class="hgf-inner">
         <div class="hgf-brand"><span class="hgf-mark">HL</span><span><strong>High Line Racing Network</strong><small>Where the racing never stops</small></span></div>
         <nav class="hgf-links" aria-label="HLRN footer navigation">
-          <a href="${url("live/")}">Live</a><a href="${url("standings/")}">Standings</a><a href="${url("drivers/")}">Drivers</a><a href="${url("news/")}">News</a><a href="${url("adventures/")}">Adventures</a><a href="${url("broadcast/")}">Broadcasts</a>
+          <a href="${url("live/")}">Live</a><a href="${url("standings/")}">Standings</a><a href="${url("drivers/")}">Drivers</a><a href="${url("news/")}">News</a><a href="${url("adventures/")}">Adventures</a><a href="${url("broadcasters/")}">Broadcasts</a>
         </nav>
         <div class="hgf-copy">© ${year} HLRN<br>High Line Racing Network</div>
       </div>`;
