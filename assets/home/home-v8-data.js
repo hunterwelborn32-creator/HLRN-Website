@@ -106,6 +106,46 @@
     window.HLRNDrivers.load().then(()=>window.HLRNDrivers.scan?.(document.getElementById("hlrnRaceDayHome")||document.body)).catch(()=>{});
   }
 
+  let liveSocket=null;
+  let liveReconnectTimer=null;
+
+  function setNetworkLive(isLive){
+    const label=$("h9NetworkStatus");
+    const dot=$("h9NetworkDot");
+    if(label) label.textContent=isLive?"HLRN LIVE":"HLRN NETWORK";
+    if(dot) dot.classList.toggle("is-live",!!isLive);
+  }
+
+  function connectLiveStatus(){
+    clearTimeout(liveReconnectTimer);
+    if(liveSocket){
+      try{liveSocket.close()}catch(_){}
+      liveSocket=null;
+    }
+    setNetworkLive(false);
+    try{
+      const ws=new WebSocket("wss://hlrn-live-feed.onrender.com/ws?role=viewer");
+      liveSocket=ws;
+      ws.onmessage=event=>{
+        try{
+          const msg=JSON.parse(event.data);
+          if(msg?.type==="state"){
+            setNetworkLive(msg?.data?.online===true);
+          }
+        }catch(_){}
+      };
+      ws.onerror=()=>setNetworkLive(false);
+      ws.onclose=()=>{
+        if(liveSocket===ws)liveSocket=null;
+        setNetworkLive(false);
+        liveReconnectTimer=setTimeout(connectLiveStatus,15000);
+      };
+    }catch(_){
+      setNetworkLive(false);
+      liveReconnectTimer=setTimeout(connectLiveStatus,15000);
+    }
+  }
+
   async function refresh(){
     try{
       const snapshot=window.HLRNData?await window.HLRNData.load():await json("data/hlrn.json");
@@ -122,6 +162,8 @@
     }
   }
   function start(){
+    setNetworkLive(false);
+    connectLiveStatus();
     refresh();
     setInterval(()=>{if(document.visibilityState==="visible")refresh()},300000);
     document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")refresh()});
