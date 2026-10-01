@@ -1,0 +1,181 @@
+name: HLRN Network Control
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "Network state"
+        required: true
+        type: choice
+        default: auto
+        options:
+          - auto
+          - race-day
+          - practice
+          - qualifying
+          - live
+          - checkered
+          - final
+          - off
+      series:
+        description: "Active league"
+        required: true
+        type: choice
+        default: auto
+        options:
+          - auto
+          - sunday
+          - monday
+      headline:
+        description: "Optional network headline"
+        required: false
+        type: string
+      note:
+        description: "Optional Race Control note"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: hlrn-network-control
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      ACTION: ${{ inputs.action }}
+      SERIES: ${{ inputs.series }}
+      HEADLINE: ${{ inputs.headline }}
+      NOTE: ${{ inputs.note }}
+      ACTOR: ${{ github.actor }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Update network control state
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          write_state() {
+            python - <<'PY'
+          import json
+          import os
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          path = Path("data/network-control.json")
+          try:
+              current = json.loads(path.read_text(encoding="utf-8"))
+          except Exception:
+              current = {
+                  "schemaVersion": 1,
+                  "enabled": False,
+                  "mode": "auto",
+                  "series": "auto",
+                  "headline": "",
+                  "note": "",
+                  "source": "automatic",
+                  "updatedAt": None,
+                  "updatedBy": None,
+              }
+
+          action = (os.environ.get("ACTION") or "auto").strip().lower()
+          requested_series = (os.environ.get("SERIES") or "auto").strip().lower()
+          headline = (os.environ.get("HEADLINE") or "").strip()
+          note = (os.environ.get("NOTE") or "").strip()
+          actor = (os.environ.get("ACTOR") or "github-actions").strip()
+
+          valid_modes = {"auto", "race-day", "practice", "qualifying", "live", "checkered", "final", "off"}
+          valid_series = {"auto", "sunday", "monday"}
+          if action not in valid_modes:
+              raise SystemExit(f"Unsupported network action: {action}")
+          if requested_series not in valid_series:
+              raise SystemExit(f"Unsupported series: {requested_series}")
+
+          if action in {"auto", "off"}:
+              enabled = False
+              mode = "auto"
+              series = "auto"
+              source = "automatic"
+              if action == "off":
+                  headline = ""
+                  note = ""
+          else:
+              enabled = True
+              mode = action
+              source = "manual"
+              if requested_series == "auto":
+                  existing = str(current.get("series") or "auto").lower()
+                  series = existing if existing in {"sunday", "monday"} else "sunday"
+              else:
+                  series = requested_series
+
+          if mode == "live" and not headline:
+              headline = f"{series.upper()} NIGHT • RACE MODE ACTIVE"
+          elif mode == "checkered" and not headline:
+              headline = "CHECKERED FLAG • RESULTS UNDER REVIEW"
+          elif mode == "final" and not headline:
+              headline = "OFFICIAL RESULTS POSTED"
+          elif mode == "race-day" and not headline:
+              headline = f"{series.upper()} NIGHT • RACE DAY"
+
+          state = {
+              "schemaVersion": 1,
+              "enabled": enabled,
+              "mode": mode,
+              "series": series,
+              "headline": headline,
+              "note": note,
+              "source": source,
+              "updatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
+              "updatedBy": actor,
+          }
+          path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(json.dumps(state, indent=2) + "\n", encoding="utf-8")
+          print(json.dumps(state, indent=2))
+          PY
+          }
+
+          git config user.name "hlrn-network-control"
+          git config user.email "actions@users.noreply.github.com"
+
+          write_state
+          git add data/network-control.json
+
+          if git diff --cached --quiet; then
+            echo "Network state is already current."
+            exit 0
+          fi
+
+          git commit -m "Set HLRN network mode: $ACTION"
+
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main
+
+            if ! git rebase origin/main; then
+              git rebase --abort || true
+              git reset --hard origin/main
+              write_state
+              git add data/network-control.json
+              if git diff --cached --quiet; then
+                echo "Latest main already contains the requested network state."
+                exit 0
+              fi
+              git commit -m "Set HLRN network mode: $ACTION"
+            fi
+
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+
+            sleep $((attempt * 2))
+          done
+
+          echo "Could not publish the HLRN network state after retries."
+          exit 1
