@@ -921,16 +921,21 @@ function queueHostedDriverLinks(key){
 }
 function resizeHostedFrame(key){
   const frame=hostedFrame(key);
-  if(!frame) return;
+  if(!frame || !frame.classList.contains("active")) return;
   try{
     const doc=frame.contentDocument;
     if(!doc || !doc.body || !doc.documentElement) return;
+    if(doc.documentElement.classList.contains("hlrn-profile-open")) return;
     doc.documentElement.style.setProperty("height","auto","important");
     doc.documentElement.style.setProperty("min-height","0","important");
     doc.body.style.setProperty("height","auto","important");
     doc.body.style.setProperty("min-height","0","important");
     doc.body.style.setProperty("overflow-x","hidden","important");
     doc.body.style.setProperty("overflow-y","visible","important");
+    // Collapse the old viewport before measuring so shorter tabs can shrink.
+    // Root scrollHeight is otherwise at least the previous iframe height.
+    frame.style.setProperty("min-height","0","important");
+    frame.style.setProperty("height","1px","important");
     const h=Math.max(
       doc.body.scrollHeight||0,
       doc.body.offsetHeight||0,
@@ -939,11 +944,8 @@ function resizeHostedFrame(key){
       180
     );
     const targetHeight=Math.ceil(h+2);
-    const previousHeight=Number(frame.dataset.hlrnLastHeight||0);
-    if(Math.abs(targetHeight-previousHeight)>2){
-      frame.dataset.hlrnLastHeight=String(targetHeight);
-      frame.style.setProperty("height",targetHeight+"px","important");
-    }
+    frame.dataset.hlrnLastHeight=String(targetHeight);
+    frame.style.setProperty("height",targetHeight+"px","important");
     frame.style.setProperty("min-height","0","important");
     frame.style.setProperty("position","relative","important");
     frame.style.setProperty("inset","auto","important");
