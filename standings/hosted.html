@@ -320,6 +320,46 @@ function hlrnHostedDarkModeActive(){
 }
 
 const HLRN_HOSTED_LIGHT_DASHBOARD_CSS = `
+/* Driver Statistics: light mode surfaces and readable text. */
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="drivers"]{
+  --stats-ink:#000;
+}
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="drivers"] body,
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="drivers"] body :is(
+  main,.hlrn-top,.hlrn-top-inner,.stats-ticker,.ticker-label,.ticker-window,
+  .ticker-track,.ticker-network,.hero,.container,.section,
+  .section-title,.cards,.card,.controls,.driver-card-list,.driver-stat-card,
+  .driver-stat-card-header,.driver-stat-grid,.driver-stat,.driver-stat-rank,
+  .leader-grid,.leader-card,.incident-container,.incident-title,.incident-top10,
+  .incident-row,.incident-rank,.incident-streak-section,.incident-streak-grid,
+  .incident-streak-card,.incident-average-table,.incident-average-header,
+  .incident-average-item,.reliability-grid,.reliability-card,.pagination,
+  .incident-pagination,.footer,.nav,.nav button,.search,.incident-search,
+  input,select,textarea,button,.table-wrap,.table-head,.table-row,
+  .table-row>.driver,table,thead,tbody,tr,th,td
+){
+  background:#fff!important;background-image:none!important;
+  color:#000!important;border-color:#d9dde2!important;box-shadow:none!important;
+}
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="drivers"] body *,
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="drivers"] body :is(
+  .driver-stat-card,.incident-container,.leader-card,.reliability-card,
+  .hlrn-top,.stats-ticker,.footer
+) *{
+  color:#000!important;-webkit-text-fill-color:#000!important;text-shadow:none!important;
+}
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="drivers"] input::placeholder{
+  color:#000!important;-webkit-text-fill-color:#000!important;opacity:1!important;
+}
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="drivers"] :is(
+  body,.hlrn-top,.hero,.footer
+)::before,
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="drivers"] :is(
+  body,.hlrn-top,.hero,.footer
+)::after{
+  background:none!important;color:#000!important;box-shadow:none!important;
+}
+
 /* Hosted dashboard light presentation, including theme changes after load. */
 html[data-hlrn-theme="light"] body :is(.ops-dashboard,.hx-telemetry,.hx-intel,.hx-podium,.hx-pulse-grid){
   display:grid!important;
@@ -348,6 +388,7 @@ html[data-hlrn-theme="light"] body .ops-stat::after{
 
 function hlrnLightHostedDoc(markup,key){
   if(!markup) return markup;
+  markup=markup.replace(/<html\b/i,'<html data-hlrn-hosted-view="'+key+'"');
   const dark=hlrnHostedDarkModeActive();
   const css=`
 :root{color-scheme:light!important;--hlrn-light-bg:#fff;--hlrn-light-ink:#111214;--hlrn-light-line:#d9dde1;}
