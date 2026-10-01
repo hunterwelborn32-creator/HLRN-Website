@@ -721,3 +721,87 @@ html.hlrn-performance-v2 :where(
   }
 }
 
+/* HLRN SECONDARY MOBILE AUDIT 20261001 */
+@media(max-width:760px){
+  /* Fantasy */
+  html[data-hlrn-route="fantasy"] #app{
+    width:100%!important;
+    max-width:100%!important;
+    padding-left:7px!important;
+    padding-right:7px!important;
+  }
+  html[data-hlrn-route="fantasy"] :where(.grid,.driver-grid,.entry-grid,.cards){
+    grid-template-columns:1fr!important;
+  }
+  html[data-hlrn-route="fantasy"] .modalbox{
+    width:calc(100% - 14px)!important;
+    max-height:90dvh!important;
+    overflow:auto!important;
+  }
+
+  /* My HLRN */
+  html[data-hlrn-route="my-hlrn"] .myh-page{
+    width:calc(100% - 14px)!important;
+    max-width:100%!important;
+  }
+  html[data-hlrn-route="my-hlrn"] :where(.myh-hero,.myh-overview,.myh-champ-grid,.myh-grid){
+    grid-template-columns:1fr!important;
+  }
+  html[data-hlrn-route="my-hlrn"] .myh-hero-copy{
+    padding-left:16px!important;
+    padding-right:16px!important;
+  }
+
+  /* Race Preview */
+  html[data-hlrn-route="race-preview"] :where(.pv-shell,.pv-main){
+    width:calc(100% - 14px)!important;
+    max-width:100%!important;
+  }
+  html[data-hlrn-route="race-preview"] :where(.pv-mast-grid,.pv-count-grid,.pv-race-hero,.pv-grid){
+    grid-template-columns:1fr!important;
+  }
+  html[data-hlrn-route="race-preview"] .pv-actions{
+    flex-wrap:wrap!important;
+  }
+
+  /* Race Reports */
+  html[data-hlrn-route="race-reports"] :where(.wrap,.mastinner){
+    width:calc(100% - 14px)!important;
+    max-width:100%!important;
+  }
+  html[data-hlrn-route="race-reports"] :where(.grid,.reports-grid){
+    grid-template-columns:1fr!important;
+  }
+  html[data-hlrn-route="race-reports"] .reportsToolbar{
+    overflow-x:auto!important;
+    -webkit-overflow-scrolling:touch!important;
+  }
+
+  /* Race recap archive (nested under News route) */
+  html[data-hlrn-route="news"] body:has(#hlrn-recap-section) .page{
+    width:calc(100% - 14px)!important;
+    max-width:100%!important;
+  }
+  html[data-hlrn-route="news"] #hlrn-recap-grid{
+    grid-template-columns:1fr!important;
+  }
+
+  /* Adventures episode/story pages */
+  html[data-hlrn-route="adventures"] :where(.hero-inner,.wrap,.story,.chapter){
+    max-width:100%!important;
+  }
+  html[data-hlrn-route="adventures"] :where(.gallery,.chapter-grid,.story-grid){
+    grid-template-columns:1fr!important;
+  }
+  html[data-hlrn-route="adventures"] .hero-actions{
+    flex-wrap:wrap!important;
+  }
+
+  /* Safe horizontal data surfaces across audited pages. */
+  html.hlrn-mobile-audit-v2 :where(.table-wrap,.table-shell,.history-wrap){
+    max-width:100%!important;
+    overflow-x:auto!important;
+    -webkit-overflow-scrolling:touch!important;
+  }
+}
+
