@@ -877,7 +877,7 @@ function start(){
         </div>
       </div>
       <button class="hgn-login" type="button" aria-label="HLRN Driver Login">DRIVER LOGIN</button>
-      <button class="hgn-theme-toggle" type="button" aria-label="Switch to Night Race theme"><span class="hgn-theme-icon">☾</span><span class="hgn-theme-label">NIGHT RACE</span></button>
+      <button class="hgn-theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Day Race theme is active"><span class="hgn-theme-switch" aria-hidden="true"><span class="hgn-theme-knob"></span></span><span class="hgn-theme-copy"><span class="hgn-theme-label">DAY RACE</span><span class="hgn-theme-status">OFF</span></span></button>
       <a class="hgn-live" href="${url("live/")}"><i></i> RACE CENTER</a>
       <button class="hgn-menu" type="button" aria-expanded="false" aria-label="Open HLRN navigation">☰</button>
       <div class="hgn-account-panel" hidden>
@@ -892,7 +892,7 @@ function start(){
     <div class="hgn-mobile">
       ${mobilePrimary}
       <button class="hgn-mobile-login" type="button">DRIVER LOGIN</button>
-      <button class="hgn-mobile-theme" type="button" aria-label="Switch to Night Race theme"><span class="hgn-theme-icon">☾</span><span class="hgn-theme-label">NIGHT RACE</span></button>
+      <button class="hgn-mobile-theme" type="button" role="switch" aria-checked="false" aria-label="Day Race theme is active"><span class="hgn-theme-switch" aria-hidden="true"><span class="hgn-theme-knob"></span></span><span class="hgn-theme-copy"><span class="hgn-theme-label">DAY RACE</span><span class="hgn-theme-status">OFF</span></span></button>
       <button class="hgn-mobile-more" type="button" aria-expanded="false">MORE <span>▾</span></button>
       <div class="hgn-mobile-more-menu">${mobileMore}</div>
     </div>`;
@@ -908,13 +908,15 @@ function start(){
   function syncThemeButtons(){
     const theme=readTheme();
     themeButtons.forEach(btn=>{
-      const icon=btn.querySelector(".hgn-theme-icon");
       const label=btn.querySelector(".hgn-theme-label");
-      if(icon) icon.textContent=theme==="dark"?"☀":"☾";
-      if(label) label.textContent=theme==="dark"?"DAY RACE":"NIGHT RACE";
-      btn.setAttribute("aria-pressed",String(theme==="dark"));
-      btn.setAttribute("data-race-theme",theme==="dark"?"day":"night");
-      btn.setAttribute("aria-label",theme==="dark"?"Switch to Day Race theme":"Switch to Night Race theme");
+      const status=btn.querySelector(".hgn-theme-status");
+      const nightActive=theme==="dark";
+      if(label) label.textContent=nightActive?"NIGHT RACE":"DAY RACE";
+      if(status) status.textContent=nightActive?"ON":"OFF";
+      btn.setAttribute("aria-pressed",String(nightActive));
+      btn.setAttribute("aria-checked",String(nightActive));
+      btn.setAttribute("data-race-theme",nightActive?"night":"day");
+      btn.setAttribute("aria-label",nightActive?"Night Race theme is on. Switch to Day Race.":"Day Race theme is active. Switch to Night Race.");
     });
   }
 
