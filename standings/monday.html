@@ -1765,7 +1765,22 @@ input,select,button{color:#111!important}
 iframe{background:#fff!important;color-scheme:light!important}
 `;
   const tag='<style id="HLRN_STATIC_LIGHT_INNER">'+css+'</style>';
-  return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'</head>') : tag+markup;
+  return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'<script id="HLRN_DIRECT_STANDINGS_THEME_BOOTSTRAP_20261001">
+(function(){
+  let theme="light";
+  try{theme=localStorage.getItem("hlrn_site_theme_v2")==="dark"?"dark":"light"}catch(e){}
+  document.documentElement.dataset.hlrnTheme=theme;
+  document.documentElement.style.colorScheme=theme;
+})();
+</script>
+<link rel="stylesheet" href="../assets/site-shell.css?v=20261001directstandings1">
+<link rel="stylesheet" href="../assets/standings/standings-series-shell.css?v=20261001directstandings1">
+<script src="../assets/standings/standings-shared-data.js?v=20261001directstandings1"></script>
+<style id="HLRN_DIRECT_FULL_PAGE_SCROLL_20261001">
+html,body{height:auto!important;min-height:100%!important;max-height:none!important;overflow-x:hidden!important;overflow-y:auto!important}
+body{position:relative!important}
+</style>
+</head>') : tag+markup;
 }
 </script>
 
@@ -3811,6 +3826,11 @@ html[style*="color-scheme: dark"] body #lastRace .hlrn-driver-profile-arrow{
 </style>
 </head>
 <body>
+<nav class="hlrn-series-switcher" aria-label="HLRN standings series">
+  <a href="./hosted.html" data-series="hosted">Hosted</a>
+  <a href="./sunday.html" data-series="sunday">Sunday</a>
+  <a href="./monday.html" data-series="monday" class="active" aria-current="page">Monday</a>
+</nav>
 <div class="page-wrap">
 <div class="cc-topline">
   <div class="cc-brand">HLRN <b>Monday Championship</b></div>
@@ -5798,5 +5818,6 @@ button,input,select,textarea,.btn,.button,.pill,.chip,.filter,.filter-btn,.tab,.
   sync();
 })();
 </script>
+<script src="../assets/site-shell.js?v=20261001directstandings1"></script>
 </body>
 </html>
