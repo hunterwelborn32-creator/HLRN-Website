@@ -899,7 +899,12 @@ function resizeHostedFrame(key){
       doc.documentElement.offsetHeight||0,
       180
     );
-    frame.style.setProperty("height",Math.ceil(h+2)+"px","important");
+    const targetHeight=Math.ceil(h+2);
+    const previousHeight=Number(frame.dataset.hlrnLastHeight||0);
+    if(Math.abs(targetHeight-previousHeight)>2){
+      frame.dataset.hlrnLastHeight=String(targetHeight);
+      frame.style.setProperty("height",targetHeight+"px","important");
+    }
     frame.style.setProperty("min-height","0","important");
     frame.style.setProperty("position","relative","important");
     frame.style.setProperty("inset","auto","important");
@@ -915,7 +920,7 @@ function installHostedResize(key){
   setTimeout(run,800);
   try{
     const doc=frame.contentDocument;
-    if(key!=="h2h" && doc && doc.body && "ResizeObserver" in window && !frame.__hlrnHostedRO){
+    if(doc && doc.body && "ResizeObserver" in window && !frame.__hlrnHostedRO){
       const ro=new ResizeObserver(()=>requestAnimationFrame(run));
       ro.observe(doc.body);
       ro.observe(doc.documentElement);
@@ -2027,9 +2032,25 @@ function applyHostedSeriesMatch(frame){
     if(frame && frame.id==="hostedFrame-h2h" && !doc.__hlrnHostedH2HPaintBound){
       doc.__hlrnHostedH2HPaintBound=true;
       const repaintH2H=()=>hardPaintHostedH2H(doc,hlrnHostedDarkModeActive());
+
+      if(!doc.__hlrnH2HContentResizeBound){
+        doc.__hlrnH2HContentResizeBound=true;
+        const content=doc.getElementById("content");
+        if(content){
+          let resizeRaf=0;
+          new MutationObserver(()=>{
+            cancelAnimationFrame(resizeRaf);
+            resizeRaf=requestAnimationFrame(()=>resizeHostedFrame("h2h"));
+            setTimeout(()=>resizeHostedFrame("h2h"),120);
+          }).observe(content,{childList:true,subtree:true});
+        }
+      }
       setTimeout(repaintH2H,0);
       setTimeout(repaintH2H,250);
       setTimeout(repaintH2H,900);
+      setTimeout(()=>resizeHostedFrame("h2h"),500);
+      setTimeout(()=>resizeHostedFrame("h2h"),1500);
+      setTimeout(()=>resizeHostedFrame("h2h"),3000);
       doc.addEventListener("click",()=>{
         setTimeout(repaintH2H,0);
         setTimeout(repaintH2H,180);
@@ -2094,10 +2115,10 @@ function loadHostedTab(key){
     frame.style.setProperty("pointer-events","auto","important");
     if(loading) loading.style.display="none";
     installHostedResize(key);
-    queueHostedDriverLinks(key);
-    setTimeout(()=>{resizeHostedFrame(key);queueHostedDriverLinks(key)},80);
-    setTimeout(()=>{resizeHostedFrame(key);queueHostedDriverLinks(key)},350);
-    setTimeout(()=>{resizeHostedFrame(key);queueHostedDriverLinks(key)},900);
+    if(key!=="h2h") queueHostedDriverLinks(key);
+    setTimeout(()=>{resizeHostedFrame(key);if(key!=="h2h")queueHostedDriverLinks(key)},80);
+    setTimeout(()=>{resizeHostedFrame(key);if(key!=="h2h")queueHostedDriverLinks(key)},350);
+    setTimeout(()=>{resizeHostedFrame(key);if(key!=="h2h")queueHostedDriverLinks(key)},900);
     setTimeout(()=>{
       try{
         const doc=frame.contentDocument;
@@ -2116,7 +2137,7 @@ function loadHostedTab(key){
     }
     try{
       const doc=frame.contentDocument;
-      if(doc&&doc.body&&!frame.__hlrnHostedDriverLinks){
+      if(key!=="h2h" && doc&&doc.body&&!frame.__hlrnHostedDriverLinks){
         frame.__hlrnHostedDriverLinks=true;
         new MutationObserver(()=>queueHostedDriverLinks(key)).observe(doc.body,{childList:true,subtree:true,characterData:true});
       }
