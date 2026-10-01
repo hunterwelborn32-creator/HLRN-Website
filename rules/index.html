@@ -5220,7 +5220,7 @@ mark[data-hlrn-final-search]{
         const link=document.createElement("a");
         link.className="rule-anchor";
         link.href="#"+rule.id;
-        link.textContent="Rule "+match[1];
+        link.textContent="§";
         link.setAttribute("aria-label","Link to "+(heading.textContent||"").trim());
         heading.prepend(link);
       }
@@ -5253,10 +5253,16 @@ mark[data-hlrn-final-search]{
 
   function findRule(section,rulePrefix){
     if(!section || !rulePrefix) return null;
+    const byId=document.getElementById(safeRuleId(rulePrefix));
+    if(byId && byId.closest(".tab-content")===section) return byId;
     const target=String(rulePrefix).toLowerCase();
     return [...section.querySelectorAll(".rule")].find(rule=>{
       const h=rule.querySelector("h3");
+      const anchor=h?.querySelector(".rule-anchor");
+      const anchorText=anchor?.textContent||"";
+      if(anchor) anchor.textContent="";
       const text=(h?.textContent||"").trim().toLowerCase();
+      if(anchor) anchor.textContent=anchorText;
       return text.startsWith(target+" ") || text===target;
     })||null;
   }
