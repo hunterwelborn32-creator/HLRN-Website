@@ -779,7 +779,7 @@ function start(){
 
   // Always use the current shared shell stylesheet. This gives every page
   // the same global mobile layer without requiring page-by-page CSS edits.
-  const SHELL_CSS_VERSION="20261001network5";
+  const SHELL_CSS_VERSION="20261001control1";
   let shellCss=[...document.querySelectorAll('link[rel="stylesheet"]')].find(link=>/\/site-shell\.css(?:\?|$)/i.test(link.getAttribute("href")||""));
   if(!shellCss){
     shellCss=document.createElement("link");
@@ -886,6 +886,7 @@ function start(){
         <div class="hgn-account-discord"></div>
         <button type="button" class="hgn-account-dashboard">MY HLRN</button>
         <button type="button" class="hgn-account-profile">MY PROFILE</button>
+        <button type="button" class="hgn-account-control" hidden>NETWORK CONTROL</button>
         <button type="button" class="hgn-account-signout">SIGN OUT</button>
       </div>
     </div>
@@ -956,9 +957,18 @@ function start(){
       btn.setAttribute("aria-label",data?"Open HLRN driver account for "+label:"HLRN Driver Login");
       btn.setAttribute("aria-expanded",String(accountMenuOpen&&!!data));
     });
-    if(!data){closeAccount();return;}
+    const controlButton=accountPanel.querySelector(".hgn-account-control");
+    if(!data){
+      if(controlButton) controlButton.hidden=true;
+      closeAccount();
+      return;
+    }
     accountPanel.querySelector(".hgn-account-name").textContent=data.driver;
     accountPanel.querySelector(".hgn-account-discord").textContent=data.discordUsername?"Discord: @"+data.discordUsername:data.discordDisplayName?"Discord: "+data.discordDisplayName:"Discord account connected";
+    if(controlButton){
+      const key=String(data.driver||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
+      controlButton.hidden=key!=="hunter welborn";
+    }
   }
 
   loginButtons.forEach(btn=>btn.addEventListener("click",e=>{
@@ -991,6 +1001,12 @@ function start(){
       if(profile){location.href=profile;return;}
     }catch(e){}
     location.href=url("drivers/"+hgnDriverSlug(d.driver)+"/");
+  });
+  accountPanel.querySelector(".hgn-account-control")?.addEventListener("click",()=>{
+    const d=readLogin();
+    closeAccount();
+    const key=String(d?.driver||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
+    if(key==="hunter welborn") location.href=url("control-center/");
   });
   accountPanel.querySelector(".hgn-account-signout").addEventListener("click",()=>{
     closeAccount();
@@ -1169,13 +1185,13 @@ function start(){
   if(!document.querySelector('link[data-hlrn-network-upgrades]')){
     const networkCss=document.createElement("link");
     networkCss.rel="stylesheet";
-    networkCss.href=url("assets/network-upgrades.css?v=20261001nx5");
+    networkCss.href=url("assets/network-upgrades.css?v=20261001control1");
     networkCss.setAttribute("data-hlrn-network-upgrades","");
     document.head.appendChild(networkCss);
   }
   if(!document.querySelector('script[data-hlrn-network-upgrades]')){
     const networkScript=document.createElement("script");
-    networkScript.src=url("assets/network-upgrades.js?v=20261001nx5");
+    networkScript.src=url("assets/network-upgrades.js?v=20261001control1");
     networkScript.defer=true;
     networkScript.setAttribute("data-hlrn-network-upgrades","");
     document.head.appendChild(networkScript);
