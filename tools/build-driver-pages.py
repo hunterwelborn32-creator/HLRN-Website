@@ -108,6 +108,18 @@ def team_maps(hlrn):
     return out
 
 
+def league_driver_maps(hlrn):
+    """Verified current driver rows keyed by league + driver id."""
+    out = {"sunday": {}, "monday": {}}
+    leagues = (hlrn or {}).get("leagues") or {}
+    for series in out:
+        for row in (leagues.get(series) or {}).get("drivers") or []:
+            did = str(row.get("driverId") or "").strip()
+            if did:
+                out[series][did] = row
+    return out
+
+
 def record_number(name, number_map, hosted_numbers=None):
     raw = keyify(name)
     if raw in number_map:
@@ -134,6 +146,12 @@ def fmt_date(value):
         return text[:10]
 
 
+def result_url(series, race_number):
+    if series in ("sunday", "monday") and race_number not in (None, "", "—"):
+        return f"/results/?league={quote(series)}&race={quote(str(race_number))}#raceReportView"
+    return "/results/"
+
+
 def series_stats_block(series, rec, team):
     label = SERIES_LABEL.get(series, series.title())
     rank = rec.get("rank")
@@ -150,6 +168,8 @@ def series_stats_block(series, rec, team):
         ("Laps", intish(rec.get("laps"))),
         ("Laps Led", intish(rec.get("lapsLed"))),
         ("Incidents", intish(rec.get("incidents"))),
+        ("Avg Rating", intish(rec.get("avgRating"))),
+        ("Poles", intish(rec.get("poles"))),
     ]
     stats_html = "".join(
         f'<div class="stat"><small>{esc(k)}</small><strong>{esc(v)}</strong></div>'
@@ -183,8 +203,9 @@ def history_table(rows):
     for r in rows:
         finish = r.get("finish")
         cls = "win" if str(finish) == "1" else ("top5" if num(finish, 999) <= 5 else "")
+        href = result_url(r.get("series"), r.get("raceNumber"))
         html_rows.append(
-            "<tr>"
+            f'<tr class="race-link" role="link" tabindex="0" data-href="{esc(href)}">'
             f'<td><span class="series-pill {esc(r.get("series"))}">{esc(SERIES_SHORT.get(r.get("series"), r.get("series")))}</span></td>'
             f"<td>{esc(r.get('raceNumber') if r.get('raceNumber') is not None else '—')}</td>"
             f"<td>{esc(fmt_date(r.get('date')))}</td>"
@@ -215,10 +236,11 @@ def recent_form(rows):
     for r in finished:
         finish = int(num(r.get("finish")))
         cls = "win" if finish == 1 else ("top5" if finish <= 5 else "")
+        href = result_url(r.get("series"), r.get("raceNumber"))
         items.append(
-            f'<div class="form-item {cls}"><strong>P{finish}</strong>'
+            f'<a class="form-item {cls}" href="{esc(href)}"><strong>P{finish}</strong>'
             f'<span>{esc(r.get("track") or "Race")}</span>'
-            f'<small>{esc(SERIES_SHORT.get(r.get("series"), ""))} • {esc(fmt_date(r.get("date")))}</small></div>'
+            f'<small>{esc(SERIES_SHORT.get(r.get("series"), ""))} • {esc(fmt_date(r.get("date")))}</small></a>'
         )
     return '<div class="form-grid">' + "".join(items) + "</div>"
 
@@ -283,8 +305,18 @@ def driver_profile_v2(history, records, teams):
     wins = sum(num(r.get("wins")) for r in records.values())
     top10 = sum(num(r.get("top10")) for r in records.values())
     laps_led = sum(num(r.get("lapsLed")) for r in records.values())
+    incidents = sum(num(r.get("incidents")) for r in records.values())
     pole_values = [r.get("poles") for r in records.values() if "poles" in r and r.get("poles") not in (None, "", "—")]
     poles = sum(num(value) for value in pole_values) if pole_values else None
+    rating_rows = [
+        (num(r.get("avgRating")), num(r.get("races")))
+        for r in records.values()
+        if r.get("avgRating") not in (None, "", "—") and num(r.get("races")) > 0
+    ]
+    avg_rating = (
+        sum(rating * races for rating, races in rating_rows) / sum(races for _, races in rating_rows)
+        if rating_rows else None
+    )
     win_rate = (wins / starts * 100) if starts else None
     top10_rate = (top10 / starts * 100) if starts else None
 
@@ -306,6 +338,8 @@ def driver_profile_v2(history, records, teams):
     intel_items = [
         ("Best Finish", best_finish, best_track),
         ("Recent 5 Avg", f"{recent_avg:.1f}" if recent_avg is not None else "—", "Average finishing position"),
+        ("Avg Rating", f"{avg_rating:.1f}" if avg_rating is not None else "—", "Verified league average"),
+        ("Incidents", intish(incidents), "Verified league total"),
         ("Biggest Mover", biggest_mover, mover_track or "Recorded start-to-finish gain"),
         ("Win Rate", f"{win_rate:.1f}%" if win_rate is not None else "—", f"{intish(wins)} wins / {intish(starts)} starts"),
         ("Top-10 Rate", f"{top10_rate:.1f}%" if top10_rate is not None else "—", f"{intish(top10)} top 10s"),
@@ -339,6 +373,15 @@ def render_page(driver):
     incidents = sum(num(r.get("incidents")) for r in records.values())
     weighted_finish_num = sum(num(r.get("avgFinish")) * num(r.get("races")) for r in records.values())
     avg_finish = weighted_finish_num / starts if starts else None
+    rating_rows = [
+        (num(r.get("avgRating")), num(r.get("races")))
+        for r in records.values()
+        if r.get("avgRating") not in (None, "", "—") and num(r.get("races")) > 0
+    ]
+    avg_rating = (
+        sum(rating * races for rating, races in rating_rows) / sum(races for _, races in rating_rows)
+        if rating_rows else None
+    )
 
     canonical = f"{ORIGIN}/drivers/{slug}/"
     series_names = " and ".join(SERIES_SHORT[s] for s in SERIES_ORDER if s in records)
@@ -373,7 +416,7 @@ def render_page(driver):
         ("Top 5", intish(top5)),
         ("Top 10", intish(top10)),
         ("Avg Finish", f"{avg_finish:.2f}" if avg_finish is not None else "—"),
-        ("Laps", intish(laps)),
+        ("Avg Rating", f"{avg_rating:.1f}" if avg_rating is not None else "—"),
         ("Laps Led", intish(led)),
         ("Incidents", intish(incidents)),
     ]
@@ -421,9 +464,9 @@ def render_page(driver):
 .section-head{{display:flex;align-items:end;justify-content:space-between;gap:16px;margin:31px 0 12px;padding-bottom:9px;border-bottom:4px solid #111}}.section-head small{{display:block;color:var(--red);font-size:8px;font-weight:1000;letter-spacing:.11em}}.section-head h2{{margin:3px 0 0;font:900 italic 34px/1 "Barlow Condensed",sans-serif;text-transform:uppercase}}
 .series-grid{{display:grid;grid-template-columns:repeat({max(1,len(records))},minmax(0,1fr));gap:14px}}
 .series-card{{background:#fff;border:1px solid var(--line);border-top:5px solid #222}}.series-card.sunday{{border-top-color:var(--sun)}}.series-card.monday{{border-top-color:var(--mon)}}.series-card.hosted{{border-top-color:var(--hosted)}}.series-head{{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:16px 18px;border-bottom:1px solid var(--line)}}.series-head small{{color:#7b848e;font-size:8px;font-weight:1000;letter-spacing:.1em;text-transform:uppercase}}.series-head h2{{margin:3px 0 0;font:900 italic 27px/1 "Barlow Condensed",sans-serif;text-transform:uppercase}}.team-badge{{text-align:right}}.team-badge strong{{display:block;margin-top:3px;font-size:13px}}
-.stats-grid{{display:grid;grid-template-columns:repeat(5,1fr)}}.stat{{padding:13px 14px;border-right:1px solid #e5e7ea;border-bottom:1px solid #e5e7ea}}.stat:nth-child(5n){{border-right:0}}.stat strong{{display:block;margin-top:4px;font:900 19px/1 "Barlow Condensed",sans-serif}}
-.form-grid{{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}}.form-item{{display:grid;grid-template-columns:auto 1fr;column-gap:10px;align-items:center;background:#fff;border:1px solid var(--line);padding:12px}}.form-item strong{{grid-row:1/3;font:900 italic 28px/1 "Barlow Condensed",sans-serif}}.form-item span{{font-size:10px;font-weight:1000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}.form-item small{{font-size:7px;font-weight:900;color:#7e8791;text-transform:uppercase}}.form-item.win{{border-left:4px solid var(--red)}}.form-item.top5{{border-left:4px solid #e5b900}}
-.history-wrap{{overflow:auto;background:#fff;border:1px solid var(--line)}}table{{width:100%;border-collapse:collapse;min-width:950px}}th{{padding:10px 9px;background:#11161d;color:#fff;text-align:left;font-size:8px;letter-spacing:.08em;text-transform:uppercase}}td{{padding:10px 9px;border-bottom:1px solid #e4e7ea;font-size:10px}}td.win{{background:#fff0f2;color:#b30c27;font-weight:1000}}td.top5{{font-weight:1000}}.series-pill{{display:inline-block;padding:4px 6px;background:#eee;font-size:7px;font-weight:1000;text-transform:uppercase}}.series-pill.sunday{{background:#fff0f2;color:#b30c27}}.series-pill.monday{{background:#eff9ea;color:#3d7f25}}.series-pill.hosted{{background:#fff8df;color:#7b5d00}}
+.stats-grid{{display:grid;grid-template-columns:repeat(6,1fr)}}.stat{{padding:13px 14px;border-right:1px solid #e5e7ea;border-bottom:1px solid #e5e7ea}}.stat:nth-child(6n){{border-right:0}}.stat strong{{display:block;margin-top:4px;font:900 19px/1 "Barlow Condensed",sans-serif}}
+.form-grid{{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}}.form-item{{display:grid;grid-template-columns:auto 1fr;column-gap:10px;align-items:center;background:#fff;border:1px solid var(--line);padding:12px;text-decoration:none;color:inherit;cursor:pointer}}.form-item:hover{{border-color:#9ea6ae}}.form-item strong{{grid-row:1/3;font:900 italic 28px/1 "Barlow Condensed",sans-serif}}.form-item span{{font-size:10px;font-weight:1000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}.form-item small{{font-size:7px;font-weight:900;color:#7e8791;text-transform:uppercase}}.form-item.win{{border-left:4px solid var(--red)}}.form-item.top5{{border-left:4px solid #e5b900}}
+.history-wrap{{overflow:auto;background:#fff;border:1px solid var(--line)}}table{{width:100%;border-collapse:collapse;min-width:950px}}.race-link{{cursor:pointer}}.race-link:hover td{{background:#f4f6f8}}.race-link:focus-visible{{outline:3px solid #111;outline-offset:-3px}}th{{padding:10px 9px;background:#11161d;color:#fff;text-align:left;font-size:8px;letter-spacing:.08em;text-transform:uppercase}}td{{padding:10px 9px;border-bottom:1px solid #e4e7ea;font-size:10px}}td.win{{background:#fff0f2;color:#b30c27;font-weight:1000}}td.top5{{font-weight:1000}}.series-pill{{display:inline-block;padding:4px 6px;background:#eee;font-size:7px;font-weight:1000;text-transform:uppercase}}.series-pill.sunday{{background:#fff0f2;color:#b30c27}}.series-pill.monday{{background:#eff9ea;color:#3d7f25}}.series-pill.hosted{{background:#fff8df;color:#7b5d00}}
 .empty{{padding:22px;background:#fff;border:1px solid var(--line);color:#747d86;font-size:10px;font-weight:800}}
 .actions{{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}}.actions a{{padding:11px 14px;background:#11161d;color:#fff;font:900 italic 15px/1 "Barlow Condensed",sans-serif;text-transform:uppercase}}.actions a.primary{{background:var(--red)}}
 .updated{{margin-top:14px;color:#858d96;font-size:8px;font-weight:800;text-transform:uppercase}}
@@ -538,6 +581,7 @@ html[data-hlrn-theme="dark"] .form-item span{{color:#fff!important}}
 html[data-hlrn-theme="dark"] .form-item small{{color:#aaa!important}}
 html[data-hlrn-theme="dark"] .form-item.win{{border-left-color:var(--red)!important}}
 html[data-hlrn-theme="dark"] .form-item.top5{{border-left-color:#e5b900!important}}
+html[data-hlrn-theme="dark"] .form-item:hover{{background:#0c0c0c!important;border-color:#555!important}}
 
 html[data-hlrn-theme="dark"] .history-wrap,
 html[data-hlrn-theme="dark"] table,
@@ -557,6 +601,8 @@ html[data-hlrn-theme="dark"] td.win{{
   background:#160307!important;
   color:#ff7b8f!important;
 }}
+html[data-hlrn-theme="dark"] .race-link:hover td{{background:#0c0c0c!important}}
+html[data-hlrn-theme="dark"] .race-link:focus-visible{{outline-color:#fff!important}}
 html[data-hlrn-theme="dark"] .series-pill{{
   background:#0a0a0a!important;
   color:#fff!important;
@@ -618,7 +664,7 @@ html[data-hlrn-theme="dark"] .updated{{color:#aaa!important}}
   <div class="section-head"><div><small>RECENT RESULTS</small><h2>Recent Form</h2></div></div>
   {recent_form(history)}
 
-  <div class="section-head"><div><small>HLRN RECORD</small><h2>Race History</h2></div><span>{len(history)} recorded result{"s" if len(history)!=1 else ""}</span></div>
+  <div class="section-head"><div><small>HLRN RECORD</small><h2>Race History</h2></div><span>{len(history)} recorded result{"s" if len(history)!=1 else ""} • CLICK A RACE FOR FULL RESULTS</span></div>
   {history_table(history)}
 
   <div class="actions">
@@ -628,6 +674,15 @@ html[data-hlrn-theme="dark"] .updated{{color:#aaa!important}}
   </div>
   <div class="updated">Profile data generated from the current HLRN verified league snapshot.</div>
 </main>
+<script>
+document.querySelectorAll(".race-link[data-href]").forEach(row=>{{
+  const open=()=>{{if(row.dataset.href)location.href=row.dataset.href;}};
+  row.addEventListener("click",open);
+  row.addEventListener("keydown",event=>{{
+    if(event.key==="Enter"||event.key===" "){{event.preventDefault();open();}}
+  }});
+}});
+</script>
 <script src="/assets/site-shell.js?v=20261001control1"></script>
 </body>
 </html>
@@ -722,6 +777,7 @@ def main():
     hlrn = load_json(HLRN_PATH)
     number_map = extract_existing_number_map()
     teams_by_series = team_maps(hlrn)
+    driver_rows_by_series = league_driver_maps(hlrn)
     hosted_records, hosted_numbers, hosted_aliases = hosted_profile_records(hlrn)
 
     grouped = defaultdict(dict)
@@ -732,7 +788,13 @@ def main():
         series = str(rec.get("series") or "").lower()
         if not name or series not in ("sunday", "monday"):
             continue
-        grouped[name][series] = rec
+        merged_rec = dict(rec)
+        did = str(rec.get("id") or "").strip()
+        shared = driver_rows_by_series.get(series, {}).get(did) or {}
+        for field in ("avgRating", "poles"):
+            if shared.get(field) not in (None, ""):
+                merged_rec[field] = shared.get(field)
+        grouped[name][series] = merged_rec
         if rec.get("photoSlug"):
             photo_slug_by_name.setdefault(name, str(rec.get("photoSlug")))
         id_by_series_name[(series, name)] = str(rec.get("id") or "")
