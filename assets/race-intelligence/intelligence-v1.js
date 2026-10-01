@@ -15,11 +15,16 @@ const raceCompletionState = {
 };
 let raceUpdateTimer = null;
 
-/* HLRN drivers intentionally excluded from Race Intelligence. */
+/* Permanently excluded drivers are removed from the model. Paused drivers stay
+   in the official standings/race history so their rank does not get rewritten,
+   but they are not selected as current contenders or trend picks. */
 const EXCLUDED_DRIVERS = [
-  "trace mcdowell",
-  "benjamin richards", // TEMPORARILY INACTIVE — out for the remainder of the season
-  "sebastian micheals" // TEMPORARILY INACTIVE — out for the remainder of the season
+  "trace mcdowell"
+];
+const PAUSED_DRIVERS = [
+  "benjamin richards",
+  "sebastian michaels",
+  "sebastian micheals"
 ];
 
 function normalizeDriverName(name){
@@ -31,6 +36,11 @@ function isExcludedDriverName(name){
   return EXCLUDED_DRIVERS.some(excluded => normalized === normalizeDriverName(formatDriverName(excluded)));
 }
 
+function isPausedDriverName(name){
+  const normalized = normalizeDriverName(formatDriverName(name));
+  return PAUSED_DRIVERS.some(paused => normalized === normalizeDriverName(formatDriverName(paused)));
+}
+
 const categoryConfig = [
   {key:"favorite", title:"Favorite", icon:"★", tag:"Overall Pick", accent:"rgba(239,37,37,.24)"},
   {key:"hot", title:"Hot Driver", icon:"🔥", tag:"Momentum", accent:"rgba(255,122,39,.24)"},
@@ -39,7 +49,7 @@ const categoryConfig = [
   {key:"mover", title:"Biggest Mover", icon:"↗", tag:"Racecraft", accent:"rgba(56,212,123,.20)"},
   {key:"recentWinner", title:"Most Recent Winner", icon:"🏁", tag:"Latest Winner", accent:"rgba(241,200,75,.23)"},
   {key:"trouble", title:"Trouble Watch", icon:"⚠", tag:"Risk Signal", accent:"rgba(239,37,37,.21)"},
-  {key:"bounce", title:"Needs A Bounce Back", icon:"↻", tag:"Recovery Watch", accent:"rgba(162,119,255,.20)"},
+  {key:"bounce", title:"Cold Streak", icon:"↓", tag:"Cooling Off", accent:"rgba(162,119,255,.20)"},
   {key:"darkHorse", title:"Dark Horse", icon:"♞", tag:"Upset Potential", accent:"rgba(162,119,255,.20)"},
   {key:"watch", title:"Driver To Watch", icon:"👁", tag:"Trending", accent:"rgba(86,164,255,.20)"}
 ];
@@ -140,7 +150,36 @@ function hLrnDriverNameMarkup(driverOrName,label){
     ? formatDriverName(driverOrName)
     : formatDriverName(driverOrName?.name || driverOrName?.driver || "Driver"));
   const url=driverOrName?.profileUrl || hLrnDriverProfileUrl(driverOrName);
-  return `<a data-hlrn-ri-profile="1" href="${esc(url)}" style="color:inherit;text-decoration:none">${esc(name)}</a>`;
+  return `<a class="ri-driver-link" data-hlrn-ri-profile="1" href="${esc(url)}">${esc(name)}</a>`;
+}
+
+function hLrnTeamUrl(team){
+  if(!String(team||"").trim()) return "";
+  const league=currentLeague==="monday"?"monday":"sunday";
+  return `/standings/${league}.html#teams`;
+}
+
+function hLrnTeamMarkup(team){
+  const name=String(team||"").trim();
+  if(!name) return "";
+  return `<a class="ri-team-link" href="${esc(hLrnTeamUrl(name))}" title="View ${esc(name)} in ${currentLeague==="monday"?"Monday":"Sunday"} team standings">${esc(name)}</a>`;
+}
+
+function hLrnResultUrl(raceNumber){
+  const race=number(raceNumber);
+  if(!race) return "/results/";
+  return `/results/?league=${encodeURIComponent(currentLeague)}&race=${encodeURIComponent(race)}#raceReportView`;
+}
+
+function hLrnRecentFormMarkup(driver,limit=5){
+  const races=Array.isArray(driver?.races)?driver.races.slice(-limit):[];
+  if(!races.length) return '<span class="ri-form-empty">No recent form</span>';
+  return races.map(r=>{
+    const finish=number(r.finish);
+    const cls=finish===1?"win":finish>0&&finish<=5?"top5":finish>0&&finish<=10?"top10":"";
+    const label=finish===1?"W":"P"+finish;
+    return `<a class="ri-form-chip ${cls}" href="${esc(hLrnResultUrl(r.raceNumber))}" title="Race ${number(r.raceNumber)} • ${esc(r.track||"HLRN race")} • Finish ${esc(label)}">${esc(label)}</a>`;
+  }).join("");
 }
 
 function hLrnStoryTitleMarkup(story){
@@ -279,8 +318,11 @@ async function loadLeague(league,options={}){
   if(options.auto) setAutoSyncStatus("Checking Results…","syncing");
 
   document.querySelectorAll(".league-btn").forEach(btn=>{
-    btn.classList.toggle("active",btn.dataset.league===league);
+    const active=btn.dataset.league===league;
+    btn.classList.toggle("active",active);
+    btn.setAttribute("aria-pressed",active?"true":"false");
   });
+  document.body.classList.toggle("ri-monday",league==="monday");
 
   document.getElementById("leagueBadge").textContent =
     league === "monday" ? "Monday League" : "Sunday League";
@@ -293,7 +335,9 @@ async function loadLeague(league,options={}){
     const rawDrivers = Array.isArray(shared.drivers) ? shared.drivers : [];
     const rawResults = Array.isArray(shared.results) ? shared.results : [];
 
-    /* Remove banned / excluded drivers from the intelligence model itself. */
+    /* Remove only permanently excluded drivers. Paused drivers remain in the
+       source ranking/history and are marked later so category selection can
+       skip them without changing official championship positions. */
     const excludedDriverIds = new Set(
       rawDrivers
         .filter(d => isExcludedDriverName(d?.driver ?? d?.name ?? d?.displayName ?? d?.display_name ?? ""))
@@ -383,6 +427,33 @@ function buildAnalytics(){
     return vals.reduce((acc,v,i)=>acc+v*base[i],0)/sum;
   }
 
+  /* Championship trend: compare the official current rank with a reconstructed
+     points order through the previous completed race. Paused drivers stay in
+     this calculation so active drivers are never artificially renumbered. */
+  const latestRaceNo=results.reduce((m,r)=>Math.max(m,number(r.raceNumber)),0);
+  const priorPointsByDriver={};
+  if(latestRaceNo>1){
+    results.forEach(r=>{
+      const race=number(r.raceNumber);
+      const id=String(r.driverId??"");
+      if(!id || race<=0 || race>=latestRaceNo) return;
+      priorPointsByDriver[id]=(priorPointsByDriver[id]||0)+number(r.points);
+    });
+  }
+  const priorRankMap={};
+  if(latestRaceNo>1){
+    drivers
+      .map(d=>({
+        id:String(d.driverId??""),
+        points:priorPointsByDriver[String(d.driverId??"")]||0,
+        currentRank:number(d.rank),
+        name:formatDriverName(d.driver||d.name||"")
+      }))
+      .filter(d=>d.id && Object.prototype.hasOwnProperty.call(priorPointsByDriver,d.id))
+      .sort((a,b)=>b.points-a.points || a.currentRank-b.currentRank || a.name.localeCompare(b.name))
+      .forEach((d,index)=>{priorRankMap[d.id]=index+1;});
+  }
+
   analytics = drivers.map(d=>{
     const id = String(d.driverId ?? "");
     const races = resultsByDriver[id] || [];
@@ -459,13 +530,22 @@ function buildAnalytics(){
 
     const displayName=formatDriverName(d.driver || d.name || "Unknown Driver");
     const identity=hLrnDriverIdentity({driverId:id,driver:displayName});
+    const rank=number(d.rank);
+    const priorRank=priorRankMap[id]||0;
+    const rankTrend=(rank>0&&priorRank>0)?priorRank-rank:0;
     return {
       ...d,
       id,
       name:identity?.displayName || displayName,
       profileUrl:identity?.url || hLrnDriverProfileUrl({driverId:id,driver:displayName}),
       photoSlug:identity?.photoSlug || d.photoSlug || "",
-      rank:number(d.rank),
+      team:String(d.team||"").trim(),
+      paused:isPausedDriverName(displayName),
+      rank,
+      priorRank,
+      rankTrend,
+      avgRating:number(d.avgRating),
+      totalIncidents:number(d.incidents) || completed.reduce((sum,r)=>sum+number(r.incidents),0),
       starts,
       wins,
       top5,
@@ -513,10 +593,11 @@ function buildAnalytics(){
   }
 }
 
-function validDrivers(minRaces=1){
-  let list = analytics.filter(d=>d.races.length>=minRaces);
-  if(!list.length && minRaces>1) list = analytics.filter(d=>d.races.length>=1);
-  if(!list.length) list = analytics;
+function validDrivers(minRaces=1,includePaused=false){
+  const eligible=analytics.filter(d=>includePaused || !d.paused);
+  let list = eligible.filter(d=>d.races.length>=minRaces);
+  if(!list.length && minRaces>1) list = eligible.filter(d=>d.races.length>=1);
+  if(!list.length) list = eligible;
   return list;
 }
 
@@ -583,11 +664,13 @@ function chooseCategories(){
     Math.max(0,d.recentAvgFinish-d.seasonAvgFinish)*3
   );
 
-  let bouncePool = all.filter(d=>d.latest && d.latest.finish>0);
+  let bouncePool = multiRace.filter(d=>d.latest && d.latest.finish>0);
+  if(!bouncePool.length) bouncePool=all.filter(d=>d.latest && d.latest.finish>0);
   const bounce = maxBy(bouncePool,d=>
-    (d.latest.finish-d.seasonAvgFinish)*6 +
-    Math.max(0,d.latest.incidents-4)*2 -
-    d.overall*.08
+    Math.max(0,-d.improvement)*12 +
+    Math.max(0,d.recentAvgFinish-d.seasonAvgFinish)*10 +
+    Math.max(0,(d.latest?.finish||0)-d.seasonAvgFinish)*4 +
+    Math.max(0,d.recentInc-d.avgInc)*3
   );
 
   let darkPool = all.filter(d=>d.rank>=6 && d.races.length>=2);
@@ -635,10 +718,10 @@ function chooseCategories(){
       "Recent incidents and finishing drop-off put this driver on the risk radar.",
       round(trouble?.recentInc,1) + " avg inc"),
     makeCategory("bounce",bounce,
-      bounce?.latest
-        ? "Last result was " + round(Math.max(0,bounce.latest.finish-bounce.seasonAvgFinish),1) + " spots worse than the season average."
-        : "Recent results suggest a rebound opportunity.",
-      bounce?.latest ? "Last: P" + bounce.latest.finish : "Bounce Watch"),
+      bounce?.recentAvgFinish>bounce?.seasonAvgFinish
+        ? "Recent form is " + round(bounce.recentAvgFinish-bounce.seasonAvgFinish,1) + " spots worse than the season average."
+        : "The latest result and incident trend put this driver on the cooling-off board.",
+      "Recent Avg " + formatFinish(bounce?.recentAvgFinish)),
     makeCategory("darkHorse",darkHorse,
       "Outside the obvious favorites but combines top-10 ability, racecraft and consistency.",
       round(darkHorse?.top10Rate,0) + "% Top 10"),
@@ -668,6 +751,19 @@ function trendLabel(d){
   return "Steady";
 }
 
+function rankTrendLabel(d,compact=false){
+  const move=number(d?.rankTrend);
+  if(!d?.priorRank || !d?.rank) return compact?"NEW":"New / no prior rank";
+  if(move>0) return compact?`↑${move}`:`Up ${move} position${move===1?"":"s"}`;
+  if(move<0) return compact?`↓${Math.abs(move)}`:`Down ${Math.abs(move)} position${Math.abs(move)===1?"":"s"}`;
+  return compact?"—":"No rank change";
+}
+
+function rankTrendClass(d){
+  const move=number(d?.rankTrend);
+  return move>0?"up":move<0?"down":"flat";
+}
+
 function renderBoard(){
   const grid = document.getElementById("intelGrid");
 
@@ -687,8 +783,17 @@ function renderBoard(){
         </div>
                 <div class="card-title">${esc(cfg.title)}</div>
         <div class="card-driver">${hLrnDriverNameMarkup(cat.driver)}</div>
+        <div class="ri-card-team">${cat.driver.team?hLrnTeamMarkup(cat.driver.team):'<span>Independent</span>'}</div>
         <div class="card-reason">${esc(cat.reason)}</div>
-        <div class="card-stat">${esc(cat.stat)}</div>
+        <div class="ri-card-metrics">
+          <div><span>Rank</span><b>#${cat.driver.rank||"—"} <em class="ri-rank-trend ${rankTrendClass(cat.driver)}">${esc(rankTrendLabel(cat.driver,true))}</em></b></div>
+          <div><span>Win Rate</span><b>${round(cat.driver.winRate,0)}%</b></div>
+          <div><span>Avg Finish</span><b>${esc(formatFinish(cat.driver.seasonAvgFinish))}</b></div>
+          <div><span>Avg Rating</span><b>${cat.driver.avgRating?round(cat.driver.avgRating,1):"—"}</b></div>
+          <div><span>Avg Inc</span><b>${round(cat.driver.avgInc,1)}</b></div>
+        </div>
+        <div class="ri-card-form"><span>Recent Form</span><div>${hLrnRecentFormMarkup(cat.driver,5)}</div></div>
+        <div class="card-stat">${cat.key==="recentWinner"&&cat.driver.latest?`<a class="ri-card-results" href="${esc(hLrnResultUrl(cat.driver.latest.raceNumber))}">${esc(cat.stat)} → Full Results</a>`:esc(cat.stat)}</div>
       </article>
     `;
   }).join("");
@@ -800,13 +905,13 @@ function renderStorylines(){
 
   if(bounce){
     stories.push({
-      kicker:"Bounce Back",
+      kicker:"Cold Streak",
       driver:bounce,
-      title:bounce.name + " has rebound potential",
-      body:bounce.latest
-        ? "The last race landed below this driver's normal season pace, creating a bounce-back opportunity."
-        : "Recent results suggest a rebound could be coming.",
-      stat:bounce.latest ? "Last finish P"+bounce.latest.finish : "Recovery watch"
+      title:bounce.name + " needs a reset",
+      body:bounce.recentAvgFinish>bounce.seasonAvgFinish
+        ? "Recent form is running "+round(bounce.recentAvgFinish-bounce.seasonAvgFinish,1)+" positions behind the season baseline."
+        : "The latest result and incident trend have cooled this driver's recent momentum.",
+      stat:"Recent Avg "+formatFinish(bounce.recentAvgFinish)
     });
   }
 
@@ -868,7 +973,8 @@ function showCategoryDeepDive(category){
   let metrics = [
     ["Season Avg", formatFinish(d.seasonAvgFinish)],
     ["Recent Avg", formatFinish(d.recentAvgFinish)],
-    ["Avg Gain", signed(d.avgGain)],
+    ["Avg Rating", d.avgRating?round(d.avgRating,1):"—"],
+    ["Rank Trend", rankTrendLabel(d,true)],
     ["Avg Inc", round(d.avgInc,1)]
   ];
 
@@ -987,19 +1093,20 @@ function showCategoryDeepDive(category){
       break;
 
     case "bounce":
-      summary = d.name + " is flagged for rebound potential because the latest result landed well below the driver's normal season pace.";
+      summary = d.name + " is on the cold-streak board because recent finishes are falling behind the driver's season baseline.";
       reasons = [
-        ["warn","Latest finish: "+(latest?"P"+latest.finish:"—")+"."],
+        ["warn","Recent average finish: "+formatFinish(d.recentAvgFinish)+"."],
         ["good","Season average finish: "+formatFinish(d.seasonAvgFinish)+"."],
-        ["","Gap from normal pace: "+(latest?round(latest.finish-d.seasonAvgFinish,1):"—")+" positions."],
-        ["","Recent trend: "+trendLabel(d)+"."]
+        ["warn","Recent vs season: "+(d.improvement<0?Math.abs(round(d.improvement,1))+" spots worse":"near the season baseline")+"."],
+        [d.recentInc>d.avgInc?"warn":"","Recent incidents: "+round(d.recentInc,1)+" avg vs "+round(d.avgInc,1)+" season avg."]
       ];
-      action = "Bounce-back benchmark: finish at or better than the season average while avoiding another high-incident result.";
+      action = "Reset benchmark: finish back at or better than the season average while bringing incidents below the recent average.";
       metrics = [
-        ["Latest",latest?"P"+latest.finish:"—"],
-        ["Season Avg",formatFinish(d.seasonAvgFinish)],
         ["Recent Avg",formatFinish(d.recentAvgFinish)],
-        ["Latest Inc",latest?latest.incidents:"—"]
+        ["Season Avg",formatFinish(d.seasonAvgFinish)],
+        ["Avg Rating",d.avgRating?round(d.avgRating,1):"—"],
+        ["Recent Inc",round(d.recentInc,1)],
+        ["Rank Trend",rankTrendLabel(d,true)]
       ];
       break;
 
@@ -1038,20 +1145,12 @@ function showCategoryDeepDive(category){
       break;
   }
 
-  document.getElementById("deepLabel").textContent = (cfg.title || "Situation") + " Deep Dive";
+  document.getElementById("deepLabel").innerHTML = esc((cfg.title || "Situation") + " Deep Dive") + (d.team?` <span class="ri-meta-sep">•</span> ${hLrnTeamMarkup(d.team)}`:"");
   document.getElementById("deepTitle").innerHTML = hLrnDriverNameMarkup(d);
   document.getElementById("deepDriverPhoto").innerHTML = hLrnPhotoMarkup(d,"cutout","hlrn-feature-cutout");
   document.getElementById("deepSummary").textContent = summary;
   const deepPill=document.getElementById("deepPill");
   deepPill.textContent = pill || "Live Analysis";
-  deepPill.style.setProperty("background","#000","important");
-  deepPill.style.setProperty("background-color","#000","important");
-  deepPill.style.setProperty("background-image","none","important");
-  deepPill.style.setProperty("color","#fff","important");
-  deepPill.style.setProperty("-webkit-text-fill-color","#fff","important");
-  deepPill.style.setProperty("border","1px solid #2b2b2b","important");
-  deepPill.style.setProperty("border-left","4px solid #ffd400","important");
-  deepPill.style.setProperty("box-shadow","none","important");
 
   document.getElementById("deepMetrics").innerHTML = metrics.map(([a,b])=>`
     <div class="deep-metric"><span>${esc(a)}</span><strong>${esc(b)}</strong></div>
@@ -1065,13 +1164,13 @@ function showCategoryDeepDive(category){
   `).join("");
 
   document.getElementById("deepRaces").innerHTML = recent.length ? recent.map(r=>`
-    <div class="deep-race">
+    <a class="deep-race ri-race-link" href="${esc(hLrnResultUrl(r.raceNumber))}" aria-label="Open Race ${number(r.raceNumber)} full results">
       <span>R${number(r.raceNumber)}</span>
       <span class="track">${esc(r.track || "Unknown Track")}</span>
       <b>P${number(r.finish)}</b>
       <b class="${r.positionGain>0?"gain":r.positionGain<0?"loss":""}">${signed(r.positionGain)}</b>
       <b>${number(r.incidents)}x</b>
-    </div>
+    </a>
   `).join("") : '<div style="color:#777;font-size:10px">No recent race history available.</div>';
 
   document.getElementById("deepAction").textContent = action;
@@ -1082,26 +1181,11 @@ function showDriver(category){
   const cfg = categoryConfig.find(x=>x.key===category.key);
 
   document.getElementById("detailWrap").style.display="block";
-  document.getElementById("detailEyebrow").textContent = cfg.title;
+  document.getElementById("detailEyebrow").innerHTML = esc(cfg.title) + (d.team?` <span class="ri-meta-sep">•</span> ${hLrnTeamMarkup(d.team)}`:"");
   document.getElementById("detailName").innerHTML = hLrnDriverNameMarkup(d);
   document.getElementById("detailDriverPhoto").innerHTML = hLrnPhotoMarkup(d,"full","hlrn-feature-full-photo");
   document.getElementById("detailCategory").textContent = category.reason;
   document.getElementById("detailScore").textContent = Math.round(d.overall);
-  const scoreBox=document.querySelector("#detailWrap .score");
-  if(scoreBox){
-    scoreBox.style.setProperty("background","#000","important");
-    scoreBox.style.setProperty("background-color","#000","important");
-    scoreBox.style.setProperty("background-image","none","important");
-    scoreBox.style.setProperty("color","#fff","important");
-    scoreBox.style.setProperty("border","1px solid #2b2b2b","important");
-    scoreBox.style.setProperty("border-left","4px solid #ffd400","important");
-    scoreBox.style.setProperty("box-shadow","none","important");
-    scoreBox.querySelectorAll("*").forEach(el=>{
-      el.style.setProperty("color","#fff","important");
-      el.style.setProperty("-webkit-text-fill-color","#fff","important");
-    });
-  }
-
   setText("dRank",d.rank ? "#"+d.rank : "—");
   setText("dWins",d.wins);
   setText("dAvgFinish",formatFinish(d.seasonAvgFinish));
@@ -1110,18 +1194,23 @@ function showDriver(category){
   setText("dInc",round(d.avgInc,1));
   setText("dTop5",round(d.top5Rate,0)+"%");
   setText("dConsistency",Math.round(d.consistency));
+  setText("dAvgRating",d.avgRating?round(d.avgRating,1):"—");
+  setText("dRankTrend",rankTrendLabel(d,true));
+  const rankTrendNode=document.getElementById("dRankTrend");
+  if(rankTrendNode) rankTrendNode.className="stat-value ri-rank-trend "+rankTrendClass(d);
+  setText("dTotalInc",d.totalIncidents);
 
   const recent = d.races.slice(-5).reverse();
   const raceList=document.getElementById("recentRaceList");
 
   raceList.innerHTML = recent.length ? recent.map(r=>`
-    <div class="race">
+    <a class="race ri-race-link" href="${esc(hLrnResultUrl(r.raceNumber))}" aria-label="Open Race ${number(r.raceNumber)} full results">
       <div class="race-num">R${number(r.raceNumber)}</div>
       <div class="race-track">${esc(r.track || "Unknown Track")}</div>
       <div><div class="mini-label">Finish</div><div class="mini-value">P${number(r.finish)}</div></div>
       <div><div class="mini-label">Gain</div><div class="mini-value ${r.positionGain>0?"positive":r.positionGain<0?"negative":""}">${signed(r.positionGain)}</div></div>
       <div><div class="mini-label">Inc</div><div class="mini-value">${number(r.incidents)}</div></div>
-    </div>
+    </a>
   `).join("") : '<div style="color:#7f8998;font-size:12px">No completed races found for this driver.</div>';
 
   const latest = d.latest;
@@ -1131,6 +1220,10 @@ function showDriver(category){
 
   document.getElementById("driverReadout").innerHTML = [
     ["Current Trend",trendLabel(d)],
+    ["Championship Trend",rankTrendLabel(d)],
+    ["Team",d.team||"Independent"],
+    ["Average Rating",d.avgRating?round(d.avgRating,1):"—"],
+    ["Win Rate",round(d.winRate,1)+"%"],
     ["Season Avg Finish",formatFinish(d.seasonAvgFinish)],
     ["Recent 3 Avg",formatFinish(d.recentAvgFinish)],
     ["Recent vs Season", d.improvement===0 ? "Even" : (d.improvement>0 ? signed(d.improvement)+" better" : Math.abs(round(d.improvement,1))+" worse")],
@@ -1140,7 +1233,7 @@ function showDriver(category){
     ["Latest Finish",latest ? "P"+latest.finish : "—"],
     ["Latest Incidents",latest ? latest.incidents : "—"]
   ].map(([a,b])=>`
-    <div class="trend-row"><span>${esc(a)}</span><strong>${esc(b)}</strong></div>
+    <div class="trend-row"><span>${esc(a)}</span><strong>${a==="Team"&&d.team?hLrnTeamMarkup(d.team):esc(b)}</strong></div>
   `).join("");
 
   // Keep the detail section in place without forcing the Google Sites embed to jump.
@@ -1170,6 +1263,9 @@ document.querySelectorAll(".league-btn").forEach(btn=>{
   btn.addEventListener("click",()=>{
     if(btn.dataset.league!==currentLeague){
       selectedCategoryKey="favorite";
+      const url=new URL(location.href);
+      url.searchParams.set("league",btn.dataset.league);
+      history.replaceState({league:btn.dataset.league},"",url.pathname+url.search+url.hash);
       loadLeague(btn.dataset.league);
     }
   });
@@ -1177,7 +1273,8 @@ document.querySelectorAll(".league-btn").forEach(btn=>{
 
 document.getElementById("refreshBtn").addEventListener("click",()=>loadLeague(currentLeague,{preserveSelection:true}));
 
-loadLeague("sunday");
+const requestedLeague=new URLSearchParams(location.search).get("league");
+loadLeague(requestedLeague==="monday"?"monday":"sunday");
 
 /* Quiet one-minute result checks. When the results feed exposes a new completed
    race with a P1 finisher, the entire intelligence model and Storylines section
@@ -1299,7 +1396,7 @@ document.addEventListener("visibilitychange",()=>{
     const grid=$('v3ContenderGrid');if(!grid)return;
     let list=[];
     try{list=Array.isArray(analytics)?analytics.slice():[]}catch(e){}
-    list=list.filter(d=>d&&Number(d.races?.length||0)>0).sort((a,b)=>Number(b.overall)-Number(a.overall)).slice(0,3);
+    list=list.filter(d=>d&&!d.paused&&Number(d.races?.length||0)>0).sort((a,b)=>Number(b.overall)-Number(a.overall)).slice(0,3);
     grid.innerHTML=list.length?list.map((d,i)=>{
       const rating=clamp(d.overall);
       const displayName=formatDriverName(d?.name||d?.driver||"");
@@ -1307,7 +1404,7 @@ document.addEventListener("visibilitychange",()=>{
       const ethanFallback="/assets/driver-photos/full/ethan-moreno.webp?v=20261001contenders2";
       const fallbackPhoto=/^ethan\s+(?:fonseca\s+)?moreno$/i.test(displayName)?ethanFallback:directPhoto;
       const photo=`<div class="v3-contender-photo-wrap"><img class="hlrn-contender-full-photo" src="${esc(directPhoto)}" alt="${esc(displayName)}" loading="eager" decoding="async" onerror="this.onerror=null;this.src='${esc(fallbackPhoto)}';"></div>`;
-      return `<article class="v3-contender">${photo}<div class="v3-contender-copy"><div class="v3-contender-label">${i===0?'Performance Leader':'Contender '+(i+1)}</div><div class="v3-contender-name">${hLrnDriverNameMarkup(d)}</div><div class="v3-contender-meta"><span>Rating ${rating.toFixed(0)}</span><span>${Number(d.top5Rate||0).toFixed(0)}% Top 5</span></div><div class="v3-contender-meter"><span style="width:${rating}%"></span></div></div></article>`;
+      return `<article class="v3-contender">${photo}<div class="v3-contender-copy"><div class="v3-contender-label">${i===0?'Performance Leader':'Contender '+(i+1)}</div><div class="v3-contender-name">${hLrnDriverNameMarkup(d)}</div><div class="v3-contender-team">${d.team?hLrnTeamMarkup(d.team):"Independent"}</div><div class="v3-contender-meta"><span>Rating ${d.avgRating?Number(d.avgRating).toFixed(1):rating.toFixed(0)}</span><span>Avg ${formatFinish(d.seasonAvgFinish)}</span><span class="ri-rank-trend ${rankTrendClass(d)}">#${d.rank||"—"} ${esc(rankTrendLabel(d,true))}</span></div><div class="v3-contender-meter"><span style="width:${rating}%"></span></div></div></article>`;
     }).join(''):'<div style="padding:18px;color:#7f8992;font-size:10px">Waiting for enough race history to build the contender board.</div>';
   }
 
@@ -1353,13 +1450,22 @@ document.addEventListener("visibilitychange",()=>{
   function updateOverview(){
     try{
       const a=Array.isArray(analytics)?analytics:[];
+      const active=a.filter(d=>!d.paused);
       const c=Array.isArray(categories)?categories:[];
-      const get=k=>c.find(x=>x&&x.key===k)?.driver?.name||'—';
+      const getDriver=k=>c.find(x=>x&&x.key===k)?.driver||null;
       const set=(id,v)=>{const n=document.getElementById(id);if(n&&n.textContent!==String(v))n.textContent=String(v)};
-      set('compactDrivers',a.length||'—');
-      set('compactFavorite',get('favorite'));
-      set('compactHot',get('hot'));
-      set('compactRisk',get('trouble')!=='—'?get('trouble'):get('watch'));
+      const setDriver=(id,d)=>{
+        const n=document.getElementById(id); if(!n)return;
+        n.innerHTML=d?hLrnDriverNameMarkup(d):"—";
+      };
+      set('compactDrivers',active.length||'—');
+      setDriver('compactFavorite',getDriver('favorite'));
+      setDriver('compactHot',getDriver('hot'));
+      setDriver('compactRisk',getDriver('trouble')||getDriver('watch'));
+      set('ccField',active.length||'—');
+      setDriver('ccLeader',getDriver('favorite'));
+      setDriver('ccHot',getDriver('hot'));
+      setDriver('ccRisk',getDriver('trouble')||getDriver('watch'));
       let race=0; try{race=results.reduce((m,r)=>Math.max(m,Number(r.raceNumber)||0),0)}catch(e){}
       set('compactRace',race?'R'+race:'—');
     }catch(e){}
