@@ -254,25 +254,6 @@ html[style*="color-scheme: dark"] #page-hosted{
   color-scheme:dark!important;
 }
 </style>
-<style id="HLRN_STANDINGS_STABLE_FRAME_FALLBACK_20261001">
-.viewport{background:transparent!important}
-iframe.page{
-  width:100%!important;
-  min-height:900px!important;
-  height:calc(100vh - 170px)!important;
-  max-height:none!important;
-  border:0!important;
-  outline:0!important;
-  box-shadow:none!important;
-}
-@media(max-width:760px){
-  iframe.page{min-height:780px!important;height:calc(100vh - 145px)!important}
-}
-html[data-hlrn-theme="dark"] .viewport,
-html[data-hlrn-theme="dark"] iframe.page{
-  background:#000!important;
-}
-</style>
 </head>
 <body>
 <div class="hlrn">
@@ -311,9 +292,9 @@ html[data-hlrn-theme="dark"] iframe.page{
   </nav>
   <main class="viewport">
     <div class="cn-series-ribbon"><i></i><span id="cnRibbonText">Hosted Racing Active</span></div>
-    <iframe class="page active" id="page-hosted" title="HLRN Hosted Racing" scrolling="auto" src="hosted.html?v=20261001stableload1"></iframe>
-    <iframe class="page" id="page-sunday" loading="lazy" title="HLRN Sunday Championship" scrolling="auto" src="sunday.html?v=20261001stableload1"></iframe>
-    <iframe class="page" id="page-monday" loading="lazy" title="HLRN Monday Championship" scrolling="auto" src="monday.html?v=20261001stableload1"></iframe>
+    <iframe class="page active" id="page-hosted" title="HLRN Hosted Racing" scrolling="auto" src="hosted.html?v=20261001h2hsearchdark1"></iframe>
+    <iframe class="page" id="page-sunday" loading="lazy" title="HLRN Sunday Championship" scrolling="auto" src="sunday.html?v=20260930darkbridge2"></iframe>
+    <iframe class="page" id="page-monday" loading="lazy" title="HLRN Monday Championship" scrolling="auto" src="monday.html?v=20260930darkbridge2"></iframe>
   </main>
 </div>
 <script>
@@ -363,6 +344,788 @@ window.addEventListener('hashchange',()=>{
   const requested=String(location.hash||'').replace(/^#/,'').toLowerCase();
   if(HLRN_STANDINGS_SERIES.has(requested)) openPage(requested,true);
 });
+</script>
+<script id="HLRN_REMOVE_HOSTED_BLACK_HERO_SCRIPT">
+(function(){
+  const css=`
+/* Remove the oversized Hosted Race Control hero/header from nested Hosted pages */
+.ops-topbar,
+.ops-hero,
+.hx-startup{
+  display:none!important;
+  height:0!important;
+  min-height:0!important;
+  max-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  overflow:hidden!important;
+  visibility:hidden!important;
+}
+/* Pull actual page content to the top after removing the hero */
+.ops-shell,
+.ops-main,
+.ops-content,
+.container,
+.content,
+.main,
+main{
+  margin-top:0!important;
+}
+`;
+  function inject(doc){
+    if(!doc || !doc.head) return;
+    let s=doc.getElementById('HLRN_REMOVE_HOSTED_BLACK_HERO');
+    if(!s){
+      s=doc.createElement('style');
+      s.id='HLRN_REMOVE_HOSTED_BLACK_HERO';
+      s.textContent=css;
+      doc.head.appendChild(s);
+    }
+    /* Hard-remove the visible blocks too, in case old !important rules fight CSS. */
+    ['.ops-topbar','.ops-hero','.hx-startup'].forEach(sel=>{
+      doc.querySelectorAll(sel).forEach(el=>{
+        el.style.setProperty('display','none','important');
+        el.style.setProperty('height','0','important');
+        el.style.setProperty('min-height','0','important');
+        el.style.setProperty('max-height','0','important');
+        el.style.setProperty('margin','0','important');
+        el.style.setProperty('padding','0','important');
+        el.style.setProperty('border','0','important');
+      });
+    });
+    [...doc.querySelectorAll('iframe')].forEach(frame=>{
+      const apply=()=>{
+        try{ inject(frame.contentDocument); }catch(e){}
+      };
+      if(!frame.__hlrnHideHeroBound){
+        frame.__hlrnHideHeroBound=true;
+        frame.addEventListener('load',apply);
+      }
+      apply();
+      setTimeout(apply,150);
+      setTimeout(apply,700);
+    });
+  }
+  function run(){
+    document.querySelectorAll('iframe.page').forEach(frame=>{
+      try{ inject(frame.contentDocument); }catch(e){}
+    });
+  }
+  document.addEventListener('DOMContentLoaded',run);
+  window.addEventListener('load',run);
+  document.querySelectorAll('.tab[data-page]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      setTimeout(run,0);
+      setTimeout(run,180);
+      setTimeout(run,800);
+    });
+  });
+  setTimeout(run,100);
+  setTimeout(run,700);
+  setTimeout(run,1800);
+})();
+</script>
+<style id="HLRN_FINAL_CLEAN_LIGHT_V4">:root{--hlrn-red:#d71920;--hlrn-green:#47a900;--hlrn-yellow:#d7a900;--hlrn-ink:#111214;--hlrn-line:#d8dde2;--hlrn-soft:#f5f6f7}html,body,.hlrn,.viewport{background:#fff!important;color:#111214!important;min-height:0!important;height:auto!important;overflow:visible!important}body{overflow-x:hidden!important}.hlrn{display:block!important;background:#fff!important}.topline,.titlebar{position:relative!important;top:auto!important;background:#fff!important;background-image:none!important;color:#111214!important;border-color:#d8dde2!important;box-shadow:none!important}.titlebar:after,.hlrn:before{display:none!important}.titlebar *,.topline *{color:#111214!important;text-shadow:none!important}.tabs{position:relative!important;top:auto!important;background:#fff!important;border-color:#d8dde2!important;box-shadow:none!important}.tab,.tab.active,.tab:hover{background:#fff!important;background-image:none!important;color:#111214!important;border-color:#d8dde2!important;box-shadow:none!important;transform:none!important}.tab:before{background:#c9ced3!important}.tab.active:after{display:block!important;height:3px!important}.tab[data-page="hosted"] strong{color:#111214!important}.tab[data-page="sunday"] strong{color:#d71920!important}.tab[data-page="monday"] strong{color:#47a900!important}.viewport{width:100%!important;height:auto!important;min-height:0!important;overflow:visible!important;border:0!important}iframe.page{display:none!important;width:100%!important;height:1px;min-height:0!important;max-height:none!important;border:0!important;background:#fff!important;overflow:hidden!important}iframe.page.active{display:block!important}</style>
+<script id="HLRN_FINAL_CLEAN_LIGHT_ENGINE_V4">
+(function(){
+  const MAX_DEPTH=7;
+  let resizeTimer=0;
+  const INNER_CSS=`
+    :root{color-scheme:light!important;--f-red:#d71920;--f-green:#47a900;--f-yellow:#c89c00;--f-ink:#111214;--f-line:#d8dde2;--f-soft:#f5f6f7}
+    html,body{margin-top:0!important;margin-bottom:0!important;padding-bottom:0!important;background:#fff!important;color:#111214!important;min-height:0!important;height:auto!important;max-height:none!important;overflow:visible!important;color-scheme:light!important}
+    body:before,body:after{display:none!important}
+    /* Flatten all legacy dark surfaces. */
+    body div,body section,body article,body aside,body main,body header,body footer,body nav,body form,
+    body p,body span,body small,body strong,body b,body i,body label,body li,body dt,body dd{
+      background-color:transparent!important;background-image:none!important;box-shadow:none!important;text-shadow:none!important
+    }
+    body div:before,body div:after,body section:before,body section:after,body article:before,body article:after,
+    body header:before,body header:after,body footer:before,body footer:after{
+      background-color:transparent!important;background-image:none!important;box-shadow:none!important
+    }
+    body,body *{color:#111214!important;text-shadow:none!important}
+    a{color:#111214!important}
+    h1,h2,h3,h4,h5,h6,.title,.driver-name,.leader-name,.winner-name,.record-driver,.record-value,.stat-value,.metric-value,.points,.num,.carno{color:#111214!important;text-shadow:none!important}
+    /* Keep only meaningful text accents. */
+    .up,.gain,.positive,.move-up,.green{color:#47a900!important}
+    .down,.loss,.negative,.move-down,.red,.warning{color:#d71920!important}
+    .yellow,.accent,.leader-highlight{color:#a98000!important}
+    /* Tabs: white, outlined, no dark fills and never sticky. */
+    .tabs,.nav,.tab-bar,.inner-tabs,.league-tabs,.hosted-hub-tabs,.rr-tabs,
+    #sundayDirectRaceReport .tabs,#mondayDirectRaceReport .tabs{
+      position:relative!important;top:auto!important;background:#fff!important;background-image:none!important;border-color:#d8dde2!important;box-shadow:none!important;backdrop-filter:none!important
+    }
+    button,.tab,.tab-btn,.inner-tab,.hosted-hub-tab,.league-btn,.rr-tab,.nav button{
+      background:#fff!important;background-image:none!important;color:#111214!important;border-color:#d8dde2!important;box-shadow:none!important;text-shadow:none!important
+    }
+    button:hover,.tab:hover,.tab-btn:hover,.inner-tab:hover,.hosted-hub-tab:hover,.league-btn:hover,.rr-tab:hover,.nav button:hover,
+    button.active,.tab.active,.tab-btn.active,.inner-tab.active,.hosted-hub-tab.active,.league-btn.active,.rr-tab.active,.nav button.active{
+      background:#f5f6f7!important;color:#111214!important;border-color:#c7cdd2!important;transform:none!important
+    }
+    /* Tables stay white and readable. */
+    table{background:#fff!important;background-image:none!important;color:#111214!important;border-collapse:collapse!important}
+    thead,thead tr,th,thead th{position:static!important;top:auto!important;background:#f1f3f5!important;background-image:none!important;color:#111214!important;border-color:#d8dde2!important;box-shadow:none!important}
+    tbody,tbody tr,td,tbody td{background:#fff!important;background-image:none!important;color:#111214!important;border-color:#e0e3e6!important;box-shadow:none!important}
+    tbody tr:nth-child(even) td{background:#fafbfc!important}
+    tbody tr:hover td{background:#f4f6f7!important}
+    /* Card systems become lines on white, not blocks. */
+    .card,.panel,.box,.tile,.stat,.stat-card,.metric-card,.summary-card,.content-card,.record-card,.leader-card,
+    .driver-card,.story-block,.leader-card,.intel,.quote,.mini,.finish-list,.caution-card,.moment-card,.event-row,
+    .last-race-card,.cc-card,.cc-battle-item,.cc-spotlight-card,.matchup-card,.comparison-card,.prime-edge,
+    .incident-streak-card,.incident-average-table,.watch,.feature,.feature-box,.callout,.result-card,.overview-card{
+      background:#fff!important;background-image:none!important;color:#111214!important;border-color:#d8dde2!important;box-shadow:none!important;text-shadow:none!important
+    }
+    /* INCIDENT WATCH — completely remove the black ranking slabs. */
+    .incident-container{max-width:none!important}
+    .incident-title{margin-bottom:28px!important;text-align:left!important}
+    .incident-title h2{color:#d71920!important}
+    .incident-red-line{margin:12px 0 0!important;background:#d71920!important}
+    .incident-section-label{color:#111214!important;border-bottom:1px solid #d8dde2!important;padding-bottom:10px!important}
+    .incident-top10{gap:0!important;border-top:1px solid #d8dde2!important}
+    .incident-row,.incident-row.rank-1,.incident-row.rank-2,.incident-row.rank-3{
+      min-height:70px!important;padding:12px 6px!important;background:#fff!important;background-image:none!important;
+      border:0!important;border-bottom:1px solid #d8dde2!important;border-left:4px solid #d8dde2!important;
+      box-shadow:none!important;transform:none!important;animation:none!important
+    }
+    .incident-row.rank-1{border-left-color:#d71920!important}.incident-row.rank-2{border-left-color:#c89c00!important}.incident-row.rank-3{border-left-color:#b36b28!important}
+    .incident-row:hover{background:#fafbfc!important;transform:none!important;box-shadow:none!important}
+    .incident-rank,.incident-row.rank-1 .incident-rank,.incident-row.rank-2 .incident-rank,.incident-row.rank-3 .incident-rank{
+      width:54px!important;height:auto!important;min-height:44px!important;background:transparent!important;border:0!important;color:#111214!important;font-size:20px!important
+    }
+    .incident-driver{padding:0 10px!important}.incident-driver-name{color:#111214!important;background:transparent!important;font-size:18px!important}
+    .incident-driver-label,.incident-row.rank-1 .incident-driver-label,.incident-row.rank-2 .incident-driver-label,.incident-row.rank-3 .incident-driver-label{color:#111214!important}
+    .incident-points strong,.incident-row.rank-1 .incident-points strong{color:#111214!important}.incident-points span{color:#111214!important}
+    .incident-average-section{margin-top:38px!important}.incident-average-table{overflow:visible!important;border:1px solid #d8dde2!important}
+    .incident-average-header,.incident-average-item{background:#fff!important;color:#111214!important;border-color:#d8dde2!important}
+    .incident-average-item:nth-child(even){background:#fafbfc!important}
+    .incident-search{background:#fff!important;color:#111214!important;border-color:#cfd4d9!important;box-shadow:none!important}
+    .incident-search::placeholder{color:#111214!important;opacity:.55!important}
+    .incident-pagination{background:#fff!important;border-color:#d8dde2!important}.incident-pagination button{background:#fff!important;color:#111214!important;border-color:#cfd4d9!important}
+    #incidentAveragePageInfo,.incident-average-note,.incident-average-note strong{color:#111214!important}
+    /* Records / leaderboards: no emoji boxes, no black card headers. */
+    .record-card{min-height:0!important;padding:18px 14px!important}.record-icon{display:none!important}
+    .record-name,.record-driver,.record-sub{color:#111214!important}.record-card:before,.record-card:after{display:none!important}
+    .leader-card{min-height:0!important}.leader-card h3,.leader-name,.leader-value,.leader-sub{color:#111214!important}
+    /* Head-to-head dark edge strips become simple white stat rows. */
+    .prime-edge-board{gap:0!important;border:1px solid #d8dde2!important}
+    .prime-edge{min-height:78px!important;border:0!important;border-right:1px solid #d8dde2!important;background:#fff!important;padding:14px!important}
+    .prime-edge:last-child{border-right:0!important}.prime-edge:before{height:3px!important;background:#d71920!important}
+    .prime-edge-label,.prime-edge-value,.prime-edge-sub{color:#111214!important}
+    .matchup-card{background:#fff!important;border:1px solid #d8dde2!important;box-shadow:none!important}
+    /* Race report panels. */
+    #sundayDirectRaceReport,#mondayDirectRaceReport,#sundayDirectRaceReport .tab-content,#mondayDirectRaceReport .tab-content,
+    #sundayDirectRaceReport .driver-card,#mondayDirectRaceReport .driver-card,#sundayDirectRaceReport .finish-list,#mondayDirectRaceReport .finish-list,
+    #sundayDirectRaceReport table,#mondayDirectRaceReport table{
+      background:#fff!important;background-image:none!important;color:#111214!important;border-color:#d8dde2!important;box-shadow:none!important
+    }
+    /* Remove fixed/minimum heights that created giant empty bottoms. */
+    .container,.wrapper,.shell,.page,.page-wrap,.main,main,.content,.main-content,.content-area,.section,.panel,
+    .hosted-hub,.hosted-hub-stage,.league-hub,.standings-hub,.results-wrap,.race-results,.race-report,.report-section,
+    .table-shell,.table-wrap,.table-container,.standings-wrap,.content-scroll,.scroll-area,.scroll-container{
+      min-height:0!important;max-height:none!important;height:auto!important
+    }
+    .table-shell,.table-wrap,.table-container,.standings-wrap,.results-wrap,.content-scroll,.scroll-area,.scroll-container{overflow:visible!important}
+    .section{padding-bottom:24px!important}
+    .footer{margin-bottom:0!important;padding-bottom:14px!important;background:#fff!important;color:#111214!important;border-color:#d8dde2!important}
+    iframe{background:#fff!important;color-scheme:light!important;min-height:0!important;max-height:none!important;border:0!important}
+  `;
+  function inject(doc){
+    if(!doc||!doc.head) return;
+    let s=doc.getElementById('HLRN_FLAT_LIGHT_V4');
+    if(!s){s=doc.createElement('style');s.id='HLRN_FLAT_LIGHT_V4';doc.head.appendChild(s)}
+    s.textContent=INNER_CSS;
+    stripEmoji(doc);
+    bindDoc(doc);
+  }
+  function stripEmoji(doc){
+    if(!doc||!doc.body) return;
+    const emojiOnly=/^[\s\u2190-\u2BFF\u{1F000}-\u{1FAFF}\uFE0F\u200D]+$/u;
+    doc.querySelectorAll('.record-icon,.incident-streak-icon,.icon-badge,.emoji,.emoji-icon,.stat-icon,.card-icon').forEach(el=>{
+      el.style.setProperty('display','none','important');
+    });
+    [...doc.querySelectorAll('h1,h2,h3,.incident-section-label,.section-title h2,.leader-card h3')].forEach(el=>{
+      for(const node of [...el.childNodes]){
+        if(node.nodeType===3){
+          let t=node.nodeValue||'';
+          // Remove pictographs but keep words/punctuation.
+          t=t.replace(/[\u{1F000}-\u{1FAFF}\u2600-\u27BF]/gu,'').replace(/\uFE0F/g,'');
+          node.nodeValue=t.replace(/^\s+/,'');
+        }else if(node.nodeType===1 && emojiOnly.test((node.textContent||'').trim())){
+          node.style.display='none';
+        }
+      }
+    });
+    // Remove the generated STAT/WINS/TOP5 pills from the earlier patch.
+    doc.querySelectorAll('.icon-badge').forEach(el=>el.remove());
+  }
+  function isVisible(el){
+    try{const cs=el.ownerDocument.defaultView.getComputedStyle(el);return cs.display!=='none'&&cs.visibility!=='hidden'}catch(e){return true}
+  }
+  function measure(doc){
+    if(!doc||!doc.body||!doc.documentElement) return 0;
+    const b=doc.body,de=doc.documentElement;
+    let h=Math.max(b.scrollHeight,b.offsetHeight,de.scrollHeight,de.offsetHeight,0);
+    // scrollHeight can retain legacy minimums; visible-body geometry gives a safer lower target.
+    try{
+      const top=b.getBoundingClientRect().top;
+      let bottom=b.getBoundingClientRect().bottom;
+      [...b.children].forEach(el=>{if(isVisible(el)){const r=el.getBoundingClientRect();bottom=Math.max(bottom,r.bottom)}});
+      const geom=Math.ceil(bottom-top);
+      if(geom>50) h=Math.min(h,geom+2);
+    }catch(e){}
+    return Math.max(80,Math.ceil(h));
+  }
+  function fitFrame(frame,depth){
+    if(!frame||depth>MAX_DEPTH) return;
+    try{
+      frame.setAttribute('scrolling','no');
+      frame.style.setProperty('overflow','hidden','important');
+      frame.style.setProperty('background','#fff','important');
+      frame.style.setProperty('min-height','0','important');
+      frame.style.setProperty('max-height','none','important');
+      const doc=frame.contentDocument;
+      if(!doc||!doc.body) return;
+      inject(doc);
+      doc.documentElement.style.setProperty('height','auto','important');
+      doc.documentElement.style.setProperty('min-height','0','important');
+      doc.body.style.setProperty('height','auto','important');
+      doc.body.style.setProperty('min-height','0','important');
+      doc.body.style.setProperty('overflow','visible','important');
+      [...doc.querySelectorAll('iframe')].forEach(k=>{
+        if(isVisible(k)) fitFrame(k,depth+1);
+      });
+      const h=measure(doc);
+      const cur=parseFloat(frame.style.height)||0;
+      if(Math.abs(cur-h)>3) frame.style.setProperty('height',h+'px','important');
+      if(!frame.__hlrnV4LoadBound){
+        frame.__hlrnV4LoadBound=true;
+        frame.addEventListener('load',()=>{setTimeout(()=>fitFrame(frame,depth),20);setTimeout(()=>fitFrame(frame,depth),250);setTimeout(scheduleFit,650)});
+      }
+    }catch(e){}
+  }
+  function fitAll(){
+    clearTimeout(resizeTimer);
+    try{
+      document.querySelectorAll('iframe.page').forEach(frame=>{
+        if(frame.classList.contains('active')) fitFrame(frame,0);
+      });
+    }catch(e){}
+  }
+  function scheduleFit(){clearTimeout(resizeTimer);resizeTimer=setTimeout(fitAll,70)}
+  function bindDoc(doc){
+    if(!doc||doc.__hlrnV4Bound) return;
+    doc.__hlrnV4Bound=true;
+    doc.addEventListener('click',()=>{setTimeout(scheduleFit,30);setTimeout(scheduleFit,250)},true);
+    doc.addEventListener('input',scheduleFit,true);
+    doc.addEventListener('change',scheduleFit,true);
+    if('ResizeObserver' in window && doc.body){
+      let lock=false;
+      const ro=new ResizeObserver(()=>{if(lock)return;lock=true;setTimeout(()=>{lock=false;scheduleFit()},90)});
+      ro.observe(doc.body);
+      doc.__hlrnV4RO=ro;
+    }
+  }
+  function init(){
+    inject(document);
+    document.querySelectorAll('iframe').forEach(f=>{
+      if(!f.__hlrnV4RootLoad){f.__hlrnV4RootLoad=true;f.addEventListener('load',()=>{setTimeout(scheduleFit,30);setTimeout(scheduleFit,400)})}
+    });
+    fitAll();setTimeout(fitAll,180);setTimeout(fitAll,700);setTimeout(fitAll,1600);
+  }
+  document.addEventListener('click',()=>{setTimeout(scheduleFit,20);setTimeout(scheduleFit,300)},true);
+  window.addEventListener('resize',scheduleFit);
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true}); else init();
+  window.addEventListener('load',()=>{setTimeout(init,40);setTimeout(fitAll,900)},{once:true});
+})();
+</script>
+<style id="HLRN_V5_VISIBLE_CONTENT_RESCUE">iframe.page.active{display:block!important;background:#fff!important;min-height:180px!important}</style>
+<script id="HLRN_V5_PARENT_RESIZE_RESCUE">
+(function(){
+  function resizeTop(){
+    document.querySelectorAll('iframe.page.active').forEach(frame=>{
+      try{
+        const doc=frame.contentDocument;
+        if(!doc||!doc.body||!doc.documentElement)return;
+        const h=Math.max(doc.body.scrollHeight||0,doc.documentElement.scrollHeight||0,180);
+        frame.style.setProperty('height',Math.ceil(h+2)+'px','important');
+      }catch(e){}
+    });
+  }
+  document.addEventListener('click',()=>{setTimeout(resizeTop,80);setTimeout(resizeTop,450)},true);
+  window.addEventListener('load',()=>{setTimeout(resizeTop,150);setTimeout(resizeTop,900)},{once:true});
+  setTimeout(resizeTop,300);setTimeout(resizeTop,1200);
+})();
+</script>
+<style id="HLRN_REMOVE_BLACK_HEADER_BARS_OUTER">html,body,.hlrn,.viewport,.page{background:#f6f7f8!important;color:#111214!important}.viewport,.page{background:#fff!important}</style>
+<script id="HLRN_REMOVE_BLACK_HEADER_BARS_SCRIPT">
+(function(){
+  const CSS = `
+    html,body{background:#fff!important;color:#111214!important}
+    .table-shell,.table-wrap,.standings-wrap,.results-wrap,.content-area,.tab-content,.report-wrap,.report-content,.panel,.card,.box,.viewport{background:#fff!important;color:#111214!important}
+    thead, thead tr, thead th, th,
+    .table-shell thead th,
+    .standings-table thead th,
+    .results-table thead th,
+    .stats-table thead th,
+    .report-table thead th,
+    .race-results thead th,
+    .driver-standings thead th,
+    .team-standings thead th{
+      background:#f2f4f6!important;
+      background-image:none!important;
+      color:#111214!important;
+      border-color:#d8dde2!important;
+      box-shadow:none!important;
+      text-shadow:none!important;
+    }
+    td, tbody td{
+      background:#fff!important;
+      color:#111214!important;
+      border-color:#e0e4e8!important;
+      box-shadow:none!important;
+      text-shadow:none!important;
+    }
+    tbody tr:nth-child(even) td{background:#fafbfc!important}
+    tbody tr:hover td{background:#f3f5f7!important}
+    .header,.section-header,.results-header,.table-header,.hero,.topline,.titlebar,.title-bar,.panel-header,.race-wire,.wire,.headline-bar,.subhead,
+    [class*="header"], [class*="titlebar"], [class*="topline"]{
+      background:#fff!important;
+      background-image:none!important;
+      color:#111214!important;
+      border-color:#d8dde2!important;
+      box-shadow:none!important;
+      text-shadow:none!important;
+    }
+    .count,.pill,.badge,.tag,.chip{background:#fff!important;color:#111214!important;border-color:#d8dde2!important;box-shadow:none!important}
+    .tabs,.tab-row,.nav,.subtabs{background:#fff!important;border-color:#d8dde2!important;box-shadow:none!important}
+    .tab-btn,.rr-tab,.hosted-hub-tab,.league-btn,.tab{background:#fff!important;color:#111214!important;border-color:#d8dde2!important;box-shadow:none!important}
+    .tab-btn.active,.rr-tab.active,.hosted-hub-tab.active,.league-btn.active,.tab.active{background:#f3f5f7!important;color:#111214!important}
+    .loading,.loader,.loading-state{background:#fff!important;color:#111214!important}
+  `;
+  function addStyle(doc){
+    if(!doc || !doc.head) return;
+    let style = doc.getElementById('HLRN_REMOVE_BLACK_HEADER_BARS_INNER');
+    if(!style){
+      style = doc.createElement('style');
+      style.id = 'HLRN_REMOVE_BLACK_HEADER_BARS_INNER';
+      doc.head.appendChild(style);
+    }
+    style.textContent = CSS;
+  }
+  function patchDoc(doc, depth){
+    if(!doc || depth > 8) return;
+    try{ addStyle(doc); }catch(e){}
+    try{
+      doc.querySelectorAll('iframe').forEach(frame=>{
+        try{
+          frame.style.background = '#fff';
+          frame.style.boxShadow = 'none';
+          if(frame.contentDocument) patchDoc(frame.contentDocument, depth+1);
+          if(!frame.__hlrnBlackBarPatched){
+            frame.__hlrnBlackBarPatched = true;
+            frame.addEventListener('load', ()=>setTimeout(()=>patchDoc(frame.contentDocument, depth+1), 60));
+          }
+        }catch(e){}
+      });
+    }catch(e){}
+  }
+  function run(){ patchDoc(document, 0); }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run, {once:true});
+  else run();
+  window.addEventListener('load', ()=>{ run(); setTimeout(run,200); setTimeout(run,900); setTimeout(run,1800); }, {once:true});
+  setInterval(run, 1500);
+})();
+</script>
+<style id="HLRN_HOSTED_SECTION_TITLE_OUTER_V8">iframe{background:#fff!important}</style>
+<script id="HLRN_HOSTED_SECTION_TITLE_FIX_V8">
+(function(){
+  function fixHostedRacingDoc(doc){
+    if(!doc) return;
+    try{
+      let style=doc.getElementById('HLRN_HOSTED_RACING_SECTION_TITLE_V8');
+      if(!style && doc.head){
+        style=doc.createElement('style');
+        style.id='HLRN_HOSTED_RACING_SECTION_TITLE_V8';
+        style.textContent=`
+          .section-title,
+          .section-title[style],
+          .section .section-title{
+            background:#fff!important;
+            background-image:none!important;
+            color:#111214!important;
+            border-top:1px solid #d9dde1!important;
+            border-bottom:1px solid #d9dde1!important;
+            box-shadow:none!important;
+            text-shadow:none!important;
+          }
+          .section-title:before,
+          .section-title:after{
+            color:#111214!important;
+            text-shadow:none!important;
+            background:transparent!important;
+          }
+          .section{
+            background:#fff!important;
+            border-color:#d9dde1!important;
+            box-shadow:none!important;
+          }
+          .table-wrap{background:#fff!important}
+          thead,thead tr,thead th,th{
+            background:#f2f4f6!important;
+            color:#111214!important;
+            border-color:#d9dde1!important;
+          }
+        `;
+        doc.head.appendChild(style);
+      }
+      doc.querySelectorAll('.section-title').forEach(el=>{
+        el.style.setProperty('background','#fff','important');
+        el.style.setProperty('background-image','none','important');
+        el.style.setProperty('color','#111214','important');
+        el.style.setProperty('border-top','1px solid #d9dde1','important');
+        el.style.setProperty('border-bottom','1px solid #d9dde1','important');
+        el.style.setProperty('box-shadow','none','important');
+        el.style.setProperty('text-shadow','none','important');
+      });
+    }catch(e){}
+  }
+  function inspectHosted(){
+    try{
+      const outer=document.getElementById('page-hosted');
+      if(!outer || !outer.contentDocument) return;
+      const od=outer.contentDocument;
+      const racing=od.getElementById('hostedFrame-racing');
+      if(racing){
+        if(racing.contentDocument) fixHostedRacingDoc(racing.contentDocument);
+        if(!racing.__sectionTitleFixBound){
+          racing.__sectionTitleFixBound=true;
+          racing.addEventListener('load',()=>{
+            setTimeout(()=>fixHostedRacingDoc(racing.contentDocument),30);
+            setTimeout(()=>fixHostedRacingDoc(racing.contentDocument),250);
+          });
+        }
+      }
+      od.querySelectorAll('iframe').forEach(f=>{
+        try{
+          if(f.contentDocument) fixHostedRacingDoc(f.contentDocument);
+        }catch(e){}
+      });
+    }catch(e){}
+  }
+  function init(){
+    const outer=document.getElementById('page-hosted');
+    if(outer && !outer.__hostedSectionFixBound){
+      outer.__hostedSectionFixBound=true;
+      outer.addEventListener('load',()=>{
+        setTimeout(inspectHosted,60);
+        setTimeout(inspectHosted,350);
+        setTimeout(inspectHosted,1000);
+      });
+    }
+    inspectHosted();
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
+  window.addEventListener('load',()=>{setTimeout(init,80);setTimeout(inspectHosted,700)},{once:true});
+  document.querySelectorAll('.tab[data-page]').forEach(btn=>btn.addEventListener('click',()=>setTimeout(inspectHosted,180)));
+  setTimeout(inspectHosted,1400);
+})();
+</script>
+<style id="HLRN_HOSTED_INNER_EXACT_FIX_OUTER">html,body,.hlrn,.viewport,iframe.page{background:#fff!important;color:#111214!important}</style>
+<script id="HLRN_HOSTED_INNER_EXACT_FIX_ENGINE">
+(function(){
+  const DRIVER_CSS=`
+    html,body{background:#fff!important;color:#111214!important}
+    body:before,body:after{display:none!important}
+    .hlrn-top,.hero,.stats-ticker,.section,.cards,.card,.driver-stat-card,.driver-stat-card-header,.driver-stat,.leader-card,
+    .incident-container,.incident-title,.incident-row,.incident-streak-card,.incident-average-table,.incident-average-header,.incident-average-item,
+    .driver-profile-hero,.driver-profile-content,.driver-profile-stat,.driver-profile-result,.driver-profile-track{
+      background:#fff!important;background-image:none!important;color:#111214!important;box-shadow:none!important;text-shadow:none!important;border-color:#d9dde1!important;
+    }
+    .hlrn-top{border-top:4px solid #d71920!important;border-bottom:1px solid #d9dde1!important}
+    .hlrn-top:after,.hero:after{color:rgba(17,18,20,.035)!important}
+    .brand,.hero h1,.section-title h2,.driver-stat-name,.driver-profile-name,h1,h2,h3,h4,strong,b{color:#111214!important;text-shadow:none!important}
+    .subtitle,.hero p,.section-title p,.driver-stat-label,.driver-profile-label,.driver-profile-sub,.incident-driver-label,.incident-streak-sub,.incident-average-note,.note,.small,.muted{color:#111214!important}
+    .nav{background:#fff!important}
+    .nav button{background:#fff!important;color:#111214!important;border:1px solid #d9dde1!important;box-shadow:none!important}
+    .nav button:hover,.nav button.active{background:#f3f5f7!important;color:#111214!important;border-color:#cbd1d6!important;transform:none!important;box-shadow:none!important}
+    .stats-ticker{background:#fff!important;border-color:#d9dde1!important;box-shadow:none!important;color:#111214!important}
+    .stats-ticker .ticker-window,.stats-ticker .ticker-track,.stats-ticker .ticker-track b,.stats-ticker .ticker-network{color:#111214!important}
+    .search,.incident-search{background:#fff!important;color:#111214!important;border:1px solid #cfd4d9!important;border-left:4px solid #f4c400!important;box-shadow:none!important}
+    .search::placeholder,.incident-search::placeholder{color:#555b61!important}
+    .driver-stat-card{border:1px solid #d9dde1!important;border-left:5px solid #d71920!important}
+    .driver-stat-card-header{border-bottom:1px solid #d9dde1!important}
+    .driver-stat-rank{background:#fff!important;color:#111214!important;border:1px solid #cfd4d9!important;border-left:3px solid #f4c400!important}
+    .driver-stat{background:#fff!important;border-color:#e0e4e8!important}
+    .driver-stat:nth-child(even){background:#fafbfc!important}
+    .driver-stat-value{color:#111214!important}
+    .driver-stat.incidents .driver-stat-value,.driver-stat.average-inc .driver-stat-value{color:#d71920!important}
+    .card,.leader-card{background:#fff!important;border-color:#d9dde1!important;box-shadow:none!important}
+    .card .value,.leader-card .value,.leader-value{color:#111214!important}
+    .incident-row{border:1px solid #d9dde1!important;border-left:4px solid #d71920!important}
+    .incident-row.rank-1{background:#fffdf3!important;border-left-color:#f4c400!important}
+    .incident-rank{background:#fff!important;color:#111214!important;border:1px solid #cfd4d9!important}
+    .incident-driver-name,.incident-points strong,.incident-streak-driver,.incident-streak-value,.incident-average-driver,.incident-average-number{color:#111214!important}
+    .incident-streak-card.clean,.incident-streak-card.improved{border-left:4px solid #46aa00!important}
+    .incident-streak-card.increase{border-left:4px solid #d98500!important}
+    .incident-average-header{background:#f2f4f6!important;color:#111214!important}
+    .incident-average-item:nth-child(even){background:#fafbfc!important}
+    .incident-pagination{background:#fff!important;border-color:#d9dde1!important}
+    .incident-pagination button{background:#fff!important;color:#111214!important;border-color:#cfd4d9!important}
+    .driver-profile-stat,.driver-profile-result,.driver-profile-track{background:#fff!important;border:1px solid #d9dde1!important;color:#111214!important}
+    ::-webkit-scrollbar-track{background:#f2f4f6!important}
+  `;
+  const RECORD_CSS=`
+    html,body{background:#fff!important;color:#111214!important}
+    body:before,body:after{display:none!important}
+    .hlrn-wrap,.hero,.panel,.card,.records-panel,.record-card,.record-status,.info-bar,.milestone,.watch-list,.watch,
+    .records-ticker{background:#fff!important;background-image:none!important;color:#111214!important;box-shadow:none!important;border-color:#d9dde1!important}
+    .hero{border-top:4px solid #d71920!important;border-bottom:1px solid #d9dde1!important}
+    .hero:after{color:rgba(17,18,20,.035)!important}
+    .hero h1,.card-title,.records-title,.record-driver,.watch-driver,.status-title,.m-driver,.stat-text,h1,h2,h3,h4,strong,b{color:#111214!important;text-shadow:none!important}
+    .hero h1 .red,.record-value,.watch-value,.info-bar .red{color:#d71920!important}
+    .hero p,.update,.subtext,.status-copy,.watch-label,.group-title,.m-progress-row,.record-name,.record-second,.info-bar{color:#111214!important}
+    .record-status{border-left:4px solid #46aa00!important;padding:17px!important}
+    .status-check{background:#eaf7e5!important;color:#278700!important;border:1px solid #b9deb0!important}
+    .record-card{border:1px solid #d9dde1!important;border-top:3px solid #f4c400!important}
+    .record-card:hover{border-color:#c9ced3!important}
+    .record-second{border-color:#d9dde1!important;color:#111214!important}
+    .progress{background:#e6e9ec!important}
+    .progress-bar{background:linear-gradient(90deg,#f4c400,#d71920)!important}
+    .m-icon{background:#fff!important;color:#111214!important;border:1px solid #d9dde1!important;box-shadow:none!important;border-radius:999px!important}
+    .record-icon,.card-title .icon{display:inline-flex!important;align-items:center!important;justify-content:center!important;min-width:42px!important;height:28px!important;padding:0 9px!important;border:1px solid #d9dde1!important;border-radius:999px!important;background:#fff!important;color:#111214!important;font:900 10px/1 Arial,sans-serif!important;letter-spacing:.05em!important}
+    .records-ticker{border:1px solid #d9dde1!important;box-shadow:none!important}
+    .records-ticker .ticker-window,.records-ticker .ticker-track,.records-ticker .ticker-track b,.records-ticker .ticker-network{color:#111214!important}
+    ::-webkit-scrollbar-track{background:#f2f4f6!important}
+  `;
+  const H2H_CSS=`
+    html,body{background:#fff!important;color:#111214!important}
+    body:before,body:after{display:none!important}
+    .wrap,.hero,.prime-deck,.prime-deck-cell,.controls,.panel,.card,.matchup-card,.fighter,.center-badge,.prediction,
+    .prime-edge,.tape-grid,.tape-row>div,.tape-center,.stat-box,.common-box,.common-record,.explain,.search-menu,.search-option{
+      background:#fff!important;background-image:none!important;color:#111214!important;box-shadow:none!important;border-color:#d9dde1!important;text-shadow:none!important;
+    }
+    .prime-scorebug,.prime-network,.prime-feed,.prime-clock{background:#fff!important;color:#111214!important;border-color:#d9dde1!important;box-shadow:none!important}
+    .prime-feed strong,.prime-clock,.prime-clock small{color:#111214!important}
+    .hero{border-bottom:1px solid #d9dde1!important}
+    .hero:after{color:rgba(17,18,20,.035)!important}
+    .hero h1,.hero h1 .red,.prime-deck-value,.driver-name,.prediction .winner,.prime-edge-value,.tape-left,.tape-right,.stat-box .value,.common-box .big,h1,h2,h3,h4,strong,b{color:#111214!important;text-shadow:none!important}
+    .hero p,.prime-deck-label,.field label,.status,.driver-number,.driver-record,.prediction .small,.prime-edge-label,.prime-edge-sub,.tape-center,.stat-box .label,.common-record{color:#111214!important}
+    .search-input,select{background:#fff!important;color:#111214!important;border:1px solid #cfd4d9!important;box-shadow:none!important}
+    .search-input::placeholder{color:#555b61!important}
+    #driverASelect .search-input{border-left:5px solid #d71920!important}
+    #driverBSelect .search-input{border-left:5px solid #286df1!important}
+    .search-menu{background:#fff!important;border:1px solid #cfd4d9!important;box-shadow:0 12px 30px rgba(0,0,0,.12)!important}
+    .search-option{background:#fff!important;color:#111214!important;border-color:#e0e4e8!important}
+    .search-option:hover,.search-option.active{background:#f2f4f6!important;color:#111214!important}
+    .vs{background:#fff!important;color:#d0a000!important;border:1px solid #d9dde1!important;clip-path:none!important}
+    .fighter.left{background:#fff!important;border-left:5px solid #d71920!important;color:#111214!important}
+    .fighter.right{background:#fff!important;border-right:5px solid #286df1!important;color:#111214!important}
+    .fighter:before{display:none!important}
+    .center-badge{background:#fff!important;border-color:#d9dde1!important}
+    .center-badge .versus{color:#d0a000!important}
+    .prediction{border-left:4px solid #f4c400!important}
+    .prime-edge{border-top:3px solid #d71920!important}
+    .prime-edge:nth-child(even){border-top-color:#286df1!important}
+    .prime-edge:before{display:none!important}
+    .tape-grid,.tape-row>div{border-color:#d9dde1!important}
+    .tape-left.win{box-shadow:inset 4px 0 0 #d71920!important}.tape-right.win{box-shadow:inset -4px 0 0 #286df1!important}
+    .stat-box,.common-box{border:1px solid #d9dde1!important}
+    .explain{background:#fffdf3!important;border-left:4px solid #f4c400!important}
+    ::-webkit-scrollbar-track{background:#f2f4f6!important}
+  `;
+  function addStyle(doc,id,css){
+    if(!doc||!doc.head) return;
+    let s=doc.getElementById(id);
+    if(!s){s=doc.createElement('style');s.id=id;doc.head.appendChild(s)}
+    s.textContent=css;
+  }
+  function cleanRecordsEmoji(doc){
+    const replacements={
+      '🔥':'LEAD','💡':'FACT','🚨':'REC','🏆':'WIN','🏁':'START','⭐':'TOP5','⑩':'TOP10','🏅':'AVG','👥':'DRVR','📊':'ALL'
+    };
+    doc.querySelectorAll('.record-icon,.card-title .icon,.m-icon,.watch-value').forEach(el=>{
+      const t=(el.textContent||'').trim();
+      if(replacements[t]) el.textContent=replacements[t];
+    });
+  }
+  function cleanDriverEmoji(doc){
+    doc.querySelectorAll('.nav button,.incident-streak-icon,.section-title h2').forEach(el=>{
+      let t=el.textContent||'';
+      t=t.replace(/🚨/g,'').replace(/🏆/g,'').replace(/🔥/g,'HIGH').replace(/🧨/g,'5-RACE').replace(/📈/g,'TREND').replace(/🧹/g,'CLEAN');
+      el.textContent=t.replace(/\s+/g,' ').trim();
+    });
+  }
+  function classify(doc){
+    const title=(doc.title||'').toLowerCase();
+    const text=(doc.body?.innerText||'').slice(0,5000).toLowerCase();
+    if(title.includes('head')||text.includes('driver matchup center')||text.includes('select matchup')) return 'h2h';
+    if(title.includes('statistics') && (text.includes('records broken')||text.includes('all-time records'))) return 'records';
+    if(text.includes('driver performance')||text.includes('incident watch')||text.includes('driver rankings')) return 'drivers';
+    return '';
+  }
+  function patchDoc(doc,depth=0){
+    if(!doc||depth>8) return;
+    try{
+      const type=classify(doc);
+      if(type==='drivers'){addStyle(doc,'HLRN_DRIVER_STATS_LIGHT_EXACT',DRIVER_CSS);cleanDriverEmoji(doc)}
+      if(type==='records'){addStyle(doc,'HLRN_RECORDS_LIGHT_EXACT',RECORD_CSS);cleanRecordsEmoji(doc)}
+      if(type==='h2h'){addStyle(doc,'HLRN_H2H_LIGHT_EXACT',H2H_CSS)}
+      doc.querySelectorAll('iframe').forEach(frame=>{
+        try{
+          frame.style.setProperty('background','#fff','important');
+          if(frame.contentDocument) patchDoc(frame.contentDocument,depth+1);
+          if(!frame.__hlrnExactHostedFix){
+            frame.__hlrnExactHostedFix=true;
+            frame.addEventListener('load',()=>setTimeout(()=>{try{patchDoc(frame.contentDocument,depth+1)}catch(e){}},80));
+          }
+        }catch(e){}
+      });
+    }catch(e){}
+  }
+  function run(){patchDoc(document,0)}
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run,{once:true}); else run();
+  window.addEventListener('load',()=>{run();setTimeout(run,250);setTimeout(run,1000);setTimeout(run,2200)},{once:true});
+  setInterval(run,1800);
+})();
+</script>
+<script id="HLRN_INCIDENT_WATCH_RENDER_RESCUE_V10">
+(function(){
+  const INCIDENT_CSS=`
+    #incidents{background:#fff!important;color:#111214!important}
+    #incidentTop10{display:grid!important;gap:10px!important;min-height:0!important;opacity:1!important;visibility:visible!important}
+    #incidentTop10 .incident-row{
+      display:grid!important;
+      grid-template-columns:72px minmax(0,1fr) 180px!important;
+      align-items:center!important;
+      min-height:76px!important;
+      opacity:1!important;
+      visibility:visible!important;
+      transform:none!important;
+      animation:none!important;
+      background:#fff!important;
+      background-image:none!important;
+      color:#111214!important;
+      border:1px solid #d9dde1!important;
+      border-left:4px solid #d71920!important;
+      box-shadow:none!important;
+    }
+    #incidentTop10 .incident-row.rank-1{background:#fffdf3!important;border-left-color:#f4c400!important}
+    #incidentTop10 .incident-row.rank-2{border-left-color:#e58a00!important}
+    #incidentTop10 .incident-row.rank-3{border-left-color:#c96b2b!important}
+    #incidentTop10 .incident-rank{
+      width:48px!important;height:48px!important;
+      display:flex!important;align-items:center!important;justify-content:center!important;
+      background:#fff!important;color:#111214!important;
+      border:1px solid #cfd4d9!important;border-radius:4px!important;
+      box-shadow:none!important;font-size:17px!important;font-weight:900!important;
+    }
+    #incidentTop10 .incident-driver-name,
+    #incidentTop10 .incident-driver-name button,
+    #incidentTop10 .incident-points strong,
+    #incidentTop10 .incident-driver-label,
+    #incidentTop10 .incident-points span{color:#111214!important;opacity:1!important;visibility:visible!important;text-shadow:none!important}
+    #incidentTop10 .incident-driver-name button{background:transparent!important;border:0!important;padding:0!important;font:inherit!important;cursor:pointer!important}
+    #incidentTop10 .incident-driver-label,#incidentTop10 .incident-points span{font-size:9px!important}
+    #incidentTop10 .incident-points strong{font-size:28px!important}
+    .incident-streak-grid,.incident-average-table,.incident-average-section{opacity:1!important;visibility:visible!important}
+    .incident-streak-card,.incident-average-item,.incident-average-header{
+      background:#fff!important;background-image:none!important;color:#111214!important;border-color:#d9dde1!important;box-shadow:none!important;opacity:1!important;visibility:visible!important;
+    }
+    .incident-empty{color:#111214!important;background:#fff!important}
+    @media(max-width:700px){
+      #incidentTop10 .incident-row{grid-template-columns:52px minmax(0,1fr)!important}
+      #incidentTop10 .incident-points{grid-column:2;text-align:left!important;margin-top:6px!important}
+    }
+  `;
+  function install(doc){
+    if(!doc||!doc.head||!doc.body) return;
+    const text=(doc.body.innerText||'').toLowerCase();
+    if(!text.includes('incident watch') || !doc.getElementById('incidentTop10')) return;
+    let style=doc.getElementById('HLRN_INCIDENT_WATCH_VISIBLE_V10');
+    if(!style){
+      style=doc.createElement('style');
+      style.id='HLRN_INCIDENT_WATCH_VISIBLE_V10';
+      style.textContent=INCIDENT_CSS;
+      doc.head.appendChild(style);
+    }
+    if(!doc.getElementById('HLRN_INCIDENT_RERENDER_V10')){
+      const script=doc.createElement('script');
+      script.id='HLRN_INCIDENT_RERENDER_V10';
+      script.textContent=`
+        (function(){
+          function forceIncidentRowsVisible(){
+            document.querySelectorAll('#incidentTop10 .incident-row').forEach(function(row){
+              row.classList.remove('hlrn-stagger-in');
+              row.style.setProperty('opacity','1','important');
+              row.style.setProperty('visibility','visible','important');
+              row.style.setProperty('transform','none','important');
+              row.style.setProperty('animation','none','important');
+              row.style.setProperty('display','grid','important');
+            });
+          }
+          function rerenderIncidentWatch(){
+            try{
+              if(typeof renderIncidentWatch==='function' && typeof hlrnDriverRows!=='undefined'){
+                renderIncidentWatch(hlrnDriverRows || []);
+              }
+            }catch(e){console.warn('Incident Watch rerender:',e);}
+            setTimeout(forceIncidentRowsVisible,0);
+            setTimeout(forceIncidentRowsVisible,80);
+            setTimeout(forceIncidentRowsVisible,300);
+          }
+          window.hlrnFixIncidentWatch=rerenderIncidentWatch;
+          document.addEventListener('click',function(e){
+            var btn=e.target.closest && e.target.closest('button');
+            if(btn && /incident watch/i.test(btn.textContent||'')){
+              setTimeout(rerenderIncidentWatch,20);
+              setTimeout(rerenderIncidentWatch,250);
+            }
+          },true);
+          var target=document.getElementById('incidentTop10');
+          if(target && 'MutationObserver' in window){
+            new MutationObserver(function(){setTimeout(forceIncidentRowsVisible,0)}).observe(target,{childList:true,subtree:true});
+          }
+          setTimeout(rerenderIncidentWatch,250);
+          setTimeout(rerenderIncidentWatch,900);
+          setTimeout(rerenderIncidentWatch,1800);
+        })();
+      `;
+      doc.body.appendChild(script);
+    }
+    try{
+      doc.querySelectorAll('#incidentTop10 .incident-row').forEach(row=>{
+        row.classList.remove('hlrn-stagger-in');
+        row.style.setProperty('opacity','1','important');
+        row.style.setProperty('visibility','visible','important');
+        row.style.setProperty('transform','none','important');
+        row.style.setProperty('animation','none','important');
+      });
+      if(doc.defaultView && typeof doc.defaultView.hlrnFixIncidentWatch==='function') doc.defaultView.hlrnFixIncidentWatch();
+    }catch(e){}
+  }
+  function walk(doc,depth){
+    if(!doc||depth>8) return;
+    try{install(doc)}catch(e){}
+    try{
+      doc.querySelectorAll('iframe').forEach(frame=>{
+        try{
+          if(frame.contentDocument) walk(frame.contentDocument,depth+1);
+          if(!frame.__incidentV10Bound){
+            frame.__incidentV10Bound=true;
+            frame.addEventListener('load',()=>setTimeout(()=>{try{walk(frame.contentDocument,depth+1)}catch(e){}},100));
+          }
+        }catch(e){}
+      });
+    }catch(e){}
+  }
+  function run(){walk(document,0)}
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run,{once:true}); else run();
+  window.addEventListener('load',()=>{run();setTimeout(run,500);setTimeout(run,1400)},{once:true});
+  document.addEventListener('click',()=>{setTimeout(run,80);setTimeout(run,400)},true);
+  setInterval(run,1800);
+})();
 </script>
 <script id="HLRN_SUNDAY_MATCH_MONDAY_REPORT">
 (function(){
@@ -595,6 +1358,109 @@ window.addEventListener('hashchange',()=>{
     iframe.page{border-radius:16px!important}
   }
 </style>
+<script id="HLRN_STANDINGS_V2_INNER_REFRESH">
+(function(){
+  const THEMES={
+    hosted:{accent:'#f7c900',soft:'#fff8de',line:'#dfe5ea',muted:'#6e7781',hover:'#fffdf2'},
+    sunday:{accent:'#d71920',soft:'#fff3f3',line:'#dfe5ea',muted:'#6e7781',hover:'#fff6f6'},
+    monday:{accent:'#55b932',soft:'#f3fbef',line:'#dfe5ea',muted:'#6e7781',hover:'#f6fcf4'}
+  };
+  function cssFor(key){
+    const t=THEMES[key];
+    return `
+      :root{--hlrnAccent:${t.accent};--hlrnSoft:${t.soft};--hlrnLine:${t.line};--hlrnMuted:${t.muted};--hlrnHover:${t.hover};--hlrnInk:#111214;--hlrnSurface:#ffffff;--hlrnSurface2:#f6f8fa;}
+      html,body{background:#f4f6f8!important;color:var(--hlrnInk)!important;font-family:Inter,"Segoe UI",Arial,sans-serif!important;overflow-x:hidden!important}
+      body{padding:18px!important}
+      .container,.page,.wrap,.wrapper,.content-wrap,.main,.main-content,.section,.panel,.card,.table-wrap,.table-shell,.stage,.hub,.race-center,.records-page,.driver-page,.h2h-page,.last-race-card,.record-card,.leader-card,.matchup-card,.cc-card,.cc-spotlight-card,.stat-card,.summary-card,.metric-card,.comparison-card,.hosted-hub,.hosted-hub-stage{background:var(--hlrnSurface)!important;color:var(--hlrnInk)!important}
+      .section,.panel,.card,.last-race-card,.record-card,.leader-card,.matchup-card,.cc-card,.cc-spotlight-card,.stat-card,.summary-card,.metric-card,.comparison-card,.box,.tile,.edge-card,.cc-battle-item,.cc-hero,.hero-card,.list-card,.moment-card,.mover-story,.quick-stat,.quick-card,.caution-card,.timeline-card{border:1px solid var(--hlrnLine)!important;border-radius:18px!important;box-shadow:0 8px 22px rgba(17,18,20,.05)!important;background:#fff!important;background-image:none!important;position:relative!important}
+      .hero,.cc-hero,.hero-card,.header,.page-header{background:linear-gradient(180deg,#fff,var(--hlrnSurface2))!important;border:1px solid var(--hlrnLine)!important;border-radius:20px!important;box-shadow:0 10px 24px rgba(17,18,20,.05)!important;position:relative!important}
+      .hero:before,.cc-hero:before,.page-header:before,.header:before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--hlrnAccent)!important;border-radius:20px 0 0 20px}
+      h1,h2,h3,h4,h5,h6,.title,.heading,.driver-name,.record-title,.section-title,.cc-main-title,.cc-spot-main,.cn-main-title{color:var(--hlrnInk)!important;text-shadow:none!important}
+      p,.sub,.subtitle,.meta,.muted,.label,.copy,.description,small,.eyebrow,.cc-sub,.cc-card-sub,.cc-spot-sub,.cn-main-copy{color:var(--hlrnMuted)!important}
+      .kicker,.card-label,.section-label,.cc-card-label,.cc-spot-label,.leader-label,.tab small,.hosted-hub-tab small,.cn-kicker,.cn-cell-label{color:var(--hlrnMuted)!important}
+      .tabs,.nav,.tab-bar,.inner-tabs,.hosted-hub-tabs{display:flex!important;flex-wrap:wrap!important;gap:10px!important;padding:0!important;margin:0 0 18px!important;background:transparent!important;border:0!important;box-shadow:none!important}
+      .tab-btn,.nav button,.tab,.hosted-hub-tab{min-height:46px!important;padding:10px 14px!important;border:1px solid var(--hlrnLine)!important;border-radius:14px!important;background:#fff!important;color:var(--hlrnInk)!important;box-shadow:0 3px 10px rgba(17,18,20,.03)!important;text-align:center!important}
+      .tab-btn strong,.tab strong,.hosted-hub-tab strong{color:var(--hlrnInk)!important}
+      .tab-btn.active,.nav button.active,.tab.active,.hosted-hub-tab.active{background:var(--hlrnSoft)!important;border-color:var(--hlrnAccent)!important;box-shadow:inset 0 -3px 0 var(--hlrnAccent),0 8px 18px rgba(17,18,20,.06)!important}
+      .tab-btn.active:after,.tab.active:after,.hosted-hub-tab.active:after{display:none!important}
+      .count,.badge,.pill,.chip{display:inline-flex!important;align-items:center!important;gap:6px!important;padding:6px 10px!important;border-radius:999px!important;border:1px solid var(--hlrnLine)!important;background:var(--hlrnSurface2)!important;color:#56606a!important;font-weight:800!important}
+      .table-shell,.table-wrap{border:1px solid var(--hlrnLine)!important;border-radius:18px!important;overflow:auto!important;box-shadow:0 8px 22px rgba(17,18,20,.05)!important;background:#fff!important}
+      table{width:100%!important;border-collapse:separate!important;border-spacing:0!important;background:#fff!important;color:var(--hlrnInk)!important}
+      thead th,th{position:sticky!important;top:0!important;z-index:3!important;background:linear-gradient(180deg,#fbfcfd,#f2f5f7)!important;color:#47515a!important;border-top:0!important;border-left:0!important;border-right:0!important;border-bottom:1px solid var(--hlrnLine)!important;padding:12px 10px!important;font-size:10px!important;letter-spacing:.08em!important;text-transform:uppercase!important}
+      tbody tr{background:#fff!important}
+      tbody td,td{background:#fff!important;color:#202428!important;border-top:0!important;border-left:0!important;border-right:0!important;border-bottom:1px solid #edf1f4!important;padding:12px 10px!important;font-size:12px!important;vertical-align:middle!important}
+      tbody tr:nth-child(even) td{background:#fafbfc!important}
+      tbody tr:hover td{background:var(--hlrnHover)!important}
+      tbody tr:first-child td{background:linear-gradient(90deg,var(--hlrnSoft),#fff 72%)!important}
+      tbody tr:first-child td:first-child{box-shadow:inset 4px 0 0 var(--hlrnAccent)!important}
+      tbody tr:nth-child(2) td:first-child{box-shadow:inset 4px 0 0 #a8b0b8!important}
+      tbody tr:nth-child(3) td:first-child{box-shadow:inset 4px 0 0 #c58b55!important}
+      .points,.stat-value,.cc-card-value,.cc-leader-points,.leader-value{font-weight:900!important;color:var(--hlrnInk)!important}
+      .name-col,.driver,.driver-name,.cc-leader-name,.winner-name{font-weight:900!important;color:var(--hlrnInk)!important}
+      .up,.positive,.gain,.arrow-up,.move-up{color:#1d9c43!important;font-weight:900!important}
+      .down,.negative,.loss,.arrow-down,.move-down{color:#d71920!important;font-weight:900!important}
+      .even,.neutral,.arrow-even{color:#67717b!important;font-weight:900!important}
+      .section-header{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;margin:0 0 14px!important;padding-bottom:8px!important;border-bottom:1px solid var(--hlrnLine)!important}
+      .section-header h2{margin:0!important;font-size:30px!important;letter-spacing:-.03em!important}
+      .last-race-grid,.summary-grid,.quick-grid,.feature-grid,.mover-grid,.timeline-grid,.records-grid,.stats-grid{gap:14px!important}
+      .stat-card,.cc-card,.record-card,.leader-card,.matchup-card,.cc-spotlight-card{padding:16px!important}
+      .stat-value,.cc-card-value{font-size:28px!important;line-height:1!important}
+      .footer,.cc-footer{margin-top:18px!important;border-top:1px solid var(--hlrnLine)!important;background:#fff!important;color:var(--hlrnMuted)!important}
+      .cc-footer{border-radius:18px!important;padding:16px!important}
+      .hosted-hub-frame,.page-frame,iframe{background:#fff!important}
+      @media(max-width:900px){body{padding:10px!important}.tabs,.nav,.tab-bar,.hosted-hub-tabs{gap:8px!important}.tab-btn,.nav button,.tab,.hosted-hub-tab{flex:1 1 calc(50% - 8px)!important}.section-header h2{font-size:24px!important}.stat-value,.cc-card-value{font-size:22px!important}}
+      @media(max-width:640px){.tab-btn,.nav button,.tab,.hosted-hub-tab{flex:1 1 100%!important}.section,.panel,.card,.last-race-card,.record-card,.leader-card,.matchup-card,.cc-card,.cc-spotlight-card,.stat-card{border-radius:14px!important}.table-shell,.table-wrap{border-radius:14px!important}thead th,th{font-size:9px!important}tbody td,td{font-size:11px!important;padding:10px 8px!important}}
+    `;
+  }
+  function ensureStyle(doc,id,text){
+    if(!doc || !doc.head) return;
+    let style=doc.getElementById(id);
+    if(!style){style=doc.createElement('style');style.id=id;doc.head.appendChild(style);} 
+    style.textContent=text;
+  }
+  function inject(doc,key){
+    try{ ensureStyle(doc,'HLRN_PREMIUM_POLISH_'+key.toUpperCase(),cssFor(key)); }catch(e){}
+  }
+  function injectHostedNested(hostDoc){
+    try{
+      hostDoc.querySelectorAll('iframe').forEach(inner=>{
+        const tryApply=()=>{ try{ inject(inner.contentDocument,'hosted'); }catch(e){} };
+        inner.addEventListener('load',()=>{setTimeout(tryApply,30);setTimeout(tryApply,300);});
+        setTimeout(tryApply,50);setTimeout(tryApply,500);
+      });
+    }catch(e){}
+  }
+  function bind(frameId,key){
+    const frame=document.getElementById(frameId);
+    if(!frame) return;
+    const apply=()=>{
+      try{ inject(frame.contentDocument,key); if(key==='hosted') injectHostedNested(frame.contentDocument); }catch(e){}
+    };
+    if(!frame.__premiumBound){
+      frame.__premiumBound=true;
+      frame.addEventListener('load',()=>{setTimeout(apply,30);setTimeout(apply,250);setTimeout(apply,800);});
+    }
+    setTimeout(apply,80);setTimeout(apply,500);setTimeout(apply,1200);
+  }
+  function outerSync(){
+    const wrap=document.querySelector('.hlrn');
+    if(!wrap) return;
+    const active=document.querySelector('.tab.active')?.dataset?.page||'hosted';
+    wrap.setAttribute('data-active-series',active);
+  }
+  function init(){
+    bind('page-hosted','hosted');
+    bind('page-sunday','sunday');
+    bind('page-monday','monday');
+    outerSync();
+    document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>setTimeout(()=>{outerSync();bind('page-hosted','hosted');bind('page-sunday','sunday');bind('page-monday','monday');},40)));
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true}); else init();
+  window.addEventListener('load',()=>setTimeout(init,100),{once:true});
+})();
+</script>
+
+
 <style id="HLRN_MOBILE_PINNED_COLUMNS_OUTER">
 /* Marker only — actual frozen-column CSS is injected into Sunday/Monday frames below. */
 </style>
@@ -1077,24 +1943,5 @@ iframe{background:#000!important;color-scheme:dark!important}
 })();
 </script>
 <script src="../assets/site-shell.js?v=20260930standingsdarkrepair1"></script>
-<script id="HLRN_STANDINGS_STABLE_LOAD_20261001">
-(function(){
-  function showActive(){
-    document.querySelectorAll("iframe.page").forEach(frame=>{
-      const active=frame.classList.contains("active");
-      frame.style.display=active?"block":"none";
-      frame.style.visibility=active?"visible":"hidden";
-    });
-  }
-  if(document.readyState==="loading"){
-    document.addEventListener("DOMContentLoaded",showActive,{once:true});
-  }else{
-    showActive();
-  }
-  document.addEventListener("click",e=>{
-    if(e.target.closest(".tab")) setTimeout(showActive,0);
-  },true);
-})();
-</script>
 </body>
 </html>
