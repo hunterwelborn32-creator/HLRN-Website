@@ -2777,3 +2777,23 @@ html[data-hlrn-theme="dark"] body #intelGrid{
   .story-copy h3 a{font-size:16px!important}
   .story-copy p{font-size:10px!important}
 }
+
+/* HLRN DRIVER RATING DARK FIX 20261001 */
+.category-deep .deep-pill,
+.detail-wrap .score{
+  background:#000!important;
+  background-color:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border:1px solid #2b2b2b!important;
+  border-left:4px solid #ffd400!important;
+  box-shadow:none!important;
+}
+.category-deep .deep-pill *,
+.detail-wrap .score *,
+.detail-wrap .score-num,
+.detail-wrap .score-label{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
