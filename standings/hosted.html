@@ -370,112 +370,7 @@ html,body,.hosted-hub{background:#fff!important;color:#111214!important;height:a
 .hosted-loading{background:#fff!important;color:#111214!important;min-height:56px!important}
 </style>`;
   const tag='<style id="HLRN_STATIC_LIGHT_INNER">'+css+'</style>'+rescue;
-  return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'
-<style id="HLRN_STANDINGS_DARK_BLACK_WHITE_20260930">
-/* Standings Dark Mode — black surfaces, white typography */
-html[data-hlrn-theme="dark"],
-html[data-hlrn-theme="dark"] body{
-  background:#000!important;
-  background-image:none!important;
-  color:#fff!important;
-}
-html[data-hlrn-theme="dark"] body :where(
-  .hlrn,.topline,.titlebar,.cn-control,.cn-control-main,.cn-control-cell,
-  .tabs,.tab,.viewport,.page,.wrap,.wrapper,.shell,.container,.content,.main,
-  main,section,article,aside,nav,header,footer,
-  .panel,.card,.box,.module,.widget,.toolbar,.subnav,.filters,.filter-bar,
-  .table-wrap,.table-shell,.table-container,
-  .standings,.standings-wrap,.standings-shell,.standings-panel,.standings-card,
-  .driver-stats,.records,.records-grid,.milestones,.head-to-head,
-  .leaderboard,.ranking,.rankings,.rank-card,.driver-card,.stat-card,
-  .hosted,.hosted-wrap,.hosted-panel,.hosted-card,
-  .series-wrap,.series-panel,.series-card,.series-header,.series-tabs,
-  .content-card,.content-panel,.section-card,.section-panel,
-  .hero,.hero-card,.mast,.masthead
-){
-  background:#000!important;
-  background-image:none!important;
-  color:#fff!important;
-  border-color:#2b2b2b!important;
-  box-shadow:none!important;
-}
-html[data-hlrn-theme="dark"] body :where(
-  h1,h2,h3,h4,h5,h6,p,span,small,strong,b,a,label,li,dt,dd,
-  .title,.heading,.headline,.name,.driver-name,.section-title,.card-title,
-  .eyebrow,.kicker,.meta,.muted,.subtitle,.description,.copy
-){
-  color:#fff!important;
-  text-shadow:none!important;
-}
-html[data-hlrn-theme="dark"] body :where(
-  table,thead,tbody,tfoot,tr,th,td
-){
-  background:#000!important;
-  background-image:none!important;
-  color:#fff!important;
-  border-color:#2b2b2b!important;
-}
-html[data-hlrn-theme="dark"] body thead th{
-  background:#050505!important;
-  color:#fff!important;
-}
-html[data-hlrn-theme="dark"] body tbody tr:nth-child(even),
-html[data-hlrn-theme="dark"] body tbody tr:nth-child(even) td,
-html[data-hlrn-theme="dark"] body tbody tr:nth-child(odd),
-html[data-hlrn-theme="dark"] body tbody tr:nth-child(odd) td{
-  background:#000!important;
-  color:#fff!important;
-}
-html[data-hlrn-theme="dark"] body tbody tr:hover,
-html[data-hlrn-theme="dark"] body tbody tr:hover td{
-  background:#0b0b0b!important;
-}
-html[data-hlrn-theme="dark"] body :where(
-  button,input,select,textarea,.btn,.button,.pill,.chip,.filter,.filter-btn,
-  .tab,.subtab
-){
-  background:#000!important;
-  background-image:none!important;
-  color:#fff!important;
-  border-color:#3a3a3a!important;
-  box-shadow:none!important;
-}
-html[data-hlrn-theme="dark"] body :where(
-  input,textarea
-)::placeholder{
-  color:#c8c8c8!important;
-  opacity:1!important;
-}
-html[data-hlrn-theme="dark"] iframe.page{
-  background:#000!important;
-  color-scheme:dark!important;
-}
-html[data-hlrn-theme="dark"] .viewport{
-  background:#000!important;
-  border-color:#2b2b2b!important;
-}
-html[data-hlrn-theme="dark"] .hlrn > .tabs,
-html[data-hlrn-theme="dark"] .hlrn > .tabs .tab,
-html[data-hlrn-theme="dark"] .hlrn > .tabs .tab.active{
-  background:#000!important;
-  background-image:none!important;
-  color:#fff!important;
-  border-color:#2b2b2b!important;
-}
-html[data-hlrn-theme="dark"] .hlrn > .tabs .tab strong,
-html[data-hlrn-theme="dark"] .hlrn > .tabs .tab small{
-  color:#fff!important;
-}
-/* Keep series identity as accent lines, not text colors */
-html[data-hlrn-theme="dark"] .tab[data-page="hosted"]:after,
-html[data-hlrn-theme="dark"] .tab[data-page="hosted"]:before{background:#ffd400!important}
-html[data-hlrn-theme="dark"] .tab[data-page="sunday"]:after,
-html[data-hlrn-theme="dark"] .tab[data-page="sunday"]:before{background:#ed1c24!important}
-html[data-hlrn-theme="dark"] .tab[data-page="monday"]:after,
-html[data-hlrn-theme="dark"] .tab[data-page="monday"]:before{background:#69e000!important}
-</style>
-
-</head>') : tag+markup;
+  return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'</head>') : tag+markup;
 }
 </script>
 
@@ -564,6 +459,65 @@ html,body,.hosted-hub{
   }
   .hosted-hub-tab strong{font-size:12px!important}
 }
+</style>
+
+<style id="HLRN_STANDINGS_DARK_SAFE_20260930">
+html[data-hlrn-theme="dark"],
+html[data-hlrn-theme="dark"] body{
+  background:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+  color-scheme:dark!important;
+}
+html[data-hlrn-theme="dark"] body :where(
+  .hlrn,.hosted-hub,.hosted-hub-tabs,.hosted-hub-stage,.hosted-loading,
+  .container,.content,.page,.page-wrap,.wrap,.wrapper,.shell,.main,.main-content,
+  main,section,article,aside,header,footer,nav,
+  .panel,.card,.box,.tile,.module,.widget,.toolbar,.subnav,.tabs,.tab-bar,
+  .section,.section-header,.section-title,.section-body,
+  .table-wrap,.table-shell,.table-container,
+  .standings,.standings-wrap,.standings-shell,.standings-panel,.standings-card,
+  .driver-stats,.records,.records-grid,.milestones,.head-to-head,
+  .leaderboard,.ranking,.rankings,.rank-card,.driver-card,.stat-card,
+  .hosted-wrap,.hosted-panel,.hosted-card,.series-wrap,.series-panel,.series-card,
+  .content-card,.content-panel,.hero,.hero-card,.mast,.masthead,
+  .cc-dashboard,.cc-card,.cc-momentum-card,.team-card,.record-card,.summary-card
+){
+  background:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+  border-color:#2b2b2b!important;
+  box-shadow:none!important;
+}
+html[data-hlrn-theme="dark"] body :where(
+  h1,h2,h3,h4,h5,h6,p,span,small,strong,b,a,label,li,dt,dd,
+  .title,.heading,.headline,.name,.driver-name,.section-title,.card-title,
+  .eyebrow,.kicker,.meta,.muted,.subtitle,.description,.copy,.count
+){
+  color:#fff!important;
+  text-shadow:none!important;
+}
+html[data-hlrn-theme="dark"] body :where(table,thead,tbody,tfoot,tr,th,td){
+  background:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+  border-color:#2b2b2b!important;
+}
+html[data-hlrn-theme="dark"] body tbody tr:nth-child(even) td,
+html[data-hlrn-theme="dark"] body tbody tr:nth-child(odd) td,
+html[data-hlrn-theme="dark"] body tbody tr:hover td{
+  background:#000!important;
+  color:#fff!important;
+}
+html[data-hlrn-theme="dark"] body :where(button,input,select,textarea,.btn,.button,.pill,.chip,.filter,.filter-btn,.tab,.subtab,.hosted-hub-tab){
+  background:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+  border-color:#3a3a3a!important;
+  box-shadow:none!important;
+}
+html[data-hlrn-theme="dark"] body :where(input,textarea)::placeholder{color:#ccc!important;opacity:1!important}
+html[data-hlrn-theme="dark"] iframe{background:#000!important;color-scheme:dark!important}
 </style>
 </head>
 <body class="nascar-hosted-page">
@@ -1046,6 +1000,48 @@ switchHostedTab("racing");
       }
     }catch(e){}
   },150);
+})();
+</script>
+
+<script id="HLRN_STANDINGS_NESTED_THEME_SYNC_20260930">
+(function(){
+  const DARK_CSS=`
+html,body{background:#000!important;background-image:none!important;color:#fff!important;color-scheme:dark!important}
+:where(.container,.content,.page,.page-wrap,.wrap,.wrapper,.shell,.main,.main-content,main,section,article,aside,header,footer,nav,.panel,.card,.box,.tile,.module,.widget,.toolbar,.subnav,.tabs,.tab-bar,.section,.section-header,.section-title,.section-body,.table-wrap,.table-shell,.table-container,.standings,.standings-wrap,.standings-shell,.standings-panel,.standings-card,.driver-stats,.records,.records-grid,.milestones,.head-to-head,.leaderboard,.ranking,.rankings,.rank-card,.driver-card,.stat-card,.hosted-hub,.hosted-hub-tabs,.hosted-hub-stage,.hosted-loading,.cc-dashboard,.cc-card,.cc-momentum-card,.team-card,.record-card,.summary-card){background:#000!important;background-image:none!important;color:#fff!important;border-color:#2b2b2b!important;box-shadow:none!important}
+:where(h1,h2,h3,h4,h5,h6,p,span,small,strong,b,a,label,li,dt,dd,.title,.heading,.headline,.name,.driver-name,.section-title,.card-title,.eyebrow,.kicker,.meta,.muted,.subtitle,.description,.copy,.count){color:#fff!important;text-shadow:none!important}
+table,thead,tbody,tfoot,tr,th,td{background:#000!important;background-image:none!important;color:#fff!important;border-color:#2b2b2b!important}
+tbody tr:nth-child(even) td,tbody tr:nth-child(odd) td,tbody tr:hover td{background:#000!important;color:#fff!important}
+button,input,select,textarea,.btn,.button,.pill,.chip,.filter,.filter-btn,.tab,.subtab{background:#000!important;background-image:none!important;color:#fff!important;border-color:#3a3a3a!important;box-shadow:none!important}
+`;
+  function sync(){
+    const dark=document.documentElement.dataset.hlrnTheme==="dark";
+    document.querySelectorAll("iframe").forEach(frame=>{
+      const apply=()=>{
+        try{
+          const doc=frame.contentDocument;
+          if(!doc||!doc.documentElement)return;
+          doc.documentElement.dataset.hlrnTheme=dark?"dark":"light";
+          let style=doc.getElementById("HLRN_STANDINGS_CHILD_DARK_RUNTIME_20260930");
+          if(!style){
+            style=doc.createElement("style");
+            style.id="HLRN_STANDINGS_CHILD_DARK_RUNTIME_20260930";
+            (doc.head||doc.documentElement).appendChild(style);
+          }
+          style.textContent=dark?DARK_CSS:"";
+        }catch(e){}
+      };
+      if(!frame.__hlrnStandingsThemeBound){
+        frame.__hlrnStandingsThemeBound=true;
+        frame.addEventListener("load",()=>setTimeout(apply,0));
+      }
+      apply();
+    });
+  }
+  new MutationObserver(sync).observe(document.documentElement,{attributes:true,attributeFilter:["data-hlrn-theme"]});
+  document.addEventListener("DOMContentLoaded",sync,{once:true});
+  window.addEventListener("load",()=>{sync();setTimeout(sync,250);setTimeout(sync,900)},{once:true});
+  window.addEventListener("hlrn-theme-change",sync);
+  sync();
 })();
 </script>
 </body>
