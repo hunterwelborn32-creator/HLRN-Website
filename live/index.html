@@ -1956,6 +1956,119 @@ html[data-hlrn-theme="dark"] body .replay-delta.same{
   color:#fff!important;
 }
 </style>
+<style id="HLRN_LIVE_POSTRACE_DARK_FORCE_20261001">
+/* Force the entire Live > Final Report / Race Replay / Lap Archive to true black in Dark Mode. */
+html[data-hlrn-theme="dark"] body #tab-report .race-replay,
+html[data-hlrn-theme="dark"] body #tab-report .race-replay-controls,
+html[data-hlrn-theme="dark"] body #tab-report .replay-slider-wrap,
+html[data-hlrn-theme="dark"] body #tab-report .replay-slider-rail,
+html[data-hlrn-theme="dark"] body #tab-report .replay-jumps,
+html[data-hlrn-theme="dark"] body #tab-report .replay-summary,
+html[data-hlrn-theme="dark"] body #tab-report .replay-summary > div,
+html[data-hlrn-theme="dark"] body #tab-report .replay-lap-events,
+html[data-hlrn-theme="dark"] body #tab-report .replay-order,
+html[data-hlrn-theme="dark"] body #tab-report .replay-table,
+html[data-hlrn-theme="dark"] body #tab-report .replay-table thead,
+html[data-hlrn-theme="dark"] body #tab-report .replay-table tbody,
+html[data-hlrn-theme="dark"] body #tab-report .replay-table tr,
+html[data-hlrn-theme="dark"] body #tab-report .replay-table th,
+html[data-hlrn-theme="dark"] body #tab-report .replay-table td,
+html[data-hlrn-theme="dark"] body #tab-report .lap-recap,
+html[data-hlrn-theme="dark"] body #tab-report .lap-recap-row,
+html[data-hlrn-theme="dark"] body #tab-report .lap-recap-meta,
+html[data-hlrn-theme="dark"] body #tab-report .lap-recap-order,
+html[data-hlrn-theme="dark"] body #tab-report .lap-recap-driver,
+html[data-hlrn-theme="dark"] body #tab-report .report-box{
+  background:#000!important;
+  background-color:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+  border-color:#2b2b2b!important;
+  box-shadow:none!important;
+}
+
+html[data-hlrn-theme="dark"] body #tab-report .replay-step,
+html[data-hlrn-theme="dark"] body #tab-report .replay-jumps button,
+html[data-hlrn-theme="dark"] body #tab-report .lap-recap-driver{
+  background:#000!important;
+  background-color:#000!important;
+  color:#fff!important;
+  border-color:#555!important;
+}
+
+html[data-hlrn-theme="dark"] body #tab-report .replay-step:hover,
+html[data-hlrn-theme="dark"] body #tab-report .replay-jumps button:hover{
+  background:#111!important;
+  color:#fff!important;
+  border-color:#777!important;
+}
+
+html[data-hlrn-theme="dark"] body #tab-report .replay-table tr:first-child td{
+  background:#000!important;
+  color:#fff!important;
+}
+
+html[data-hlrn-theme="dark"] body #tab-report :where(
+  .replay-slider-labels span,
+  .replay-slider-labels strong,
+  .replay-summary small,
+  .replay-summary strong,
+  .replay-table th,
+  .replay-table td,
+  .replay-driver,
+  .replay-status,
+  .replay-pos,
+  .replay-delta,
+  .lap-recap-meta strong,
+  .lap-recap-meta span,
+  .lap-recap-driver,
+  .lap-recap-driver b,
+  .lap-recap-driver.down
+){
+  color:#fff!important;
+  text-shadow:none!important;
+}
+
+html[data-hlrn-theme="dark"] body #tab-report .replay-event,
+html[data-hlrn-theme="dark"] body #tab-report .replay-event.empty{
+  background:#000!important;
+  color:#fff!important;
+  border-color:#555!important;
+}
+
+html[data-hlrn-theme="dark"] body #tab-report .replay-event.caution{border-color:#e4b500!important}
+html[data-hlrn-theme="dark"] body #tab-report .replay-event.penalty{border-color:#e31837!important}
+html[data-hlrn-theme="dark"] body #tab-report .replay-event.lead{border-color:#356fd1!important}
+html[data-hlrn-theme="dark"] body #tab-report .replay-event.restart{border-color:#1d9b55!important}
+html[data-hlrn-theme="dark"] body #tab-report .replay-event.checkered{border-color:#777!important}
+
+html[data-hlrn-theme="dark"] body #tab-report .replay-marker{
+  box-shadow:0 0 0 2px #000!important;
+}
+
+/* Same fallback using the color-scheme value applied by site-shell.js. */
+html[style*="color-scheme: dark"] body #tab-report :where(
+  .race-replay,.race-replay-controls,.replay-slider-wrap,.replay-slider-rail,
+  .replay-jumps,.replay-summary,.replay-summary > div,.replay-lap-events,
+  .replay-order,.replay-table,.replay-table thead,.replay-table tbody,
+  .replay-table tr,.replay-table th,.replay-table td,.lap-recap,.lap-recap-row,
+  .lap-recap-meta,.lap-recap-order,.lap-recap-driver,.report-box
+){
+  background:#000!important;
+  background-color:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+  border-color:#2b2b2b!important;
+}
+html[style*="color-scheme: dark"] body #tab-report :where(
+  .replay-slider-labels span,.replay-slider-labels strong,
+  .replay-summary small,.replay-summary strong,.replay-table th,.replay-table td,
+  .replay-driver,.replay-status,.replay-pos,.replay-delta,
+  .lap-recap-meta strong,.lap-recap-meta span,.lap-recap-driver,.lap-recap-driver b
+){
+  color:#fff!important;
+}
+</style>
 </head>
 <body>
 
