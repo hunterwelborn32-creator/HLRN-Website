@@ -759,6 +759,25 @@ html[style*="color-scheme: dark"] body iframe{
 html,body{height:auto!important;min-height:100%!important;max-height:none!important;overflow-x:hidden!important;overflow-y:auto!important}
 body{position:relative!important}
 </style>
+
+<style id="HLRN_HOSTED_DARK_CONTRAST_20261001">
+/* Override the shared light presentation on the dark Hosted page. */
+html[data-hlrn-theme="dark"] body.nascar-hosted-page,
+html[data-hlrn-theme="dark"] body.nascar-hosted-page .hosted-hub,
+html[data-hlrn-theme="dark"] body.nascar-hosted-page .hosted-hub-stage,
+html[data-hlrn-theme="dark"] body.nascar-hosted-page .hosted-hub-frame,
+html[data-hlrn-theme="dark"] body.nascar-hosted-page .hosted-loading{
+  background:#000!important;background-image:none!important;color:#fff!important;
+}
+html[data-hlrn-theme="dark"] body.nascar-hosted-page .hosted-hub-stage{
+  border:0!important;
+}
+html[data-hlrn-theme="dark"] body.nascar-hosted-page .hosted-hub-tab,
+html[data-hlrn-theme="dark"] body.nascar-hosted-page .hosted-hub-tab strong,
+html[data-hlrn-theme="dark"] body.nascar-hosted-page .hosted-hub-tab small{
+  color:#fff!important;-webkit-text-fill-color:#fff!important;
+}
+</style>
 </head>
 <body class="nascar-hosted-page">
 <nav class="hlrn-series-switcher" aria-label="HLRN standings series">
@@ -1129,6 +1148,23 @@ tbody tr:hover td{background:#f1f2f3!important;color:#111!important}
 `;
 
 const HLRN_HOSTED_DARK_SERIES_CSS = `
+/* Dashboard text must win over legacy light-theme and muted label rules. */
+html[data-hlrn-theme="dark"] body :is(
+  .ops-stat-label,.ops-stat-sub,.ops-stat-value,
+  .hx-podium-meta,.hx-place,.hx-panel-head span,
+  .hx-pulse span,.hx-telemetry-cell span,.hx-telemetry-track,
+  .card-label,.meta,.muted,.subtitle,.description
+){
+  color:#fff!important;-webkit-text-fill-color:#fff!important;text-shadow:none!important;
+}
+/* Keep the existing colored metric accents. */
+html[data-hlrn-theme="dark"] body #opsWins{
+  color:#ffd400!important;-webkit-text-fill-color:#ffd400!important;
+}
+html[data-hlrn-theme="dark"] body #opsAvg{
+  color:#63ef8b!important;-webkit-text-fill-color:#63ef8b!important;
+}
+
 :root{
   --host-yellow:#ffd400;
   --host-ink:#fff;
