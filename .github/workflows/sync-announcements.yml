@@ -32,6 +32,7 @@ jobs:
         env:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
           DISCORD_ANCHOR_CHANNEL_ID: '1528189461656244364'
+          DISCORD_ANNOUNCEMENTS_CHANNEL_ID: '1529356159906222201'
         run: python tools/sync-announcements.py
 
       - name: Commit announcement feed
