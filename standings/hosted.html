@@ -1809,10 +1809,113 @@ html[data-hlrn-theme="dark"] .matchup-card:after{
 html[data-hlrn-theme="dark"] .prime-flash{
   display:none!important;
 }
+
+/* HLRN_H2H_TALE_DARK_FIX_20261001 */
+html[data-hlrn-theme="dark"] .tape-grid,
+html[data-hlrn-theme="dark"] .tape-row,
+html[data-hlrn-theme="dark"] .tape-row > div,
+html[data-hlrn-theme="dark"] .tape-left,
+html[data-hlrn-theme="dark"] .tape-center,
+html[data-hlrn-theme="dark"] .tape-right,
+html[data-hlrn-theme="dark"] .compare-grid,
+html[data-hlrn-theme="dark"] .compare-grid > div,
+html[data-hlrn-theme="dark"] .stat-box,
+html[data-hlrn-theme="dark"] .common,
+html[data-hlrn-theme="dark"] .common-grid,
+html[data-hlrn-theme="dark"] .common-box,
+html[data-hlrn-theme="dark"] .common-record,
+html[data-hlrn-theme="dark"] .explain{
+  background:#000!important;
+  background-color:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:#2b2b2b!important;
+  box-shadow:none!important;
+}
+
+html[data-hlrn-theme="dark"] .tape-row > div,
+html[data-hlrn-theme="dark"] .stat-box,
+html[data-hlrn-theme="dark"] .common-box,
+html[data-hlrn-theme="dark"] .common-record{
+  background:#050505!important;
+  background-color:#050505!important;
+}
+
+html[data-hlrn-theme="dark"] .tape-center{
+  background:#111!important;
+  background-color:#111!important;
+}
+
+html[data-hlrn-theme="dark"] :where(
+  .tape-title,
+  .tape-left,.tape-center,.tape-right,
+  .tape-row span,.tape-row strong,
+  .stat-box .label,.stat-box .value,.stat-box .detail,
+  .common-box .big,.common-box .label,
+  .common-record,.explain,.explain strong
+){
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  text-shadow:none!important;
+}
+
+html[data-hlrn-theme="dark"] .tape-left.win,
+html[data-hlrn-theme="dark"] .tape-right.win{
+  color:#ffd400!important;
+  -webkit-text-fill-color:#ffd400!important;
+}
 `;
+
+function hardPaintHostedH2HTape(doc,dark){
+  if(!doc)return;
+
+  const blocks=doc.querySelectorAll(
+    ".tape-grid,.tape-row,.tape-row > div,.tape-left,.tape-center,.tape-right,"+
+    ".compare-grid,.compare-grid > div,.stat-box,.common,.common-grid,.common-box,"+
+    ".common-record,.explain"
+  );
+
+  blocks.forEach(el=>{
+    if(!dark){
+      ["background","background-color","background-image","color","-webkit-text-fill-color","border-color","box-shadow","text-shadow"]
+        .forEach(p=>el.style.removeProperty(p));
+      return;
+    }
+    el.style.setProperty("background","#000","important");
+    el.style.setProperty("background-color","#000","important");
+    el.style.setProperty("background-image","none","important");
+    el.style.setProperty("color","#fff","important");
+    el.style.setProperty("-webkit-text-fill-color","#fff","important");
+    el.style.setProperty("border-color","#2b2b2b","important");
+    el.style.setProperty("box-shadow","none","important");
+    el.style.setProperty("text-shadow","none","important");
+  });
+
+  if(dark){
+    doc.querySelectorAll(".tape-row > div,.stat-box,.common-box,.common-record").forEach(el=>{
+      el.style.setProperty("background","#050505","important");
+      el.style.setProperty("background-color","#050505","important");
+    });
+    doc.querySelectorAll(".tape-center").forEach(el=>{
+      el.style.setProperty("background","#111","important");
+      el.style.setProperty("background-color","#111","important");
+    });
+    doc.querySelectorAll(".tape-title,.tape-left,.tape-center,.tape-right,.tape-row span,.tape-row strong,.stat-box .label,.stat-box .value,.stat-box .detail,.common-box .big,.common-box .label,.common-record,.explain,.explain strong").forEach(el=>{
+      el.style.setProperty("color","#fff","important");
+      el.style.setProperty("-webkit-text-fill-color","#fff","important");
+      el.style.setProperty("text-shadow","none","important");
+    });
+    doc.querySelectorAll(".tape-left.win,.tape-right.win").forEach(el=>{
+      el.style.setProperty("color","#ffd400","important");
+      el.style.setProperty("-webkit-text-fill-color","#ffd400","important");
+    });
+  }
+}
 
 function hardPaintHostedH2H(doc,dark){
   if(!doc)return;
+  hardPaintHostedH2HTape(doc,dark);
 
   const blocks=".wrap,.prime-scorebug,.hero,.h2h-ticker,.prime-deck,.prime-deck-cell,.controls,.control-grid,.field,.search-select,.prime-edge-board,.prime-edge,#content,.panel,.card,.matchup-card,.fighter,.prediction,.tape-grid,.tape-row,.compare-grid,.stat-box,.common,.common-grid,.common-box,.common-record,.explain,.loading";
   doc.querySelectorAll(blocks).forEach(el=>{
@@ -2040,8 +2143,14 @@ function applyHostedSeriesMatch(frame){
           let resizeRaf=0;
           new MutationObserver(()=>{
             cancelAnimationFrame(resizeRaf);
-            resizeRaf=requestAnimationFrame(()=>resizeHostedFrame("h2h"));
-            setTimeout(()=>resizeHostedFrame("h2h"),120);
+            resizeRaf=requestAnimationFrame(()=>{
+              hardPaintHostedH2HTape(doc,hlrnHostedDarkModeActive());
+              resizeHostedFrame("h2h");
+            });
+            setTimeout(()=>{
+              hardPaintHostedH2HTape(doc,hlrnHostedDarkModeActive());
+              resizeHostedFrame("h2h");
+            },120);
           }).observe(content,{childList:true,subtree:true});
         }
       }
@@ -2052,10 +2161,12 @@ function applyHostedSeriesMatch(frame){
       setTimeout(()=>resizeHostedFrame("h2h"),1500);
       setTimeout(()=>resizeHostedFrame("h2h"),3000);
       doc.addEventListener("click",()=>{
-        setTimeout(repaintH2H,0);
-        setTimeout(repaintH2H,180);
+        setTimeout(()=>{repaintH2H();hardPaintHostedH2HTape(doc,hlrnHostedDarkModeActive());},0);
+        setTimeout(()=>{repaintH2H();hardPaintHostedH2HTape(doc,hlrnHostedDarkModeActive());},180);
       },true);
-      doc.addEventListener("input",()=>setTimeout(repaintH2H,0),true);
+      doc.addEventListener("input",()=>{
+        setTimeout(()=>{repaintH2H();hardPaintHostedH2HTape(doc,hlrnHostedDarkModeActive());},0);
+      },true);
     }
 
     if(frame && frame.id==="hostedFrame-records" && !doc.__hlrnHostedRecordsPaintBound){
