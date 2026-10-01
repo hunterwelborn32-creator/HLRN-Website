@@ -319,6 +319,33 @@ function hlrnHostedDarkModeActive(){
   }
 }
 
+const HLRN_HOSTED_LIGHT_DASHBOARD_CSS = `
+/* Hosted dashboard light presentation, including theme changes after load. */
+html[data-hlrn-theme="light"] body :is(.ops-dashboard,.hx-telemetry,.hx-intel,.hx-podium,.hx-pulse-grid){
+  display:grid!important;
+}
+html[data-hlrn-theme="light"] body :is(
+  .ops-dashboard,.ops-stat,.hx-telemetry,.hx-telemetry-label,.hx-telemetry-cell,
+  .hx-telemetry-window,.hx-telemetry-track,.hx-intel,.hx-panel,.hx-panel-head,
+  .hx-podium,.hx-podium-card,.hx-racepulse,.hx-pulse-grid,.hx-pulse
+){
+  background:#fff!important;background-image:none!important;color:#000!important;
+  border-color:#d9dde2!important;box-shadow:none!important;
+}
+html[data-hlrn-theme="light"] body :is(.ops-dashboard,.hx-telemetry,.hx-intel),
+html[data-hlrn-theme="light"] body :is(.ops-dashboard,.hx-telemetry,.hx-intel) *{
+  color:#000!important;-webkit-text-fill-color:#000!important;text-shadow:none!important;
+}
+html[data-hlrn-theme="light"] body :is(#opsRank1,#opsTop5,#opsWins,#opsAvg){
+  color:#000!important;-webkit-text-fill-color:#000!important;
+}
+html[data-hlrn-theme="light"] body::before,
+html[data-hlrn-theme="light"] body::after,
+html[data-hlrn-theme="light"] body .ops-stat::after{
+  display:none!important;
+}
+`;
+
 function hlrnLightHostedDoc(markup,key){
   if(!markup) return markup;
   const dark=hlrnHostedDarkModeActive();
@@ -417,7 +444,7 @@ html,body,.hosted-hub{background:#fff!important;color:#111214!important;height:a
       : darkBoot+markup;
   }
 
-  const tag='<style id="HLRN_STATIC_LIGHT_INNER">'+css+'</style>'+rescue;
+  const tag='<style id="HLRN_STATIC_LIGHT_INNER">'+css+HLRN_HOSTED_LIGHT_DASHBOARD_CSS+'</style>'+rescue;
   return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'</head>') : tag+markup;
 }
 </script>
@@ -2368,7 +2395,7 @@ function applyHostedSeriesMatch(frame){
     const driverStatsDark = frame && frame.id==="hostedFrame-drivers" ? HLRN_HOSTED_DRIVER_STATS_DARK_CSS : "";
     const recordsDark = frame && frame.id==="hostedFrame-records" ? HLRN_HOSTED_RECORDS_DARK_CSS : "";
     const h2hDark = frame && frame.id==="hostedFrame-h2h" ? HLRN_HOSTED_H2H_DARK_CSS : "";
-    style.textContent=dark?(HLRN_HOSTED_DARK_SERIES_CSS+driverStatsDark+recordsDark+h2hDark):HLRN_HOSTED_MATCH_SERIES_CSS;
+    style.textContent=dark?(HLRN_HOSTED_DARK_SERIES_CSS+driverStatsDark+recordsDark+h2hDark):(HLRN_HOSTED_MATCH_SERIES_CSS+HLRN_HOSTED_LIGHT_DASHBOARD_CSS);
     doc.head.appendChild(style);
     hardPaintHostedSectionTitles(doc,dark);
     if(frame && frame.id==="hostedFrame-drivers") hardPaintHostedIncidentWatch(doc,dark);
@@ -2449,7 +2476,7 @@ function applyHostedSeriesMatch(frame){
             const driverStatsDark = frame && frame.id==="hostedFrame-drivers" ? HLRN_HOSTED_DRIVER_STATS_DARK_CSS : "";
             const recordsDark = frame && frame.id==="hostedFrame-records" ? HLRN_HOSTED_RECORDS_DARK_CSS : "";
             const h2hDark = frame && frame.id==="hostedFrame-h2h" ? HLRN_HOSTED_H2H_DARK_CSS : "";
-            style.textContent=isDark?(HLRN_HOSTED_DARK_SERIES_CSS+driverStatsDark+recordsDark+h2hDark):HLRN_HOSTED_MATCH_SERIES_CSS;
+            style.textContent=isDark?(HLRN_HOSTED_DARK_SERIES_CSS+driverStatsDark+recordsDark+h2hDark):(HLRN_HOSTED_MATCH_SERIES_CSS+HLRN_HOSTED_LIGHT_DASHBOARD_CSS);
             doc.head.appendChild(style);
             hardPaintHostedSectionTitles(doc,isDark);
             if(frame && frame.id==="hostedFrame-drivers") hardPaintHostedIncidentWatch(doc,isDark);
