@@ -1274,6 +1274,90 @@ html[data-hlrn-theme="light"] #profileModal .close-btn{
   }
 }
 </style>
+
+<style id="HLRN_ADMINS_CONNECTED_UPGRADE_20261001">
+/* Meet the Admins — connected profiles, role tags and Day/Night-safe controls. */
+.member-card[role="button"]{cursor:pointer}
+.member-card[role="button"]:focus-visible{
+  outline:3px solid #e31837!important;
+  outline-offset:2px!important;
+}
+.member-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  min-height:24px;
+  margin-top:10px;
+}
+.member-tags span{
+  display:inline-flex;
+  align-items:center;
+  min-height:22px;
+  padding:0 7px;
+  border:1px solid #38434e;
+  border-radius:999px;
+  color:#aeb7c1;
+  font-size:6px;
+  font-weight:1000;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.profile-links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:16px;
+}
+.profile-links a{
+  display:inline-flex;
+  align-items:center;
+  min-height:38px;
+  padding:0 12px;
+  border:1px solid #3a4550;
+  border-left:3px solid #e31837;
+  border-radius:4px;
+  background:#11171e;
+  color:#fff;
+  font-size:8px;
+  font-weight:1000;
+  letter-spacing:.07em;
+  text-decoration:none;
+  text-transform:uppercase;
+}
+.profile-links a:hover{border-color:#e31837}
+html[data-hlrn-theme="light"] .member-tags span{
+  background:#fff!important;
+  color:#5f6872!important;
+  -webkit-text-fill-color:#5f6872!important;
+  border-color:#cfd6de!important;
+}
+html[data-hlrn-theme="light"] .profile-links a{
+  background:#fff!important;
+  color:#11161c!important;
+  -webkit-text-fill-color:#11161c!important;
+  border-color:#cfd6de!important;
+  border-left-color:#e31837!important;
+}
+html[data-hlrn-theme="dark"] .member-tags span{
+  background:#0b1015!important;
+  color:#b8c1ca!important;
+  -webkit-text-fill-color:#b8c1ca!important;
+  border-color:#303a44!important;
+}
+html[data-hlrn-theme="dark"] .profile-links a{
+  background:#05080b!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:#343e48!important;
+  border-left-color:#e31837!important;
+}
+@media(max-width:560px){
+  .member-tags{min-height:0}
+  .profile-links{display:grid;grid-template-columns:1fr}
+  .profile-links a{justify-content:center;min-height:44px}
+}
+</style>
+
 </head>
 <body>
 
@@ -1394,6 +1478,7 @@ html[data-hlrn-theme="light"] #profileModal .close-btn{
         <div class="profile-meta"><small>Primary Role</small><strong id="profileRoleRepeat"></strong></div>
         <div class="profile-meta"><small>Car Number</small><strong id="profileCarNumber"></strong></div>
       </div>
+      <div class="profile-links" id="profileLinks" aria-label="HLRN team member links"></div>
     </div>
   </div>
 </div>
@@ -1426,6 +1511,7 @@ const profileName = document.getElementById("profileName");
 const profileRole = document.getElementById("profileRole");
 const profileRoleRepeat = document.getElementById("profileRoleRepeat");
 const profileCarNumber = document.getElementById("profileCarNumber");
+const profileLinks = document.getElementById("profileLinks");
 
 const lightbox = document.getElementById("imageLightbox");
 const lightboxImage = document.getElementById("lightboxImage");
@@ -1445,7 +1531,7 @@ function matches(member){
 function render(){
   const filtered = MEMBERS.filter(matches);
   grid.innerHTML = filtered.map((m)=>`
-    <article class="member-card" data-name="${esc(m.name)}" data-number="${esc(m.number)}">
+    <article class="member-card" data-name="${esc(m.name)}" data-number="${esc(m.number)}" data-profile-card="${esc(m.name)}" role="button" tabindex="0" aria-label="Open profile for ${esc(m.name)}">
       <div class="member-media">
         <img class="member-img" src="${m.image}" alt="${esc(m.name)}" loading="lazy">
         <div class="member-number">#${esc(m.number)}</div>
@@ -1455,6 +1541,7 @@ function render(){
         <div class="member-kicker">HLRN Team</div>
         <div class="member-name">${esc(m.name)}</div>
         <div class="member-role">${esc(m.role)}</div>
+        <div class="member-tags">${m.categories.map(cat=>`<span>${cat==="race-control"?"Race Control":cat==="broadcasting"?"Broadcasting":"Administration"}</span>`).join("")}</div>
         <div class="member-actions">
           <button class="profile-btn" type="button" data-profile="${esc(m.name)}">View Profile</button>
           <button class="image-btn" type="button" data-image="${esc(m.name)}" aria-label="View full image for ${esc(m.name)}">↗</button>
@@ -1472,13 +1559,40 @@ function render(){
   grid.querySelectorAll("[data-image]").forEach(btn=>{
     btn.addEventListener("click",()=>openImage(btn.dataset.image));
   });
+  grid.querySelectorAll("[data-profile-card]").forEach(card=>{
+    card.addEventListener("click",e=>{
+      if(e.target.closest("button,a")) return;
+      openProfile(card.dataset.profileCard);
+    });
+    card.addEventListener("keydown",e=>{
+      if((e.key==="Enter"||e.key===" ")&&!e.target.closest("button,a")){
+        e.preventDefault();
+        openProfile(card.dataset.profileCard);
+      }
+    });
+  });
 }
 
 function memberByName(name){
   return MEMBERS.find(m=>m.name===name);
 }
 
-function openProfile(name){
+function memberLinks(m){
+  const links=[];
+  if(m.categories.includes("race-control")) links.push({href:"../live/",label:"Live Race Center"});
+  if(m.categories.includes("broadcasting")) links.push({href:"../broadcasters/",label:"Broadcast Center"});
+  if(m.categories.includes("administration")) links.push({href:"../rules/",label:"Official Rules"});
+  return links;
+}
+
+function syncMemberUrl(name){
+  const url=new URL(location.href);
+  if(name) url.searchParams.set("member",name);
+  else url.searchParams.delete("member");
+  history.replaceState({member:name||null},"",url.pathname+url.search+url.hash);
+}
+
+function openProfile(name,updateUrl=true){
   const m = memberByName(name);
   if(!m) return;
   profileImage.src = m.image;
@@ -1490,16 +1604,19 @@ function openProfile(name){
   profileRole.textContent = m.role;
   profileRoleRepeat.textContent = m.role;
   profileCarNumber.textContent = `#${m.number}`;
+  profileLinks.innerHTML = memberLinks(m).map(link=>`<a href="${link.href}">${link.label} →</a>`).join("");
+  if(updateUrl) syncMemberUrl(m.name);
   modal.classList.add("open");
   modal.setAttribute("aria-hidden","false");
   document.body.style.overflow = "hidden";
   profileClose.focus();
 }
 
-function closeProfile(){
+function closeProfile(updateUrl=true){
   modal.classList.remove("open");
   modal.setAttribute("aria-hidden","true");
   document.body.style.overflow = "";
+  if(updateUrl) syncMemberUrl("");
 }
 
 function openImage(name){
@@ -1522,6 +1639,10 @@ function closeImage(){
 filterButtons.forEach(btn=>btn.addEventListener("click",()=>{
   activeFilter = btn.dataset.filter;
   filterButtons.forEach(b=>b.classList.toggle("active",b===btn));
+  const url=new URL(location.href);
+  if(activeFilter==="all") url.searchParams.delete("role");
+  else url.searchParams.set("role",activeFilter);
+  history.replaceState({role:activeFilter},"",url.pathname+url.search+url.hash);
   render();
 }));
 
@@ -1548,7 +1669,18 @@ document.getElementById("summaryAdmin").textContent = MEMBERS.filter(m=>m.catego
 document.getElementById("summaryRace").textContent = MEMBERS.filter(m=>m.categories.includes("race-control")).length;
 document.getElementById("summaryBroadcast").textContent = MEMBERS.filter(m=>m.categories.includes("broadcasting")).length;
 
+const initialParams=new URLSearchParams(location.search);
+const initialRole=initialParams.get("role");
+if(["administration","race-control","broadcasting"].includes(initialRole)){
+  activeFilter=initialRole;
+  filterButtons.forEach(btn=>btn.classList.toggle("active",btn.dataset.filter===initialRole));
+}
 render();
+
+const requestedMember=initialParams.get("member");
+if(requestedMember && memberByName(requestedMember)){
+  setTimeout(()=>openProfile(requestedMember,false),0);
+}
 </script>
 </body>
 </html>
