@@ -1546,6 +1546,84 @@ html[data-hlrn-theme="dark"] tbody tr:hover td{
 }
 `;
 
+function hardPaintHostedIncidentWatch(doc,dark){
+  if(!doc)return;
+
+  const bg=dark?"#000":"";
+  const fg=dark?"#fff":"";
+  const line=dark?"#2b2b2b":"";
+
+  doc.querySelectorAll("#incidents,.incident-container,.incident-top10,.incident-average-table,.incident-average-header,.incident-average-item,.incident-streak-section,.incident-streak-grid,.incident-streak-card").forEach(el=>{
+    if(!dark){
+      el.style.removeProperty("background");
+      el.style.removeProperty("background-color");
+      el.style.removeProperty("background-image");
+      el.style.removeProperty("color");
+      el.style.removeProperty("border-color");
+      return;
+    }
+    el.style.setProperty("background",bg,"important");
+    el.style.setProperty("background-color",bg,"important");
+    el.style.setProperty("background-image","none","important");
+    el.style.setProperty("color",fg,"important");
+    el.style.setProperty("border-color",line,"important");
+    el.style.setProperty("box-shadow","none","important");
+  });
+
+  doc.querySelectorAll(".incident-row").forEach(el=>{
+    if(!dark){
+      el.style.removeProperty("background");
+      el.style.removeProperty("background-color");
+      el.style.removeProperty("background-image");
+      el.style.removeProperty("color");
+      el.style.removeProperty("border-color");
+      el.style.removeProperty("box-shadow");
+      return;
+    }
+    el.style.setProperty("background","#050505","important");
+    el.style.setProperty("background-color","#050505","important");
+    el.style.setProperty("background-image","none","important");
+    el.style.setProperty("color","#fff","important");
+    el.style.setProperty("border-top-color","#2b2b2b","important");
+    el.style.setProperty("border-right-color","#2b2b2b","important");
+    el.style.setProperty("border-bottom-color","#2b2b2b","important");
+    el.style.setProperty("box-shadow","none","important");
+  });
+
+  doc.querySelectorAll(".incident-rank").forEach(el=>{
+    if(!dark){
+      el.style.removeProperty("background");
+      el.style.removeProperty("background-color");
+      el.style.removeProperty("color");
+      el.style.removeProperty("border-color");
+      return;
+    }
+    el.style.setProperty("background","#0b0b0b","important");
+    el.style.setProperty("background-color","#0b0b0b","important");
+    el.style.setProperty("color","#fff","important");
+    el.style.setProperty("-webkit-text-fill-color","#fff","important");
+    el.style.setProperty("border-color","#444","important");
+  });
+
+  doc.querySelectorAll(".incident-driver-name,.incident-driver-label,.incident-points strong,.incident-points span,.incident-average-driver,.incident-average-number,.incident-streak-card h3,.incident-streak-driver,.incident-streak-value,.incident-streak-sub").forEach(el=>{
+    if(!dark){
+      el.style.removeProperty("color");
+      el.style.removeProperty("-webkit-text-fill-color");
+      return;
+    }
+    el.style.setProperty("color","#fff","important");
+    el.style.setProperty("-webkit-text-fill-color","#fff","important");
+    el.style.setProperty("text-shadow","none","important");
+  });
+
+  // Preserve warning accents without allowing light cards back in.
+  if(dark){
+    doc.querySelectorAll(".incident-row.rank-1").forEach(el=>el.style.setProperty("border-left-color","#ffd400","important"));
+    doc.querySelectorAll(".incident-row.rank-2").forEach(el=>el.style.setProperty("border-left-color","#f39c12","important"));
+    doc.querySelectorAll(".incident-row.rank-3").forEach(el=>el.style.setProperty("border-left-color","#d98b32","important"));
+  }
+}
+
 function hardPaintHostedSectionTitles(doc,dark){
   if(!doc)return;
   doc.querySelectorAll(".section-title").forEach(el=>{
@@ -1580,6 +1658,16 @@ function applyHostedSeriesMatch(frame){
     style.textContent=dark?(HLRN_HOSTED_DARK_SERIES_CSS+driverStatsDark):HLRN_HOSTED_MATCH_SERIES_CSS;
     doc.head.appendChild(style);
     hardPaintHostedSectionTitles(doc,dark);
+    if(frame && frame.id==="hostedFrame-drivers") hardPaintHostedIncidentWatch(doc,dark);
+
+    if(frame && frame.id==="hostedFrame-drivers" && !doc.__hlrnHostedIncidentClickBound){
+      doc.__hlrnHostedIncidentClickBound=true;
+      doc.addEventListener("click",()=>{
+        setTimeout(()=>hardPaintHostedIncidentWatch(doc,hlrnHostedDarkModeActive()),0);
+        setTimeout(()=>hardPaintHostedIncidentWatch(doc,hlrnHostedDarkModeActive()),120);
+        setTimeout(()=>hardPaintHostedIncidentWatch(doc,hlrnHostedDarkModeActive()),500);
+      },true);
+    }
 
     if(!doc.__hlrnHostedThemeObserver && doc.body){
       doc.__hlrnHostedThemeObserver=true;
@@ -1596,9 +1684,10 @@ function applyHostedSeriesMatch(frame){
             style.textContent=isDark?(HLRN_HOSTED_DARK_SERIES_CSS+driverStatsDark):HLRN_HOSTED_MATCH_SERIES_CSS;
             doc.head.appendChild(style);
             hardPaintHostedSectionTitles(doc,isDark);
+            if(frame && frame.id==="hostedFrame-drivers") hardPaintHostedIncidentWatch(doc,isDark);
           }catch(_){}
         });
-      }).observe(doc.body,{childList:true,subtree:true});
+      }).observe(doc.body,{childList:true,subtree:true,attributes:true,attributeFilter:["class","style"]});
     }
   }catch(e){}
 }
