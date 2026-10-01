@@ -505,3 +505,109 @@ html[data-hlrn-theme="light"] .h9-score-brand:before{
   display:none!important;
   content:none!important;
 }
+
+/* HLRN_HOME_DARK_BLACK_WHITE_20260930 */
+html[data-hlrn-theme="dark"] body.rd-v5.home-v8-page{
+  background:#000!important;
+  color:#fff!important;
+}
+html[data-hlrn-theme="dark"] body.home-v8-page .home9{
+  --h9-ink:#fff;
+  --h9-charcoal:#000;
+  --h9-muted:#fff;
+  --h9-line:#2b2b2b;
+  --h9-soft:#000;
+  --h9-paper:#000;
+  background:#000!important;
+  color:#fff!important;
+}
+html[data-hlrn-theme="dark"] body.home-v8-page :where(
+  .h9-top,
+  .h9-raceweek,
+  .h9-series,
+  .h9-racecenter,
+  .h9-desk,
+  .h9-recap,
+  .h9-more,
+  .h9-story-rail,
+  .h9-story,
+  .h9-week-card,
+  .h9-series-block,
+  .h9-series-cell,
+  .h9-result-card,
+  .h9-result-main,
+  .h9-result-stats,
+  .h9-result-stats div,
+  .h9-desk-grid,
+  .h9-desk-card,
+  .h9-recap .hlrn-recap-card,
+  .h9-recap .hlrn-recap-card-top,
+  .h9-recap .hlrn-recap-card-main,
+  .h9-recap .hlrn-recap-empty
+){
+  background:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+  border-color:#2b2b2b!important;
+}
+html[data-hlrn-theme="dark"] body.home-v8-page .home9 :where(
+  h1,h2,h3,h4,h5,h6,
+  p,span,small,strong,b,a,div
+){
+  color:#fff!important;
+}
+html[data-hlrn-theme="dark"] body.home-v8-page :where(
+  .h9-section-head>a,
+  .h9-story-num,
+  .h9-story span,
+  .h9-week-card p,
+  .h9-series-cell small,
+  .h9-series-cell span,
+  .h9-result-meta,
+  .h9-result-stats span,
+  .h9-desk-card small,
+  .h9-desk-card span,
+  .h9-footer-brand span,
+  .h9-footer nav a
+){
+  color:#fff!important;
+}
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-story:hover{
+  background:#0b0b0b!important;
+}
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-series-cell.driver-feature:after,
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-series-block.sunday .h9-series-cell.driver-feature:after,
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-series-block.monday .h9-series-cell.driver-feature:after{
+  background:linear-gradient(90deg,rgba(0,0,0,0),rgba(0,0,0,.92))!important;
+}
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-network-mark{
+  background:#000!important;
+  color:#fff!important;
+  border:1px solid #333!important;
+}
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-network-state,
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-network-state.is-live{
+  background:#000!important;
+  border-color:#333!important;
+}
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-btn{
+  background:#000!important;
+  color:#fff!important;
+  border:1px solid #fff!important;
+}
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-btn.primary{
+  background:var(--h9-red)!important;
+  color:#fff!important;
+  border-color:var(--h9-red)!important;
+}
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-result-meta b{
+  background:#000!important;
+  color:#fff!important;
+  border:1px solid #fff!important;
+}
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-recap .hlrn-recap-card-main h3,
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-recap .hlrn-recap-card-main p,
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-recap .hlrn-recap-card-foot,
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-recap .hlrn-recap-card-foot b{
+  color:#fff!important;
+}
