@@ -413,7 +413,22 @@ html,body,.hosted-hub{background:#fff!important;color:#111214!important;height:a
       '\nhtml,body{background:#000!important;background-color:#000!important;background-image:none!important;color:#fff!important;color-scheme:dark!important}' +
       '</style>';
     return /<\/head>/i.test(markup)
-      ? markup.replace(/<\/head>/i,darkBoot+'</head>')
+      ? markup.replace(/<\/head>/i,darkBoot+'<script id="HLRN_DIRECT_STANDINGS_THEME_BOOTSTRAP_20261001">
+(function(){
+  let theme="light";
+  try{theme=localStorage.getItem("hlrn_site_theme_v2")==="dark"?"dark":"light"}catch(e){}
+  document.documentElement.dataset.hlrnTheme=theme;
+  document.documentElement.style.colorScheme=theme;
+})();
+</script>
+<link rel="stylesheet" href="../assets/site-shell.css?v=20261001directstandings1">
+<link rel="stylesheet" href="../assets/standings/standings-series-shell.css?v=20261001directstandings1">
+<script src="../assets/standings/standings-shared-data.js?v=20261001directstandings1"></script>
+<style id="HLRN_DIRECT_FULL_PAGE_SCROLL_20261001">
+html,body{height:auto!important;min-height:100%!important;max-height:none!important;overflow-x:hidden!important;overflow-y:auto!important}
+body{position:relative!important}
+</style>
+</head>')
       : darkBoot+markup;
   }
 
@@ -746,6 +761,11 @@ html[style*="color-scheme: dark"] body iframe{
 </style>
 </head>
 <body class="nascar-hosted-page">
+<nav class="hlrn-series-switcher" aria-label="HLRN standings series">
+  <a href="./hosted.html" data-series="hosted" class="active" aria-current="page">Hosted</a>
+  <a href="./sunday.html" data-series="sunday">Sunday</a>
+  <a href="./monday.html" data-series="monday">Monday</a>
+</nav>
 <div class="hosted-hub">
   <nav class="hosted-hub-tabs" aria-label="Hosted Racing sections">
     <button class="hosted-hub-tab active" data-hosted-tab="racing">
@@ -2571,5 +2591,6 @@ input,select,button,textarea{background:#000!important;color:#fff!important;bord
   sync();
 })();
 </script>
+<script src="../assets/site-shell.js?v=20261001directstandings1"></script>
 </body>
 </html>
