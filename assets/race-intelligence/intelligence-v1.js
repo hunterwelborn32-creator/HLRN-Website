@@ -312,6 +312,7 @@ async function loadLeague(league,options={}){
     renderBoard();
     renderStorylines();
     if(window.HLRN_V3_SYNC) window.HLRN_V3_SYNC();
+    if(window.HLRN_COMPACT_SYNC) window.HLRN_COMPACT_SYNC();
 
     const completion=latestCompletedRaceInfo(results);
     const isNewCompletedRace=processRaceCompletion(league,completion);
@@ -678,11 +679,11 @@ function renderBoard(){
     return;
   }
 
-  grid.innerHTML = categories.map(cat=>{
+  grid.innerHTML = categories.map((cat,cardIndex)=>{
     const cfg = categoryConfig.find(x=>x.key===cat.key);
     return `
       <article class="intel-card" data-key="${esc(cat.key)}" style="--card-accent:${cfg.accent}">
-        <div class="card-top">
+        <div class="card-top" data-rank="${String(cardIndex+1).padStart(2,"0")}">
           ${hLrnPhotoMarkup(cat.driver,"full","hlrn-card-full-photo")}
           <div class="card-icon">${cfg.icon}</div>
           <div class="card-tag">${esc(cfg.tag)}</div>
@@ -1172,234 +1173,6 @@ document.addEventListener("visibilitychange",()=>{
 });
 
 
-/* HLRN Race Intelligence script block 4 */
-(function(){
-  const targets = document.querySelectorAll(
-    '.intel-card,.category-deep,.story-section,.detail-wrap,.toolbar'
-  );
-  targets.forEach(el => el.classList.add('reveal-race'));
-  if ('IntersectionObserver' in window){
-    const io = new IntersectionObserver(entries=>{
-      entries.forEach(entry=>{
-        if(entry.isIntersecting){
-          entry.target.classList.add('in-view');
-          io.unobserve(entry.target);
-        }
-      });
-    },{threshold:.08});
-    targets.forEach(el=>io.observe(el));
-  } else {
-    targets.forEach(el=>el.classList.add('in-view'));
-  }
-
-  // Observe dynamically generated intelligence/story cards too.
-  const parentTargets = ['intelGrid','storyGrid','deepMetrics','deepRaces'];
-  const mo = new MutationObserver(()=>{
-    document.querySelectorAll('.intel-card,.story-card,.deep-metric,.deep-race').forEach((el,i)=>{
-      if(!el.dataset.hlrnMotion){
-        el.dataset.hlrnMotion='1';
-        el.style.animation='hlrnCardIn .42s ease both';
-        el.style.animationDelay=Math.min(i*35,280)+'ms';
-      }
-    });
-  });
-  parentTargets.forEach(id=>{
-    const node=document.getElementById(id);
-    if(node) mo.observe(node,{childList:true,subtree:true});
-  });
-})();
-
-
-/* HLRN Race Intelligence script block 5 */
-(function(){
-  function pad(n){return String(n).padStart(2,"0")}
-  function updateClock(){
-    var el=document.getElementById("hlrnLiveClock");
-    if(!el)return;
-    var d=new Date();
-    var h=d.getHours(), ap=h>=12?"PM":"AM";
-    h=h%12||12;
-    el.textContent=h+":"+pad(d.getMinutes())+":"+pad(d.getSeconds())+" "+ap;
-  }
-  updateClock();
-  setInterval(updateClock,1000);
-
-  function syncLeague(){
-    var active=document.querySelector(".league-btn.active");
-    var league=active ? (active.dataset.league||active.textContent||"Sunday") : "Sunday";
-    league=league.charAt(0).toUpperCase()+league.slice(1);
-    var el=document.getElementById("hlrnActiveLeague");
-    if(el)el.textContent=league+" Intelligence";
-  }
-  document.addEventListener("click",function(e){
-    if(e.target.closest(".league-btn")) setTimeout(syncLeague,20);
-  });
-  syncLeague();
-
-  var observer=new MutationObserver(function(){
-    var loading=document.getElementById("loading");
-    var error=document.getElementById("errorBox");
-    var feed=document.getElementById("hlrnFeedState");
-    if(!feed)return;
-    if(error && error.textContent.trim() && getComputedStyle(error).display!=="none"){
-      feed.textContent="Feed Warning";
-      feed.style.color="#ff5a55";
-    }else if(loading && loading.classList.contains("show")){
-      feed.textContent="Syncing Data";
-      feed.style.color="#f2c84b";
-    }else{
-      feed.textContent="Live + Synced";
-      feed.style.color="#31d466";
-    }
-  });
-  ["loading","errorBox","intelGrid"].forEach(function(id){
-    var n=document.getElementById(id);
-    if(n)observer.observe(n,{attributes:true,childList:true,subtree:true,characterData:true});
-  });
-
-  var revealObserver=new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      if(entry.isIntersecting){
-        entry.target.classList.add("hlrn-visible");
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  },{threshold:.09,rootMargin:"0px 0px -20px 0px"});
-
-  function wireReveal(){
-    document.querySelectorAll(".intel-grid > *, .story-grid > *, .category-deep, .detail-wrap").forEach(function(el,i){
-      if(el.dataset.hlrnReveal)return;
-      el.dataset.hlrnReveal="1";
-      el.classList.add("hlrn-reveal");
-      el.style.transitionDelay=Math.min((i%5)*55,220)+"ms";
-      revealObserver.observe(el);
-    });
-  }
-  wireReveal();
-  var contentObserver=new MutationObserver(function(){requestAnimationFrame(wireReveal)});
-  ["intelGrid","storyGrid"].forEach(function(id){
-    var n=document.getElementById(id);
-    if(n)contentObserver.observe(n,{childList:true,subtree:true});
-  });
-
-  var refresh=document.getElementById("refreshBtn");
-  if(refresh){
-    refresh.addEventListener("click",function(){
-      refresh.classList.add("hlrn-refreshing");
-      var old=refresh.textContent;
-      refresh.textContent="↻ Syncing";
-      setTimeout(function(){
-        refresh.classList.remove("hlrn-refreshing");
-        refresh.textContent=old;
-      },1100);
-    });
-  }
-
-  document.addEventListener("mousemove",function(e){
-    var card=e.target.closest(".intel-grid > *, .story-grid > *");
-    if(!card)return;
-    var r=card.getBoundingClientRect();
-    card.style.setProperty("--mx",(e.clientX-r.left)+"px");
-    card.style.setProperty("--my",(e.clientY-r.top)+"px");
-  },{passive:true});
-})();
-
-
-/* HLRN Race Intelligence script block 6 */
-(function(){
-  const q=id=>document.getElementById(id);
-  function pctClamp(v){return Math.max(0,Math.min(100,Number(v)||0));}
-  function setMeter(id,textId,val,label){const m=q(id),t=q(textId);if(m)m.style.width=pctClamp(val)+'%';if(t)t.textContent=label;}
-  function updateDeck(){
-    try{
-      const list=Array.isArray(window.analytics)?window.analytics:(typeof analytics!=='undefined'&&Array.isArray(analytics)?analytics:[]);
-      const cats=Array.isArray(window.categories)?window.categories:(typeof categories!=='undefined'&&Array.isArray(categories)?categories:[]);
-      if(q('ccField')) q('ccField').textContent=list.length||'—';
-      const byKey=k=>cats.find(c=>c&&c.key===k)?.driver?.name||'—';
-      if(q('ccLeader')) q('ccLeader').textContent=byKey('favorite');
-      if(q('ccHot')) q('ccHot').textContent=byKey('hot');
-      if(q('ccRisk')) q('ccRisk').textContent=byKey('trouble')!=='—'?byKey('trouble'):byKey('watch');
-      const completed=list.filter(d=>d&&Number(d.races)>0);
-      const confidence=(window.HLRN_MODEL_METRICS && Number.isFinite(window.HLRN_MODEL_METRICS.top5Capture)) ? window.HLRN_MODEL_METRICS.top5Capture : (completed.length?Math.min(100,55+completed.length*2.2):18);
-      const depth=completed.length?Math.min(100,completed.length*4):12;
-      const recentVals=completed.map(d=>Number(d.recentAvg)).filter(Number.isFinite);
-      const seasonVals=completed.map(d=>Number(d.avgFinish)).filter(Number.isFinite);
-      const momentum=(recentVals.length&&seasonVals.length)?Math.min(100,45+Math.abs((seasonVals.reduce((a,b)=>a+b,0)/seasonVals.length)-(recentVals.reduce((a,b)=>a+b,0)/recentVals.length))*7):25;
-      const risks=completed.map(d=>Number(d.recentInc)).filter(Number.isFinite);
-      const risk=risks.length?Math.min(100,(risks.reduce((a,b)=>a+b,0)/risks.length)*12):15;
-      setMeter('ccConfidence','ccConfidenceText',confidence,Math.round(confidence)+'%');
-      setMeter('ccDepth','ccDepthText',depth,Math.round(depth)+'%');
-      setMeter('ccMomentum','ccMomentumText',momentum,Math.round(momentum)+'%');
-      setMeter('ccRiskMeter','ccRiskText',risk,Math.round(risk)+'%');
-    }catch(e){}
-  }
-  const obs=new MutationObserver(()=>requestAnimationFrame(updateDeck));
-  ['intelGrid','loading','errorBox'].forEach(id=>{const n=q(id);if(n)obs.observe(n,{childList:true,subtree:true,attributes:true});});
-  document.addEventListener('click',e=>{if(e.target.closest('.league-btn')||e.target.closest('#refreshBtn'))setTimeout(updateDeck,350)});
-  setInterval(updateDeck,4000);setTimeout(updateDeck,800);
-  const cur=q('ccCursor');
-  if(cur&&matchMedia('(pointer:fine)').matches){document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';},{passive:true});}
-  document.addEventListener('mousemove',function(e){const c=e.target.closest('.intel-card,.story-card,.deep-box,.detail-box');if(!c)return;const r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)+'px');c.style.setProperty('--my',(e.clientY-r.top)+'px');},{passive:true});
-})();
-
-
-/* HLRN Race Intelligence script block 7 */
-document.addEventListener('DOMContentLoaded', function(){
-  const header = document.querySelector('.header');
-  if(header && !document.querySelector('.x-launch-bar')){
-    header.insertAdjacentHTML('afterend', `
-      <section class="x-launch-bar" aria-label="HLRN command launch bar">
-        <div class="x-launch-card feature">
-          <div class="x-launch-kicker">HLRN // Command Center</div>
-          <div class="x-launch-title">Race Intelligence Headquarters</div>
-          <div class="x-launch-copy">Full-field performance analysis, momentum tracking, risk watch, and automatic deep-dive panels for both HLRN leagues.</div>
-          <div class="x-pill">Live race intelligence feed active</div>
-        </div>
-        <div class="x-launch-card">
-          <span class="x-launch-value">Live</span>
-          <span class="x-launch-label">Data status</span>
-        </div>
-        <div class="x-launch-card">
-          <span class="x-launch-value">2</span>
-          <span class="x-launch-label">Leagues tracked</span>
-        </div>
-        <div class="x-launch-card">
-          <span class="x-launch-value">Deep Dive</span>
-          <span class="x-launch-label">Click any card</span>
-        </div>
-      </section>
-    `);
-  }
-
-  const storySection = document.querySelector('.story-section');
-  if(storySection && !document.querySelector('.x-spotlight-banner')){
-    storySection.insertAdjacentHTML('beforebegin', `
-      <section class="x-spotlight-banner" aria-label="HLRN spotlight banner">
-        <div class="x-spotlight-kicker">Trackside Spotlight</div>
-        <div class="x-spotlight-row">
-          <div>
-            <div class="x-spotlight-copy">Built to feel like a real NASCAR command board.</div>
-            <div class="x-spotlight-meta">Driver signals • storylines • recent evidence • race-by-race insight</div>
-          </div>
-          <div class="x-spotlight-action">Powered by <span>HLRN Results</span></div>
-        </div>
-      </section>
-    `);
-  }
-
-  const observer = new IntersectionObserver((entries)=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        entry.target.classList.add('hlrn-visible');
-      }
-    });
-  }, {threshold:0.12});
-
-  document.querySelectorAll('.x-launch-bar, .cc-command-deck, .cc-meter-band, .hero, .toolbar, .intel-grid, .x-spotlight-banner, .story-section, .category-deep, .detail-wrap').forEach(el=>{
-    el.classList.add('hlrn-reveal');
-    observer.observe(el);
-  });
-});
 
 
 /* HLRN Race Intelligence script block 8 */
@@ -1536,30 +1309,16 @@ document.addEventListener('DOMContentLoaded', function(){
     if(meter && Number.isFinite(m.top5Capture))meter.style.width=clamp(m.top5Capture)+'%';
   }
 
-  function easternClock(){
-    const el=$('hlrnLiveClock');if(!el)return;
-    try{el.textContent=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true}).format(new Date())+' ET'}catch(e){}
-  }
-
   window.HLRN_V3_SYNC=function(){
     ensurePanels();
     requestAnimationFrame(()=>{
       decorateCards();
       renderContenders();
       renderVerification();
-      easternClock();
+      if(window.HLRN_COMPACT_SYNC) window.HLRN_COMPACT_SYNC();
     });
   };
-
-  document.addEventListener('DOMContentLoaded',()=>{
-    easternClock();setInterval(easternClock,1000);
-    const roots=['intelGrid','storyGrid','loading','errorBox'];
-    const mo=new MutationObserver(()=>requestAnimationFrame(()=>window.HLRN_V3_SYNC()));
-    roots.forEach(id=>{const n=$(id);if(n)mo.observe(n,{childList:true,subtree:true})});
-    setTimeout(()=>window.HLRN_V3_SYNC(),250);
-  });
 })();
-
 
 /* HLRN Race Intelligence script block 9 */
 (function(){
@@ -1617,7 +1376,7 @@ document.addEventListener('DOMContentLoaded', function(){
       <button class="compact-tab" data-panel="deep">Selected Driver</button>
       <button class="compact-tab" data-panel="stories">Storylines</button>
     </nav>
-    <section class="compact-panel active" data-panel="board" id="compactPanelBoard"><div class="compact-board-head"><strong>Live Intelligence Board</strong><span>Click a card for the deep dive</span></div><section class="v3-contenders" id="v3Contenders"><div class="v3-contenders-head"><strong>Top 3 Projected Contenders</strong><span id="v3ContenderMeta">Live HLRN performance data</span></div><div class="v3-contender-grid" id="v3ContenderGrid"></div></section></section>
+    <section class="compact-panel active" data-panel="board" id="compactPanelBoard"><div class="compact-board-head"><strong>Featured Race Intelligence</strong><span>Sunday and Monday league analysis</span></div><section class="v3-contenders" id="v3Contenders"><div class="v3-contenders-head"><strong>Top 3 Projected Contenders</strong><span id="v3ContenderMeta">Live HLRN performance data</span></div><div class="v3-contender-grid" id="v3ContenderGrid"></div></section></section>
     <section class="compact-panel" data-panel="deep" id="compactPanelDeep"></section>
     <section class="compact-panel" data-panel="stories" id="compactPanelStories"></section>`);
 
@@ -1632,15 +1391,9 @@ document.addEventListener('DOMContentLoaded', function(){
       if(e.target.closest('.intel-card')) setTimeout(()=>activate('deep'),0);
     });
 
-    // Do not observe the entire document; that created a feedback loop on dynamic UI updates.
-    const intel=document.getElementById('intelGrid');
-    if(intel){
-      const mo=new MutationObserver(()=>requestAnimationFrame(()=>{updateOverview(); if(window.HLRN_V3_SYNC) window.HLRN_V3_SYNC();}));
-      mo.observe(intel,{childList:true,subtree:true});
-    }
+    window.HLRN_COMPACT_SYNC=updateOverview;
     updateOverview();
     if(window.HLRN_V3_SYNC) window.HLRN_V3_SYNC();
-    setInterval(updateOverview,2500);
   }
 
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>setTimeout(build,450));
@@ -1648,59 +1401,3 @@ document.addEventListener('DOMContentLoaded', function(){
 })();
 
 
-/* HLRN Race Intelligence script block 10 */
-(function(){
-  function applyEditorialLayout(){
-    document.body.classList.add('nascar-cup-news-style');
-    const hero=document.querySelector('.hero h1');
-    if(hero) hero.innerHTML='HLRN Race Intelligence';
-    const kicker=document.querySelector('.hero .kicker');
-    if(kicker) kicker.textContent='HIGH LINE RACING NETWORK • RACE INTELLIGENCE';
-    const p=document.querySelector('.hero p');
-    if(p) p.textContent='Current driver form, projected contenders, momentum, consistency, racecraft and risk signals — updated automatically from HLRN league results.';
-    const boardHead=document.querySelector('.compact-board-head strong');
-    if(boardHead) boardHead.textContent='Featured Race Intelligence';
-    const boardSub=document.querySelector('.compact-board-head span');
-    if(boardSub) boardSub.textContent='Sunday and Monday league analysis';
-    const sectionLabel=document.querySelector('.section-label');
-    if(sectionLabel) sectionLabel.textContent='Latest Intelligence';
-    const storyTitle=document.querySelector('.story-title');
-    if(storyTitle) storyTitle.textContent='Latest Storylines';
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(applyEditorialLayout,850));
-  else setTimeout(applyEditorialLayout,850);
-  setTimeout(applyEditorialLayout,1800);
-})();
-
-
-/* HLRN Race Intelligence script block 11 */
-(function(){
-  function polish(){
-    const hero=document.querySelector('.hero-inner');
-    if(hero && !hero.querySelector('.nn-page-title')){
-      const old=hero.querySelector('h1');
-      const title=document.createElement('div');
-      title.className='nn-page-title';
-      title.textContent='HLRN Race Intelligence';
-      if(old) old.insertAdjacentElement('afterend',title); else hero.prepend(title);
-    }
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>setTimeout(polish,900));
-  else setTimeout(polish,900);
-  setTimeout(polish,1800);
-})();
-
-
-/* HLRN Race Intelligence script block 12 */
-(function(){
-  function syncRanks(){
-    document.querySelectorAll('.intel-card').forEach(function(card,i){
-      var top=card.querySelector('.card-top');
-      if(top) top.setAttribute('data-rank',String(i+1).padStart(2,'0'));
-    });
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',function(){setTimeout(syncRanks,900)});
-  else setTimeout(syncRanks,900);
-  setTimeout(syncRanks,1800);
-  setInterval(syncRanks,5000);
-})();
