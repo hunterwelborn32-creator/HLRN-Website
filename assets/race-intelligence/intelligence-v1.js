@@ -836,11 +836,13 @@ function renderStorylines(){
 
   grid.innerHTML = unique.slice(0,6).map(story=>`
     <article class="story-card ${hLrnDriverPhoto(story.driver,"full") ? "has-driver-photo" : ""}">
-      ${hLrnPhotoMarkup(story.driver,"full","hlrn-story-full-photo")}
-      <div class="story-kicker">${esc(story.kicker)}</div>
-      <h3>${hLrnStoryTitleMarkup(story)}</h3>
-      <p>${esc(story.body)}</p>
-      <div class="story-stat">${esc(story.stat)}</div>
+      <div class="story-thumb">${hLrnPhotoMarkup(story.driver,"full","hlrn-story-full-photo")}</div>
+      <div class="story-copy">
+        <div class="story-kicker">${esc(story.kicker)}</div>
+        <h3>${hLrnStoryTitleMarkup(story)}</h3>
+        <p>${esc(story.body)}</p>
+        <div class="story-stat">${esc(story.stat)}</div>
+      </div>
     </article>
   `).join("");
 }
