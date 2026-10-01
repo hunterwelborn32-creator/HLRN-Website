@@ -28,69 +28,206 @@ ready(async function(){
     }
     return s;
   };
-  const localDateKey=(d=new Date())=>{
-    const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,"0"),day=String(d.getDate()).padStart(2,"0");
-    return `${y}-${m}-${day}`;
-  };
+  const RACE_TIME_ZONE="America/New_York";
+  const LIVE_STATE_URL="https://hlrn-live-feed.onrender.com/api/state";
+
+  function easternParts(date=new Date()){
+    const parts=new Intl.DateTimeFormat("en-US",{
+      timeZone:RACE_TIME_ZONE,
+      year:"numeric",month:"2-digit",day:"2-digit",
+      hour:"2-digit",minute:"2-digit",second:"2-digit",
+      hourCycle:"h23"
+    }).formatToParts(date);
+    const out={};
+    parts.forEach(p=>{if(p.type!=="literal")out[p.type]=p.value;});
+    return {
+      year:Number(out.year||0),month:Number(out.month||0),day:Number(out.day||0),
+      hour:Number(out.hour||0),minute:Number(out.minute||0),second:Number(out.second||0)
+    };
+  }
+  function easternNow(){
+    const p=easternParts();
+    const dateKey=`${p.year}-${String(p.month).padStart(2,"0")}-${String(p.day).padStart(2,"0")}`;
+    return {...p,dateKey,minutes:p.hour*60+p.minute};
+  }
+  const localDateKey=()=>easternNow().dateKey;
   const humanDate=(key)=>{
-    try{return new Date(key+"T12:00:00").toLocaleDateString([], {month:"short",day:"numeric"}).toUpperCase();}
+    if(!key) return "TBA";
+    try{return new Date(key+"T12:00:00").toLocaleDateString("en-US",{timeZone:RACE_TIME_ZONE,month:"short",day:"numeric"}).toUpperCase();}
     catch(e){return key;}
   };
+  function dateSerial(key){
+    const m=String(key||"").match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    return m?Date.UTC(Number(m[1]),Number(m[2])-1,Number(m[3])):0;
+  }
+  function dayDiff(fromKey,toKey){
+    const a=dateSerial(fromKey),b=dateSerial(toKey);
+    return a&&b?Math.round((b-a)/86400000):0;
+  }
+
+  const memoryCache=new Map();
+  async function cachedJSON(cacheKey,href,ttlMs){
+    const now=Date.now();
+    const mem=memoryCache.get(cacheKey);
+    if(mem&&now-mem.at<ttlMs) return mem.value;
+    try{
+      const raw=sessionStorage.getItem("hlrn_nx_cache_"+cacheKey);
+      if(raw){
+        const saved=JSON.parse(raw);
+        if(saved&&now-Number(saved.at||0)<ttlMs&&saved.value){
+          memoryCache.set(cacheKey,{at:Number(saved.at),value:saved.value});
+          return saved.value;
+        }
+      }
+    }catch(e){}
+    try{
+      const r=await fetch(href,{cache:"default"});
+      if(!r.ok) throw new Error("HTTP "+r.status);
+      const value=await r.json();
+      memoryCache.set(cacheKey,{at:now,value});
+      try{sessionStorage.setItem("hlrn_nx_cache_"+cacheKey,JSON.stringify({at:now,value}));}catch(e){}
+      return value;
+    }catch(e){
+      return mem?.value||null;
+    }
+  }
 
   let schedulesPromise=null;
   let dataPromise=null;
   function loadSchedules(){
-    if(!schedulesPromise) schedulesPromise=fetch(url("data/schedules-2026.json?v=20261001nx1"),{cache:"no-store"}).then(r=>r.ok?r.json():null).catch(()=>null);
+    if(!schedulesPromise) schedulesPromise=cachedJSON("schedule_2026",url("data/schedules-2026.json?v=20261001nx3"),6*60*60*1000);
     return schedulesPromise;
   }
   function loadData(){
-    if(!dataPromise) dataPromise=fetch(url("data/hlrn.json?v=20261001nx1"),{cache:"no-store"}).then(r=>r.ok?r.json():null).catch(()=>null);
+    if(!dataPromise){
+      dataPromise=cachedJSON("hlrn_data",url("data/hlrn.json?v=20261001nx3"),60*1000);
+      setTimeout(()=>{dataPromise=null},65*1000);
+    }
     return dataPromise;
   }
 
-  function nextRace(items){
-    const today=localDateKey();
-    const races=(Array.isArray(items)?items:[]).filter(x=>x&&!x.off&&x.date);
-    return races.find(x=>x.date>=today)||races[races.length-1]||null;
+  function raceContext(items,series){
+    const now=easternNow();
+    const races=(Array.isArray(items)?items:[]).filter(x=>x&&!x.off&&x.date).slice().sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+    const today=races.find(x=>x.date===now.dateKey)||null;
+    const future=races.find(x=>x.date>now.dateKey)||null;
+    const past=races.filter(x=>x.date<now.dateKey).pop()||null;
+    const race=today||future||past||null;
+    if(!race) return {series,race:null,mode:"schedule",label:"SCHEDULE",days:0,isToday:false};
+    let mode="next",label="NEXT RACE",days=dayDiff(now.dateKey,race.date),isToday=!!today;
+    if(today){
+      if(now.minutes<17*60){mode="race-day";label="RACE DAY";}
+      else if(now.minutes<20*60){mode="pre-race";label="PRE-RACE";}
+      else if(now.minutes<20*60+30){mode="grid";label="GRID OPEN";}
+      else {mode="race-window";label="RACE WINDOW";}
+    }else if(future){
+      if(days===1){mode="tomorrow";label="TOMORROW";}
+      else if(days>1&&days<=4){mode="race-week";label=days+" DAYS";}
+      else if(days>4&&days<=7){mode="race-week";label="RACE WEEK";}
+      else{mode="next";label=race.week?"WEEK "+race.week:"NEXT RACE";}
+    }else{
+      mode="final";label="FINAL";
+    }
+    return {series,race,mode,label,days,isToday,now};
   }
-  function raceStateLabel(race){
-    if(!race||!race.date) return "SCHEDULE";
-    const today=localDateKey();
-    if(race.date===today) return "RACE DAY";
-    const a=new Date(today+"T12:00:00"),b=new Date(race.date+"T12:00:00");
-    const diff=Math.round((b-a)/86400000);
-    if(diff===1) return "TOMORROW";
-    if(diff>1&&diff<7) return diff+" DAYS";
-    return race.week?"WEEK "+race.week:"NEXT";
+
+  function raceSeriesTitle(series){return series==="monday"?"MONDAY NIGHT":"SUNDAY NIGHT";}
+
+  function applyLiveProbe(ctxs,live){
+    if(!live||typeof live!=="object") return ctxs;
+    const active=ctxs.find(x=>x.isToday);
+    if(!active) return ctxs;
+    const phase=canon(live.phase||live.sessionName||live.sessionState||"");
+    const flag=canon(live.flag||"");
+    const hasCars=Number(live.driverCount||0)>0||Array.isArray(live.drivers)&&live.drivers.length>0;
+    const online=live.online!==false&&(hasCars||phase.includes("race")||phase.includes("qual")||phase.includes("practice"));
+    const complete=!!live.raceFrozen||phase.includes("final")||phase.includes("complete")||flag.includes("checkered");
+    if(complete){active.mode="final";active.label="FINAL";}
+    else if(online){
+      if(phase.includes("practice")){active.mode="practice";active.label="PRACTICE LIVE";}
+      else if(phase.includes("qual")){active.mode="qualifying";active.label="QUALIFYING LIVE";}
+      else{active.mode="live";active.label="LIVE NOW";}
+    }
+    active.live=live;
+    return ctxs;
   }
-  function raceCard(league,race){
-    if(!race) return "";
-    const cls=league==="monday"?"monday":"sunday";
-    const title=league==="monday"?"MONDAY NIGHT":"SUNDAY NIGHT";
+
+  async function probeLiveState(){
+    const ctrl=("AbortController" in window)?new AbortController():null;
+    const timer=ctrl?setTimeout(()=>ctrl.abort(),4200):0;
+    try{
+      const r=await fetch(LIVE_STATE_URL,{cache:"no-store",signal:ctrl?.signal});
+      if(!r.ok) return null;
+      return await r.json();
+    }catch(e){return null;}
+    finally{if(timer)clearTimeout(timer);}
+  }
+
+  function raceCard(ctx){
+    if(!ctx?.race) return "";
+    const series=ctx.series;
+    const race=ctx.race;
+    const title=raceSeriesTitle(series);
+    const liveish=["live","practice","qualifying"].includes(ctx.mode);
+    const target=liveish?url("live/"):url("results/");
     return `
-      <a class="nx-race-week-card ${cls}" href="${url("results/")}" aria-label="${esc(title)} next race at ${esc(race.track)}">
-        <span class="nx-race-week-status">${esc(raceStateLabel(race))}</span>
+      <a class="nx-race-week-card ${series} mode-${esc(ctx.mode)}" href="${target}" aria-label="${esc(title)} ${esc(ctx.label)} at ${esc(race.track)}">
+        <span class="nx-race-week-status">${liveish?'<i aria-hidden="true"></i>':""}${esc(ctx.label)}</span>
         <span class="nx-race-week-series">${title}</span>
         <strong>${esc(race.track||"TBA")}</strong>
-        <span class="nx-race-week-meta">${esc(humanDate(race.date))} • ${esc(race.car||"")} • 8:30 PM ET</span>
+        <span class="nx-race-week-meta">${esc(humanDate(race.date))} • ${esc(race.car||"")} • ${esc(race.laps||"—")} LAPS • 8:30 PM ET</span>
       </a>`;
   }
 
+  function setGlobalRaceMode(ctxs){
+    const today=ctxs.find(x=>x.isToday);
+    const active=today||ctxs.filter(x=>x.race&&x.race.date>=localDateKey()).sort((a,b)=>dateSerial(a.race.date)-dateSerial(b.race.date))[0]||ctxs[0];
+    const mode=active?.mode||"schedule";
+    const series=active?.series||"";
+    document.documentElement.dataset.hlrnRaceMode=mode;
+    document.documentElement.dataset.hlrnRaceSeries=series;
+    document.body?.setAttribute("data-hlrn-race-mode",mode);
+    document.body?.setAttribute("data-hlrn-race-series",series);
+    const nav=document.getElementById("hlrn-global-nav");
+    if(nav){nav.dataset.raceMode=mode;nav.dataset.raceSeries=series;}
+  }
+
   async function installRaceWeekend(){
-    if(document.getElementById("hlrn-race-weekend-strip")) return;
     const nav=document.getElementById("hlrn-global-nav");
     if(!nav) return;
     const sch=await loadSchedules();
-    const sunday=nextRace(sch?.leagues?.sunday);
-    const monday=nextRace(sch?.leagues?.monday);
-    if(!sunday&&!monday) return;
-    const strip=document.createElement("section");
-    strip.id="hlrn-race-weekend-strip";
-    strip.innerHTML=`
-      <div class="nx-race-week-label"><i></i><span>HLRN RACE WEEK</span></div>
-      <div class="nx-race-week-cards">${raceCard("sunday",sunday)}${raceCard("monday",monday)}</div>
-      <a class="nx-race-week-live" href="${url("live/")}"><i></i><span>RACE CENTER</span></a>`;
-    nav.insertAdjacentElement("afterend",strip);
+    if(!sch?.leagues) return;
+
+    let strip=document.getElementById("hlrn-race-weekend-strip");
+    if(!strip){
+      strip=document.createElement("section");
+      strip.id="hlrn-race-weekend-strip";
+      nav.insertAdjacentElement("afterend",strip);
+    }
+
+    let liveProbe=null;
+    async function refresh({probe=false}={}){
+      let ctxs=[
+        raceContext(sch.leagues.sunday,"sunday"),
+        raceContext(sch.leagues.monday,"monday")
+      ];
+      if(probe&&ctxs.some(x=>x.isToday)){
+        liveProbe=await probeLiveState()||liveProbe;
+      }
+      ctxs=applyLiveProbe(ctxs,liveProbe);
+      setGlobalRaceMode(ctxs);
+      const active=ctxs.find(x=>x.isToday)||ctxs.slice().sort((a,b)=>Math.abs(a.days)-Math.abs(b.days))[0];
+      const networkLabel=["live","practice","qualifying"].includes(active?.mode)?"HLRN LIVE":"HLRN RACE WEEK";
+      strip.className="mode-"+(active?.mode||"schedule");
+      strip.innerHTML=`
+        <div class="nx-race-week-label"><i></i><span>${networkLabel}</span><b>AUTO</b></div>
+        <div class="nx-race-week-cards">${ctxs.map(raceCard).join("")}</div>
+        <a class="nx-race-week-live" href="${url("live/")}"><i></i><span>${["live","practice","qualifying"].includes(active?.mode)?"WATCH LIVE":"RACE CENTER"}</span></a>`;
+    }
+
+    await refresh({probe:true});
+    setInterval(()=>refresh({probe:true}),60000);
+    document.addEventListener("visibilitychange",()=>{if(!document.hidden)refresh({probe:true})});
   }
 
   function standingsSeries(){
@@ -264,41 +401,92 @@ ready(async function(){
   }
 
   function installLiveCommandDeck(){
-    if(route!=="live"||document.getElementById("hlrn-live-network-deck")) return;
+    if(route!=="live") return;
+    const existing=document.getElementById("hlrn-live-network-deck");
+    if(existing) existing.remove();
     const page=document.querySelector(".page")||document.querySelector("main")||document.body;
     const deck=document.createElement("section");
     deck.id="hlrn-live-network-deck";
+    deck.setAttribute("aria-label","HLRN Race Center 2.0 command deck");
     deck.innerHTML=`
-      <div class="nx-live-deck-title"><small>HLRN NETWORK CONTROL</small><strong>RACE COMMAND</strong><span id="nxLiveConn">STANDBY</span></div>
+      <div class="nx-live-deck-title">
+        <small>HLRN RACE CENTER 2.0</small>
+        <strong>RACE COMMAND</strong>
+        <span id="nxLiveConn">STANDBY</span>
+      </div>
       <div class="nx-live-deck-grid">
         <button data-nx-tab="control"><small>FLAG</small><strong id="nxLiveFlag">OFFLINE</strong></button>
         <button data-nx-tab="race"><small>LAP</small><strong id="nxLiveLap">—</strong></button>
         <button data-nx-tab="race"><small>LEADER</small><strong id="nxLiveLeader">—</strong></button>
+        <button data-nx-tab="battles"><small>CLOSEST BATTLE</small><strong id="nxLiveBattle">—</strong></button>
+        <button data-nx-tab="control"><small>CAUTION</small><strong id="nxLiveCaution">—</strong></button>
+        <button data-nx-tab="control"><small>RESTART</small><strong id="nxLiveRestart">—</strong></button>
         <button data-nx-tab="fastest"><small>FASTEST</small><strong id="nxLiveFast">—</strong></button>
-        <button data-nx-tab="battles"><small>FIELD</small><strong id="nxLiveField">—</strong></button>
         <button data-nx-tab="timeline"><small>TIME LEFT</small><strong id="nxLiveTime">—</strong></button>
+      </div>
+      <div class="nx-live-alert">
+        <span class="nx-live-alert-kicker"><i></i><b id="nxLiveAlertType">RACE CONTROL</b></span>
+        <strong id="nxLiveAlertText">Waiting for the iRacing bridge.</strong>
+        <span id="nxLiveAlertMeta">0 CARS • GREEN RUN —</span>
       </div>`;
     page.prepend(deck);
+
     deck.addEventListener("click",e=>{
       const b=e.target.closest("[data-nx-tab]"); if(!b)return;
       const t=b.dataset.nxTab;
       document.querySelector('.tab[data-tab="'+t+'"]')?.click();
+      document.getElementById("tab-"+t)?.scrollIntoView({behavior:"smooth",block:"start"});
     });
+
     const text=(id)=>document.getElementById(id)?.textContent?.trim()||"—";
+    const cleaned=(value)=>String(value||"—").trim().replace(/\s+/g," ");
+    let lastSignature="";
+
     const sync=()=>{
       const flag=text("flag");
+      const leader=cleaned(document.getElementById("leaderName")?.innerText);
+      const battle=cleaned(text("trackerClosestBattle"));
+      const caution=cleaned(text("mrcCaution"));
+      const restart=cleaned(text("mrcRestart"));
+      const greenRun=cleaned(text("mrcGreenRun"));
+      const cars=cleaned(text("carCount"));
+      const conn=cleaned(text("socketStatus"));
+      const signature=[flag,leader,battle,caution,restart,greenRun,cars,conn,text("lap"),text("bestLap"),text("timeRemaining")].join("|");
+      if(signature===lastSignature) return;
+      lastSignature=signature;
+
       document.getElementById("nxLiveFlag").textContent=flag;
       document.getElementById("nxLiveLap").textContent=text("lap");
-      document.getElementById("nxLiveLeader").textContent=(document.getElementById("leaderName")?.innerText||"—").trim().replace(/\s+/g," ");
+      document.getElementById("nxLiveLeader").textContent=leader;
+      document.getElementById("nxLiveBattle").textContent=battle;
+      document.getElementById("nxLiveCaution").textContent=caution;
+      document.getElementById("nxLiveRestart").textContent=restart;
       document.getElementById("nxLiveFast").textContent=text("bestLap");
-      document.getElementById("nxLiveField").textContent=text("carCount");
       document.getElementById("nxLiveTime").textContent=text("timeRemaining");
-      const conn=text("socketStatus");
-      const c=document.getElementById("nxLiveConn"); c.textContent=conn;
-      deck.dataset.flag=canon(flag);
+      const c=document.getElementById("nxLiveConn");
+      c.textContent=conn+" • "+cars+" CARS";
+
+      const f=canon(flag);
+      const connected=/connected|demo/i.test(conn);
+      deck.dataset.flag=f;
       deck.dataset.conn=canon(conn);
+      let type="RACE CONTROL";
+      let message=connected?"Race feed connected. Waiting for green-flag action.":"Waiting for the iRacing bridge.";
+      if(f.includes("one to green")){type="ONE TO GREEN";message="Field is preparing for the restart • "+restart;}
+      else if(f.includes("caution")||f.includes("yellow")){type="CAUTION";message="Caution "+caution+" • Restart "+restart;}
+      else if(f.includes("red")){type="RED FLAG";message="Race Control has stopped the session.";}
+      else if(f.includes("checkered")){type="CHECKERED";message="Race complete • Final results are being prepared.";}
+      else if(f.includes("green")&&connected){type="GREEN FLAG";message=(leader!=="—"?"Leader: "+leader:"Race is green")+" • "+(battle!=="—"?"Closest battle "+battle:"field running");}
+      document.getElementById("nxLiveAlertType").textContent=type;
+      document.getElementById("nxLiveAlertText").textContent=message;
+      document.getElementById("nxLiveAlertMeta").textContent=cars+" CARS • GREEN RUN "+greenRun;
     };
-    sync(); setInterval(sync,1000);
+
+    sync();
+    const observer=new MutationObserver(()=>requestAnimationFrame(sync));
+    const watch=document.querySelector(".event-shell")||document.body;
+    observer.observe(watch,{subtree:true,childList:true,characterData:true});
+    document.addEventListener("visibilitychange",()=>{if(!document.hidden)sync()});
   }
 
   async function installDriverProfileCommand(){
@@ -326,6 +514,34 @@ ready(async function(){
     document.body.classList.add("hlrn-driver-profile-network");
   }
 
+  function installPerformanceAndMobileAudit(){
+    document.documentElement.classList.add("hlrn-mobile-audit-v2","hlrn-performance-v2");
+
+    const tune=()=>{
+      const vh=window.innerHeight||800;
+      document.querySelectorAll("img").forEach((img,index)=>{
+        if(index<3||img.closest("#hlrn-global-nav,.hero,.team-hero,.nr-mast,.event-head")) return;
+        const rect=img.getBoundingClientRect();
+        if(rect.top>vh*.9){
+          if(!img.hasAttribute("loading")) img.loading="lazy";
+          if(!img.hasAttribute("decoding")) img.decoding="async";
+        }
+      });
+      document.querySelectorAll("iframe").forEach((frame,index)=>{
+        if(index>0&&!frame.hasAttribute("loading")) frame.loading="lazy";
+      });
+    };
+
+    if("requestIdleCallback" in window) requestIdleCallback(tune,{timeout:1200});
+    else setTimeout(tune,250);
+
+    // Keep interactive controls comfortably tappable without rewriting page-specific markup.
+    document.querySelectorAll("button,a").forEach(el=>{
+      if(el.closest("#hlrn-global-nav,#hlrn-global-footer")) return;
+      if(!el.getAttribute("aria-label")&&!el.textContent.trim()&&el.querySelector("svg,img")) el.setAttribute("aria-label","Open");
+    });
+  }
+
   await installRaceWeekend();
   await Promise.all([
     installHomeRaceHub(),
@@ -335,5 +551,6 @@ ready(async function(){
   ]);
   installAdminPitPass();
   installLiveCommandDeck();
+  installPerformanceAndMobileAudit();
 });
 })();
