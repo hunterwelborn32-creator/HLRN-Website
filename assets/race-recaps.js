@@ -65,7 +65,7 @@
     if(!grid) return;
     if(count) count.textContent=`${recaps.length} PUBLISHED RECAP${recaps.length===1?"":"S"}`;
     if(!recaps.length){
-      grid.innerHTML='<div class="hlrn-recap-empty" data-race-recaps-loading>No published race recaps yet. The archive will populate automatically after a real race is frozen at checkered.</div>';
+      grid.innerHTML='';
       return;
     }
     grid.innerHTML=recaps.map(x=>card(x,false)).join("");
