@@ -1865,6 +1865,35 @@ html[data-hlrn-theme="dark"] .tape-right.win{
   color:#ffd400!important;
   -webkit-text-fill-color:#ffd400!important;
 }
+
+/* HLRN_H2H_VS_DARK_FIX_20261001 */
+html[data-hlrn-theme="dark"] .vs,
+html[data-hlrn-theme="dark"] .center-badge{
+  background:#000!important;
+  background-color:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:#2b2b2b!important;
+  box-shadow:none!important;
+}
+
+html[data-hlrn-theme="dark"] .center-badge{
+  border-left:1px solid #2b2b2b!important;
+  border-right:1px solid #2b2b2b!important;
+}
+
+html[data-hlrn-theme="dark"] .center-badge .versus,
+html[data-hlrn-theme="dark"] .vs{
+  color:#ffd400!important;
+  -webkit-text-fill-color:#ffd400!important;
+  text-shadow:none!important;
+}
+
+html[data-hlrn-theme="dark"] .center-badge .round{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
 `;
 
 function hardPaintHostedH2HTape(doc,dark){
@@ -1916,6 +1945,41 @@ function hardPaintHostedH2HTape(doc,dark){
 function hardPaintHostedH2H(doc,dark){
   if(!doc)return;
   hardPaintHostedH2HTape(doc,dark);
+
+  doc.querySelectorAll(".vs,.center-badge").forEach(el=>{
+    if(!dark){
+      el.style.removeProperty("background");
+      el.style.removeProperty("background-color");
+      el.style.removeProperty("background-image");
+      el.style.removeProperty("color");
+      el.style.removeProperty("-webkit-text-fill-color");
+      el.style.removeProperty("border-color");
+      el.style.removeProperty("box-shadow");
+      return;
+    }
+    el.style.setProperty("background","#000","important");
+    el.style.setProperty("background-color","#000","important");
+    el.style.setProperty("background-image","none","important");
+    el.style.setProperty("color","#fff","important");
+    el.style.setProperty("-webkit-text-fill-color","#fff","important");
+    el.style.setProperty("border-color","#2b2b2b","important");
+    el.style.setProperty("box-shadow","none","important");
+  });
+
+  doc.querySelectorAll(".vs,.center-badge .versus").forEach(el=>{
+    if(dark){
+      el.style.setProperty("color","#ffd400","important");
+      el.style.setProperty("-webkit-text-fill-color","#ffd400","important");
+      el.style.setProperty("text-shadow","none","important");
+    }
+  });
+
+  doc.querySelectorAll(".center-badge .round").forEach(el=>{
+    if(dark){
+      el.style.setProperty("color","#fff","important");
+      el.style.setProperty("-webkit-text-fill-color","#fff","important");
+    }
+  });
 
   const blocks=".wrap,.prime-scorebug,.hero,.h2h-ticker,.prime-deck,.prime-deck-cell,.controls,.control-grid,.field,.search-select,.prime-edge-board,.prime-edge,#content,.panel,.card,.matchup-card,.fighter,.prediction,.tape-grid,.tape-row,.compare-grid,.stat-box,.common,.common-grid,.common-box,.common-record,.explain,.loading";
   doc.querySelectorAll(blocks).forEach(el=>{
