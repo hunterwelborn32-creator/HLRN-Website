@@ -1769,6 +1769,66 @@ html[data-hlrn-theme="dark"] body .archive-empty strong{
 }
 </style>
 
+
+<style id="HLRN_LIVE_DARK_CLEANUP_20260930">
+/* Catch remaining hard-coded white Live-page surfaces in Dark Mode. */
+html[data-hlrn-theme="dark"] body :where(
+  #leaderboard,
+  #raceStorylines,
+  #battleTracker,
+  #racePulseList,
+  .offline,
+  .storyline-list,
+  .storyline-row,
+  .storyline-empty,
+  .battle-list,
+  .battle-empty,
+  .race-pulse-list,
+  .rc-fast-list,
+  .rc-battle-stage,
+  .table-shell,
+  .rc2-side-list,
+  .rc-radio-feed
+){
+  background:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+  border-color:#2b2b2b!important;
+  box-shadow:none!important;
+}
+
+html[data-hlrn-theme="dark"] body :where(
+  .offline,
+  .offline strong,
+  .storyline-empty,
+  .storyline-kicker,
+  .storyline-value,
+  .storyline-copy,
+  .storyline-copy b,
+  .battle-empty,
+  .race-pulse-copy
+){
+  color:#fff!important;
+}
+
+html[data-hlrn-theme="dark"] body .mini-action,
+html[data-hlrn-theme="dark"] body .mini-action:hover{
+  background:#000!important;
+  color:#fff!important;
+  border-color:#fff!important;
+}
+
+html[data-hlrn-theme="dark"] body :where(
+  .storyline-row.mover,
+  .storyline-row.faller,
+  .storyline-row.fast,
+  .storyline-row.battle
+){
+  background:#000!important;
+  color:#fff!important;
+}
+</style>
+
 </head>
 <body>
 
