@@ -316,6 +316,16 @@ body{font-family:var(--hlrn-body)}
   background:#171e27!important;border:1px solid #384452!important;color:#fff!important;font-size:9px!important;font-weight:1000!important;letter-spacing:.06em!important;text-transform:uppercase!important;cursor:pointer!important
 }
 #hlrn-global-nav .hgn-account-panel button:hover{background:#222b36!important}
+#hlrn-global-nav .hgn-account-panel .hgn-account-control[hidden]{display:none!important}
+#hlrn-global-nav .hgn-account-panel .hgn-account-control{
+  border-left:3px solid var(--hlrn-yellow)!important;
+  background:linear-gradient(90deg,rgba(246,200,0,.08),#171e27)!important;
+}
+#hlrn-global-nav .hgn-account-panel .hgn-account-control:hover{
+  background:var(--hlrn-yellow)!important;
+  border-color:var(--hlrn-yellow)!important;
+  color:#111!important;
+}
 #hlrn-global-nav .hgn-account-panel .hgn-account-signout:hover{background:var(--hlrn-red)!important;border-color:var(--hlrn-red)!important}
 
 /* Mobile navigation */
