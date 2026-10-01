@@ -30,6 +30,7 @@ ready(async function(){
   };
   const RACE_TIME_ZONE="America/New_York";
   const LIVE_STATE_URL="https://hlrn-live-feed.onrender.com/api/state";
+  const NETWORK_CONTROL_URL="https://raw.githubusercontent.com/HunterWelborn32-creator/HLRN-Website/main/data/network-control.json";
 
   function easternParts(date=new Date()){
     const parts=new Intl.DateTimeFormat("en-US",{
@@ -170,6 +171,90 @@ ready(async function(){
     finally{if(timer)clearTimeout(timer);}
   }
 
+  async function probeNetworkControl(){
+    const ctrl=("AbortController" in window)?new AbortController():null;
+    const timer=ctrl?setTimeout(()=>ctrl.abort(),4200):0;
+    try{
+      const r=await fetch(NETWORK_CONTROL_URL+"?t="+Date.now(),{cache:"no-store",signal:ctrl?.signal});
+      if(!r.ok) return null;
+      const state=await r.json();
+      return state&&typeof state==="object"?state:null;
+    }catch(e){return null;}
+    finally{if(timer)clearTimeout(timer);}
+  }
+
+  function controlLabel(mode){
+    return ({
+      "race-day":"RACE DAY",
+      practice:"PRACTICE LIVE",
+      qualifying:"QUALIFYING LIVE",
+      live:"RACE MODE ACTIVE",
+      checkered:"CHECKERED",
+      final:"OFFICIAL FINAL"
+    })[mode]||String(mode||"").replace(/-/g," ").toUpperCase();
+  }
+
+  function applyNetworkControl(ctxs,control){
+    if(!control||control.enabled!==true||!control.mode||control.mode==="auto") return ctxs;
+    const series=["sunday","monday"].includes(String(control.series||"").toLowerCase())
+      ?String(control.series).toLowerCase()
+      :"sunday";
+    let active=ctxs.find(x=>x.series===series)||ctxs[0];
+    if(!active) return ctxs;
+    active.mode=String(control.mode).toLowerCase();
+    active.label=controlLabel(active.mode);
+    active.manual=true;
+    active.control=control;
+    active.isToday=true;
+    return ctxs;
+  }
+
+  function syncNetworkReaction(active,control){
+    const manual=!!active?.manual;
+    const mode=active?.mode||"schedule";
+    const series=active?.series||"";
+    const liveish=["live","practice","qualifying"].includes(mode);
+    const prominent=manual||liveish||["race-day","checkered","final"].includes(mode);
+
+    let banner=document.getElementById("hlrn-network-mode-banner");
+    if(!prominent){
+      banner?.remove();
+      return;
+    }
+    if(!banner){
+      banner=document.createElement("section");
+      banner.id="hlrn-network-mode-banner";
+      banner.setAttribute("aria-live","polite");
+      const strip=document.getElementById("hlrn-race-weekend-strip");
+      (strip||document.getElementById("hlrn-global-nav"))?.insertAdjacentElement("afterend",banner);
+    }
+
+    const headline=(manual&&String(control?.headline||"").trim())
+      ||(series?raceSeriesTitle(series)+" • ":"")+controlLabel(mode);
+    const note=(manual&&String(control?.note||"").trim())
+      ||(mode==="checkered"
+        ?"Race complete. Official results and standings are under review."
+        :mode==="final"
+          ?"Official HLRN results are posted."
+          :liveish
+            ?"Race Center is active with live HLRN timing and race-control data."
+            :"HLRN race-day coverage is active.");
+
+    banner.className="mode-"+mode+" "+(series||"")+" "+(manual?"manual":"automatic");
+    banner.innerHTML=`
+      <div class="nx-network-state"><i></i><span>${manual?"NETWORK CONTROL":"AUTOMATIC NETWORK"}</span></div>
+      <strong>${esc(headline)}</strong>
+      <span class="nx-network-note">${esc(note)}</span>
+      <a href="${mode==="final"?url("results/"):mode==="checkered"?url("live/?section=report"):url("live/")}">${mode==="final"?"OFFICIAL RESULTS":mode==="checkered"?"REVIEW RACE":"RACE CENTER"} →</a>`;
+
+    const homeState=document.getElementById("h9NetworkState");
+    if(homeState) homeState.textContent=headline;
+    const broadcasterState=document.getElementById("bcNetworkFlag");
+    if(broadcasterState) broadcasterState.textContent=liveish?"LIVE":mode==="checkered"?"CHECKERED":mode==="final"?"FINAL":controlLabel(mode);
+    const newsLive=document.querySelector("#hlrn-news-network-rail .nx-news-live span");
+    if(newsLive) newsLive.textContent=mode==="final"?"OFFICIAL HLRN":mode==="checkered"?"CHECKERED":liveish?"HLRN LIVE":"LATEST HLRN";
+  }
+
   function raceCard(ctx){
     if(!ctx?.race) return "";
     const series=ctx.series;
@@ -187,16 +272,21 @@ ready(async function(){
   }
 
   function setGlobalRaceMode(ctxs){
+    const manual=ctxs.find(x=>x.manual);
     const today=ctxs.find(x=>x.isToday);
-    const active=today||ctxs.filter(x=>x.race&&x.race.date>=localDateKey()).sort((a,b)=>dateSerial(a.race.date)-dateSerial(b.race.date))[0]||ctxs[0];
+    const active=manual||today||ctxs.filter(x=>x.race&&x.race.date>=localDateKey()).sort((a,b)=>dateSerial(a.race.date)-dateSerial(b.race.date))[0]||ctxs[0];
     const mode=active?.mode||"schedule";
     const series=active?.series||"";
+    const source=active?.manual?"manual":"automatic";
     document.documentElement.dataset.hlrnRaceMode=mode;
     document.documentElement.dataset.hlrnRaceSeries=series;
+    document.documentElement.dataset.hlrnRaceSource=source;
     document.body?.setAttribute("data-hlrn-race-mode",mode);
     document.body?.setAttribute("data-hlrn-race-series",series);
+    document.body?.setAttribute("data-hlrn-race-source",source);
     const nav=document.getElementById("hlrn-global-nav");
-    if(nav){nav.dataset.raceMode=mode;nav.dataset.raceSeries=series;}
+    if(nav){nav.dataset.raceMode=mode;nav.dataset.raceSeries=series;nav.dataset.raceSource=source;}
+    return active;
   }
 
   async function installRaceWeekend(){
@@ -213,27 +303,42 @@ ready(async function(){
     }
 
     let liveProbe=null;
+    let networkControl=null;
     async function refresh({probe=false}={}){
       let ctxs=[
         raceContext(sch.leagues.sunday,"sunday"),
         raceContext(sch.leagues.monday,"monday")
       ];
-      if(probe&&ctxs.some(x=>x.isToday)){
-        liveProbe=await probeLiveState()||liveProbe;
+
+      if(probe){
+        const [nextLive,nextControl]=await Promise.all([
+          ctxs.some(x=>x.isToday)?probeLiveState():Promise.resolve(null),
+          probeNetworkControl()
+        ]);
+        liveProbe=nextLive||liveProbe;
+        networkControl=nextControl||networkControl;
       }
+
       ctxs=applyLiveProbe(ctxs,liveProbe);
-      setGlobalRaceMode(ctxs);
-      const active=ctxs.find(x=>x.isToday)||ctxs.slice().sort((a,b)=>Math.abs(a.days)-Math.abs(b.days))[0];
-      const networkLabel=["live","practice","qualifying"].includes(active?.mode)?"HLRN LIVE":"HLRN RACE WEEK";
-      strip.className="mode-"+(active?.mode||"schedule");
+      ctxs=applyNetworkControl(ctxs,networkControl);
+      const active=setGlobalRaceMode(ctxs);
+      const mode=active?.mode||"schedule";
+      const manual=!!active?.manual;
+      const liveish=["live","practice","qualifying"].includes(mode);
+      const networkLabel=manual?"HLRN NETWORK CONTROL":liveish?"HLRN LIVE":"HLRN RACE WEEK";
+      const rightLabel=mode==="final"?"OFFICIAL RESULTS":mode==="checkered"?"REVIEW RACE":liveish?"WATCH LIVE":"RACE CENTER";
+      const rightHref=mode==="final"?url("results/"):mode==="checkered"?url("live/?section=report"):url("live/");
+
+      strip.className="mode-"+mode+" "+(manual?"manual":"automatic");
       strip.innerHTML=`
-        <div class="nx-race-week-label"><i></i><span>${networkLabel}</span><b>AUTO</b></div>
+        <div class="nx-race-week-label"><i></i><span>${networkLabel}</span><b>${manual?"MANUAL":"AUTO"}</b></div>
         <div class="nx-race-week-cards">${ctxs.map(raceCard).join("")}</div>
-        <a class="nx-race-week-live" href="${url("live/")}"><i></i><span>${["live","practice","qualifying"].includes(active?.mode)?"WATCH LIVE":"RACE CENTER"}</span></a>`;
+        <a class="nx-race-week-live" href="${rightHref}"><i></i><span>${rightLabel}</span></a>`;
+      syncNetworkReaction(active,networkControl);
     }
 
     await refresh({probe:true});
-    setInterval(()=>refresh({probe:true}),60000);
+    setInterval(()=>refresh({probe:true}),15000);
     document.addEventListener("visibilitychange",()=>{if(!document.hidden)refresh({probe:true})});
   }
 
