@@ -2069,6 +2069,104 @@ html[style*="color-scheme: dark"] body #tab-report :where(
   color:#fff!important;
 }
 </style>
+<style id="HLRN_RECAP_MANUAL_APPROVAL_20261001">
+.recap-approval-panel{
+  margin:0;
+  border-top:1px solid #2b333d;
+  border-bottom:1px solid #2b333d;
+  background:#0b1016;
+  color:#fff;
+}
+.recap-approval-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  padding:16px;
+  border-bottom:1px solid #2b333d;
+  background:linear-gradient(110deg,rgba(227,24,55,.14),transparent 42%),#0b1016;
+}
+.recap-approval-head>div{display:grid;gap:4px}
+.recap-approval-head small{color:#e31837;font-size:7px;font-weight:1000;letter-spacing:1px}
+.recap-approval-head strong{font-size:20px;font-weight:1000;font-style:italic}
+.recap-approval-head span{color:#a8b2bd;font-size:9px;font-weight:800}
+.recap-private-badge{
+  flex:0 0 auto;
+  padding:7px 9px;
+  border:1px solid #3f4a56;
+  background:#111820;
+  color:#fff!important;
+  font-size:7px!important;
+  font-weight:1000!important;
+  letter-spacing:.7px;
+}
+.recap-preview-text{
+  margin:0;
+  max-height:520px;
+  overflow:auto;
+  padding:18px;
+  background:#000;
+  color:#fff;
+  border:0;
+  font:10px/1.55 Consolas,Monaco,monospace;
+  white-space:pre-wrap;
+}
+.recap-approval-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  padding:14px 16px 8px;
+  background:#000;
+}
+.recap-publish-btn,
+.recap-dont-publish-btn,
+.recap-preview-btn{
+  min-height:36px;
+  padding:9px 13px;
+  border:1px solid #4a535e;
+  font-size:8px;
+  font-weight:1000;
+  letter-spacing:.6px;
+  text-transform:uppercase;
+  cursor:pointer;
+  text-decoration:none;
+}
+.recap-publish-btn{
+  background:#15803d;
+  border-color:#1f9a4d;
+  color:#fff;
+}
+.recap-dont-publish-btn{
+  background:#11161d;
+  color:#fff;
+}
+.recap-preview-btn{
+  background:#e31837!important;
+  border-color:#e31837!important;
+  color:#fff!important;
+}
+.recap-approval-note{
+  padding:0 16px 15px;
+  background:#000;
+  color:#9aa5b1;
+  font-size:8px;
+  font-weight:800;
+  line-height:1.5;
+}
+html[data-hlrn-theme="dark"] body .recap-approval-panel,
+html[data-hlrn-theme="dark"] body .recap-preview-text,
+html[data-hlrn-theme="dark"] body .recap-approval-actions,
+html[data-hlrn-theme="dark"] body .recap-approval-note{
+  background:#000!important;
+  color:#fff!important;
+  border-color:#2b2b2b!important;
+}
+@media(max-width:650px){
+  .recap-approval-head{align-items:flex-start;flex-direction:column}
+  .recap-approval-actions{display:grid;grid-template-columns:1fr 1fr}
+  .recap-publish-btn,.recap-dont-publish-btn{text-align:center}
+}
+</style>
 </head>
 <body>
 
@@ -2368,10 +2466,28 @@ html[style*="color-scheme: dark"] body #tab-report :where(
         <div class="report-toolbar">
           <div id="reportStatus" class="report-status">Waiting for race-night data</div>
           <div class="report-actions">
-            <a id="postRaceResultsBtn" class="story-btn" href="/results/" hidden aria-disabled="true">RESULTS PUBLISHING…</a>
-            <a id="postRaceStoryBtn" class="story-btn" href="/news/race-recaps/" hidden aria-disabled="true">STORY PUBLISHING…</a>
+            <button id="postRacePreviewBtn" class="story-btn recap-preview-btn" type="button" hidden>PREVIEW RACE RECAP</button>
+            <a id="postRaceResultsBtn" class="story-btn" href="/results/" hidden>VIEW PUBLISHED RESULTS →</a>
+            <a id="postRaceStoryBtn" class="story-btn" href="/news/race-recaps/" hidden>READ PUBLISHED STORY →</a>
             <button id="copyReportBtn" class="copy-btn">COPY FULL REPORT</button>
           </div>
+        </div>
+
+        <div id="recapApprovalPanel" class="recap-approval-panel" hidden>
+          <div class="recap-approval-head">
+            <div>
+              <small>PRIVATE REVIEW • NOT PUBLISHED</small>
+              <strong id="recapPreviewTitle">RACE RECAP PREVIEW</strong>
+              <span>Review the frozen race report before anything is added to HLRN News.</span>
+            </div>
+            <span class="recap-private-badge">YOUR REVIEW</span>
+          </div>
+          <pre id="recapPreviewText" class="recap-preview-text"></pre>
+          <div class="recap-approval-actions">
+            <a id="recapPublishBtn" class="recap-publish-btn" href="https://github.com/hunterwelborn32-creator/HLRN-Website/actions/workflows/publish-race-recaps.yml" target="_blank" rel="noopener noreferrer">PUBLISH</a>
+            <button id="recapDontPublishBtn" class="recap-dont-publish-btn" type="button">DON'T PUBLISH</button>
+          </div>
+          <div class="recap-approval-note">Nothing publishes automatically. PUBLISH opens the secure GitHub approval screen; DON'T PUBLISH keeps this race off the public recap archive.</div>
         </div>
         <div id="raceReplay" class="race-replay">
           <div class="race-replay-head">
@@ -4020,31 +4136,112 @@ html[style*="color-scheme: dark"] body #tab-report :where(
     return String(race.track||"")+"|"+String(race.raceFrozenAt||"");
   }
 
+  const RECAP_REVIEW_LOGIN_KEY="hlrn_driver_login_device_v1";
+  const RECAP_REVIEWER_NAME="hunter welborn";
+  const RECAP_PUBLISH_WORKFLOW_URL="https://github.com/hunterwelborn32-creator/HLRN-Website/actions/workflows/publish-race-recaps.yml";
+
+  function recapReviewerLogin(){
+    try{
+      const data=JSON.parse(localStorage.getItem(RECAP_REVIEW_LOGIN_KEY)||"null");
+      const name=String(data?.driver||"").trim().toLowerCase().replace(/\s+/g," ");
+      return name===RECAP_REVIEWER_NAME;
+    }catch(_){
+      return false;
+    }
+  }
+
+  function recapHoldStorageKey(race){
+    return "hlrn_recap_hold_v1:"+recapIdentityFor(race);
+  }
+
+  function recapIsHeld(race){
+    if(!race) return false;
+    try{return localStorage.getItem(recapHoldStorageKey(race))==="1";}catch(_){return false;}
+  }
+
+  function setRecapHeld(race,held){
+    if(!race) return;
+    try{
+      if(held) localStorage.setItem(recapHoldStorageKey(race),"1");
+      else localStorage.removeItem(recapHoldStorageKey(race));
+    }catch(_){}
+  }
+
+  function openRecapApprovalPreview(race){
+    if(!race || !recapReviewerLogin()) return;
+    const panel=$("recapApprovalPanel");
+    const preview=$("recapPreviewText");
+    const title=$("recapPreviewTitle");
+    const publish=$("recapPublishBtn");
+    if(!panel || !preview) return;
+
+    setRecapHeld(race,false);
+    preview.textContent=buildPostRaceReport();
+    if(title) title.textContent="RACE RECAP PREVIEW • "+String(race.track||"HLRN RACE").toUpperCase();
+    if(publish) publish.href=RECAP_PUBLISH_WORKFLOW_URL;
+    panel.hidden=false;
+    panel.scrollIntoView({behavior:"smooth",block:"start"});
+  }
+
+  function closeRecapApprovalPreview(race,hold){
+    const panel=$("recapApprovalPanel");
+    if(hold) setRecapHeld(race,true);
+    if(panel) panel.hidden=true;
+    const previewBtn=$("postRacePreviewBtn");
+    if(previewBtn && race){
+      previewBtn.textContent=recapIsHeld(race) ? "REVIEW HELD RECAP" : "PREVIEW RACE RECAP";
+    }
+  }
+
+  const recapPreviewBtn=$("postRacePreviewBtn");
+  if(recapPreviewBtn){
+    recapPreviewBtn.addEventListener("click",()=>{
+      const race=getPhaseState("race");
+      openRecapApprovalPreview(race);
+    });
+  }
+
+  const recapDontPublishBtn=$("recapDontPublishBtn");
+  if(recapDontPublishBtn){
+    recapDontPublishBtn.addEventListener("click",()=>{
+      const race=getPhaseState("race");
+      closeRecapApprovalPreview(race,true);
+      if(race && $("reportStatus")) $("reportStatus").textContent="FINAL REPORT • HELD • NOT PUBLISHED";
+    });
+  }
+
+  const recapPublishBtn=$("recapPublishBtn");
+  if(recapPublishBtn){
+    recapPublishBtn.addEventListener("click",()=>{
+      const race=getPhaseState("race");
+      if(race) setRecapHeld(race,false);
+    });
+  }
+
   async function updatePostRaceStoryLink(race){
-    const btn=$("postRaceStoryBtn");
+    const storyBtn=$("postRaceStoryBtn");
     const resultsBtn=$("postRaceResultsBtn");
-    if(!btn) return;
+    const previewBtn=$("postRacePreviewBtn");
+    const approvalPanel=$("recapApprovalPanel");
 
     const complete=!!race && (race.raceFrozen || raceFinished(race));
     if(!complete){
       permanentRecapRaceKey=null;
-      btn.hidden=true;
+      if(storyBtn) storyBtn.hidden=true;
       if(resultsBtn) resultsBtn.hidden=true;
+      if(previewBtn) previewBtn.hidden=true;
+      if(approvalPanel) approvalPanel.hidden=true;
       return;
     }
 
-    btn.hidden=false;
-    btn.classList.remove("ready");
-    btn.setAttribute("aria-disabled","true");
-    btn.textContent="STORY PUBLISHING…";
-    btn.href="/news/race-recaps/";
-    if(resultsBtn){
-      resultsBtn.hidden=false;
-      resultsBtn.classList.remove("ready");
-      resultsBtn.setAttribute("aria-disabled","true");
-      resultsBtn.textContent="RESULTS PUBLISHING…";
-      resultsBtn.href="/results/";
+    const reviewer=recapReviewerLogin();
+    if(storyBtn) storyBtn.hidden=true;
+    if(resultsBtn) resultsBtn.hidden=true;
+    if(previewBtn){
+      previewBtn.hidden=!reviewer;
+      previewBtn.textContent=recapIsHeld(race) ? "REVIEW HELD RECAP" : "PREVIEW RACE RECAP";
     }
+    if(!reviewer && approvalPanel) approvalPanel.hidden=true;
 
     const key=recapIdentityFor(race);
     const now=Date.now();
@@ -4066,21 +4263,31 @@ html[style*="color-scheme: dark"] body #tab-report :where(
         if(!sub && sid && String(item.sessionId ?? "")===sid) return true;
         return false;
       });
+
       if(match?.url){
         permanentRecapRaceKey=key;
-        btn.href=match.url;
-        btn.textContent="READ POST-RACE STORY →";
-        btn.classList.add("ready");
-        btn.removeAttribute("aria-disabled");
+        if(previewBtn) previewBtn.hidden=true;
+        if(approvalPanel) approvalPanel.hidden=true;
+
+        if(storyBtn){
+          storyBtn.hidden=false;
+          storyBtn.href=match.url;
+          storyBtn.textContent="READ PUBLISHED STORY →";
+          storyBtn.classList.add("ready");
+          storyBtn.removeAttribute("aria-disabled");
+        }
         if(resultsBtn){
+          resultsBtn.hidden=false;
           resultsBtn.href=match.resultsUrl || (match.slug ? "/results/?recap="+encodeURIComponent(match.slug) : "/results/");
-          resultsBtn.textContent="VIEW PERMANENT RESULTS →";
+          resultsBtn.textContent="VIEW PUBLISHED RESULTS →";
           resultsBtn.classList.add("ready");
           resultsBtn.removeAttribute("aria-disabled");
         }
+      }else{
+        permanentRecapRaceKey=null;
       }
     }catch(err){
-      // The article publisher may still be waiting for the next GitHub sync.
+      permanentRecapRaceKey=null;
     }finally{
       recapLookupBusy=false;
     }
@@ -4098,12 +4305,20 @@ html[style*="color-scheme: dark"] body #tab-report :where(
     if(race){
       const complete = raceFinished(race);
       const permanent = recapIdentityFor(race) === permanentRecapRaceKey;
+      const reviewer=recapReviewerLogin();
+      const held=recapIsHeld(race);
       $("reportStatus").textContent = permanent
         ? "FINAL • FROZEN • PERMANENT ARCHIVE PUBLISHED"
         : race.raceFrozen
-          ? "FINAL REPORT • FROZEN AT CHECKERED • PUBLISHING ARCHIVE"
+          ? reviewer
+            ? held
+              ? "FINAL REPORT • HELD • NOT PUBLISHED"
+              : "FINAL REPORT • FROZEN • WAITING FOR YOUR APPROVAL"
+            : "FINAL REPORT • FROZEN"
           : complete
-            ? "FINAL REPORT READY TO COPY"
+            ? reviewer
+              ? "FINAL REPORT READY • PREVIEW BEFORE PUBLISHING"
+              : "FINAL REPORT READY"
             : "LIVE REPORT • SERVER RECORDER ACTIVE";
     }else{
       $("reportStatus").textContent = "BUILDING RACE-NIGHT REPORT";
