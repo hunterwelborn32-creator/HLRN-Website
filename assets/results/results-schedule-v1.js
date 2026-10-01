@@ -77,6 +77,13 @@
   let winnerFeedLoaded=false;
   let winnerSyncing=false;
 
+  /* Completed-race detail feed.
+     Uses the published HLRN snapshot so the existing Results layout can show
+     useful race facts without changing the page structure. */
+  const HLRN_RESULT_DETAILS={sunday:{},monday:{}};
+  let resultDetailsLoaded=false;
+  let resultDetailsSyncing=false;
+
   function googleTableToObjects(table){
     const headers=(table.cols||[]).map((col,index)=>{
       const label=String(col&&col.label!=null?col.label:'').trim();
@@ -162,6 +169,80 @@
     return winners;
   }
 
+  function snapshotDriverName(rawName,driverId){
+    const id=cleanDriverId(driverId);
+    if(HLRN_DRIVER_NAME_OVERRIDES[id]) return HLRN_DRIVER_NAME_OVERRIDES[id];
+    return formatDriverName(rawName,id)||(id?('Driver '+id):'Unknown Driver');
+  }
+
+  function buildResultDetails(leagueData){
+    const details={};
+    if(!leagueData) return details;
+    const names={};
+    (Array.isArray(leagueData.drivers)?leagueData.drivers:[]).forEach(d=>{
+      const id=cleanDriverId(d&&d.driverId);
+      if(id) names[id]=snapshotDriverName(d&&d.driver,id);
+    });
+    const byRace={};
+    (Array.isArray(leagueData.results)?leagueData.results:[]).forEach(row=>{
+      const raceNo=numberValue(row&&row.raceNumber);
+      if(!raceNo) return;
+      const key=Math.trunc(raceNo);
+      (byRace[key]??=[]).push(row);
+    });
+    Object.keys(byRace).forEach(key=>{
+      const rows=byRace[key].slice().sort((a,b)=>(numberValue(a.finish)||999)-(numberValue(b.finish)||999));
+      const nameOf=row=>{
+        const id=cleanDriverId(row&&row.driverId);
+        return names[id]||HLRN_DRIVER_NAME_OVERRIDES[id]||(id?('Driver '+id):'Unknown Driver');
+      };
+      const winner=rows.find(r=>numberValue(r.finish)===1)||rows[0]||null;
+      const pole=rows.find(r=>numberValue(r.start)===1)||null;
+      const mostLed=rows.slice().sort((a,b)=>(numberValue(b.lapsLed)||0)-(numberValue(a.lapsLed)||0))[0]||null;
+      const biggestMover=rows.slice().sort((a,b)=>(numberValue(b.positionGain)||0)-(numberValue(a.positionGain)||0))[0]||null;
+      const top3=rows.filter(r=>{
+        const fin=numberValue(r.finish);
+        return fin!==null&&fin>=1&&fin<=3;
+      }).slice(0,3).map(r=>({finish:numberValue(r.finish),name:nameOf(r)}));
+      const totalIncidents=rows.reduce((sum,r)=>sum+(numberValue(r.incidents)||0),0);
+      details[key]={
+        raceNumber:Number(key),
+        raceId:String((winner&&winner.raceId)||''),
+        fieldSize:rows.length,
+        winnerName:winner?nameOf(winner):'',
+        poleName:pole?nameOf(pole):'',
+        mostLedName:mostLed?nameOf(mostLed):'',
+        mostLedLaps:mostLed?(numberValue(mostLed.lapsLed)||0):0,
+        moverName:biggestMover?nameOf(biggestMover):'',
+        moverGain:biggestMover?(numberValue(biggestMover.positionGain)||0):0,
+        totalIncidents,
+        top3
+      };
+    });
+    return details;
+  }
+
+  async function loadResultDetails(){
+    if(resultDetailsSyncing) return;
+    resultDetailsSyncing=true;
+    try{
+      const res=await fetch('../data/hlrn.json?v='+Date.now(),{cache:'no-store'});
+      if(!res.ok) throw new Error('HLRN results snapshot unavailable');
+      const data=await res.json();
+      HLRN_RESULT_DETAILS.sunday=buildResultDetails(data&&data.leagues&&data.leagues.sunday);
+      HLRN_RESULT_DETAILS.monday=buildResultDetails(data&&data.leagues&&data.leagues.monday);
+      resultDetailsLoaded=true;
+      document.documentElement.setAttribute('data-hlrn-result-details','online');
+      render();
+    }catch(err){
+      console.warn('HLRN completed race details:',err);
+      resultDetailsLoaded=true;
+      document.documentElement.setAttribute('data-hlrn-result-details','unavailable');
+    }finally{
+      resultDetailsSyncing=false;
+    }
+  }
+
   async function loadPastWinners(){
     if(winnerSyncing) return;
     winnerSyncing=true;
@@ -238,6 +319,27 @@
       : `<div class="ns-winner missing">Winner • Result pending</div>`;
   }
 
+  function resultDetailsFor(r){
+    if(!r||!r.week) return null;
+    return HLRN_RESULT_DETAILS[league]&&HLRN_RESULT_DETAILS[league][Number(r.week)]||null;
+  }
+
+  function fullResultsUrl(r){
+    if(!r||!r.week) return './';
+    return './?league='+encodeURIComponent(league)+'&race='+encodeURIComponent(r.week)+'#raceReportView';
+  }
+
+  function resultMetaMarkup(r,compact=false){
+    const d=resultDetailsFor(r);
+    if(!d) return '';
+    const parts=[];
+    if(d.poleName) parts.push('Pole: '+d.poleName);
+    if(d.mostLedName) parts.push('Most led: '+d.mostLedName+(d.mostLedLaps?' ('+d.mostLedLaps+')':''));
+    if(d.moverName&&d.moverGain>0) parts.push('Mover: '+d.moverName+' (+'+d.moverGain+')');
+    if(compact&&d.fieldSize) parts.push('Field: '+d.fieldSize);
+    return parts.length?'<div class="ns-result-meta'+(compact?' compact':'')+'">'+parts.map(esc).join(' • ')+'</div>':'';
+  }
+
   function raceStart(r){return typeof getRaceStart==='function'?getRaceStart(r):new Date(r.date+'T20:30:00');}
   function races(){return scheduleOf().filter(r=>!r.off).map(r=>({...r,_start:raceStart(r)})).sort((a,b)=>a._start-b._start)}
   function state(){
@@ -259,8 +361,12 @@
   function summary(r,type,isLive){
     if(!r) return `<div class="ns-race-name">Season Complete</div><div class="ns-race-meta">No additional races are scheduled.</div>`;
     const status=isLive?'Live Now':type==='previous'?'Final':'Upcoming';
-    const action=type==='next'?`<div class="ns-race-actions"><a class="ns-btn primary" href="${youtubeOf()}" target="_blank" rel="noopener">${isLive?'Watch Live':'Watch HLRN'}</a><a class="ns-btn" href="#nsSchedule">Full Schedule</a></div>`:'';
-    return `<span class="ns-status">${status}</span><div class="ns-race-name">${esc(r.track)}</div><div class="ns-race-meta">Week ${esc(r.week)} • ${fDate(r._start,true)} • ${fTime(r._start)}<br>${esc(r.car)} • ${esc(r.laps)} laps • ${esc(r.tires)}</div>${type==='previous'?winnerMarkup(r,true):''}${type==='next'&&!isLive?countdown(r):''}${action}`;
+    const action=type==='next'
+      ? `<div class="ns-race-actions"><a class="ns-btn primary" href="${youtubeOf()}" target="_blank" rel="noopener">${isLive?'Watch Live':'Watch HLRN'}</a><a class="ns-btn" href="#nsSchedule">Full Schedule</a></div>`
+      : type==='previous'
+        ? `<div class="ns-race-actions"><a class="ns-btn ns-full-results ${league}" href="${fullResultsUrl(r)}">View Full Results</a></div>`
+        : '';
+    return `<span class="ns-status">${status}</span><div class="ns-race-name">${esc(r.track)}</div><div class="ns-race-meta">Week ${esc(r.week)} • ${fDate(r._start,true)} • ${fTime(r._start)}<br>${esc(r.car)} • ${esc(r.laps)} laps • ${esc(r.tires)}</div>${type==='previous'?winnerMarkup(r,true)+resultMetaMarkup(r,true):''}${type==='next'&&!isLive?countdown(r):''}${action}`;
   }
   function feature(r,isLive){
     if(!r) return `<div class="ns-feature-main"><div class="ns-feature-kicker">2026 Season</div><div class="ns-feature-track">Season Complete</div><div class="ns-feature-desc">Thank you for racing with High Line Racing Network.</div></div>`;
@@ -275,7 +381,7 @@
     document.getElementById('nsSchedule').innerHTML=months.length?months.map(month=>`<section class="ns-month"><h2 class="ns-month-title">${month}</h2><div class="ns-races">${groups[month].map(r=>{
       const end=raceEnd(r._start),past=end<st.now,live=st.now>=r._start&&st.now<end,isNext=st.next===r&&!live;
       const day=new Intl.DateTimeFormat('en-US',{day:'2-digit'}).format(r._start),dow=new Intl.DateTimeFormat('en-US',{weekday:'short'}).format(r._start).toUpperCase();
-      return `<article class="ns-race-row ${past?'past':''} ${isNext?'next':''}"><div class="ns-date"><b>${day}</b><span>${dow}</span></div><div><div class="ns-row-week">Week ${esc(r.week)} • ${league==='sunday'?'Sunday':'Monday'} League</div><div class="ns-row-track">${esc(r.track)}</div><div class="ns-row-location">${esc(r.location||'')} • ${fTime(r._start)}</div>${past?winnerMarkup(r,false):''}</div><div class="ns-row-spec">${esc(r.car)}<br>${esc(r.laps)} Laps • ${esc(r.tires)}</div><div class="ns-row-status"><span class="ns-chip ${live?'live':isNext?'next':''} ${league}">${live?'Live':past?'Final':isNext?'Next Race':'Upcoming'}</span></div></article>`;
+      return `<article class="ns-race-row ${past?'past':''} ${isNext?'next':''}"><div class="ns-date"><b>${day}</b><span>${dow}</span></div><div><div class="ns-row-week">Week ${esc(r.week)} • ${league==='sunday'?'Sunday':'Monday'} League</div><div class="ns-row-track">${esc(r.track)}</div><div class="ns-row-location">${esc(r.location||'')} • ${fTime(r._start)}</div>${past?winnerMarkup(r,false)+resultMetaMarkup(r,false):''}</div><div class="ns-row-spec">${esc(r.car)}<br>${esc(r.laps)} Laps • ${esc(r.tires)}</div><div class="ns-row-status"><span class="ns-chip ${live?'live':isNext?'next':''} ${league}">${live?'Live':past?'Final':isNext?'Next Race':'Upcoming'}</span>${past?`<a class="ns-row-results ${league}" href="${fullResultsUrl(r)}">Full Results →</a>`:''}</div></article>`;
     }).join('')}</div></section>`).join(''):`<div class="ns-empty">No upcoming races found.</div>`;
   }
   function render(){
@@ -292,7 +398,9 @@
   showPast.addEventListener('change',render);
   render();
   loadPastWinners();
+  loadResultDetails();
   setInterval(render,1000);
   setInterval(loadPastWinners,HLRN_RESULTS_REFRESH_MS);
-  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible') loadPastWinners();});
+  setInterval(loadResultDetails,HLRN_RESULTS_REFRESH_MS);
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){loadPastWinners();loadResultDetails();}});
 })();
