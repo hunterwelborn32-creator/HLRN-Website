@@ -131,6 +131,13 @@ ready(async function(){
     return {series,race,mode,label,days,isToday,now};
   }
 
+  function nextRace(items){
+    return raceContext(items,"").race;
+  }
+  function raceStateLabel(race){
+    return raceContext(race?[race]:[],"").label;
+  }
+
   function raceSeriesTitle(series){return series==="monday"?"MONDAY NIGHT":"SUNDAY NIGHT";}
 
   function applyLiveProbe(ctxs,live){
