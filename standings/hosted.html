@@ -1655,6 +1655,186 @@ html[data-hlrn-theme="dark"] .records-panel:before{
 }
 `;
 
+const HLRN_HOSTED_H2H_DARK_CSS = `
+/* Hosted > Head to Head dark mode */
+html[data-hlrn-theme="dark"],
+html[data-hlrn-theme="dark"] body,
+html[data-hlrn-theme="dark"] .wrap,
+html[data-hlrn-theme="dark"] .prime-scorebug,
+html[data-hlrn-theme="dark"] .hero,
+html[data-hlrn-theme="dark"] .h2h-ticker,
+html[data-hlrn-theme="dark"] .prime-deck,
+html[data-hlrn-theme="dark"] .prime-deck-cell,
+html[data-hlrn-theme="dark"] .controls,
+html[data-hlrn-theme="dark"] .control-grid,
+html[data-hlrn-theme="dark"] .field,
+html[data-hlrn-theme="dark"] .search-select,
+html[data-hlrn-theme="dark"] .prime-edge-board,
+html[data-hlrn-theme="dark"] .prime-edge,
+html[data-hlrn-theme="dark"] #content,
+html[data-hlrn-theme="dark"] .panel,
+html[data-hlrn-theme="dark"] .card,
+html[data-hlrn-theme="dark"] .matchup-card,
+html[data-hlrn-theme="dark"] .fighter,
+html[data-hlrn-theme="dark"] .prediction,
+html[data-hlrn-theme="dark"] .tape-grid,
+html[data-hlrn-theme="dark"] .tape-row,
+html[data-hlrn-theme="dark"] .compare-grid,
+html[data-hlrn-theme="dark"] .stat-box,
+html[data-hlrn-theme="dark"] .common,
+html[data-hlrn-theme="dark"] .common-grid,
+html[data-hlrn-theme="dark"] .common-box,
+html[data-hlrn-theme="dark"] .common-record,
+html[data-hlrn-theme="dark"] .explain,
+html[data-hlrn-theme="dark"] .loading{
+  background:#000!important;
+  background-color:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+  border-color:#2b2b2b!important;
+  box-shadow:none!important;
+}
+
+html[data-hlrn-theme="dark"] body:before,
+html[data-hlrn-theme="dark"] body:after,
+html[data-hlrn-theme="dark"] .hero:before,
+html[data-hlrn-theme="dark"] .hero:after{
+  background:none!important;
+}
+
+html[data-hlrn-theme="dark"] :where(
+  .prime-network,.prime-feed,.prime-feed strong,.prime-clock,.prime-clock small,
+  .hero h1,.hero h1 .red,.hero p,
+  .h2h-ticker,.h2h-ticker *,
+  .prime-deck-label,.prime-deck-value,
+  .field label,.vs,.status,
+  .prime-edge-label,.prime-edge-value,.prime-edge-sub,
+  .driver-name,.driver-sub,.center-badge,
+  .prediction,.prediction .winner,.prediction .confidence,
+  .tape-title,.tape-left,.tape-center,.tape-right,
+  .stat-box .label,.stat-box .value,.stat-box .detail,
+  .common-box .big,.common-box .label,.common-record,.explain,
+  .loading,.error
+){
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  text-shadow:none!important;
+}
+
+html[data-hlrn-theme="dark"] .prime-network{
+  background:#111!important;
+  color:#fff!important;
+}
+
+html[data-hlrn-theme="dark"] .prime-deck-cell,
+html[data-hlrn-theme="dark"] .prime-edge{
+  background:#050505!important;
+  background-color:#050505!important;
+  background-image:none!important;
+}
+
+html[data-hlrn-theme="dark"] .search-input,
+html[data-hlrn-theme="dark"] input,
+html[data-hlrn-theme="dark"] .search-menu,
+html[data-hlrn-theme="dark"] .search-menu-item{
+  background:#050505!important;
+  background-color:#050505!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:#3a3a3a!important;
+  box-shadow:none!important;
+}
+html[data-hlrn-theme="dark"] .search-input::placeholder,
+html[data-hlrn-theme="dark"] input::placeholder{
+  color:#c8c8c8!important;
+  -webkit-text-fill-color:#c8c8c8!important;
+  opacity:1!important;
+}
+html[data-hlrn-theme="dark"] .search-menu-item:hover,
+html[data-hlrn-theme="dark"] .search-menu-item.active{
+  background:#111!important;
+  color:#fff!important;
+}
+
+html[data-hlrn-theme="dark"] .vs{
+  background:#090909!important;
+  border-color:#3a3a3a!important;
+}
+
+html[data-hlrn-theme="dark"] .prime-edge-board{
+  border-color:#2b2b2b!important;
+}
+
+html[data-hlrn-theme="dark"] .spinner{
+  border-color:#303030!important;
+  border-top-color:#ffd400!important;
+}
+
+/* Remove the large white canvas/borders visible around the embedded matchup. */
+html[data-hlrn-theme="dark"] .wrap,
+html[data-hlrn-theme="dark"] #content{
+  outline:0!important;
+}
+`;
+
+function hardPaintHostedH2H(doc,dark){
+  if(!doc)return;
+
+  const blocks=".wrap,.prime-scorebug,.hero,.h2h-ticker,.prime-deck,.prime-deck-cell,.controls,.control-grid,.field,.search-select,.prime-edge-board,.prime-edge,#content,.panel,.card,.matchup-card,.fighter,.prediction,.tape-grid,.tape-row,.compare-grid,.stat-box,.common,.common-grid,.common-box,.common-record,.explain,.loading";
+  doc.querySelectorAll(blocks).forEach(el=>{
+    if(!dark){
+      el.style.removeProperty("background");
+      el.style.removeProperty("background-color");
+      el.style.removeProperty("background-image");
+      el.style.removeProperty("color");
+      el.style.removeProperty("border-color");
+      el.style.removeProperty("box-shadow");
+      return;
+    }
+    el.style.setProperty("background","#000","important");
+    el.style.setProperty("background-color","#000","important");
+    el.style.setProperty("background-image","none","important");
+    el.style.setProperty("color","#fff","important");
+    el.style.setProperty("border-color","#2b2b2b","important");
+    el.style.setProperty("box-shadow","none","important");
+  });
+
+  doc.querySelectorAll(".prime-deck-cell,.prime-edge,.stat-box,.common-box,.common-record").forEach(el=>{
+    if(dark){
+      el.style.setProperty("background","#050505","important");
+      el.style.setProperty("background-color","#050505","important");
+      el.style.setProperty("background-image","none","important");
+    }
+  });
+
+  doc.querySelectorAll(".search-input,input,.search-menu,.search-menu-item").forEach(el=>{
+    if(!dark){
+      el.style.removeProperty("background");
+      el.style.removeProperty("background-color");
+      el.style.removeProperty("color");
+      el.style.removeProperty("-webkit-text-fill-color");
+      el.style.removeProperty("border-color");
+      return;
+    }
+    el.style.setProperty("background","#050505","important");
+    el.style.setProperty("background-color","#050505","important");
+    el.style.setProperty("color","#fff","important");
+    el.style.setProperty("-webkit-text-fill-color","#fff","important");
+    el.style.setProperty("border-color","#3a3a3a","important");
+  });
+
+  doc.querySelectorAll(".prime-feed,.prime-feed strong,.prime-clock,.prime-clock small,.hero h1,.hero h1 .red,.hero p,.h2h-ticker *,.prime-deck-label,.prime-deck-value,.field label,.vs,.status,.prime-edge-label,.prime-edge-value,.prime-edge-sub,.driver-name,.driver-sub,.center-badge,.prediction,.prediction .winner,.prediction .confidence,.tape-title,.tape-left,.tape-center,.tape-right,.stat-box .label,.stat-box .value,.stat-box .detail,.common-box .big,.common-box .label,.common-record,.explain,.loading,.error").forEach(el=>{
+    if(!dark){
+      el.style.removeProperty("color");
+      el.style.removeProperty("-webkit-text-fill-color");
+      return;
+    }
+    el.style.setProperty("color","#fff","important");
+    el.style.setProperty("-webkit-text-fill-color","#fff","important");
+    el.style.setProperty("text-shadow","none","important");
+  });
+}
+
 function hardPaintHostedRecords(doc,dark){
   if(!doc)return;
 
@@ -1807,11 +1987,26 @@ function applyHostedSeriesMatch(frame){
     doc.documentElement.style.colorScheme=dark?"dark":"light";
     const driverStatsDark = frame && frame.id==="hostedFrame-drivers" ? HLRN_HOSTED_DRIVER_STATS_DARK_CSS : "";
     const recordsDark = frame && frame.id==="hostedFrame-records" ? HLRN_HOSTED_RECORDS_DARK_CSS : "";
-    style.textContent=dark?(HLRN_HOSTED_DARK_SERIES_CSS+driverStatsDark+recordsDark):HLRN_HOSTED_MATCH_SERIES_CSS;
+    const h2hDark = frame && frame.id==="hostedFrame-h2h" ? HLRN_HOSTED_H2H_DARK_CSS : "";
+    style.textContent=dark?(HLRN_HOSTED_DARK_SERIES_CSS+driverStatsDark+recordsDark+h2hDark):HLRN_HOSTED_MATCH_SERIES_CSS;
     doc.head.appendChild(style);
     hardPaintHostedSectionTitles(doc,dark);
     if(frame && frame.id==="hostedFrame-drivers") hardPaintHostedIncidentWatch(doc,dark);
     if(frame && frame.id==="hostedFrame-records") hardPaintHostedRecords(doc,dark);
+    if(frame && frame.id==="hostedFrame-h2h") hardPaintHostedH2H(doc,dark);
+
+    if(frame && frame.id==="hostedFrame-h2h" && !doc.__hlrnHostedH2HPaintBound){
+      doc.__hlrnHostedH2HPaintBound=true;
+      const repaintH2H=()=>hardPaintHostedH2H(doc,hlrnHostedDarkModeActive());
+      setTimeout(repaintH2H,0);
+      setTimeout(repaintH2H,250);
+      setTimeout(repaintH2H,900);
+      doc.addEventListener("click",()=>{
+        setTimeout(repaintH2H,0);
+        setTimeout(repaintH2H,180);
+      },true);
+      doc.addEventListener("input",()=>setTimeout(repaintH2H,0),true);
+    }
 
     if(frame && frame.id==="hostedFrame-records" && !doc.__hlrnHostedRecordsPaintBound){
       doc.__hlrnHostedRecordsPaintBound=true;
@@ -1843,14 +2038,16 @@ function applyHostedSeriesMatch(frame){
             doc.documentElement.dataset.hlrnTheme=isDark?"dark":"light";
             const driverStatsDark = frame && frame.id==="hostedFrame-drivers" ? HLRN_HOSTED_DRIVER_STATS_DARK_CSS : "";
             const recordsDark = frame && frame.id==="hostedFrame-records" ? HLRN_HOSTED_RECORDS_DARK_CSS : "";
-            style.textContent=isDark?(HLRN_HOSTED_DARK_SERIES_CSS+driverStatsDark+recordsDark):HLRN_HOSTED_MATCH_SERIES_CSS;
+            const h2hDark = frame && frame.id==="hostedFrame-h2h" ? HLRN_HOSTED_H2H_DARK_CSS : "";
+            style.textContent=isDark?(HLRN_HOSTED_DARK_SERIES_CSS+driverStatsDark+recordsDark+h2hDark):HLRN_HOSTED_MATCH_SERIES_CSS;
             doc.head.appendChild(style);
             hardPaintHostedSectionTitles(doc,isDark);
             if(frame && frame.id==="hostedFrame-drivers") hardPaintHostedIncidentWatch(doc,isDark);
             if(frame && frame.id==="hostedFrame-records") hardPaintHostedRecords(doc,isDark);
+            if(frame && frame.id==="hostedFrame-h2h") hardPaintHostedH2H(doc,isDark);
           }catch(_){}
         });
-      }).observe(doc.body,{childList:true,subtree:true,attributes:true,attributeFilter:["class","style"]});
+      }).observe(doc.body,{childList:true,subtree:true});
     }
   }catch(e){}
 }
@@ -1871,7 +2068,11 @@ function loadHostedTab(key){
     setTimeout(()=>{
       try{
         const doc=frame.contentDocument;
-        if(doc) hardPaintHostedSectionTitles(doc,hlrnHostedDarkModeActive());
+        if(doc){
+          const dark=hlrnHostedDarkModeActive();
+          hardPaintHostedSectionTitles(doc,dark);
+          if(key==="h2h") hardPaintHostedH2H(doc,dark);
+        }
       }catch(e){}
     },1200);
     if(key==="racing" && !frame.dataset.hlrnNascarDefault){
