@@ -184,6 +184,52 @@ html[data-hlrn-theme="light"] .bc-replay-frame{
   background:#000!important;
 }
 </style>
+
+<style id="HLRN_BROADCASTERS_CONNECTED_UPGRADE_20261001">
+/* Broadcast Center connections — results + admin profiles, safe in both themes. */
+.bc-person-name-link{
+  color:inherit;
+  text-decoration:none;
+}
+.bc-person-name-link:hover{text-decoration:underline}
+.bc-replay-results{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:40px;
+  padding:0 12px;
+  border-top:1px solid #2f3740;
+  color:#fff;
+  font-size:8px;
+  font-weight:1000;
+  letter-spacing:.08em;
+  text-decoration:none;
+  text-transform:uppercase;
+}
+.bc-replay-results.sunday{box-shadow:inset 4px 0 0 #e31837}
+.bc-replay-results.monday{box-shadow:inset 4px 0 0 #36b766}
+.bc-replay-results:hover{background:rgba(255,255,255,.05)}
+html[data-hlrn-theme="light"] .bc-person-name-link{
+  color:#11161c!important;
+  -webkit-text-fill-color:#11161c!important;
+}
+html[data-hlrn-theme="light"] .bc-replay-results{
+  background:#fff!important;
+  color:#11161c!important;
+  -webkit-text-fill-color:#11161c!important;
+  border-color:#d8dee5!important;
+}
+html[data-hlrn-theme="light"] .bc-replay-results:hover{background:#f4f6f8!important}
+html[data-hlrn-theme="dark"] .bc-person-name-link,
+html[data-hlrn-theme="dark"] .bc-replay-results{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+@media(max-width:700px){
+  .bc-replay-results{min-height:44px;font-size:9px}
+}
+</style>
+
 </head>
 <body class="bc-page">
 
@@ -250,7 +296,7 @@ html[data-hlrn-theme="light"] .bc-replay-frame{
           <div class="bc-actions">
             <a class="bc-btn primary" id="bcYoutubeLink" href="https://www.youtube.com/@High_Line_Racing" target="_blank" rel="noopener noreferrer">OPEN YOUTUBE ↗</a>
             <a class="bc-btn" href="../live/">LIVE RACE CENTER →</a>
-            <a class="bc-btn" href="../results/">RESULTS →</a>
+            <a class="bc-btn" id="bcResultsLink" href="../results/">LATEST RACE RESULTS →</a>
           </div>
         </div>
       </article>
@@ -315,6 +361,7 @@ html[data-hlrn-theme="light"] .bc-replay-frame{
             </a>
           </div>
           <div class="bc-replay-foot" id="bcSundayReplayFoot">The latest completed Sunday broadcast will load here automatically.</div>
+          <a class="bc-replay-results sunday" data-results-series="sunday" href="../results/?league=sunday">VIEW LATEST SUNDAY RESULTS →</a>
         </article>
 
         <article class="bc-replay-card" data-series="monday">
@@ -324,6 +371,7 @@ html[data-hlrn-theme="light"] .bc-replay-frame{
           </div>
           <div class="bc-replay-frame"><iframe data-replay-frame="monday" title="RSI Monday latest race replays" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
           <div class="bc-replay-foot">The newest uploads from RSI Broadcasting are loaded here automatically for Monday coverage.</div>
+          <a class="bc-replay-results monday" data-results-series="monday" href="../results/?league=monday">VIEW LATEST MONDAY RESULTS →</a>
         </article>
       </div>
     </section>
@@ -339,7 +387,7 @@ html[data-hlrn-theme="light"] .bc-replay-frame{
           <div class="bc-person-media"><img src="https://lh3.googleusercontent.com/d/1Z9gUw1HHBTfVDYRLGjqCCaP-SykvidpA" alt="Tommy Rogers" loading="lazy"></div>
           <div class="bc-person-copy">
             <small>SUNDAY NIGHT • HIGH LINE RACING NETWORK</small>
-            <h3>Tommy Rogers</h3>
+            <h3><a class="bc-person-name-link" href="../meet-the-admins/?member=Tommy%20Rogers%20%E2%80%9CFresh%E2%80%9D">Tommy Rogers</a></h3>
             <div class="role">Fresh • HLRN Owner • Broadcaster</div>
             <p>Tommy brings the Sunday Night League to life with HLRN’s own race coverage, following the drivers, battles and storylines throughout the night.</p>
             <a href="https://www.youtube.com/@High_Line_Racing" target="_blank" rel="noopener noreferrer">WATCH TOMMY ON HLRN →</a>
@@ -350,7 +398,7 @@ html[data-hlrn-theme="light"] .bc-replay-frame{
           <div class="bc-person-media"><img src="https://lh3.googleusercontent.com/d/1PA5IWGaV31ApyCbY81F2LKje1CS9YXkn" alt="Randy Schweitzer" loading="lazy"></div>
           <div class="bc-person-copy">
             <small>MONDAY NIGHT • RSI BROADCASTING</small>
-            <h3>Randy Schweitzer</h3>
+            <h3><a class="bc-person-name-link" href="../meet-the-admins/?member=Randy%20Schweitzer">Randy Schweitzer</a></h3>
             <div class="role">RSI Broadcasting • Broadcaster</div>
             <p>Randy and RSI Broadcasting deliver Monday Night League coverage with race-long commentary and the action from the weekly HLRN championship.</p>
             <a href="https://www.youtube.com/@rsibroadcasting" target="_blank" rel="noopener noreferrer">WATCH RANDY ON RSI →</a>
@@ -379,7 +427,7 @@ html[data-hlrn-theme="light"] .bc-replay-frame{
   </div>
 </main>
 
-<script src="../assets/broadcast-center/broadcast-center.js?v=20260929bc4"></script>
+<script src="../assets/broadcast-center/broadcast-center.js?v=20261001connected1"></script>
 <script src="../assets/site-shell.js?v=20261001control1"></script>
 </body>
 </html>
