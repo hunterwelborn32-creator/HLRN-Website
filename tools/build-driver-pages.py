@@ -223,6 +223,102 @@ def recent_form(rows):
     return '<div class="form-grid">' + "".join(items) + "</div>"
 
 
+
+def driver_profile_v2(history, records, teams):
+    """Build factual driver snapshot / performance intel from verified profile history."""
+    finished = [r for r in history if num(r.get("finish"), 0) > 0]
+    recent = finished[:5]
+
+    ranked = []
+    for series in SERIES_ORDER:
+        rec = records.get(series) or {}
+        rank = rec.get("rank")
+        if rank not in (None, "", "—") and num(rank, 0) > 0:
+            ranked.append((num(rank), series, int(num(rank))))
+    ranked.sort(key=lambda x: x[0])
+
+    hero_badges = []
+    for _, series, rank in ranked:
+        points = records.get(series, {}).get("points")
+        points_text = f" • {intish(points)} PTS" if points not in (None, "", "—") else ""
+        hero_badges.append(
+            f'<span class="profile-v2-badge {esc(series)}"><small>{esc(SERIES_SHORT.get(series, series.title()))}</small>'
+            f'<strong>P{rank}{esc(points_text)}</strong></span>'
+        )
+    hero_badges_html = '<div class="profile-v2-badges">' + "".join(hero_badges) + "</div>" if hero_badges else ""
+
+    team_names = []
+    for series in SERIES_ORDER:
+        team = str(teams.get(series) or "").strip()
+        if team and team not in team_names:
+            team_names.append(team)
+    team_text = " / ".join(team_names) if team_names else "Independent"
+
+    primary_champ = "—"
+    primary_series = "HLRN"
+    if ranked:
+        _, series, rank = ranked[0]
+        primary_champ = f"P{rank}"
+        primary_series = SERIES_SHORT.get(series, series.title())
+
+    recent_positions = [int(num(r.get("finish"))) for r in recent]
+    recent_form_text = " • ".join(f"P{x}" for x in recent_positions) if recent_positions else "—"
+    recent_avg = sum(recent_positions) / len(recent_positions) if recent_positions else None
+
+    best = min(finished, key=lambda r: num(r.get("finish"), 9999)) if finished else None
+    best_finish = f"P{int(num(best.get('finish')))}" if best else "—"
+    best_track = str(best.get("track") or "—") if best else "—"
+
+    movers = []
+    for r in finished:
+        start = num(r.get("start"), 0)
+        finish = num(r.get("finish"), 0)
+        if start > 0 and finish > 0:
+            movers.append((start - finish, r))
+    movers.sort(key=lambda x: x[0], reverse=True)
+    biggest_mover = f"+{int(movers[0][0])}" if movers and movers[0][0] > 0 else "—"
+    mover_track = str(movers[0][1].get("track") or "") if movers and movers[0][0] > 0 else ""
+
+    starts = sum(num(r.get("races")) for r in records.values())
+    wins = sum(num(r.get("wins")) for r in records.values())
+    top10 = sum(num(r.get("top10")) for r in records.values())
+    laps_led = sum(num(r.get("lapsLed")) for r in records.values())
+    poles = sum(num(r.get("poles")) for r in records.values())
+    win_rate = (wins / starts * 100) if starts else None
+    top10_rate = (top10 / starts * 100) if starts else None
+
+    snapshot = f"""
+    <section class="driver-v2-snapshot" aria-label="Driver snapshot">
+      <div class="driver-v2-snapshot-head">
+        <div><small>HLRN DRIVER PROFILE 2.0</small><strong>Driver Snapshot</strong></div>
+        <span>VERIFIED NETWORK DATA</span>
+      </div>
+      <div class="driver-v2-snapshot-grid">
+        <div><small>Current Championship</small><strong>{esc(primary_champ)}</strong><span>{esc(primary_series)}</span></div>
+        <div><small>Team</small><strong>{esc(team_text)}</strong><span>Current HLRN team</span></div>
+        <div><small>Recent 5</small><strong class="form-line">{esc(recent_form_text)}</strong><span>{esc(f"{recent_avg:.1f} avg finish" if recent_avg is not None else "No recent finishes")}</span></div>
+        <div><small>Laps Led</small><strong>{esc(intish(laps_led))}</strong><span>Career verified total</span></div>
+      </div>
+    </section>
+    """
+
+    intel_items = [
+        ("Best Finish", best_finish, best_track),
+        ("Recent 5 Avg", f"{recent_avg:.1f}" if recent_avg is not None else "—", "Average finishing position"),
+        ("Biggest Mover", biggest_mover, mover_track or "Recorded start-to-finish gain"),
+        ("Win Rate", f"{win_rate:.1f}%" if win_rate is not None else "—", f"{intish(wins)} wins / {intish(starts)} starts"),
+        ("Top-10 Rate", f"{top10_rate:.1f}%" if top10_rate is not None else "—", f"{intish(top10)} top 10s"),
+        ("Poles", intish(poles), "Verified league totals"),
+        ("Laps Led", intish(laps_led), "Verified league totals"),
+        ("Races Recorded", str(len(finished)), "Race history on this profile"),
+    ]
+    intel_html = "".join(
+        f'<div class="driver-v2-intel-card"><small>{esc(label)}</small><strong>{esc(value)}</strong><span>{esc(note)}</span></div>'
+        for label, value, note in intel_items
+    )
+    performance = f'<div class="driver-v2-intel-grid">{intel_html}</div>'
+    return hero_badges_html, snapshot, performance
+
 def render_page(driver):
     name = driver["name"]
     slug = driver["slug"]
@@ -284,6 +380,7 @@ def render_page(driver):
         f'<div class="career-stat"><small>{esc(k)}</small><strong>{esc(v)}</strong></div>'
         for k, v in combined_stats
     )
+    hero_badges_html, driver_snapshot_html, driver_performance_html = driver_profile_v2(history, records, teams)
 
     return f"""<!doctype html>
 <html lang="en">
@@ -300,7 +397,7 @@ def render_page(driver):
 <meta property="og:url" content="{esc(canonical)}">
 <meta property="og:image" content="{esc(photo)}">
 <script type="application/ld+json">{schema_json}</script>
-<link rel="stylesheet" href="/assets/site-shell.css?v=20261001profiledark1">
+<link rel="stylesheet" href="/assets/site-shell.css?v=20261001network3">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,800;1,900&family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
@@ -329,6 +426,51 @@ def render_page(driver):
 .empty{{padding:22px;background:#fff;border:1px solid var(--line);color:#747d86;font-size:10px;font-weight:800}}
 .actions{{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}}.actions a{{padding:11px 14px;background:#11161d;color:#fff;font:900 italic 15px/1 "Barlow Condensed",sans-serif;text-transform:uppercase}}.actions a.primary{{background:var(--red)}}
 .updated{{margin-top:14px;color:#858d96;font-size:8px;font-weight:800;text-transform:uppercase}}
+
+/* ===== DRIVER PROFILE 2.0 ===== */
+.hero:before{{content:"#{esc(number)}";position:absolute;right:-30px;bottom:-44px;z-index:1;color:rgba(17,22,28,.035);font:900 italic clamp(170px,22vw,330px)/.7 "Barlow Condensed",sans-serif;letter-spacing:-.08em;pointer-events:none}}
+.profile-v2-badges{{display:flex;flex-wrap:wrap;gap:7px;margin-top:22px}}
+.profile-v2-badge{{display:inline-grid;grid-template-columns:auto auto;align-items:center;gap:7px;min-height:34px;padding:6px 9px;border:1px solid var(--line);background:#f6f7f9}}
+.profile-v2-badge small{{color:#707983;font-size:7px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase}}
+.profile-v2-badge strong{{color:#11161c;font:900 italic 15px/1 "Barlow Condensed",sans-serif;white-space:nowrap}}
+.profile-v2-badge.sunday{{border-left:4px solid var(--sun)}}.profile-v2-badge.monday{{border-left:4px solid var(--mon)}}.profile-v2-badge.hosted{{border-left:4px solid var(--hosted)}}
+
+.driver-v2-snapshot{{margin-top:14px;border:1px solid var(--line);background:#fff;box-shadow:0 12px 28px rgba(18,24,31,.06)}}
+.driver-v2-snapshot-head{{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:13px 15px;border-bottom:1px solid var(--line);background:#f5f6f8}}
+.driver-v2-snapshot-head small{{display:block;color:var(--red);font-size:7px;font-weight:1000;letter-spacing:.12em;text-transform:uppercase}}
+.driver-v2-snapshot-head strong{{display:block;margin-top:3px;font:900 italic 24px/1 "Barlow Condensed",sans-serif;text-transform:uppercase}}
+.driver-v2-snapshot-head>span{{color:#7d8690;font-size:7px;font-weight:1000;letter-spacing:.08em}}
+.driver-v2-snapshot-grid{{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}}
+.driver-v2-snapshot-grid>div{{min-width:0;padding:15px;border-right:1px solid var(--line)}}
+.driver-v2-snapshot-grid>div:last-child{{border-right:0}}
+.driver-v2-snapshot-grid small{{display:block;color:#7d8690;font-size:7px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase}}
+.driver-v2-snapshot-grid strong{{display:block;margin-top:6px;color:#11161c;font:900 italic 25px/1 "Barlow Condensed",sans-serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+.driver-v2-snapshot-grid strong.form-line{{font-size:19px;letter-spacing:.02em}}
+.driver-v2-snapshot-grid span{{display:block;margin-top:5px;color:#737d87;font-size:8px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+
+.driver-v2-intel-grid{{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}}
+.driver-v2-intel-card{{position:relative;min-width:0;min-height:104px;padding:15px;border:1px solid var(--line);background:#fff;overflow:hidden}}
+.driver-v2-intel-card:before{{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:#e31837}}
+.driver-v2-intel-card small{{display:block;color:#7a848e;font-size:7px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase}}
+.driver-v2-intel-card strong{{display:block;margin-top:8px;color:#11161c;font:900 italic 28px/1 "Barlow Condensed",sans-serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+.driver-v2-intel-card span{{display:block;margin-top:6px;color:#727c87;font-size:8px;font-weight:800;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+
+html[data-hlrn-theme="dark"] .hero:before{{color:rgba(255,255,255,.045)!important}}
+html[data-hlrn-theme="dark"] .profile-v2-badge,
+html[data-hlrn-theme="dark"] .driver-v2-snapshot,
+html[data-hlrn-theme="dark"] .driver-v2-snapshot-head,
+html[data-hlrn-theme="dark"] .driver-v2-snapshot-grid>div,
+html[data-hlrn-theme="dark"] .driver-v2-intel-card{{background:#000!important;color:#fff!important;border-color:#2b2b2b!important;box-shadow:none!important}}
+html[data-hlrn-theme="dark"] .profile-v2-badge small,
+html[data-hlrn-theme="dark"] .driver-v2-snapshot-grid small,
+html[data-hlrn-theme="dark"] .driver-v2-snapshot-grid span,
+html[data-hlrn-theme="dark"] .driver-v2-intel-card small,
+html[data-hlrn-theme="dark"] .driver-v2-intel-card span,
+html[data-hlrn-theme="dark"] .driver-v2-snapshot-head>span{{color:#aaa!important}}
+html[data-hlrn-theme="dark"] .profile-v2-badge strong,
+html[data-hlrn-theme="dark"] .driver-v2-snapshot-head strong,
+html[data-hlrn-theme="dark"] .driver-v2-snapshot-grid strong,
+html[data-hlrn-theme="dark"] .driver-v2-intel-card strong{{color:#fff!important}}
 
 html[data-hlrn-theme="dark"],
 html[data-hlrn-theme="dark"] body{{background:#000!important;color:#fff!important}}
@@ -438,6 +580,8 @@ html[data-hlrn-theme="dark"] .updated{{color:#aaa!important}}
 
 @media(max-width:900px){{.hero{{grid-template-columns:1fr}}.hero-media{{min-height:390px}}.hero-copy{{padding:34px 25px}}.career-strip{{grid-template-columns:repeat(4,1fr)}}.career-stat:nth-child(4n){{border-right:0}}.series-grid{{grid-template-columns:1fr}}.form-grid{{grid-template-columns:1fr 1fr}}}}
 @media(max-width:560px){{.page{{width:min(100% - 18px,1380px)}}.hero-media{{min-height:330px}}.hero h1{{font-size:54px}}.career-strip{{grid-template-columns:repeat(2,1fr)}}.career-stat:nth-child(2n){{border-right:0}}.stats-grid{{grid-template-columns:repeat(2,1fr)}}.stat{{border-right:1px solid #e5e7ea!important}}.stat:nth-child(2n){{border-right:0!important}}.form-grid{{grid-template-columns:1fr}}}}
+@media(max-width:900px){{.driver-v2-snapshot-grid{{grid-template-columns:repeat(2,1fr)}}.driver-v2-snapshot-grid>div:nth-child(2n){{border-right:0}}.driver-v2-intel-grid{{grid-template-columns:repeat(2,1fr)}}}}
+@media(max-width:560px){{.hero:before{{right:-10px;bottom:-18px;font-size:150px}}.profile-v2-badges{{margin-top:16px}}.profile-v2-badge{{width:100%;justify-content:space-between}}.driver-v2-snapshot{{margin-top:9px}}.driver-v2-snapshot-head{{align-items:flex-start;padding:11px 12px}}.driver-v2-snapshot-head>span{{display:none}}.driver-v2-snapshot-grid{{grid-template-columns:1fr 1fr}}.driver-v2-snapshot-grid>div{{padding:12px}}.driver-v2-snapshot-grid strong{{font-size:21px}}.driver-v2-snapshot-grid strong.form-line{{font-size:15px}}.driver-v2-intel-grid{{grid-template-columns:1fr 1fr;gap:6px}}.driver-v2-intel-card{{min-height:92px;padding:12px}}.driver-v2-intel-card strong{{font-size:23px}}}}
 </style>
 </head>
 <body>
@@ -456,13 +600,19 @@ html[data-hlrn-theme="dark"] .updated{{color:#aaa!important}}
         <div class="car-number">#{esc(number)}</div>
         <div class="series-list">{esc(series_names or "HLRN DRIVER")}<br>HIGH LINE RACING NETWORK</div>
       </div>
+      {hero_badges_html}
     </div>
   </section>
 
   <section class="career-strip">{combined_html}</section>
 
+  {driver_snapshot_html}
+
   <div class="section-head"><div><small>CHAMPIONSHIP DATA</small><h2>League Performance</h2></div></div>
   <div class="series-grid">{series_html}</div>
+
+  <div class="section-head"><div><small>PERFORMANCE INTELLIGENCE</small><h2>Driver Intel</h2></div><span>Verified profile metrics</span></div>
+  {driver_performance_html}
 
   <div class="section-head"><div><small>RECENT RESULTS</small><h2>Recent Form</h2></div></div>
   {recent_form(history)}
@@ -477,7 +627,7 @@ html[data-hlrn-theme="dark"] .updated{{color:#aaa!important}}
   </div>
   <div class="updated">Profile data generated from the current HLRN verified league snapshot.</div>
 </main>
-<script src="/assets/site-shell.js?v=20261001network2"></script>
+<script src="/assets/site-shell.js?v=20261001network3"></script>
 </body>
 </html>
 """
