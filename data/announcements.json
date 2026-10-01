@@ -1,16 +1,442 @@
 {
   "success": true,
-  "updatedAt": "2026-10-01T20:26:54Z",
+  "updatedAt": "2026-10-01T20:57:46Z",
   "channel": {
-    "id": "1431686178691748021",
-    "name": "announcements",
+    "id": "1529356159906222201",
+    "name": "🚨-high-line-announcements",
     "guild_id": "1401318372075114636"
   },
   "announcements": [
     {
-      "id": "1475577471956160523",
-      "content": "@everyone High Line Racing Network Merch Store is here.  https://stores.inksoft.com/highline_racing_network/shop/home",
-      "timestamp": "2026-02-23T19:38:04.218000+00:00",
+      "id": "1554973625575276564",
+      "content": "",
+      "timestamp": "2026-09-30T21:50:02.350000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "1051673096463077386",
+        "username": "Jim Segredo",
+        "global_name": "Jim Segredo",
+        "avatar": "01471ecae9c8cda9f28601aab9db221d"
+      },
+      "attachments": [
+        {
+          "id": "1554973621343101009",
+          "filename": "1480E23F-7D19-4BEC-BDC1-3F4C5F2A4475.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1554973621343101009/1480E23F-7D19-4BEC-BDC1-3F4C5F2A4475.png?backend=b2&ex=6abf7e49&is=6abe2cc9&hm=37edc6d5a69d5236a3c7e840379be86c1c179d5bd48eab1ebeb7cd467083cf81&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1554973621343101009/1480E23F-7D19-4BEC-BDC1-3F4C5F2A4475.png?backend=b2&ex=6abf7e49&is=6abe2cc9&hm=37edc6d5a69d5236a3c7e840379be86c1c179d5bd48eab1ebeb7cd467083cf81&",
+          "size": 2790389,
+          "content_type": "image/png",
+          "width": 1672,
+          "height": 941
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1554973625575276564"
+    },
+    {
+      "id": "1552797087886872707",
+      "content": "",
+      "timestamp": "2026-09-24T21:41:15.327000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "606195560830992392",
+        "username": "Brian Hebbard2",
+        "global_name": "Brian Hebbard2",
+        "avatar": "909f2d6a9814456db4c9103034b7b2df"
+      },
+      "attachments": [
+        {
+          "id": "1552797086297358457",
+          "filename": "IMG_3048.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1552797086297358457/IMG_3048.png?ex=6abf7c3a&is=6abe2aba&hm=3a47474f2b4ece36a64a9182a18161f62d352e2054f689a6723a77f5fc1187c3&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1552797086297358457/IMG_3048.png?ex=6abf7c3a&is=6abe2aba&hm=3a47474f2b4ece36a64a9182a18161f62d352e2054f689a6723a77f5fc1187c3&",
+          "size": 2624154,
+          "content_type": "image/png",
+          "width": 1024,
+          "height": 1536
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1552797087886872707"
+    },
+    {
+      "id": "1552431669271855184",
+      "content": "",
+      "timestamp": "2026-09-23T21:29:12.740000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "1051673096463077386",
+        "username": "Jim Segredo",
+        "global_name": "Jim Segredo",
+        "avatar": "01471ecae9c8cda9f28601aab9db221d"
+      },
+      "attachments": [
+        {
+          "id": "1552431668709687417",
+          "filename": "65AD4DB6-31AA-4732-A4FD-A0CD2A41B7A5.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1552431668709687417/65AD4DB6-31AA-4732-A4FD-A0CD2A41B7A5.png?ex=6abf7968&is=6abe27e8&hm=c20ad73fb0d54cec9601b23d34051ea6c3d3022bf84e7f53473e878d8363b505&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1552431668709687417/65AD4DB6-31AA-4732-A4FD-A0CD2A41B7A5.png?ex=6abf7968&is=6abe27e8&hm=c20ad73fb0d54cec9601b23d34051ea6c3d3022bf84e7f53473e878d8363b505&",
+          "size": 3702876,
+          "content_type": "image/png",
+          "width": 1122,
+          "height": 1402
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1552431669271855184"
+    },
+    {
+      "id": "1552368106104557610",
+      "content": "",
+      "timestamp": "2026-09-23T17:16:38.100000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "810534889610674196",
+        "username": "Tommy Rogers",
+        "global_name": "Tommy Rogers",
+        "avatar": "95f66064c31c01cef63626bc34897fe0"
+      },
+      "attachments": [
+        {
+          "id": "1552368105835991182",
+          "filename": "file_0000000048088211b06edcb185f03ea7.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1552368105835991182/file_0000000048088211b06edcb185f03ea7.png?ex=6abfe6f6&is=6abe9576&hm=3bfde597d178688864695a5a825716588b92332eb10a1df768460a1b990a87c1&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1552368105835991182/file_0000000048088211b06edcb185f03ea7.png?ex=6abfe6f6&is=6abe9576&hm=3bfde597d178688864695a5a825716588b92332eb10a1df768460a1b990a87c1&",
+          "size": 2310631,
+          "content_type": "image/png",
+          "width": 1672,
+          "height": 941
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1552368106104557610"
+    },
+    {
+      "id": "1551591636528668693",
+      "content": "",
+      "timestamp": "2026-09-21T13:51:13.327000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "1051673096463077386",
+        "username": "Jim Segredo",
+        "global_name": "Jim Segredo",
+        "avatar": "01471ecae9c8cda9f28601aab9db221d"
+      },
+      "attachments": [
+        {
+          "id": "1551591636411093022",
+          "filename": "8A0F6C37-DC46-40DA-B991-9196AB8E9135.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1551591636411093022/8A0F6C37-DC46-40DA-B991-9196AB8E9135.png?ex=6abfb6d1&is=6abe6551&hm=d5c53da0fddd454e3c92cf5f488ec5c75eb414b6dab5f2ae83661a70a1100f28&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1551591636411093022/8A0F6C37-DC46-40DA-B991-9196AB8E9135.png?ex=6abfb6d1&is=6abe6551&hm=d5c53da0fddd454e3c92cf5f488ec5c75eb414b6dab5f2ae83661a70a1100f28&",
+          "size": 2746466,
+          "content_type": "image/png",
+          "width": 1122,
+          "height": 1402
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1551591636528668693"
+    },
+    {
+      "id": "1551030529313214505",
+      "content": "Switching to Dega after a bunch of request",
+      "timestamp": "2026-09-20T00:41:34.942000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "810534889610674196",
+        "username": "Tommy Rogers",
+        "global_name": "Tommy Rogers",
+        "avatar": "95f66064c31c01cef63626bc34897fe0"
+      },
+      "attachments": [
+        {
+          "id": "1551030528910696448",
+          "filename": "file_0000000007bc81fd9ac3f0319fd141ba.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1551030528910696448/file_0000000007bc81fd9ac3f0319fd141ba.png?ex=6abfa67e&is=6abe54fe&hm=1316ad5f0d7ed280a1d837318f7d96db19f615c5800f63c88919a204e684596a&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1551030528910696448/file_0000000007bc81fd9ac3f0319fd141ba.png?ex=6abfa67e&is=6abe54fe&hm=1316ad5f0d7ed280a1d837318f7d96db19f615c5800f63c88919a204e684596a&",
+          "size": 3016785,
+          "content_type": "image/png",
+          "width": 1672,
+          "height": 941
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1551030529313214505"
+    },
+    {
+      "id": "1550291303567462441",
+      "content": "",
+      "timestamp": "2026-09-17T23:44:09.790000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "1051673096463077386",
+        "username": "Jim Segredo",
+        "global_name": "Jim Segredo",
+        "avatar": "01471ecae9c8cda9f28601aab9db221d"
+      },
+      "attachments": [
+        {
+          "id": "1550291303248429166",
+          "filename": "1BE3EB52-08D6-4E91-BB87-0B564EA279E2.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1550291303248429166/1BE3EB52-08D6-4E91-BB87-0B564EA279E2.png?ex=6abf9909&is=6abe4789&hm=dc0d6092ef72908dffd35f1dde68054d51a09004915f233fc87501568b8243c5&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1550291303248429166/1BE3EB52-08D6-4E91-BB87-0B564EA279E2.png?ex=6abf9909&is=6abe4789&hm=dc0d6092ef72908dffd35f1dde68054d51a09004915f233fc87501568b8243c5&",
+          "size": 2883177,
+          "content_type": "image/png",
+          "width": 1145,
+          "height": 1374
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1550291303567462441"
+    },
+    {
+      "id": "1549895915496546406",
+      "content": "",
+      "timestamp": "2026-09-16T21:33:01.928000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "606195560830992392",
+        "username": "Brian Hebbard2",
+        "global_name": "Brian Hebbard2",
+        "avatar": "909f2d6a9814456db4c9103034b7b2df"
+      },
+      "attachments": [
+        {
+          "id": "1549895915190358066",
+          "filename": "IMG_2978.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1549895915190358066/IMG_2978.png?ex=6abf7a4d&is=6abe28cd&hm=786fe6a2771539a1e1e81f20b0fc03fe0abbbc3c0e37fb025d2159f5f4b2ad91&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1549895915190358066/IMG_2978.png?ex=6abf7a4d&is=6abe28cd&hm=786fe6a2771539a1e1e81f20b0fc03fe0abbbc3c0e37fb025d2159f5f4b2ad91&",
+          "size": 2512242,
+          "content_type": "image/png",
+          "width": 1024,
+          "height": 1536
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1549895915496546406"
+    },
+    {
+      "id": "1549153571952525335",
+      "content": "🏁 **HLRN RACE CONTROL — POST-RACE BULLETIN** 🏁\n\nFollowing our post-race review of last night’s event, Race Control determined that **Matthew Brown was found at fault for two separate incidents and should have received a Green Flag Pass-Through Penalty.**\n\nThat penalty was missed during the race.\n\nWe’ve said from the beginning that Race Control won’t be perfect. We make decisions in real time while reviewing incidents, tracking penalties, communicating with drivers, and managing the race. Last night brought more cautions and incidents than anticipated, and unfortunately, this was an oversight on our part.\n\nRace Control discussed the situation after the race and takes responsibility for the missed penalty.\n\nFortunately, it does not appear that the missed Green Flag Pass-Through had a significant impact on the final race results. However, **that does not make the mistake acceptable or something we simply brush aside.** We take the consistency and integrity of HLRN officiating seriously, and we are already working on measures to help prevent this type of oversight in the future.\n\n**We also need our drivers to help us catch something if it doesn’t look right.**\n\nFor example, if you recognize that a driver has received an **EOL when their accumulated at-fault incidents should have resulted in a Green Flag Pass-Through**, respectfully bring it to Race Control’s attention. You are not challenging Race Control by doing so—you are giving us an opportunity to double-check the situation and correct a potential mistake **while we still have the opportunity to enforce the proper penalty during the race.**\n\nRace Control will always make the final determination, but if something appears to have been missed, **speak up respectfully. We would rather verify it than unknowingly allow an incorrect penalty to stand.**\n\nOur commitment is simple: **call the race as fairly and consistently as possible, enforce the rules equally, and protect the competitive integrity of HLRN.** When we get something wrong, we’ll own it, address it, and work to make sure we’re better the next time.\n\nWe expect accountability from our drivers, and **Race Control should be held to that same standard.**\n\n🏁 **HLRN Race Control**\n*If you’re not on the High Line, you’re already behind!*",
+      "timestamp": "2026-09-14T20:23:13.435000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "810534889610674196",
+        "username": "Tommy Rogers",
+        "global_name": "Tommy Rogers",
+        "avatar": "95f66064c31c01cef63626bc34897fe0"
+      },
+      "attachments": [],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1549153571952525335"
+    },
+    {
+      "id": "1549053482504556688",
+      "content": "",
+      "timestamp": "2026-09-14T13:45:30.251000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "1051673096463077386",
+        "username": "Jim Segredo",
+        "global_name": "Jim Segredo",
+        "avatar": "01471ecae9c8cda9f28601aab9db221d"
+      },
+      "attachments": [
+        {
+          "id": "1549053482001109062",
+          "filename": "D18696E3-6885-4FBA-9C61-1DFDE7C88911.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1549053482001109062/D18696E3-6885-4FBA-9C61-1DFDE7C88911.png?ex=6abfb57a&is=6abe63fa&hm=cc0423bc76bc26d98bd9751e043ce63fd95ebf5623c9ce295bd5f9dbf6d7d21d&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1549053482001109062/D18696E3-6885-4FBA-9C61-1DFDE7C88911.png?ex=6abfb57a&is=6abe63fa&hm=cc0423bc76bc26d98bd9751e043ce63fd95ebf5623c9ce295bd5f9dbf6d7d21d&",
+          "size": 3140611,
+          "content_type": "image/png",
+          "width": 1254,
+          "height": 1254
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1549053482504556688"
+    },
+    {
+      "id": "1548816185972498454",
+      "content": "",
+      "timestamp": "2026-09-13T22:02:34.349000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "810534889610674196",
+        "username": "Tommy Rogers",
+        "global_name": "Tommy Rogers",
+        "avatar": "95f66064c31c01cef63626bc34897fe0"
+      },
+      "attachments": [
+        {
+          "id": "1548816185720578050",
+          "filename": "ChatGPT_Image_Sep_13_2026_03_00_20_PM.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1548816185720578050/ChatGPT_Image_Sep_13_2026_03_00_20_PM.png?ex=6abf813a&is=6abe2fba&hm=b981e8e3dc2f79a8b3cd4c2c6f8f1a22d23b5442b163e354ca53a11c2c62172b&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1548816185720578050/ChatGPT_Image_Sep_13_2026_03_00_20_PM.png?ex=6abf813a&is=6abe2fba&hm=b981e8e3dc2f79a8b3cd4c2c6f8f1a22d23b5442b163e354ca53a11c2c62172b&",
+          "size": 2521816,
+          "content_type": "image/png",
+          "width": 1672,
+          "height": 941
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1548816185972498454"
+    },
+    {
+      "id": "1548501252793438239",
+      "content": "@everyone Arca Dega up. 100Laps",
+      "timestamp": "2026-09-13T01:11:08.428000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "771760806739181620",
+        "username": "Ryan Wilson21",
+        "global_name": "Ryan Wilson21",
+        "avatar": "8994d62a3dd388e440ad2f9aba48ffdc"
+      },
+      "attachments": [],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1548501252793438239"
+    },
+    {
+      "id": "1548116673847107594",
+      "content": "",
+      "timestamp": "2026-09-11T23:42:57.662000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "810534889610674196",
+        "username": "Tommy Rogers",
+        "global_name": "Tommy Rogers",
+        "avatar": "95f66064c31c01cef63626bc34897fe0"
+      },
+      "attachments": [
+        {
+          "id": "1548116673536458782",
+          "filename": "file_000000006f7882308aa62dd8a56e016c.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1548116673536458782/file_000000006f7882308aa62dd8a56e016c.png?ex=6abf98c1&is=6abe4741&hm=cb2eb934ef91c121e6a23a291b23ba1dd9df800cc6b7ba65471c0fc7515ea169&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1548116673536458782/file_000000006f7882308aa62dd8a56e016c.png?ex=6abf98c1&is=6abe4741&hm=cb2eb934ef91c121e6a23a291b23ba1dd9df800cc6b7ba65471c0fc7515ea169&",
+          "size": 2635475,
+          "content_type": "image/png",
+          "width": 1672,
+          "height": 941
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1548116673847107594"
+    },
+    {
+      "id": "1547774790994100255",
+      "content": "30 and 60?",
+      "timestamp": "2026-09-11T01:04:26.438000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "810534889610674196",
+        "username": "Tommy Rogers",
+        "global_name": "Tommy Rogers",
+        "avatar": "95f66064c31c01cef63626bc34897fe0"
+      },
+      "attachments": [],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1547774790994100255"
+    },
+    {
+      "id": "1545935107792314448",
+      "content": "",
+      "timestamp": "2026-09-05T23:14:11.783000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "606195560830992392",
+        "username": "Brian Hebbard2",
+        "global_name": "Brian Hebbard2",
+        "avatar": "909f2d6a9814456db4c9103034b7b2df"
+      },
+      "attachments": [
+        {
+          "id": "1545935107507093504",
+          "filename": "content.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1545935107507093504/content.png?ex=6abf9203&is=6abe4083&hm=2afccd62480a186d764020f4ad77b2438a16f06783c86b636d6351680c7929df&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1545935107507093504/content.png?ex=6abf9203&is=6abe4083&hm=2afccd62480a186d764020f4ad77b2438a16f06783c86b636d6351680c7929df&",
+          "size": 3064547,
+          "content_type": "image/png",
+          "width": 1254,
+          "height": 1254
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1545935107792314448"
+    },
+    {
+      "id": "1545588886980272141",
+      "content": "",
+      "timestamp": "2026-09-05T00:18:26.309000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "606195560830992392",
+        "username": "Brian Hebbard2",
+        "global_name": "Brian Hebbard2",
+        "avatar": "909f2d6a9814456db4c9103034b7b2df"
+      },
+      "attachments": [
+        {
+          "id": "1545588886904901765",
+          "filename": "content.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1545588886904901765/content.png?ex=6abfa112&is=6abe4f92&hm=2676d21435d9f2865ee76a5598001fbec684709d0e47f40a993e289fde02f58f&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1545588886904901765/content.png?ex=6abfa112&is=6abe4f92&hm=2676d21435d9f2865ee76a5598001fbec684709d0e47f40a993e289fde02f58f&",
+          "size": 2771433,
+          "content_type": "image/png",
+          "width": 1149,
+          "height": 1369
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1545588886980272141"
+    },
+    {
+      "id": "1544849336632873061",
+      "content": "",
+      "timestamp": "2026-09-02T23:19:43.766000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "1051673096463077386",
+        "username": "Jim Segredo",
+        "global_name": "Jim Segredo",
+        "avatar": "01471ecae9c8cda9f28601aab9db221d"
+      },
+      "attachments": [
+        {
+          "id": "1544849335924166808",
+          "filename": "13C07001-3A59-437B-8E64-EC0C795DC9F1.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1544849335924166808/13C07001-3A59-437B-8E64-EC0C795DC9F1.png?ex=6abf934f&is=6abe41cf&hm=6cfc07837a60b3c063b2dcbe2df05cdaa6691a081ad87591dc620496bb86f7af&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1544849335924166808/13C07001-3A59-437B-8E64-EC0C795DC9F1.png?ex=6abf934f&is=6abe41cf&hm=6cfc07837a60b3c063b2dcbe2df05cdaa6691a081ad87591dc620496bb86f7af&",
+          "size": 3662821,
+          "content_type": "image/png",
+          "width": 1122,
+          "height": 1402
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1544849336632873061"
+    },
+    {
+      "id": "1544490767576211576",
+      "content": "https://youtu.be/xR_CI2TnF6Q?is=prbQNRxeWoirnnJ5",
+      "timestamp": "2026-09-01T23:34:54.241000+00:00",
       "edited_timestamp": null,
       "pinned": false,
       "author": {
@@ -22,63 +448,53 @@
       "attachments": [],
       "embeds": [
         {
-          "title": "Highline Racing Network",
-          "url": "https://stores.inksoft.com/highline_racing_network/shop/home",
-          "type": "link",
+          "title": "HLRN's The Show: Season 2 Episode 8! #hilarious #iracing #nascar #e...",
+          "description": "Big time fun and storyline across the both leagues in the High Line!   Its all right here on The Show! #simracing #trakracer #moza #hilarious #racinggames",
+          "url": "https://www.youtube.com/watch?v=xR_CI2TnF6Q",
+          "type": "video",
+          "color": 16711680,
           "thumbnail": {
-            "url": "https://cdn.inksoft.com/images/publishers/1369/stores/highline_racing_network/img/socialmedia.jpg"
+            "url": "https://i.ytimg.com/vi/xR_CI2TnF6Q/maxresdefault.jpg"
+          },
+          "author": {
+            "name": "High Line Racing Network",
+            "url": "https://www.youtube.com/channel/UCaxHNmaiYiKsZYLtqhhgfHg"
           }
         }
       ],
-      "jump_url": "https://discord.com/channels/1401318372075114636/1431686178691748021/1475577471956160523"
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1544490767576211576"
     },
     {
-      "id": "1459046631298043946",
+      "id": "1544005651443749004",
       "content": "",
-      "timestamp": "2026-01-09T04:50:24.677000+00:00",
+      "timestamp": "2026-08-31T15:27:13.542000+00:00",
       "edited_timestamp": null,
       "pinned": false,
       "author": {
-        "id": "810534889610674196",
-        "username": "Tommy Rogers",
-        "global_name": "Tommy Rogers",
-        "avatar": "95f66064c31c01cef63626bc34897fe0"
+        "id": "1051673096463077386",
+        "username": "Jim Segredo",
+        "global_name": "Jim Segredo",
+        "avatar": "01471ecae9c8cda9f28601aab9db221d"
       },
       "attachments": [
         {
-          "id": "1459046631264751668",
-          "filename": "IMG_6609.png",
-          "url": "https://cdn.discordapp.com/attachments/1431686178691748021/1459046631264751668/IMG_6609.png?ex=6abfe0d0&is=6abe8f50&hm=e26b1cfadfae831be7c05550297febc2273706ba5ab00784cbbe9b62b8c1da54&",
-          "proxy_url": "https://media.discordapp.net/attachments/1431686178691748021/1459046631264751668/IMG_6609.png?ex=6abfe0d0&is=6abe8f50&hm=e26b1cfadfae831be7c05550297febc2273706ba5ab00784cbbe9b62b8c1da54&",
-          "size": 4265138,
+          "id": "1544005650927976468",
+          "filename": "1029454B-56D5-453A-822D-26DEB63DB106.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1544005650927976468/1029454B-56D5-453A-822D-26DEB63DB106.png?ex=6abfcd51&is=6abe7bd1&hm=f33804ea61ab5715d35c028a7d6d6f9571143dce95b284fe4e91b46073037494&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1544005650927976468/1029454B-56D5-453A-822D-26DEB63DB106.png?ex=6abfcd51&is=6abe7bd1&hm=f33804ea61ab5715d35c028a7d6d6f9571143dce95b284fe4e91b46073037494&",
+          "size": 3527518,
           "content_type": "image/png",
-          "width": 1290,
-          "height": 1974
+          "width": 1254,
+          "height": 1254
         }
       ],
       "embeds": [],
-      "jump_url": "https://discord.com/channels/1401318372075114636/1431686178691748021/1459046631298043946"
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1544005651443749004"
     },
     {
-      "id": "1450887009366184087",
-      "content": "If you run a league or a hosted series we want you to race in the HLRN League!  Why you should:\n- Free advertising in the HLRN discord for your league\n- Your logo in the broadcast and show\n- marketing for your league in the broadcast and show \n- it's all free\nWhat you need: at least 4 members from your league in the league race with your logo on their car . We will get you guys your own team voice channel.  \nWe want to promote you all right here, in the broadcast and the show!",
-      "timestamp": "2025-12-17T16:26:59.210000+00:00",
-      "edited_timestamp": "2025-12-17T16:27:49.999000+00:00",
-      "pinned": false,
-      "author": {
-        "id": "810534889610674196",
-        "username": "Tommy Rogers",
-        "global_name": "Tommy Rogers",
-        "avatar": "95f66064c31c01cef63626bc34897fe0"
-      },
-      "attachments": [],
-      "embeds": [],
-      "jump_url": "https://discord.com/channels/1401318372075114636/1431686178691748021/1450887009366184087"
-    },
-    {
-      "id": "1433597856668979210",
+      "id": "1543382287356530762",
       "content": "",
-      "timestamp": "2025-10-30T23:26:03.990000+00:00",
+      "timestamp": "2026-08-29T22:10:11.962000+00:00",
       "edited_timestamp": null,
       "pinned": false,
       "author": {
@@ -89,23 +505,255 @@
       },
       "attachments": [
         {
-          "id": "1433597856400408596",
-          "filename": "flyer-1.jpg",
-          "url": "https://cdn.discordapp.com/attachments/1431686178691748021/1433597856400408596/flyer-1.jpg?ex=6abf94cb&is=6abe434b&hm=407249d46043360833377911dd5340715b1585a393b56ffa100c981a3b39e16d&",
-          "proxy_url": "https://media.discordapp.net/attachments/1431686178691748021/1433597856400408596/flyer-1.jpg?ex=6abf94cb&is=6abe434b&hm=407249d46043360833377911dd5340715b1585a393b56ffa100c981a3b39e16d&",
-          "size": 217880,
-          "content_type": "image/jpeg",
-          "width": 1024,
+          "id": "1543382286823718943",
+          "filename": "file_0000000016fc81fd91c5d7c8e9bf3468.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1543382286823718943/file_0000000016fc81fd91c5d7c8e9bf3468.png?ex=6abf8303&is=6abe3183&hm=0048880582dc892d2c2905dd5bfaa1dd8ee06f3da323095e832b1e9d457d43a4&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1543382286823718943/file_0000000016fc81fd91c5d7c8e9bf3468.png?ex=6abf8303&is=6abe3183&hm=0048880582dc892d2c2905dd5bfaa1dd8ee06f3da323095e832b1e9d457d43a4&",
+          "size": 2948104,
+          "content_type": "image/png",
+          "width": 1536,
           "height": 1024
         }
       ],
       "embeds": [],
-      "jump_url": "https://discord.com/channels/1401318372075114636/1431686178691748021/1433597856668979210"
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1543382287356530762"
     },
     {
-      "id": "1431688099351494717",
-      "content": "Everyone who joins will have their stats tracked on Sim Racer Hub.  If you have a few dollars and want to sponsor the upcomingp league reach out to us!  The League is free so any sponsorship or donations will be funneled into the League for prizes, swag, trophies ect.  If your a content creator and want to work with High Line, CSR Broadcasting, and Blind Squirrel, reach out!",
-      "timestamp": "2025-10-25T16:57:22.364000+00:00",
+      "id": "1542988316478021673",
+      "content": "",
+      "timestamp": "2026-08-28T20:04:41.985000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "1051673096463077386",
+        "username": "Jim Segredo",
+        "global_name": "Jim Segredo",
+        "avatar": "01471ecae9c8cda9f28601aab9db221d"
+      },
+      "attachments": [
+        {
+          "id": "1542988316197134356",
+          "filename": "CB3741E3-DCB4-4731-AB8E-A230C4E5A875.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1542988316197134356/CB3741E3-DCB4-4731-AB8E-A230C4E5A875.png?ex=6ac00e59&is=6abebcd9&hm=1d4ea3527f3a4b02c18ba0dbe0f31c3e17b59c7e776ee498b936a57f74a6f4d6&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1542988316197134356/CB3741E3-DCB4-4731-AB8E-A230C4E5A875.png?ex=6ac00e59&is=6abebcd9&hm=1d4ea3527f3a4b02c18ba0dbe0f31c3e17b59c7e776ee498b936a57f74a6f4d6&",
+          "size": 3500048,
+          "content_type": "image/png",
+          "width": 1122,
+          "height": 1402
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1542988316478021673"
+    },
+    {
+      "id": "1542498001837096972",
+      "content": "",
+      "timestamp": "2026-08-27T11:36:21.865000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "1051673096463077386",
+        "username": "Jim Segredo",
+        "global_name": "Jim Segredo",
+        "avatar": "01471ecae9c8cda9f28601aab9db221d"
+      },
+      "attachments": [
+        {
+          "id": "1542498001468129310",
+          "filename": "48AD876B-5555-41A5-B29F-97B449F4A6B7.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1542498001468129310/48AD876B-5555-41A5-B29F-97B449F4A6B7.png?ex=6abf9735&is=6abe45b5&hm=8f79b7d584d74022b1d6240ffe337f2abe2727dd0a44d5ae6aa68b6afe67085e&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1542498001468129310/48AD876B-5555-41A5-B29F-97B449F4A6B7.png?ex=6abf9735&is=6abe45b5&hm=8f79b7d584d74022b1d6240ffe337f2abe2727dd0a44d5ae6aa68b6afe67085e&",
+          "size": 2090630,
+          "content_type": "image/png",
+          "width": 1149,
+          "height": 1369
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1542498001837096972"
+    },
+    {
+      "id": "1542285622939492473",
+      "content": "",
+      "timestamp": "2026-08-26T21:32:26.790000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "1051673096463077386",
+        "username": "Jim Segredo",
+        "global_name": "Jim Segredo",
+        "avatar": "01471ecae9c8cda9f28601aab9db221d"
+      },
+      "attachments": [
+        {
+          "id": "1542285622566457465",
+          "filename": "BC90A675-CA49-4F52-BC93-53C954C7C2B2.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1542285622566457465/BC90A675-CA49-4F52-BC93-53C954C7C2B2.png?ex=6abf7a2a&is=6abe28aa&hm=55fcf6b3c7c7681530de93aec17443407568cba026ee3762675826c664a06708&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1542285622566457465/BC90A675-CA49-4F52-BC93-53C954C7C2B2.png?ex=6abf7a2a&is=6abe28aa&hm=55fcf6b3c7c7681530de93aec17443407568cba026ee3762675826c664a06708&",
+          "size": 2275796,
+          "content_type": "image/png",
+          "width": 1122,
+          "height": 1402
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1542285622939492473"
+    },
+    {
+      "id": "1541959380243849307",
+      "content": "",
+      "timestamp": "2026-08-25T23:56:04.470000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "1051673096463077386",
+        "username": "Jim Segredo",
+        "global_name": "Jim Segredo",
+        "avatar": "01471ecae9c8cda9f28601aab9db221d"
+      },
+      "attachments": [
+        {
+          "id": "1541959379732009141",
+          "filename": "E6F71156-C5D0-4473-9324-254179C2724A.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1541959379732009141/E6F71156-C5D0-4473-9324-254179C2724A.png?ex=6abf9bd4&is=6abe4a54&hm=c56a8c586548383c03a1c872c00820678861842194262c25fa0e5538defd8e2a&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1541959379732009141/E6F71156-C5D0-4473-9324-254179C2724A.png?ex=6abf9bd4&is=6abe4a54&hm=c56a8c586548383c03a1c872c00820678861842194262c25fa0e5538defd8e2a&",
+          "size": 2839757,
+          "content_type": "image/png",
+          "width": 1672,
+          "height": 941
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1541959380243849307"
+    },
+    {
+      "id": "1541514824444542997",
+      "content": "",
+      "timestamp": "2026-08-24T18:29:34.108000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "1051673096463077386",
+        "username": "Jim Segredo",
+        "global_name": "Jim Segredo",
+        "avatar": "01471ecae9c8cda9f28601aab9db221d"
+      },
+      "attachments": [
+        {
+          "id": "1541514823668465684",
+          "filename": "AAE4A234-EF63-4DF8-9AD3-52DFABB1BC8C.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1541514823668465684/AAE4A234-EF63-4DF8-9AD3-52DFABB1BC8C.png?ex=6abff80d&is=6abea68d&hm=86674d04a5d98575088d21c1cae55761eba6a538269f9697d00a816f05f46a8d&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1541514823668465684/AAE4A234-EF63-4DF8-9AD3-52DFABB1BC8C.png?ex=6abff80d&is=6abea68d&hm=86674d04a5d98575088d21c1cae55761eba6a538269f9697d00a816f05f46a8d&",
+          "size": 3502215,
+          "content_type": "image/png",
+          "width": 1672,
+          "height": 941
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1541514824444542997"
+    },
+    {
+      "id": "1540445435209056296",
+      "content": "Tonight its Going down Broadcasted by RSI <@448167380829601802>",
+      "timestamp": "2026-08-21T19:40:11.846000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "810534889610674196",
+        "username": "Tommy Rogers",
+        "global_name": "Tommy Rogers",
+        "avatar": "95f66064c31c01cef63626bc34897fe0"
+      },
+      "attachments": [
+        {
+          "id": "1540445434739167394",
+          "filename": "ChatGPT_Image_Aug_21_2026_12_39_08_PM.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1540445434739167394/ChatGPT_Image_Aug_21_2026_12_39_08_PM.png?ex=6ac0089b&is=6abeb71b&hm=247ba0237f0714b4cf88284698f00c0a1ae5f3b99906db7a8aad7b614990284c&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1540445434739167394/ChatGPT_Image_Aug_21_2026_12_39_08_PM.png?ex=6ac0089b&is=6abeb71b&hm=247ba0237f0714b4cf88284698f00c0a1ae5f3b99906db7a8aad7b614990284c&",
+          "size": 2604456,
+          "content_type": "image/png",
+          "width": 1672,
+          "height": 941
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1540445435209056296"
+    },
+    {
+      "id": "1540428506725355632",
+      "content": "this is the one!",
+      "timestamp": "2026-08-21T18:32:55.781000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "810534889610674196",
+        "username": "Tommy Rogers",
+        "global_name": "Tommy Rogers",
+        "avatar": "95f66064c31c01cef63626bc34897fe0"
+      },
+      "attachments": [
+        {
+          "id": "1540428506633342976",
+          "filename": "ChatGPT_Image_Aug_21_2026_11_32_10_AM.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1540428506633342976/ChatGPT_Image_Aug_21_2026_11_32_10_AM.png?ex=6abff8d7&is=6abea757&hm=c0eb6a35e76ea2fd966920053825254cf1b0369fc643852a033e9f5962a80790&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1540428506633342976/ChatGPT_Image_Aug_21_2026_11_32_10_AM.png?ex=6abff8d7&is=6abea757&hm=c0eb6a35e76ea2fd966920053825254cf1b0369fc643852a033e9f5962a80790&",
+          "size": 2723948,
+          "content_type": "image/png",
+          "width": 1672,
+          "height": 941
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1540428506725355632"
+    },
+    {
+      "id": "1540424940652863618",
+      "content": "Sunday Sunday Sunday!  Its gonna be a good one!  Looking forward to it!",
+      "timestamp": "2026-08-21T18:18:45.563000+00:00",
+      "edited_timestamp": "2026-08-21T18:22:29.978000+00:00",
+      "pinned": false,
+      "author": {
+        "id": "810534889610674196",
+        "username": "Tommy Rogers",
+        "global_name": "Tommy Rogers",
+        "avatar": "95f66064c31c01cef63626bc34897fe0"
+      },
+      "attachments": [],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1540424940652863618"
+    },
+    {
+      "id": "1540138348973400125",
+      "content": "",
+      "timestamp": "2026-08-20T23:19:56.782000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "1051673096463077386",
+        "username": "Jim Segredo",
+        "global_name": "Jim Segredo",
+        "avatar": "01471ecae9c8cda9f28601aab9db221d"
+      },
+      "attachments": [
+        {
+          "id": "1540138348478341222",
+          "filename": "0E942CD5-D415-435F-AF7A-279AD43D455D.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1540138348478341222/0E942CD5-D415-435F-AF7A-279AD43D455D.png?ex=6abf935c&is=6abe41dc&hm=2f0e2132af0a0ad69a2757b6326ca06ab3bc3c1c46d5ebb6f71fb26bf8ed3e75&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1540138348478341222/0E942CD5-D415-435F-AF7A-279AD43D455D.png?ex=6abf935c&is=6abe41dc&hm=2f0e2132af0a0ad69a2757b6326ca06ab3bc3c1c46d5ebb6f71fb26bf8ed3e75&",
+          "size": 2329868,
+          "content_type": "image/png",
+          "width": 1536,
+          "height": 1024
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1540138348973400125"
+    },
+    {
+      "id": "1540080827088638033",
+      "content": "League Rules have been updated.  Please review.  @everyone",
+      "timestamp": "2026-08-20T19:31:22.496000+00:00",
       "edited_timestamp": null,
       "pinned": false,
       "author": {
@@ -116,12 +764,66 @@
       },
       "attachments": [],
       "embeds": [],
-      "jump_url": "https://discord.com/channels/1401318372075114636/1431686178691748021/1431688099351494717"
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1540080827088638033"
     },
     {
-      "id": "1431688040568459345",
-      "content": "Remember the season will be ran through hosted sessions!  Anybody that joins a High Line Race on League Night will be tracked in the league!  The league could Ultimately have hundreds of drivers! Ofcourse we will have it limited. Teams and Regulars that exhibit good sportsmanship and race craft will be given first priority! If races start maxing out then we will implement the password.  Those same teams and drivers will recieve the password well in advance.  After the 30 minute mark of practice the password will be distributed on facebook, word of mouth, and discord for those that wish to battle it out with us all!  This League is geared towards growth not maintaining a stagnant group  of 40 drivers!  We want to see our league driver list grow into the hundreds!  We will limiti it to probably C class and above but with a team of experienced drivers, league owners, content creators, IT professionals I think we all can make this amazing not only for the league but for the content creators and Broadcastors alike.  This method will increase viewership ten fold because new drivers will become vested on the leader board and in the broadcast.  We open our doors to content creators to join us on this journey, if you can do something cool we want you on the team!  If you just want to do your thing as a creator, we'll this is the place!  We love to see and collaborate with you all!  \nIf my vision continues to become reality and things get to demanding as more drivers want in a given race than we can allow, we will make adjustments. Perhaps even having races  to earn a spot in the league race.  We will set a day and time but we have latitude to move it around as needed at any given time because we will run it through Hosted sessions.",
-      "timestamp": "2025-10-25T16:57:08.349000+00:00",
+      "id": "1539405216087277718",
+      "content": "",
+      "timestamp": "2026-08-18T22:46:44.281000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "1051673096463077386",
+        "username": "Jim Segredo",
+        "global_name": "Jim Segredo",
+        "avatar": "01471ecae9c8cda9f28601aab9db221d"
+      },
+      "attachments": [
+        {
+          "id": "1539405215785164810",
+          "filename": "E4E7A687-ACE8-4778-B88E-CF1BD0859757.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1539405215785164810/E4E7A687-ACE8-4778-B88E-CF1BD0859757.png?ex=6abf8b94&is=6abe3a14&hm=e260da6545108b51fd89f61d7305a54144795942c1086bb43f38d455e75b5009&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1539405215785164810/E4E7A687-ACE8-4778-B88E-CF1BD0859757.png?ex=6abf8b94&is=6abe3a14&hm=e260da6545108b51fd89f61d7305a54144795942c1086bb43f38d455e75b5009&",
+          "size": 2800809,
+          "content_type": "image/png",
+          "width": 1536,
+          "height": 1024
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1539405216087277718"
+    },
+    {
+      "id": "1538941741372276736",
+      "content": "",
+      "timestamp": "2026-08-17T16:05:03.298000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "1051673096463077386",
+        "username": "Jim Segredo",
+        "global_name": "Jim Segredo",
+        "avatar": "01471ecae9c8cda9f28601aab9db221d"
+      },
+      "attachments": [
+        {
+          "id": "1538941741065965598",
+          "filename": "76E3DBCC-EE08-470E-BD06-BDE3A14695D4.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1538941741065965598/76E3DBCC-EE08-470E-BD06-BDE3A14695D4.png?ex=6abfd62f&is=6abe84af&hm=be0473d26b5036d5644c6aa1a81480b0df0b2daa9b46fca31e8774329619803b&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1538941741065965598/76E3DBCC-EE08-470E-BD06-BDE3A14695D4.png?ex=6abfd62f&is=6abe84af&hm=be0473d26b5036d5644c6aa1a81480b0df0b2daa9b46fca31e8774329619803b&",
+          "size": 2430483,
+          "content_type": "image/png",
+          "width": 1149,
+          "height": 1369
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1538941741372276736"
+    },
+    {
+      "id": "1538336003129868348",
+      "content": "Texas Bound!  Its gonna be a shootout come Sunday!",
+      "timestamp": "2026-08-15T23:58:04.047000+00:00",
       "edited_timestamp": null,
       "pinned": false,
       "author": {
@@ -130,9 +832,212 @@
         "global_name": "Tommy Rogers",
         "avatar": "95f66064c31c01cef63626bc34897fe0"
       },
+      "attachments": [
+        {
+          "id": "1538336002886606868",
+          "filename": "ChatGPT_Image_Aug_15_2026_04_56_29_PM.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1538336002886606868/ChatGPT_Image_Aug_15_2026_04_56_29_PM.png?ex=6abf9c4b&is=6abe4acb&hm=9894e3866aeb475b0bf420716c303d1fb2cb9c08d880039eead7fc5346f0dceb&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1538336002886606868/ChatGPT_Image_Aug_15_2026_04_56_29_PM.png?ex=6abf9c4b&is=6abe4acb&hm=9894e3866aeb475b0bf420716c303d1fb2cb9c08d880039eead7fc5346f0dceb&",
+          "size": 2528311,
+          "content_type": "image/png",
+          "width": 1672,
+          "height": 941
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1538336003129868348"
+    },
+    {
+      "id": "1537882730220621905",
+      "content": "@everyone \n\n<@1051673096463077386> and myself have been working on a new website for HLRN it’s officially released and of course will be updated regularly if there are any problems please let me know what you guys think as all your feedback goes a long way \n\nThank you \n\nhttps://sites.google.com/view/highlineracingnetwork/home",
+      "timestamp": "2026-08-14T17:56:55.364000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "897239790188109874",
+        "username": "Hunter",
+        "global_name": "Hunter",
+        "avatar": "b282c87198c20c087e597ed69a7aa2ac"
+      },
+      "attachments": [],
+      "embeds": [
+        {
+          "title": "High Line Racing Network",
+          "url": "https://sites.google.com/view/highlineracingnetwork/home",
+          "type": "link",
+          "thumbnail": {
+            "url": "https://lh3.googleusercontent.com/sitesv/AG8ngQW3FkqjNrny8VnIhpTlAfFM-08TMAQ-mVaybZ4oMYIiUE5b5bQgCsPa2aMcFca1geAYAiO0Nu1vSHjwqeZbhmPp8lJbnxBd_06Kwins_9WszMWbise3b-uo4pTAgo9bqqdzm0WYLJkfur_9fAk_RB-c6j7SLQt5_lh_qp6NeLX6egyJKvH1OoZp957R-Ok=w16383"
+          }
+        }
+      ],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1537882730220621905"
+    },
+    {
+      "id": "1534592099805167656",
+      "content": "Charlotte Practice Tomorrow!",
+      "timestamp": "2026-08-05T16:01:07.936000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "810534889610674196",
+        "username": "Tommy Rogers",
+        "global_name": "Tommy Rogers",
+        "avatar": "95f66064c31c01cef63626bc34897fe0"
+      },
+      "attachments": [
+        {
+          "id": "1534592099117170729",
+          "filename": "file_000000002070820ba3e3d746037778f3.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1534592099117170729/file_000000002070820ba3e3d746037778f3.png?ex=6abfd543&is=6abe83c3&hm=a114ff4ca54741c073366b472384caf91670516364b78b5e7a09cc9b9af2b68d&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1534592099117170729/file_000000002070820ba3e3d746037778f3.png?ex=6abfd543&is=6abe83c3&hm=a114ff4ca54741c073366b472384caf91670516364b78b5e7a09cc9b9af2b68d&",
+          "size": 2254763,
+          "content_type": "image/png",
+          "width": 1536,
+          "height": 1024
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1534592099805167656"
+    },
+    {
+      "id": "1530963939536666776",
+      "content": "",
+      "timestamp": "2026-07-26T15:44:07.120000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "1051673096463077386",
+        "username": "Jim Segredo",
+        "global_name": "Jim Segredo",
+        "avatar": "01471ecae9c8cda9f28601aab9db221d"
+      },
+      "attachments": [
+        {
+          "id": "1530963939238612992",
+          "filename": "1BDAB76D-4D3F-45D4-B081-FEC88A7AD480.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1530963939238612992/1BDAB76D-4D3F-45D4-B081-FEC88A7AD480.png?ex=6abfd147&is=6abe7fc7&hm=ff4ac565116408789a7e9a7b1bd2daa0105973f1660254247f782ce5cbdb7ad5&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1530963939238612992/1BDAB76D-4D3F-45D4-B081-FEC88A7AD480.png?ex=6abfd147&is=6abe7fc7&hm=ff4ac565116408789a7e9a7b1bd2daa0105973f1660254247f782ce5cbdb7ad5&",
+          "size": 2532576,
+          "content_type": "image/png",
+          "width": 1024,
+          "height": 1536
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1530963939536666776"
+    },
+    {
+      "id": "1530963191453057226",
+      "content": "RSI is broadcasting",
+      "timestamp": "2026-07-26T15:41:08.763000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "448167380829601802",
+        "username": "Randy Schweitzer",
+        "global_name": "Randy Schweitzer",
+        "avatar": "996aaa41752931c27933402465fa9735"
+      },
       "attachments": [],
       "embeds": [],
-      "jump_url": "https://discord.com/channels/1401318372075114636/1431686178691748021/1431688040568459345"
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1530963191453057226"
+    },
+    {
+      "id": "1530715196061122760",
+      "content": "@everyone tomorrow night we will run the 1st of 2 recruitment races for our Monday Night League. If you are an independent driver looking for a team or a new driver unknown to us, this is the perfect opportunity to get into the league. Driver already competing in the Monday League are welcome to race as well",
+      "timestamp": "2026-07-25T23:15:42.054000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "1051673096463077386",
+        "username": "Jim Segredo",
+        "global_name": "Jim Segredo",
+        "avatar": "01471ecae9c8cda9f28601aab9db221d"
+      },
+      "attachments": [
+        {
+          "id": "1530715195805143120",
+          "filename": "885BDB0A-A284-48FC-A536-F382C4387BA9.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1530715195805143120/885BDB0A-A284-48FC-A536-F382C4387BA9.png?ex=6abf925d&is=6abe40dd&hm=2369b2619ebb783b2b957017ff1abcde50703fef9597c4bf25b089e082b86cd8&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1530715195805143120/885BDB0A-A284-48FC-A536-F382C4387BA9.png?ex=6abf925d&is=6abe40dd&hm=2369b2619ebb783b2b957017ff1abcde50703fef9597c4bf25b089e082b86cd8&",
+          "size": 2641845,
+          "content_type": "image/png",
+          "width": 1024,
+          "height": 1536
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1530715196061122760"
+    },
+    {
+      "id": "1530326866567757824",
+      "content": "🚨 HLRN Monday Night League, Season 2 Information 🚨\n\n@everyone \n\nOur Season 2 Monday Night League officially kicks off Monday, August 10th!\n\nAs of today, drivers are free to recruit teammates and form race teams (C Class License at minimum). Once your team has been established, please designate a Team Captain. **We will have a limit of 10 teams**\n\n**Team Captains:**\nPlease send me a private DM with the following:\n\n* Team Name\n* Complete Driver Roster\n* Driver Numbers\n\n*Teams are restricted to 5 drivers for Monday League* 4 Driver teams are allowed\n\n**Number Assignments**\n\nPlease head over to the Number Assignments channel in our Monday League tab and report an available number to your team captain.\n\nAny numbers that are already filled are reserved for our Sunday League drivers and will remain locked, regardless of whether that driver competes on Monday nights. Our goal is for drivers to build an identity within HLRN by keeping the same number for years to come.\n\nIf you’re a new Monday-only driver, choose an available number and report it to your Team Captain. Number assignments will be awarded on a first-come, first-served basis once Team Captains submit their official roster and team name.  (ANY NUMBER MARKED FILL IN EXCEPT FOR THE #6 IS STILL AVAILABLE)\n\n**Schedule**\n\nThe official Season 2 schedule has been posted! All races will be broadcast live on RSI Broadcasting via YouTube.\n\n**League Entry Fee**\n\nThe league entry fee is $40 per driver and must be paid by Wednesday, August 5th.\n\nPayments must be sent via Venmo to @tommylrogers.\n\nTeam Captains are responsible for making sure every driver on their roster has paid by the deadline.\n\nFailure to pay by August 5th will result in forfeiture of your assigned car number and roster spot.\n\nWe will only accept payment through Venmo. If you don’t have a Venmo account, find a teammate, friend, or family member who can submit your payment, then reimburse them however you’d like.\n\nLet’s get these teams built and get ready for another great season. See you boys on August 10th!",
+      "timestamp": "2026-07-24T21:32:37.088000+00:00",
+      "edited_timestamp": "2026-07-24T21:32:59.835000+00:00",
+      "pinned": true,
+      "author": {
+        "id": "1051673096463077386",
+        "username": "Jim Segredo",
+        "global_name": "Jim Segredo",
+        "avatar": "01471ecae9c8cda9f28601aab9db221d"
+      },
+      "attachments": [],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1530326866567757824"
+    },
+    {
+      "id": "1529880609776861335",
+      "content": "",
+      "timestamp": "2026-07-23T15:59:21.178000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "810534889610674196",
+        "username": "Tommy Rogers",
+        "global_name": "Tommy Rogers",
+        "avatar": "95f66064c31c01cef63626bc34897fe0"
+      },
+      "attachments": [
+        {
+          "id": "1529880609483395255",
+          "filename": "file_00000000182481f583ef1a19ad1ff1a2.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1529880609483395255/file_00000000182481f583ef1a19ad1ff1a2.png?ex=6abfd4d9&is=6abe8359&hm=f3494d1d95d0d1038a8e696b62500f1c8a2eb6e2057d886f4e04b5616cd37d0e&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1529880609483395255/file_00000000182481f583ef1a19ad1ff1a2.png?ex=6abfd4d9&is=6abe8359&hm=f3494d1d95d0d1038a8e696b62500f1c8a2eb6e2057d886f4e04b5616cd37d0e&",
+          "size": 2391765,
+          "content_type": "image/png",
+          "width": 1536,
+          "height": 1024
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1529880609776861335"
+    },
+    {
+      "id": "1529869447970426930",
+      "content": "",
+      "timestamp": "2026-07-23T15:14:59.996000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "1051673096463077386",
+        "username": "Jim Segredo",
+        "global_name": "Jim Segredo",
+        "avatar": "01471ecae9c8cda9f28601aab9db221d"
+      },
+      "attachments": [
+        {
+          "id": "1529869447706181632",
+          "filename": "7EA7A848-F091-434D-BE56-B060D1E0E09E.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1529869447706181632/7EA7A848-F091-434D-BE56-B060D1E0E09E.png?ex=6abfca73&is=6abe78f3&hm=76d616c79f31c584ae1a15ca74f87ca57b3b899b5994020172b6ad398a3287fc&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1529869447706181632/7EA7A848-F091-434D-BE56-B060D1E0E09E.png?ex=6abfca73&is=6abe78f3&hm=76d616c79f31c584ae1a15ca74f87ca57b3b899b5994020172b6ad398a3287fc&",
+          "size": 2529744,
+          "content_type": "image/png",
+          "width": 1254,
+          "height": 1254
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1529869447970426930"
     }
   ]
 }
