@@ -805,3 +805,234 @@ html.hlrn-performance-v2 :where(
   }
 }
 
+/* HLRN NETWORK CONTROL PLATFORM 20261001 */
+/* =========================
+   HLRN NETWORK CONTROL PLATFORM
+========================= */
+#hlrn-race-weekend-strip.manual .nx-race-week-label{
+  background:
+    linear-gradient(90deg,color-mix(in srgb,var(--nx-red) 13%,var(--nx-surface-2)),var(--nx-surface-2))!important;
+}
+#hlrn-race-weekend-strip.manual .nx-race-week-label b{
+  border-color:var(--nx-red)!important;
+  color:var(--nx-red)!important;
+}
+html[data-hlrn-theme="dark"] #hlrn-race-weekend-strip.manual .nx-race-week-label b{
+  color:#ff758a!important;
+}
+#hlrn-race-weekend-strip.mode-checkered:after{
+  opacity:1!important;
+  background:
+    repeating-linear-gradient(90deg,#fff 0 12px,#111 12px 24px,#111 24px 36px,#fff 36px 48px)!important;
+}
+#hlrn-race-weekend-strip.mode-final:after{
+  opacity:1!important;
+  background:linear-gradient(90deg,#d6ad16,#ffe66a,#d6ad16)!important;
+}
+#hlrn-race-weekend-strip.mode-checkered .nx-race-week-status,
+#hlrn-race-weekend-strip.mode-final .nx-race-week-status{
+  color:var(--nx-yellow)!important;
+}
+#hlrn-race-weekend-strip.mode-checkered .nx-race-week-label i{
+  border-radius:0!important;
+  background:
+    conic-gradient(#fff 25%,#111 0 50%,#fff 0 75%,#111 0) 0 0/6px 6px!important;
+  box-shadow:0 0 0 1px var(--nx-line-strong)!important;
+}
+#hlrn-race-weekend-strip.mode-final .nx-race-week-label i{
+  background:var(--nx-yellow)!important;
+  box-shadow:0 0 11px color-mix(in srgb,var(--nx-yellow) 60%,transparent)!important;
+}
+
+/* One compact state banner makes every major HLRN page react to the same control state. */
+#hlrn-network-mode-banner{
+  position:relative!important;
+  z-index:2147482400!important;
+  min-height:42px!important;
+  display:grid!important;
+  grid-template-columns:auto minmax(180px,auto) minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:11px!important;
+  padding:7px 14px!important;
+  border-bottom:1px solid var(--nx-line)!important;
+  background:var(--nx-surface-2)!important;
+  color:var(--nx-ink)!important;
+  font-family:var(--hlrn-body,Inter,Arial,sans-serif)!important;
+  box-shadow:0 6px 16px rgba(0,0,0,.05)!important;
+}
+#hlrn-network-mode-banner:before{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;
+  top:0!important;
+  bottom:0!important;
+  width:4px!important;
+  background:var(--nx-red)!important;
+}
+#hlrn-network-mode-banner .nx-network-state{
+  display:flex!important;
+  align-items:center!important;
+  gap:7px!important;
+  color:var(--nx-muted)!important;
+  font-size:6px!important;
+  font-weight:1000!important;
+  letter-spacing:.1em!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+}
+#hlrn-network-mode-banner .nx-network-state i{
+  width:7px!important;
+  height:7px!important;
+  border-radius:50%!important;
+  background:#818c97!important;
+}
+#hlrn-network-mode-banner>strong{
+  min-width:0!important;
+  color:var(--nx-ink)!important;
+  font-size:10px!important;
+  font-weight:1000!important;
+  font-style:italic!important;
+  letter-spacing:.035em!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+#hlrn-network-mode-banner .nx-network-note{
+  min-width:0!important;
+  color:var(--nx-muted)!important;
+  font-size:7px!important;
+  font-weight:800!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+#hlrn-network-mode-banner>a{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-height:27px!important;
+  padding:0 9px!important;
+  border:1px solid var(--nx-line-strong)!important;
+  background:var(--nx-surface)!important;
+  color:var(--nx-ink)!important;
+  text-decoration:none!important;
+  font-size:6px!important;
+  font-weight:1000!important;
+  letter-spacing:.07em!important;
+  white-space:nowrap!important;
+}
+#hlrn-network-mode-banner.mode-live:before,
+#hlrn-network-mode-banner.mode-practice:before,
+#hlrn-network-mode-banner.mode-qualifying:before{
+  background:var(--nx-green)!important;
+}
+#hlrn-network-mode-banner.mode-live .nx-network-state i,
+#hlrn-network-mode-banner.mode-practice .nx-network-state i,
+#hlrn-network-mode-banner.mode-qualifying .nx-network-state i{
+  background:#35d276!important;
+  box-shadow:0 0 10px rgba(53,210,118,.55)!important;
+}
+#hlrn-network-mode-banner.mode-live>a,
+#hlrn-network-mode-banner.mode-practice>a,
+#hlrn-network-mode-banner.mode-qualifying>a{
+  background:#176f40!important;
+  border-color:#176f40!important;
+  color:#fff!important;
+}
+#hlrn-network-mode-banner.mode-checkered{
+  background:
+    linear-gradient(90deg,color-mix(in srgb,var(--nx-yellow) 8%,var(--nx-surface-2)),var(--nx-surface-2))!important;
+}
+#hlrn-network-mode-banner.mode-checkered:before{
+  background:
+    repeating-linear-gradient(0deg,#111 0 4px,#fff 4px 8px)!important;
+}
+#hlrn-network-mode-banner.mode-checkered .nx-network-state i{
+  border-radius:0!important;
+  background:
+    conic-gradient(#fff 25%,#111 0 50%,#fff 0 75%,#111 0) 0 0/6px 6px!important;
+  box-shadow:0 0 0 1px var(--nx-line-strong)!important;
+}
+#hlrn-network-mode-banner.mode-final:before{
+  background:var(--nx-yellow)!important;
+}
+#hlrn-network-mode-banner.mode-final .nx-network-state i{
+  background:var(--nx-yellow)!important;
+  box-shadow:0 0 10px color-mix(in srgb,var(--nx-yellow) 55%,transparent)!important;
+}
+#hlrn-network-mode-banner.mode-final>a{
+  background:var(--nx-yellow)!important;
+  border-color:var(--nx-yellow)!important;
+  color:#111!important;
+}
+
+/* Route reactions */
+html[data-hlrn-race-source="manual"][data-hlrn-race-series="sunday"]{
+  --nx-active-series:#e31837;
+}
+html[data-hlrn-race-source="manual"][data-hlrn-race-series="monday"]{
+  --nx-active-series:#1c8b4b;
+}
+html[data-hlrn-race-source="manual"] #hlrn-global-nav{
+  box-shadow:
+    inset 0 3px 0 var(--nx-active-series,var(--hlrn-red,#e31837)),
+    0 8px 24px rgba(0,0,0,.22)!important;
+}
+html[data-hlrn-race-mode="live"] .h9-top,
+html[data-hlrn-race-mode="live"] .nr-mast,
+html[data-hlrn-race-mode="live"] .bc-mast,
+html[data-hlrn-race-mode="live"] #hero{
+  border-top-color:var(--nx-active-series,var(--nx-green))!important;
+}
+html[data-hlrn-race-mode="checkered"] .h9-top,
+html[data-hlrn-race-mode="checkered"] .nr-mast{
+  position:relative!important;
+}
+html[data-hlrn-race-mode="checkered"] .h9-top:after,
+html[data-hlrn-race-mode="checkered"] .nr-mast:after{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  bottom:0!important;
+  height:5px!important;
+  background:repeating-linear-gradient(90deg,#111 0 10px,#fff 10px 20px)!important;
+  pointer-events:none!important;
+}
+
+/* On the actual Race Center, keep the network-control banner visually connected to Race Command. */
+html[data-hlrn-route="live"] #hlrn-network-mode-banner{
+  margin-bottom:0!important;
+}
+html[data-hlrn-route="live"][data-hlrn-race-mode="checkered"] #hlrn-live-network-deck{
+  border-top:3px solid var(--nx-yellow)!important;
+}
+html[data-hlrn-route="live"][data-hlrn-race-mode="final"] #hlrn-live-network-deck{
+  border-top:3px solid var(--nx-yellow)!important;
+}
+
+/* Phone network state remains readable without taking over the screen. */
+@media(max-width:760px){
+  #hlrn-network-mode-banner{
+    grid-template-columns:auto minmax(0,1fr) auto!important;
+    gap:7px!important;
+    min-height:40px!important;
+    padding:6px 8px!important;
+  }
+  #hlrn-network-mode-banner .nx-network-state span{
+    display:none!important;
+  }
+  #hlrn-network-mode-banner>strong{
+    font-size:8px!important;
+  }
+  #hlrn-network-mode-banner .nx-network-note{
+    display:none!important;
+  }
+  #hlrn-network-mode-banner>a{
+    min-height:28px!important;
+    padding:0 7px!important;
+    font-size:5px!important;
+  }
+}
+
