@@ -436,10 +436,18 @@ function renderReport(race,updateUrl=true){
 
 function closeReport(updateUrl=true){
   $('raceReportView').classList.remove('active');
-  $('raceArchive').style.display='block';
+  const archive=$('raceArchive');
+  const schedule=document.getElementById('nsSchedule');
   currentKey='';
+  if(archive&&archive.hasAttribute('hidden')){
+    archive.style.display='none';
+    if(updateUrl)history.pushState({results:true},'','./#nsSchedule');
+    setTimeout(()=>{if(schedule)schedule.scrollIntoView({behavior:'smooth',block:'start'});},10);
+    return;
+  }
+  if(archive) archive.style.display='block';
   if(updateUrl)history.pushState({archive:true},'','./#raceArchive');
-  setTimeout(()=>$('raceArchive').scrollIntoView({behavior:'smooth',block:'start'}),10);
+  setTimeout(()=>{if(archive)archive.scrollIntoView({behavior:'smooth',block:'start'});},10);
 }
 
 function finalRecorderRows(archive){
