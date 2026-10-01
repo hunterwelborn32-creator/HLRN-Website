@@ -2527,6 +2527,93 @@ html[data-hlrn-theme="dark"] body .footer-text{
   color:#aeb8c4!important;
 }
 </style>
+
+<style id="HLRN_STORE_FUNCTIONAL_UPGRADE_20261001">
+/* Store usability upgrade — keeps the current retail layout. */
+.hlrn-product-open{
+  cursor:pointer!important;
+}
+.product-name.hlrn-product-open:focus-visible,
+.product-image.hlrn-product-open:focus-visible{
+  outline:3px solid #e31837!important;
+  outline-offset:-3px!important;
+}
+.product-meta-strip{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:10px;
+  padding-top:10px;
+  border-top:1px solid #e1e3e5;
+  color:#6b7279;
+  font-size:7px;
+  font-weight:900;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+}
+.product-meta-strip strong{color:#111;font-size:8px}
+.hlrn-shop-sort{
+  min-height:37px;
+  padding:0 34px 0 10px;
+  border:1px solid #c8ccd0;
+  border-radius:2px;
+  background:#fff;
+  color:#222;
+  font-size:9px;
+  font-weight:900;
+  text-transform:uppercase;
+}
+.hlrn-shop-cat .hlrn-cat-count{
+  display:block;
+  margin-top:5px;
+  color:#e31837;
+  font-size:8px;
+  font-style:normal;
+  font-weight:1000;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+.product.hlrn-deep-linked{
+  border-color:#e31837!important;
+  box-shadow:0 0 0 2px rgba(227,24,55,.12)!important;
+}
+html[data-hlrn-theme="light"] .product-meta-strip{
+  border-color:#e1e3e5!important;
+  color:#66717d!important;
+}
+html[data-hlrn-theme="light"] .product-meta-strip strong{
+  color:#11161c!important;
+  -webkit-text-fill-color:#11161c!important;
+}
+html[data-hlrn-theme="light"] .hlrn-shop-sort{
+  background:#fff!important;
+  color:#11161c!important;
+  border-color:#cfd6de!important;
+}
+html[data-hlrn-theme="dark"] .product-meta-strip{
+  border-color:#2b333e!important;
+  color:#aeb8c4!important;
+}
+html[data-hlrn-theme="dark"] .product-meta-strip strong{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+html[data-hlrn-theme="dark"] .hlrn-shop-sort{
+  background:#0d1117!important;
+  color:#fff!important;
+  border-color:#38424d!important;
+}
+html[data-hlrn-theme="dark"] .hlrn-shop-cat .hlrn-cat-count{
+  color:#ff6679!important;
+  -webkit-text-fill-color:#ff6679!important;
+}
+@media(max-width:700px){
+  .hlrn-shop-sort{width:100%;min-height:42px}
+  .product-meta-strip{font-size:8px}
+}
+</style>
+
 </head><body><div class="page"><div class="mh-cursor-glow" id="mhCursorGlow"></div><div class="mh-network"><div class="left"><span class="mh-live-dot"></span><strong>HLRN Merch Hauler</strong></div><div class="center">Official High Line Racing Network Store</div><div class="right"><span class="clock" id="mhClock">--:-- -- ET</span></div></div><section class="hero"><div class="logo">High Line Racing Network</div><h1>HLRN <span>Store</span></h1><p>Represent the High Line. Official High Line Racing Network apparel, racing gear, and HLRN merchandise.</p><div class="mh-hero-kickers"><span class="mh-chip hot">Official HLRN Gear</span><span class="mh-chip gold">Race Day Apparel</span><span class="mh-chip">Multiple Colors</span><span class="mh-chip">Ships Direct</span></div><div class="hero-line"></div></section>
 
 <div class="store-ticker" aria-label="HLRN official store ticker">
@@ -3040,6 +3127,173 @@ document.addEventListener("DOMContentLoaded", function() {
 
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',buildStoreUI,{once:true});
   else buildStoreUI();
+})();
+</script>
+
+
+
+<script id="HLRN_STORE_FUNCTIONAL_BEHAVIOR_20261001">
+(function(){
+  function slug(value){
+    return String(value||"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");
+  }
+  function priceValue(card){
+    const raw=card.querySelector(".price")?.textContent||"";
+    const value=parseFloat(raw.replace(/[^0-9.]/g,""));
+    return Number.isFinite(value)?value:0;
+  }
+  function openProduct(card){
+    const link=card?.querySelector(".shop-button[href]");
+    if(link) window.open(link.href,link.target||"_self",link.target==="_blank"?"noopener":"");
+  }
+  function productCategory(card){
+    if(card.dataset.mhCategory) return card.dataset.mhCategory;
+    const name=(card.querySelector(".product-name")?.textContent||"").toLowerCase();
+    if(name.includes("hood")) return "hoodie";
+    if(name.includes("cap")||name.includes("hat")) return "cap";
+    return "shirt";
+  }
+  function setUrlState(){
+    const url=new URL(location.href);
+    const active=document.querySelector("[data-shop-filter].active");
+    const category=active?.dataset.shopFilter||"all";
+    const q=document.getElementById("hlrnShopSearch")?.value?.trim()||"";
+    if(category&&category!=="all") url.searchParams.set("category",category);
+    else url.searchParams.delete("category");
+    if(q) url.searchParams.set("q",q);
+    else url.searchParams.delete("q");
+    history.replaceState({store:true},"",url.pathname+url.search+url.hash);
+  }
+  function highlightHash(){
+    document.querySelectorAll(".product.hlrn-deep-linked").forEach(card=>card.classList.remove("hlrn-deep-linked"));
+    const id=decodeURIComponent((location.hash||"").replace(/^#/,""));
+    if(!id) return;
+    const card=document.getElementById(id);
+    if(!card?.classList.contains("product")) return;
+    card.classList.add("hlrn-deep-linked");
+    const top=card.getBoundingClientRect().top+window.scrollY-90;
+    window.scrollTo({top:Math.max(0,top),behavior:"smooth"});
+    setTimeout(()=>card.classList.remove("hlrn-deep-linked"),2200);
+  }
+  function enhance(){
+    const products=[...document.querySelectorAll(".product")];
+    const container=document.querySelector(".products");
+    if(!products.length||!container) return;
+
+    products.forEach(card=>{
+      const nameNode=card.querySelector(".product-name");
+      const imageNode=card.querySelector(".product-image");
+      const name=(nameNode?.textContent||"HLRN Gear").trim();
+      const id="product-"+slug(name);
+      if(!card.id) card.id=id;
+      card.dataset.originalOrder=String(products.indexOf(card));
+      card.dataset.price=String(priceValue(card));
+
+      [nameNode,imageNode].filter(Boolean).forEach(node=>{
+        node.classList.add("hlrn-product-open");
+        node.setAttribute("tabindex","0");
+        node.setAttribute("role","link");
+        node.setAttribute("aria-label","Shop "+name);
+        node.addEventListener("click",e=>{
+          if(e.target.closest("button,a")) return;
+          openProduct(card);
+        });
+        node.addEventListener("keydown",e=>{
+          if(e.key==="Enter"){
+            e.preventDefault();
+            openProduct(card);
+          }
+        });
+      });
+
+      if(!card.querySelector(".product-meta-strip")){
+        const swatches=card.querySelectorAll(".swatch").length;
+        const meta=document.createElement("div");
+        meta.className="product-meta-strip";
+        meta.innerHTML="<span>"+(swatches?swatches+" color"+(swatches===1?"":"s"):"Official HLRN gear")+"</span><strong>Ships Direct</strong>";
+        const bottom=card.querySelector(".product-bottom");
+        if(bottom) bottom.insertAdjacentElement("beforebegin",meta);
+      }
+
+      const button=card.querySelector(".shop-button");
+      if(button){
+        button.textContent="SHOP THIS ITEM →";
+        button.addEventListener("click",()=>{
+          history.replaceState({product:id},"",location.pathname+location.search+"#"+id);
+        });
+      }
+    });
+
+    // Category cards show actual item counts.
+    document.querySelectorAll(".hlrn-shop-cat[data-shop-filter]").forEach(cat=>{
+      const filter=cat.dataset.shopFilter||"all";
+      const count=filter==="all"?products.length:products.filter(card=>productCategory(card)===filter).length;
+      const copy=cat.querySelector("div");
+      if(copy&&!copy.querySelector(".hlrn-cat-count")){
+        const badge=document.createElement("em");
+        badge.className="hlrn-cat-count";
+        badge.textContent=count+" item"+(count===1?"":"s");
+        copy.appendChild(badge);
+      }
+    });
+
+    // Add sorting next to the existing product filters.
+    const filterbar=document.querySelector(".mh-filterbar");
+    if(filterbar&&!document.getElementById("hlrnShopSort")){
+      const select=document.createElement("select");
+      select.id="hlrnShopSort";
+      select.className="hlrn-shop-sort";
+      select.setAttribute("aria-label","Sort HLRN store products");
+      select.innerHTML='<option value="featured">Featured</option><option value="price-asc">Price: Low to High</option><option value="price-desc">Price: High to Low</option><option value="name">Name A–Z</option>';
+      filterbar.appendChild(select);
+      select.addEventListener("change",()=>{
+        const mode=select.value;
+        const sorted=[...products].sort((a,b)=>{
+          if(mode==="price-asc") return Number(a.dataset.price)-Number(b.dataset.price);
+          if(mode==="price-desc") return Number(b.dataset.price)-Number(a.dataset.price);
+          if(mode==="name") return (a.querySelector(".product-name")?.textContent||"").localeCompare(b.querySelector(".product-name")?.textContent||"");
+          return Number(a.dataset.originalOrder)-Number(b.dataset.originalOrder);
+        });
+        sorted.forEach(card=>container.appendChild(card));
+      });
+    }
+
+    const params=new URLSearchParams(location.search);
+    const category=params.get("category");
+    const q=params.get("q");
+    if(category&&["shirt","hoodie","cap","all"].includes(category)){
+      document.querySelector('[data-shop-filter="'+category+'"]')?.click();
+    }
+    const search=document.getElementById("hlrnShopSearch");
+    if(search&&q){
+      search.value=q;
+      search.dispatchEvent(new Event("input",{bubbles:true}));
+    }
+
+    document.querySelectorAll("[data-shop-filter]").forEach(el=>el.addEventListener("click",()=>setTimeout(setUrlState,0)));
+    if(search){
+      search.addEventListener("input",()=>setTimeout(setUrlState,0));
+      search.addEventListener("keydown",e=>{
+        if(e.key==="Escape"){
+          search.value="";
+          search.dispatchEvent(new Event("input",{bubbles:true}));
+          search.focus();
+        }else if(e.key==="Enter"){
+          const visible=products.filter(card=>!card.classList.contains("hidden-by-filter"));
+          if(visible.length===1){
+            e.preventDefault();
+            openProduct(visible[0]);
+          }
+        }
+      });
+    }
+
+    highlightHash();
+    window.addEventListener("hashchange",highlightHash);
+  }
+
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",()=>setTimeout(enhance,0),{once:true});
+  else setTimeout(enhance,0);
 })();
 </script>
 
