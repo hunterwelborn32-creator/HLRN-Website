@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#07090d">
+<title>HLRN Network Control Center</title>
+<link rel="stylesheet" href="../assets/site-shell.css?v=20261001network5">
+<script src="../assets/site-shell.js?v=20261001network5" defer></script>
+<style>
+:root{
+  --cc-bg:#eef1f4;--cc-panel:#fff;--cc-panel2:#f5f7f9;--cc-ink:#10151b;--cc-muted:#697480;
+  --cc-line:#d6dde4;--cc-line2:#bcc6cf;--cc-red:#e31837;--cc-green:#1dad60;--cc-yellow:#d2a900;
+  --cc-shadow:0 18px 50px rgba(15,24,34,.12);
+}
+html[data-hlrn-theme="dark"]{
+  --cc-bg:#000;--cc-panel:#080c11;--cc-panel2:#11171e;--cc-ink:#fff;--cc-muted:#9aa6b2;
+  --cc-line:#242d36;--cc-line2:#3a4652;--cc-yellow:#ffd400;--cc-shadow:0 20px 60px rgba(0,0,0,.52);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--cc-bg);color:var(--cc-ink);font-family:Inter,Arial,sans-serif}
+button,a,input,textarea{font:inherit}
+.cc-page{width:min(1450px,calc(100% - 26px));margin:0 auto;padding:18px 0 70px}
+.cc-gate{min-height:70vh;display:grid;place-items:center}
+.cc-gate-card{width:min(560px,100%);padding:28px;border:1px solid var(--cc-line);background:var(--cc-panel);box-shadow:var(--cc-shadow)}
+.cc-gate-card small,.cc-eyebrow{display:block;color:var(--cc-red);font-size:8px;font-weight:1000;letter-spacing:.14em;text-transform:uppercase}
+.cc-gate-card h1{margin:7px 0 10px;font-size:38px;font-style:italic;text-transform:uppercase;letter-spacing:-.04em}
+.cc-gate-card p{margin:0;color:var(--cc-muted);font-size:12px;line-height:1.6}
+.cc-gate-card a{display:inline-flex;margin-top:16px;padding:11px 14px;background:var(--cc-red);color:#fff;text-decoration:none;font-size:9px;font-weight:1000;letter-spacing:.07em}
+.cc-app[hidden],.cc-gate[hidden]{display:none!important}
+.cc-top{position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end;padding:28px 30px;border:1px solid var(--cc-line);border-bottom:5px solid var(--cc-red);background:var(--cc-panel);box-shadow:var(--cc-shadow)}
+.cc-top:after{content:"CONTROL";position:absolute;right:-12px;bottom:-42px;color:color-mix(in srgb,var(--cc-ink) 4%,transparent);font-size:150px;font-weight:1000;font-style:italic;line-height:.7;pointer-events:none}
+.cc-top h1{position:relative;z-index:1;margin:7px 0 0;font-size:clamp(45px,7vw,92px);font-style:italic;line-height:.82;letter-spacing:-.065em;text-transform:uppercase}
+.cc-top h1 span{color:var(--cc-red)}
+.cc-live-state{position:relative;z-index:1;min-width:260px;padding:15px;border:1px solid var(--cc-line);background:var(--cc-panel2)}
+.cc-live-state small{display:block;color:var(--cc-muted);font-size:7px;font-weight:1000;letter-spacing:.1em}
+.cc-live-state strong{display:block;margin-top:5px;font-size:19px;font-style:italic}
+.cc-live-state span{display:flex;align-items:center;gap:7px;margin-top:7px;color:var(--cc-muted);font-size:8px;font-weight:900}
+.cc-live-state span i{width:8px;height:8px;border-radius:50%;background:#7c8792}
+.cc-live-state.live span i{background:var(--cc-green);box-shadow:0 0 12px rgba(29,173,96,.55)}
+.cc-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(340px,.7fr);gap:14px;margin-top:14px}
+.cc-panel{border:1px solid var(--cc-line);background:var(--cc-panel);box-shadow:var(--cc-shadow)}
+.cc-panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 15px;border-bottom:1px solid var(--cc-line);background:var(--cc-panel2)}
+.cc-panel-head div small{display:block;color:var(--cc-red);font-size:7px;font-weight:1000;letter-spacing:.11em}
+.cc-panel-head div strong{display:block;margin-top:3px;font-size:18px;font-style:italic;text-transform:uppercase}
+.cc-panel-head>span{color:var(--cc-muted);font-size:7px;font-weight:1000;letter-spacing:.07em}
+.cc-body{padding:15px}
+.cc-series{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cc-series button,.cc-mode-grid button,.cc-action{
+  min-height:48px;border:1px solid var(--cc-line2);background:var(--cc-panel2);color:var(--cc-ink);
+  cursor:pointer;font-size:9px;font-weight:1000;letter-spacing:.065em;text-transform:uppercase
+}
+.cc-series button.active[data-series="sunday"]{background:#e31837;color:#fff;border-color:#e31837}
+.cc-series button.active[data-series="monday"]{background:#1c8b4b;color:#fff;border-color:#1c8b4b}
+.cc-mode-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.cc-mode-grid button{position:relative;min-height:72px;padding:10px;text-align:left}
+.cc-mode-grid button small{display:block;color:var(--cc-muted);font-size:6px;margin-bottom:5px}
+.cc-mode-grid button strong{display:block;font-size:12px}
+.cc-mode-grid button.active{border-color:var(--cc-red);box-shadow:inset 4px 0 0 var(--cc-red);background:color-mix(in srgb,var(--cc-red) 8%,var(--cc-panel))}
+.cc-mode-grid button[data-mode="live"].active{border-color:var(--cc-green);box-shadow:inset 4px 0 0 var(--cc-green)}
+.cc-mode-grid button[data-mode="checkered"].active,.cc-mode-grid button[data-mode="final"].active{border-color:var(--cc-yellow);box-shadow:inset 4px 0 0 var(--cc-yellow)}
+.cc-field{margin-top:12px}
+.cc-field label{display:block;margin-bottom:5px;color:var(--cc-muted);font-size:7px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase}
+.cc-field input,.cc-field textarea{width:100%;border:1px solid var(--cc-line);background:var(--cc-panel2);color:var(--cc-ink);padding:11px 12px;outline:none;font-size:11px}
+.cc-field textarea{min-height:78px;resize:vertical}
+.cc-publish-row{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:13px}
+.cc-action{padding:0 16px}
+.cc-action.primary{background:var(--cc-red);border-color:var(--cc-red);color:#fff}
+.cc-action.final{background:var(--cc-yellow);border-color:var(--cc-yellow);color:#111}
+.cc-action.auto{background:var(--cc-panel2)}
+.cc-state-preview{padding:16px;border-left:4px solid var(--cc-red);background:var(--cc-panel2)}
+.cc-state-preview small{display:block;color:var(--cc-muted);font-size:7px;font-weight:1000;letter-spacing:.09em}
+.cc-state-preview h2{margin:6px 0 5px;font-size:25px;font-style:italic;line-height:.95;text-transform:uppercase}
+.cc-state-preview p{margin:0;color:var(--cc-muted);font-size:9px;line-height:1.5}
+.cc-state-preview.live{border-left-color:var(--cc-green)}
+.cc-state-preview.checkered,.cc-state-preview.final{border-left-color:var(--cc-yellow)}
+.cc-status-list{display:grid;gap:7px;margin-top:12px}
+.cc-status-list div{display:grid;grid-template-columns:110px minmax(0,1fr);gap:8px;padding:9px 10px;border:1px solid var(--cc-line);background:var(--cc-panel2)}
+.cc-status-list small{color:var(--cc-muted);font-size:7px;font-weight:1000;text-transform:uppercase}
+.cc-status-list strong{overflow:hidden;text-overflow:ellipsis;color:var(--cc-ink);font-size:9px}
+.cc-review{margin-top:14px}
+.cc-review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}
+.cc-review-grid a{min-height:62px;padding:11px;border:1px solid var(--cc-line);background:var(--cc-panel2);color:var(--cc-ink);text-decoration:none}
+.cc-review-grid a small{display:block;color:var(--cc-muted);font-size:6px;font-weight:1000;letter-spacing:.07em}
+.cc-review-grid a strong{display:block;margin-top:5px;font-size:10px}
+.cc-secure-note{margin-top:10px;padding:10px 11px;border:1px solid var(--cc-line);background:var(--cc-panel2);color:var(--cc-muted);font-size:8px;line-height:1.55}
+.cc-secure-note b{color:var(--cc-ink)}
+.cc-toast{position:fixed;right:14px;bottom:14px;z-index:2147483600;max-width:min(400px,calc(100% - 28px));padding:12px 14px;border:1px solid var(--cc-line2);background:#10161d;color:#fff;box-shadow:0 20px 50px rgba(0,0,0,.3);font-size:9px;font-weight:800;transform:translateY(120px);opacity:0;transition:.2s}
+.cc-toast.show{transform:none;opacity:1}
+@media(max-width:900px){
+  .cc-top{grid-template-columns:1fr;padding:22px 18px}.cc-live-state{min-width:0}.cc-grid{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .cc-page{width:calc(100% - 14px);padding-top:8px}.cc-top h1{font-size:52px}.cc-top:after{font-size:100px}
+  .cc-mode-grid{grid-template-columns:1fr 1fr}.cc-publish-row{grid-template-columns:1fr}.cc-action{min-height:50px}
+  .cc-review-grid{grid-template-columns:1fr}.cc-status-list div{grid-template-columns:90px 1fr}
+}
+</style>
+</head>
+<body>
+<main class="cc-page">
+  <section id="ccGate" class="cc-gate">
+    <div class="cc-gate-card">
+      <small>HLRN ADMINISTRATION</small>
+      <h1>Network Control</h1>
+      <p>This console is available from the HLRN admin account. Sign in as Hunter Welborn from the normal HLRN driver login, then reopen this page.</p>
+      <a href="../">RETURN TO HLRN</a>
+    </div>
+  </section>
+
+  <div id="ccApp" class="cc-app" hidden>
+    <header class="cc-top">
+      <div>
+        <span class="cc-eyebrow">HLRN NETWORK OPERATIONS // MASTER CONTROL</span>
+        <h1>Race <span>Control</span></h1>
+      </div>
+      <div id="ccPublishedState" class="cc-live-state">
+        <small>PUBLISHED NETWORK STATE</small>
+        <strong>LOADING</strong>
+        <span><i></i><b>Reading control feed...</b></span>
+      </div>
+    </header>
+
+    <div class="cc-grid">
+      <section class="cc-panel">
+        <div class="cc-panel-head">
+          <div><small>MASTER SWITCH</small><strong>Race Night Mode</strong></div>
+          <span>PUBLIC NETWORK CONTROL</span>
+        </div>
+        <div class="cc-body">
+          <div class="cc-series">
+            <button type="button" data-series="sunday">SUNDAY NIGHT</button>
+            <button type="button" data-series="monday">MONDAY NIGHT</button>
+          </div>
+
+          <div class="cc-mode-grid">
+            <button type="button" data-mode="race-day"><small>01</small><strong>RACE DAY</strong></button>
+            <button type="button" data-mode="practice"><small>02</small><strong>PRACTICE</strong></button>
+            <button type="button" data-mode="qualifying"><small>03</small><strong>QUALIFYING</strong></button>
+            <button type="button" data-mode="live"><small>04</small><strong>RACE MODE ACTIVE</strong></button>
+            <button type="button" data-mode="checkered"><small>05</small><strong>CHECKERED</strong></button>
+            <button type="button" data-mode="final"><small>06</small><strong>PUBLISH FINAL</strong></button>
+          </div>
+
+          <div class="cc-field">
+            <label for="ccHeadline">Network Headline</label>
+            <input id="ccHeadline" maxlength="120" placeholder="SUNDAY NIGHT • RACE MODE ACTIVE">
+          </div>
+          <div class="cc-field">
+            <label for="ccNote">Race Control Note</label>
+            <textarea id="ccNote" maxlength="280" placeholder="Optional message shown with the network state."></textarea>
+          </div>
+
+          <div class="cc-publish-row">
+            <button id="ccPublish" class="cc-action primary" type="button">PUBLISH SELECTED MODE</button>
+            <button id="ccAuto" class="cc-action auto" type="button">RETURN TO AUTO</button>
+          </div>
+
+          <div class="cc-secure-note"><b>Secure publishing:</b> the website never stores a GitHub password or token. Publish opens the repository's authenticated Network Control workflow; GitHub permissions are the final authorization layer.</div>
+        </div>
+      </section>
+
+      <aside>
+        <section class="cc-panel">
+          <div class="cc-panel-head"><div><small>NETWORK PREVIEW</small><strong>What Fans See</strong></div><span>DAY + NIGHT READY</span></div>
+          <div class="cc-body">
+            <div id="ccPreview" class="cc-state-preview">
+              <small>HLRN NETWORK</small>
+              <h2>Select a race mode</h2>
+              <p>The homepage, Live, News, standings, broadcaster page and navigation will use this state together.</p>
+            </div>
+            <div class="cc-status-list">
+              <div><small>Series</small><strong id="ccPreviewSeries">—</strong></div>
+              <div><small>Mode</small><strong id="ccPreviewMode">—</strong></div>
+              <div><small>Headline</small><strong id="ccPreviewHeadline">—</strong></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="cc-panel cc-review">
+          <div class="cc-panel-head"><div><small>CHECKERED REVIEW</small><strong>Post-Race Desk</strong></div><span>VERIFY BEFORE FINAL</span></div>
+          <div class="cc-body">
+            <div class="cc-review-grid">
+              <a href="../live/?section=report" target="_blank"><small>01 • LIVE</small><strong>Review Race Report →</strong></a>
+              <a href="../results/" target="_blank"><small>02 • RESULTS</small><strong>Verify Results →</strong></a>
+              <a href="../standings/" target="_blank"><small>03 • POINTS</small><strong>Verify Standings →</strong></a>
+              <a href="../news/race-recaps/" target="_blank"><small>04 • NEWS</small><strong>Review Recap →</strong></a>
+            </div>
+            <button id="ccFinal" class="cc-action final" type="button" style="width:100%;margin-top:8px">PUBLISH FINAL</button>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<div id="ccToast" class="cc-toast"></div>
+
+<script>
+(() => {
+  const LOGIN_KEY="hlrn_driver_login_device_v1";
+  const STATE_URL="https://raw.githubusercontent.com/HunterWelborn32-creator/HLRN-Website/main/data/network-control.json";
+  const WORKFLOW_URL="https://github.com/HunterWelborn32-creator/HLRN-Website/actions/workflows/network-control.yml";
+  const $=id=>document.getElementById(id);
+  const norm=v=>String(v||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
+
+  function adminLogin(){
+    try{
+      const d=JSON.parse(localStorage.getItem(LOGIN_KEY)||"null");
+      return d&&norm(d.driver)==="hunter welborn"?d:null;
+    }catch(e){return null}
+  }
+
+  const admin=adminLogin();
+  $("ccGate").hidden=!!admin;
+  $("ccApp").hidden=!admin;
+  if(!admin)return;
+
+  let series="sunday";
+  let mode="race-day";
+  let published=null;
+
+  const labels={
+    "race-day":"RACE DAY",
+    practice:"PRACTICE LIVE",
+    qualifying:"QUALIFYING LIVE",
+    live:"RACE MODE ACTIVE",
+    checkered:"CHECKERED FLAG",
+    final:"OFFICIAL FINAL"
+  };
+
+  function defaultHeadline(){
+    if(mode==="live")return series.toUpperCase()+" NIGHT • RACE MODE ACTIVE";
+    if(mode==="checkered")return "CHECKERED FLAG • RESULTS UNDER REVIEW";
+    if(mode==="final")return "OFFICIAL RESULTS POSTED";
+    if(mode==="race-day")return series.toUpperCase()+" NIGHT • RACE DAY";
+    return series.toUpperCase()+" NIGHT • "+labels[mode];
+  }
+
+  function renderSelection(){
+    document.querySelectorAll("[data-series]").forEach(b=>b.classList.toggle("active",b.dataset.series===series));
+    document.querySelectorAll("[data-mode]").forEach(b=>b.classList.toggle("active",b.dataset.mode===mode));
+    const headline=$("ccHeadline").value.trim()||defaultHeadline();
+    const preview=$("ccPreview");
+    preview.className="cc-state-preview "+mode;
+    preview.querySelector("small").textContent=series.toUpperCase()+" NIGHT • HLRN NETWORK";
+    preview.querySelector("h2").textContent=labels[mode]||mode.toUpperCase();
+    preview.querySelector("p").textContent=$("ccNote").value.trim()||"This status will be reflected across the HLRN network.";
+    $("ccPreviewSeries").textContent=series.toUpperCase()+" NIGHT";
+    $("ccPreviewMode").textContent=labels[mode]||mode.toUpperCase();
+    $("ccPreviewHeadline").textContent=headline;
+    $("ccPublish").textContent=mode==="final"?"PUBLISH FINAL":"PUBLISH "+(labels[mode]||mode).toUpperCase();
+  }
+
+  document.querySelectorAll("[data-series]").forEach(b=>b.addEventListener("click",()=>{series=b.dataset.series;renderSelection()}));
+  document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>{
+    mode=b.dataset.mode;
+    $("ccHeadline").value=defaultHeadline();
+    renderSelection();
+  }));
+  $("ccHeadline").addEventListener("input",renderSelection);
+  $("ccNote").addEventListener("input",renderSelection);
+
+  function toast(msg){
+    const t=$("ccToast");t.textContent=msg;t.classList.add("show");
+    clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.classList.remove("show"),5200);
+  }
+
+  async function loadPublished(){
+    try{
+      const r=await fetch(STATE_URL+"?t="+Date.now(),{cache:"no-store"});
+      if(!r.ok)throw new Error("HTTP "+r.status);
+      published=await r.json();
+      const box=$("ccPublishedState");
+      const active=!!published.enabled&&published.mode!=="auto";
+      box.classList.toggle("live",active&&["live","practice","qualifying"].includes(published.mode));
+      box.querySelector("strong").textContent=active
+        ?((published.series||"").toUpperCase()+" • "+String(published.mode||"").replace(/-/g," ").toUpperCase())
+        :"AUTOMATIC";
+      box.querySelector("b").textContent=published.headline||"Schedule + live feed control";
+      if(["sunday","monday"].includes(published.series)){
+        series=published.series;
+      }
+      if(labels[published.mode]){
+        mode=published.mode;
+      }
+      renderSelection();
+    }catch(e){
+      $("ccPublishedState").querySelector("strong").textContent="STATE UNAVAILABLE";
+      $("ccPublishedState").querySelector("b").textContent="Retrying control feed";
+    }
+  }
+
+  function queuePublish(action){
+    const headline=$("ccHeadline").value.trim()||defaultHeadline();
+    const note=$("ccNote").value.trim();
+    const pending={action,series:action==="auto"?"auto":series,headline:action==="auto"?"":headline,note:action==="auto"?"":note,createdAt:Date.now()};
+    localStorage.setItem("hlrn_network_pending_publish_v1",JSON.stringify(pending));
+    const instructions=[
+      "HLRN NETWORK CONTROL",
+      "Action: "+pending.action,
+      "Series: "+pending.series,
+      "Headline: "+(pending.headline||"(blank)"),
+      "Note: "+(pending.note||"(blank)")
+    ].join("\n");
+    navigator.clipboard?.writeText(instructions).catch(()=>{});
+    window.open(WORKFLOW_URL,"_blank","noopener");
+    toast("GitHub publisher opened. Choose Run workflow and use: "+pending.action+" / "+pending.series+". The settings were also copied.");
+  }
+
+  $("ccPublish").addEventListener("click",()=>queuePublish(mode));
+  $("ccFinal").addEventListener("click",()=>{mode="final";$("ccHeadline").value=defaultHeadline();renderSelection();queuePublish("final")});
+  $("ccAuto").addEventListener("click",()=>queuePublish("auto"));
+
+  renderSelection();
+  loadPublished();
+  setInterval(loadPublished,15000);
+  document.addEventListener("visibilitychange",()=>{if(!document.hidden)loadPublished()});
+})();
+</script>
+</body>
+</html>
