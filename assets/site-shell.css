@@ -1327,3 +1327,121 @@ html[data-hlrn-theme="dark"] thead th{
 html[data-hlrn-theme="dark"] tbody tr:nth-child(even) td{
   background:#11171f!important;
 }
+
+/* HLRN DAY RACE / NIGHT RACE THEME CONTROL 20261001 */
+#hlrn-global-nav .hgn-theme-toggle,
+#hlrn-global-nav .hgn-mobile-theme{
+  position:relative!important;
+  isolation:isolate!important;
+  overflow:hidden!important;
+  min-width:96px!important;
+  min-height:38px!important;
+  padding:0 14px 0 16px!important;
+  gap:8px!important;
+  border:1px solid #3a4552!important;
+  border-radius:5px!important;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.035),transparent 46%),
+    #0b1016!important;
+  color:#fff!important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.025),
+    0 5px 14px rgba(0,0,0,.20)!important;
+  letter-spacing:.075em!important;
+  transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease!important;
+}
+#hlrn-global-nav .hgn-theme-toggle:before,
+#hlrn-global-nav .hgn-mobile-theme:before{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;
+  top:0!important;
+  bottom:0!important;
+  width:4px!important;
+  z-index:1!important;
+  background:#e31837!important;
+  box-shadow:4px 0 14px rgba(227,24,55,.16)!important;
+}
+#hlrn-global-nav .hgn-theme-toggle:after,
+#hlrn-global-nav .hgn-mobile-theme:after{
+  content:""!important;
+  position:absolute!important;
+  z-index:-1!important;
+  width:28px!important;
+  height:28px!important;
+  right:-8px!important;
+  top:-8px!important;
+  opacity:.11!important;
+  background:
+    conic-gradient(#fff 25%,transparent 0 50%,#fff 0 75%,transparent 0)
+    0 0/8px 8px!important;
+  transform:rotate(8deg)!important;
+  pointer-events:none!important;
+}
+#hlrn-global-nav .hgn-theme-icon{
+  position:relative!important;
+  z-index:2!important;
+  width:17px!important;
+  height:17px!important;
+  display:inline-grid!important;
+  place-items:center!important;
+  font-size:13px!important;
+  line-height:1!important;
+  color:#ffd84d!important;
+  text-shadow:0 0 10px rgba(255,216,77,.20)!important;
+}
+#hlrn-global-nav .hgn-theme-label{
+  position:relative!important;
+  z-index:2!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  font-size:8px!important;
+  font-weight:1000!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+#hlrn-global-nav .hgn-theme-toggle:hover,
+#hlrn-global-nav .hgn-theme-toggle:focus-visible,
+#hlrn-global-nav .hgn-mobile-theme:hover,
+#hlrn-global-nav .hgn-mobile-theme:focus-visible{
+  transform:translateY(-1px)!important;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.065),transparent 48%),
+    #111820!important;
+  border-color:#65717d!important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.035),
+    0 8px 20px rgba(0,0,0,.28)!important;
+}
+
+/* The control describes the race mode clicking it will activate. */
+html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-theme-toggle:before,
+html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mobile-theme:before{
+  background:#6d4dff!important;
+  box-shadow:4px 0 14px rgba(109,77,255,.22)!important;
+}
+html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-theme-icon{
+  color:#c8bfff!important;
+  text-shadow:0 0 10px rgba(109,77,255,.28)!important;
+}
+html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-theme-toggle:before,
+html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mobile-theme:before{
+  background:#ffd400!important;
+  box-shadow:4px 0 14px rgba(255,212,0,.20)!important;
+}
+html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-theme-icon{
+  color:#ffd84d!important;
+}
+
+/* Keep the racing switch dark and cockpit-like in both site themes. */
+html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-theme-toggle,
+html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mobile-theme,
+html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-theme-toggle,
+html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mobile-theme{
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.04),transparent 46%),
+    #0b1016!important;
+  color:#fff!important;
+  border-color:#3a4552!important;
+}
+
