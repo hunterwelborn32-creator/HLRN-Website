@@ -5758,5 +5758,81 @@ button,input,select,textarea,.btn,.button,.pill,.chip,.filter,.filter-btn,.tab,.
   #drivers .hlrn-driver-profile-name{font-size:14px!important}
 }
 </style>
+<style id="HLRN_MOBILE_STANDINGS_LAST_COLUMNS_20261001">
+/* Fix the final driver-stat columns on phones: give each one a real width. */
+@media(max-width:760px){
+  #drivers table{
+    width:1580px!important;
+    min-width:1580px!important;
+    max-width:none!important;
+  }
+
+  #drivers th:nth-child(18),#drivers td:nth-child(18){
+    width:70px!important;
+    min-width:70px!important;
+    max-width:70px!important;
+  }
+  #drivers th:nth-child(19),#drivers td:nth-child(19){
+    width:96px!important;
+    min-width:96px!important;
+    max-width:96px!important;
+  }
+  #drivers th:nth-child(20),#drivers td:nth-child(20){
+    width:82px!important;
+    min-width:82px!important;
+    max-width:82px!important;
+  }
+  #drivers th:nth-child(21),#drivers td:nth-child(21){
+    width:170px!important;
+    min-width:170px!important;
+    max-width:170px!important;
+  }
+
+  #drivers th:nth-child(18),
+  #drivers th:nth-child(19),
+  #drivers th:nth-child(20),
+  #drivers th:nth-child(21){
+    white-space:normal!important;
+    text-align:center!important;
+    line-height:1.08!important;
+    overflow:hidden!important;
+  }
+
+  #drivers td:nth-child(18),
+  #drivers td:nth-child(19),
+  #drivers td:nth-child(20){
+    text-align:center!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+  }
+
+  #drivers td.team-name{
+    text-align:left!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    padding-left:10px!important;
+    padding-right:10px!important;
+  }
+
+  /* Strong divider before the final four stats so they read as separate columns. */
+  #drivers th:nth-child(18),
+  #drivers td:nth-child(18){
+    border-left:2px solid #d7dce0!important;
+  }
+}
+
+@media(max-width:420px){
+  #drivers table{
+    width:1540px!important;
+    min-width:1540px!important;
+  }
+  #drivers th:nth-child(21),#drivers td:nth-child(21){
+    width:150px!important;
+    min-width:150px!important;
+    max-width:150px!important;
+  }
+}
+</style>
 </body>
 </html>
