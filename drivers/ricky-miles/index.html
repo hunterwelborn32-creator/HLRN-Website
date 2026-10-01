@@ -13,7 +13,7 @@
 <meta property="og:url" content="https://highlineracingnetwork.com/drivers/ricky-miles/">
 <meta property="og:image" content="/assets/driver-photos/cutout/ricky-miles.webp">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "name": "Ricky Miles", "url": "https://highlineracingnetwork.com/drivers/ricky-miles/", "image": "/assets/driver-photos/cutout/ricky-miles.webp", "memberOf": [{"@type": "SportsOrganization", "name": "Monday Night League", "url": "https://highlineracingnetwork.com/standings/"}]}</script>
-<link rel="stylesheet" href="/assets/site-shell.css?v=20260928v6">
+<link rel="stylesheet" href="/assets/site-shell.css?v=20261001profiledark1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,800;1,900&family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
@@ -43,16 +43,111 @@
 .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}.actions a{padding:11px 14px;background:#11161d;color:#fff;font:900 italic 15px/1 "Barlow Condensed",sans-serif;text-transform:uppercase}.actions a.primary{background:var(--red)}
 .updated{margin-top:14px;color:#858d96;font-size:8px;font-weight:800;text-transform:uppercase}
 
-html[data-hlrn-theme="dark"] body{background:#07090d;color:#f7f8fa}
-html[data-hlrn-theme="dark"] .hero{background:#0c1016;color:#fff;border-color:#2b333e}
-html[data-hlrn-theme="dark"] .hero-media{background:radial-gradient(circle at 50% 30%,#3c4653 0,#1c232c 42%,#0c1016 75%);border-right-color:#2b333e}
-html[data-hlrn-theme="dark"] .hero-media:after{display:block;background:linear-gradient(transparent,#0c1016)}
-html[data-hlrn-theme="dark"] .hero-fallback{color:rgba(255,255,255,.08)}
-html[data-hlrn-theme="dark"] .hero-copy{background:linear-gradient(120deg,rgba(227,24,55,.12),transparent 42%)}
-html[data-hlrn-theme="dark"] .kicker{color:var(--yellow)}
+html[data-hlrn-theme="dark"],
+html[data-hlrn-theme="dark"] body{background:#000!important;color:#fff!important}
+html[data-hlrn-theme="dark"] .page{background:#000!important;color:#fff!important}
+html[data-hlrn-theme="dark"] .crumb{color:#aeb8c4!important}
+html[data-hlrn-theme="dark"] .crumb a{color:#fff!important}
+
+html[data-hlrn-theme="dark"] .hero{background:#000!important;color:#fff!important;border-color:#2b2b2b!important}
+html[data-hlrn-theme="dark"] .hero-media{background:#050505!important;border-right-color:#2b2b2b!important}
+html[data-hlrn-theme="dark"] .hero-media:after{display:block;background:linear-gradient(transparent,#000)!important}
+html[data-hlrn-theme="dark"] .hero-fallback{color:rgba(255,255,255,.08)!important}
+html[data-hlrn-theme="dark"] .hero-copy{background:#000!important;background-image:none!important}
+html[data-hlrn-theme="dark"] .kicker{color:var(--yellow)!important}
 html[data-hlrn-theme="dark"] .hero h1,
-html[data-hlrn-theme="dark"] .car-number{color:#fff}
-html[data-hlrn-theme="dark"] .series-list{color:#aeb8c4}
+html[data-hlrn-theme="dark"] .car-number{color:#fff!important}
+html[data-hlrn-theme="dark"] .series-list{color:#fff!important}
+
+html[data-hlrn-theme="dark"] .career-strip,
+html[data-hlrn-theme="dark"] .career-stat{
+  background:#000!important;
+  color:#fff!important;
+  border-color:#2b2b2b!important;
+}
+html[data-hlrn-theme="dark"] .career-stat small{color:#aaa!important}
+html[data-hlrn-theme="dark"] .career-stat strong{color:#fff!important}
+
+html[data-hlrn-theme="dark"] .section-head{
+  background:#000!important;
+  color:#fff!important;
+  border-bottom-color:#2b2b2b!important;
+}
+html[data-hlrn-theme="dark"] .section-head h2,
+html[data-hlrn-theme="dark"] .section-head span{color:#fff!important}
+html[data-hlrn-theme="dark"] .section-head small{color:var(--red)!important}
+
+html[data-hlrn-theme="dark"] .series-grid{background:#000!important}
+html[data-hlrn-theme="dark"] .series-card,
+html[data-hlrn-theme="dark"] .series-head,
+html[data-hlrn-theme="dark"] .stats-grid,
+html[data-hlrn-theme="dark"] .stat{
+  background:#000!important;
+  background-color:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+  border-color:#2b2b2b!important;
+}
+html[data-hlrn-theme="dark"] .series-head small,
+html[data-hlrn-theme="dark"] .stat small{color:#aaa!important}
+html[data-hlrn-theme="dark"] .series-head h2,
+html[data-hlrn-theme="dark"] .team-badge strong,
+html[data-hlrn-theme="dark"] .stat strong{color:#fff!important}
+html[data-hlrn-theme="dark"] .series-card.sunday{border-top-color:var(--sun)!important}
+html[data-hlrn-theme="dark"] .series-card.monday{border-top-color:var(--mon)!important}
+html[data-hlrn-theme="dark"] .series-card.hosted{border-top-color:var(--hosted)!important}
+
+html[data-hlrn-theme="dark"] .form-grid{background:#000!important}
+html[data-hlrn-theme="dark"] .form-item{
+  background:#000!important;
+  color:#fff!important;
+  border-color:#2b2b2b!important;
+}
+html[data-hlrn-theme="dark"] .form-item strong,
+html[data-hlrn-theme="dark"] .form-item span{color:#fff!important}
+html[data-hlrn-theme="dark"] .form-item small{color:#aaa!important}
+html[data-hlrn-theme="dark"] .form-item.win{border-left-color:var(--red)!important}
+html[data-hlrn-theme="dark"] .form-item.top5{border-left-color:#e5b900!important}
+
+html[data-hlrn-theme="dark"] .history-wrap,
+html[data-hlrn-theme="dark"] table,
+html[data-hlrn-theme="dark"] tbody,
+html[data-hlrn-theme="dark"] tr,
+html[data-hlrn-theme="dark"] td{
+  background:#000!important;
+  color:#fff!important;
+  border-color:#2b2b2b!important;
+}
+html[data-hlrn-theme="dark"] th{
+  background:#0a0a0a!important;
+  color:#fff!important;
+  border-color:#2b2b2b!important;
+}
+html[data-hlrn-theme="dark"] td.win{
+  background:#160307!important;
+  color:#ff7b8f!important;
+}
+html[data-hlrn-theme="dark"] .series-pill{
+  background:#0a0a0a!important;
+  color:#fff!important;
+  border:1px solid #2b2b2b!important;
+}
+html[data-hlrn-theme="dark"] .series-pill.sunday{color:#ff8b9c!important;border-left:3px solid var(--sun)!important}
+html[data-hlrn-theme="dark"] .series-pill.monday{color:#8ee06e!important;border-left:3px solid var(--mon)!important}
+html[data-hlrn-theme="dark"] .series-pill.hosted{color:#e4c85a!important;border-left:3px solid var(--hosted)!important}
+
+html[data-hlrn-theme="dark"] .empty{
+  background:#000!important;
+  color:#aaa!important;
+  border-color:#2b2b2b!important;
+}
+html[data-hlrn-theme="dark"] .actions a{
+  background:#0a0a0a!important;
+  color:#fff!important;
+  border:1px solid #333!important;
+}
+html[data-hlrn-theme="dark"] .actions a.primary{background:var(--red)!important;border-color:var(--red)!important}
+html[data-hlrn-theme="dark"] .updated{color:#aaa!important}
 
 @media(max-width:900px){.hero{grid-template-columns:1fr}.hero-media{min-height:390px}.hero-copy{padding:34px 25px}.career-strip{grid-template-columns:repeat(4,1fr)}.career-stat:nth-child(4n){border-right:0}.series-grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.page{width:min(100% - 18px,1380px)}.hero-media{min-height:330px}.hero h1{font-size:54px}.career-strip{grid-template-columns:repeat(2,1fr)}.career-stat:nth-child(2n){border-right:0}.stats-grid{grid-template-columns:repeat(2,1fr)}.stat{border-right:1px solid #e5e7ea!important}.stat:nth-child(2n){border-right:0!important}.form-grid{grid-template-columns:1fr}}
@@ -102,6 +197,6 @@ html[data-hlrn-theme="dark"] .series-list{color:#aeb8c4}
   </div>
   <div class="updated">Profile data generated from the current HLRN verified league snapshot.</div>
 </main>
-<script src="/assets/site-shell.js?v=20260929myhlrn1"></script>
+<script src="/assets/site-shell.js?v=20261001profiledark1"></script>
 </body>
 </html>
