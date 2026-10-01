@@ -6447,5 +6447,214 @@ button,input,select,textarea,.btn,.button,.pill,.chip,.filter,.filter-btn,.tab,.
 })();
 </script>
 
-</body>
+
+<style id="HLRN_STANDINGS_FLOATING_HEADER_FINAL_20261001_STYLE">
+/* Final standings-header follower.
+   The fixed clone below is intentionally independent of table overflow,
+   so Race Day/Race Night and desktop/mobile scrolling cannot cancel it. */
+.hlrn-standings-floating-head{
+  position:fixed!important;
+  top:0!important;
+  height:auto!important;
+  overflow:hidden!important;
+  z-index:2147483000!important;
+  pointer-events:none!important;
+  display:none;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:0 5px 12px rgba(0,0,0,.18)!important;
+}
+.hlrn-standings-floating-head table{
+  position:absolute!important;
+  top:0!important;
+  margin:0!important;
+}
+</style>
+<script id="HLRN_STANDINGS_FLOATING_HEADER_FINAL_20261001_SCRIPT">
+(function(){
+  if(window.__hlrnStandingsFloatingHeaderFinal) return;
+  window.__hlrnStandingsFloatingHeaderFinal=true;
+
+  const followers=new Map();
+
+  function panelVisible(panel){
+    if(!panel) return false;
+    const cs=getComputedStyle(panel);
+    return cs.display!=="none" && cs.visibility!=="hidden" && panel.classList.contains("active");
+  }
+
+  function copyHeaderLook(sourceTh,cloneTh){
+    const s=getComputedStyle(sourceTh);
+    [
+      "display","boxSizing","background","backgroundColor","backgroundImage",
+      "color","fontFamily","fontSize","fontWeight","fontStyle","fontStretch",
+      "letterSpacing","lineHeight","textAlign","verticalAlign","textTransform",
+      "whiteSpace","paddingTop","paddingRight","paddingBottom","paddingLeft",
+      "borderTop","borderRight","borderBottom","borderLeft"
+    ].forEach(function(prop){
+      cloneTh.style[prop]=s[prop];
+    });
+    const r=sourceTh.getBoundingClientRect();
+    cloneTh.style.width=r.width+"px";
+    cloneTh.style.minWidth=r.width+"px";
+    cloneTh.style.maxWidth=r.width+"px";
+    cloneTh.style.height=r.height+"px";
+  }
+
+  function build(panel){
+    const shell=panel.querySelector(".table-shell");
+    const table=shell && shell.querySelector("table");
+    const thead=table && table.querySelector("thead");
+    if(!shell || !table || !thead) return null;
+
+    const wrap=document.createElement("div");
+    wrap.className="hlrn-standings-floating-head";
+    wrap.setAttribute("aria-hidden","true");
+
+    const cloneTable=document.createElement("table");
+    const cloneHead=thead.cloneNode(true);
+    cloneTable.appendChild(cloneHead);
+    wrap.appendChild(cloneTable);
+    document.body.appendChild(wrap);
+
+    const item={panel,shell,table,thead,wrap,cloneTable,cloneHead,shown:false};
+
+    function refreshClone(){
+      const currentHead=item.table.querySelector("thead");
+      if(!currentHead) return;
+      if(currentHead.innerHTML!==item.cloneHead.innerHTML){
+        const replacement=currentHead.cloneNode(true);
+        item.cloneTable.replaceChild(replacement,item.cloneHead);
+        item.cloneHead=replacement;
+      }
+      const tableStyle=getComputedStyle(item.table);
+      item.cloneTable.style.borderCollapse=tableStyle.borderCollapse;
+      item.cloneTable.style.borderSpacing=tableStyle.borderSpacing;
+      item.cloneTable.style.tableLayout=tableStyle.tableLayout;
+      item.cloneTable.style.background=tableStyle.background;
+      const src=[...currentHead.querySelectorAll("th")];
+      const dst=[...item.cloneHead.querySelectorAll("th")];
+      src.forEach((th,i)=>{ if(dst[i]) copyHeaderLook(th,dst[i]); });
+    }
+
+    item.refreshClone=refreshClone;
+    return item;
+  }
+
+  function ensure(panelId){
+    const panel=document.getElementById(panelId);
+    if(!panel) return null;
+    let item=followers.get(panel);
+    if(!item){
+      item=build(panel);
+      if(item) followers.set(panel,item);
+    }
+    return item;
+  }
+
+  function updateItem(item,forceStyle){
+    if(!item || !panelVisible(item.panel)){
+      if(item) item.wrap.style.display="none";
+      return;
+    }
+
+    const shellRect=item.shell.getBoundingClientRect();
+    const tableRect=item.table.getBoundingClientRect();
+    const headRect=item.thead.getBoundingClientRect();
+    const headHeight=Math.max(1,headRect.height);
+    const shouldFloat=shellRect.top < 0 && shellRect.bottom > headHeight;
+
+    if(!shouldFloat){
+      item.wrap.style.display="none";
+      item.shown=false;
+      return;
+    }
+
+    const left=Math.max(0,shellRect.left);
+    const right=Math.min(window.innerWidth,shellRect.right);
+    const visibleWidth=Math.max(0,right-left);
+    if(visibleWidth<=0){
+      item.wrap.style.display="none";
+      item.shown=false;
+      return;
+    }
+
+    if(forceStyle || !item.shown) item.refreshClone();
+
+    item.wrap.style.display="block";
+    item.wrap.style.left=left+"px";
+    item.wrap.style.width=visibleWidth+"px";
+    item.wrap.style.height=headHeight+"px";
+
+    item.cloneTable.style.width=tableRect.width+"px";
+    item.cloneTable.style.minWidth=tableRect.width+"px";
+    item.cloneTable.style.maxWidth=tableRect.width+"px";
+    item.cloneTable.style.left=(tableRect.left-left)+"px";
+    item.cloneTable.style.height=headHeight+"px";
+
+    item.shown=true;
+  }
+
+  function update(forceStyle){
+    updateItem(ensure("drivers"),forceStyle);
+    updateItem(ensure("teams"),forceStyle);
+  }
+
+  let ticking=false;
+  function requestUpdate(forceStyle){
+    if(ticking && !forceStyle) return;
+    ticking=true;
+    requestAnimationFrame(function(){
+      ticking=false;
+      update(!!forceStyle);
+    });
+  }
+
+  window.addEventListener("scroll",function(){requestUpdate(false)},{passive:true});
+  window.addEventListener("resize",function(){requestUpdate(true)},{passive:true});
+  document.addEventListener("scroll",function(e){
+    if(e.target && e.target.classList && e.target.classList.contains("table-shell")){
+      requestUpdate(false);
+    }
+  },true);
+
+  document.addEventListener("click",function(e){
+    if(e.target && e.target.closest && e.target.closest(".tab-btn")){
+      setTimeout(function(){requestUpdate(true)},0);
+      setTimeout(function(){requestUpdate(true)},150);
+    }
+  });
+
+  const rootObserver=new MutationObserver(function(mutations){
+    let relevant=false;
+    for(const m of mutations){
+      if(m.type==="attributes" || m.type==="childList"){ relevant=true; break; }
+    }
+    if(relevant) requestUpdate(true);
+  });
+
+  function start(){
+    ensure("drivers");
+    ensure("teams");
+    rootObserver.observe(document.documentElement,{
+      attributes:true,
+      attributeFilter:["data-hlrn-theme","style"],
+      childList:true,
+      subtree:true
+    });
+    requestUpdate(true);
+    setTimeout(function(){requestUpdate(true)},500);
+    setTimeout(function(){requestUpdate(true)},1800);
+  }
+
+  if(document.readyState==="loading"){
+    document.addEventListener("DOMContentLoaded",start,{once:true});
+  }else{
+    start();
+  }
+})();
+</script>
+\n</body>
 </html>
