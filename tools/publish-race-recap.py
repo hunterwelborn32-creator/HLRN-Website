@@ -32,8 +32,6 @@ DEFAULT_RECAP_URL = "https://hlrn-live-feed.onrender.com/api/recaps"
 SITE_ORIGIN = "https://highlineracingnetwork.com"
 ET = ZoneInfo("America/New_York")
 
-# Races intentionally removed from the public HLRN recap/results archive.
-REMOVED_RACE_KEYS = {"subsession:89034974"}
 
 
 def safe_int(value, default=None):
@@ -301,8 +299,6 @@ def race_key(recap):
 
 
 def is_publishable(recap):
-    if race_key(recap) in REMOVED_RACE_KEYS:
-        return False, "race is intentionally excluded from the public archive"
     if not recap.get("raceFrozen"):
         return False, "race is not frozen"
     race = recap.get("race")
