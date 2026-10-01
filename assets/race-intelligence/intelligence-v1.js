@@ -1507,7 +1507,12 @@ document.addEventListener('DOMContentLoaded', function(){
     list=list.filter(d=>d&&Number(d.races?.length||0)>0).sort((a,b)=>Number(b.overall)-Number(a.overall)).slice(0,3);
     grid.innerHTML=list.length?list.map((d,i)=>{
       const rating=clamp(d.overall);
-      return `<article class="v3-contender">${hLrnPhotoMarkup(d,"full","hlrn-contender-full-photo")}<div class="v3-contender-label">${i===0?'Performance Leader':'Contender '+(i+1)}</div><div class="v3-contender-name">${hLrnDriverNameMarkup(d)}</div><div class="v3-contender-meta"><span>Rating ${rating.toFixed(0)}</span><span>${Number(d.top5Rate||0).toFixed(0)}% Top 5</span></div><div class="v3-contender-meter"><span style="width:${rating}%"></span></div></article>`;
+      const displayName=formatDriverName(d?.name||d?.driver||"");
+      const directPhoto=hLrnDriverPhoto(d,"full");
+      const ethanFallback="/assets/driver-photos/full/ethan-moreno.webp?v=20261001contenders2";
+      const fallbackPhoto=/^ethan\s+(?:fonseca\s+)?moreno$/i.test(displayName)?ethanFallback:directPhoto;
+      const photo=`<div class="v3-contender-photo-wrap"><img class="hlrn-contender-full-photo" src="${esc(directPhoto)}" alt="${esc(displayName)}" loading="eager" decoding="async" onerror="this.onerror=null;this.src='${esc(fallbackPhoto)}';"></div>`;
+      return `<article class="v3-contender">${photo}<div class="v3-contender-copy"><div class="v3-contender-label">${i===0?'Performance Leader':'Contender '+(i+1)}</div><div class="v3-contender-name">${hLrnDriverNameMarkup(d)}</div><div class="v3-contender-meta"><span>Rating ${rating.toFixed(0)}</span><span>${Number(d.top5Rate||0).toFixed(0)}% Top 5</span></div><div class="v3-contender-meter"><span style="width:${rating}%"></span></div></div></article>`;
     }).join(''):'<div style="padding:18px;color:#7f8992;font-size:10px">Waiting for enough race history to build the contender board.</div>';
   }
 
