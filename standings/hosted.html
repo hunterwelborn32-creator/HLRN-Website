@@ -1546,6 +1546,157 @@ html[data-hlrn-theme="dark"] tbody tr:hover td{
 }
 `;
 
+const HLRN_HOSTED_RECORDS_DARK_CSS = `
+/* Hosted > Records & Milestones dark mode */
+html[data-hlrn-theme="dark"],
+html[data-hlrn-theme="dark"] body,
+html[data-hlrn-theme="dark"] .hlrn-wrap,
+html[data-hlrn-theme="dark"] .hero,
+html[data-hlrn-theme="dark"] .panel,
+html[data-hlrn-theme="dark"] .records-ticker,
+html[data-hlrn-theme="dark"] .hlrn-live-strip,
+html[data-hlrn-theme="dark"] .hlrn-summary-ribbon,
+html[data-hlrn-theme="dark"] .hlrn-summary-cell,
+html[data-hlrn-theme="dark"] #content,
+html[data-hlrn-theme="dark"] .top-grid,
+html[data-hlrn-theme="dark"] .card,
+html[data-hlrn-theme="dark"] .records-panel,
+html[data-hlrn-theme="dark"] .records-grid,
+html[data-hlrn-theme="dark"] .record-card,
+html[data-hlrn-theme="dark"] .milestone-group,
+html[data-hlrn-theme="dark"] .milestone,
+html[data-hlrn-theme="dark"] .watch,
+html[data-hlrn-theme="dark"] .watch-list,
+html[data-hlrn-theme="dark"] .record-status,
+html[data-hlrn-theme="dark"] .info-bar{
+  background:#000!important;
+  background-color:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+  border-color:#2b2b2b!important;
+  box-shadow:none!important;
+}
+
+html[data-hlrn-theme="dark"] body:before,
+html[data-hlrn-theme="dark"] body:after,
+html[data-hlrn-theme="dark"] .hlrn-wrap:before,
+html[data-hlrn-theme="dark"] .hero:before,
+html[data-hlrn-theme="dark"] .hero:after,
+html[data-hlrn-theme="dark"] .record-card:after{
+  background:none!important;
+}
+
+html[data-hlrn-theme="dark"] :where(
+  .hero h1,.hero h1 .red,.hero p,
+  .records-ticker,.records-ticker *,
+  .hlrn-live-left,.hlrn-live-center,.hlrn-live-clock,
+  .hlrn-summary-label,.hlrn-summary-value,
+  .card-title,.stat-text,.stat-text strong,
+  .records-title,.record-name,.record-value,.record-driver,.record-second,.record-second strong,
+  .group-title,.m-driver,.watch-label,.watch-driver,.watch-value,
+  .status-title,.status-copy,.status-line,
+  .info-bar,.info-bar strong,.info-bar .red,
+  .loading,.error,.warning
+){
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  text-shadow:none!important;
+}
+
+html[data-hlrn-theme="dark"] .hlrn-summary-cell{
+  border:1px solid #303030!important;
+}
+html[data-hlrn-theme="dark"] .card,
+html[data-hlrn-theme="dark"] .record-card,
+html[data-hlrn-theme="dark"] .milestone-group,
+html[data-hlrn-theme="dark"] .milestone,
+html[data-hlrn-theme="dark"] .watch,
+html[data-hlrn-theme="dark"] .record-status,
+html[data-hlrn-theme="dark"] .info-bar{
+  background:#050505!important;
+  background-color:#050505!important;
+  background-image:none!important;
+}
+
+html[data-hlrn-theme="dark"] .records-panel{
+  background:#000!important;
+}
+html[data-hlrn-theme="dark"] .records-title{
+  border-color:#333!important;
+}
+html[data-hlrn-theme="dark"] .record-second{
+  border-top-color:#333!important;
+}
+
+html[data-hlrn-theme="dark"] .hlrn-live-strip,
+html[data-hlrn-theme="dark"] .records-ticker{
+  background:#050505!important;
+  background-color:#050505!important;
+}
+
+html[data-hlrn-theme="dark"] .hlrn-summary-ribbon{
+  background:#000!important;
+}
+
+html[data-hlrn-theme="dark"] .hlrn-live-dot{
+  background:#49d56a!important;
+  box-shadow:0 0 12px #49d56a!important;
+}
+
+/* Keep brand/accent bars while removing light fills */
+html[data-hlrn-theme="dark"] .hero{
+  border-top-color:#ed1c24!important;
+}
+html[data-hlrn-theme="dark"] .record-card:before{
+  background:linear-gradient(90deg,#ffd400,#ed1c24,transparent)!important;
+}
+html[data-hlrn-theme="dark"] .records-panel:before{
+  background:linear-gradient(90deg,#ffd400 0 14%,#ed1c24 14% 62%,transparent)!important;
+}
+`;
+
+function hardPaintHostedRecords(doc,dark){
+  if(!doc)return;
+
+  const blocks=".hlrn-wrap,.hero,.panel,.records-ticker,.hlrn-live-strip,.hlrn-summary-ribbon,.hlrn-summary-cell,#content,.top-grid,.card,.records-panel,.records-grid,.record-card,.milestone-group,.milestone,.watch,.watch-list,.record-status,.info-bar";
+  doc.querySelectorAll(blocks).forEach(el=>{
+    if(!dark){
+      el.style.removeProperty("background");
+      el.style.removeProperty("background-color");
+      el.style.removeProperty("background-image");
+      el.style.removeProperty("color");
+      el.style.removeProperty("border-color");
+      el.style.removeProperty("box-shadow");
+      return;
+    }
+    el.style.setProperty("background","#000","important");
+    el.style.setProperty("background-color","#000","important");
+    el.style.setProperty("background-image","none","important");
+    el.style.setProperty("color","#fff","important");
+    el.style.setProperty("border-color","#2b2b2b","important");
+    el.style.setProperty("box-shadow","none","important");
+  });
+
+  doc.querySelectorAll(".card,.record-card,.milestone-group,.milestone,.watch,.record-status,.info-bar").forEach(el=>{
+    if(dark){
+      el.style.setProperty("background","#050505","important");
+      el.style.setProperty("background-color","#050505","important");
+      el.style.setProperty("background-image","none","important");
+    }
+  });
+
+  doc.querySelectorAll(".hero h1,.hero h1 .red,.hero p,.records-ticker *,.hlrn-live-left,.hlrn-live-center,.hlrn-live-clock,.hlrn-summary-label,.hlrn-summary-value,.card-title,.stat-text,.stat-text strong,.records-title,.record-name,.record-value,.record-driver,.record-second,.record-second strong,.group-title,.m-driver,.watch-label,.watch-driver,.watch-value,.status-title,.status-copy,.status-line,.info-bar,.info-bar strong,.info-bar .red,.loading,.error,.warning").forEach(el=>{
+    if(!dark){
+      el.style.removeProperty("color");
+      el.style.removeProperty("-webkit-text-fill-color");
+      return;
+    }
+    el.style.setProperty("color","#fff","important");
+    el.style.setProperty("-webkit-text-fill-color","#fff","important");
+    el.style.setProperty("text-shadow","none","important");
+  });
+}
+
 function hardPaintHostedIncidentWatch(doc,dark){
   if(!doc)return;
 
@@ -1655,10 +1806,20 @@ function applyHostedSeriesMatch(frame){
     doc.documentElement.dataset.hlrnTheme=dark?"dark":"light";
     doc.documentElement.style.colorScheme=dark?"dark":"light";
     const driverStatsDark = frame && frame.id==="hostedFrame-drivers" ? HLRN_HOSTED_DRIVER_STATS_DARK_CSS : "";
-    style.textContent=dark?(HLRN_HOSTED_DARK_SERIES_CSS+driverStatsDark):HLRN_HOSTED_MATCH_SERIES_CSS;
+    const recordsDark = frame && frame.id==="hostedFrame-records" ? HLRN_HOSTED_RECORDS_DARK_CSS : "";
+    style.textContent=dark?(HLRN_HOSTED_DARK_SERIES_CSS+driverStatsDark+recordsDark):HLRN_HOSTED_MATCH_SERIES_CSS;
     doc.head.appendChild(style);
     hardPaintHostedSectionTitles(doc,dark);
     if(frame && frame.id==="hostedFrame-drivers") hardPaintHostedIncidentWatch(doc,dark);
+    if(frame && frame.id==="hostedFrame-records") hardPaintHostedRecords(doc,dark);
+
+    if(frame && frame.id==="hostedFrame-records" && !doc.__hlrnHostedRecordsPaintBound){
+      doc.__hlrnHostedRecordsPaintBound=true;
+      const repaintRecords=()=>hardPaintHostedRecords(doc,hlrnHostedDarkModeActive());
+      setTimeout(repaintRecords,0);
+      setTimeout(repaintRecords,300);
+      setTimeout(repaintRecords,1200);
+    }
 
     if(frame && frame.id==="hostedFrame-drivers" && !doc.__hlrnHostedIncidentClickBound){
       doc.__hlrnHostedIncidentClickBound=true;
@@ -1681,10 +1842,12 @@ function applyHostedSeriesMatch(frame){
             const isDark=hlrnHostedDarkModeActive();
             doc.documentElement.dataset.hlrnTheme=isDark?"dark":"light";
             const driverStatsDark = frame && frame.id==="hostedFrame-drivers" ? HLRN_HOSTED_DRIVER_STATS_DARK_CSS : "";
-            style.textContent=isDark?(HLRN_HOSTED_DARK_SERIES_CSS+driverStatsDark):HLRN_HOSTED_MATCH_SERIES_CSS;
+            const recordsDark = frame && frame.id==="hostedFrame-records" ? HLRN_HOSTED_RECORDS_DARK_CSS : "";
+            style.textContent=isDark?(HLRN_HOSTED_DARK_SERIES_CSS+driverStatsDark+recordsDark):HLRN_HOSTED_MATCH_SERIES_CSS;
             doc.head.appendChild(style);
             hardPaintHostedSectionTitles(doc,isDark);
             if(frame && frame.id==="hostedFrame-drivers") hardPaintHostedIncidentWatch(doc,isDark);
+            if(frame && frame.id==="hostedFrame-records") hardPaintHostedRecords(doc,isDark);
           }catch(_){}
         });
       }).observe(doc.body,{childList:true,subtree:true,attributes:true,attributeFilter:["class","style"]});
