@@ -398,7 +398,7 @@ def render_page(driver):
 <meta property="og:url" content="{esc(canonical)}">
 <meta property="og:image" content="{esc(photo)}">
 <script type="application/ld+json">{schema_json}</script>
-<link rel="stylesheet" href="/assets/site-shell.css?v=20261001network4">
+<link rel="stylesheet" href="/assets/site-shell.css?v=20261001network5">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,800;1,900&family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
@@ -628,7 +628,7 @@ html[data-hlrn-theme="dark"] .updated{{color:#aaa!important}}
   </div>
   <div class="updated">Profile data generated from the current HLRN verified league snapshot.</div>
 </main>
-<script src="/assets/site-shell.js?v=20261001network4"></script>
+<script src="/assets/site-shell.js?v=20261001network5"></script>
 </body>
 </html>
 """
