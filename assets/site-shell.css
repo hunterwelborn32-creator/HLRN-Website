@@ -1489,3 +1489,60 @@ html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mobile-theme{
   }
 }
 
+/* HLRN MOBILE TOP-RIGHT RACE SWITCH 20261001 */
+/* Put the race-mode switch directly beside the hamburger on tablet/mobile. */
+@media(max-width:1280px){
+  #hlrn-global-nav .hgn-theme-toggle{
+    display:inline-flex!important;
+    flex:0 0 auto!important;
+    order:90!important;
+    margin-left:auto!important;
+    width:auto!important;
+    min-width:118px!important;
+    min-height:38px!important;
+  }
+  #hlrn-global-nav .hgn-menu{
+    order:100!important;
+    margin-left:0!important;
+  }
+
+  /* Remove the duplicate switch from inside the opened mobile menu. */
+  #hlrn-global-nav .hgn-mobile-theme{
+    display:none!important;
+  }
+}
+
+/* On phones, use the actual switch only so it fits cleanly beside ☰. */
+@media(max-width:760px){
+  #hlrn-global-nav .hgn-theme-toggle{
+    min-width:0!important;
+    width:54px!important;
+    height:38px!important;
+    min-height:38px!important;
+    padding:6px!important;
+    gap:0!important;
+    justify-content:center!important;
+    border-left-width:1px!important;
+    border-radius:7px!important;
+  }
+  #hlrn-global-nav .hgn-theme-toggle .hgn-theme-copy{
+    display:none!important;
+  }
+  #hlrn-global-nav .hgn-theme-toggle .hgn-theme-switch{
+    width:42px!important;
+    height:22px!important;
+    flex:0 0 42px!important;
+  }
+}
+
+/* Extra-small phones: keep switch + menu locked together at the right edge. */
+@media(max-width:460px){
+  #hlrn-global-nav .hgn-theme-toggle{
+    margin-left:auto!important;
+    width:52px!important;
+  }
+  #hlrn-global-nav .hgn-menu{
+    flex:0 0 40px!important;
+  }
+}
+
