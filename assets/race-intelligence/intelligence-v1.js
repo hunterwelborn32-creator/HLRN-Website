@@ -1042,7 +1042,16 @@ function showCategoryDeepDive(category){
   document.getElementById("deepTitle").innerHTML = hLrnDriverNameMarkup(d);
   document.getElementById("deepDriverPhoto").innerHTML = hLrnPhotoMarkup(d,"cutout","hlrn-feature-cutout");
   document.getElementById("deepSummary").textContent = summary;
-  document.getElementById("deepPill").textContent = pill || "Live Analysis";
+  const deepPill=document.getElementById("deepPill");
+  deepPill.textContent = pill || "Live Analysis";
+  deepPill.style.setProperty("background","#000","important");
+  deepPill.style.setProperty("background-color","#000","important");
+  deepPill.style.setProperty("background-image","none","important");
+  deepPill.style.setProperty("color","#fff","important");
+  deepPill.style.setProperty("-webkit-text-fill-color","#fff","important");
+  deepPill.style.setProperty("border","1px solid #2b2b2b","important");
+  deepPill.style.setProperty("border-left","4px solid #ffd400","important");
+  deepPill.style.setProperty("box-shadow","none","important");
 
   document.getElementById("deepMetrics").innerHTML = metrics.map(([a,b])=>`
     <div class="deep-metric"><span>${esc(a)}</span><strong>${esc(b)}</strong></div>
@@ -1078,6 +1087,20 @@ function showDriver(category){
   document.getElementById("detailDriverPhoto").innerHTML = hLrnPhotoMarkup(d,"full","hlrn-feature-full-photo");
   document.getElementById("detailCategory").textContent = category.reason;
   document.getElementById("detailScore").textContent = Math.round(d.overall);
+  const scoreBox=document.querySelector("#detailWrap .score");
+  if(scoreBox){
+    scoreBox.style.setProperty("background","#000","important");
+    scoreBox.style.setProperty("background-color","#000","important");
+    scoreBox.style.setProperty("background-image","none","important");
+    scoreBox.style.setProperty("color","#fff","important");
+    scoreBox.style.setProperty("border","1px solid #2b2b2b","important");
+    scoreBox.style.setProperty("border-left","4px solid #ffd400","important");
+    scoreBox.style.setProperty("box-shadow","none","important");
+    scoreBox.querySelectorAll("*").forEach(el=>{
+      el.style.setProperty("color","#fff","important");
+      el.style.setProperty("-webkit-text-fill-color","#fff","important");
+    });
+  }
 
   setText("dRank",d.rank ? "#"+d.rank : "—");
   setText("dWins",d.wins);
