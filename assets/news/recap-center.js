@@ -5,6 +5,7 @@ const $=s=>document.querySelector(s);
 const $$=s=>Array.from(document.querySelectorAll(s));
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
 let allRecaps=[],filter="all";
+let raceIndex={sunday:[],monday:[]};
 
 function seriesKey(value){
   const s=String(value||"").toLowerCase();
@@ -19,8 +20,70 @@ function seriesLabel(value){
 function val(value,fallback="—"){
   return value===0||value?String(value):fallback;
 }
+function dateKey(value){
+  const d=new Date(value);
+  if(Number.isNaN(d.getTime()))return "";
+  const parts=new Intl.DateTimeFormat("en-US",{
+    timeZone:"America/New_York",year:"numeric",month:"2-digit",day:"2-digit"
+  }).formatToParts(d);
+  const part=type=>parts.find(x=>x.type===type)?.value||"";
+  return part("year")+"-"+part("month")+"-"+part("day");
+}
+function trackKey(value){
+  return String(value||"").toLowerCase()
+    .replace(/\([^)]*\)/g," ")
+    .replace(/\b(international|motor|speedway|superspeedway|raceway|oval)\b/g," ")
+    .replace(/[^a-z0-9]+/g," ").trim().replace(/\s+/g," ");
+}
+function buildRaceIndex(snapshot){
+  const out={sunday:[],monday:[]};
+  for(const league of ["sunday","monday"]){
+    const seen=new Map();
+    const rows=Array.isArray(snapshot?.leagues?.[league]?.results)?snapshot.leagues[league].results:[];
+    rows.forEach(row=>{
+      const race=Number(row?.raceNumber);
+      if(!Number.isFinite(race)||race<=0)return;
+      if(!seen.has(race)){
+        seen.set(race,{
+          race,
+          track:String(row?.track||""),
+          trackKey:trackKey(row?.track),
+          dateKey:dateKey(row?.date),
+          dateMs:Date.parse(row?.date||"")||0
+        });
+      }
+    });
+    out[league]=[...seen.values()];
+  }
+  return out;
+}
+function exactResultsUrl(item){
+  const league=seriesKey(item?.series);
+  if(league!=="sunday"&&league!=="monday")return "";
+  const targetTrack=trackKey(item?.track);
+  const targetDate=dateKey(item?.raceFrozenAt||item?.publishedAt);
+  let candidates=(raceIndex[league]||[]).filter(r=>targetTrack&&r.trackKey===targetTrack);
+  if(!candidates.length&&targetTrack){
+    candidates=(raceIndex[league]||[]).filter(r=>r.trackKey&&(
+      r.trackKey.includes(targetTrack)||targetTrack.includes(r.trackKey)
+    ));
+  }
+  if(targetDate){
+    const sameDate=candidates.find(r=>r.dateKey===targetDate);
+    if(sameDate)return "/results/?league="+league+"&race="+sameDate.race+"#raceReportView";
+  }
+  if(candidates.length===1)return "/results/?league="+league+"&race="+candidates[0].race+"#raceReportView";
+  if(candidates.length&&item?.raceFrozenAt){
+    const targetMs=Date.parse(item.raceFrozenAt)||0;
+    candidates.sort((a,b)=>Math.abs(a.dateMs-targetMs)-Math.abs(b.dateMs-targetMs));
+    if(candidates[0])return "/results/?league="+league+"&race="+candidates[0].race+"#raceReportView";
+  }
+  return "";
+}
 function resultsUrl(item){
-  return item?.resultsUrl || (item?.slug?"/results/?recap="+encodeURIComponent(item.slug):"/results/");
+  return exactResultsUrl(item)
+    || item?.resultsUrl
+    || (item?.slug?"/results/?recap="+encodeURIComponent(item.slug):"/results/");
 }
 function replayUrl(item){
   const key=seriesKey(item?.series);
@@ -42,7 +105,7 @@ function feature(item){
   const key=seriesKey(item.series),winner=item.winner||{};
   mount.innerHTML=
     '<article class="nr-recap-hero '+esc(key)+'">'+
-      '<div><div class="nr-recap-eyebrow"><i></i> LATEST RACE STORY • '+esc(seriesLabel(item.series))+'</div>'+
+      '<div><div class="nr-recap-eyebrow"><i></i> LATEST RACE STORY <span class="nr-series-tag '+esc(key)+'">'+esc(seriesLabel(item.series))+'</span></div>'+
       '<h3>'+esc(item.title||((winner.name||"HLRN Winner")+" at "+(item.track||"HLRN Race")))+'</h3>'+
       '<p>'+esc(item.subtitle||"HLRN has preserved the permanent checkered-flag record from this race.")+'</p></div>'+
       '<div><div class="nr-recap-winner"><small>RECORDED WINNER</small><strong>#'+esc(winner.number||"—")+' '+esc(winner.name||"—")+'</strong></div>'+
@@ -62,7 +125,7 @@ function feature(item){
 function card(item){
   const key=seriesKey(item.series),winner=item.winner||{};
   return '<article class="nr-recap-card '+esc(key)+'" data-series="'+esc(key)+'">'+
-    '<div class="nr-recap-card-head"><span>'+esc(item.displayDate||"CHECKERED FLAG")+'</span><b>'+esc(seriesLabel(item.series))+'</b></div>'+
+    '<div class="nr-recap-card-head"><span>'+esc(item.displayDate||"CHECKERED FLAG")+'</span><b class="nr-series-tag '+esc(key)+'">'+esc(seriesLabel(item.series))+'</b></div>'+
     '<div class="nr-recap-card-main">'+
       '<small>'+esc(item.track||"HLRN RACE")+'</small>'+
       '<h3>'+esc(item.title||"HLRN Race Recap")+'</h3>'+
@@ -94,9 +157,16 @@ function render(){
 async function load(){
   const featureMount=$("#nrRecapFeature"),grid=$("#nrRecapGrid");
   try{
-    const res=await fetch("/data/race-recaps/index.json?v="+Date.now(),{cache:"no-store"});
-    if(!res.ok)throw new Error("recap index "+res.status);
-    const data=await res.json();
+    const stamp=Date.now();
+    const [recapRes,snapshotRes]=await Promise.all([
+      fetch("/data/race-recaps/index.json?v="+stamp,{cache:"no-store"}),
+      fetch("/data/hlrn.json?v="+stamp,{cache:"no-store"}).catch(()=>null)
+    ]);
+    if(!recapRes.ok)throw new Error("recap index "+recapRes.status);
+    const data=await recapRes.json();
+    if(snapshotRes?.ok){
+      try{raceIndex=buildRaceIndex(await snapshotRes.json())}catch(_){}
+    }
     allRecaps=Array.isArray(data?.recaps)?data.recaps:[];
     feature(allRecaps[0]||null);
     render();
