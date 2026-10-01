@@ -38,11 +38,47 @@ jobs:
 
       - name: Commit generated driver profiles
         run: |
-          git add drivers data/driver-pages.json sitemap.xml
-          if ! git diff --cached --quiet; then
-            git config user.name "hlrn-driver-pages-bot"
-            git config user.email "actions@users.noreply.github.com"
+          git config user.name "hlrn-driver-pages-bot"
+          git config user.email "actions@users.noreply.github.com"
+
+          commit_generated() {
+            git add drivers data/driver-pages.json sitemap.xml
+            if git diff --cached --quiet; then
+              return 1
+            fi
             git commit -m "Build permanent HLRN driver profile pages"
-            git pull --rebase origin main
-            git push
+            return 0
+          }
+
+          if ! commit_generated; then
+            echo "No generated driver-page changes to publish."
+            exit 0
           fi
+
+          # Other site workflows can update main while this generator is running.
+          # Retry on a fresh main instead of failing on a moving branch ref.
+          for attempt in 1 2 3 4 5; do
+            echo "Publish attempt $attempt"
+            git fetch origin main
+
+            if ! git rebase origin/main; then
+              echo "Generated files conflicted with a newer main; regenerating from latest."
+              git rebase --abort || true
+              git reset --hard origin/main
+              python tools/build-driver-pages.py
+              python tools/build-sitemap.py
+              if ! commit_generated; then
+                echo "Latest main already contains the generated output."
+                exit 0
+              fi
+            fi
+
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+
+            sleep $((attempt * 2))
+          done
+
+          echo "Unable to publish generated driver pages after retries."
+          exit 1
