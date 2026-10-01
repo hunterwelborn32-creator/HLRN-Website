@@ -491,6 +491,10 @@ ready(async function(){
 
   async function installDriverProfileCommand(){
     if(route!=="drivers") return;
+    if(document.querySelector(".driver-v2-snapshot")){
+      document.body.classList.add("hlrn-driver-profile-network");
+      return;
+    }
     const hero=document.querySelector(".hero");
     const nameEl=hero?.querySelector("h1");
     if(!hero||!nameEl||document.getElementById("hlrn-driver-command")) return;
@@ -542,6 +546,10 @@ ready(async function(){
     });
   }
 
+  // Critical layout/performance layer first; network data modules follow.
+  installPerformanceAndMobileAudit();
+  installAdminPitPass();
+  installLiveCommandDeck();
   await installRaceWeekend();
   await Promise.all([
     installHomeRaceHub(),
@@ -549,8 +557,5 @@ ready(async function(){
     installMobileStandingsCards(),
     installDriverProfileCommand()
   ]);
-  installAdminPitPass();
-  installLiveCommandDeck();
-  installPerformanceAndMobileAudit();
 });
 })();
