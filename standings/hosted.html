@@ -319,8 +319,9 @@ function hlrnHostedDarkModeActive(){
   }
 }
 
-function hlrnLightHostedDoc(markup){
+function hlrnLightHostedDoc(markup,key){
   if(!markup) return markup;
+  const dark=hlrnHostedDarkModeActive();
   const css=`
 :root{color-scheme:light!important;--hlrn-light-bg:#fff;--hlrn-light-ink:#111214;--hlrn-light-line:#d9dde1;}
 html,body{background:#fff!important;color:#111214!important;color-scheme:light!important;min-height:0!important;height:auto!important}
@@ -399,10 +400,24 @@ html,body,.hosted-hub{background:#fff!important;color:#111214!important;height:a
 .hosted-hub-frame.active{display:block!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;z-index:1!important}
 .hosted-loading{background:#fff!important;color:#111214!important;min-height:56px!important}
 </style>`;
-  const darkTag=hlrnHostedDarkModeActive()
-    ? '<style id="HLRN_HOSTED_DARK_INITIAL">'+HLRN_HOSTED_DARK_SERIES_CSS+'</style>'
-    : '';
-  const tag='<style id="HLRN_STATIC_LIGHT_INNER">'+css+'</style>'+rescue+darkTag;
+  if(dark){
+    const specific =
+      key==="drivers" ? HLRN_HOSTED_DRIVER_STATS_DARK_CSS :
+      key==="records" ? HLRN_HOSTED_RECORDS_DARK_CSS :
+      key==="h2h" ? HLRN_HOSTED_H2H_DARK_CSS :
+      "";
+    const darkBoot =
+      '<style id="HLRN_HOSTED_DARK_INITIAL">' +
+      HLRN_HOSTED_DARK_SERIES_CSS +
+      specific +
+      '\nhtml,body{background:#000!important;background-color:#000!important;background-image:none!important;color:#fff!important;color-scheme:dark!important}' +
+      '</style>';
+    return /<\/head>/i.test(markup)
+      ? markup.replace(/<\/head>/i,darkBoot+'</head>')
+      : darkBoot+markup;
+  }
+
+  const tag='<style id="HLRN_STATIC_LIGHT_INNER">'+css+'</style>'+rescue;
   return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'</head>') : tag+markup;
 }
 </script>
@@ -900,7 +915,7 @@ function installHostedResize(key){
   setTimeout(run,800);
   try{
     const doc=frame.contentDocument;
-    if(doc && doc.body && "ResizeObserver" in window && !frame.__hlrnHostedRO){
+    if(key!=="h2h" && doc && doc.body && "ResizeObserver" in window && !frame.__hlrnHostedRO){
       const ro=new ResizeObserver(()=>requestAnimationFrame(run));
       ro.observe(doc.body);
       ro.observe(doc.documentElement);
@@ -1775,6 +1790,20 @@ html[data-hlrn-theme="dark"] .wrap,
 html[data-hlrn-theme="dark"] #content{
   outline:0!important;
 }
+
+/* HLRN_H2H_STABILITY_DARK_20261001 */
+html[data-hlrn-theme="dark"] body:before,
+html[data-hlrn-theme="dark"] body:after,
+html[data-hlrn-theme="dark"] .h2h-ticker .ticker-track,
+html[data-hlrn-theme="dark"] .prime-live-dot,
+html[data-hlrn-theme="dark"] .status,
+html[data-hlrn-theme="dark"] .prediction:after,
+html[data-hlrn-theme="dark"] .matchup-card:after{
+  animation:none!important;
+}
+html[data-hlrn-theme="dark"] .prime-flash{
+  display:none!important;
+}
 `;
 
 function hardPaintHostedH2H(doc,dark){
@@ -2059,6 +2088,10 @@ function loadHostedTab(key){
   const finish=()=>{
     hostedLoaded[key]=true;
     applyHostedSeriesMatch(frame);
+    frame.style.setProperty("display","block","important");
+    frame.style.setProperty("visibility","visible","important");
+    frame.style.setProperty("opacity","1","important");
+    frame.style.setProperty("pointer-events","auto","important");
     if(loading) loading.style.display="none";
     installHostedResize(key);
     queueHostedDriverLinks(key);
@@ -2104,7 +2137,7 @@ function loadHostedTab(key){
   frame.onload=finish;
   try{
     const raw=decodeHostedDoc(HOSTED_DOCS[key]);
-    frame.srcdoc=hlrnLightHostedDoc(raw);
+    frame.srcdoc=hlrnLightHostedDoc(raw,key);
   }catch(err){
     if(loading){
       loading.style.display="block";
@@ -2136,11 +2169,13 @@ function switchHostedTab(key){
   });
   document.querySelectorAll(".hosted-hub-frame").forEach(frame=>{
     const on=frame.id==="hostedFrame-"+key;
+    const frameKey=frame.id.replace("hostedFrame-","");
+    const ready=!!hostedLoaded[frameKey];
     frame.classList.toggle("active",on);
     frame.style.setProperty("display",on ? "block" : "none","important");
-    frame.style.setProperty("visibility",on ? "visible" : "hidden","important");
-    frame.style.setProperty("opacity",on ? "1" : "0","important");
-    frame.style.setProperty("pointer-events",on ? "auto" : "none","important");
+    frame.style.setProperty("visibility",on && ready ? "visible" : "hidden","important");
+    frame.style.setProperty("opacity",on && ready ? "1" : "0","important");
+    frame.style.setProperty("pointer-events",on && ready ? "auto" : "none","important");
     frame.style.setProperty("z-index",on ? "10" : "-100","important");
   });
   loadHostedTab(key);
