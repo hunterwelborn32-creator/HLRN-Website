@@ -818,6 +818,10 @@ def publish(recap):
 
 
 def main():
+    if os.getenv("HLRN_PUBLISH_APPROVED") != "1":
+        print("[HLRN recap] Manual approval required; no recap was published.")
+        return 0
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--input", help="Use a local recap JSON instead of fetching Render.")
     parser.add_argument("--url", default=os.getenv("HLRN_RECAP_URL", DEFAULT_RECAP_URL))
