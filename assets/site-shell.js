@@ -1175,7 +1175,7 @@ function start(){
   }
   if(!document.querySelector('script[data-hlrn-network-upgrades]')){
     const networkScript=document.createElement("script");
-    networkScript.src=url("assets/network-upgrades.js?v=20261001nx1");
+    networkScript.src=url("assets/network-upgrades.js?v=20261001nx2");
     networkScript.defer=true;
     networkScript.setAttribute("data-hlrn-network-upgrades","");
     document.head.appendChild(networkScript);
