@@ -507,5 +507,106 @@ html[data-hlrn-theme="dark"] body .shell .stat-grid{
 
 
 
+<script id="HLRN_RI_FORCE_NIGHT_MODE_20261001">
+(function(){
+  const SURFACES=[
+    "body",".shell",".hero",".hero-inner",".compact-panel",".compact-board-head",
+    ".compact-overview",".compact-overview-card",".toolbar",".v3-verification",
+    ".v3-accuracy-line",".v3-accuracy-stat",".v3-contenders",".v3-contenders-head",
+    ".v3-contender-grid",".v3-contender",".v3-contender-top",".intel-grid",".intel-card",
+    ".category-deep",".deep-head",".deep-grid",".deep-metric",".deep-body",".deep-box",
+    ".deep-point",".deep-race",".deep-action",".detail-wrap",".detail-head",".stat-grid",
+    ".stat",".detail-body",".detail-box",".race",".trend-row",".story-section",".story-head",
+    ".story-grid",".story-card",".loading",".error",".badge",".refresh"
+  ];
+  const SOFT=[
+    ".intel-card",".deep-metric",".deep-box",".detail-box",".stat",".deep-point",
+    ".deep-race",".race",".trend-row",".story-card",".badge",".refresh"
+  ];
+  const ACCENT_RED=".kicker,.story-kicker,.deep-label,.detail-eyebrow";
+
+  function isDark(){
+    return document.documentElement.dataset.hlrnTheme==="dark" ||
+      String(document.documentElement.style.colorScheme||"").toLowerCase()==="dark";
+  }
+
+  function force(){
+    if(!isDark()) return;
+
+    document.documentElement.style.setProperty("background","#000","important");
+    document.body.style.setProperty("background","#000","important");
+    document.body.style.setProperty("color","#fff","important");
+
+    document.querySelectorAll(SURFACES.join(",")).forEach(el=>{
+      el.style.setProperty("background-color","#000","important");
+      el.style.setProperty("background-image","none","important");
+      el.style.setProperty("color","#fff","important");
+      el.style.setProperty("border-color","#2b2b2b","important");
+      el.style.setProperty("box-shadow","none","important");
+    });
+
+    document.querySelectorAll(SOFT.join(",")).forEach(el=>{
+      el.style.setProperty("background-color","#050505","important");
+    });
+
+    document.querySelectorAll(".shell *:not(img):not(svg):not(path)").forEach(el=>{
+      el.style.setProperty("color","#fff","important");
+      el.style.setProperty("-webkit-text-fill-color","#fff","important");
+      el.style.setProperty("text-shadow","none","important");
+    });
+
+    document.querySelectorAll(ACCENT_RED).forEach(el=>{
+      el.style.setProperty("color","#e10600","important");
+      el.style.setProperty("-webkit-text-fill-color","#e10600","important");
+    });
+
+    document.querySelectorAll(".positive,.gain").forEach(el=>{
+      el.style.setProperty("color","#31d466","important");
+      el.style.setProperty("-webkit-text-fill-color","#31d466","important");
+    });
+    document.querySelectorAll(".negative").forEach(el=>{
+      el.style.setProperty("color","#ff6060","important");
+      el.style.setProperty("-webkit-text-fill-color","#ff6060","important");
+    });
+
+    let style=document.getElementById("HLRN_RI_NIGHT_PSEUDO_FIX");
+    if(!style){
+      style=document.createElement("style");
+      style.id="HLRN_RI_NIGHT_PSEUDO_FIX";
+      document.head.appendChild(style);
+    }
+    style.textContent=`
+      html[data-hlrn-theme="dark"] body .story-card,
+      html[data-hlrn-theme="dark"] body .story-card:hover,
+      html[data-hlrn-theme="dark"] body .story-grid,
+      html[data-hlrn-theme="dark"] body .story-section,
+      html[data-hlrn-theme="dark"] body .deep-grid,
+      html[data-hlrn-theme="dark"] body .stat-grid{
+        background:#000!important;
+        background-image:none!important;
+        color:#fff!important;
+      }
+      html[data-hlrn-theme="dark"] body .story-card:before{background:#111!important}
+      html[data-hlrn-theme="dark"] body .story-card.has-driver-photo:after{display:none!important}
+    `;
+  }
+
+  const observer=new MutationObserver(()=>requestAnimationFrame(force));
+  if(document.readyState==="loading"){
+    document.addEventListener("DOMContentLoaded",()=>{
+      force();
+      observer.observe(document.body,{childList:true,subtree:true});
+    },{once:true});
+  }else{
+    force();
+    observer.observe(document.body,{childList:true,subtree:true});
+  }
+  window.addEventListener("hlrn-theme-change",()=>setTimeout(force,0));
+  window.addEventListener("pageshow",force);
+  setTimeout(force,250);
+  setTimeout(force,1000);
+  setTimeout(force,2500);
+})();
+</script>
 </body>
 </html>
