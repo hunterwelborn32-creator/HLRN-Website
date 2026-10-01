@@ -527,7 +527,9 @@ html[data-hlrn-theme="dark"] #recaps .nr-series-tag{
    if(!loaded){
      loaded=true;
      frame.addEventListener('load',syncAnnouncementTheme,{once:false});
-     frame.srcdoc=new TextDecoder().decode(Uint8Array.from(atob(encoded),c=>c.charCodeAt(0)));
+     const announcementDoc=new TextDecoder().decode(Uint8Array.from(atob(encoded),c=>c.charCodeAt(0)))
+       .replace('https://hlrn-discord.hunterwelborn32.workers.dev/api/announcements','/data/announcements.json');
+     frame.srcdoc=announcementDoc;
    }else syncAnnouncementTheme();
    window.scrollTo({top:rail.getBoundingClientRect().top+window.scrollY-65,behavior:'instant'});
  }
