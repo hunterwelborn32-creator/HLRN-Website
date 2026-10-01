@@ -779,7 +779,7 @@ function start(){
 
   // Always use the current shared shell stylesheet. This gives every page
   // the same global mobile layer without requiring page-by-page CSS edits.
-  const SHELL_CSS_VERSION="20261001network3";
+  const SHELL_CSS_VERSION="20261001network4";
   let shellCss=[...document.querySelectorAll('link[rel="stylesheet"]')].find(link=>/\/site-shell\.css(?:\?|$)/i.test(link.getAttribute("href")||""));
   if(!shellCss){
     shellCss=document.createElement("link");
@@ -1169,13 +1169,13 @@ function start(){
   if(!document.querySelector('link[data-hlrn-network-upgrades]')){
     const networkCss=document.createElement("link");
     networkCss.rel="stylesheet";
-    networkCss.href=url("assets/network-upgrades.css?v=20261001nx3");
+    networkCss.href=url("assets/network-upgrades.css?v=20261001nx4");
     networkCss.setAttribute("data-hlrn-network-upgrades","");
     document.head.appendChild(networkCss);
   }
   if(!document.querySelector('script[data-hlrn-network-upgrades]')){
     const networkScript=document.createElement("script");
-    networkScript.src=url("assets/network-upgrades.js?v=20261001nx3");
+    networkScript.src=url("assets/network-upgrades.js?v=20261001nx4");
     networkScript.defer=true;
     networkScript.setAttribute("data-hlrn-network-upgrades","");
     document.head.appendChild(networkScript);
