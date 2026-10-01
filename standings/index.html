@@ -146,6 +146,108 @@ html[data-hlrn-theme="light"] .standings-frame{color-scheme:light}
   .standings-frame{height:calc(100vh - 165px);min-height:620px}
 }
 </style>
+<script id="HLRN_STANDINGS_SHARED_DATA_20261001">
+(function(){
+  "use strict";
+
+  const CACHE_KEY="hlrn_standings_snapshot_v1";
+  const listeners=new Set();
+  let snapshot=null;
+  let state="idle";
+  let error=null;
+  let pending=null;
+
+  function status(){
+    return {
+      state,
+      error:error ? String(error.message||error) : "",
+      generatedAt:snapshot && snapshot.generatedAt ? snapshot.generatedAt : null
+    };
+  }
+
+  function notify(){
+    const detail={snapshot,status:status()};
+    listeners.forEach(fn=>{
+      try{fn(detail);}catch(e){}
+    });
+  }
+
+  function readCached(){
+    try{
+      const raw=localStorage.getItem(CACHE_KEY);
+      if(!raw)return null;
+      const parsed=JSON.parse(raw);
+      return parsed && parsed.leagues ? parsed : null;
+    }catch(e){
+      return null;
+    }
+  }
+
+  function writeCached(value){
+    try{localStorage.setItem(CACHE_KEY,JSON.stringify(value));}catch(e){}
+  }
+
+  async function load(){
+    if(snapshot && state==="current")return snapshot;
+    if(pending)return pending;
+
+    state="loading";
+    error=null;
+    notify();
+
+    pending=fetch("../data/hlrn.json?v=20261001standingsdata1",{cache:"no-store"})
+      .then(response=>{
+        if(!response.ok)throw new Error("HLRN data HTTP "+response.status);
+        return response.json();
+      })
+      .then(data=>{
+        if(!data || !data.leagues)throw new Error("Invalid HLRN standings snapshot");
+        snapshot=data;
+        state="current";
+        error=null;
+        writeCached(data);
+        notify();
+        return snapshot;
+      })
+      .catch(err=>{
+        const cached=readCached();
+        error=err;
+        if(cached){
+          snapshot=cached;
+          state="cached";
+          notify();
+          return snapshot;
+        }
+        state="unavailable";
+        notify();
+        throw err;
+      })
+      .finally(()=>{pending=null;});
+
+    return pending;
+  }
+
+  const cached=readCached();
+  if(cached){
+    snapshot=cached;
+    state="cached";
+  }
+
+  window.HLRNData=Object.freeze({
+    load,
+    get(){return snapshot;},
+    getStatus:status,
+    subscribe(fn){
+      if(typeof fn!=="function")return function(){};
+      listeners.add(fn);
+      try{fn({snapshot,status:status()});}catch(e){}
+      return function(){listeners.delete(fn);};
+    }
+  });
+
+  load().catch(()=>{});
+})();
+</script>
 </head>
 <body>
 <div class="standings-shell">
@@ -168,21 +270,21 @@ html[data-hlrn-theme="light"] .standings-frame{color-scheme:light}
       class="standings-frame"
       id="frame-hosted"
       title="HLRN Hosted Racing"
-      data-src="hosted.html?v=20261001cleanwrapper1"
+      data-src="hosted.html?v=20261001shareddatafix1"
       scrolling="auto"></iframe>
 
     <iframe
       class="standings-frame active"
       id="frame-sunday"
       title="HLRN Sunday Championship"
-      src="sunday.html?v=20261001cleanwrapper1"
+      data-src="sunday.html?v=20261001shareddatafix1"
       scrolling="auto"></iframe>
 
     <iframe
       class="standings-frame"
       id="frame-monday"
       title="HLRN Monday Championship"
-      data-src="monday.html?v=20261001cleanwrapper1"
+      data-src="monday.html?v=20261001shareddatafix1"
       scrolling="auto"></iframe>
   </main>
 </div>
@@ -194,10 +296,31 @@ html[data-hlrn-theme="light"] .standings-frame{color-scheme:light}
   const frames=[...document.querySelectorAll(".standings-frame")];
   const loading=document.getElementById("standingsLoading");
 
+  function currentTheme(){
+    try{
+      return localStorage.getItem("hlrn_site_theme_v2")==="dark" ? "dark" : "light";
+    }catch(e){
+      return document.documentElement.dataset.hlrnTheme==="dark" ? "dark" : "light";
+    }
+  }
+
+  function syncFrameTheme(frame){
+    try{
+      const doc=frame.contentDocument;
+      if(!doc||!doc.documentElement)return;
+      const theme=currentTheme();
+      doc.documentElement.dataset.hlrnTheme=theme;
+      doc.documentElement.style.colorScheme=theme;
+      if(doc.defaultView){
+        doc.defaultView.dispatchEvent(new CustomEvent("hlrn-theme-change",{detail:{theme}}));
+      }
+    }catch(e){}
+  }
+
   function ensureLoaded(frame){
-    if(frame.src)return;
+    if(frame.getAttribute("src"))return;
     const src=frame.dataset.src;
-    if(src)frame.src=src;
+    if(src)frame.setAttribute("src",src);
   }
 
   function show(series,updateHash=true){
@@ -223,6 +346,7 @@ html[data-hlrn-theme="light"] .standings-frame{color-scheme:light}
   frames.forEach(frame=>{
     frame.addEventListener("load",()=>{
       frame.dataset.hlrnReady="1";
+      syncFrameTheme(frame);
       if(frame.classList.contains("active") && loading)loading.classList.remove("active");
     });
   });
