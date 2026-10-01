@@ -1716,124 +1716,7 @@ input,select,button{color:#111!important}
 iframe{background:#fff!important;color-scheme:light!important}
 `;
   const tag='<style id="HLRN_STATIC_LIGHT_INNER">'+css+'</style>';
-  return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'<style id="HLRN_STANDINGS_DARK_FINAL_20261001">
-/* Final dark-mode override: keep the standings experience black with white type. */
-html[data-hlrn-theme="dark"],
-html[data-hlrn-theme="dark"] body{
-  background:#000!important;
-  background-image:none!important;
-  color:#fff!important;
-  color-scheme:dark!important;
-}
-
-html[data-hlrn-theme="dark"] body .page-wrap,
-html[data-hlrn-theme="dark"] body .page-wrap > .tabs,
-html[data-hlrn-theme="dark"] body .tab-content,
-html[data-hlrn-theme="dark"] body .section-header,
-html[data-hlrn-theme="dark"] body .table-shell,
-html[data-hlrn-theme="dark"] body .table-wrap,
-html[data-hlrn-theme="dark"] body .cc-dashboard,
-html[data-hlrn-theme="dark"] body .cc-momentum-card,
-html[data-hlrn-theme="dark"] body .cc-card,
-html[data-hlrn-theme="dark"] body .cc-spotlight-card,
-html[data-hlrn-theme="dark"] body .last-race-card,
-html[data-hlrn-theme="dark"] body .stat-card,
-html[data-hlrn-theme="dark"] body .race-report-card,
-html[data-hlrn-theme="dark"] body .report-card,
-html[data-hlrn-theme="dark"] body .race-card,
-html[data-hlrn-theme="dark"] body .message,
-html[data-hlrn-theme="dark"] body .loading{
-  background:#000!important;
-  background-color:#000!important;
-  background-image:none!important;
-  color:#fff!important;
-  border-color:#2b2b2b!important;
-  box-shadow:none!important;
-}
-
-/* Driver / Team / Last Race tabs */
-html[data-hlrn-theme="dark"] body .page-wrap > .tabs .tab-btn,
-html[data-hlrn-theme="dark"] body .tabs .tab-btn,
-html[data-hlrn-theme="dark"] body .tab-button{
-  background:#000!important;
-  background-image:none!important;
-  color:#fff!important;
-  border-color:#2b2b2b!important;
-  box-shadow:none!important;
-}
-html[data-hlrn-theme="dark"] body .page-wrap > .tabs .tab-btn:hover,
-html[data-hlrn-theme="dark"] body .page-wrap > .tabs .tab-btn:active,
-html[data-hlrn-theme="dark"] body .page-wrap > .tabs .tab-btn.active,
-html[data-hlrn-theme="dark"] body .tabs .tab-btn.active,
-html[data-hlrn-theme="dark"] body .tab-button.active{
-  background:#0b0b0b!important;
-  color:#fff!important;
-}
-
-/* Standings table */
-html[data-hlrn-theme="dark"] body table,
-html[data-hlrn-theme="dark"] body thead,
-html[data-hlrn-theme="dark"] body tbody,
-html[data-hlrn-theme="dark"] body tfoot,
-html[data-hlrn-theme="dark"] body tr,
-html[data-hlrn-theme="dark"] body th,
-html[data-hlrn-theme="dark"] body td,
-html[data-hlrn-theme="dark"] body tbody tr,
-html[data-hlrn-theme="dark"] body tbody tr td,
-html[data-hlrn-theme="dark"] body tbody tr:nth-child(odd) td,
-html[data-hlrn-theme="dark"] body tbody tr:nth-child(even) td,
-html[data-hlrn-theme="dark"] body tbody tr:first-child td,
-html[data-hlrn-theme="dark"] body tbody tr:hover td{
-  background:#000!important;
-  background-color:#000!important;
-  background-image:none!important;
-  color:#fff!important;
-  border-color:#252525!important;
-  box-shadow:none!important;
-}
-
-html[data-hlrn-theme="dark"] body thead th,
-html[data-hlrn-theme="dark"] body th{
-  background:#0b0b0b!important;
-  color:#fff!important;
-  border-bottom-color:#444!important;
-}
-
-/* Force the table's special cells back to dark too. */
-html[data-hlrn-theme="dark"] body td.name-col,
-html[data-hlrn-theme="dark"] body td:nth-child(3),
-html[data-hlrn-theme="dark"] body .points,
-html[data-hlrn-theme="dark"] body .position,
-html[data-hlrn-theme="dark"] body .position.top1,
-html[data-hlrn-theme="dark"] body .position.top2,
-html[data-hlrn-theme="dark"] body .position.top3,
-html[data-hlrn-theme="dark"] body .movement,
-html[data-hlrn-theme="dark"] body .movement.up,
-html[data-hlrn-theme="dark"] body .movement.down,
-html[data-hlrn-theme="dark"] body .movement.same{
-  background:transparent!important;
-  color:#fff!important;
-  border-color:#252525!important;
-}
-
-/* All visible copy in the standings area stays white. */
-html[data-hlrn-theme="dark"] body .page-wrap :where(
-  h1,h2,h3,h4,h5,h6,p,span,small,strong,b,label,
-  .cc-spot-label,.cc-spot-main,.cc-spot-sub,
-  .section-head h2,.section-head h3,.section-head p,
-  .stat-value,.big-number,.metric-value,.stat-label,
-  .name-col,.driver-name,.team-name,.points,.position
-){
-  color:#fff!important;
-  text-shadow:none!important;
-}
-
-/* Keep the red Sunday / green Monday accent lines, but never light backgrounds. */
-html[data-hlrn-theme="dark"] body .page-wrap > .tabs .tab-btn.active:before{
-  opacity:1!important;
-}
-</style>
-</head>') : tag+markup;
+  return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'</head>') : tag+markup;
 }
 </script>
 
@@ -3547,6 +3430,183 @@ html[data-hlrn-theme="dark"] body :where(button,input,select,textarea,.btn,.butt
 }
 html[data-hlrn-theme="dark"] body :where(input,textarea)::placeholder{color:#ccc!important;opacity:1!important}
 html[data-hlrn-theme="dark"] iframe{background:#000!important;color-scheme:dark!important}
+</style>
+<style id="HLRN_STANDINGS_DARK_FINAL_20261001">
+/* HLRN standings — final dark-mode override */
+html[data-hlrn-theme="dark"],
+html[data-hlrn-theme="dark"] body,
+html[style*="color-scheme: dark"],
+html[style*="color-scheme: dark"] body{
+  background:#000!important;
+  background-color:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+  color-scheme:dark!important;
+}
+
+html[data-hlrn-theme="dark"] body :where(
+  .page-wrap,.container,.content,.main,.main-content,.section,.panel,.card,.box,
+  .cc-dashboard,.cc-card,.cc-momentum-card,.cc-spotlight-card,.last-race-card,
+  .stat-card,.race-report-card,.report-card,.race-card,.section-header,
+  .table-wrap,.table-shell,.tabs,.tab-bar,.hosted-hub,.hosted-hub-tabs,
+  .hosted-hub-stage,.hosted-loading,.nav
+),
+html[style*="color-scheme: dark"] body :where(
+  .page-wrap,.container,.content,.main,.main-content,.section,.panel,.card,.box,
+  .cc-dashboard,.cc-card,.cc-momentum-card,.cc-spotlight-card,.last-race-card,
+  .stat-card,.race-report-card,.report-card,.race-card,.section-header,
+  .table-wrap,.table-shell,.tabs,.tab-bar,.hosted-hub,.hosted-hub-tabs,
+  .hosted-hub-stage,.hosted-loading,.nav
+){
+  background:#000!important;
+  background-color:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+  border-color:#2b2b2b!important;
+  box-shadow:none!important;
+}
+
+/* Main Sunday/Monday standings tables */
+html[data-hlrn-theme="dark"] body #drivers,
+html[data-hlrn-theme="dark"] body #teams,
+html[data-hlrn-theme="dark"] body #drivers .table-shell,
+html[data-hlrn-theme="dark"] body #teams .table-shell,
+html[data-hlrn-theme="dark"] body #drivers table,
+html[data-hlrn-theme="dark"] body #teams table,
+html[data-hlrn-theme="dark"] body #drivers thead,
+html[data-hlrn-theme="dark"] body #teams thead,
+html[data-hlrn-theme="dark"] body #drivers tbody,
+html[data-hlrn-theme="dark"] body #teams tbody,
+html[data-hlrn-theme="dark"] body #drivers tr,
+html[data-hlrn-theme="dark"] body #teams tr,
+html[data-hlrn-theme="dark"] body #drivers th,
+html[data-hlrn-theme="dark"] body #teams th,
+html[data-hlrn-theme="dark"] body #drivers td,
+html[data-hlrn-theme="dark"] body #teams td,
+html[style*="color-scheme: dark"] body #drivers,
+html[style*="color-scheme: dark"] body #teams,
+html[style*="color-scheme: dark"] body #drivers .table-shell,
+html[style*="color-scheme: dark"] body #teams .table-shell,
+html[style*="color-scheme: dark"] body #drivers table,
+html[style*="color-scheme: dark"] body #teams table,
+html[style*="color-scheme: dark"] body #drivers thead,
+html[style*="color-scheme: dark"] body #teams thead,
+html[style*="color-scheme: dark"] body #drivers tbody,
+html[style*="color-scheme: dark"] body #teams tbody,
+html[style*="color-scheme: dark"] body #drivers tr,
+html[style*="color-scheme: dark"] body #teams tr,
+html[style*="color-scheme: dark"] body #drivers th,
+html[style*="color-scheme: dark"] body #teams th,
+html[style*="color-scheme: dark"] body #drivers td,
+html[style*="color-scheme: dark"] body #teams td{
+  background:#000!important;
+  background-color:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+  border-color:#262626!important;
+  box-shadow:none!important;
+}
+
+html[data-hlrn-theme="dark"] body #drivers th,
+html[data-hlrn-theme="dark"] body #teams th,
+html[style*="color-scheme: dark"] body #drivers th,
+html[style*="color-scheme: dark"] body #teams th{
+  background:#0a0a0a!important;
+  color:#fff!important;
+}
+
+/* Kill alternating white rows and special first-place light fills */
+html[data-hlrn-theme="dark"] body #drivers tbody tr:nth-child(odd) td,
+html[data-hlrn-theme="dark"] body #drivers tbody tr:nth-child(even) td,
+html[data-hlrn-theme="dark"] body #drivers tbody tr:first-child td,
+html[data-hlrn-theme="dark"] body #drivers tbody tr:hover td,
+html[data-hlrn-theme="dark"] body #teams tbody tr:nth-child(odd) td,
+html[data-hlrn-theme="dark"] body #teams tbody tr:nth-child(even) td,
+html[data-hlrn-theme="dark"] body #teams tbody tr:first-child td,
+html[data-hlrn-theme="dark"] body #teams tbody tr:hover td,
+html[style*="color-scheme: dark"] body #drivers tbody tr:nth-child(odd) td,
+html[style*="color-scheme: dark"] body #drivers tbody tr:nth-child(even) td,
+html[style*="color-scheme: dark"] body #drivers tbody tr:first-child td,
+html[style*="color-scheme: dark"] body #drivers tbody tr:hover td,
+html[style*="color-scheme: dark"] body #teams tbody tr:nth-child(odd) td,
+html[style*="color-scheme: dark"] body #teams tbody tr:nth-child(even) td,
+html[style*="color-scheme: dark"] body #teams tbody tr:first-child td,
+html[style*="color-scheme: dark"] body #teams tbody tr:hover td{
+  background:#000!important;
+  background-color:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+}
+
+/* Tabs */
+html[data-hlrn-theme="dark"] body .page-wrap > .tabs,
+html[data-hlrn-theme="dark"] body .page-wrap > .tabs .tab-btn,
+html[data-hlrn-theme="dark"] body .tabs .tab-btn,
+html[data-hlrn-theme="dark"] body .tab-button,
+html[data-hlrn-theme="dark"] body .hosted-hub-tabs,
+html[data-hlrn-theme="dark"] body .hosted-hub-tab,
+html[data-hlrn-theme="dark"] body .nav,
+html[data-hlrn-theme="dark"] body .nav button,
+html[style*="color-scheme: dark"] body .page-wrap > .tabs,
+html[style*="color-scheme: dark"] body .page-wrap > .tabs .tab-btn,
+html[style*="color-scheme: dark"] body .tabs .tab-btn,
+html[style*="color-scheme: dark"] body .tab-button,
+html[style*="color-scheme: dark"] body .hosted-hub-tabs,
+html[style*="color-scheme: dark"] body .hosted-hub-tab,
+html[style*="color-scheme: dark"] body .nav,
+html[style*="color-scheme: dark"] body .nav button{
+  background:#000!important;
+  background-color:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+  border-color:#2d2d2d!important;
+  box-shadow:none!important;
+}
+html[data-hlrn-theme="dark"] body .page-wrap > .tabs .tab-btn.active,
+html[data-hlrn-theme="dark"] body .tabs .tab-btn.active,
+html[data-hlrn-theme="dark"] body .tab-button.active,
+html[data-hlrn-theme="dark"] body .hosted-hub-tab.active,
+html[data-hlrn-theme="dark"] body .nav button.active,
+html[style*="color-scheme: dark"] body .page-wrap > .tabs .tab-btn.active,
+html[style*="color-scheme: dark"] body .tabs .tab-btn.active,
+html[style*="color-scheme: dark"] body .tab-button.active,
+html[style*="color-scheme: dark"] body .hosted-hub-tab.active,
+html[style*="color-scheme: dark"] body .nav button.active{
+  background:#0b0b0b!important;
+  color:#fff!important;
+}
+
+/* Text */
+html[data-hlrn-theme="dark"] body .page-wrap :where(
+  h1,h2,h3,h4,h5,h6,p,span,small,strong,b,label,a,
+  .name-col,.driver-name,.team-name,.points,.position,
+  .cc-spot-label,.cc-spot-main,.cc-spot-sub,.stat-value,.stat-label
+),
+html[data-hlrn-theme="dark"] body .hosted-hub :where(
+  h1,h2,h3,h4,h5,h6,p,span,small,strong,b,label,a
+),
+html[style*="color-scheme: dark"] body .page-wrap :where(
+  h1,h2,h3,h4,h5,h6,p,span,small,strong,b,label,a,
+  .name-col,.driver-name,.team-name,.points,.position,
+  .cc-spot-label,.cc-spot-main,.cc-spot-sub,.stat-value,.stat-label
+),
+html[style*="color-scheme: dark"] body .hosted-hub :where(
+  h1,h2,h3,h4,h5,h6,p,span,small,strong,b,label,a
+){
+  color:#fff!important;
+  text-shadow:none!important;
+}
+
+/* Keep movement/series accents readable without changing backgrounds */
+html[data-hlrn-theme="dark"] body .movement.up{color:#39d353!important}
+html[data-hlrn-theme="dark"] body .movement.down{color:#ff5c5c!important}
+html[data-hlrn-theme="dark"] body .movement.same{color:#c9c9c9!important}
+
+html[data-hlrn-theme="dark"] body iframe,
+html[style*="color-scheme: dark"] body iframe{
+  background:#000!important;
+  color-scheme:dark!important;
+}
 </style>
 </head>
 <body>
