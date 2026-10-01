@@ -5712,3 +5712,15 @@ body{
   .recorder-facts b{font-size:9px!important}
   .recorder-card-actions a{min-height:36px!important}
 }
+
+/* HLRN RESULTS MONTH HEADERS DARK FIX 20261001 */
+html[data-hlrn-theme="dark"] .ns-month-title{
+  background:#000!important;
+  background-color:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-top:1px solid #2b2b2b!important;
+  border-bottom:1px solid #2b2b2b!important;
+  box-shadow:none!important;
+}
