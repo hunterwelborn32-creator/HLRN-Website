@@ -13,7 +13,7 @@
 <meta property="og:url" content="https://highlineracingnetwork.com/drivers/joshua-spragg/">
 <meta property="og:image" content="/assets/driver-photos/cutout/joshua-spragg.webp">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "name": "Joshua Spragg", "url": "https://highlineracingnetwork.com/drivers/joshua-spragg/", "image": "/assets/driver-photos/cutout/joshua-spragg.webp", "memberOf": [{"@type": "SportsOrganization", "name": "Sunday Night League", "url": "https://highlineracingnetwork.com/standings/"}]}</script>
-<link rel="stylesheet" href="/assets/site-shell.css?v=20261001profiledark1">
+<link rel="stylesheet" href="/assets/site-shell.css?v=20261001network3">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,800;1,900&family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
@@ -42,6 +42,51 @@
 .empty{padding:22px;background:#fff;border:1px solid var(--line);color:#747d86;font-size:10px;font-weight:800}
 .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}.actions a{padding:11px 14px;background:#11161d;color:#fff;font:900 italic 15px/1 "Barlow Condensed",sans-serif;text-transform:uppercase}.actions a.primary{background:var(--red)}
 .updated{margin-top:14px;color:#858d96;font-size:8px;font-weight:800;text-transform:uppercase}
+
+/* ===== DRIVER PROFILE 2.0 ===== */
+.hero:before{content:"#37";position:absolute;right:-30px;bottom:-44px;z-index:1;color:rgba(17,22,28,.035);font:900 italic clamp(170px,22vw,330px)/.7 "Barlow Condensed",sans-serif;letter-spacing:-.08em;pointer-events:none}
+.profile-v2-badges{display:flex;flex-wrap:wrap;gap:7px;margin-top:22px}
+.profile-v2-badge{display:inline-grid;grid-template-columns:auto auto;align-items:center;gap:7px;min-height:34px;padding:6px 9px;border:1px solid var(--line);background:#f6f7f9}
+.profile-v2-badge small{color:#707983;font-size:7px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase}
+.profile-v2-badge strong{color:#11161c;font:900 italic 15px/1 "Barlow Condensed",sans-serif;white-space:nowrap}
+.profile-v2-badge.sunday{border-left:4px solid var(--sun)}.profile-v2-badge.monday{border-left:4px solid var(--mon)}.profile-v2-badge.hosted{border-left:4px solid var(--hosted)}
+
+.driver-v2-snapshot{margin-top:14px;border:1px solid var(--line);background:#fff;box-shadow:0 12px 28px rgba(18,24,31,.06)}
+.driver-v2-snapshot-head{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:13px 15px;border-bottom:1px solid var(--line);background:#f5f6f8}
+.driver-v2-snapshot-head small{display:block;color:var(--red);font-size:7px;font-weight:1000;letter-spacing:.12em;text-transform:uppercase}
+.driver-v2-snapshot-head strong{display:block;margin-top:3px;font:900 italic 24px/1 "Barlow Condensed",sans-serif;text-transform:uppercase}
+.driver-v2-snapshot-head>span{color:#7d8690;font-size:7px;font-weight:1000;letter-spacing:.08em}
+.driver-v2-snapshot-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.driver-v2-snapshot-grid>div{min-width:0;padding:15px;border-right:1px solid var(--line)}
+.driver-v2-snapshot-grid>div:last-child{border-right:0}
+.driver-v2-snapshot-grid small{display:block;color:#7d8690;font-size:7px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase}
+.driver-v2-snapshot-grid strong{display:block;margin-top:6px;color:#11161c;font:900 italic 25px/1 "Barlow Condensed",sans-serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.driver-v2-snapshot-grid strong.form-line{font-size:19px;letter-spacing:.02em}
+.driver-v2-snapshot-grid span{display:block;margin-top:5px;color:#737d87;font-size:8px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.driver-v2-intel-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.driver-v2-intel-card{position:relative;min-width:0;min-height:104px;padding:15px;border:1px solid var(--line);background:#fff;overflow:hidden}
+.driver-v2-intel-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:#e31837}
+.driver-v2-intel-card small{display:block;color:#7a848e;font-size:7px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase}
+.driver-v2-intel-card strong{display:block;margin-top:8px;color:#11161c;font:900 italic 28px/1 "Barlow Condensed",sans-serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.driver-v2-intel-card span{display:block;margin-top:6px;color:#727c87;font-size:8px;font-weight:800;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+html[data-hlrn-theme="dark"] .hero:before{color:rgba(255,255,255,.045)!important}
+html[data-hlrn-theme="dark"] .profile-v2-badge,
+html[data-hlrn-theme="dark"] .driver-v2-snapshot,
+html[data-hlrn-theme="dark"] .driver-v2-snapshot-head,
+html[data-hlrn-theme="dark"] .driver-v2-snapshot-grid>div,
+html[data-hlrn-theme="dark"] .driver-v2-intel-card{background:#000!important;color:#fff!important;border-color:#2b2b2b!important;box-shadow:none!important}
+html[data-hlrn-theme="dark"] .profile-v2-badge small,
+html[data-hlrn-theme="dark"] .driver-v2-snapshot-grid small,
+html[data-hlrn-theme="dark"] .driver-v2-snapshot-grid span,
+html[data-hlrn-theme="dark"] .driver-v2-intel-card small,
+html[data-hlrn-theme="dark"] .driver-v2-intel-card span,
+html[data-hlrn-theme="dark"] .driver-v2-snapshot-head>span{color:#aaa!important}
+html[data-hlrn-theme="dark"] .profile-v2-badge strong,
+html[data-hlrn-theme="dark"] .driver-v2-snapshot-head strong,
+html[data-hlrn-theme="dark"] .driver-v2-snapshot-grid strong,
+html[data-hlrn-theme="dark"] .driver-v2-intel-card strong{color:#fff!important}
 
 html[data-hlrn-theme="dark"],
 html[data-hlrn-theme="dark"] body{background:#000!important;color:#fff!important}
@@ -151,6 +196,8 @@ html[data-hlrn-theme="dark"] .updated{color:#aaa!important}
 
 @media(max-width:900px){.hero{grid-template-columns:1fr}.hero-media{min-height:390px}.hero-copy{padding:34px 25px}.career-strip{grid-template-columns:repeat(4,1fr)}.career-stat:nth-child(4n){border-right:0}.series-grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.page{width:min(100% - 18px,1380px)}.hero-media{min-height:330px}.hero h1{font-size:54px}.career-strip{grid-template-columns:repeat(2,1fr)}.career-stat:nth-child(2n){border-right:0}.stats-grid{grid-template-columns:repeat(2,1fr)}.stat{border-right:1px solid #e5e7ea!important}.stat:nth-child(2n){border-right:0!important}.form-grid{grid-template-columns:1fr}}
+@media(max-width:900px){.driver-v2-snapshot-grid{grid-template-columns:repeat(2,1fr)}.driver-v2-snapshot-grid>div:nth-child(2n){border-right:0}.driver-v2-intel-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.hero:before{right:-10px;bottom:-18px;font-size:150px}.profile-v2-badges{margin-top:16px}.profile-v2-badge{width:100%;justify-content:space-between}.driver-v2-snapshot{margin-top:9px}.driver-v2-snapshot-head{align-items:flex-start;padding:11px 12px}.driver-v2-snapshot-head>span{display:none}.driver-v2-snapshot-grid{grid-template-columns:1fr 1fr}.driver-v2-snapshot-grid>div{padding:12px}.driver-v2-snapshot-grid strong{font-size:21px}.driver-v2-snapshot-grid strong.form-line{font-size:15px}.driver-v2-intel-grid{grid-template-columns:1fr 1fr;gap:6px}.driver-v2-intel-card{min-height:92px;padding:12px}.driver-v2-intel-card strong{font-size:23px}}
 </style>
 </head>
 <body>
@@ -169,10 +216,26 @@ html[data-hlrn-theme="dark"] .updated{color:#aaa!important}
         <div class="car-number">#37</div>
         <div class="series-list">Sunday<br>HIGH LINE RACING NETWORK</div>
       </div>
+      <div class="profile-v2-badges"><span class="profile-v2-badge sunday"><small>Sunday</small><strong>P17 • 358 PTS</strong></span></div>
     </div>
   </section>
 
   <section class="career-strip"><div class="career-stat"><small>Starts</small><strong>11</strong></div><div class="career-stat"><small>Wins</small><strong>0</strong></div><div class="career-stat"><small>Top 5</small><strong>0</strong></div><div class="career-stat"><small>Top 10</small><strong>2</strong></div><div class="career-stat"><small>Avg Finish</small><strong>20.64</strong></div><div class="career-stat"><small>Laps</small><strong>1542</strong></div><div class="career-stat"><small>Laps Led</small><strong>0</strong></div><div class="career-stat"><small>Incidents</small><strong>222</strong></div></section>
+
+  
+    <section class="driver-v2-snapshot" aria-label="Driver snapshot">
+      <div class="driver-v2-snapshot-head">
+        <div><small>HLRN DRIVER PROFILE 2.0</small><strong>Driver Snapshot</strong></div>
+        <span>VERIFIED NETWORK DATA</span>
+      </div>
+      <div class="driver-v2-snapshot-grid">
+        <div><small>Current Championship</small><strong>P17</strong><span>Sunday</span></div>
+        <div><small>Team</small><strong>Rowdy</strong><span>Current HLRN team</span></div>
+        <div><small>Recent 5</small><strong class="form-line">P24 • P12 • P18 • P11 • P10</strong><span>15.0 avg finish</span></div>
+        <div><small>Laps Led</small><strong>0</strong><span>Career verified total</span></div>
+      </div>
+    </section>
+    
 
   <div class="section-head"><div><small>CHAMPIONSHIP DATA</small><h2>League Performance</h2></div></div>
   <div class="series-grid">
@@ -183,6 +246,9 @@ html[data-hlrn-theme="dark"] .updated{color:#aaa!important}
       </div>
       <div class="stats-grid"><div class="stat"><small>Rank</small><strong>#17</strong></div><div class="stat"><small>Points</small><strong>358</strong></div><div class="stat"><small>Starts</small><strong>11</strong></div><div class="stat"><small>Wins</small><strong>0</strong></div><div class="stat"><small>Top 5</small><strong>0</strong></div><div class="stat"><small>Top 10</small><strong>2</strong></div><div class="stat"><small>Avg Finish</small><strong>20.64</strong></div><div class="stat"><small>Laps</small><strong>1542</strong></div><div class="stat"><small>Laps Led</small><strong>0</strong></div><div class="stat"><small>Incidents</small><strong>222</strong></div></div>
     </section></div>
+
+  <div class="section-head"><div><small>PERFORMANCE INTELLIGENCE</small><h2>Driver Intel</h2></div><span>Verified profile metrics</span></div>
+  <div class="driver-v2-intel-grid"><div class="driver-v2-intel-card"><small>Best Finish</small><strong>P9</strong><span>Daytona International Speedway</span></div><div class="driver-v2-intel-card"><small>Recent 5 Avg</small><strong>15.0</strong><span>Average finishing position</span></div><div class="driver-v2-intel-card"><small>Biggest Mover</small><strong>+25</strong><span>Talladega Superspeedway</span></div><div class="driver-v2-intel-card"><small>Win Rate</small><strong>0.0%</strong><span>0 wins / 11 starts</span></div><div class="driver-v2-intel-card"><small>Top-10 Rate</small><strong>18.2%</strong><span>2 top 10s</span></div><div class="driver-v2-intel-card"><small>Poles</small><strong>0</strong><span>Verified league totals</span></div><div class="driver-v2-intel-card"><small>Laps Led</small><strong>0</strong><span>Verified league totals</span></div><div class="driver-v2-intel-card"><small>Races Recorded</small><strong>11</strong><span>Race history on this profile</span></div></div>
 
   <div class="section-head"><div><small>RECENT RESULTS</small><h2>Recent Form</h2></div></div>
   <div class="form-grid"><div class="form-item "><strong>P24</strong><span>Indianapolis Motor Speedway</span><small>Sunday • Sep 27, 2026</small></div><div class="form-item "><strong>P12</strong><span>Michigan International Speedway</span><small>Sunday • Sep 20, 2026</small></div><div class="form-item "><strong>P18</strong><span>Homestead Miami Speedway</span><small>Sunday • Sep 13, 2026</small></div><div class="form-item "><strong>P11</strong><span>Talladega Superspeedway</span><small>Sunday • Aug 30, 2026</small></div><div class="form-item "><strong>P10</strong><span>Auto Club Speedway</span><small>Sunday • Aug 23, 2026</small></div><div class="form-item "><strong>P32</strong><span>Texas Motor Speedway</span><small>Sunday • Aug 16, 2026</small></div><div class="form-item "><strong>P26</strong><span>Charlotte Motor Speedway</span><small>Sunday • Aug 9, 2026</small></div><div class="form-item "><strong>P35</strong><span>EchoPark Speedway (Atlanta)</span><small>Sunday • Jul 19, 2026</small></div></div>
@@ -197,6 +263,6 @@ html[data-hlrn-theme="dark"] .updated{color:#aaa!important}
   </div>
   <div class="updated">Profile data generated from the current HLRN verified league snapshot.</div>
 </main>
-<script src="/assets/site-shell.js?v=20261001profiledark1"></script>
+<script src="/assets/site-shell.js?v=20261001network3"></script>
 </body>
 </html>
