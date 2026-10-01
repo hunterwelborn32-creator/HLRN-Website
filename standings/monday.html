@@ -6627,23 +6627,28 @@ button,input,select,textarea,.btn,.button,.pill,.chip,.filter,.filter-btn,.tab,.
     }
   });
 
-  const rootObserver=new MutationObserver(function(mutations){
-    let relevant=false;
-    for(const m of mutations){
-      if(m.type==="attributes" || m.type==="childList"){ relevant=true; break; }
-    }
-    if(relevant) requestUpdate(true);
+  const themeObserver=new MutationObserver(function(){
+    requestUpdate(true);
   });
+
+  function watchTableBody(panelId){
+    const panel=document.getElementById(panelId);
+    const body=panel && panel.querySelector("tbody");
+    if(!body) return;
+    new MutationObserver(function(){
+      requestUpdate(true);
+    }).observe(body,{childList:true,subtree:true});
+  }
 
   function start(){
     ensure("drivers");
     ensure("teams");
-    rootObserver.observe(document.documentElement,{
+    themeObserver.observe(document.documentElement,{
       attributes:true,
-      attributeFilter:["data-hlrn-theme","style"],
-      childList:true,
-      subtree:true
+      attributeFilter:["data-hlrn-theme"]
     });
+    watchTableBody("drivers");
+    watchTableBody("teams");
     requestUpdate(true);
     setTimeout(function(){requestUpdate(true)},500);
     setTimeout(function(){requestUpdate(true)},1800);
