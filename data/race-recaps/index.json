@@ -1,4 +1,179 @@
 {
-  "updatedAt": null,
-  "recaps": []
+  "updatedAt": "2026-10-01T03:54:41Z",
+  "recaps": [
+    {
+      "raceKey": "subsession:89034974",
+      "slug": "2026-09-30-race-iracing-superspeedway-89034974",
+      "url": "/news/race-recaps/2026-09-30-race-iracing-superspeedway-89034974/",
+      "rawUrl": "/data/race-recaps/2026-09-30-race-iracing-superspeedway-89034974.json",
+      "resultsUrl": "/results/?recap=2026-09-30-race-iracing-superspeedway-89034974",
+      "title": "Jerry Fassett Wins at iRacing Superspeedway After Late-Race Restart",
+      "subtitle": "Jerry Fassett was frozen P1 in the HLRN recorder classification • 8 cautions • 28 recorded lead changes",
+      "publishedAt": "2026-10-01T03:54:41Z",
+      "updatedAt": "2026-10-01T03:54:41Z",
+      "raceFrozenAt": "2026-10-01T03:44:12.868Z",
+      "displayDate": "September 30, 2026",
+      "series": "Race",
+      "track": "iRacing Superspeedway",
+      "subSessionId": 89034974,
+      "sessionId": 323202927,
+      "winner": {
+        "name": "Jerry Fassett",
+        "number": "71",
+        "lapsCompleted": 82,
+        "lapsLedCaptured": 24
+      },
+      "drivers": [
+        {
+          "position": 1,
+          "name": "Jerry Fassett",
+          "number": "71",
+          "status": "ACTIVE"
+        },
+        {
+          "position": 2,
+          "name": "Ricky Miles",
+          "number": "5",
+          "status": "ACTIVE"
+        },
+        {
+          "position": 3,
+          "name": "Brian Duncan3",
+          "number": "13",
+          "status": "ACTIVE"
+        },
+        {
+          "position": 4,
+          "name": "Larkin Boyer",
+          "number": "19",
+          "status": "ACTIVE"
+        },
+        {
+          "position": 5,
+          "name": "Jonathan Adkins",
+          "number": "10",
+          "status": "ACTIVE"
+        },
+        {
+          "position": 6,
+          "name": "Robert Lovell",
+          "number": "83",
+          "status": "ACTIVE"
+        },
+        {
+          "position": 7,
+          "name": "Joshua McKinney2",
+          "number": "03",
+          "status": "ACTIVE"
+        },
+        {
+          "position": 8,
+          "name": "Scott Wise",
+          "number": "31",
+          "status": "ACTIVE"
+        },
+        {
+          "position": 9,
+          "name": "Gerry Bergeron",
+          "number": "1",
+          "status": "ACTIVE"
+        },
+        {
+          "position": 10,
+          "name": "Javone Thompson",
+          "number": "93",
+          "status": "ACTIVE"
+        },
+        {
+          "position": 11,
+          "name": "Donny Battiest",
+          "number": "9",
+          "status": "ACTIVE"
+        },
+        {
+          "position": 12,
+          "name": "Jt Huskins",
+          "number": "11",
+          "status": "ACTIVE"
+        },
+        {
+          "position": 13,
+          "name": "Taylor Butcher-Benjamin",
+          "number": "12",
+          "status": "ACTIVE"
+        },
+        {
+          "position": 14,
+          "name": "John Miles4",
+          "number": "69",
+          "status": "ACTIVE"
+        },
+        {
+          "position": 15,
+          "name": "Carlos Andrade",
+          "number": "24",
+          "status": "ACTIVE"
+        },
+        {
+          "position": 16,
+          "name": "Hunter Welborn",
+          "number": "66",
+          "status": "ACTIVE"
+        },
+        {
+          "position": 17,
+          "name": "Ashton Beam",
+          "number": "23",
+          "status": "ACTIVE"
+        },
+        {
+          "position": 18,
+          "name": "Tyler L Reed",
+          "number": "77",
+          "status": "ACTIVE"
+        },
+        {
+          "position": 19,
+          "name": "Jayson Anderson",
+          "number": "92",
+          "status": "ACTIVE"
+        },
+        {
+          "position": 20,
+          "name": "Gregory Smith15",
+          "number": "58",
+          "status": "ACTIVE"
+        },
+        {
+          "position": 21,
+          "name": "JD Wright",
+          "number": "701",
+          "status": "ACTIVE"
+        },
+        {
+          "position": 22,
+          "name": "Dylan Butler",
+          "number": "96",
+          "status": "ACTIVE"
+        },
+        {
+          "position": 23,
+          "name": "Jim Segredo",
+          "number": "21",
+          "status": "ACTIVE"
+        },
+        {
+          "position": 24,
+          "name": "Robert Stanners",
+          "number": "007",
+          "status": "ACTIVE"
+        }
+      ],
+      "cautions": 8,
+      "penalties": 0,
+      "leadChanges": 28,
+      "completedLapsCaptured": 82,
+      "archiveQuality": 82248100
+    }
+  ]
 }
