@@ -139,7 +139,10 @@ ready(async function(){
 
     body.addEventListener("click",async e=>{
       if(!window.matchMedia("(max-width:900px)").matches) return;
-      if(e.target.closest("a,button,input,select,textarea")) return;
+      if(e.target.closest("button,input,select,textarea")) return;
+      const profileTap=e.target.closest(".hlrn-driver-profile-link");
+      if(e.target.closest("a")&&!profileTap) return;
+      if(profileTap) e.preventDefault();
       const row=e.target.closest("tr");
       if(!row||row.querySelector(".message")) return;
       const name=row.querySelector(".hlrn-driver-profile-name")?.textContent?.trim()||row.querySelector(".name-col")?.innerText?.trim()||"";
