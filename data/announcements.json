@@ -1,6 +1,138 @@
 {
   "success": true,
-  "updatedAt": null,
-  "channel": null,
-  "announcements": []
+  "updatedAt": "2026-10-01T20:26:54Z",
+  "channel": {
+    "id": "1431686178691748021",
+    "name": "announcements",
+    "guild_id": "1401318372075114636"
+  },
+  "announcements": [
+    {
+      "id": "1475577471956160523",
+      "content": "@everyone High Line Racing Network Merch Store is here.  https://stores.inksoft.com/highline_racing_network/shop/home",
+      "timestamp": "2026-02-23T19:38:04.218000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "810534889610674196",
+        "username": "Tommy Rogers",
+        "global_name": "Tommy Rogers",
+        "avatar": "95f66064c31c01cef63626bc34897fe0"
+      },
+      "attachments": [],
+      "embeds": [
+        {
+          "title": "Highline Racing Network",
+          "url": "https://stores.inksoft.com/highline_racing_network/shop/home",
+          "type": "link",
+          "thumbnail": {
+            "url": "https://cdn.inksoft.com/images/publishers/1369/stores/highline_racing_network/img/socialmedia.jpg"
+          }
+        }
+      ],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1431686178691748021/1475577471956160523"
+    },
+    {
+      "id": "1459046631298043946",
+      "content": "",
+      "timestamp": "2026-01-09T04:50:24.677000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "810534889610674196",
+        "username": "Tommy Rogers",
+        "global_name": "Tommy Rogers",
+        "avatar": "95f66064c31c01cef63626bc34897fe0"
+      },
+      "attachments": [
+        {
+          "id": "1459046631264751668",
+          "filename": "IMG_6609.png",
+          "url": "https://cdn.discordapp.com/attachments/1431686178691748021/1459046631264751668/IMG_6609.png?ex=6abfe0d0&is=6abe8f50&hm=e26b1cfadfae831be7c05550297febc2273706ba5ab00784cbbe9b62b8c1da54&",
+          "proxy_url": "https://media.discordapp.net/attachments/1431686178691748021/1459046631264751668/IMG_6609.png?ex=6abfe0d0&is=6abe8f50&hm=e26b1cfadfae831be7c05550297febc2273706ba5ab00784cbbe9b62b8c1da54&",
+          "size": 4265138,
+          "content_type": "image/png",
+          "width": 1290,
+          "height": 1974
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1431686178691748021/1459046631298043946"
+    },
+    {
+      "id": "1450887009366184087",
+      "content": "If you run a league or a hosted series we want you to race in the HLRN League!  Why you should:\n- Free advertising in the HLRN discord for your league\n- Your logo in the broadcast and show\n- marketing for your league in the broadcast and show \n- it's all free\nWhat you need: at least 4 members from your league in the league race with your logo on their car . We will get you guys your own team voice channel.  \nWe want to promote you all right here, in the broadcast and the show!",
+      "timestamp": "2025-12-17T16:26:59.210000+00:00",
+      "edited_timestamp": "2025-12-17T16:27:49.999000+00:00",
+      "pinned": false,
+      "author": {
+        "id": "810534889610674196",
+        "username": "Tommy Rogers",
+        "global_name": "Tommy Rogers",
+        "avatar": "95f66064c31c01cef63626bc34897fe0"
+      },
+      "attachments": [],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1431686178691748021/1450887009366184087"
+    },
+    {
+      "id": "1433597856668979210",
+      "content": "",
+      "timestamp": "2025-10-30T23:26:03.990000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "810534889610674196",
+        "username": "Tommy Rogers",
+        "global_name": "Tommy Rogers",
+        "avatar": "95f66064c31c01cef63626bc34897fe0"
+      },
+      "attachments": [
+        {
+          "id": "1433597856400408596",
+          "filename": "flyer-1.jpg",
+          "url": "https://cdn.discordapp.com/attachments/1431686178691748021/1433597856400408596/flyer-1.jpg?ex=6abf94cb&is=6abe434b&hm=407249d46043360833377911dd5340715b1585a393b56ffa100c981a3b39e16d&",
+          "proxy_url": "https://media.discordapp.net/attachments/1431686178691748021/1433597856400408596/flyer-1.jpg?ex=6abf94cb&is=6abe434b&hm=407249d46043360833377911dd5340715b1585a393b56ffa100c981a3b39e16d&",
+          "size": 217880,
+          "content_type": "image/jpeg",
+          "width": 1024,
+          "height": 1024
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1431686178691748021/1433597856668979210"
+    },
+    {
+      "id": "1431688099351494717",
+      "content": "Everyone who joins will have their stats tracked on Sim Racer Hub.  If you have a few dollars and want to sponsor the upcomingp league reach out to us!  The League is free so any sponsorship or donations will be funneled into the League for prizes, swag, trophies ect.  If your a content creator and want to work with High Line, CSR Broadcasting, and Blind Squirrel, reach out!",
+      "timestamp": "2025-10-25T16:57:22.364000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "810534889610674196",
+        "username": "Tommy Rogers",
+        "global_name": "Tommy Rogers",
+        "avatar": "95f66064c31c01cef63626bc34897fe0"
+      },
+      "attachments": [],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1431686178691748021/1431688099351494717"
+    },
+    {
+      "id": "1431688040568459345",
+      "content": "Remember the season will be ran through hosted sessions!  Anybody that joins a High Line Race on League Night will be tracked in the league!  The league could Ultimately have hundreds of drivers! Ofcourse we will have it limited. Teams and Regulars that exhibit good sportsmanship and race craft will be given first priority! If races start maxing out then we will implement the password.  Those same teams and drivers will recieve the password well in advance.  After the 30 minute mark of practice the password will be distributed on facebook, word of mouth, and discord for those that wish to battle it out with us all!  This League is geared towards growth not maintaining a stagnant group  of 40 drivers!  We want to see our league driver list grow into the hundreds!  We will limiti it to probably C class and above but with a team of experienced drivers, league owners, content creators, IT professionals I think we all can make this amazing not only for the league but for the content creators and Broadcastors alike.  This method will increase viewership ten fold because new drivers will become vested on the leader board and in the broadcast.  We open our doors to content creators to join us on this journey, if you can do something cool we want you on the team!  If you just want to do your thing as a creator, we'll this is the place!  We love to see and collaborate with you all!  \nIf my vision continues to become reality and things get to demanding as more drivers want in a given race than we can allow, we will make adjustments. Perhaps even having races  to earn a spot in the league race.  We will set a day and time but we have latitude to move it around as needed at any given time because we will run it through Hosted sessions.",
+      "timestamp": "2025-10-25T16:57:08.349000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "810534889610674196",
+        "username": "Tommy Rogers",
+        "global_name": "Tommy Rogers",
+        "avatar": "95f66064c31c01cef63626bc34897fe0"
+      },
+      "attachments": [],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1431686178691748021/1431688040568459345"
+    }
+  ]
 }
