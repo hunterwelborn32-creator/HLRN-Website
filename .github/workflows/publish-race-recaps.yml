@@ -1,14 +1,13 @@
-name: Publish HLRN Race Recaps
+name: Publish HLRN Race Recaps — Manual Approval
 
 on:
-  schedule:
-    - cron: '2-59/5 * * * *'
   workflow_dispatch:
-  push:
-    paths:
-      - 'tools/publish-race-recap.py'
-      - 'tests/test_race_recap_publisher.py'
-      - '.github/workflows/publish-race-recaps.yml'
+    inputs:
+      approve:
+        description: 'Approve publishing the frozen HLRN race recap'
+        required: true
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -19,6 +18,7 @@ concurrency:
 
 jobs:
   publish:
+    if: ${{ inputs.approve }}
     runs-on: ubuntu-latest
     env:
       HLRN_RECAP_URL: https://hlrn-live-feed.onrender.com/api/recaps
