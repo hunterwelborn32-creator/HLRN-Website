@@ -1267,6 +1267,50 @@ html[data-hlrn-theme="dark"] #profileView .profile-back{
   border:1px solid #333!important;
 }
 </style>
+
+<style id="HLRN_DRIVERS_USEFUL_STATS_20261001">
+/* More useful driver cards/profiles without changing the directory structure. */
+@media(min-width:621px){
+  .driver-stats{grid-template-columns:repeat(6,minmax(0,1fr))!important}
+}
+@media(max-width:620px){
+  .mini-stat.card-extra{display:none!important}
+}
+.profile-results-actions{
+  display:flex;
+  justify-content:flex-end;
+  margin:8px 0 11px;
+}
+.profile-results-actions a{
+  display:inline-flex;
+  align-items:center;
+  min-height:38px;
+  padding:0 12px;
+  border:1px solid #cfd5dc;
+  background:#fff;
+  color:#11161c;
+  font-size:9px;
+  font-weight:1000;
+  letter-spacing:.07em;
+  text-decoration:none;
+  text-transform:uppercase;
+}
+.profile-results-actions a:hover{border-color:#8f99a3}
+.profile-race-link{cursor:pointer}
+.profile-race-link:hover td{background:#f5f7f9!important}
+.profile-race-link:focus-visible{outline:3px solid #111;outline-offset:-3px}
+.profile-mobile-result{display:block;text-decoration:none;color:inherit}
+html[data-hlrn-theme="dark"] .profile-results-actions a{
+  background:#000!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:#444!important;
+}
+html[data-hlrn-theme="dark"] .profile-results-actions a:hover{background:#111!important}
+html[data-hlrn-theme="dark"] .profile-race-link:hover td{background:#0c0c0c!important}
+html[data-hlrn-theme="dark"] .profile-race-link:focus-visible{outline-color:#fff!important}
+</style>
+
 </head>
 <body>
 <div id="directoryView" class="driver-page">
@@ -1714,7 +1758,8 @@ function enrichDriverFromShared(league,driver){
     averageFinish:metric("avgFinish",stats.averageFinish??"—"),
     racePoints:metric("racePoints",stats.racePoints),stagePoints:metric("stagePoints",stats.stagePoints),
     bonus:metric("bonus",stats.bonus),penalty:metric("penalty",stats.penalty),
-    laps:metric("laps",stats.laps),lapsLed:metric("lapsLed",stats.lapsLed),incidents:metric("incidents",stats.incidents)
+    laps:metric("laps",stats.laps),lapsLed:metric("lapsLed",stats.lapsLed),incidents:metric("incidents",stats.incidents),
+    avgRating:metric("avgRating",stats.avgRating),poles:metric("poles",stats.poles)
   };
   const s=driver.leagueStats[league];
   driver.points=num(s.points);driver.starts=num(s.starts);driver.wins=num(s.wins);driver.top5=num(s.top5);driver.top10=num(s.top10);
@@ -1845,6 +1890,8 @@ function card(d,index=0){
  const points=leagueStats.points!=null?leagueStats.points:(d.points??"—");
  const stagePoints=leagueStats.stagePoints!=null?leagueStats.stagePoints:"—";
  const team=String(d.team||leagueStats.team||"").trim();
+ const avgRating=leagueStats.avgRating!=null&&leagueStats.avgRating!==""&&leagueStats.avgRating!=="—"?Number(leagueStats.avgRating).toFixed(1):"—";
+ const incidents=leagueStats.incidents!=null&&leagueStats.incidents!==""?leagueStats.incidents:"—";
  const eager=index<4;
  return `<button class="driver-card" type="button" data-driver="${esc(name)}" aria-label="Open ${esc(name)} profile">
    <div class="driver-media">
@@ -1862,12 +1909,14 @@ function card(d,index=0){
        <span><b>${esc(points)}</b><small>PTS</small></span>
        <span><b>${esc(stagePoints)}</b><small>STG</small></span>
      </div>
-     <div class="driver-sub"><span>${car}</span><span class="win-mark">${right}</span></div>
+     <div class="driver-sub"><span>${car}${team?` • ${esc(team)}`:""}</span><span class="win-mark">${right}</span></div>
      <div class="driver-stats">
        <div class="mini-stat"><b>${esc(d.starts)}</b><span>Starts</span></div>
        <div class="mini-stat"><b>${esc(d.wins)}</b><span>Wins</span></div>
        <div class="mini-stat"><b>${esc(d.top5)}</b><span>Top 5</span></div>
        <div class="mini-stat"><b>${esc(d.top10)}</b><span>Top 10</span></div>
+       <div class="mini-stat card-extra"><b>${esc(incidents)}</b><span>Incs</span></div>
+       <div class="mini-stat card-extra"><b>${esc(avgRating)}</b><span>Avg Rating</span></div>
      </div>
    </div>
  </button>`
@@ -1974,12 +2023,15 @@ function renderProfile(d){
   const seasonLapsLed=value(league.lapsLed??(hist.length?d.lapsLed:"—"));
   const seasonIncidents=value(league.incidents??(hist.length?hist.reduce((t,r)=>t+num(r.incidents),0):"—"));
   const avgFinish=value(league.averageFinish??d.averageFinish);
+  const avgRating=value(league.avgRating);
+  const poles=value(league.poles);
   const stat=(label,v)=>`<div class="profile-stat"><b>${esc(v)}</b><span>${esc(label)}</span></div>`;
   const lead=(label,v)=>`<div class="profile-hero-stat"><span>${esc(label)}</span><b>${esc(v)}</b></div>`;
   const insight=(label,v,detail)=>`<div class="profile-insight"><span>${esc(label)}</span><strong>${esc(v)}</strong><small>${esc(detail)}</small></div>`;
+  const raceResultUrl=r=>r&&r.raceNumber?`/results/?league=${encodeURIComponent(activeLeague)}&race=${encodeURIComponent(r.raceNumber)}#raceReportView`:"/results/";
   const rows=hist.length?hist.slice(0,30).map(r=>{
-    const f=Number(r.finish);
-    return `<tr><td>${esc(leagueLabel(activeLeague))}</td><td>${esc(r.raceNumber||"—")}</td><td>${esc(r.date||"—")}</td><td>${esc(r.track||"—")}</td><td class="${f===1?'win':f>1&&f<=5?'top5':''}">${esc(r.finish||"—")}</td><td>${esc(r.points??"—")}</td><td>${esc(r.lapsLed??"—")}</td><td>${esc(r.incidents??"—")}</td><td>${esc(r.status||"—")}</td></tr>`;
+    const f=Number(r.finish),href=raceResultUrl(r);
+    return `<tr class="profile-race-link" role="link" tabindex="0" data-href="${esc(href)}"><td>${esc(leagueLabel(activeLeague))}</td><td>${esc(r.raceNumber||"—")}</td><td>${esc(r.date||"—")}</td><td>${esc(r.track||"—")}</td><td class="${f===1?'win':f>1&&f<=5?'top5':''}">${esc(r.finish||"—")}</td><td>${esc(r.points??"—")}</td><td>${esc(r.lapsLed??"—")}</td><td>${esc(r.incidents??"—")}</td><td>${esc(r.status||"—")}</td></tr>`;
   }).join(""):`<tr><td colspan="9">${ready?"No race history available for this league.":"Race history is syncing."}</td></tr>`;
   const form=hist.filter(r=>Number(r.finish)>0).slice(0,5).map(r=>{
     const finish=Number(r.finish),cls=finish===1?"form-win":finish<=5?"form-top5":"";
@@ -1987,7 +2039,7 @@ function renderProfile(d){
   }).join("");
   const mobileResults=hist.length?hist.slice(0,10).map(r=>{
     const finish=Number(r.finish),finishClass=finish===1?"win":finish>1&&finish<=5?"top5":"";
-    return `<article class="profile-mobile-result">
+    return `<a class="profile-mobile-result" href="${raceResultUrl(r)}" aria-label="View Race ${esc(r.raceNumber||"")} results at ${esc(r.track||"Unknown Track")}">
       <div class="profile-mobile-result-top">
         <div><small>Race ${esc(r.raceNumber||"—")}</small><strong>${esc(r.track||"Unknown Track")}</strong><span>${esc(r.date||"—")}</span></div>
         <b class="${finishClass}">P${esc(r.finish||"—")}</b>
@@ -1998,7 +2050,7 @@ function renderProfile(d){
         <span><b>${esc(r.incidents??"—")}</b><small>INCS</small></span>
         <span><b>${esc(r.status||"—")}</b><small>STATUS</small></span>
       </div>
-    </article>`;
+    </a>`;
   }).join(""):`<div class="profile-mobile-result-empty">${ready?"No race history available for this league.":"Race history is syncing."}</div>`;
   document.getElementById("profileContent").innerHTML=`
     <div class="profile-hero" data-driver-key="${esc(key)}">
@@ -2021,6 +2073,7 @@ function renderProfile(d){
         ${lead("Top 5 finishes",top5)}
         ${lead("Top 10 finishes",top10)}
         ${lead("Average finish",avgFinish)}
+        ${lead("Avg rating",avgRating)}
         ${lead("Laps led",seasonLapsLed)}
       </div></aside>
     </div>
@@ -2031,6 +2084,7 @@ function renderProfile(d){
       ${stat("Season points",seasonPoints)}${stat("Race points",racePoints)}
       ${stat("Stage points",stagePoints)}${stat("Bonus",bonusPoints)}${stat("Penalty",penaltyPoints)}
       ${stat("Laps",seasonLaps)}${stat("Laps led",seasonLapsLed)}${stat("Incidents",seasonIncidents)}
+      ${stat("Average rating",avgRating)}${stat("Poles",poles)}
       ${stat("League position",league.rank!=null&&league.rank!=="—"?"#"+league.rank:"—")}
       ${stat("Recorded results",hist.length?hist.length:"—")}
     </div>
@@ -2045,8 +2099,9 @@ function renderProfile(d){
     </div>
     <div class="profile-section-heading">Recent Race Form</div>
     <div class="profile-form">${form||"<span>—</span>"}</div>
+    <div class="profile-results-actions"><a href="/results/?league=${encodeURIComponent(activeLeague)}">View ${esc(leagueLabel(activeLeague))} Results Center →</a></div>
     <div class="profile-mobile-results">${mobileResults}</div>
-    <div class="history-wrap"><div class="history-head">Recent ${esc(leagueLabel(activeLeague))} Results</div>
+    <div class="history-wrap"><div class="history-head">Recent ${esc(leagueLabel(activeLeague))} Results • Click a race to open full results</div>
       <table><thead><tr><th>League</th><th>Race</th><th>Date</th><th>Track</th><th>Finish</th><th>Points</th><th>Laps Led</th><th>Incidents</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table>
     </div>`;
   setSuitStyle(document.querySelector("#profileContent .profile-hero"),suitPalette(d.driver));
@@ -2075,7 +2130,16 @@ window.addEventListener("popstate",()=>{
   }
 });
 
-document.addEventListener("DOMContentLoaded",()=>{document.getElementById("search").addEventListener("input",searchDrivers);document.getElementById("driverSort").addEventListener("change",e=>{currentDriverSort=e.target.value;searchDrivers()});document.getElementById("driverGrid").addEventListener("click",e=>{const c=e.target.closest(".driver-card");if(c)openProfile(c.dataset.driver)});document.getElementById("backToDirectory").addEventListener("click",showDirectory);document.querySelectorAll(".league-tab").forEach(btn=>btn.addEventListener("click",()=>setLeague(btn.dataset.league)));initializeDrivers()});
+document.addEventListener("DOMContentLoaded",()=>{
+  document.getElementById("search").addEventListener("input",searchDrivers);
+  document.getElementById("driverSort").addEventListener("change",e=>{currentDriverSort=e.target.value;searchDrivers()});
+  document.getElementById("driverGrid").addEventListener("click",e=>{const card=e.target.closest(".driver-card");if(card)openProfile(card.dataset.driver)});
+  document.getElementById("profileContent").addEventListener("click",e=>{const row=e.target.closest(".profile-race-link[data-href]");if(row)location.href=row.dataset.href});
+  document.getElementById("profileContent").addEventListener("keydown",e=>{const row=e.target.closest(".profile-race-link[data-href]");if(row&&(e.key==="Enter"||e.key===" ")){e.preventDefault();location.href=row.dataset.href}});
+  document.getElementById("backToDirectory").addEventListener("click",showDirectory);
+  document.querySelectorAll(".league-tab").forEach(btn=>btn.addEventListener("click",()=>setLeague(btn.dataset.league)));
+  initializeDrivers();
+});
 </script>
 <script src="../assets/site-shell.js?v=20261001control1"></script>
 </body>
