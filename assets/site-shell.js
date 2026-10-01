@@ -580,7 +580,32 @@ function installThemeReadabilityLayer(){
       text-shadow:0 2px 12px rgba(0,0,0,.72)!important;
     }
     html[data-hlrn-route="news"][data-hlrn-theme="light"] .feed-shell{
-      display:none!important;
+      display:block!important;
+      background:#fff!important;
+      color:#11161c!important;
+      border-color:#d8dee5!important;
+      box-shadow:none!important;
+    }
+    html[data-hlrn-route="news"][data-hlrn-theme="light"] .feed-top{
+      background:#f5f6f8!important;
+      color:#11161c!important;
+      border-color:#d8dee5!important;
+    }
+    html[data-hlrn-route="news"][data-hlrn-theme="light"] .feed-top strong{
+      color:#11161c!important;
+      -webkit-text-fill-color:#11161c!important;
+    }
+    html[data-hlrn-route="news"][data-hlrn-theme="light"] .feed-live{
+      color:#66717d!important;
+    }
+    html[data-hlrn-route="news"][data-hlrn-theme="light"] .frame-wrap,
+    html[data-hlrn-route="news"][data-hlrn-theme="light"] .news-frame{
+      background:#fff!important;
+    }
+    html[data-hlrn-route="news"][data-hlrn-theme="light"] .loading{
+      background:#f5f6f8!important;
+      color:#66717d!important;
+      border-color:#d8dee5!important;
     }
 
     /* ADMINS: remaining dark informational boxes to white. */
