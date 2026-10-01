@@ -5585,5 +5585,178 @@ button,input,select,textarea,.btn,.button,.pill,.chip,.filter,.filter-btn,.tab,.
 })();
 </script>
 <script src="../assets/site-shell.js?v=20261001directstandings1"></script>
+<style id="HLRN_MOBILE_STANDINGS_USABLE_20261001">
+/* Phone standings: readable swipeable table instead of squeezing every column into the viewport. */
+@media(max-width:760px){
+  #drivers .table-shell{
+    position:relative!important;
+    width:100%!important;
+    max-width:100%!important;
+    overflow-x:auto!important;
+    overflow-y:visible!important;
+    -webkit-overflow-scrolling:touch!important;
+    touch-action:pan-x pan-y!important;
+    overscroll-behavior-x:contain!important;
+    scroll-snap-type:x proximity!important;
+    border-radius:10px!important;
+    scrollbar-width:thin!important;
+  }
+
+  #drivers table{
+    width:1120px!important;
+    min-width:1120px!important;
+    max-width:none!important;
+    table-layout:fixed!important;
+    border-collapse:separate!important;
+    border-spacing:0!important;
+  }
+
+  #drivers th,
+  #drivers td{
+    width:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+    padding-left:7px!important;
+    padding-right:7px!important;
+    overflow:visible!important;
+    text-overflow:clip!important;
+    white-space:nowrap!important;
+  }
+
+  #drivers th{
+    height:42px!important;
+    font-size:9px!important;
+    line-height:1.05!important;
+    letter-spacing:.035em!important;
+  }
+
+  #drivers tbody td:not(.name-col),
+  #drivers tbody td:not(.name-col) *{
+    font-size:12px!important;
+  }
+
+  /* Mobile scorecard keeps rank/change/points inside the pinned driver card. */
+  #drivers.panel th:nth-child(1),#drivers.panel td:nth-child(1),
+  #drivers.panel th:nth-child(2),#drivers.panel td:nth-child(2),
+  #drivers.panel th:nth-child(8),#drivers.panel td:nth-child(8),
+  #drivers.panel th:nth-child(9),#drivers.panel td:nth-child(9){
+    display:none!important;
+  }
+
+  /* Readable stat widths instead of percent-based compression. */
+  #drivers th:nth-child(3),#drivers td:nth-child(3){
+    width:255px!important;
+    min-width:255px!important;
+    max-width:255px!important;
+  }
+  #drivers th:nth-child(4),#drivers td:nth-child(4){width:86px!important}
+  #drivers th:nth-child(5),#drivers td:nth-child(5){width:74px!important}
+  #drivers th:nth-child(6),#drivers td:nth-child(6){width:74px!important}
+  #drivers th:nth-child(7),#drivers td:nth-child(7){width:70px!important}
+  #drivers th:nth-child(10),#drivers td:nth-child(10){width:72px!important}
+  #drivers th:nth-child(11),#drivers td:nth-child(11){width:72px!important}
+  #drivers th:nth-child(12),#drivers td:nth-child(12){width:72px!important}
+  #drivers th:nth-child(13),#drivers td:nth-child(13){width:72px!important}
+  #drivers th:nth-child(14),#drivers td:nth-child(14){width:72px!important}
+  #drivers th:nth-child(15),#drivers td:nth-child(15){width:80px!important}
+  #drivers th:nth-child(16),#drivers td:nth-child(16){width:80px!important}
+  #drivers th:nth-child(17),#drivers td:nth-child(17){width:70px!important}
+
+  /* Keep the driver identity card visible while stats swipe underneath it. */
+  #drivers thead th.name-col,
+  #drivers tbody td.name-col{
+    position:-webkit-sticky!important;
+    position:sticky!important;
+    left:0!important;
+    z-index:40!important;
+    overflow:hidden!important;
+    box-shadow:10px 0 18px -14px rgba(0,0,0,.8)!important;
+    scroll-snap-align:start!important;
+  }
+  #drivers thead th.name-col{
+    z-index:60!important;
+  }
+
+  #drivers td.name-col{
+    height:78px!important;
+    padding:7px 8px!important;
+  }
+
+  #drivers .hlrn-mobile-driver-card{
+    display:grid!important;
+    grid-template-columns:36px minmax(0,1fr) 56px!important;
+    gap:7px!important;
+    align-items:center!important;
+    width:100%!important;
+    min-width:0!important;
+  }
+
+  #drivers .hlrn-driver-profile-inner{
+    display:grid!important;
+    grid-template-columns:42px minmax(0,1fr)!important;
+    gap:8px!important;
+    align-items:center!important;
+    width:100%!important;
+    min-height:62px!important;
+    overflow:hidden!important;
+  }
+
+  #drivers td.name-col img{
+    width:42px!important;
+    height:54px!important;
+    max-width:42px!important;
+    object-fit:contain!important;
+  }
+
+  #drivers .hlrn-driver-profile-name{
+    font-size:15px!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+
+  #drivers td:nth-child(4){
+    font-size:17px!important;
+    font-weight:900!important;
+  }
+
+  .hlrn-mobile-scroll-hint{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:7px!important;
+    min-height:36px!important;
+    padding:8px 10px!important;
+    font-size:10px!important;
+    font-weight:900!important;
+    letter-spacing:.055em!important;
+    text-transform:uppercase!important;
+  }
+  .hlrn-mobile-scroll-hint:before{
+    content:"←"!important;
+  }
+  .hlrn-mobile-scroll-hint:after{
+    content:"→"!important;
+  }
+}
+
+/* Very small phones: keep the same readable table, just slightly narrower identity card. */
+@media(max-width:420px){
+  #drivers table{
+    width:1080px!important;
+    min-width:1080px!important;
+  }
+  #drivers th:nth-child(3),#drivers td:nth-child(3){
+    width:225px!important;
+    min-width:225px!important;
+    max-width:225px!important;
+  }
+  #drivers .hlrn-mobile-driver-card{
+    grid-template-columns:32px minmax(0,1fr) 52px!important;
+    gap:5px!important;
+  }
+  #drivers .hlrn-driver-profile-name{font-size:14px!important}
+}
+</style>
 </body>
 </html>
