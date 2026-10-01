@@ -321,6 +321,12 @@ function hlrnHostedDarkModeActive(){
 
 const HLRN_HOSTED_LIGHT_DASHBOARD_CSS = `
 /* Driver Statistics: light mode surfaces and readable text. */
+/* Hide oversized decorative lettering; retain the actual page headings. */
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="drivers"] .hlrn-top::after,
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="drivers"] .hero::after{
+  content:none!important;display:none!important;
+}
+
 html[data-hlrn-theme="light"][data-hlrn-hosted-view="drivers"]{
   --stats-ink:#000;
 }
