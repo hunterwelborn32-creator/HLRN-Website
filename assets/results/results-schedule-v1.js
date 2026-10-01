@@ -381,7 +381,9 @@
     document.getElementById('nsSchedule').innerHTML=months.length?months.map(month=>`<section class="ns-month"><h2 class="ns-month-title">${month}</h2><div class="ns-races">${groups[month].map(r=>{
       const end=raceEnd(r._start),past=end<st.now,live=st.now>=r._start&&st.now<end,isNext=st.next===r&&!live;
       const day=new Intl.DateTimeFormat('en-US',{day:'2-digit'}).format(r._start),dow=new Intl.DateTimeFormat('en-US',{weekday:'short'}).format(r._start).toUpperCase();
-      return `<article class="ns-race-row ${past?'past':''} ${isNext?'next':''}"><div class="ns-date"><b>${day}</b><span>${dow}</span></div><div><div class="ns-row-week">Week ${esc(r.week)} • ${league==='sunday'?'Sunday':'Monday'} League</div><div class="ns-row-track">${esc(r.track)}</div><div class="ns-row-location">${esc(r.location||'')} • ${fTime(r._start)}</div>${past?winnerMarkup(r,false)+resultMetaMarkup(r,false):''}</div><div class="ns-row-spec">${esc(r.car)}<br>${esc(r.laps)} Laps • ${esc(r.tires)}</div><div class="ns-row-status"><span class="ns-chip ${live?'live':isNext?'next':''} ${league}">${live?'Live':past?'Final':isNext?'Next Race':'Upcoming'}</span>${past?`<a class="ns-row-results ${league}" href="${fullResultsUrl(r)}">Full Results →</a>`:''}</div></article>`;
+      const resultHref=past?fullResultsUrl(r):'';
+      const clickAttrs=past?` role="link" tabindex="0" data-results-href="${esc(resultHref)}" aria-label="View full results for Week ${esc(r.week)} at ${esc(r.track)}"`:'';
+      return `<article class="ns-race-row ${past?'past clickable-result':''} ${isNext?'next':''}"${clickAttrs}><div class="ns-date"><b>${day}</b><span>${dow}</span></div><div><div class="ns-row-week">Week ${esc(r.week)} • ${league==='sunday'?'Sunday':'Monday'} League</div><div class="ns-row-track">${esc(r.track)}</div><div class="ns-row-location">${esc(r.location||'')} • ${fTime(r._start)}</div>${past?winnerMarkup(r,false)+resultMetaMarkup(r,false):''}</div><div class="ns-row-spec">${esc(r.car)}<br>${esc(r.laps)} Laps • ${esc(r.tires)}</div><div class="ns-row-status"><span class="ns-chip ${live?'live':isNext?'next':''} ${league}">${live?'Live':past?'Final':isNext?'Next Race':'Upcoming'}</span>${past?`<a class="ns-row-results ${league}" href="${resultHref}">Full Results →</a>`:''}</div></article>`;
     }).join('')}</div></section>`).join(''):`<div class="ns-empty">No upcoming races found.</div>`;
   }
   function render(){
@@ -396,6 +398,26 @@
     league=btn.dataset.league;document.querySelectorAll('.ns-league-tab').forEach(b=>b.classList.toggle('active',b===btn));render();
   }));
   showPast.addEventListener('change',render);
+
+  const scheduleRoot=document.getElementById('nsSchedule');
+  function openPastRaceFromRow(row){
+    const href=row&&row.dataset?row.dataset.resultsHref:'';
+    if(href) window.location.href=href;
+  }
+  scheduleRoot?.addEventListener('click',e=>{
+    if(e.target.closest('a,button,input,select,label')) return;
+    const row=e.target.closest('.ns-race-row.clickable-result[data-results-href]');
+    if(row) openPastRaceFromRow(row);
+  });
+  scheduleRoot?.addEventListener('keydown',e=>{
+    const row=e.target.closest('.ns-race-row.clickable-result[data-results-href]');
+    if(!row) return;
+    if(e.key==='Enter'||e.key===' '){
+      e.preventDefault();
+      openPastRaceFromRow(row);
+    }
+  });
+
   render();
   loadPastWinners();
   loadResultDetails();
