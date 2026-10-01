@@ -216,6 +216,44 @@ html[data-hlrn-theme="dark"] .tab[data-page="monday"]:after,
 html[data-hlrn-theme="dark"] .tab[data-page="monday"]:before{background:#69e000!important}
 </style>
 
+<style id="HLRN_HOSTED_OUTER_WHITE_FRAME_DARK_FIX_20261001">
+/* Dark mode: remove the white frame around the Hosted embedded page. */
+html[data-hlrn-theme="dark"],
+html[data-hlrn-theme="dark"] body,
+html[data-hlrn-theme="dark"] .hlrn,
+html[data-hlrn-theme="dark"] .viewport,
+html[data-hlrn-theme="dark"] iframe.page,
+html[data-hlrn-theme="dark"] #page-hosted,
+html[style*="color-scheme: dark"],
+html[style*="color-scheme: dark"] body,
+html[style*="color-scheme: dark"] .hlrn,
+html[style*="color-scheme: dark"] .viewport,
+html[style*="color-scheme: dark"] iframe.page,
+html[style*="color-scheme: dark"] #page-hosted{
+  background:#000!important;
+  background-color:#000!important;
+  background-image:none!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+}
+
+html[data-hlrn-theme="dark"] .viewport,
+html[style*="color-scheme: dark"] .viewport{
+  padding:0!important;
+  margin:0!important;
+}
+
+html[data-hlrn-theme="dark"] #page-hosted,
+html[style*="color-scheme: dark"] #page-hosted{
+  display:block!important;
+  width:100%!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  color-scheme:dark!important;
+}
+</style>
 </head>
 <body>
 <div class="hlrn">
