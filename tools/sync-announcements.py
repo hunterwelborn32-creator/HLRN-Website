@@ -105,6 +105,10 @@ def discover_channel():
     candidates = [
         c for c in text_channels
         if "announce" in norm_name(c.get("name"))
+        and not any(
+            private_word in norm_name(c.get("name"))
+            for private_word in ("admin", "staff", "moderator", "mod-", "race-control", "bot-")
+        )
     ]
     if not candidates:
         available = ", ".join(sorted(c.get("name", "") for c in text_channels))
@@ -114,12 +118,46 @@ def discover_channel():
             f"Visible text channels: {available}"
         )
 
-    candidates.sort(key=lambda c: (
-        0 if norm_name(c.get("name")) == "announcements" else 1,
-        int(c.get("position") or 9999),
-        norm_name(c.get("name")),
-    ))
-    return guild_id, candidates[0]
+    # Multiple HLRN channels can contain "announcements". Prefer the public-facing
+    # candidate that is actually active now instead of blindly taking the first
+    # channel named #announcements (which may be an old archived channel).
+    preferred_names = {
+        "hlrn-announcements": 0,
+        "official-announcements": 1,
+        "league-announcements": 2,
+        "announcements": 3,
+        "announcement": 4,
+        "updates-and-announcements": 5,
+        "announcements-and-updates": 6,
+    }
+
+    def recent_activity(channel):
+        channel_id = str(channel.get("id") or "")
+        latest_ts = ""
+        latest_id = ""
+        try:
+            batch = request_json(f"/channels/{channel_id}/messages?limit=1")
+            if batch:
+                latest_ts = str(batch[0].get("timestamp") or "")
+                latest_id = str(batch[0].get("id") or "")
+        except Exception:
+            pass
+        return latest_ts, latest_id
+
+    scored = []
+    for channel in candidates:
+        latest_ts, latest_id = recent_activity(channel)
+        name = norm_name(channel.get("name"))
+        scored.append((
+            latest_ts,
+            latest_id,
+            -preferred_names.get(name, 99),
+            -int(channel.get("position") or 9999),
+            channel,
+        ))
+
+    scored.sort(key=lambda item: item[:4], reverse=True)
+    return guild_id, scored[0][4]
 
 
 def compact_embed(embed):
