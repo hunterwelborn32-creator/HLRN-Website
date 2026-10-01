@@ -7,7 +7,7 @@
 <meta name="description" content="HLRN Race Intelligence provides data-driven championship analysis, driver trends, contender projections and race-night insights for High Line Racing Network.">
 
 <link rel="stylesheet" href="../assets/race-intelligence/intelligence-v1.min.css?v=20260930daylogo2">
-<link rel="preload" as="script" href="../assets/race-intelligence/intelligence-v1.js?v=20260930noaccuracy1">
+<link rel="preload" as="script" href="../assets/race-intelligence/intelligence-v1.js?v=20261001contenders2">
 
 
 
@@ -239,6 +239,76 @@ html[data-hlrn-theme="dark"] body .shell .deep-grid,
 html[data-hlrn-theme="dark"] body .shell .stat-grid{
   background:#000!important;
   border-color:#2b2b2b!important;
+}
+</style>
+<style id="HLRN_RI_TOP3_FIT_20261001">
+/* Top 3 projected contenders: equal cards, complete images, no overflow. */
+#v3Contenders{
+  width:100%!important;
+  max-width:100%!important;
+  overflow:hidden!important;
+}
+#v3ContenderGrid,
+.v3-contender-grid{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:18px!important;
+  width:100%!important;
+  max-width:100%!important;
+  overflow:hidden!important;
+}
+#v3ContenderGrid .v3-contender{
+  min-width:0!important;
+  width:100%!important;
+  max-width:100%!important;
+  overflow:hidden!important;
+  padding:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  border:1px solid #2b2b2b!important;
+  background:#000!important;
+}
+#v3ContenderGrid .v3-contender-photo-wrap{
+  width:100%!important;
+  aspect-ratio:16/9!important;
+  min-height:0!important;
+  overflow:hidden!important;
+  background:#000!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+#v3ContenderGrid .v3-contender-photo-wrap .hlrn-contender-full-photo,
+#v3ContenderGrid .v3-contender > .hlrn-contender-full-photo{
+  display:block!important;
+  position:static!important;
+  inset:auto!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:100%!important;
+  max-height:100%!important;
+  margin:0!important;
+  padding:0!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  transform:none!important;
+  clip-path:none!important;
+  background:#000!important;
+}
+#v3ContenderGrid .v3-contender-copy{
+  min-width:0!important;
+  padding:18px 22px 20px!important;
+}
+#v3ContenderGrid .v3-contender-name{
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+}
+@media(max-width:900px){
+  #v3ContenderGrid,.v3-contender-grid{
+    grid-template-columns:1fr!important;
+    gap:14px!important;
+  }
+  #v3ContenderGrid .v3-contender-photo-wrap{aspect-ratio:16/9!important}
 }
 </style>
 </head>
