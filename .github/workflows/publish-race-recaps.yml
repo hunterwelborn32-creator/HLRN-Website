@@ -22,6 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       HLRN_RECAP_URL: https://hlrn-live-feed.onrender.com/api/recaps
+      HLRN_PUBLISH_APPROVED: '1'
 
     steps:
       - name: Checkout
