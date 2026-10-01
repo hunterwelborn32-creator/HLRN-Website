@@ -1716,22 +1716,7 @@ input,select,button{color:#111!important}
 iframe{background:#fff!important;color-scheme:light!important}
 `;
   const tag='<style id="HLRN_STATIC_LIGHT_INNER">'+css+'</style>';
-  return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'<script id="HLRN_DIRECT_STANDINGS_THEME_BOOTSTRAP_20261001">
-(function(){
-  let theme="light";
-  try{theme=localStorage.getItem("hlrn_site_theme_v2")==="dark"?"dark":"light"}catch(e){}
-  document.documentElement.dataset.hlrnTheme=theme;
-  document.documentElement.style.colorScheme=theme;
-})();
-</script>
-<link rel="stylesheet" href="../assets/site-shell.css?v=20261001directstandings1">
-<link rel="stylesheet" href="../assets/standings/standings-series-shell.css?v=20261001directstandings1">
-<script src="../assets/standings/standings-shared-data.js?v=20261001directstandings1"></script>
-<style id="HLRN_DIRECT_FULL_PAGE_SCROLL_20261001">
-html,body{height:auto!important;min-height:100%!important;max-height:none!important;overflow-x:hidden!important;overflow-y:auto!important}
-body{position:relative!important}
-</style>
-</head>') : tag+markup;
+  return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'</head>') : tag+markup;
 }
 </script>
 
@@ -3902,6 +3887,21 @@ html[style*="color-scheme: dark"] body #lastRace .hlrn-driver-profile-arrow{
   }
   #drivers .hlrn-driver-profile-name{font-size:11px!important}
 }
+</style>
+<script id="HLRN_DIRECT_STANDINGS_THEME_BOOTSTRAP_20261001">
+(function(){
+  let theme="light";
+  try{theme=localStorage.getItem("hlrn_site_theme_v2")==="dark"?"dark":"light"}catch(e){}
+  document.documentElement.dataset.hlrnTheme=theme;
+  document.documentElement.style.colorScheme=theme;
+})();
+</script>
+<link rel="stylesheet" href="../assets/site-shell.css?v=20261001directstandings1">
+<link rel="stylesheet" href="../assets/standings/standings-series-shell.css?v=20261001directstandings1">
+<script src="../assets/standings/standings-shared-data.js?v=20261001directstandings1"></script>
+<style id="HLRN_DIRECT_FULL_PAGE_SCROLL_20261001">
+html,body{height:auto!important;min-height:100%!important;max-height:none!important;overflow-x:hidden!important;overflow-y:auto!important}
+body{position:relative!important}
 </style>
 </head>
 <body>
