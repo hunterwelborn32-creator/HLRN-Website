@@ -5879,5 +5879,189 @@ button,input,select,textarea,.btn,.button,.pill,.chip,.filter,.filter-btn,.tab,.
   }
 }
 </style>
+
+<style id="HLRN_FLOATING_STANDINGS_HEADER_20261001">
+/* True viewport-following standings header. This is a separate overlay so
+   horizontal scrolling/overflow on the real table cannot break sticky behavior. */
+#hlrnFloatingStandingsHeader{
+  position:fixed!important;
+  top:0!important;
+  left:0;
+  z-index:2147483000!important;
+  display:none;
+  overflow:hidden!important;
+  pointer-events:none!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:0 8px 18px -14px rgba(0,0,0,.75)!important;
+}
+#hlrnFloatingStandingsHeader table{
+  position:relative!important;
+  margin:0!important;
+  border-spacing:0!important;
+  table-layout:fixed!important;
+}
+#hlrnFloatingStandingsHeader thead,
+#hlrnFloatingStandingsHeader tr{
+  margin:0!important;
+  padding:0!important;
+}
+#hlrnFloatingStandingsHeader th{
+  position:static!important;
+  top:auto!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+}
+</style>
+<script id="HLRN_FLOATING_STANDINGS_HEADER_20261001_JS">
+(function(){
+  if(window.__hlrnFloatingStandingsHeaderReady) return;
+  window.__hlrnFloatingStandingsHeaderReady=true;
+
+  let floatBox=null;
+  let floatTable=null;
+  let activeSource=null;
+  let raf=0;
+
+  function ensureBox(){
+    if(floatBox) return;
+    floatBox=document.createElement('div');
+    floatBox.id='hlrnFloatingStandingsHeader';
+    floatTable=document.createElement('table');
+    floatBox.appendChild(floatTable);
+    document.body.appendChild(floatBox);
+  }
+
+  function activeTable(){
+    const panel=document.querySelector('.page-wrap > .panel.active') || document.querySelector('.panel.active');
+    if(!panel || (panel.id!=='drivers' && panel.id!=='teams')) return null;
+    const shell=panel.querySelector('.table-shell');
+    const table=shell && shell.querySelector('table');
+    const thead=table && table.querySelector('thead');
+    if(!shell || !table || !thead) return null;
+    return {panel,shell,table,thead};
+  }
+
+  function copyHeader(source){
+    ensureBox();
+    floatTable.innerHTML='';
+    const clonedHead=source.thead.cloneNode(true);
+    floatTable.appendChild(clonedHead);
+
+    const sourceCells=source.thead.querySelectorAll('th');
+    const cloneCells=clonedHead.querySelectorAll('th');
+    const tableStyle=getComputedStyle(source.table);
+
+    floatTable.style.width=Math.max(source.table.scrollWidth, source.table.getBoundingClientRect().width)+'px';
+    floatTable.style.minWidth=floatTable.style.width;
+    floatTable.style.borderCollapse=tableStyle.borderCollapse;
+    floatTable.style.background=tableStyle.background;
+    floatTable.style.color=tableStyle.color;
+
+    cloneCells.forEach((cell,i)=>{
+      const original=sourceCells[i];
+      if(!original) return;
+      const r=original.getBoundingClientRect();
+      const s=getComputedStyle(original);
+      cell.style.width=r.width+'px';
+      cell.style.minWidth=r.width+'px';
+      cell.style.maxWidth=r.width+'px';
+      cell.style.height=r.height+'px';
+      cell.style.padding=s.padding;
+      cell.style.fontFamily=s.fontFamily;
+      cell.style.fontSize=s.fontSize;
+      cell.style.fontWeight=s.fontWeight;
+      cell.style.fontStyle=s.fontStyle;
+      cell.style.lineHeight=s.lineHeight;
+      cell.style.letterSpacing=s.letterSpacing;
+      cell.style.textTransform=s.textTransform;
+      cell.style.textAlign=s.textAlign;
+      cell.style.verticalAlign=s.verticalAlign;
+      cell.style.whiteSpace=s.whiteSpace;
+      cell.style.color=s.color;
+      cell.style.webkitTextFillColor=s.webkitTextFillColor;
+      cell.style.background=s.background;
+      cell.style.backgroundColor=s.backgroundColor;
+      cell.style.backgroundImage=s.backgroundImage;
+      cell.style.borderTop=s.borderTop;
+      cell.style.borderRight=s.borderRight;
+      cell.style.borderBottom=s.borderBottom;
+      cell.style.borderLeft=s.borderLeft;
+      cell.style.boxShadow=s.boxShadow;
+    });
+    activeSource=source.table;
+  }
+
+  function updateNow(){
+    raf=0;
+    const source=activeTable();
+    if(!source){
+      if(floatBox) floatBox.style.display='none';
+      activeSource=null;
+      return;
+    }
+
+    const shellRect=source.shell.getBoundingClientRect();
+    const tableRect=source.table.getBoundingClientRect();
+    const headRect=source.thead.getBoundingClientRect();
+    const headHeight=Math.max(1, headRect.height);
+    const topOffset=0;
+
+    /* Rebuild whenever the active table changes, widths change, or content refreshes. */
+    if(activeSource!==source.table ||
+       !floatTable ||
+       Math.abs(parseFloat(floatTable.style.width||'0')-Math.max(source.table.scrollWidth,source.table.getBoundingClientRect().width))>2){
+      copyHeader(source);
+    }
+
+    const shouldShow =
+      headRect.top < topOffset &&
+      tableRect.bottom > topOffset + headHeight &&
+      shellRect.right > 0 &&
+      shellRect.left < window.innerWidth;
+
+    if(!shouldShow){
+      floatBox.style.display='none';
+      return;
+    }
+
+    /* Re-copy on each show/update so Race Day/Race Night theme changes are reflected. */
+    copyHeader(source);
+
+    const visibleLeft=Math.max(0,shellRect.left);
+    const visibleRight=Math.min(window.innerWidth,shellRect.right);
+    const visibleWidth=Math.max(0,visibleRight-visibleLeft);
+
+    floatBox.style.display='block';
+    floatBox.style.top=topOffset+'px';
+    floatBox.style.left=visibleLeft+'px';
+    floatBox.style.width=visibleWidth+'px';
+    floatBox.style.height=headHeight+'px';
+
+    const clippedFromLeft=visibleLeft-shellRect.left;
+    floatTable.style.transform='translateX('+(-(source.shell.scrollLeft+clippedFromLeft))+'px)';
+  }
+
+  function schedule(){ if(!raf) raf=requestAnimationFrame(updateNow); }
+
+  window.addEventListener('scroll',schedule,{passive:true});
+  window.addEventListener('resize',schedule,{passive:true});
+  document.addEventListener('click',function(){ setTimeout(schedule,0); },true);
+  document.addEventListener('visibilitychange',schedule);
+
+  const observer=new MutationObserver(schedule);
+  observer.observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['class','style','data-hlrn-theme']});
+
+  document.addEventListener('scroll',function(e){
+    if(e.target && e.target.classList && e.target.classList.contains('table-shell')) schedule();
+  },true);
+
+  setTimeout(schedule,50);
+  setTimeout(schedule,500);
+})();
+</script>
+
 </body>
 </html>
