@@ -2,7 +2,7 @@
 <meta name="description" content="High Line Racing Network race results, previous winners, upcoming events and the complete Sunday and Monday league schedule.">
 <link rel="canonical" href="https://highlineracingnetwork.com/results/"><link rel="stylesheet" href="../assets/results/results-v1.min.css?v=20261001months1">
 <link rel="preload" as="script" href="../assets/results/results-core-v1.js?v=20260929p3">
-<link rel="preload" as="script" href="../assets/results/results-schedule-v1.js?v=20260929freeze1">
+<link rel="preload" as="script" href="../assets/results/results-schedule-v1.js?v=20261001details1">
 
 
 
@@ -300,6 +300,80 @@ html[data-hlrn-theme="dark"] #raceReportContent{
   color:#fff!important;
 }
 </style>
+
+<style id="HLRN_RESULTS_DETAIL_ENHANCEMENTS_20261001">
+/* Completed-race upgrades. Existing Results layout/grid is intentionally unchanged. */
+.ns-result-meta{
+  margin-top:7px!important;
+  max-width:100%!important;
+  overflow:hidden!important;
+  color:#67717b!important;
+  font-size:7px!important;
+  font-weight:800!important;
+  line-height:1.35!important;
+  letter-spacing:.025em!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+.ns-result-meta.compact{
+  margin-top:8px!important;
+  padding-top:8px!important;
+  border-top:1px dashed #d7dce1!important;
+  font-size:7px!important;
+}
+.ns-row-status .ns-row-results{
+  display:block!important;
+  margin-top:8px!important;
+  font-size:6px!important;
+  font-weight:1000!important;
+  letter-spacing:.08em!important;
+  line-height:1.2!important;
+  text-decoration:none!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+}
+.ns-row-results.sunday{color:#ed1c24!important}
+.ns-row-results.monday{color:#36df7d!important}
+.ns-row-results:hover{text-decoration:underline!important}
+.ns-full-results.sunday{
+  border-color:#ed1c24!important;
+  color:#ed1c24!important;
+}
+.ns-full-results.monday{
+  border-color:#36a965!important;
+  color:#23864c!important;
+}
+
+html[data-hlrn-theme="dark"] .ns-result-meta{
+  color:#b9c0c7!important;
+  -webkit-text-fill-color:#b9c0c7!important;
+}
+html[data-hlrn-theme="dark"] .ns-result-meta.compact{
+  border-top-color:#2b2b2b!important;
+}
+html[data-hlrn-theme="dark"] .ns-full-results.sunday{
+  background:#000!important;
+  border-color:#ed1c24!important;
+  color:#ff5d63!important;
+  -webkit-text-fill-color:#ff5d63!important;
+}
+html[data-hlrn-theme="dark"] .ns-full-results.monday{
+  background:#000!important;
+  border-color:#36df7d!important;
+  color:#69f39c!important;
+  -webkit-text-fill-color:#69f39c!important;
+}
+
+/* Preserve the existing mobile geometry. Detailed stat line is desktop/tablet only. */
+@media(max-width:620px){
+  .ns-result-meta{display:none!important}
+  .ns-row-status .ns-row-results{
+    margin-top:5px!important;
+    font-size:5px!important;
+  }
+}
+</style>
+
 </head><body>
 <div class="hlrn-race-center">
 <div class="ultra-scan"></div><div class="ultra-orb one"></div><div class="ultra-orb two"></div>
@@ -520,7 +594,7 @@ html[data-hlrn-theme="dark"] #raceReportContent{
 
 
 
-<script src="../assets/results/results-schedule-v1.js?v=20260929m1"></script>
+<script src="../assets/results/results-schedule-v1.js?v=20261001details1"></script>
 <script src="../assets/hlrn-core.js?v=results-archive-1"></script>
 <script data-hlrn-driver-system src="../assets/driver-system.js?v=20260930v7"></script>
 <script src="../assets/results/results-archive-v1.js?v=20261001reset1"></script>
