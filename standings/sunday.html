@@ -1716,215 +1716,7 @@ input,select,button{color:#111!important}
 iframe{background:#fff!important;color-scheme:light!important}
 `;
   const tag='<style id="HLRN_STATIC_LIGHT_INNER">'+css+'</style>';
-  return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'<style id="HLRN_DRIVER_PROFILE_LINKS_V1">
-#drivers .hlrn-driver-profile-link{
-  display:inline-flex!important;
-  max-width:100%!important;
-  color:#111214!important;
-  text-decoration:none!important;
-  border-radius:8px!important;
-  outline:none!important;
-}
-#drivers .hlrn-driver-profile-inner{
-  display:inline-flex!important;
-  align-items:center!important;
-  gap:10px!important;
-  min-height:58px!important;
-  max-width:100%!important;
-  vertical-align:middle!important;
-}
-#drivers .hlrn-driver-profile-name{
-  overflow:hidden!important;
-  text-overflow:ellipsis!important;
-  white-space:nowrap!important;
-  border-bottom:2px solid transparent!important;
-  transition:border-color .15s ease,color .15s ease!important;
-}
-#drivers .hlrn-driver-profile-arrow{
-  display:inline-flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  width:22px!important;
-  height:22px!important;
-  flex:0 0 22px!important;
-  border-radius:50%!important;
-  background:#eef1f3!important;
-  color:#596168!important;
-  font-family:Arial,sans-serif!important;
-  font-size:20px!important;
-  font-style:normal!important;
-  line-height:1!important;
-  transition:transform .15s ease,background .15s ease,color .15s ease!important;
-}
-#drivers .hlrn-driver-profile-link:hover .hlrn-driver-profile-name,
-#drivers .hlrn-driver-profile-link:focus-visible .hlrn-driver-profile-name{
-  border-bottom-color:var(--driver-accent,#d71920)!important;
-}
-#drivers .hlrn-driver-profile-link:hover .hlrn-driver-profile-arrow,
-#drivers .hlrn-driver-profile-link:focus-visible .hlrn-driver-profile-arrow{
-  transform:translateX(2px)!important;
-  background:var(--driver-accent,#d71920)!important;
-  color:#fff!important;
-}
-#drivers .hlrn-driver-profile-link:focus-visible{
-  box-shadow:0 0 0 3px rgba(17,18,20,.12)!important;
-}
-</style>
-<style id="HLRN_TEAM_PROFILE_LINKS_V1">
-#teams .hlrn-team-profile-link{
-  display:inline-flex!important;align-items:center!important;gap:8px!important;
-  color:#111214!important;text-decoration:none!important;font-weight:900!important;
-  border-bottom:2px solid transparent!important;transition:.15s ease!important;
-}
-#teams .hlrn-team-profile-arrow{
-  display:inline-flex!important;align-items:center!important;justify-content:center!important;
-  width:22px!important;height:22px!important;border-radius:50%!important;background:#eef1f3!important;
-  color:#596168!important;font:900 20px/1 Arial!important;transition:.15s ease!important;
-}
-#teams .hlrn-team-profile-link:hover,#teams .hlrn-team-profile-link:focus-visible{
-  border-bottom-color:var(--driver-accent,#d71920)!important;
-}
-#teams .hlrn-team-profile-link:hover .hlrn-team-profile-arrow,#teams .hlrn-team-profile-link:focus-visible .hlrn-team-profile-arrow{
-  transform:translateX(2px)!important;background:#d71920!important;color:#fff!important;
-}
-</style>
-<style id="HLRN_CHAMPIONSHIP_BATTLE_DASHBOARD_V2">
-.cc-dashboard{grid-template-columns:1.25fr repeat(4,.75fr)!important}
-.cc-card{min-height:92px!important}
-.cc-card-value{font-size:clamp(20px,2.1vw,28px)!important}
-.cc-momentum-row{
-  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:-6px 0 16px;
-}
-.cc-momentum-card{
-  position:relative;overflow:hidden;padding:12px 14px;border:1px solid #2b2b2b;
-  background:linear-gradient(180deg,#101010,#070707);min-width:0;
-}
-.cc-momentum-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:#55b932}
-.cc-momentum-card span{display:block;color:#6f6f6f;font-size:6px;font-weight:1000;letter-spacing:.16em;text-transform:uppercase}
-.cc-momentum-card strong{display:block;margin-top:5px;color:#fff;font-family:Impact,"Arial Narrow",Arial,sans-serif;font-size:20px;line-height:1;font-style:italic;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cc-momentum-card small{display:block;margin-top:5px;color:#8c8c8c;font-size:7px;font-weight:900;letter-spacing:.06em;text-transform:uppercase}
-.cc-dashboard .cc-card:nth-child(4) .cc-card-value a{color:#fff!important;text-decoration:none!important}
-.cc-dashboard .cc-card:nth-child(4) .cc-card-value a:hover{text-decoration:underline!important}
-@media(max-width:1050px){
-  .cc-dashboard{grid-template-columns:repeat(2,1fr)!important}
-  .cc-card:first-child{grid-column:1/-1!important}
-}
-@media(max-width:760px){
-  .cc-dashboard{grid-template-columns:1fr 1fr!important}
-  .cc-card:first-child{grid-column:1/-1!important}
-  .cc-momentum-row{grid-template-columns:1fr!important}
-}
-@media(max-width:480px){
-  .cc-dashboard{grid-template-columns:1fr!important}
-  .cc-card:first-child{grid-column:auto!important}
-}
-</style>
-
-<style id="HLRN_STANDINGS_DARK_BLACK_WHITE_20260930">
-/* Standings Dark Mode — black surfaces, white typography */
-html[data-hlrn-theme="dark"],
-html[data-hlrn-theme="dark"] body{
-  background:#000!important;
-  background-image:none!important;
-  color:#fff!important;
-}
-html[data-hlrn-theme="dark"] body :where(
-  .hlrn,.topline,.titlebar,.cn-control,.cn-control-main,.cn-control-cell,
-  .tabs,.tab,.viewport,.page,.wrap,.wrapper,.shell,.container,.content,.main,
-  main,section,article,aside,nav,header,footer,
-  .panel,.card,.box,.module,.widget,.toolbar,.subnav,.filters,.filter-bar,
-  .table-wrap,.table-shell,.table-container,
-  .standings,.standings-wrap,.standings-shell,.standings-panel,.standings-card,
-  .driver-stats,.records,.records-grid,.milestones,.head-to-head,
-  .leaderboard,.ranking,.rankings,.rank-card,.driver-card,.stat-card,
-  .hosted,.hosted-wrap,.hosted-panel,.hosted-card,
-  .series-wrap,.series-panel,.series-card,.series-header,.series-tabs,
-  .content-card,.content-panel,.section-card,.section-panel,
-  .hero,.hero-card,.mast,.masthead
-){
-  background:#000!important;
-  background-image:none!important;
-  color:#fff!important;
-  border-color:#2b2b2b!important;
-  box-shadow:none!important;
-}
-html[data-hlrn-theme="dark"] body :where(
-  h1,h2,h3,h4,h5,h6,p,span,small,strong,b,a,label,li,dt,dd,
-  .title,.heading,.headline,.name,.driver-name,.section-title,.card-title,
-  .eyebrow,.kicker,.meta,.muted,.subtitle,.description,.copy
-){
-  color:#fff!important;
-  text-shadow:none!important;
-}
-html[data-hlrn-theme="dark"] body :where(
-  table,thead,tbody,tfoot,tr,th,td
-){
-  background:#000!important;
-  background-image:none!important;
-  color:#fff!important;
-  border-color:#2b2b2b!important;
-}
-html[data-hlrn-theme="dark"] body thead th{
-  background:#050505!important;
-  color:#fff!important;
-}
-html[data-hlrn-theme="dark"] body tbody tr:nth-child(even),
-html[data-hlrn-theme="dark"] body tbody tr:nth-child(even) td,
-html[data-hlrn-theme="dark"] body tbody tr:nth-child(odd),
-html[data-hlrn-theme="dark"] body tbody tr:nth-child(odd) td{
-  background:#000!important;
-  color:#fff!important;
-}
-html[data-hlrn-theme="dark"] body tbody tr:hover,
-html[data-hlrn-theme="dark"] body tbody tr:hover td{
-  background:#0b0b0b!important;
-}
-html[data-hlrn-theme="dark"] body :where(
-  button,input,select,textarea,.btn,.button,.pill,.chip,.filter,.filter-btn,
-  .tab,.subtab
-){
-  background:#000!important;
-  background-image:none!important;
-  color:#fff!important;
-  border-color:#3a3a3a!important;
-  box-shadow:none!important;
-}
-html[data-hlrn-theme="dark"] body :where(
-  input,textarea
-)::placeholder{
-  color:#c8c8c8!important;
-  opacity:1!important;
-}
-html[data-hlrn-theme="dark"] iframe.page{
-  background:#000!important;
-  color-scheme:dark!important;
-}
-html[data-hlrn-theme="dark"] .viewport{
-  background:#000!important;
-  border-color:#2b2b2b!important;
-}
-html[data-hlrn-theme="dark"] .hlrn > .tabs,
-html[data-hlrn-theme="dark"] .hlrn > .tabs .tab,
-html[data-hlrn-theme="dark"] .hlrn > .tabs .tab.active{
-  background:#000!important;
-  background-image:none!important;
-  color:#fff!important;
-  border-color:#2b2b2b!important;
-}
-html[data-hlrn-theme="dark"] .hlrn > .tabs .tab strong,
-html[data-hlrn-theme="dark"] .hlrn > .tabs .tab small{
-  color:#fff!important;
-}
-/* Keep series identity as accent lines, not text colors */
-html[data-hlrn-theme="dark"] .tab[data-page="hosted"]:after,
-html[data-hlrn-theme="dark"] .tab[data-page="hosted"]:before{background:#ffd400!important}
-html[data-hlrn-theme="dark"] .tab[data-page="sunday"]:after,
-html[data-hlrn-theme="dark"] .tab[data-page="sunday"]:before{background:#ed1c24!important}
-html[data-hlrn-theme="dark"] .tab[data-page="monday"]:after,
-html[data-hlrn-theme="dark"] .tab[data-page="monday"]:before{background:#69e000!important}
-</style>
-
-</head>') : tag+markup;
+  return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'</head>') : tag+markup;
 }
 </script>
 
@@ -3580,6 +3372,65 @@ html,body,.page-wrap{
   }
 }
 </style>
+
+<style id="HLRN_STANDINGS_DARK_SAFE_20260930">
+html[data-hlrn-theme="dark"],
+html[data-hlrn-theme="dark"] body{
+  background:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+  color-scheme:dark!important;
+}
+html[data-hlrn-theme="dark"] body :where(
+  .hlrn,.hosted-hub,.hosted-hub-tabs,.hosted-hub-stage,.hosted-loading,
+  .container,.content,.page,.page-wrap,.wrap,.wrapper,.shell,.main,.main-content,
+  main,section,article,aside,header,footer,nav,
+  .panel,.card,.box,.tile,.module,.widget,.toolbar,.subnav,.tabs,.tab-bar,
+  .section,.section-header,.section-title,.section-body,
+  .table-wrap,.table-shell,.table-container,
+  .standings,.standings-wrap,.standings-shell,.standings-panel,.standings-card,
+  .driver-stats,.records,.records-grid,.milestones,.head-to-head,
+  .leaderboard,.ranking,.rankings,.rank-card,.driver-card,.stat-card,
+  .hosted-wrap,.hosted-panel,.hosted-card,.series-wrap,.series-panel,.series-card,
+  .content-card,.content-panel,.hero,.hero-card,.mast,.masthead,
+  .cc-dashboard,.cc-card,.cc-momentum-card,.team-card,.record-card,.summary-card
+){
+  background:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+  border-color:#2b2b2b!important;
+  box-shadow:none!important;
+}
+html[data-hlrn-theme="dark"] body :where(
+  h1,h2,h3,h4,h5,h6,p,span,small,strong,b,a,label,li,dt,dd,
+  .title,.heading,.headline,.name,.driver-name,.section-title,.card-title,
+  .eyebrow,.kicker,.meta,.muted,.subtitle,.description,.copy,.count
+){
+  color:#fff!important;
+  text-shadow:none!important;
+}
+html[data-hlrn-theme="dark"] body :where(table,thead,tbody,tfoot,tr,th,td){
+  background:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+  border-color:#2b2b2b!important;
+}
+html[data-hlrn-theme="dark"] body tbody tr:nth-child(even) td,
+html[data-hlrn-theme="dark"] body tbody tr:nth-child(odd) td,
+html[data-hlrn-theme="dark"] body tbody tr:hover td{
+  background:#000!important;
+  color:#fff!important;
+}
+html[data-hlrn-theme="dark"] body :where(button,input,select,textarea,.btn,.button,.pill,.chip,.filter,.filter-btn,.tab,.subtab,.hosted-hub-tab){
+  background:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+  border-color:#3a3a3a!important;
+  box-shadow:none!important;
+}
+html[data-hlrn-theme="dark"] body :where(input,textarea)::placeholder{color:#ccc!important;opacity:1!important}
+html[data-hlrn-theme="dark"] iframe{background:#000!important;color-scheme:dark!important}
+</style>
 </head>
 <body>
 <div class="page-wrap">
@@ -5212,6 +5063,48 @@ document.addEventListener("DOMContentLoaded",function(){
   }
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",restore,{once:true});
   else restore();
+})();
+</script>
+
+<script id="HLRN_STANDINGS_NESTED_THEME_SYNC_20260930">
+(function(){
+  const DARK_CSS=`
+html,body{background:#000!important;background-image:none!important;color:#fff!important;color-scheme:dark!important}
+:where(.container,.content,.page,.page-wrap,.wrap,.wrapper,.shell,.main,.main-content,main,section,article,aside,header,footer,nav,.panel,.card,.box,.tile,.module,.widget,.toolbar,.subnav,.tabs,.tab-bar,.section,.section-header,.section-title,.section-body,.table-wrap,.table-shell,.table-container,.standings,.standings-wrap,.standings-shell,.standings-panel,.standings-card,.driver-stats,.records,.records-grid,.milestones,.head-to-head,.leaderboard,.ranking,.rankings,.rank-card,.driver-card,.stat-card,.hosted-hub,.hosted-hub-tabs,.hosted-hub-stage,.hosted-loading,.cc-dashboard,.cc-card,.cc-momentum-card,.team-card,.record-card,.summary-card){background:#000!important;background-image:none!important;color:#fff!important;border-color:#2b2b2b!important;box-shadow:none!important}
+:where(h1,h2,h3,h4,h5,h6,p,span,small,strong,b,a,label,li,dt,dd,.title,.heading,.headline,.name,.driver-name,.section-title,.card-title,.eyebrow,.kicker,.meta,.muted,.subtitle,.description,.copy,.count){color:#fff!important;text-shadow:none!important}
+table,thead,tbody,tfoot,tr,th,td{background:#000!important;background-image:none!important;color:#fff!important;border-color:#2b2b2b!important}
+tbody tr:nth-child(even) td,tbody tr:nth-child(odd) td,tbody tr:hover td{background:#000!important;color:#fff!important}
+button,input,select,textarea,.btn,.button,.pill,.chip,.filter,.filter-btn,.tab,.subtab{background:#000!important;background-image:none!important;color:#fff!important;border-color:#3a3a3a!important;box-shadow:none!important}
+`;
+  function sync(){
+    const dark=document.documentElement.dataset.hlrnTheme==="dark";
+    document.querySelectorAll("iframe").forEach(frame=>{
+      const apply=()=>{
+        try{
+          const doc=frame.contentDocument;
+          if(!doc||!doc.documentElement)return;
+          doc.documentElement.dataset.hlrnTheme=dark?"dark":"light";
+          let style=doc.getElementById("HLRN_STANDINGS_CHILD_DARK_RUNTIME_20260930");
+          if(!style){
+            style=doc.createElement("style");
+            style.id="HLRN_STANDINGS_CHILD_DARK_RUNTIME_20260930";
+            (doc.head||doc.documentElement).appendChild(style);
+          }
+          style.textContent=dark?DARK_CSS:"";
+        }catch(e){}
+      };
+      if(!frame.__hlrnStandingsThemeBound){
+        frame.__hlrnStandingsThemeBound=true;
+        frame.addEventListener("load",()=>setTimeout(apply,0));
+      }
+      apply();
+    });
+  }
+  new MutationObserver(sync).observe(document.documentElement,{attributes:true,attributeFilter:["data-hlrn-theme"]});
+  document.addEventListener("DOMContentLoaded",sync,{once:true});
+  window.addEventListener("load",()=>{sync();setTimeout(sync,250);setTimeout(sync,900)},{once:true});
+  window.addEventListener("hlrn-theme-change",sync);
+  sync();
 })();
 </script>
 </body>
