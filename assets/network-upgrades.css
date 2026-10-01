@@ -598,7 +598,7 @@ html.hlrn-mobile-audit-v2 iframe{
     width:calc(100% - 14px)!important;
     max-width:100%!important;
   }
-  html[data-hlrn-route="teams"] :where(.tc-mast-grid,.tc-board,.tcTeamGrid,.tc-team-grid){
+  html[data-hlrn-route="teams"] :where(.tc-mast-grid,.tc-board,#tcTeamGrid,.tc-team-grid){
     grid-template-columns:1fr!important;
   }
 
