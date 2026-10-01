@@ -19,7 +19,6 @@ jobs:
     env:
       HLRN_LEAGUE_WEBAPP_URL: ${{ secrets.HLRN_LEAGUE_WEBAPP_URL }}
       HLRN_HOSTED_WEBAPP_URL: ${{ secrets.HLRN_HOSTED_WEBAPP_URL }}
-      HLRN_RECAP_URL: https://hlrn-live-feed.onrender.com/api/recaps
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -33,11 +32,9 @@ jobs:
         run: node tools/sync-data.mjs
       - name: Build published reports and profiles
         run: node tools/build-derived.mjs
-      - name: Publish frozen post-race recap when available
-        run: python tools/publish-race-recap.py
       - name: Rebuild public sitemap
         run: python tools/build-sitemap.py
-      - name: Commit verified data, reports, recaps and sitemap only when changed
+      - name: Commit verified data, reports and sitemap only when changed
         run: |
           git config user.name "hlrn-data-bot"
           git config user.email "actions@users.noreply.github.com"
@@ -50,12 +47,10 @@ jobs:
               git reset --hard origin/main
               node tools/sync-data.mjs
               node tools/build-derived.mjs
-              python tools/publish-race-recap.py
               python tools/build-sitemap.py
             fi
 
-            git add data/hlrn.json data/derived data/race-recaps
-            if [ -d news/race-recaps ]; then git add news/race-recaps; fi
+            git add data/hlrn.json data/derived
             if [ -f sitemap.xml ]; then git add sitemap.xml; fi
 
             if git diff --cached --quiet; then
@@ -63,7 +58,7 @@ jobs:
               exit 0
             fi
 
-            git commit -m "Sync HLRN data, reports, recaps and sitemap"
+            git commit -m "Sync HLRN data, reports and sitemap"
             if git push origin main; then
               exit 0
             fi
