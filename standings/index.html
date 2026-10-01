@@ -254,9 +254,9 @@ html[data-hlrn-theme="dark"] .tab[data-page="monday"]:before{background:#69e000!
   </nav>
   <main class="viewport">
     <div class="cn-series-ribbon"><i></i><span id="cnRibbonText">Hosted Racing Active</span></div>
-    <iframe class="page active" id="page-hosted" title="HLRN Hosted Racing" scrolling="auto" src="hosted.html?v=20260930darkrepair1"></iframe>
-    <iframe class="page" id="page-sunday" loading="lazy" title="HLRN Sunday Championship" scrolling="auto" src="sunday.html?v=20260930darkrepair1"></iframe>
-    <iframe class="page" id="page-monday" loading="lazy" title="HLRN Monday Championship" scrolling="auto" src="monday.html?v=20260930darkrepair1"></iframe>
+    <iframe class="page active" id="page-hosted" title="HLRN Hosted Racing" scrolling="auto" src="hosted.html?v=20260930darkbridge2"></iframe>
+    <iframe class="page" id="page-sunday" loading="lazy" title="HLRN Sunday Championship" scrolling="auto" src="sunday.html?v=20260930darkbridge2"></iframe>
+    <iframe class="page" id="page-monday" loading="lazy" title="HLRN Monday Championship" scrolling="auto" src="monday.html?v=20260930darkbridge2"></iframe>
   </main>
 </div>
 <script>
@@ -1807,6 +1807,76 @@ main{
   window.addEventListener('load',()=>{run();setTimeout(run,500);setTimeout(run,1500)},{once:true});
   window.addEventListener('resize',()=>setTimeout(run,80));
   document.addEventListener('click',()=>setTimeout(run,120),true);
+})();
+</script>
+
+<script id="HLRN_STANDINGS_FRAME_THEME_BRIDGE_20260930">
+(function(){
+  const KEY="hlrn_site_theme_v2";
+  const DARK_CSS=`
+html,body{background:#000!important;background-image:none!important;color:#fff!important;color-scheme:dark!important}
+:where(.hlrn,.hosted-hub,.hosted-hub-tabs,.hosted-hub-stage,.hosted-loading,.container,.content,.page,.page-wrap,.wrap,.wrapper,.shell,.main,.main-content,main,section,article,aside,header,footer,nav,.panel,.card,.box,.tile,.module,.widget,.toolbar,.subnav,.tabs,.tab-bar,.section,.section-header,.section-title,.section-body,.table-wrap,.table-shell,.table-container,.standings,.standings-wrap,.standings-shell,.standings-panel,.standings-card,.driver-stats,.records,.records-grid,.milestones,.head-to-head,.leaderboard,.ranking,.rankings,.rank-card,.driver-card,.stat-card,.hosted-wrap,.hosted-panel,.hosted-card,.series-wrap,.series-panel,.series-card,.content-card,.content-panel,.hero,.hero-card,.mast,.masthead,.cc-dashboard,.cc-card,.cc-momentum-card,.team-card,.record-card,.summary-card){background:#000!important;background-image:none!important;color:#fff!important;border-color:#2b2b2b!important;box-shadow:none!important}
+:where(h1,h2,h3,h4,h5,h6,p,span,small,strong,b,a,label,li,dt,dd,.title,.heading,.headline,.name,.driver-name,.section-title,.card-title,.eyebrow,.kicker,.meta,.muted,.subtitle,.description,.copy,.count){color:#fff!important;text-shadow:none!important}
+table,thead,tbody,tfoot,tr,th,td{background:#000!important;background-image:none!important;color:#fff!important;border-color:#2b2b2b!important}
+tbody tr:nth-child(even) td,tbody tr:nth-child(odd) td,tbody tr:hover td{background:#000!important;color:#fff!important}
+button,input,select,textarea,.btn,.button,.pill,.chip,.filter,.filter-btn,.tab,.subtab,.hosted-hub-tab{background:#000!important;background-image:none!important;color:#fff!important;border-color:#3a3a3a!important;box-shadow:none!important}
+iframe{background:#000!important;color-scheme:dark!important}
+`;
+
+  function currentTheme(){
+    const attr=document.documentElement.dataset.hlrnTheme;
+    if(attr==="dark"||attr==="light") return attr;
+    try{return localStorage.getItem(KEY)==="dark"?"dark":"light";}catch(e){return "light";}
+  }
+
+  function applyToDocument(doc,theme){
+    if(!doc||!doc.documentElement)return;
+    doc.documentElement.dataset.hlrnTheme=theme;
+    doc.documentElement.style.colorScheme=theme;
+    let style=doc.getElementById("HLRN_STANDINGS_FRAME_DARK_RUNTIME_20260930");
+    if(!style){
+      style=doc.createElement("style");
+      style.id="HLRN_STANDINGS_FRAME_DARK_RUNTIME_20260930";
+      (doc.head||doc.documentElement).appendChild(style);
+    }
+    style.textContent=theme==="dark"?DARK_CSS:"";
+  }
+
+  function applyFrame(frame,theme){
+    try{
+      const doc=frame.contentDocument;
+      if(!doc)return;
+      applyToDocument(doc,theme);
+      doc.querySelectorAll("iframe").forEach(child=>{
+        try{
+          applyToDocument(child.contentDocument,theme);
+        }catch(e){}
+      });
+    }catch(e){}
+  }
+
+  function sync(){
+    const theme=currentTheme();
+    document.querySelectorAll("iframe.page").forEach(frame=>{
+      if(!frame.__hlrnStandingsBridgeBound){
+        frame.__hlrnStandingsBridgeBound=true;
+        frame.addEventListener("load",()=>{
+          const t=currentTheme();
+          setTimeout(()=>applyFrame(frame,t),0);
+          setTimeout(()=>applyFrame(frame,t),150);
+          setTimeout(()=>applyFrame(frame,t),700);
+        });
+      }
+      applyFrame(frame,theme);
+    });
+  }
+
+  new MutationObserver(sync).observe(document.documentElement,{attributes:true,attributeFilter:["data-hlrn-theme"]});
+  window.addEventListener("storage",e=>{if(e.key===KEY)sync();});
+  window.addEventListener("hlrn-theme-change",sync);
+  window.addEventListener("load",()=>{sync();setTimeout(sync,250);setTimeout(sync,1000)},{once:true});
+  document.addEventListener("click",()=>setTimeout(sync,80),true);
+  sync();
 })();
 </script>
 <script src="../assets/site-shell.js?v=20260930standingsdarkrepair1"></script>
