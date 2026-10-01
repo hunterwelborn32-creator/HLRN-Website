@@ -1157,6 +1157,11 @@ html[data-hlrn-theme="dark"] body :is(
 ){
   color:#fff!important;-webkit-text-fill-color:#fff!important;text-shadow:none!important;
 }
+/* Override the embedded ID rules that force these values to dark ink. */
+html[data-hlrn-theme="dark"] body #opsRank1,
+html[data-hlrn-theme="dark"] body #opsTop5{
+  color:#fff!important;-webkit-text-fill-color:#fff!important;text-shadow:none!important;
+}
 /* Keep the existing colored metric accents. */
 html[data-hlrn-theme="dark"] body #opsWins{
   color:#ffd400!important;-webkit-text-fill-color:#ffd400!important;
