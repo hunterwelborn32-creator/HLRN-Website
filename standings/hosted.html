@@ -290,11 +290,29 @@ iframe{background:#fff!important;color-scheme:light!important}
 <script data-hlrn-driver-system src="../assets/driver-system.js?v=20260930v7"></script>
 <script>
 function hlrnHostedDarkModeActive(){
+  try{
+    const topRoot=window.top && window.top.document
+      ? window.top.document.documentElement
+      : null;
+    if(topRoot){
+      if(topRoot.dataset.hlrnTheme==="dark") return true;
+      if(topRoot.dataset.hlrnTheme==="light") return false;
+      if(String(topRoot.style.colorScheme||"").toLowerCase().includes("dark")) return true;
+    }
+  }catch(_){}
+
+  try{
+    const saved=localStorage.getItem("hlrn_site_theme_v2");
+    if(saved==="dark") return true;
+    if(saved==="light") return false;
+  }catch(_){}
+
   const root=document.documentElement;
   try{
+    if(root.dataset.hlrnTheme==="dark") return true;
+    if(root.dataset.hlrnTheme==="light") return false;
     const computed=getComputedStyle(root).colorScheme||"";
-    return root.dataset.hlrnTheme==="dark" ||
-      String(root.style.colorScheme||"").toLowerCase().includes("dark") ||
+    return String(root.style.colorScheme||"").toLowerCase().includes("dark") ||
       String(computed).toLowerCase().includes("dark");
   }catch(_){
     return root.dataset.hlrnTheme==="dark";
@@ -1245,6 +1263,90 @@ input,select,button,textarea{
   .nav{margin:0 -10px 20px!important;padding:0 10px!important;overflow-x:auto!important}
   .nav button{min-width:135px!important;min-height:50px!important;padding:10px 12px!important;font-size:11px!important}
 }
+
+/* Exact Hosted ranking/session/latest dark repair */
+html[data-hlrn-theme="dark"] body,
+html[data-hlrn-theme="dark"] body .container,
+html[data-hlrn-theme="dark"] body .content,
+html[data-hlrn-theme="dark"] body #latestPage,
+html[data-hlrn-theme="dark"] body #sessionsPage,
+html[data-hlrn-theme="dark"] body #rankingsPage,
+html[data-hlrn-theme="dark"] body .section,
+html[data-hlrn-theme="dark"] body .section-title,
+html[data-hlrn-theme="dark"] body .table-wrap,
+html[data-hlrn-theme="dark"] body table,
+html[data-hlrn-theme="dark"] body thead,
+html[data-hlrn-theme="dark"] body tbody,
+html[data-hlrn-theme="dark"] body tfoot,
+html[data-hlrn-theme="dark"] body tr,
+html[data-hlrn-theme="dark"] body th,
+html[data-hlrn-theme="dark"] body td,
+html[data-hlrn-theme="dark"] body #rankingsResults tr,
+html[data-hlrn-theme="dark"] body #rankingsResults td,
+html[data-hlrn-theme="dark"] body #sessionsResults tr,
+html[data-hlrn-theme="dark"] body #sessionsResults td,
+html[data-hlrn-theme="dark"] body #latestResults tr,
+html[data-hlrn-theme="dark"] body #latestResults td{
+  background:#000!important;
+  background-color:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+  border-color:#2b2b2b!important;
+  box-shadow:none!important;
+}
+
+html[data-hlrn-theme="dark"] body thead th,
+html[data-hlrn-theme="dark"] body #rankingsPage thead th,
+html[data-hlrn-theme="dark"] body #sessionsPage thead th,
+html[data-hlrn-theme="dark"] body #latestPage thead th{
+  background:#0a0a0a!important;
+  background-color:#0a0a0a!important;
+  color:#fff!important;
+}
+
+html[data-hlrn-theme="dark"] body #rankingsResults tr:nth-child(odd) td,
+html[data-hlrn-theme="dark"] body #rankingsResults tr:nth-child(even) td,
+html[data-hlrn-theme="dark"] body #rankingsResults tr:first-child td,
+html[data-hlrn-theme="dark"] body #rankingsResults tr:hover td,
+html[data-hlrn-theme="dark"] body #sessionsResults tr:nth-child(odd) td,
+html[data-hlrn-theme="dark"] body #sessionsResults tr:nth-child(even) td,
+html[data-hlrn-theme="dark"] body #sessionsResults tr:first-child td,
+html[data-hlrn-theme="dark"] body #sessionsResults tr:hover td,
+html[data-hlrn-theme="dark"] body #latestResults tr:nth-child(odd) td,
+html[data-hlrn-theme="dark"] body #latestResults tr:nth-child(even) td,
+html[data-hlrn-theme="dark"] body #latestResults tr:first-child td,
+html[data-hlrn-theme="dark"] body #latestResults tr:hover td{
+  background:#000!important;
+  background-color:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+}
+
+html[data-hlrn-theme="dark"] body :where(
+  .rank,.driver-link,.hlrn-hosted-driver-photo-link,.car-number-cell,
+  #rankingsResults a,#rankingsResults span,#rankingsResults td,
+  #sessionsResults a,#sessionsResults span,#sessionsResults td,
+  #latestResults a,#latestResults span,#latestResults td,
+  .section-title,.sessions-page-info
+){
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  text-shadow:none!important;
+}
+
+html[data-hlrn-theme="dark"] body .nav,
+html[data-hlrn-theme="dark"] body .nav button{
+  background:#000!important;
+  background-color:#000!important;
+  color:#fff!important;
+  border-color:#303030!important;
+}
+html[data-hlrn-theme="dark"] body .nav button.active{
+  background:#111!important;
+  background-image:none!important;
+  color:#fff!important;
+  border-color:#ffd400!important;
+}
 `;
 
 function applyHostedSeriesMatch(frame){
@@ -1259,7 +1361,27 @@ function applyHostedSeriesMatch(frame){
     }
     const dark=hlrnHostedDarkModeActive();
     doc.documentElement.dataset.hlrnTheme=dark?"dark":"light";
+    doc.documentElement.style.colorScheme=dark?"dark":"light";
     style.textContent=dark?HLRN_HOSTED_DARK_SERIES_CSS:HLRN_HOSTED_MATCH_SERIES_CSS;
+    doc.head.appendChild(style);
+
+    if(!doc.__hlrnHostedThemeObserver && doc.body){
+      doc.__hlrnHostedThemeObserver=true;
+      let queued=false;
+      new MutationObserver(()=>{
+        if(queued)return;
+        queued=true;
+        requestAnimationFrame(()=>{
+          queued=false;
+          try{
+            const isDark=hlrnHostedDarkModeActive();
+            doc.documentElement.dataset.hlrnTheme=isDark?"dark":"light";
+            style.textContent=isDark?HLRN_HOSTED_DARK_SERIES_CSS:HLRN_HOSTED_MATCH_SERIES_CSS;
+            doc.head.appendChild(style);
+          }catch(_){}
+        });
+      }).observe(doc.body,{childList:true,subtree:true});
+    }
   }catch(e){}
 }
 
