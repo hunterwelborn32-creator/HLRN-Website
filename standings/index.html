@@ -429,6 +429,12 @@ main{
 <style id="HLRN_FINAL_CLEAN_LIGHT_V4">:root{--hlrn-red:#d71920;--hlrn-green:#47a900;--hlrn-yellow:#d7a900;--hlrn-ink:#111214;--hlrn-line:#d8dde2;--hlrn-soft:#f5f6f7}html,body,.hlrn,.viewport{background:#fff!important;color:#111214!important;min-height:0!important;height:auto!important;overflow:visible!important}body{overflow-x:hidden!important}.hlrn{display:block!important;background:#fff!important}.topline,.titlebar{position:relative!important;top:auto!important;background:#fff!important;background-image:none!important;color:#111214!important;border-color:#d8dde2!important;box-shadow:none!important}.titlebar:after,.hlrn:before{display:none!important}.titlebar *,.topline *{color:#111214!important;text-shadow:none!important}.tabs{position:relative!important;top:auto!important;background:#fff!important;border-color:#d8dde2!important;box-shadow:none!important}.tab,.tab.active,.tab:hover{background:#fff!important;background-image:none!important;color:#111214!important;border-color:#d8dde2!important;box-shadow:none!important;transform:none!important}.tab:before{background:#c9ced3!important}.tab.active:after{display:block!important;height:3px!important}.tab[data-page="hosted"] strong{color:#111214!important}.tab[data-page="sunday"] strong{color:#d71920!important}.tab[data-page="monday"] strong{color:#47a900!important}.viewport{width:100%!important;height:auto!important;min-height:0!important;overflow:visible!important;border:0!important}iframe.page{display:none!important;width:100%!important;height:1px;min-height:0!important;max-height:none!important;border:0!important;background:#fff!important;overflow:hidden!important}iframe.page.active{display:block!important}</style>
 <script id="HLRN_FINAL_CLEAN_LIGHT_ENGINE_V4">
 (function(){
+  function hlrnLegacyDarkNow(){
+    const root=document.documentElement;
+    if(root.dataset.hlrnTheme==="dark") return true;
+    if(root.dataset.hlrnTheme==="light") return false;
+    try{return localStorage.getItem("hlrn_site_theme_v2")==="dark";}catch(e){return false;}
+  }
   const MAX_DEPTH=7;
   let resizeTimer=0;
   const INNER_CSS=`
@@ -532,6 +538,11 @@ main{
   `;
   function inject(doc){
     if(!doc||!doc.head) return;
+    if(hlrnLegacyDarkNow()){
+      const old=doc.getElementById('HLRN_FLAT_LIGHT_V4');
+      if(old) old.remove();
+      return;
+    }
     let s=doc.getElementById('HLRN_FLAT_LIGHT_V4');
     if(!s){s=doc.createElement('style');s.id='HLRN_FLAT_LIGHT_V4';doc.head.appendChild(s)}
     s.textContent=INNER_CSS;
@@ -581,7 +592,7 @@ main{
     try{
       frame.setAttribute('scrolling','no');
       frame.style.setProperty('overflow','hidden','important');
-      frame.style.setProperty('background','#fff','important');
+      frame.style.setProperty('background',hlrnLegacyDarkNow()?'#000':'#fff','important');
       frame.style.setProperty('min-height','0','important');
       frame.style.setProperty('max-height','none','important');
       const doc=frame.contentDocument;
@@ -627,7 +638,12 @@ main{
     }
   }
   function init(){
-    inject(document);
+    if(hlrnLegacyDarkNow()){
+      const old=document.getElementById('HLRN_FLAT_LIGHT_V4');
+      if(old) old.remove();
+    }else{
+      inject(document);
+    }
     document.querySelectorAll('iframe').forEach(f=>{
       if(!f.__hlrnV4RootLoad){f.__hlrnV4RootLoad=true;f.addEventListener('load',()=>{setTimeout(scheduleFit,30);setTimeout(scheduleFit,400)})}
     });
@@ -639,7 +655,11 @@ main{
   window.addEventListener('load',()=>{setTimeout(init,40);setTimeout(fitAll,900)},{once:true});
 })();
 </script>
-<style id="HLRN_V5_VISIBLE_CONTENT_RESCUE">iframe.page.active{display:block!important;background:#fff!important;min-height:180px!important}</style>
+<style id="HLRN_V5_VISIBLE_CONTENT_RESCUE">
+iframe.page.active{display:block!important;min-height:180px!important}
+html:not([data-hlrn-theme="dark"]) iframe.page.active{background:#fff!important}
+html[data-hlrn-theme="dark"] iframe.page.active{background:#000!important}
+</style>
 <script id="HLRN_V5_PARENT_RESIZE_RESCUE">
 (function(){
   function resizeTop(){
@@ -657,9 +677,25 @@ main{
   setTimeout(resizeTop,300);setTimeout(resizeTop,1200);
 })();
 </script>
-<style id="HLRN_REMOVE_BLACK_HEADER_BARS_OUTER">html,body,.hlrn,.viewport,.page{background:#f6f7f8!important;color:#111214!important}.viewport,.page{background:#fff!important}</style>
+<style id="HLRN_REMOVE_BLACK_HEADER_BARS_OUTER">
+html:not([data-hlrn-theme="dark"]) body,
+html:not([data-hlrn-theme="dark"]) .hlrn{background:#f6f7f8!important;color:#111214!important}
+html:not([data-hlrn-theme="dark"]) .viewport,
+html:not([data-hlrn-theme="dark"]) .page{background:#fff!important}
+html[data-hlrn-theme="dark"],
+html[data-hlrn-theme="dark"] body,
+html[data-hlrn-theme="dark"] .hlrn,
+html[data-hlrn-theme="dark"] .viewport,
+html[data-hlrn-theme="dark"] .page{background:#000!important;color:#fff!important}
+</style>
 <script id="HLRN_REMOVE_BLACK_HEADER_BARS_SCRIPT">
 (function(){
+  function hlrnLegacyDarkNow(){
+    const root=document.documentElement;
+    if(root.dataset.hlrnTheme==="dark") return true;
+    if(root.dataset.hlrnTheme==="light") return false;
+    try{return localStorage.getItem("hlrn_site_theme_v2")==="dark";}catch(e){return false;}
+  }
   const CSS = `
     html,body{background:#fff!important;color:#111214!important}
     .table-shell,.table-wrap,.standings-wrap,.results-wrap,.content-area,.tab-content,.report-wrap,.report-content,.panel,.card,.box,.viewport{background:#fff!important;color:#111214!important}
@@ -730,18 +766,49 @@ main{
       });
     }catch(e){}
   }
-  function run(){ patchDoc(document, 0); }
+  function removeLight(doc,depth){
+    if(!doc||depth>8)return;
+    try{
+      const light=doc.getElementById('HLRN_REMOVE_BLACK_HEADER_BARS_INNER');
+      if(light) light.remove();
+      doc.querySelectorAll('iframe').forEach(frame=>{
+        try{
+          frame.style.setProperty('background','#000','important');
+          frame.style.setProperty('box-shadow','none','important');
+          if(frame.contentDocument) removeLight(frame.contentDocument,depth+1);
+        }catch(e){}
+      });
+    }catch(e){}
+  }
+  function run(){
+    if(hlrnLegacyDarkNow()) removeLight(document,0);
+    else patchDoc(document, 0);
+  }
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run, {once:true});
   else run();
   window.addEventListener('load', ()=>{ run(); setTimeout(run,200); setTimeout(run,900); setTimeout(run,1800); }, {once:true});
   setInterval(run, 1500);
 })();
 </script>
-<style id="HLRN_HOSTED_SECTION_TITLE_OUTER_V8">iframe{background:#fff!important}</style>
+<style id="HLRN_HOSTED_SECTION_TITLE_OUTER_V8">
+html:not([data-hlrn-theme="dark"]) iframe{background:#fff!important}
+html[data-hlrn-theme="dark"] iframe{background:#000!important}
+</style>
 <script id="HLRN_HOSTED_SECTION_TITLE_FIX_V8">
 (function(){
+  function hlrnLegacyDarkNow(){
+    const root=document.documentElement;
+    if(root.dataset.hlrnTheme==="dark") return true;
+    if(root.dataset.hlrnTheme==="light") return false;
+    try{return localStorage.getItem("hlrn_site_theme_v2")==="dark";}catch(e){return false;}
+  }
   function fixHostedRacingDoc(doc){
     if(!doc) return;
+    if(hlrnLegacyDarkNow()){
+      const old=doc.getElementById('HLRN_HOSTED_RACING_SECTION_TITLE_V8');
+      if(old)old.remove();
+      return;
+    }
     try{
       let style=doc.getElementById('HLRN_HOSTED_RACING_SECTION_TITLE_V8');
       if(!style && doc.head){
@@ -832,9 +899,25 @@ main{
   setTimeout(inspectHosted,1400);
 })();
 </script>
-<style id="HLRN_HOSTED_INNER_EXACT_FIX_OUTER">html,body,.hlrn,.viewport,iframe.page{background:#fff!important;color:#111214!important}</style>
+<style id="HLRN_HOSTED_INNER_EXACT_FIX_OUTER">
+html:not([data-hlrn-theme="dark"]) body,
+html:not([data-hlrn-theme="dark"]) .hlrn,
+html:not([data-hlrn-theme="dark"]) .viewport,
+html:not([data-hlrn-theme="dark"]) iframe.page{background:#fff!important;color:#111214!important}
+html[data-hlrn-theme="dark"],
+html[data-hlrn-theme="dark"] body,
+html[data-hlrn-theme="dark"] .hlrn,
+html[data-hlrn-theme="dark"] .viewport,
+html[data-hlrn-theme="dark"] iframe.page{background:#000!important;color:#fff!important}
+</style>
 <script id="HLRN_HOSTED_INNER_EXACT_FIX_ENGINE">
 (function(){
+  function hlrnLegacyDarkNow(){
+    const root=document.documentElement;
+    if(root.dataset.hlrnTheme==="dark") return true;
+    if(root.dataset.hlrnTheme==="light") return false;
+    try{return localStorage.getItem("hlrn_site_theme_v2")==="dark";}catch(e){return false;}
+  }
   const DRIVER_CSS=`
     html,body{background:#fff!important;color:#111214!important}
     body:before,body:after{display:none!important}
@@ -984,7 +1067,25 @@ main{
       });
     }catch(e){}
   }
-  function run(){patchDoc(document,0)}
+  function clearExactLight(doc,depth=0){
+    if(!doc||depth>8)return;
+    try{
+      ['HLRN_DRIVER_STATS_LIGHT_EXACT','HLRN_RECORDS_LIGHT_EXACT','HLRN_H2H_LIGHT_EXACT'].forEach(id=>{
+        const el=doc.getElementById(id);
+        if(el)el.remove();
+      });
+      doc.querySelectorAll('iframe').forEach(frame=>{
+        try{
+          frame.style.setProperty('background','#000','important');
+          if(frame.contentDocument) clearExactLight(frame.contentDocument,depth+1);
+        }catch(e){}
+      });
+    }catch(e){}
+  }
+  function run(){
+    if(hlrnLegacyDarkNow()) clearExactLight(document,0);
+    else patchDoc(document,0);
+  }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run,{once:true}); else run();
   window.addEventListener('load',()=>{run();setTimeout(run,250);setTimeout(run,1000);setTimeout(run,2200)},{once:true});
   setInterval(run,1800);
@@ -1943,5 +2044,70 @@ iframe{background:#000!important;color-scheme:dark!important}
 })();
 </script>
 <script src="../assets/site-shell.js?v=20260930standingsdarkrepair1"></script>
+<script id="HLRN_DARK_HOSTED_BORDER_SANITIZER_20261001">
+(function(){
+  const KEY="hlrn_site_theme_v2";
+  const LEGACY_IDS=[
+    "HLRN_FLAT_LIGHT_V4",
+    "HLRN_REMOVE_BLACK_HEADER_BARS_INNER",
+    "HLRN_DRIVER_STATS_LIGHT_EXACT",
+    "HLRN_RECORDS_LIGHT_EXACT",
+    "HLRN_H2H_LIGHT_EXACT",
+    "HLRN_HOSTED_RACING_SECTION_TITLE_V8"
+  ];
+
+  function dark(){
+    const a=document.documentElement.dataset.hlrnTheme;
+    if(a==="dark")return true;
+    if(a==="light")return false;
+    try{return localStorage.getItem(KEY)==="dark";}catch(e){return false;}
+  }
+
+  function cleanDoc(doc,depth){
+    if(!doc||depth>8)return;
+    try{
+      doc.documentElement.style.setProperty("background","#000","important");
+      if(doc.body)doc.body.style.setProperty("background","#000","important");
+      LEGACY_IDS.forEach(id=>{const n=doc.getElementById(id);if(n)n.remove();});
+
+      ["html","body",".hlrn",".viewport",".hosted-hub",".hosted-hub-stage"].forEach(sel=>{
+        try{
+          doc.querySelectorAll(sel).forEach(el=>{
+            el.style.setProperty("background-color","#000","important");
+            el.style.setProperty("background-image","none","important");
+          });
+        }catch(e){}
+      });
+
+      doc.querySelectorAll("iframe").forEach(frame=>{
+        try{
+          frame.style.setProperty("background","#000","important");
+          frame.style.setProperty("border","0","important");
+          frame.style.setProperty("outline","0","important");
+          frame.style.setProperty("box-shadow","none","important");
+          if(frame.contentDocument)cleanDoc(frame.contentDocument,depth+1);
+          if(!frame.__hlrnDarkBorderBound){
+            frame.__hlrnDarkBorderBound=true;
+            frame.addEventListener("load",()=>setTimeout(()=>{try{cleanDoc(frame.contentDocument,depth+1)}catch(e){}},0));
+          }
+        }catch(e){}
+      });
+    }catch(e){}
+  }
+
+  function run(){
+    if(!dark())return;
+    cleanDoc(document,0);
+  }
+
+  new MutationObserver(run).observe(document.documentElement,{attributes:true,attributeFilter:["data-hlrn-theme","style"]});
+  window.addEventListener("hlrn-theme-change",run);
+  window.addEventListener("storage",e=>{if(e.key===KEY)run();});
+  document.addEventListener("click",()=>setTimeout(run,0),true);
+  window.addEventListener("load",()=>{run();setTimeout(run,200);setTimeout(run,900)},{once:true});
+  setInterval(run,1200);
+  run();
+})();
+</script>
 </body>
 </html>
