@@ -283,7 +283,8 @@ def driver_profile_v2(history, records, teams):
     wins = sum(num(r.get("wins")) for r in records.values())
     top10 = sum(num(r.get("top10")) for r in records.values())
     laps_led = sum(num(r.get("lapsLed")) for r in records.values())
-    poles = sum(num(r.get("poles")) for r in records.values())
+    pole_values = [r.get("poles") for r in records.values() if "poles" in r and r.get("poles") not in (None, "", "—")]
+    poles = sum(num(value) for value in pole_values) if pole_values else None
     win_rate = (wins / starts * 100) if starts else None
     top10_rate = (top10 / starts * 100) if starts else None
 
