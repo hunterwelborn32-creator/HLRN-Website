@@ -1038,6 +1038,242 @@ html[data-hlrn-theme="dark"] .filter-btn.active{
   box-shadow:0 8px 20px rgba(227,24,55,.18)!important;
 }
 </style>
+<style id="HLRN_ADMINS_PROFILE_MODAL_REDESIGN_20261001">
+/* Meet the Admins profile modal — balanced in both Night and Day mode. */
+#profileModal{
+  padding:24px!important;
+}
+#profileModal .modal-card{
+  width:min(1080px,calc(100vw - 48px))!important;
+  min-height:540px!important;
+  max-height:min(88vh,760px)!important;
+  display:grid!important;
+  grid-template-columns:minmax(360px,.95fr) minmax(420px,1.05fr)!important;
+  overflow:hidden!important;
+  border-radius:14px!important;
+}
+#profileModal .modal-media{
+  position:relative!important;
+  min-height:540px!important;
+  overflow:hidden!important;
+  display:grid!important;
+  place-items:center!important;
+  isolation:isolate!important;
+}
+#profileModal .modal-media:before{
+  content:""!important;
+  position:absolute!important;
+  inset:-28px!important;
+  z-index:-2!important;
+  background-image:
+    linear-gradient(rgba(5,8,12,.68),rgba(5,8,12,.82)),
+    var(--profile-modal-image,none)!important;
+  background-size:cover!important;
+  background-position:center!important;
+  filter:blur(18px) saturate(.9)!important;
+  transform:scale(1.08)!important;
+}
+#profileModal .modal-media:after{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:-1!important;
+  background:linear-gradient(180deg,rgba(5,8,12,.04),rgba(5,8,12,.32))!important;
+  pointer-events:none!important;
+}
+#profileModal .modal-media img{
+  position:relative!important;
+  z-index:1!important;
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-height:620px!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  margin:auto!important;
+}
+#profileModal .modal-copy{
+  min-width:0!important;
+  justify-content:center!important;
+  padding:54px 46px!important;
+}
+#profileModal .profile-name{
+  max-width:100%!important;
+  font-size:clamp(42px,5vw,68px)!important;
+  line-height:.86!important;
+  overflow-wrap:anywhere!important;
+}
+#profileModal .profile-role{
+  max-width:580px!important;
+}
+#profileModal .profile-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+}
+#profileModal .profile-meta{
+  min-width:0!important;
+}
+#profileModal .profile-meta strong{
+  overflow-wrap:anywhere!important;
+}
+#profileModal .close-btn{
+  z-index:5!important;
+  cursor:pointer!important;
+}
+
+/* NIGHT MODE */
+html[data-hlrn-theme="dark"] #profileModal{
+  background:rgba(0,0,0,.82)!important;
+}
+html[data-hlrn-theme="dark"] #profileModal .modal-card{
+  background:#090c10!important;
+  border-color:#313842!important;
+  box-shadow:0 34px 100px rgba(0,0,0,.72)!important;
+}
+html[data-hlrn-theme="dark"] #profileModal .modal-media{
+  background:#080b0f!important;
+  border-right:1px solid #2a3139!important;
+}
+html[data-hlrn-theme="dark"] #profileModal .modal-copy{
+  background:
+    radial-gradient(circle at 100% 0,rgba(227,24,55,.13),transparent 32%),
+    #0d1117!important;
+  color:#fff!important;
+}
+html[data-hlrn-theme="dark"] #profileModal .profile-name,
+html[data-hlrn-theme="dark"] #profileModal .profile-role,
+html[data-hlrn-theme="dark"] #profileModal .profile-meta strong{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+html[data-hlrn-theme="dark"] #profileModal .profile-role{
+  color:#b8c1cb!important;
+  -webkit-text-fill-color:#b8c1cb!important;
+}
+html[data-hlrn-theme="dark"] #profileModal .profile-num{
+  color:#f3cf58!important;
+  -webkit-text-fill-color:#f3cf58!important;
+}
+html[data-hlrn-theme="dark"] #profileModal .profile-meta{
+  background:#141a21!important;
+  color:#fff!important;
+  border-color:#303945!important;
+  box-shadow:none!important;
+}
+html[data-hlrn-theme="dark"] #profileModal .profile-meta small{
+  color:#7f8b97!important;
+  -webkit-text-fill-color:#7f8b97!important;
+}
+html[data-hlrn-theme="dark"] #profileModal .close-btn{
+  background:#121820!important;
+  color:#fff!important;
+  border-color:#35404b!important;
+}
+
+/* DAY MODE */
+html[data-hlrn-theme="light"] #profileModal{
+  background:rgba(17,22,28,.55)!important;
+}
+html[data-hlrn-theme="light"] #profileModal .modal-card{
+  background:#fff!important;
+  border-color:#cfd6de!important;
+  box-shadow:0 28px 80px rgba(20,28,38,.24)!important;
+}
+html[data-hlrn-theme="light"] #profileModal .modal-media{
+  background:#f3f5f7!important;
+  border-right:1px solid #d8dee5!important;
+}
+html[data-hlrn-theme="light"] #profileModal .modal-media:before{
+  background-image:
+    linear-gradient(rgba(245,247,249,.42),rgba(245,247,249,.72)),
+    var(--profile-modal-image,none)!important;
+  filter:blur(18px) saturate(.72)!important;
+  opacity:.58!important;
+}
+html[data-hlrn-theme="light"] #profileModal .modal-media:after{
+  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.30))!important;
+}
+html[data-hlrn-theme="light"] #profileModal .modal-copy{
+  background:#fff!important;
+  background-image:none!important;
+  color:#11161c!important;
+}
+html[data-hlrn-theme="light"] #profileModal .profile-name,
+html[data-hlrn-theme="light"] #profileModal .profile-meta strong{
+  color:#11161c!important;
+  -webkit-text-fill-color:#11161c!important;
+}
+html[data-hlrn-theme="light"] #profileModal .profile-role{
+  color:#5f6974!important;
+  -webkit-text-fill-color:#5f6974!important;
+}
+html[data-hlrn-theme="light"] #profileModal .profile-num{
+  color:#a67f00!important;
+  -webkit-text-fill-color:#a67f00!important;
+}
+html[data-hlrn-theme="light"] #profileModal .profile-meta{
+  background:#f6f7f9!important;
+  color:#11161c!important;
+  border-color:#d8dee5!important;
+  box-shadow:none!important;
+}
+html[data-hlrn-theme="light"] #profileModal .profile-meta small{
+  color:#6d7782!important;
+  -webkit-text-fill-color:#6d7782!important;
+}
+html[data-hlrn-theme="light"] #profileModal .close-btn{
+  background:#fff!important;
+  color:#11161c!important;
+  border-color:#cfd6de!important;
+  box-shadow:0 4px 12px rgba(20,28,38,.10)!important;
+}
+
+@media(max-width:850px){
+  #profileModal{
+    padding:10px!important;
+    align-items:flex-start!important;
+    overflow:auto!important;
+  }
+  #profileModal .modal-card{
+    width:min(680px,100%)!important;
+    min-height:0!important;
+    max-height:none!important;
+    margin:auto!important;
+    grid-template-columns:1fr!important;
+    overflow:visible!important;
+  }
+  #profileModal .modal-media{
+    min-height:0!important;
+    height:auto!important;
+    aspect-ratio:16/10!important;
+    border-right:0!important;
+    border-bottom:1px solid #2f3842!important;
+  }
+  #profileModal .modal-media img{
+    height:100%!important;
+    max-height:none!important;
+  }
+  #profileModal .modal-copy{
+    padding:34px 26px 30px!important;
+  }
+}
+@media(max-width:520px){
+  #profileModal .modal-card{
+    border-radius:9px!important;
+  }
+  #profileModal .modal-media{
+    aspect-ratio:4/3!important;
+  }
+  #profileModal .modal-copy{
+    padding:30px 18px 22px!important;
+  }
+  #profileModal .profile-name{
+    font-size:44px!important;
+  }
+  #profileModal .profile-grid{
+    grid-template-columns:1fr!important;
+  }
+}
+</style>
 </head>
 <body>
 
@@ -1247,6 +1483,8 @@ function openProfile(name){
   if(!m) return;
   profileImage.src = m.image;
   profileImage.alt = m.name;
+  const modalMedia=profileImage.closest(".modal-media");
+  if(modalMedia) modalMedia.style.setProperty("--profile-modal-image",`url("${m.image}")`);
   profileNumber.textContent = `HLRN TEAM • #${m.number}`;
   profileName.textContent = m.name;
   profileRole.textContent = m.role;
