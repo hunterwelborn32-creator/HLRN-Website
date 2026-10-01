@@ -3683,6 +3683,132 @@ html[style*="color-scheme: dark"] body #raceEntryCount{
   text-shadow:none!important;
 }
 </style>
+<style id="HLRN_LAST_RACE_DARK_FIX_20261001">
+/* Dark mode: Last Race tab */
+html[data-hlrn-theme="dark"] body #lastRace,
+html[data-hlrn-theme="dark"] body #lastRace .cc-race-spotlight,
+html[data-hlrn-theme="dark"] body #lastRace .cc-spotlight-card,
+html[data-hlrn-theme="dark"] body #lastRace .last-race-card,
+html[data-hlrn-theme="dark"] body #lastRace .race-header,
+html[data-hlrn-theme="dark"] body #lastRace .last-race-grid,
+html[data-hlrn-theme="dark"] body #lastRace .stat-card,
+html[data-hlrn-theme="dark"] body #lastRace .table-shell,
+html[data-hlrn-theme="dark"] body #lastRace table,
+html[data-hlrn-theme="dark"] body #lastRace thead,
+html[data-hlrn-theme="dark"] body #lastRace tbody,
+html[data-hlrn-theme="dark"] body #lastRace tr,
+html[data-hlrn-theme="dark"] body #lastRace th,
+html[data-hlrn-theme="dark"] body #lastRace td,
+html[style*="color-scheme: dark"] body #lastRace,
+html[style*="color-scheme: dark"] body #lastRace .cc-race-spotlight,
+html[style*="color-scheme: dark"] body #lastRace .cc-spotlight-card,
+html[style*="color-scheme: dark"] body #lastRace .last-race-card,
+html[style*="color-scheme: dark"] body #lastRace .race-header,
+html[style*="color-scheme: dark"] body #lastRace .last-race-grid,
+html[style*="color-scheme: dark"] body #lastRace .stat-card,
+html[style*="color-scheme: dark"] body #lastRace .table-shell,
+html[style*="color-scheme: dark"] body #lastRace table,
+html[style*="color-scheme: dark"] body #lastRace thead,
+html[style*="color-scheme: dark"] body #lastRace tbody,
+html[style*="color-scheme: dark"] body #lastRace tr,
+html[style*="color-scheme: dark"] body #lastRace th,
+html[style*="color-scheme: dark"] body #lastRace td{
+  background:#000!important;
+  background-color:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+  border-color:#2b2b2b!important;
+  box-shadow:none!important;
+}
+
+/* Header row */
+html[data-hlrn-theme="dark"] body #lastRace thead th,
+html[style*="color-scheme: dark"] body #lastRace thead th{
+  background:#0a0a0a!important;
+  color:#fff!important;
+  border-color:#2b2b2b!important;
+}
+
+/* Remove alternating/winner light fills */
+html[data-hlrn-theme="dark"] body #lastRace tbody tr:nth-child(odd) td,
+html[data-hlrn-theme="dark"] body #lastRace tbody tr:nth-child(even) td,
+html[data-hlrn-theme="dark"] body #lastRace tbody tr:hover td,
+html[data-hlrn-theme="dark"] body #lastRace tbody tr.winner-row td,
+html[style*="color-scheme: dark"] body #lastRace tbody tr:nth-child(odd) td,
+html[style*="color-scheme: dark"] body #lastRace tbody tr:nth-child(even) td,
+html[style*="color-scheme: dark"] body #lastRace tbody tr:hover td,
+html[style*="color-scheme: dark"] body #lastRace tbody tr.winner-row td{
+  background:#000!important;
+  background-color:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+}
+
+/* All Last Race text */
+html[data-hlrn-theme="dark"] body #lastRace :where(
+  .cc-spot-label,.cc-spot-main,.cc-spot-sub,
+  .race-eyebrow,.race-track,.race-date,.race-number,
+  .stat-label,.stat-value,.stat-sub,
+  .finish-pos,.points,.position-gain,
+  .hlrn-driver-profile-link,.hlrn-driver-profile-name,
+  .hlrn-driver-profile-inner,
+  th,td
+),
+html[style*="color-scheme: dark"] body #lastRace :where(
+  .cc-spot-label,.cc-spot-main,.cc-spot-sub,
+  .race-eyebrow,.race-track,.race-date,.race-number,
+  .stat-label,.stat-value,.stat-sub,
+  .finish-pos,.points,.position-gain,
+  .hlrn-driver-profile-link,.hlrn-driver-profile-name,
+  .hlrn-driver-profile-inner,
+  th,td
+){
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  text-shadow:none!important;
+}
+
+/* Keep the Sunday/Monday accent bars only */
+html[data-hlrn-theme="dark"] body #lastRace .cc-spotlight-card:before,
+html[data-hlrn-theme="dark"] body #lastRace tbody tr.winner-row td:first-child,
+html[style*="color-scheme: dark"] body #lastRace .cc-spotlight-card:before,
+html[style*="color-scheme: dark"] body #lastRace tbody tr.winner-row td:first-child{
+  border-color:var(--race-accent)!important;
+}
+
+/* Pills / arrows */
+html[data-hlrn-theme="dark"] body #lastRace .race-number,
+html[data-hlrn-theme="dark"] body #lastRace .status-pill,
+html[data-hlrn-theme="dark"] body #lastRace .hlrn-driver-profile-arrow,
+html[style*="color-scheme: dark"] body #lastRace .race-number,
+html[style*="color-scheme: dark"] body #lastRace .status-pill,
+html[style*="color-scheme: dark"] body #lastRace .hlrn-driver-profile-arrow{
+  background:#090909!important;
+  background-color:#090909!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border:1px solid #3a3a3a!important;
+  box-shadow:none!important;
+}
+
+/* Mobile pinned driver cell was still explicitly light */
+@media(max-width:760px){
+  html[data-hlrn-theme="dark"] body #lastRace thead th.name-col,
+  html[data-hlrn-theme="dark"] body #lastRace tbody td.name-col,
+  html[data-hlrn-theme="dark"] body #lastRace tbody tr:nth-child(odd) td.name-col,
+  html[data-hlrn-theme="dark"] body #lastRace tbody tr:nth-child(even) td.name-col,
+  html[data-hlrn-theme="dark"] body #lastRace tbody tr.winner-row td.name-col,
+  html[style*="color-scheme: dark"] body #lastRace thead th.name-col,
+  html[style*="color-scheme: dark"] body #lastRace tbody td.name-col,
+  html[style*="color-scheme: dark"] body #lastRace tbody tr:nth-child(odd) td.name-col,
+  html[style*="color-scheme: dark"] body #lastRace tbody tr:nth-child(even) td.name-col,
+  html[style*="color-scheme: dark"] body #lastRace tbody tr.winner-row td.name-col{
+    background:#000!important;
+    background-color:#000!important;
+    color:#fff!important;
+  }
+}
+</style>
 </head>
 <body>
 <div class="page-wrap">
