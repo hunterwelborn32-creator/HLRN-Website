@@ -320,6 +320,33 @@ function hlrnHostedDarkModeActive(){
 }
 
 const HLRN_HOSTED_LIGHT_DASHBOARD_CSS = `
+/* Records & Milestones light-mode surfaces, including live summary strips. */
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="records"] body,
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="records"] body :is(
+  .hlrn-wrap,.hero,.panel,.records-ticker,.ticker-label,.ticker-window,
+  .ticker-track,.ticker-network,.hlrn-live-strip,.hlrn-summary-ribbon,
+  .hlrn-summary-cell,#content,.top-grid,.card,.records-panel,.records-grid,
+  .record-card,.milestone-group,.milestone,.watch,.watch-list,.record-status,
+  .status-check,.m-icon,.info-bar
+){
+  background:#fff!important;background-image:none!important;
+  color:#000!important;border-color:#d9dde2!important;box-shadow:none!important;
+}
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="records"] body *,
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="records"] body :is(
+  #recordBookClock,#recordFeedStatus,#summaryDrivers,#summaryRows,#summaryWins,#summaryLed
+){
+  color:#000!important;-webkit-text-fill-color:#000!important;text-shadow:none!important;
+}
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="records"] body::before,
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="records"] body::after,
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="records"] .hlrn-wrap::before,
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="records"] .hero::before,
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="records"] .hero::after,
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="records"] .card::after{
+  content:none!important;display:none!important;
+}
+
 /* Driver Statistics: light mode surfaces and readable text. */
 /* Hide oversized decorative lettering; retain the actual page headings. */
 html[data-hlrn-theme="light"][data-hlrn-hosted-view="drivers"] .hlrn-top::after,
