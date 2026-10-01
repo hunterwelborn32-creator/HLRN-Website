@@ -779,7 +779,7 @@ function start(){
 
   // Always use the current shared shell stylesheet. This gives every page
   // the same global mobile layer without requiring page-by-page CSS edits.
-  const SHELL_CSS_VERSION="20260930theme2";
+  const SHELL_CSS_VERSION="20261001network2";
   let shellCss=[...document.querySelectorAll('link[rel="stylesheet"]')].find(link=>/\/site-shell\.css(?:\?|$)/i.test(link.getAttribute("href")||""));
   if(!shellCss){
     shellCss=document.createElement("link");
@@ -1162,6 +1162,23 @@ function start(){
     searchScript.defer=true;
     searchScript.setAttribute("data-hlrn-site-search","");
     document.head.appendChild(searchScript);
+  }
+
+  // HLRN Network Experience layer: race-week strip, mobile standings quick cards,
+  // race hub, newsroom rail, admin pit passes, Live command deck, and driver command.
+  if(!document.querySelector('link[data-hlrn-network-upgrades]')){
+    const networkCss=document.createElement("link");
+    networkCss.rel="stylesheet";
+    networkCss.href=url("assets/network-upgrades.css?v=20261001nx1");
+    networkCss.setAttribute("data-hlrn-network-upgrades","");
+    document.head.appendChild(networkCss);
+  }
+  if(!document.querySelector('script[data-hlrn-network-upgrades]')){
+    const networkScript=document.createElement("script");
+    networkScript.src=url("assets/network-upgrades.js?v=20261001nx1");
+    networkScript.defer=true;
+    networkScript.setAttribute("data-hlrn-network-upgrades","");
+    document.head.appendChild(networkScript);
   }
 
   document.documentElement.classList.add("hlrn-shell-ready");
