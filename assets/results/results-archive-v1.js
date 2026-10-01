@@ -503,6 +503,10 @@ function openFromQuery(){
     if(race){renderReport(race,false);return true}
     const item=recapItems.find(x=>String(x?.slug||'')===recapSlug),archive=recapArchives.get(recapSlug);
     if(item&&archive){renderFrozenOnlyReport(item,archive);return true}
+    if($('raceReportView')) $('raceReportView').classList.remove('active');
+    if($('raceArchive')) $('raceArchive').style.display='block';
+    currentKey='';
+    history.replaceState({archive:true},'','./#raceArchive');
     return false;
   }
   const key=String(q.get('league')||'').toLowerCase(),raceNo=num(q.get('race'));
@@ -562,9 +566,7 @@ async function loadRecorderArchive(){
     if(status)status.textContent=recapItems.length
       ? recapItems.length+' FROZEN RACE'+(recapItems.length===1?'':'S')+' PUBLISHED'
       : 'RECORDER READY';
-    grid.innerHTML=recapItems.length
-      ? recapItems.map(recorderCard).join('')
-      : '<div class="recorder-archive-empty">No frozen race records have been published yet. The next real race frozen at checkered will appear here automatically.</div>';
+    grid.innerHTML=recapItems.length ? recapItems.map(recorderCard).join('') : '';
   }catch(err){
     if(status)status.textContent='ARCHIVE TEMPORARILY UNAVAILABLE';
     grid.innerHTML='<div class="recorder-archive-empty">Frozen race records will appear here after the recorder publisher completes its next sync.</div>';
