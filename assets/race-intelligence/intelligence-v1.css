@@ -2797,3 +2797,31 @@ html[data-hlrn-theme="dark"] body #intelGrid{
   color:#fff!important;
   -webkit-text-fill-color:#fff!important;
 }
+
+/* HLRN HERO BADGES DARK FIX 20261001 */
+html[data-hlrn-theme="dark"] .shell .hero .hero-meta .badge,
+html[data-hlrn-theme="dark"] .shell .hero .badge,
+html[data-hlrn-theme="dark"] #heroMeta .badge{
+  background:#000!important;
+  background-color:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border:1px solid #2b2b2b!important;
+  box-shadow:none!important;
+}
+
+html[data-hlrn-theme="dark"] .shell .hero .hero-meta .badge:nth-child(1),
+html[data-hlrn-theme="dark"] .shell .hero .badge:nth-child(1){
+  border-left:4px solid #31d466!important;
+}
+
+html[data-hlrn-theme="dark"] .shell .hero .hero-meta .badge:nth-child(2),
+html[data-hlrn-theme="dark"] .shell .hero .badge:nth-child(2){
+  border-left:4px solid #e10600!important;
+}
+
+html[data-hlrn-theme="dark"] .shell .hero .hero-meta .badge:nth-child(3),
+html[data-hlrn-theme="dark"] .shell .hero .badge:nth-child(3){
+  border-left:4px solid #ffd400!important;
+}
