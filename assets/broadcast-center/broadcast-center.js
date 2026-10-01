@@ -72,6 +72,28 @@ function setCountdown(target){
   Object.entries(vals).forEach(([k,v])=>{const el=document.querySelector('[data-count="'+k+'"]');if(el)el.textContent=pad(v)});
 }
 let broadcastData={sunday:null};
+let latestRace={sunday:null,monday:null};
+
+function buildLatestRace(snapshot,league){
+  const rows=Array.isArray(snapshot?.leagues?.[league]?.results)?snapshot.leagues[league].results:[];
+  const races=new Map();
+  rows.forEach(row=>{
+    const race=Number(row?.raceNumber);
+    if(!Number.isFinite(race)||race<=0)return;
+    if(!races.has(race)){
+      races.set(race,{race,track:String(row?.track||""),date:row?.date||""});
+    }
+  });
+  const list=[...races.values()].sort((a,b)=>b.race-a.race);
+  return list[0]||null;
+}
+function raceResultsUrl(league){
+  const race=latestRace[league];
+  return race
+    ? "../results/?league="+encodeURIComponent(league)+"&race="+encodeURIComponent(race.race)+"#raceReportView"
+    : "../results/?league="+encodeURIComponent(league);
+}
+
 
 function sundayReplay(){
   return broadcastData.sunday&&broadcastData.sunday.latestReplay||null;
@@ -140,6 +162,7 @@ function render(){
   const pTitle=$("#bcPlayerTitle");
   const pDesc=$("#bcPlayerDesc");
   const yt=$("#bcYoutubeLink");
+  const resultsLink=$("#bcResultsLink");
   if(pStatus)pStatus.textContent=s.key==="sunday"?(isLive?"SUNDAY RACE NIGHT":"PREVIOUS SUNDAY RACE"):(isLive?"ON AIR":"LATEST REPLAYS");
   if(pSub)pSub.textContent=s.key==="sunday"?"Official High Line Racing YouTube uploads":"Most recent uploads from the broadcast channel";
   if(pTitle){
@@ -150,6 +173,22 @@ function render(){
     ? "Previous Sunday coverage from the official High Line Racing YouTube channel • Sunday Night League • 8:30 PM ET."
     : (isLive?"Watch the scheduled live race broadcast. ":"Catch up on recent HLRN race coverage. ")+s.network+" • 8:30 PM ET.";
   if(yt){yt.href=s.channelUrl;yt.textContent="OPEN "+(active==="sunday"?"HLRN":"RSI")+" YOUTUBE ↗"}
+  if(resultsLink){
+    const race=latestRace[active];
+    resultsLink.href=raceResultsUrl(active);
+    resultsLink.textContent=race
+      ? "RACE "+race.race+" RESULTS →"
+      : "LATEST RACE RESULTS →";
+  }
+
+  $("[data-results-series]").forEach(link=>{
+    const league=link.dataset.resultsSeries;
+    const race=latestRace[league];
+    link.href=raceResultsUrl(league);
+    if(race){
+      link.textContent="RACE "+race.race+(race.track?" • "+race.track:"")+" RESULTS →";
+    }
+  });
 
   const flag=$("#bcNetworkFlag"), headline=$("#bcNetworkHeadline"), meta=$("#bcNetworkMeta");
   if(state.current){
@@ -218,11 +257,22 @@ function refreshReplayFrames(){
 }
 
 async function loadBroadcastData(){
+  const stamp=Date.now();
   try{
-    const res=await fetch("../data/broadcasts.json?ts="+Date.now(),{cache:"no-store"});
-    if(!res.ok)throw new Error("broadcast data "+res.status);
-    const data=await res.json();
+    const [broadcastRes,snapshotRes]=await Promise.all([
+      fetch("../data/broadcasts.json?ts="+stamp,{cache:"no-store"}),
+      fetch("../data/hlrn.json?ts="+stamp,{cache:"no-store"}).catch(()=>null)
+    ]);
+    if(!broadcastRes.ok)throw new Error("broadcast data "+broadcastRes.status);
+    const data=await broadcastRes.json();
     broadcastData.sunday=data&&data.sunday||null;
+    if(snapshotRes?.ok){
+      try{
+        const snapshot=await snapshotRes.json();
+        latestRace.sunday=buildLatestRace(snapshot,"sunday");
+        latestRace.monday=buildLatestRace(snapshot,"monday");
+      }catch(_){}
+    }
   }catch(err){
     console.warn("HLRN broadcast sync not ready",err);
   }
