@@ -477,7 +477,7 @@ html[data-hlrn-theme="dark"] .updated{{color:#aaa!important}}
   </div>
   <div class="updated">Profile data generated from the current HLRN verified league snapshot.</div>
 </main>
-<script src="/assets/site-shell.js?v=20261001profiledark1"></script>
+<script src="/assets/site-shell.js?v=20261001network2"></script>
 </body>
 </html>
 """
