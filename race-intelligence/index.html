@@ -6,8 +6,8 @@
 <title>HLRN Race Intelligence</title>
 <meta name="description" content="HLRN Race Intelligence provides data-driven championship analysis, driver trends, contender projections and race-night insights for High Line Racing Network.">
 
-<link rel="stylesheet" href="../assets/race-intelligence/intelligence-v1.min.css?v=20260930daylogo2">
-<link rel="preload" as="script" href="../assets/race-intelligence/intelligence-v1.js?v=20261001contenders2">
+<link rel="stylesheet" href="../assets/race-intelligence/intelligence-v1.min.css?v=20261001fast2">
+<link rel="preload" as="script" href="../assets/race-intelligence/intelligence-v1.js?v=20261001fast2">
 
 
 
@@ -17,10 +17,6 @@
 
 
 
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <script id="HLRN_RACE_INTELLIGENCE_V11_SERIES_CLASS">
 document.addEventListener('click',function(e){
@@ -47,326 +43,9 @@ document.addEventListener('DOMContentLoaded',function(){
 <link rel="canonical" href="https://highlineracingnetwork.com/race-intelligence/">
 
 <meta name="theme-color" content="#07090d">
-<style id="HLRN_RI_DARK_MODE_FINAL_20261001">
-/* Race Intelligence dark mode: black surfaces + white typography. */
-html[data-hlrn-theme="dark"],
-html[style*="color-scheme: dark"]{
-  background:#000!important;
-  color-scheme:dark!important;
-}
-html[data-hlrn-theme="dark"] body,
-html[style*="color-scheme: dark"] body,
-html[data-hlrn-theme="dark"] body .shell,
-html[style*="color-scheme: dark"] body .shell{
-  background:#000!important;
-  color:#fff!important;
-}
-
-html[data-hlrn-theme="dark"] body :is(
-  .hero,.hero-inner,.compact-panel,.compact-board-head,.toolbar,
-  .v3-contenders,.v3-contenders-head,.v3-contender-grid,.v3-contender,.v3-contender-top,
-  .intel-grid,.intel-card,.category-deep,.detail-wrap,.deep-body,.detail-body,
-  .deep-box,.detail-box,.story-section,.story-head,.story-grid,.story-card
-),
-html[style*="color-scheme: dark"] body :is(
-  .hero,.hero-inner,.compact-panel,.compact-board-head,.toolbar,
-  .v3-contenders,.v3-contenders-head,.v3-contender-grid,.v3-contender,.v3-contender-top,
-  .intel-grid,.intel-card,.category-deep,.detail-wrap,.deep-body,.detail-body,
-  .deep-box,.detail-box,.story-section,.story-head,.story-grid,.story-card
-){
-  background:#000!important;
-  background-image:none!important;
-  color:#fff!important;
-  border-color:#2a2a2a!important;
-  box-shadow:none!important;
-}
-
-html[data-hlrn-theme="dark"] body :is(
-  .deep-head,.detail-head,.deep-metric,.stat,.deep-point,.deep-race,.race,.trend-row,
-  .card-icon,.deep-pill,.badge,.refresh,.story-stat,.card-stat
-),
-html[style*="color-scheme: dark"] body :is(
-  .deep-head,.detail-head,.deep-metric,.stat,.deep-point,.deep-race,.race,.trend-row,
-  .card-icon,.deep-pill,.badge,.refresh,.story-stat,.card-stat
-){
-  background:#070707!important;
-  background-image:none!important;
-  color:#fff!important;
-  border-color:#303030!important;
-}
-
-html[data-hlrn-theme="dark"] body :is(
-  h1,h2,h3,h4,h5,h6,strong,b,
-  .section-label,.compact-board-head strong,.v3-contenders-head strong,
-  .v3-contender-name,.card-driver,.deep-metric strong,.stat-value,
-  .deep-box h4,.box-title,.story-title,.story-card h3,.nn-page-title,
-  .score-num,.detail-name,.deep-title
-),
-html[style*="color-scheme: dark"] body :is(
-  h1,h2,h3,h4,h5,h6,strong,b,
-  .section-label,.compact-board-head strong,.v3-contenders-head strong,
-  .v3-contender-name,.card-driver,.deep-metric strong,.stat-value,
-  .deep-box h4,.box-title,.story-title,.story-card h3,.nn-page-title,
-  .score-num,.detail-name,.deep-title
-){
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-  text-shadow:none!important;
-}
-
-html[data-hlrn-theme="dark"] body :is(
-  .hero p,.compact-board-head span,.v3-contenders-head span,.card-title,.card-reason,
-  .deep-summary,.deep-point,.trend-row,.story-sub,.story-card p,.stat-label,
-  .score-label,.detail-category,.story-stat,.card-stat,.badge
-),
-html[style*="color-scheme: dark"] body :is(
-  .hero p,.compact-board-head span,.v3-contenders-head span,.card-title,.card-reason,
-  .deep-summary,.deep-point,.trend-row,.story-sub,.story-card p,.stat-label,
-  .score-label,.detail-category,.story-stat,.card-stat,.badge
-){
-  color:#d0d0d0!important;
-  -webkit-text-fill-color:#d0d0d0!important;
-}
-
-html[data-hlrn-theme="dark"] body .v3-contender-top .hlrn-contender-full-photo,
-html[style*="color-scheme: dark"] body .v3-contender-top .hlrn-contender-full-photo{
-  background:#000!important;
-}
-
-html[data-hlrn-theme="dark"] body .refresh:hover,
-html[style*="color-scheme: dark"] body .refresh:hover{
-  background:#fff!important;
-  color:#000!important;
-  -webkit-text-fill-color:#000!important;
-}
-</style>
-<style id="HLRN_RI_DARK_MODE_BLACK_WHITE_V2">
-/* Race Intelligence Night Mode — full black surfaces / white type. */
-html[data-hlrn-theme="dark"],
-html[data-hlrn-theme="dark"] body{
-  background:#000!important;
-  color:#fff!important;
-  color-scheme:dark!important;
-}
-html[data-hlrn-theme="dark"] body .shell{
-  background:#000!important;
-  color:#fff!important;
-}
-
-/* Remove every remaining white editorial surface in Night Mode. */
-html[data-hlrn-theme="dark"] body .shell :is(
-  .hero,.hero-inner,
-  .compact-panel,.compact-board-head,.compact-overview,.compact-overview-card,
-  .toolbar,
-  .v3-verification,.v3-accuracy-line,.v3-accuracy-stat,
-  .v3-contenders,.v3-contenders-head,.v3-contender-grid,.v3-contender,.v3-contender-top,
-  .intel-grid,.intel-card,
-  .category-deep,.deep-head,.deep-grid,.deep-metric,.deep-body,.deep-box,.deep-point,.deep-race,.deep-action,
-  .detail-wrap,.detail-head,.stat-grid,.stat,.detail-body,.detail-box,.race,.trend-row,
-  .story-section,.story-head,.story-grid,.story-card,
-  .loading,.error,.badge,.refresh
-){
-  background:#000!important;
-  background-color:#000!important;
-  background-image:none!important;
-  color:#fff!important;
-  border-color:#2b2b2b!important;
-  box-shadow:none!important;
-}
-
-/* Slight separation for nested cards without introducing gray/white panels. */
-html[data-hlrn-theme="dark"] body .shell :is(
-  .intel-card,.deep-metric,.deep-box,.detail-box,.stat,.deep-point,.deep-race,.race,.trend-row,.story-card,.badge,.refresh
-){
-  background:#050505!important;
-  background-color:#050505!important;
-}
-
-/* White typography everywhere inside Race Intelligence content. */
-html[data-hlrn-theme="dark"] body .shell :is(
-  .hero,.compact-panel,.v3-contenders,.intel-grid,.category-deep,.detail-wrap,.story-section
-) :where(
-  h1,h2,h3,h4,h5,h6,p,span,small,strong,b,a,label,
-  .nn-page-title,.section-label,.compact-board-head,.compact-board-head *,
-  .v3-contenders-head,.v3-contenders-head *,.v3-contender-name,
-  .card-title,.card-driver,.card-reason,.card-stat,
-  .deep-title,.deep-summary,.deep-pill,.deep-metric,.deep-metric *,
-  .detail-name,.detail-category,.score-num,.score-label,.stat-label,.stat-value,
-  .box-title,.trend-row,.trend-row *,
-  .story-title,.story-sub,.story-card h3,.story-card p,.story-stat,
-  .badge,.refresh
-){
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-  text-shadow:none!important;
-}
-
-/* Keep HLRN accents visible. */
-html[data-hlrn-theme="dark"] body .shell :is(.kicker,.story-kicker,.deep-label,.detail-eyebrow){
-  color:#e10600!important;
-  -webkit-text-fill-color:#e10600!important;
-}
-html[data-hlrn-theme="dark"] body .shell :is(.positive,.gain,.ri-auto-sync-dot){
-  color:#31d466!important;
-  -webkit-text-fill-color:#31d466!important;
-}
-html[data-hlrn-theme="dark"] body .shell .negative{
-  color:#ff6060!important;
-  -webkit-text-fill-color:#ff6060!important;
-}
-
-/* Latest Storylines specifically: no white cards, no pale text. */
-html[data-hlrn-theme="dark"] body .shell .story-grid,
-html[data-hlrn-theme="dark"] body .shell .story-card,
-html[data-hlrn-theme="dark"] body .shell .story-card:hover{
-  background:#000!important;
-  background-color:#000!important;
-  background-image:none!important;
-}
-html[data-hlrn-theme="dark"] body .shell .story-card :where(h3,p,a,.story-stat){
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-}
-html[data-hlrn-theme="dark"] body .shell .story-card:before{
-  background:#111!important;
-}
-html[data-hlrn-theme="dark"] body .shell .story-card.has-driver-photo:after{
-  display:none!important;
-}
-
-/* Metric strips in the deep dive stay black too. */
-html[data-hlrn-theme="dark"] body .shell .deep-grid,
-html[data-hlrn-theme="dark"] body .shell .stat-grid{
-  background:#000!important;
-  border-color:#2b2b2b!important;
-}
-</style>
-<style id="HLRN_RI_TOP3_FIT_20261001">
-/* Top 3 projected contenders: equal cards, complete images, no overflow. */
-#v3Contenders{
-  width:100%!important;
-  max-width:100%!important;
-  overflow:hidden!important;
-}
-#v3ContenderGrid,
-.v3-contender-grid{
-  display:grid!important;
-  grid-template-columns:repeat(3,minmax(0,1fr))!important;
-  gap:18px!important;
-  width:100%!important;
-  max-width:100%!important;
-  overflow:hidden!important;
-}
-#v3ContenderGrid .v3-contender{
-  min-width:0!important;
-  width:100%!important;
-  max-width:100%!important;
-  overflow:hidden!important;
-  padding:0!important;
-  display:flex!important;
-  flex-direction:column!important;
-  border:1px solid #2b2b2b!important;
-  background:#000!important;
-}
-#v3ContenderGrid .v3-contender-photo-wrap{
-  width:100%!important;
-  aspect-ratio:16/9!important;
-  min-height:0!important;
-  overflow:hidden!important;
-  background:#000!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-}
-#v3ContenderGrid .v3-contender-photo-wrap .hlrn-contender-full-photo,
-#v3ContenderGrid .v3-contender > .hlrn-contender-full-photo{
-  display:block!important;
-  position:static!important;
-  inset:auto!important;
-  width:100%!important;
-  height:100%!important;
-  max-width:100%!important;
-  max-height:100%!important;
-  margin:0!important;
-  padding:0!important;
-  object-fit:contain!important;
-  object-position:center!important;
-  transform:none!important;
-  clip-path:none!important;
-  background:#000!important;
-}
-#v3ContenderGrid .v3-contender-copy{
-  min-width:0!important;
-  padding:18px 22px 20px!important;
-}
-#v3ContenderGrid .v3-contender-name{
-  overflow-wrap:normal!important;
-  word-break:normal!important;
-}
-@media(max-width:900px){
-  #v3ContenderGrid,.v3-contender-grid{
-    grid-template-columns:1fr!important;
-    gap:14px!important;
-  }
-  #v3ContenderGrid .v3-contender-photo-wrap{aspect-ratio:16/9!important}
-}
-</style>
-<style id="HLRN_RI_INTEL_CARD_BLACK_HEADERS_20261001">
-/* Latest Intelligence: remove all white/gray header backgrounds. */
-html[data-hlrn-theme="dark"] body #intelGrid .intel-card,
-html[data-hlrn-theme="dark"] body #intelGrid .intel-card:hover{
-  background:#000!important;
-  background-color:#000!important;
-  background-image:none!important;
-  border-color:#2b2b2b!important;
-}
-
-html[data-hlrn-theme="dark"] body #intelGrid .intel-card .card-top{
-  background:#000!important;
-  background-color:#000!important;
-  background-image:none!important;
-  border-color:#2b2b2b!important;
-  box-shadow:none!important;
-}
-
-html[data-hlrn-theme="dark"] body #intelGrid .intel-card .card-top .hlrn-card-full-photo{
-  background:#000!important;
-  background-color:#000!important;
-  width:100%!important;
-  height:100%!important;
-  object-fit:contain!important;
-  object-position:center!important;
-}
-
-html[data-hlrn-theme="dark"] body #intelGrid .intel-card .card-top:before,
-html[data-hlrn-theme="dark"] body #intelGrid .intel-card .card-top:after{
-  background:transparent!important;
-  background-image:none!important;
-}
-
-html[data-hlrn-theme="dark"] body #intelGrid .intel-card .card-icon{
-  background:#000!important;
-  background-color:#000!important;
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-  border:1px solid #3a3a3a!important;
-  box-shadow:none!important;
-}
-
-html[data-hlrn-theme="dark"] body #intelGrid .intel-card .card-tag{
-  background:#e10600!important;
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-}
-
-html[data-hlrn-theme="dark"] body #intelGrid{
-  background:#000!important;
-  background-color:#000!important;
-}
-</style>
 </head>
 
-<body>
+<body data-hlrn-no-driver-links="1">
 
 
 <div class="shell">
@@ -451,11 +130,10 @@ html[data-hlrn-theme="dark"] body #intelGrid{
 
   <section class="hero">
     <div class="hero-inner">
-      <div class="kicker">HLRN • Data • Insights • Performance</div>
-      <h1>Race <span style="color:#e10600">Intelligence</span></h1>
-      <p>
-        Race-by-race performance analysis built from HLRN league results. Track form, momentum, consistency, racecraft and risk signals as the championship changes.
-      </p>
+      <div class="kicker">HIGH LINE RACING NETWORK • RACE INTELLIGENCE</div>
+      <h1>HLRN Race Intelligence</h1>
+      <div class="nn-page-title">HLRN Race Intelligence</div>
+      <p>Current driver form, projected contenders, momentum, consistency, racecraft and risk signals — updated automatically from HLRN league results.</p>
       <div class="hero-meta">
         <div class="badge"><span class="dot"></span><span id="liveText">Live Data</span></div>
         <div class="badge" id="leagueBadge">Sunday League</div>
@@ -465,7 +143,7 @@ html[data-hlrn-theme="dark"] body #intelGrid{
   </section>
 
   <div class="toolbar">
-    <div class="section-label">Intelligence Board</div>
+    <div class="section-label">Latest Intelligence</div>
     <div class="ri-toolbar-actions">
       <div class="ri-auto-sync" id="riAutoSync" title="Race Intelligence checks the active league for new completed results every 60 seconds.">
         <span class="ri-auto-sync-dot"></span><span id="riAutoSyncText">Auto Sync • 60 Sec</span>
@@ -512,7 +190,7 @@ html[data-hlrn-theme="dark"] body #intelGrid{
 
   <section class="story-section">
     <div class="story-head">
-      <div class="story-title">League Storylines</div>
+      <div class="story-title">Latest Storylines</div>
       <div class="story-sub" id="storyLeagueLabel">Sunday League</div>
     </div>
     <div class="story-grid" id="storyGrid"></div>
@@ -561,7 +239,7 @@ html[data-hlrn-theme="dark"] body #intelGrid{
 
 <script src="../assets/hlrn-core.js?v=20260930ri1"></script>
 <script data-hlrn-driver-system src="../assets/driver-system.js?v=20260930fullphotos1"></script>
-<script src="../assets/race-intelligence/intelligence-v1.js?v=20260930noaccuracy1"></script>
+<script src="../assets/race-intelligence/intelligence-v1.js?v=20261001fast2"></script>
 
 
 
@@ -630,106 +308,5 @@ html[data-hlrn-theme="dark"] body #intelGrid{
 
 
 
-<script id="HLRN_RI_FORCE_NIGHT_MODE_20261001">
-(function(){
-  const SURFACES=[
-    "body",".shell",".hero",".hero-inner",".compact-panel",".compact-board-head",
-    ".compact-overview",".compact-overview-card",".toolbar",".v3-verification",
-    ".v3-accuracy-line",".v3-accuracy-stat",".v3-contenders",".v3-contenders-head",
-    ".v3-contender-grid",".v3-contender",".v3-contender-top",".intel-grid",".intel-card",
-    ".category-deep",".deep-head",".deep-grid",".deep-metric",".deep-body",".deep-box",
-    ".deep-point",".deep-race",".deep-action",".detail-wrap",".detail-head",".stat-grid",
-    ".stat",".detail-body",".detail-box",".race",".trend-row",".story-section",".story-head",
-    ".story-grid",".story-card",".loading",".error",".badge",".refresh"
-  ];
-  const SOFT=[
-    ".intel-card",".deep-metric",".deep-box",".detail-box",".stat",".deep-point",
-    ".deep-race",".race",".trend-row",".story-card",".badge",".refresh"
-  ];
-  const ACCENT_RED=".kicker,.story-kicker,.deep-label,.detail-eyebrow";
-
-  function isDark(){
-    return document.documentElement.dataset.hlrnTheme==="dark" ||
-      String(document.documentElement.style.colorScheme||"").toLowerCase()==="dark";
-  }
-
-  function force(){
-    if(!isDark()) return;
-
-    document.documentElement.style.setProperty("background","#000","important");
-    document.body.style.setProperty("background","#000","important");
-    document.body.style.setProperty("color","#fff","important");
-
-    document.querySelectorAll(SURFACES.join(",")).forEach(el=>{
-      el.style.setProperty("background-color","#000","important");
-      el.style.setProperty("background-image","none","important");
-      el.style.setProperty("color","#fff","important");
-      el.style.setProperty("border-color","#2b2b2b","important");
-      el.style.setProperty("box-shadow","none","important");
-    });
-
-    document.querySelectorAll(SOFT.join(",")).forEach(el=>{
-      el.style.setProperty("background-color","#050505","important");
-    });
-
-    document.querySelectorAll(".shell *:not(img):not(svg):not(path)").forEach(el=>{
-      el.style.setProperty("color","#fff","important");
-      el.style.setProperty("-webkit-text-fill-color","#fff","important");
-      el.style.setProperty("text-shadow","none","important");
-    });
-
-    document.querySelectorAll(ACCENT_RED).forEach(el=>{
-      el.style.setProperty("color","#e10600","important");
-      el.style.setProperty("-webkit-text-fill-color","#e10600","important");
-    });
-
-    document.querySelectorAll(".positive,.gain").forEach(el=>{
-      el.style.setProperty("color","#31d466","important");
-      el.style.setProperty("-webkit-text-fill-color","#31d466","important");
-    });
-    document.querySelectorAll(".negative").forEach(el=>{
-      el.style.setProperty("color","#ff6060","important");
-      el.style.setProperty("-webkit-text-fill-color","#ff6060","important");
-    });
-
-    let style=document.getElementById("HLRN_RI_NIGHT_PSEUDO_FIX");
-    if(!style){
-      style=document.createElement("style");
-      style.id="HLRN_RI_NIGHT_PSEUDO_FIX";
-      document.head.appendChild(style);
-    }
-    style.textContent=`
-      html[data-hlrn-theme="dark"] body .story-card,
-      html[data-hlrn-theme="dark"] body .story-card:hover,
-      html[data-hlrn-theme="dark"] body .story-grid,
-      html[data-hlrn-theme="dark"] body .story-section,
-      html[data-hlrn-theme="dark"] body .deep-grid,
-      html[data-hlrn-theme="dark"] body .stat-grid{
-        background:#000!important;
-        background-image:none!important;
-        color:#fff!important;
-      }
-      html[data-hlrn-theme="dark"] body .story-card:before{background:#111!important}
-      html[data-hlrn-theme="dark"] body .story-card.has-driver-photo:after{display:none!important}
-    `;
-  }
-
-  const observer=new MutationObserver(()=>requestAnimationFrame(force));
-  if(document.readyState==="loading"){
-    document.addEventListener("DOMContentLoaded",()=>{
-      force();
-      observer.observe(document.body,{childList:true,subtree:true});
-    },{once:true});
-  }else{
-    force();
-    observer.observe(document.body,{childList:true,subtree:true});
-  }
-  window.addEventListener("hlrn-theme-change",()=>setTimeout(force,0));
-  window.addEventListener("pageshow",force);
-  setTimeout(force,250);
-  setTimeout(force,1000);
-  setTimeout(force,2500);
-})();
-</script>
 </body>
 </html>
