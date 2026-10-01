@@ -1198,7 +1198,6 @@ function showDriver(category){
   setText("dRankTrend",rankTrendLabel(d,true));
   const rankTrendNode=document.getElementById("dRankTrend");
   if(rankTrendNode) rankTrendNode.className="stat-value ri-rank-trend "+rankTrendClass(d);
-  setText("dTotalInc",d.totalIncidents);
 
   const recent = d.races.slice(-5).reverse();
   const raceList=document.getElementById("recentRaceList");
@@ -1231,6 +1230,7 @@ function showDriver(category){
     ["Biggest Position Gain",signed(biggestGain)],
     ["Total Laps Led",lapsLed],
     ["Latest Finish",latest ? "P"+latest.finish : "—"],
+    ["Total Incidents",d.totalIncidents],
     ["Latest Incidents",latest ? latest.incidents : "—"]
   ].map(([a,b])=>`
     <div class="trend-row"><span>${esc(a)}</span><strong>${a==="Team"&&d.team?hLrnTeamMarkup(d.team):esc(b)}</strong></div>
@@ -1240,7 +1240,8 @@ function showDriver(category){
 }
 
 function setText(id,value){
-  document.getElementById(id).textContent = value;
+  const node=document.getElementById(id);
+  if(node) node.textContent = value;
 }
 
 function setLoading(on){
