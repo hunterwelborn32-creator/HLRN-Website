@@ -2,7 +2,7 @@
 <meta name="description" content="High Line Racing Network race results, previous winners, upcoming events and the complete Sunday and Monday league schedule.">
 <link rel="canonical" href="https://highlineracingnetwork.com/results/"><link rel="stylesheet" href="../assets/results/results-v1.min.css?v=20261001months1">
 <link rel="preload" as="script" href="../assets/results/results-core-v1.js?v=20260929p3">
-<link rel="preload" as="script" href="../assets/results/results-schedule-v1.js?v=20261001details1">
+<link rel="preload" as="script" href="../assets/results/results-schedule-v1.js?v=20261001clickpast1">
 
 
 
@@ -484,6 +484,24 @@ html[data-hlrn-theme="light"] #raceReportView .report-story{
 }
 </style>
 
+
+<style id="HLRN_CLICKABLE_PAST_RACES_20261001">
+/* Completed schedule races are fully clickable without changing the layout. */
+.ns-race-row.clickable-result{
+  cursor:pointer!important;
+}
+.ns-race-row.clickable-result:focus-visible{
+  outline:3px solid currentColor!important;
+  outline-offset:-3px!important;
+}
+.ns-race-row.clickable-result[data-results-href]:hover{
+  filter:brightness(.985);
+}
+html[data-hlrn-theme="dark"] .ns-race-row.clickable-result[data-results-href]:hover{
+  background:#080808!important;
+}
+</style>
+
 </head><body>
 <div class="hlrn-race-center">
 <div class="ultra-scan"></div><div class="ultra-orb one"></div><div class="ultra-orb two"></div>
@@ -704,7 +722,7 @@ html[data-hlrn-theme="light"] #raceReportView .report-story{
 
 
 
-<script src="../assets/results/results-schedule-v1.js?v=20261001details1"></script>
+<script src="../assets/results/results-schedule-v1.js?v=20261001clickpast1"></script>
 <script src="../assets/hlrn-core.js?v=results-archive-1"></script>
 <script data-hlrn-driver-system src="../assets/driver-system.js?v=20260930v7"></script>
 <script src="../assets/results/results-archive-v1.js?v=20261001scheduleback1"></script>
