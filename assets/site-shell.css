@@ -1329,119 +1329,163 @@ html[data-hlrn-theme="dark"] tbody tr:nth-child(even) td{
 }
 
 /* HLRN DAY RACE / NIGHT RACE THEME CONTROL 20261001 */
+/* Real race-mode switch: Night Race is ON, Day Race is OFF. */
 #hlrn-global-nav .hgn-theme-toggle,
 #hlrn-global-nav .hgn-mobile-theme{
   position:relative!important;
-  isolation:isolate!important;
-  overflow:hidden!important;
-  min-width:96px!important;
-  min-height:38px!important;
-  padding:0 14px 0 16px!important;
-  gap:8px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:9px!important;
+  min-width:132px!important;
+  min-height:40px!important;
+  padding:5px 11px 5px 8px!important;
   border:1px solid #3a4552!important;
-  border-radius:5px!important;
-  background:
-    linear-gradient(135deg,rgba(255,255,255,.035),transparent 46%),
-    #0b1016!important;
+  border-radius:7px!important;
+  background:#0b1016!important;
   color:#fff!important;
   box-shadow:
     inset 0 0 0 1px rgba(255,255,255,.025),
     0 5px 14px rgba(0,0,0,.20)!important;
-  letter-spacing:.075em!important;
-  transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease!important;
-}
-#hlrn-global-nav .hgn-theme-toggle:before,
-#hlrn-global-nav .hgn-mobile-theme:before{
-  content:""!important;
-  position:absolute!important;
-  left:0!important;
-  top:0!important;
-  bottom:0!important;
-  width:4px!important;
-  z-index:1!important;
-  background:#e31837!important;
-  box-shadow:4px 0 14px rgba(227,24,55,.16)!important;
-}
-#hlrn-global-nav .hgn-theme-toggle:after,
-#hlrn-global-nav .hgn-mobile-theme:after{
-  content:""!important;
-  position:absolute!important;
-  z-index:-1!important;
-  width:28px!important;
-  height:28px!important;
-  right:-8px!important;
-  top:-8px!important;
-  opacity:.11!important;
-  background:
-    conic-gradient(#fff 25%,transparent 0 50%,#fff 0 75%,transparent 0)
-    0 0/8px 8px!important;
-  transform:rotate(8deg)!important;
-  pointer-events:none!important;
-}
-#hlrn-global-nav .hgn-theme-icon{
-  position:relative!important;
-  z-index:2!important;
-  width:17px!important;
-  height:17px!important;
-  display:inline-grid!important;
-  place-items:center!important;
-  font-size:13px!important;
-  line-height:1!important;
-  color:#ffd84d!important;
-  text-shadow:0 0 10px rgba(255,216,77,.20)!important;
-}
-#hlrn-global-nav .hgn-theme-label{
-  position:relative!important;
-  z-index:2!important;
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-  font-size:8px!important;
-  font-weight:1000!important;
-  line-height:1!important;
+  cursor:pointer!important;
   white-space:nowrap!important;
+  transition:border-color .16s ease,box-shadow .16s ease,transform .16s ease!important;
 }
 #hlrn-global-nav .hgn-theme-toggle:hover,
 #hlrn-global-nav .hgn-theme-toggle:focus-visible,
 #hlrn-global-nav .hgn-mobile-theme:hover,
 #hlrn-global-nav .hgn-mobile-theme:focus-visible{
   transform:translateY(-1px)!important;
-  background:
-    linear-gradient(135deg,rgba(255,255,255,.065),transparent 48%),
-    #111820!important;
-  border-color:#65717d!important;
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,.035),
-    0 8px 20px rgba(0,0,0,.28)!important;
+  border-color:#687583!important;
+  box-shadow:0 8px 20px rgba(0,0,0,.28)!important;
+  outline:none!important;
 }
 
-/* The control describes the race mode clicking it will activate. */
-html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-theme-toggle:before,
-html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mobile-theme:before{
-  background:#6d4dff!important;
-  box-shadow:4px 0 14px rgba(109,77,255,.22)!important;
+/* Switch track */
+#hlrn-global-nav .hgn-theme-switch{
+  position:relative!important;
+  flex:0 0 auto!important;
+  width:42px!important;
+  height:22px!important;
+  border-radius:999px!important;
+  background:#262e38!important;
+  border:1px solid #4a5663!important;
+  box-shadow:inset 0 2px 5px rgba(0,0,0,.45)!important;
+  transition:background .18s ease,border-color .18s ease!important;
 }
-html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-theme-icon{
-  color:#c8bfff!important;
-  text-shadow:0 0 10px rgba(109,77,255,.28)!important;
+#hlrn-global-nav .hgn-theme-switch:before,
+#hlrn-global-nav .hgn-theme-switch:after{
+  position:absolute!important;
+  top:50%!important;
+  transform:translateY(-50%)!important;
+  z-index:1!important;
+  font-size:8px!important;
+  line-height:1!important;
+  opacity:.62!important;
+  pointer-events:none!important;
 }
-html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-theme-toggle:before,
-html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mobile-theme:before{
-  background:#ffd400!important;
-  box-shadow:4px 0 14px rgba(255,212,0,.20)!important;
-}
-html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-theme-icon{
+#hlrn-global-nav .hgn-theme-switch:before{
+  content:"☀"!important;
+  left:5px!important;
   color:#ffd84d!important;
 }
+#hlrn-global-nav .hgn-theme-switch:after{
+  content:"☾"!important;
+  right:5px!important;
+  color:#d8ddff!important;
+}
 
-/* Keep the racing switch dark and cockpit-like in both site themes. */
+/* Moving knob */
+#hlrn-global-nav .hgn-theme-knob{
+  position:absolute!important;
+  z-index:2!important;
+  top:2px!important;
+  left:2px!important;
+  width:16px!important;
+  height:16px!important;
+  border-radius:50%!important;
+  background:#fff!important;
+  box-shadow:
+    0 1px 5px rgba(0,0,0,.55),
+    inset 0 0 0 1px rgba(0,0,0,.06)!important;
+  transition:transform .20s cubic-bezier(.2,.75,.2,1),background .18s ease!important;
+}
+
+/* Night Race = switch ON = knob to the right. */
+#hlrn-global-nav .hgn-theme-toggle[aria-checked="true"] .hgn-theme-switch,
+#hlrn-global-nav .hgn-mobile-theme[aria-checked="true"] .hgn-theme-switch{
+  background:#138447!important;
+  border-color:#29b969!important;
+  box-shadow:
+    inset 0 2px 5px rgba(0,0,0,.35),
+    0 0 12px rgba(41,185,105,.16)!important;
+}
+#hlrn-global-nav .hgn-theme-toggle[aria-checked="true"] .hgn-theme-knob,
+#hlrn-global-nav .hgn-mobile-theme[aria-checked="true"] .hgn-theme-knob{
+  transform:translateX(20px)!important;
+  background:#f7fff9!important;
+}
+
+/* Label shows the CURRENT race mode. */
+#hlrn-global-nav .hgn-theme-copy{
+  min-width:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  gap:2px!important;
+  line-height:1!important;
+}
+#hlrn-global-nav .hgn-theme-label{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  font-family:var(--hlrn-body)!important;
+  font-size:8px!important;
+  font-weight:1000!important;
+  letter-spacing:.075em!important;
+  text-transform:uppercase!important;
+  line-height:1!important;
+}
+#hlrn-global-nav .hgn-theme-status{
+  color:#84909c!important;
+  -webkit-text-fill-color:#84909c!important;
+  font-family:var(--hlrn-body)!important;
+  font-size:6px!important;
+  font-weight:1000!important;
+  letter-spacing:.14em!important;
+  text-transform:uppercase!important;
+  line-height:1!important;
+}
+#hlrn-global-nav .hgn-theme-toggle[aria-checked="true"] .hgn-theme-status,
+#hlrn-global-nav .hgn-mobile-theme[aria-checked="true"] .hgn-theme-status{
+  color:#55df91!important;
+  -webkit-text-fill-color:#55df91!important;
+}
+
+/* Day Race gets a warm accent; Night Race gets a green live-state accent. */
+#hlrn-global-nav .hgn-theme-toggle[data-race-theme="day"],
+#hlrn-global-nav .hgn-mobile-theme[data-race-theme="day"]{
+  border-left:3px solid #ffd400!important;
+}
+#hlrn-global-nav .hgn-theme-toggle[data-race-theme="night"],
+#hlrn-global-nav .hgn-mobile-theme[data-race-theme="night"]{
+  border-left:3px solid #29b969!important;
+}
+
+/* Keep the switch cockpit-dark in both site themes so state is obvious. */
 html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-theme-toggle,
 html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mobile-theme,
 html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-theme-toggle,
 html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mobile-theme{
-  background:
-    linear-gradient(135deg,rgba(255,255,255,.04),transparent 46%),
-    #0b1016!important;
+  background:#0b1016!important;
   color:#fff!important;
-  border-color:#3a4552!important;
+}
+
+@media(max-width:1280px){
+  #hlrn-global-nav .hgn-theme-toggle{display:none!important}
+  #hlrn-global-nav .hgn-mobile-theme{
+    display:flex!important;
+    width:100%!important;
+    justify-content:flex-start!important;
+  }
 }
 
