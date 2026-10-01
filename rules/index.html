@@ -3254,6 +3254,217 @@ html[data-hlrn-theme="dark"] .rule mark[data-rc-search]{
   color:#111!important;
 }
 </style>
+
+<style id="HLRN_RULES_NAVIGATOR_20261001">
+/* Rules usability upgrade — preserves every existing rule and section. */
+.rules-jump-nav{
+  margin:0 0 18px!important;
+  border:1px solid #d7dce2!important;
+  background:#fff!important;
+  color:#11161c!important;
+}
+.rules-jump-head{
+  min-height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  padding:11px 14px;
+  border-bottom:1px solid #d7dce2;
+  background:#f5f6f7;
+}
+.rules-jump-head>div{min-width:0}
+.rules-jump-head span{
+  display:block;
+  color:#e31837;
+  font:1000 7px/1 Arial,sans-serif;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.rules-jump-head strong{
+  display:block;
+  margin-top:4px;
+  color:#11161c;
+  font:1000 italic 19px/1 "Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  letter-spacing:-.02em;
+  text-transform:uppercase;
+}
+.rules-jump-head small{
+  color:#6c747d;
+  font:800 8px/1.25 Arial,sans-serif;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+  text-align:right;
+}
+.rules-jump-grid{
+  display:grid;
+  grid-template-columns:repeat(6,minmax(0,1fr));
+  background:#fff;
+}
+.rules-jump-btn{
+  appearance:none;
+  min-width:0;
+  min-height:72px;
+  padding:12px 11px;
+  border:0;
+  border-right:1px solid #d7dce2;
+  background:#fff;
+  color:#11161c;
+  text-align:left;
+  cursor:pointer;
+}
+.rules-jump-btn:last-child{border-right:0}
+.rules-jump-btn:hover,
+.rules-jump-btn:focus-visible{
+  background:#f2f4f6;
+  outline:none;
+  box-shadow:inset 0 -3px 0 #e31837;
+}
+.rules-jump-btn span{
+  display:block;
+  color:#11161c;
+  font:1000 10px/1.1 Arial,sans-serif;
+  text-transform:uppercase;
+}
+.rules-jump-btn small{
+  display:block;
+  margin-top:6px;
+  color:#747c85;
+  font:800 7px/1.3 Arial,sans-serif;
+  letter-spacing:.03em;
+}
+.tab-count{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:22px;
+  height:18px;
+  margin-top:3px;
+  padding:0 5px;
+  border:1px solid currentColor;
+  border-radius:999px;
+  font:1000 7px/1 Arial,sans-serif;
+  opacity:.72;
+}
+.rule[id]{scroll-margin-top:18px}
+.rule .rule-anchor{
+  float:right;
+  margin-left:10px;
+  color:#8a929b;
+  font:900 8px/1 Arial,sans-serif;
+  text-decoration:none;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+.rule .rule-anchor:hover{text-decoration:underline}
+.rule.hlrn-rule-target{
+  box-shadow:inset 4px 0 0 #e31837!important;
+}
+
+/* Race Day */
+html[data-hlrn-theme="light"] .rules-jump-nav,
+html[data-hlrn-theme="light"] .rules-jump-grid,
+html[data-hlrn-theme="light"] .rules-jump-btn{
+  background:#fff!important;
+  color:#11161c!important;
+  border-color:#d7dce2!important;
+}
+html[data-hlrn-theme="light"] .rules-jump-head{
+  background:#f5f6f7!important;
+  border-color:#d7dce2!important;
+}
+html[data-hlrn-theme="light"] .rules-jump-head strong,
+html[data-hlrn-theme="light"] .rules-jump-btn span{
+  color:#11161c!important;
+  -webkit-text-fill-color:#11161c!important;
+}
+html[data-hlrn-theme="light"] .rules-jump-head small,
+html[data-hlrn-theme="light"] .rules-jump-btn small,
+html[data-hlrn-theme="light"] .rule .rule-anchor{
+  color:#6c747d!important;
+  -webkit-text-fill-color:#6c747d!important;
+}
+html[data-hlrn-theme="light"] .rules-jump-head span{
+  color:#e31837!important;
+  -webkit-text-fill-color:#e31837!important;
+}
+
+/* Race Night */
+html[data-hlrn-theme="dark"] .rules-jump-nav,
+html[data-hlrn-theme="dark"] .rules-jump-grid,
+html[data-hlrn-theme="dark"] .rules-jump-btn{
+  background:#000!important;
+  color:#fff!important;
+  border-color:#2b2b2b!important;
+}
+html[data-hlrn-theme="dark"] .rules-jump-head{
+  background:#050505!important;
+  border-color:#2b2b2b!important;
+}
+html[data-hlrn-theme="dark"] .rules-jump-head strong,
+html[data-hlrn-theme="dark"] .rules-jump-btn span{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+html[data-hlrn-theme="dark"] .rules-jump-head small,
+html[data-hlrn-theme="dark"] .rules-jump-btn small,
+html[data-hlrn-theme="dark"] .rule .rule-anchor{
+  color:#a9b1ba!important;
+  -webkit-text-fill-color:#a9b1ba!important;
+}
+html[data-hlrn-theme="dark"] .rules-jump-head span{
+  color:#ff596d!important;
+  -webkit-text-fill-color:#ff596d!important;
+}
+html[data-hlrn-theme="dark"] .rules-jump-btn:hover,
+html[data-hlrn-theme="dark"] .rules-jump-btn:focus-visible{
+  background:#0b0b0b!important;
+}
+
+/* Cleaner reading on phones while preserving all rule text. */
+@media(max-width:900px){
+  .rules-jump-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+  .rules-jump-btn:nth-child(3){border-right:0}
+  .rules-jump-btn:nth-child(-n+3){border-bottom:1px solid #d7dce2}
+  html[data-hlrn-theme="dark"] .rules-jump-btn:nth-child(-n+3){border-bottom-color:#2b2b2b}
+}
+@media(max-width:600px){
+  .rules-jump-nav{margin-bottom:10px!important}
+  .rules-jump-head{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:6px;
+  }
+  .rules-jump-head small{text-align:left}
+  .rules-jump-grid{
+    display:flex;
+    overflow-x:auto;
+    scroll-snap-type:x proximity;
+    scrollbar-width:none;
+  }
+  .rules-jump-grid::-webkit-scrollbar{display:none}
+  .rules-jump-btn{
+    flex:0 0 160px;
+    min-height:70px;
+    border-right:1px solid #d7dce2!important;
+    border-bottom:0!important;
+    scroll-snap-align:start;
+  }
+  html[data-hlrn-theme="dark"] .rules-jump-btn{border-right-color:#2b2b2b!important}
+  .section-header{font-size:27px!important;line-height:1!important}
+  .section-body{padding:0 14px 5px!important}
+  .rule{
+    padding:17px 14px!important;
+    margin-bottom:9px!important;
+  }
+  .rule h3{font-size:20px!important;line-height:1.08!important}
+  .rule p,.rule li{font-size:13px!important;line-height:1.62!important}
+  .rule .rule-anchor{float:none;display:inline-block;margin:0 0 8px 0}
+}
+</style>
+
 </head>
 
 <body>
@@ -3357,7 +3568,7 @@ html[data-hlrn-theme="dark"] .rule mark[data-rc-search]{
     </strong>
 
     <p>
-        Select a section below to view the rules.
+        Search the full rulebook, choose a section, or use the quick-jump navigator to go straight to the rule you need.
     </p>
 
 </div>
@@ -3394,6 +3605,39 @@ html[data-hlrn-theme="dark"] .rule mark[data-rc-search]{
         <strong>0</strong> rules indexed
     </div>
 </section>
+
+<!-- =========================
+     QUICK RULE NAVIGATOR
+========================= -->
+<nav class="rules-jump-nav" id="rulesJumpNav" aria-label="Quick jump to common HLRN rules">
+    <div class="rules-jump-head">
+        <div>
+            <span>Quick Jump</span>
+            <strong>Find The Rule Fast</strong>
+        </div>
+        <small>Direct links to the most-used race procedures</small>
+    </div>
+    <div class="rules-jump-grid">
+        <button type="button" class="rules-jump-btn" data-section="conduct" data-rule="">
+            <span>General Rules</span><small>Conduct &amp; Race Control</small>
+        </button>
+        <button type="button" class="rules-jump-btn" data-section="procedures" data-rule="2.3">
+            <span>Qualifying</span><small>Format &amp; Expectations</small>
+        </button>
+        <button type="button" class="rules-jump-btn" data-section="procedures" data-rule="2.4A">
+            <span>Pit Road</span><small>Entry, Boxes &amp; Exit</small>
+        </button>
+        <button type="button" class="rules-jump-btn" data-section="procedures" data-rule="2.6">
+            <span>Starts / Restarts</span><small>Lane &amp; Restart Rules</small>
+        </button>
+        <button type="button" class="rules-jump-btn" data-section="procedures" data-rule="2.7">
+            <span>Cautions</span><small>Yellow-Flag Procedures</small>
+        </button>
+        <button type="button" class="rules-jump-btn" data-section="penalties" data-rule="">
+            <span>Penalties</span><small>Incidents &amp; Escalation</small>
+        </button>
+    </div>
+</nav>
 
 <!-- =========================
      TABS
@@ -4939,6 +5183,139 @@ mark[data-hlrn-final-search]{
   });
 
   if(status) status.innerHTML='<strong>'+rules.length+'</strong> rules indexed';
+})();
+</script>
+
+
+<script id="HLRN_RULES_NAVIGATOR_BEHAVIOR_20261001">
+(function(){
+  const sections=[...document.querySelectorAll(".tab-content")];
+  const tabs=[...document.querySelectorAll(".tab")];
+  const search=document.getElementById("rcRuleSearch");
+
+  function tabFor(sectionId){
+    return tabs.find(btn=>{
+      const raw=btn.getAttribute("onclick")||"";
+      return raw.includes("'"+sectionId+"'") || raw.includes('"'+sectionId+'"');
+    })||null;
+  }
+
+  function safeRuleId(prefix){
+    return "rule-"+String(prefix||"")
+      .trim().toLowerCase()
+      .replace(/[^a-z0-9]+/g,"-")
+      .replace(/^-+|-+$/g,"");
+  }
+
+  // Give every rule a stable deep link and every section tab a live count.
+  sections.forEach(section=>{
+    const rules=[...section.querySelectorAll(".rule")];
+    rules.forEach(rule=>{
+      const heading=rule.querySelector("h3");
+      if(!heading) return;
+      const match=(heading.textContent||"").trim().match(/^([0-9]+(?:\.[0-9]+[A-Za-z]?))/);
+      if(!match) return;
+      if(!rule.id) rule.id=safeRuleId(match[1]);
+      if(!heading.querySelector(".rule-anchor")){
+        const link=document.createElement("a");
+        link.className="rule-anchor";
+        link.href="#"+rule.id;
+        link.textContent="Rule "+match[1];
+        link.setAttribute("aria-label","Link to "+(heading.textContent||"").trim());
+        heading.prepend(link);
+      }
+    });
+
+    const tab=tabFor(section.id);
+    if(tab){
+      tab.setAttribute("aria-controls",section.id);
+      tab.setAttribute("role","tab");
+      if(!tab.querySelector(".tab-count")){
+        const count=document.createElement("span");
+        count.className="tab-count";
+        count.textContent=rules.length;
+        count.setAttribute("aria-label",rules.length+" rules");
+        tab.appendChild(count);
+      }
+    }
+    section.setAttribute("role","tabpanel");
+  });
+
+  const tabList=document.querySelector(".tabs");
+  if(tabList) tabList.setAttribute("role","tablist");
+
+  function clearSearch(){
+    const live=document.getElementById("rcRuleSearch");
+    if(!live || !live.value) return;
+    live.value="";
+    live.dispatchEvent(new Event("search",{bubbles:true}));
+  }
+
+  function findRule(section,rulePrefix){
+    if(!section || !rulePrefix) return null;
+    const target=String(rulePrefix).toLowerCase();
+    return [...section.querySelectorAll(".rule")].find(rule=>{
+      const h=rule.querySelector("h3");
+      const text=(h?.textContent||"").trim().toLowerCase();
+      return text.startsWith(target+" ") || text===target;
+    })||null;
+  }
+
+  function openTarget(sectionId,rulePrefix,writeHash=true){
+    const section=document.getElementById(sectionId);
+    const tab=tabFor(sectionId);
+    if(!section || !tab) return;
+
+    clearSearch();
+    if(typeof window.openTab==="function") window.openTab(sectionId,tab);
+
+    document.querySelectorAll(".hlrn-rule-target").forEach(el=>el.classList.remove("hlrn-rule-target"));
+    const target=findRule(section,rulePrefix)||section;
+    if(target.classList?.contains("rule")) target.classList.add("hlrn-rule-target");
+
+    if(writeHash){
+      const hash=target.id ? "#"+target.id : "#"+sectionId;
+      history.replaceState({rulebook:true},"",location.pathname+location.search+hash);
+    }
+
+    requestAnimationFrame(()=>{
+      target.scrollIntoView({behavior:"smooth",block:"start"});
+      if(target.classList?.contains("rule")){
+        setTimeout(()=>target.classList.remove("hlrn-rule-target"),1800);
+      }
+    });
+  }
+
+  document.querySelectorAll(".rules-jump-btn").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      openTarget(btn.dataset.section||"conduct",btn.dataset.rule||"",true);
+    });
+  });
+
+  // Deep links work when copied/shared or opened from another HLRN page.
+  function openFromHash(){
+    const hash=decodeURIComponent(location.hash||"").replace(/^#/,"");
+    if(!hash) return;
+
+    let target=document.getElementById(hash);
+    if(target?.classList.contains("rule")){
+      const section=target.closest(".tab-content");
+      const tab=section?tabFor(section.id):null;
+      if(section&&tab&&typeof window.openTab==="function"){
+        window.openTab(section.id,tab);
+        requestAnimationFrame(()=>target.scrollIntoView({behavior:"auto",block:"start"}));
+      }
+      return;
+    }
+
+    if(target?.classList.contains("tab-content")){
+      const tab=tabFor(target.id);
+      if(tab&&typeof window.openTab==="function") window.openTab(target.id,tab);
+    }
+  }
+
+  window.addEventListener("hashchange",openFromHash);
+  setTimeout(openFromHash,40);
 })();
 </script>
 
