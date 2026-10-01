@@ -877,7 +877,7 @@ function start(){
         </div>
       </div>
       <button class="hgn-login" type="button" aria-label="HLRN Driver Login">DRIVER LOGIN</button>
-      <button class="hgn-theme-toggle" type="button" aria-label="Switch HLRN theme"><span class="hgn-theme-icon">☾</span><span class="hgn-theme-label">NIGHT</span></button>
+      <button class="hgn-theme-toggle" type="button" aria-label="Switch to Night Race theme"><span class="hgn-theme-icon">☾</span><span class="hgn-theme-label">NIGHT RACE</span></button>
       <a class="hgn-live" href="${url("live/")}"><i></i> RACE CENTER</a>
       <button class="hgn-menu" type="button" aria-expanded="false" aria-label="Open HLRN navigation">☰</button>
       <div class="hgn-account-panel" hidden>
@@ -892,7 +892,7 @@ function start(){
     <div class="hgn-mobile">
       ${mobilePrimary}
       <button class="hgn-mobile-login" type="button">DRIVER LOGIN</button>
-      <button class="hgn-mobile-theme" type="button"><span class="hgn-theme-icon">☾</span><span class="hgn-theme-label">NIGHT MODE</span></button>
+      <button class="hgn-mobile-theme" type="button" aria-label="Switch to Night Race theme"><span class="hgn-theme-icon">☾</span><span class="hgn-theme-label">NIGHT RACE</span></button>
       <button class="hgn-mobile-more" type="button" aria-expanded="false">MORE <span>▾</span></button>
       <div class="hgn-mobile-more-menu">${mobileMore}</div>
     </div>`;
@@ -911,9 +911,10 @@ function start(){
       const icon=btn.querySelector(".hgn-theme-icon");
       const label=btn.querySelector(".hgn-theme-label");
       if(icon) icon.textContent=theme==="dark"?"☀":"☾";
-      if(label) label.textContent=theme==="dark"?(btn.classList.contains("hgn-mobile-theme")?"LIGHT MODE":"LIGHT"):(btn.classList.contains("hgn-mobile-theme")?"NIGHT MODE":"NIGHT");
+      if(label) label.textContent=theme==="dark"?"DAY RACE":"NIGHT RACE";
       btn.setAttribute("aria-pressed",String(theme==="dark"));
-      btn.setAttribute("aria-label",theme==="dark"?"Switch to light mode":"Switch to night mode");
+      btn.setAttribute("data-race-theme",theme==="dark"?"day":"night");
+      btn.setAttribute("aria-label",theme==="dark"?"Switch to Day Race theme":"Switch to Night Race theme");
     });
   }
 
