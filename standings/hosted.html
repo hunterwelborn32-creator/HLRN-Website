@@ -2108,7 +2108,7 @@ function hardPaintHostedH2H(doc,dark){
     }
   });
 
-  doc.querySelectorAll(".search-input,input,.search-menu,.search-menu-item").forEach(el=>{
+  doc.querySelectorAll(".search-input,input,.search-select,.search-menu,.search-menu-item,.search-option,.search-empty").forEach(el=>{
     if(!dark){
       el.style.removeProperty("background");
       el.style.removeProperty("background-color");
@@ -2122,6 +2122,17 @@ function hardPaintHostedH2H(doc,dark){
     el.style.setProperty("color","#fff","important");
     el.style.setProperty("-webkit-text-fill-color","#fff","important");
     el.style.setProperty("border-color","#3a3a3a","important");
+  });
+
+  doc.querySelectorAll(".search-option").forEach(el=>{
+    if(dark){
+      el.style.setProperty("background","#050505","important");
+      el.style.setProperty("background-color","#050505","important");
+      el.style.setProperty("background-image","none","important");
+      el.style.setProperty("color","#fff","important");
+      el.style.setProperty("-webkit-text-fill-color","#fff","important");
+      el.style.setProperty("border-bottom-color","#242424","important");
+    }
   });
 
   doc.querySelectorAll(".prime-feed,.prime-feed strong,.prime-clock,.prime-clock small,.hero h1,.hero h1 .red,.hero p,.h2h-ticker *,.prime-deck-label,.prime-deck-value,.field label,.vs,.status,.prime-edge-label,.prime-edge-value,.prime-edge-sub,.driver-name,.driver-sub,.center-badge,.prediction,.prediction .winner,.prediction .confidence,.tape-title,.tape-left,.tape-center,.tape-right,.stat-box .label,.stat-box .value,.stat-box .detail,.common-box .big,.common-box .label,.common-record,.explain,.loading,.error").forEach(el=>{
