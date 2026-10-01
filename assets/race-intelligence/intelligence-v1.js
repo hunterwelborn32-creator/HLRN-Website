@@ -127,11 +127,8 @@ function hLrnDriverPhoto(driverOrName,type="full"){
   const slug=hLrnPhotoSlug(driverOrName);
   if(!slug) return "";
 
-  if(String(type||"full").toLowerCase()==="full"){
-    return "/assets/driver-photos/full/"+encodeURIComponent(slug)+".webp";
-  }
-
-  return "/assets/driver-photos/full/"+encodeURIComponent(slug)+".webp";
+  const folder=String(type||"full").toLowerCase()==="full" ? "full" : "cutout";
+  return "/assets/driver-photos/"+folder+"/"+encodeURIComponent(slug)+".webp";
 }
 
 function hLrnDriverProfileUrl(driverOrName){
@@ -1043,7 +1040,7 @@ function showCategoryDeepDive(category){
 
   document.getElementById("deepLabel").textContent = (cfg.title || "Situation") + " Deep Dive";
   document.getElementById("deepTitle").innerHTML = hLrnDriverNameMarkup(d);
-  document.getElementById("deepDriverPhoto").innerHTML = hLrnPhotoMarkup(d,"full","hlrn-feature-full-photo");
+  document.getElementById("deepDriverPhoto").innerHTML = hLrnPhotoMarkup(d,"cutout","hlrn-feature-cutout");
   document.getElementById("deepSummary").textContent = summary;
   document.getElementById("deepPill").textContent = pill || "Live Analysis";
 
