@@ -276,3 +276,448 @@ html[data-hlrn-theme="light"] #profileModal .modal-card:after{color:rgba(17,22,2
   .nx-driver-command-league{border-right:0!important;border-bottom:1px solid var(--nx-line)!important}
   .nx-driver-command-league:last-child{border-bottom:0!important}
 }
+
+/* HLRN NETWORK V2 — AUTO RACE MODE / MOBILE AUDIT / PERFORMANCE 20261001 */
+
+/* =========================
+   AUTOMATIC RACE WEEKEND MODE
+========================= */
+.nx-race-week-label b{
+  display:inline-flex!important;
+  align-items:center!important;
+  min-height:18px!important;
+  margin-left:2px!important;
+  padding:0 5px!important;
+  border:1px solid var(--nx-line-strong)!important;
+  border-radius:999px!important;
+  background:var(--nx-surface)!important;
+  color:var(--nx-muted)!important;
+  font-size:5px!important;
+  font-weight:1000!important;
+  letter-spacing:.09em!important;
+}
+.nx-race-week-status i{
+  width:6px!important;
+  height:6px!important;
+  margin-right:5px!important;
+  border-radius:50%!important;
+  display:inline-block!important;
+  background:#35d276!important;
+  box-shadow:0 0 0 3px rgba(53,210,118,.12),0 0 9px rgba(53,210,118,.55)!important;
+  vertical-align:middle!important;
+}
+#hlrn-race-weekend-strip.mode-live,
+#hlrn-race-weekend-strip.mode-practice,
+#hlrn-race-weekend-strip.mode-qualifying{
+  border-bottom-color:#35d276!important;
+  box-shadow:0 7px 22px rgba(24,151,80,.14)!important;
+}
+#hlrn-race-weekend-strip.mode-live:after,
+#hlrn-race-weekend-strip.mode-practice:after,
+#hlrn-race-weekend-strip.mode-qualifying:after{
+  background:linear-gradient(90deg,#35d276,#35d276)!important;
+  opacity:1!important;
+}
+#hlrn-race-weekend-strip.mode-race-day:after,
+#hlrn-race-weekend-strip.mode-pre-race:after,
+#hlrn-race-weekend-strip.mode-grid:after,
+#hlrn-race-weekend-strip.mode-race-window:after{
+  background:linear-gradient(90deg,#e31837 0 70%,#ffd400 70% 100%)!important;
+  opacity:1!important;
+}
+.nx-race-week-card.mode-live,
+.nx-race-week-card.mode-practice,
+.nx-race-week-card.mode-qualifying{
+  background:
+    linear-gradient(90deg,rgba(53,210,118,.07),transparent 44%),
+    var(--nx-surface)!important;
+}
+.nx-race-week-card.mode-live .nx-race-week-status,
+.nx-race-week-card.mode-practice .nx-race-week-status,
+.nx-race-week-card.mode-qualifying .nx-race-week-status{
+  color:#168742!important;
+}
+html[data-hlrn-theme="dark"] .nx-race-week-card.mode-live .nx-race-week-status,
+html[data-hlrn-theme="dark"] .nx-race-week-card.mode-practice .nx-race-week-status,
+html[data-hlrn-theme="dark"] .nx-race-week-card.mode-qualifying .nx-race-week-status{
+  color:#65e49a!important;
+}
+.nx-race-week-card.mode-race-day .nx-race-week-status,
+.nx-race-week-card.mode-pre-race .nx-race-week-status,
+.nx-race-week-card.mode-grid .nx-race-week-status,
+.nx-race-week-card.mode-race-window .nx-race-week-status{
+  color:#d71932!important;
+}
+html[data-hlrn-race-mode="live"] #hlrn-global-nav .hgn-live,
+html[data-hlrn-race-mode="practice"] #hlrn-global-nav .hgn-live,
+html[data-hlrn-race-mode="qualifying"] #hlrn-global-nav .hgn-live{
+  border-color:#35d276!important;
+  box-shadow:inset 0 0 0 1px rgba(53,210,118,.2),0 0 16px rgba(53,210,118,.13)!important;
+}
+html[data-hlrn-race-mode="live"] #hlrn-global-nav .hgn-live i,
+html[data-hlrn-race-mode="practice"] #hlrn-global-nav .hgn-live i,
+html[data-hlrn-race-mode="qualifying"] #hlrn-global-nav .hgn-live i{
+  background:#35d276!important;
+  box-shadow:0 0 10px rgba(53,210,118,.65)!important;
+}
+html[data-hlrn-race-mode="race-day"] #hlrn-global-nav,
+html[data-hlrn-race-mode="pre-race"] #hlrn-global-nav,
+html[data-hlrn-race-mode="grid"] #hlrn-global-nav,
+html[data-hlrn-race-mode="race-window"] #hlrn-global-nav{
+  border-top-color:#e31837!important;
+}
+
+/* =========================
+   RACE CENTER 2.0
+========================= */
+#hlrn-live-network-deck{
+  grid-template-columns:205px minmax(0,1fr)!important;
+  grid-template-rows:auto auto!important;
+  overflow:hidden!important;
+}
+#hlrn-live-network-deck .nx-live-deck-title{
+  grid-row:1/3!important;
+}
+#hlrn-live-network-deck .nx-live-deck-grid{
+  grid-template-columns:repeat(8,minmax(0,1fr))!important;
+  border-bottom:1px solid var(--nx-line)!important;
+}
+#hlrn-live-network-deck .nx-live-deck-grid button{
+  min-height:62px!important;
+}
+#hlrn-live-network-deck .nx-live-deck-grid button:nth-child(-n+8){
+  border-bottom:0!important;
+}
+.nx-live-alert{
+  min-width:0!important;
+  display:grid!important;
+  grid-template-columns:auto minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:10px!important;
+  min-height:42px!important;
+  padding:8px 11px!important;
+  background:var(--nx-surface-2)!important;
+  color:var(--nx-ink)!important;
+}
+.nx-live-alert-kicker{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:6px!important;
+  color:var(--nx-muted)!important;
+  font-size:6px!important;
+  font-weight:1000!important;
+  letter-spacing:.09em!important;
+  white-space:nowrap!important;
+}
+.nx-live-alert-kicker i{
+  width:7px!important;height:7px!important;border-radius:50%!important;
+  background:#788491!important;
+}
+.nx-live-alert>strong{
+  min-width:0!important;
+  overflow:hidden!important;
+  color:var(--nx-ink)!important;
+  font-size:9px!important;
+  font-weight:900!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+.nx-live-alert>span:last-child{
+  color:var(--nx-muted)!important;
+  font-size:6px!important;
+  font-weight:900!important;
+  letter-spacing:.05em!important;
+  white-space:nowrap!important;
+}
+#hlrn-live-network-deck[data-flag*="green"] .nx-live-alert-kicker i{
+  background:#35d276!important;box-shadow:0 0 9px rgba(53,210,118,.6)!important;
+}
+#hlrn-live-network-deck[data-flag*="yellow"] .nx-live-alert-kicker i,
+#hlrn-live-network-deck[data-flag*="caution"] .nx-live-alert-kicker i,
+#hlrn-live-network-deck[data-flag*="one to green"] .nx-live-alert-kicker i{
+  background:#ffd84d!important;box-shadow:0 0 9px rgba(255,216,77,.5)!important;
+}
+#hlrn-live-network-deck[data-flag*="red"] .nx-live-alert-kicker i{
+  background:#ff4d68!important;box-shadow:0 0 9px rgba(255,77,104,.48)!important;
+}
+#hlrn-live-network-deck[data-flag*="checkered"] .nx-live-alert-kicker i{
+  background:#fff!important;box-shadow:0 0 0 2px #111!important;
+}
+#nxLiveBattle{color:var(--nx-yellow)!important}
+#nxLiveCaution,#nxLiveRestart{font-variant-numeric:tabular-nums!important}
+
+/* =========================
+   FULL MOBILE AUDIT V2
+========================= */
+html.hlrn-mobile-audit-v2,
+html.hlrn-mobile-audit-v2 body{
+  max-width:100%!important;
+  overflow-x:hidden!important;
+}
+html.hlrn-mobile-audit-v2 img,
+html.hlrn-mobile-audit-v2 video,
+html.hlrn-mobile-audit-v2 iframe{
+  max-width:100%;
+}
+@media(max-width:760px){
+  html.hlrn-mobile-audit-v2 body{
+    -webkit-text-size-adjust:100%!important;
+  }
+  html.hlrn-mobile-audit-v2 :where(button,.btn,.button,[role="button"],input,select){
+    touch-action:manipulation;
+  }
+
+  /* Home */
+  html[data-hlrn-route="home"] :where(.h9-shell,.rd-shell,.home-shell){
+    width:calc(100% - 14px)!important;
+    max-width:100%!important;
+  }
+  html[data-hlrn-route="home"] .h9-scorestrip{
+    overflow-x:auto!important;
+    -webkit-overflow-scrolling:touch!important;
+    scrollbar-width:none!important;
+  }
+  html[data-hlrn-route="home"] .h9-scorestrip::-webkit-scrollbar{display:none!important}
+  html[data-hlrn-route="home"] :where(.h9-lead-grid,.h9-series-grid,.h9-desk-grid){
+    grid-template-columns:1fr!important;
+  }
+
+  /* News */
+  html[data-hlrn-route="news"] :where(.nr-shell,.nr-main){
+    width:calc(100% - 14px)!important;
+    max-width:100%!important;
+  }
+  html[data-hlrn-route="news"] :where(.nr-mast-inner,.nr-lead-grid,.nr-recap-grid,.nr-shortcuts){
+    grid-template-columns:1fr!important;
+  }
+  html[data-hlrn-route="news"] .nr-title{
+    font-size:clamp(42px,15vw,70px)!important;
+  }
+  html[data-hlrn-route="news"] .frame-wrap,
+  html[data-hlrn-route="news"] .news-frame{
+    min-height:1120px!important;
+  }
+
+  /* Results / schedule */
+  html[data-hlrn-route="results"] :where(.ns-wrap,.ultra-shell,.hlrn-race-center){
+    max-width:100%!important;
+  }
+  html[data-hlrn-route="results"] :where(.ns-feature,.ns-race-summary,.ns-summary-grid,.ultra-raceboard){
+    grid-template-columns:1fr!important;
+  }
+  html[data-hlrn-route="results"] :where(.ns-controls,.ns-top-links,.ns-subnav){
+    overflow-x:auto!important;
+    -webkit-overflow-scrolling:touch!important;
+    scrollbar-width:none!important;
+  }
+  html[data-hlrn-route="results"] :where(.ns-controls,.ns-top-links,.ns-subnav)::-webkit-scrollbar{display:none!important}
+  html[data-hlrn-route="results"] .ns-race{
+    min-width:0!important;
+  }
+
+  /* Race Intelligence */
+  html[data-hlrn-route="race-intelligence"] :where(.shell,.intel-grid,.deep-grid,.story-grid,.leader-grid){
+    max-width:100%!important;
+    grid-template-columns:1fr!important;
+  }
+  html[data-hlrn-route="race-intelligence"] :where(.league-tabs,.intel-tabs,.nascar-ticker){
+    overflow-x:auto!important;
+    -webkit-overflow-scrolling:touch!important;
+    scrollbar-width:none!important;
+  }
+
+  /* Rules */
+  html[data-hlrn-route="rules"] .page{
+    width:calc(100% - 14px)!important;
+    max-width:100%!important;
+  }
+  html[data-hlrn-route="rules"] :where(.quick,.rules-grid,.rules-layout){
+    grid-template-columns:1fr!important;
+  }
+  html[data-hlrn-route="rules"] :where(.rules-tabs,.rules-nav,.rc-opsbar-redesign){
+    overflow-x:auto!important;
+    -webkit-overflow-scrolling:touch!important;
+    scrollbar-width:none!important;
+  }
+
+  /* Broadcasters */
+  html[data-hlrn-route="broadcasters"] :where(.bc-shell,.bc-main){
+    width:calc(100% - 14px)!important;
+    max-width:100%!important;
+  }
+  html[data-hlrn-route="broadcasters"] :where(.bc-mast-grid,.bc-watch-grid){
+    grid-template-columns:1fr!important;
+  }
+  html[data-hlrn-route="broadcasters"] .bc-player-wrap iframe{
+    width:100%!important;
+    aspect-ratio:16/9!important;
+    height:auto!important;
+  }
+
+  /* Store */
+  html[data-hlrn-route="store"] .page{
+    width:calc(100% - 14px)!important;
+    max-width:100%!important;
+  }
+  html[data-hlrn-route="store"] :where(.mh-dashboard,.product-grid,.store-grid,.featured-grid){
+    grid-template-columns:1fr!important;
+  }
+  html[data-hlrn-route="store"] :where(.store-ticker,.category-tabs,.filters){
+    overflow-x:auto!important;
+    -webkit-overflow-scrolling:touch!important;
+    scrollbar-width:none!important;
+  }
+
+  /* Meet the Admins */
+  html[data-hlrn-route="meet-the-admins"] .admin-page{
+    width:calc(100% - 14px)!important;
+    max-width:100%!important;
+  }
+  html[data-hlrn-route="meet-the-admins"] :where(.admin-grid,.team-grid,.summary-grid){
+    grid-template-columns:1fr!important;
+  }
+  html[data-hlrn-route="meet-the-admins"] .team-hero{
+    min-height:300px!important;
+    padding:34px 18px 30px!important;
+  }
+  html[data-hlrn-route="meet-the-admins"] .team-hero h1{
+    font-size:clamp(48px,16vw,78px)!important;
+  }
+
+  /* Adventures */
+  html[data-hlrn-route="adventures"] :where(.series-intro-inner,.episode-shelf,.episode-grid){
+    grid-template-columns:1fr!important;
+  }
+  html[data-hlrn-route="adventures"] :where(.wrap,.series-intro-inner){
+    width:calc(100% - 14px)!important;
+    max-width:100%!important;
+  }
+
+  /* Teams */
+  html[data-hlrn-route="teams"] :where(.tc-shell,.tc-main){
+    width:calc(100% - 14px)!important;
+    max-width:100%!important;
+  }
+  html[data-hlrn-route="teams"] :where(.tc-mast-grid,.tc-board,.tcTeamGrid,.tc-team-grid){
+    grid-template-columns:1fr!important;
+  }
+
+  /* Drivers directory */
+  html[data-hlrn-route="drivers"] .driver-heading-inner,
+  html[data-hlrn-route="drivers"] .roster-tools,
+  html[data-hlrn-route="drivers"] .league-tabs,
+  html[data-hlrn-route="drivers"] .driver-grid,
+  html[data-hlrn-route="drivers"] .profile-view{
+    width:calc(100% - 14px)!important;
+    max-width:100%!important;
+  }
+
+  /* Global cards/actions on phones */
+  html.hlrn-mobile-audit-v2 :where(.actions,.hero-actions,.card-actions,.nr-lead-actions){
+    flex-wrap:wrap!important;
+  }
+  html.hlrn-mobile-audit-v2 :where(.actions>a,.actions>button,.hero-actions>a,.hero-actions>button){
+    min-height:42px!important;
+  }
+}
+
+@media(max-width:460px){
+  #hlrn-race-weekend-strip .nx-race-week-card{
+    flex-basis:94%!important;
+    grid-template-columns:auto minmax(0,1fr)!important;
+    grid-template-areas:"status series" "strong strong" "meta meta"!important;
+    row-gap:3px!important;
+  }
+  #hlrn-race-weekend-strip .nx-race-week-card strong{
+    text-align:left!important;
+    font-size:13px!important;
+  }
+  #hlrn-race-weekend-strip .nx-race-week-status{
+    align-self:center!important;
+    border-right:0!important;
+    padding-right:0!important;
+  }
+}
+
+/* =========================
+   PERFORMANCE PASS
+========================= */
+html.hlrn-performance-v2 :where(
+  #recaps,
+  #all-news,
+  .nr-shortcuts,
+  #teams,
+  #lastRace,
+  #raceReport,
+  .history-wrap,
+  .form-grid,
+  .series-grid,
+  .rules-section,
+  .store-section,
+  .episode-shelf
+){
+  content-visibility:auto;
+  contain-intrinsic-size:auto 700px;
+}
+@media(prefers-reduced-motion:reduce){
+  #hlrn-race-weekend-strip *,
+  #hlrn-live-network-deck *{
+    animation:none!important;
+    transition:none!important;
+    scroll-behavior:auto!important;
+  }
+}
+
+/* Race Center 2.0 mobile composition */
+@media(max-width:1100px){
+  #hlrn-live-network-deck{
+    grid-template-columns:170px minmax(0,1fr)!important;
+  }
+  #hlrn-live-network-deck .nx-live-deck-grid{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  }
+  #hlrn-live-network-deck .nx-live-deck-grid button:nth-child(-n+4){
+    border-bottom:1px solid var(--nx-line)!important;
+  }
+}
+@media(max-width:760px){
+  #hlrn-live-network-deck{
+    display:block!important;
+    margin:6px!important;
+  }
+  #hlrn-live-network-deck .nx-live-deck-title{
+    display:grid!important;
+    grid-template-columns:1fr auto!important;
+    grid-template-rows:auto auto!important;
+    border-right:0!important;
+    border-bottom:1px solid var(--nx-line)!important;
+  }
+  #hlrn-live-network-deck .nx-live-deck-grid{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  }
+  #hlrn-live-network-deck .nx-live-deck-grid button{
+    min-height:54px!important;
+    padding:7px 5px!important;
+  }
+  #hlrn-live-network-deck .nx-live-deck-grid small{
+    font-size:5px!important;
+  }
+  #hlrn-live-network-deck .nx-live-deck-grid strong{
+    font-size:8px!important;
+  }
+  .nx-live-alert{
+    grid-template-columns:1fr auto!important;
+    gap:4px 8px!important;
+    padding:7px 8px!important;
+  }
+  .nx-live-alert>strong{
+    grid-column:1/-1!important;
+    grid-row:2!important;
+    font-size:8px!important;
+  }
+  .nx-live-alert>span:last-child{
+    text-align:right!important;
+    font-size:5px!important;
+  }
+}
+
