@@ -1349,6 +1349,23 @@ html[data-hlrn-theme="dark"] body .nav button.active{
 }
 `;
 
+function hardPaintHostedSectionTitles(doc,dark){
+  if(!doc)return;
+  doc.querySelectorAll(".section-title").forEach(el=>{
+    el.style.setProperty("background",dark?"#000":"#fff","important");
+    el.style.setProperty("background-color",dark?"#000":"#fff","important");
+    el.style.setProperty("background-image","none","important");
+    el.style.setProperty("color",dark?"#fff":"#111318","important");
+    el.style.setProperty("-webkit-text-fill-color",dark?"#fff":"#111318","important");
+    el.style.setProperty("border-color",dark?"#2b2b2b":"#d9dde2","important");
+    el.style.setProperty("text-shadow","none","important");
+  });
+  doc.querySelectorAll(".section-title *").forEach(el=>{
+    el.style.setProperty("color",dark?"#fff":"#111318","important");
+    el.style.setProperty("-webkit-text-fill-color",dark?"#fff":"#111318","important");
+  });
+}
+
 function applyHostedSeriesMatch(frame){
   try{
     const doc=frame&&frame.contentDocument;
@@ -1364,6 +1381,7 @@ function applyHostedSeriesMatch(frame){
     doc.documentElement.style.colorScheme=dark?"dark":"light";
     style.textContent=dark?HLRN_HOSTED_DARK_SERIES_CSS:HLRN_HOSTED_MATCH_SERIES_CSS;
     doc.head.appendChild(style);
+    hardPaintHostedSectionTitles(doc,dark);
 
     if(!doc.__hlrnHostedThemeObserver && doc.body){
       doc.__hlrnHostedThemeObserver=true;
@@ -1378,6 +1396,7 @@ function applyHostedSeriesMatch(frame){
             doc.documentElement.dataset.hlrnTheme=isDark?"dark":"light";
             style.textContent=isDark?HLRN_HOSTED_DARK_SERIES_CSS:HLRN_HOSTED_MATCH_SERIES_CSS;
             doc.head.appendChild(style);
+            hardPaintHostedSectionTitles(doc,isDark);
           }catch(_){}
         });
       }).observe(doc.body,{childList:true,subtree:true});
@@ -1398,6 +1417,12 @@ function loadHostedTab(key){
     setTimeout(()=>{resizeHostedFrame(key);queueHostedDriverLinks(key)},80);
     setTimeout(()=>{resizeHostedFrame(key);queueHostedDriverLinks(key)},350);
     setTimeout(()=>{resizeHostedFrame(key);queueHostedDriverLinks(key)},900);
+    setTimeout(()=>{
+      try{
+        const doc=frame.contentDocument;
+        if(doc) hardPaintHostedSectionTitles(doc,hlrnHostedDarkModeActive());
+      }catch(e){}
+    },1200);
     if(key==="racing" && !frame.dataset.hlrnNascarDefault){
       frame.dataset.hlrnNascarDefault="1";
       try{
