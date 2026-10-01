@@ -813,6 +813,7 @@ function renderBoard(){
     };
     card.addEventListener("click",e=>{ if(e.target.closest("a")) return; openCard(); });
     card.addEventListener("keydown",e=>{
+      if(e.target.closest("a")) return;
       if(e.key==="Enter" || e.key===" "){
         e.preventDefault();
         openCard();
