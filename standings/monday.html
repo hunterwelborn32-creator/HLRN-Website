@@ -6436,7 +6436,7 @@ button,input,select,textarea,.btn,.button,.pill,.chip,.filter,.filter-btn,.tab,.
   document.addEventListener('visibilitychange',schedule);
 
   const observer=new MutationObserver(schedule);
-  observer.observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['class','style','data-hlrn-theme']});
+  observer.observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['class','data-hlrn-theme']});
 
   document.addEventListener('scroll',function(e){
     if(e.target && e.target.classList && e.target.classList.contains('table-shell')) schedule();
