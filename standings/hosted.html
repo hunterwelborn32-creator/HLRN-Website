@@ -320,6 +320,45 @@ function hlrnHostedDarkModeActive(){
 }
 
 const HLRN_HOSTED_LIGHT_DASHBOARD_CSS = `
+/* Head to Head: keep all matchup surfaces readable in light mode. */
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="h2h"] body,
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="h2h"] body :is(
+  .wrap,.prime-scorebug,.prime-network,.hero,.h2h-ticker,.ticker-label,
+  .ticker-window,.ticker-track,.ticker-network,.prime-deck,.prime-deck-cell,
+  .controls,.control-grid,.field,.search-select,.search-input,.search-menu,
+  .search-menu-item,.search-option,.search-empty,.search-arrow,input,select,
+  .prime-edge-board,.prime-edge,#content,.panel,.card,.matchup-card,
+  .fight-head,.fighter,.center-badge,.vs,.prediction,.tape-grid,.tape-row,
+  .tape-row>div,.compare-grid,.compare-grid>div,.stat-box,.common,
+  .common-grid,.common-box,.common-record,.explain,.loading
+){
+  background:#fff!important;background-image:none!important;
+  color:#000!important;border-color:#d9dde2!important;box-shadow:none!important;
+}
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="h2h"] body *,
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="h2h"] body #content *{
+  color:#000!important;-webkit-text-fill-color:#000!important;text-shadow:none!important;
+}
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="h2h"] input{
+  caret-color:#000!important;
+}
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="h2h"] input::placeholder{
+  color:#000!important;-webkit-text-fill-color:#000!important;opacity:1!important;
+}
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="h2h"] .search-option:hover,
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="h2h"] .search-option.active{
+  background:#f3f4f5!important;border-left:3px solid #ffd400!important;
+}
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="h2h"] body::before,
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="h2h"] body::after,
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="h2h"] .hero::before,
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="h2h"] .hero::after,
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="h2h"] .fighter::before,
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="h2h"] .prediction::after,
+html[data-hlrn-theme="light"][data-hlrn-hosted-view="h2h"] .matchup-card::after{
+  content:none!important;display:none!important;
+}
+
 /* Records & Milestones light-mode surfaces, including live summary strips. */
 html[data-hlrn-theme="light"][data-hlrn-hosted-view="records"] body,
 html[data-hlrn-theme="light"][data-hlrn-hosted-view="records"] body :is(
@@ -2212,6 +2251,14 @@ function hardPaintHostedH2HTape(doc,dark){
 
 function hardPaintHostedH2H(doc,dark){
   if(!doc)return;
+  if(!dark){
+    // Release text painted inline by the dark comparison and VS treatments.
+    doc.querySelectorAll(".tape-row span,.tape-row strong,.explain strong,.center-badge .versus,.center-badge .round").forEach(el=>{
+      el.style.removeProperty("color");
+      el.style.removeProperty("-webkit-text-fill-color");
+      el.style.removeProperty("text-shadow");
+    });
+  }
   hardPaintHostedH2HSearch(doc,dark);
   hardPaintHostedH2HTape(doc,dark);
 
