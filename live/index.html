@@ -2166,6 +2166,80 @@ html[data-hlrn-theme="dark"] body .recap-approval-note{
   .recap-publish-btn,.recap-dont-publish-btn{text-align:center}
 }
 </style>
+
+<style id="HLRN_LIVE_RACEDAY_NIGHT_POLISH_20261001">
+/* Live Race Center polish — preserves both Race Day (light) and Race Night (dark). */
+
+/* Clear driver-state language in Race Day. */
+html[data-hlrn-theme="light"] #leaderboard .track-status.on-track,
+html[data-hlrn-theme="light"] #leaderboard .track-status.finished{color:#147a42!important}
+html[data-hlrn-theme="light"] #leaderboard .track-status.pit-road{color:#946f00!important}
+html[data-hlrn-theme="light"] #leaderboard .track-status.black-flag,
+html[data-hlrn-theme="light"] #leaderboard .track-status.dq,
+html[data-hlrn-theme="light"] #leaderboard .track-status.meatball{color:#bd1732!important}
+html[data-hlrn-theme="light"] #leaderboard .track-status.disconnected,
+html[data-hlrn-theme="light"] #leaderboard .track-status.out{color:#68717d!important}
+html[data-hlrn-theme="light"] #leaderboard .track-status[class*="lap-down"]{color:#9a6200!important}
+
+/* Same status hierarchy in Race Night, tuned for black surfaces. */
+html[data-hlrn-theme="dark"] body #leaderboard .track-status.on-track,
+html[data-hlrn-theme="dark"] body #leaderboard .track-status.finished{color:#72e49e!important}
+html[data-hlrn-theme="dark"] body #leaderboard .track-status.pit-road{color:#ffe06c!important}
+html[data-hlrn-theme="dark"] body #leaderboard .track-status.black-flag,
+html[data-hlrn-theme="dark"] body #leaderboard .track-status.dq,
+html[data-hlrn-theme="dark"] body #leaderboard .track-status.meatball{color:#ff7588!important}
+html[data-hlrn-theme="dark"] body #leaderboard .track-status.disconnected,
+html[data-hlrn-theme="dark"] body #leaderboard .track-status.out{color:#b5bdc7!important}
+html[data-hlrn-theme="dark"] body #leaderboard .track-status[class*="lap-down"]{color:#ffc96b!important}
+
+/* True viewport-following leaderboard header. */
+#hlrnLiveFloatingHeader{
+  position:fixed!important;
+  top:0!important;
+  left:0;
+  z-index:2147483000!important;
+  display:none;
+  overflow:hidden!important;
+  pointer-events:none!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:0 8px 18px -14px rgba(0,0,0,.78)!important;
+}
+#hlrnLiveFloatingHeader table{
+  position:relative!important;
+  margin:0!important;
+  border-spacing:0!important;
+  table-layout:fixed!important;
+}
+#hlrnLiveFloatingHeader thead,
+#hlrnLiveFloatingHeader tr{margin:0!important;padding:0!important}
+#hlrnLiveFloatingHeader th{
+  position:static!important;
+  top:auto!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveFloatingHeader th{
+  background:#f1f3f5!important;
+  color:#59636e!important;
+  border-color:#d8dce2!important;
+}
+html[data-hlrn-theme="dark"] #hlrnLiveFloatingHeader th{
+  background:#080808!important;
+  color:#fff!important;
+  border-color:#2b2b2b!important;
+}
+@media(max-width:700px){
+  #hlrnLiveFloatingHeader{display:none!important}
+}
+
+/* One-to-green should visually read the same in both modes. */
+html[data-hlrn-theme="light"] #rc2CautionLap{color:#8b6800!important}
+html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
+</style>
+
 </head>
 <body>
 
@@ -2613,6 +2687,130 @@ html[data-hlrn-theme="dark"] body .recap-approval-note{
   const previousPitState = new Map();
   const pitExitHoldUntil = new Map();
 
+  /* Keep the live scoring column labels visible while the PAGE scrolls.
+     A separate overlay is used because horizontal overflow on the timing table
+     prevents native sticky headers from following the viewport reliably. */
+  let liveFloatBox=null;
+  let liveFloatTable=null;
+  let liveFloatRaf=0;
+  let liveFloatSource=null;
+
+  function ensureLiveFloatingHeader(){
+    if(liveFloatBox) return;
+    liveFloatBox=document.createElement("div");
+    liveFloatBox.id="hlrnLiveFloatingHeader";
+    liveFloatTable=document.createElement("table");
+    liveFloatBox.appendChild(liveFloatTable);
+    document.body.appendChild(liveFloatBox);
+  }
+
+  function copyLiveFloatingHeader(source){
+    ensureLiveFloatingHeader();
+    liveFloatTable.innerHTML="";
+    const cloned=source.thead.cloneNode(true);
+    liveFloatTable.appendChild(cloned);
+
+    const sourceCells=source.thead.querySelectorAll("th");
+    const cloneCells=cloned.querySelectorAll("th");
+    const tableWidth=Math.max(source.table.scrollWidth,source.table.getBoundingClientRect().width);
+    liveFloatTable.style.width=tableWidth+"px";
+    liveFloatTable.style.minWidth=tableWidth+"px";
+    liveFloatTable.style.borderCollapse=getComputedStyle(source.table).borderCollapse;
+
+    cloneCells.forEach((cell,i)=>{
+      const original=sourceCells[i];
+      if(!original) return;
+      const r=original.getBoundingClientRect();
+      const s=getComputedStyle(original);
+      cell.style.width=r.width+"px";
+      cell.style.minWidth=r.width+"px";
+      cell.style.maxWidth=r.width+"px";
+      cell.style.height=r.height+"px";
+      cell.style.padding=s.padding;
+      cell.style.fontFamily=s.fontFamily;
+      cell.style.fontSize=s.fontSize;
+      cell.style.fontWeight=s.fontWeight;
+      cell.style.lineHeight=s.lineHeight;
+      cell.style.letterSpacing=s.letterSpacing;
+      cell.style.textTransform=s.textTransform;
+      cell.style.textAlign=s.textAlign;
+      cell.style.whiteSpace=s.whiteSpace;
+      cell.style.color=s.color;
+      cell.style.background=s.background;
+      cell.style.borderTop=s.borderTop;
+      cell.style.borderRight=s.borderRight;
+      cell.style.borderBottom=s.borderBottom;
+      cell.style.borderLeft=s.borderLeft;
+    });
+    liveFloatSource=source.table;
+  }
+
+  function liveLeaderboardSource(){
+    if(window.matchMedia("(max-width:700px)").matches) return null;
+    const section=document.getElementById("tab-race");
+    if(!section?.classList.contains("active")) return null;
+    const shell=document.querySelector("#leaderboard .table-shell");
+    const table=shell?.querySelector("table");
+    const thead=table?.querySelector("thead");
+    if(!shell||!table||!thead) return null;
+    return {shell,table,thead};
+  }
+
+  function updateLiveFloatingHeader(){
+    liveFloatRaf=0;
+    const source=liveLeaderboardSource();
+    if(!source){
+      if(liveFloatBox) liveFloatBox.style.display="none";
+      liveFloatSource=null;
+      return;
+    }
+
+    const shellRect=source.shell.getBoundingClientRect();
+    const tableRect=source.table.getBoundingClientRect();
+    const headRect=source.thead.getBoundingClientRect();
+    const headHeight=Math.max(1,headRect.height);
+    const width=Math.max(source.table.scrollWidth,source.table.getBoundingClientRect().width);
+
+    if(liveFloatSource!==source.table || !liveFloatTable || Math.abs(parseFloat(liveFloatTable.style.width||"0")-width)>2){
+      copyLiveFloatingHeader(source);
+    }
+
+    const shouldShow=headRect.top<0 && tableRect.bottom>headHeight && shellRect.right>0 && shellRect.left<window.innerWidth;
+    if(!shouldShow){
+      liveFloatBox.style.display="none";
+      return;
+    }
+
+    copyLiveFloatingHeader(source);
+
+    const visibleLeft=Math.max(0,shellRect.left);
+    const visibleRight=Math.min(window.innerWidth,shellRect.right);
+    const visibleWidth=Math.max(0,visibleRight-visibleLeft);
+    const clippedFromLeft=visibleLeft-shellRect.left;
+
+    liveFloatBox.style.display="block";
+    liveFloatBox.style.left=visibleLeft+"px";
+    liveFloatBox.style.width=visibleWidth+"px";
+    liveFloatBox.style.height=headHeight+"px";
+    liveFloatTable.style.transform="translateX("+(-(source.shell.scrollLeft+clippedFromLeft))+"px)";
+  }
+
+  function scheduleLiveFloatingHeader(){
+    if(!liveFloatRaf) liveFloatRaf=requestAnimationFrame(updateLiveFloatingHeader);
+  }
+
+  if(!window.__hlrnLiveFloatingHeaderReady){
+    window.__hlrnLiveFloatingHeaderReady=true;
+    window.addEventListener("scroll",scheduleLiveFloatingHeader,{passive:true});
+    window.addEventListener("resize",scheduleLiveFloatingHeader,{passive:true});
+    document.addEventListener("scroll",event=>{
+      if(event.target?.classList?.contains("table-shell")) scheduleLiveFloatingHeader();
+    },true);
+    new MutationObserver(scheduleLiveFloatingHeader).observe(document.documentElement,{
+      subtree:true,childList:true,attributes:true,attributeFilter:["class","data-hlrn-theme"]
+    });
+  }
+
   const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({
     "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
   })[c]);
@@ -2708,11 +2906,29 @@ html[data-hlrn-theme="dark"] body .recap-approval-note{
 
 
   function driverStatus(driver){
-    if(driver && driver.disqualified) return "DQ";
-    if(driver && driver.disconnected && !driver?.status) return "DISCONNECTED";
-    const raw = String(driver?.status || "").trim().toUpperCase();
+    if(!driver) return "—";
+    if(driver.disqualified) return "DQ";
+    if(driver.blackFlag) return "BLACK FLAG";
+    if(driver.repairFlag) return "MEATBALL";
+
+    const raw=String(driver.status||"").trim().toUpperCase();
+    const track=String(driver.trackStatus||"").trim().toUpperCase();
+
+    if(driver.disconnected || raw.includes("DISCONNECT") || track.includes("DISCONNECT")) return "DISCONNECTED";
+    if(raw.includes("OUT / DISCONNECTED")) return "OUT";
+    if(raw==="OUT" || raw.includes("OUT OF CAR") || track.includes("OUT OF CAR")) return "OUT";
+    if(driver.onPitRoad || raw.includes("PIT ROAD") || track.includes("PIT ROAD")) return "PIT ROAD";
+
+    const lapsDown=Number(driver.lapsDown);
+    if(Number.isFinite(lapsDown) && lapsDown>0) return lapsDown===1 ? "1 LAP DOWN" : lapsDown+" LAPS DOWN";
+
+    if(state?.phase==="race" && raceFinished(state)) return "FINISHED";
+    if(track==="OFF TRACK" || raw==="OFF TRACK") return "OFF TRACK";
+
+    if(["ACTIVE","RUNNING","LEAD LAP","ON TRACK"].includes(raw) || ["ACTIVE","RUNNING","LEAD LAP","ON TRACK"].includes(track)) return "ON TRACK";
     if(raw) return raw;
-    return "ACTIVE";
+    if(track) return track;
+    return "ON TRACK";
   }
 
   function statusClass(driver){
@@ -2902,12 +3118,19 @@ html[data-hlrn-theme="dark"] body .recap-approval-note{
     document.querySelectorAll(".section").forEach(x=>x.classList.remove("active"));
     btn.classList.add("active");
     section.classList.add("active");
+    scheduleLiveFloatingHeader();
   }
 
   function raceFinished(s){
+    if(s?.raceFrozen) return true;
     const flag=normalizeFlag(s?.flag);
-    const sessionState=String(s?.sessionState||"").toUpperCase();
-    return flag==="CHECKERED" || sessionState==="CHECKERED" || sessionState==="COOL DOWN";
+    const sessionState=String(s?.sessionState||"").trim().toUpperCase().replaceAll("_"," ");
+    return flag==="CHECKERED"
+      || sessionState==="CHECKERED"
+      || sessionState==="COOL DOWN"
+      || sessionState==="COOLDOWN"
+      || sessionState==="FINISHED"
+      || sessionState==="COMPLETE";
   }
 
   function autoNavigateSession(s){
@@ -3217,6 +3440,9 @@ html[data-hlrn-theme="dark"] body .recap-approval-note{
 
   function getBattles(drivers){
     if(!Array.isArray(drivers) || drivers.length < 2) return [];
+    if(state?.phase!=="race" || raceFinished(state)) return [];
+    const raceFlag=normalizeFlag(state?.flag);
+    if(raceFlag!=="GREEN") return [];
 
     // Battle Tracker is intentionally focused on contenders only: TOP 10,
     // on-track, same-lap cars. This keeps the panel useful instead of flagging
@@ -3236,6 +3462,10 @@ html[data-hlrn-theme="dark"] body .recap-approval-note{
       const ahead = sorted[i - 1];
       const behind = sorted[i];
       if(!ahead || !behind) continue;
+
+      // Never invent a "battle" across a missing scored position. If P3 is
+      // pitting/out, P2 and P4 are not treated as a direct fight.
+      if(Number(behind.position)-Number(ahead.position)!==1) continue;
 
       const aheadLaps = Number(ahead.lapsCompleted);
       const behindLaps = Number(behind.lapsCompleted);
@@ -4235,7 +4465,13 @@ html[data-hlrn-theme="dark"] body .recap-approval-note{
 
     const reviewer=recapReviewerLogin();
     if(storyBtn) storyBtn.hidden=true;
-    if(resultsBtn) resultsBtn.hidden=true;
+    if(resultsBtn){
+      resultsBtn.hidden=false;
+      resultsBtn.href="/results/";
+      resultsBtn.textContent="VIEW RESULTS CENTER →";
+      resultsBtn.classList.add("ready");
+      resultsBtn.removeAttribute("aria-disabled");
+    }
     if(previewBtn){
       previewBtn.hidden=!reviewer;
       previewBtn.textContent=recapIsHeld(race) ? "REVIEW HELD RECAP" : "PREVIEW RACE RECAP";
@@ -4425,7 +4661,9 @@ html[data-hlrn-theme="dark"] body .recap-approval-note{
     $("rc2Flag").className=flagClass(flag);
     $("rc2Caution").textContent=Number(rc.cautionCount)>0 ? `#${rc.cautionCount}` : "—";
     $("rc2YellowLaps").textContent=Number(rc.totalCautionLaps||0);
-    $("rc2CautionLap").textContent=rc.active && rc.paceLap!=null ? `${rc.paceLap}` : "—";
+    $("rc2CautionLap").textContent=rc.oneToGreen
+      ? (rc.paceLap!=null ? `LAP ${rc.paceLap} • 1 TO GREEN` : "1 TO GREEN")
+      : (rc.active && rc.paceLap!=null ? `LAP ${rc.paceLap}` : "—");
     $("rc2GreenRun").textContent=Number(rc.currentGreenRun||0);
     $("rc2LongestGreen").textContent=Number(rc.longestGreenRun||0);
     $("rc2ControlMeta").textContent=rc.sessionCautionsExact || rc.sessionCautionLapsExact ? "IRACING COUNTERS + HLRN TRACKING" : (raceState ? "HLRN TRACKING" : "WAITING FOR RACE");
@@ -4697,8 +4935,19 @@ html[data-hlrn-theme="dark"] body .recap-approval-note{
       || /race/i.test(String(s?.sessionName||""));
   }
 
+  function detectedPhase(s){
+    const raw=String(s?.phase||"").trim().toLowerCase();
+    if(["practice","qualifying","race"].includes(raw)) return raw;
+    const label=(String(s?.sessionName||"")+" "+String(s?.sessionType||"")+" "+String(s?.sessionState||"")).toLowerCase();
+    if(/qual/.test(label)) return "qualifying";
+    if(/practice/.test(label)) return "practice";
+    if(/race/.test(label)) return "race";
+    return raw || "other";
+  }
+
   function acceptIncomingState(incoming){
-    const next=incoming && typeof incoming==="object" ? incoming : {};
+    const next=incoming && typeof incoming==="object" ? {...incoming} : {};
+    next.phase=detectedPhase(next);
     const key=incomingRaceIdentity(next);
 
     if(localFrozenRaceState){
@@ -4818,6 +5067,7 @@ html[data-hlrn-theme="dark"] body .recap-approval-note{
     }
 
     renderLeaderboard(drivers, available);
+    scheduleLiveFloatingHeader();
     renderScanner(drivers);
     renderLiveTicker(available, drivers);
     renderBattleTracker(drivers, available);
