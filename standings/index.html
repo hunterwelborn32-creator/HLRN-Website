@@ -254,7 +254,7 @@ html[data-hlrn-theme="dark"] .tab[data-page="monday"]:before{background:#69e000!
   </nav>
   <main class="viewport">
     <div class="cn-series-ribbon"><i></i><span id="cnRibbonText">Hosted Racing Active</span></div>
-    <iframe class="page active" id="page-hosted" title="HLRN Hosted Racing" scrolling="auto" src="hosted.html?v=20260930darkbridge2"></iframe>
+    <iframe class="page active" id="page-hosted" title="HLRN Hosted Racing" scrolling="auto" src="hosted.html?v=20261001darkfinal4"></iframe>
     <iframe class="page" id="page-sunday" loading="lazy" title="HLRN Sunday Championship" scrolling="auto" src="sunday.html?v=20260930darkbridge2"></iframe>
     <iframe class="page" id="page-monday" loading="lazy" title="HLRN Monday Championship" scrolling="auto" src="monday.html?v=20260930darkbridge2"></iframe>
   </main>
@@ -1846,12 +1846,33 @@ iframe{background:#000!important;color-scheme:dark!important}
     try{
       const doc=frame.contentDocument;
       if(!doc)return;
-      applyToDocument(doc,theme);
-      doc.querySelectorAll("iframe").forEach(child=>{
-        try{
-          applyToDocument(child.contentDocument,theme);
-        }catch(e){}
-      });
+
+      const applyTree=(targetDoc)=>{
+        if(!targetDoc)return;
+        applyToDocument(targetDoc,theme);
+
+        targetDoc.querySelectorAll("iframe").forEach(child=>{
+          const applyChild=()=>{
+            try{
+              const childDoc=child.contentDocument;
+              if(!childDoc)return;
+              applyTree(childDoc);
+            }catch(e){}
+          };
+
+          if(!child.__hlrnDeepThemeBound){
+            child.__hlrnDeepThemeBound=true;
+            child.addEventListener("load",()=>{
+              setTimeout(applyChild,0);
+              setTimeout(applyChild,120);
+              setTimeout(applyChild,500);
+            });
+          }
+          applyChild();
+        });
+      };
+
+      applyTree(doc);
     }catch(e){}
   }
 
@@ -1875,7 +1896,11 @@ iframe{background:#000!important;color-scheme:dark!important}
   window.addEventListener("storage",e=>{if(e.key===KEY)sync();});
   window.addEventListener("hlrn-theme-change",sync);
   window.addEventListener("load",()=>{sync();setTimeout(sync,250);setTimeout(sync,1000)},{once:true});
-  document.addEventListener("click",()=>setTimeout(sync,80),true);
+  document.addEventListener("click",()=>{
+    setTimeout(sync,50);
+    setTimeout(sync,180);
+    setTimeout(sync,600);
+  },true);
   sync();
 })();
 </script>
