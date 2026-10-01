@@ -3824,6 +3824,134 @@ html[style*="color-scheme: dark"] body #lastRace .hlrn-driver-profile-arrow{
   }
 }
 </style>
+<style id="HLRN_DRIVER_TABLE_FIT_VIEWPORT_20261001">
+/* Sunday/Monday driver standings: fit every stat column in the page width. */
+#drivers .table-shell{
+  width:100%!important;
+  max-width:100%!important;
+  overflow-x:hidden!important;
+  overflow-y:visible!important;
+}
+
+#drivers table{
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  table-layout:fixed!important;
+  border-collapse:collapse!important;
+}
+
+#drivers th,
+#drivers td{
+  width:auto!important;
+  min-width:0!important;
+  max-width:none!important;
+  padding-left:3px!important;
+  padding-right:3px!important;
+  overflow:hidden!important;
+  text-overflow:clip!important;
+  white-space:nowrap!important;
+}
+
+#drivers th{
+  font-size:clamp(6px,.55vw,9px)!important;
+  line-height:1!important;
+  letter-spacing:.01em!important;
+}
+
+#drivers tbody td:not(.name-col),
+#drivers tbody td:not(.name-col) *{
+  font-size:clamp(9px,.72vw,12px)!important;
+}
+
+#drivers th:nth-child(1),
+#drivers td:nth-child(1){
+  width:4%!important;
+}
+#drivers th:nth-child(2),
+#drivers td:nth-child(2){
+  width:4.5%!important;
+}
+#drivers th:nth-child(3),
+#drivers td:nth-child(3){
+  width:18.5%!important;
+  min-width:0!important;
+  max-width:none!important;
+}
+
+/* Let the remaining stat columns evenly share the rest of the table. */
+#drivers th:nth-child(n+4),
+#drivers td:nth-child(n+4){
+  width:auto!important;
+  min-width:0!important;
+  max-width:none!important;
+}
+
+/* Compact the driver cell enough to keep the full table on screen. */
+#drivers td.name-col{
+  width:18.5%!important;
+  min-width:0!important;
+  max-width:none!important;
+  overflow:hidden!important;
+}
+
+#drivers .hlrn-driver-profile-link{
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  overflow:hidden!important;
+}
+
+#drivers .hlrn-driver-profile-inner{
+  display:grid!important;
+  grid-template-columns:46px minmax(0,1fr)!important;
+  column-gap:7px!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  min-height:58px!important;
+  overflow:hidden!important;
+}
+
+#drivers td.name-col img{
+  width:46px!important;
+  height:58px!important;
+  max-width:46px!important;
+  object-fit:contain!important;
+}
+
+#drivers .hlrn-driver-profile-name{
+  min-width:0!important;
+  max-width:100%!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+  font-size:clamp(11px,1vw,16px)!important;
+  line-height:1!important;
+}
+
+/* Keep the compact fit on smaller desktop/tablet widths too. */
+@media(max-width:1100px){
+  #drivers th,
+  #drivers td{
+    padding-left:2px!important;
+    padding-right:2px!important;
+  }
+  #drivers th{font-size:6px!important}
+  #drivers tbody td:not(.name-col),
+  #drivers tbody td:not(.name-col) *{font-size:9px!important}
+  #drivers .hlrn-driver-profile-inner{
+    grid-template-columns:38px minmax(0,1fr)!important;
+    column-gap:5px!important;
+  }
+  #drivers td.name-col img{
+    width:38px!important;
+    height:50px!important;
+    max-width:38px!important;
+  }
+  #drivers .hlrn-driver-profile-name{font-size:11px!important}
+}
+</style>
 </head>
 <body>
 <nav class="hlrn-series-switcher" aria-label="HLRN standings series">
