@@ -140,6 +140,107 @@ html[style*="color-scheme: dark"] body .refresh:hover{
   -webkit-text-fill-color:#000!important;
 }
 </style>
+<style id="HLRN_RI_DARK_MODE_BLACK_WHITE_V2">
+/* Race Intelligence Night Mode — full black surfaces / white type. */
+html[data-hlrn-theme="dark"],
+html[data-hlrn-theme="dark"] body{
+  background:#000!important;
+  color:#fff!important;
+  color-scheme:dark!important;
+}
+html[data-hlrn-theme="dark"] body .shell{
+  background:#000!important;
+  color:#fff!important;
+}
+
+/* Remove every remaining white editorial surface in Night Mode. */
+html[data-hlrn-theme="dark"] body .shell :is(
+  .hero,.hero-inner,
+  .compact-panel,.compact-board-head,.compact-overview,.compact-overview-card,
+  .toolbar,
+  .v3-verification,.v3-accuracy-line,.v3-accuracy-stat,
+  .v3-contenders,.v3-contenders-head,.v3-contender-grid,.v3-contender,.v3-contender-top,
+  .intel-grid,.intel-card,
+  .category-deep,.deep-head,.deep-grid,.deep-metric,.deep-body,.deep-box,.deep-point,.deep-race,.deep-action,
+  .detail-wrap,.detail-head,.stat-grid,.stat,.detail-body,.detail-box,.race,.trend-row,
+  .story-section,.story-head,.story-grid,.story-card,
+  .loading,.error,.badge,.refresh
+){
+  background:#000!important;
+  background-color:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+  border-color:#2b2b2b!important;
+  box-shadow:none!important;
+}
+
+/* Slight separation for nested cards without introducing gray/white panels. */
+html[data-hlrn-theme="dark"] body .shell :is(
+  .intel-card,.deep-metric,.deep-box,.detail-box,.stat,.deep-point,.deep-race,.race,.trend-row,.story-card,.badge,.refresh
+){
+  background:#050505!important;
+  background-color:#050505!important;
+}
+
+/* White typography everywhere inside Race Intelligence content. */
+html[data-hlrn-theme="dark"] body .shell :is(
+  .hero,.compact-panel,.v3-contenders,.intel-grid,.category-deep,.detail-wrap,.story-section
+) :where(
+  h1,h2,h3,h4,h5,h6,p,span,small,strong,b,a,label,
+  .nn-page-title,.section-label,.compact-board-head,.compact-board-head *,
+  .v3-contenders-head,.v3-contenders-head *,.v3-contender-name,
+  .card-title,.card-driver,.card-reason,.card-stat,
+  .deep-title,.deep-summary,.deep-pill,.deep-metric,.deep-metric *,
+  .detail-name,.detail-category,.score-num,.score-label,.stat-label,.stat-value,
+  .box-title,.trend-row,.trend-row *,
+  .story-title,.story-sub,.story-card h3,.story-card p,.story-stat,
+  .badge,.refresh
+){
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  text-shadow:none!important;
+}
+
+/* Keep HLRN accents visible. */
+html[data-hlrn-theme="dark"] body .shell :is(.kicker,.story-kicker,.deep-label,.detail-eyebrow){
+  color:#e10600!important;
+  -webkit-text-fill-color:#e10600!important;
+}
+html[data-hlrn-theme="dark"] body .shell :is(.positive,.gain,.ri-auto-sync-dot){
+  color:#31d466!important;
+  -webkit-text-fill-color:#31d466!important;
+}
+html[data-hlrn-theme="dark"] body .shell .negative{
+  color:#ff6060!important;
+  -webkit-text-fill-color:#ff6060!important;
+}
+
+/* Latest Storylines specifically: no white cards, no pale text. */
+html[data-hlrn-theme="dark"] body .shell .story-grid,
+html[data-hlrn-theme="dark"] body .shell .story-card,
+html[data-hlrn-theme="dark"] body .shell .story-card:hover{
+  background:#000!important;
+  background-color:#000!important;
+  background-image:none!important;
+}
+html[data-hlrn-theme="dark"] body .shell .story-card :where(h3,p,a,.story-stat){
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+html[data-hlrn-theme="dark"] body .shell .story-card:before{
+  background:#111!important;
+}
+html[data-hlrn-theme="dark"] body .shell .story-card.has-driver-photo:after{
+  display:none!important;
+}
+
+/* Metric strips in the deep dive stay black too. */
+html[data-hlrn-theme="dark"] body .shell .deep-grid,
+html[data-hlrn-theme="dark"] body .shell .stat-grid{
+  background:#000!important;
+  border-color:#2b2b2b!important;
+}
+</style>
 </head>
 
 <body>
