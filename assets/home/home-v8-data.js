@@ -43,6 +43,28 @@
     };
     probe.src=src;
   };
+  const setExactDriverPhoto=(id,value)=>{
+    const el=$(id);
+    if(!el)return;
+    el.hidden=true;
+    const system=window.HLRNDrivers;
+    const src=system?.photoUrl?.(value,"cutout")||"";
+    if(!src)return;
+    const rec=system?.resolve?.(value);
+    const nextAlt=(rec?.displayName||pretty(value?.driver||value?.name||value||"Driver"))+" driver photo";
+    const probe=new Image();
+    probe.onload=()=>{
+      el.src=src;
+      el.alt=nextAlt;
+      el.hidden=false;
+    };
+    probe.onerror=()=>{
+      el.removeAttribute("src");
+      el.alt="";
+      el.hidden=true;
+    };
+    probe.src=src;
+  };
   const setDriverLink=(id,value,fallback)=>{
     const el=$(id);if(!el)return;
     el.href=window.HLRNDrivers?.profileUrl?.(value)||fallback||"drivers/";
@@ -76,7 +98,9 @@
   };
   const longDate=date=>{
     if(!date)return "--";
-    const d=/^\d{4}-\d{2}-\d{2}$/.test(date)?new Date(date+"T12:00:00-04:00"):new Date(date);
+    const raw=String(date).trim();
+    const isoDay=raw.match(/^(\d{4}-\d{2}-\d{2})/);
+    const d=isoDay?new Date(isoDay[1]+"T12:00:00-04:00"):new Date(raw);
     if(!Number.isFinite(d.getTime()))return "--";
     return new Intl.DateTimeFormat("en-US",{timeZone:"America/New_York",month:"short",day:"numeric",year:"numeric"}).format(d).toUpperCase();
   };
@@ -137,35 +161,49 @@
   function renderLatest(report,schedule,recapIndex){
     if(!report)return;
     const winner=pretty(report.winner?.name||report.winnerName||"");
+    const winnerKey=String(report.winner?.id||"").trim()||winner;
     const track=String(report.track||"LATEST HLRN RESULT").trim();
-    const laps=reportLaps(report,schedule);
     const drivers=Number(report.classified||report.driverCount||0);
+
+    const resultRows=Array.isArray(report.results)&&report.results.length
+      ? report.results
+      : (Array.isArray(report.top10)?report.top10:[]);
+    const winnerRow=resultRows.find(r=>Number(r?.finish)===1)
+      || resultRows.find(r=>String(r?.id||"")===String(report.winner?.id||""))
+      || resultRows[0]
+      || null;
+    const winnerLapsLed=winnerRow&&Number.isFinite(Number(winnerRow.lapsLed))
+      ? Number(winnerRow.lapsLed)
+      : null;
+    const winnerIncidents=winnerRow&&Number.isFinite(Number(winnerRow.incidents))
+      ? Number(winnerRow.incidents)
+      : null;
+
     put("rdLatestWinner",winner,"HLRN");
     put("rdLastWinner",winner,"--");
     put("pitLastWinner",winner,"HLRN");
     put("pitLastWinnerDetail",(track||"LATEST RESULT")+(report.date?" • "+longDate(report.date):""));
+
     if(winner){
-      setDriverPhoto("rdLatestWinnerPhoto",winner);
-      setDriverLink("rdLatestWinnerLink",winner,"results/");
-      setDriverPhoto("rdLastWinnerPhoto",winner);
-      setDriverPhoto("pitLastWinnerPhoto",winner);
-      setDriverLink("pitLastWinnerLink",winner,"results/");
+      setDriverPhoto("rdLatestWinnerPhoto",winnerKey);
+      setDriverLink("rdLatestWinnerLink",winnerKey,"results/");
+      setExactDriverPhoto("rdLastWinnerPhoto",winnerKey);
+      setDriverPhoto("pitLastWinnerPhoto",winnerKey);
+      setDriverLink("pitLastWinnerLink",winnerKey,"results/");
     }
+
     put("rdLastTrack",track,"LATEST HLRN RESULT");
     put("rdLastDate",longDate(report.date));
     put("rdLastDrivers",drivers>0?String(drivers):"--");
-    put("rdLastLaps",laps!=null?String(laps):"--");
-    const recap=matchingRecap(report,recapIndex);
-    const cautionValue =
-      Number.isFinite(Number(report?.cautions)) ? Number(report.cautions) :
-      Number.isFinite(Number(recap?.cautions)) ? Number(recap.cautions) :
-      null;
-    put("rdLastCautions",cautionValue!=null?String(cautionValue):"N/A");
+    put("rdLastLaps",winnerLapsLed!=null?String(winnerLapsLed):"--");
+    put("rdLastCautions",winnerIncidents!=null?String(winnerIncidents):"--");
+
     put("rdLeadHeadline",winner?winner+" WINS AT "+track:"HIGH LINE RACING NETWORK");
     const bits=[];
     if(report.date)bits.push(longDate(report.date));
     if(drivers>0)bits.push(drivers+" drivers");
-    if(laps!=null)bits.push(laps+" laps");
+    if(winnerLapsLed!=null)bits.push(winnerLapsLed+" laps led");
+    if(winnerRow?.carNumber)bits.push("#"+winnerRow.carNumber);
     put("rdLeadSub",bits.join(" • "),"Sunday and Monday night competition. Hosted racing. Live broadcasts.");
   }
   function relinkDrivers(){
