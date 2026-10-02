@@ -1,12 +1,39 @@
 {
   "success": true,
-  "updatedAt": "2026-10-02T12:49:02Z",
+  "updatedAt": "2026-10-02T13:41:40Z",
   "channel": {
     "id": "1529356159906222201",
     "name": "🚨-high-line-announcements",
     "guild_id": "1401318372075114636"
   },
   "announcements": [
+    {
+      "id": "1555572420755062834",
+      "content": "",
+      "timestamp": "2026-10-02T13:29:26.246000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "1051673096463077386",
+        "username": "Jim Segredo",
+        "global_name": "Jim Segredo",
+        "avatar": "01471ecae9c8cda9f28601aab9db221d"
+      },
+      "attachments": [
+        {
+          "id": "1555572418918096989",
+          "filename": "4C4B3E0C-2CD8-43C0-925A-D2DE9E9350B9.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1555572418918096989/4C4B3E0C-2CD8-43C0-925A-D2DE9E9350B9.png?backend=b2&ex=6ac10335&is=6abfb1b5&hm=0c1961727c9bf14b7e9ae5bf7a6792db4714419d3552ef19ab0a12e483b51867&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1555572418918096989/4C4B3E0C-2CD8-43C0-925A-D2DE9E9350B9.png?backend=b2&ex=6ac10335&is=6abfb1b5&hm=0c1961727c9bf14b7e9ae5bf7a6792db4714419d3552ef19ab0a12e483b51867&",
+          "size": 3290102,
+          "content_type": "image/png",
+          "width": 1122,
+          "height": 1402
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1555572420755062834"
+    },
     {
       "id": "1555373985339015278",
       "content": "",
