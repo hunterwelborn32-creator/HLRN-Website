@@ -96,9 +96,35 @@
       setHref('home'+prefix+'TeamLink',teamLink(key,team));
     }
     if(winner){
-      setText('home'+prefix+'Winner',pretty(winner.driver));
+      const winnerName=pretty(winner.driver);
+      setText('home'+prefix+'Winner',winnerName);
       setHref('home'+prefix+'WinnerLink',driverLink(key,winner));
-      setDriverPhoto('home'+prefix+'WinnerPhoto',{driverId:winner.driverId,driver:pretty(winner.driver)});
+      setDriverPhoto('home'+prefix+'WinnerPhoto',{driverId:winner.driverId,driver:winnerName});
+
+      const pitPrefix=key==='sunday'?'Sunday':'Monday';
+      const pitLinkId='pit'+pitPrefix+'WinnerLink';
+      const pitPhotoId='pit'+pitPrefix+'WinnerPhoto';
+      const pitWinnerId='pit'+pitPrefix+'Winner';
+      const pitDetailId='pit'+pitPrefix+'WinnerDetail';
+
+      setText(pitWinnerId,winnerName);
+      setHref(pitLinkId,driverLink(key,winner));
+      setDriverPhoto(pitPhotoId,{driverId:winner.driverId,driver:winnerName});
+
+      const detail=[];
+      if(winnerRow?.track)detail.push(String(winnerRow.track).trim());
+      if(winnerRow?.date){
+        const d=new Date(winnerRow.date);
+        if(Number.isFinite(d.getTime())){
+          detail.push(new Intl.DateTimeFormat('en-US',{
+            timeZone:'America/New_York',
+            month:'short',
+            day:'numeric',
+            year:'numeric'
+          }).format(d).toUpperCase());
+        }
+      }
+      setText(pitDetailId,detail.join(' • ')||('Latest '+pitPrefix+' winner'));
     }else if(winnerRow){
       setText('home'+prefix+'Winner','Race '+num(winnerRow.raceNumber)+' winner');
     }
@@ -193,7 +219,6 @@
       const snapshot=await HLRNData.load();
       renderLeague(snapshot,'sunday','Sunday');
       renderLeague(snapshot,'monday','Monday');
-      renderHot(snapshot);
       renderNextRace();
       if(snapshot.generatedAt){
         const when=new Date(snapshot.generatedAt).toLocaleTimeString('en-US',{
