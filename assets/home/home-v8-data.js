@@ -121,6 +121,7 @@
       put("v7"+prefix+"Date",date+(track?" • "+track:""));
       put("v7"+prefix+"Mirror",date);
     });
+    renderPitNext(schedule);
   }
   function renderSnapshot(snapshot){
     const hosted=Array.isArray(snapshot?.hosted?.rankings)?snapshot.hosted.rankings:[];
@@ -141,10 +142,14 @@
     const drivers=Number(report.classified||report.driverCount||0);
     put("rdLatestWinner",winner,"HLRN");
     put("rdLastWinner",winner,"--");
+    put("pitLastWinner",winner,"HLRN");
+    put("pitLastWinnerDetail",(track||"LATEST RESULT")+(report.date?" • "+longDate(report.date):""));
     if(winner){
       setDriverPhoto("rdLatestWinnerPhoto",winner);
       setDriverLink("rdLatestWinnerLink",winner,"results/");
       setDriverPhoto("rdLastWinnerPhoto",winner);
+      setDriverPhoto("pitLastWinnerPhoto",winner);
+      setDriverLink("pitLastWinnerLink",winner,"results/");
     }
     put("rdLastTrack",track,"LATEST HLRN RESULT");
     put("rdLastDate",longDate(report.date));
@@ -170,14 +175,101 @@
 
   let liveSocket=null;
   let liveReconnectTimer=null;
+  let pitNextInstant=null;
+  let pitNextEvent=null;
+
+  function easternOffsetMinutes(date){
+    const zone=new Intl.DateTimeFormat("en-US",{
+      timeZone:"America/New_York",timeZoneName:"shortOffset",hour:"2-digit"
+    }).formatToParts(date).find(p=>p.type==="timeZoneName")?.value||"GMT-4";
+    const m=zone.match(/GMT([+-])(\d{1,2})(?::?(\d{2}))?/i);
+    if(!m)return -240;
+    const mins=Number(m[2])*60+Number(m[3]||0);
+    return m[1]==="+"?mins:-mins;
+  }
+  function easternRaceInstant(date,hour=20,minute=30){
+    const m=String(date||"").match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if(!m)return null;
+    const y=Number(m[1]),mo=Number(m[2]),d=Number(m[3]);
+    let utc=Date.UTC(y,mo-1,d,hour,minute,0,0);
+    for(let i=0;i<2;i++){
+      const off=easternOffsetMinutes(new Date(utc));
+      utc=Date.UTC(y,mo-1,d,hour,minute,0,0)-off*60000;
+    }
+    return new Date(utc);
+  }
+  function updatePitCountdown(){
+    if(!pitNextInstant)return;
+    const diff=Math.max(0,pitNextInstant.getTime()-Date.now());
+    const totalMinutes=Math.floor(diff/60000);
+    const days=Math.floor(totalMinutes/1440);
+    const hours=Math.floor((totalMinutes%1440)/60);
+    const minutes=totalMinutes%60;
+    put("pitDays",String(days).padStart(2,"0"));
+    put("pitHours",String(hours).padStart(2,"0"));
+    put("pitMinutes",String(minutes).padStart(2,"0"));
+    put("pitCountdownLabel",diff>0?"TO GREEN FLAG":"GREEN FLAG");
+  }
+  function renderPitNext(schedule){
+    const now=Date.now();
+    const choices=[];
+    for(const key of ["sunday","monday"]){
+      for(const event of schedule?.leagues?.[key]||[]){
+        if(event?.off||!event?.date)continue;
+        const when=easternRaceInstant(event.date);
+        if(when&&when.getTime()>now)choices.push({key,event,when});
+      }
+    }
+    choices.sort((a,b)=>a.when-b.when);
+    const next=choices[0]||null;
+    if(!next)return;
+    pitNextInstant=next.when;
+    pitNextEvent=next;
+    put("pitNextLeague",next.key==="sunday"?"SUNDAY NIGHT":"MONDAY NIGHT");
+    put("pitNextTrack",next.event.track||"HLRN RACE WEEK");
+    const details=[
+      longDate(next.event.date),
+      "8:30 PM ET",
+      next.event.car,
+      next.event.laps!=null?next.event.laps+" LAPS":""
+    ].filter(Boolean);
+    put("pitNextDate",details.join(" • "));
+    const link=$("pitNextLink");
+    if(link)link.href="race-preview/?league="+encodeURIComponent(next.key);
+    updatePitCountdown();
+  }
+  function renderPitTicker(snapshot,report){
+    const items=[];
+    if(pitNextEvent){
+      items.push("NEXT: "+(pitNextEvent.key==="sunday"?"SUNDAY":"MONDAY")+" • "+String(pitNextEvent.event.track||"")+" • "+longDate(pitNextEvent.event.date));
+    }
+    const hostedWinner=pretty(snapshot?.hosted?.latest?.winner||"");
+    const hostedTrack=String(snapshot?.hosted?.latest?.track||"").trim();
+    if(hostedWinner)items.push("HOSTED: "+hostedWinner+" WINS"+(hostedTrack?" AT "+hostedTrack:""));
+    const latestWinner=pretty(report?.winner?.name||report?.winnerName||"");
+    if(latestWinner)items.push("LATEST HLRN WINNER: "+latestWinner+(report?.track?" • "+report.track:""));
+    items.push("RACE INTELLIGENCE UPDATED");
+    const message=items.join("  •  ");
+    put("pitTickerText",message+"  •  "+message);
+  }
 
   function setNetworkLive(isLive){
     const label=$("h9NetworkStatus");
     const dot=$("h9NetworkDot");
     const state=$("h9NetworkState");
+    const pitState=$("pitWallStatus");
+    const broadcast=$("pitBroadcastLink");
     if(label) label.textContent=isLive?"LIVE NOW":"OFF AIR";
     if(dot) dot.classList.toggle("is-live",!!isLive);
     if(state) state.classList.toggle("is-live",!!isLive);
+    if(pitState){
+      pitState.classList.toggle("is-live",!!isLive);
+      pitState.innerHTML="<i></i> "+(isLive?"RACE LIVE":"LIVE DATA");
+    }
+    if(broadcast)broadcast.classList.toggle("is-live",!!isLive);
+    put("pitBroadcastState",isLive?"LIVE NOW":"NEXT BROADCAST");
+    put("pitBroadcastLabel",isLive?"📡 HLRN TV • LIVE":"📡 HLRN TV");
+    put("pitBroadcastDetail",isLive?"Timing, flags and race coverage are live →":"Sunday + Monday coverage and latest replays →");
   }
 
   function connectLiveStatus(){
@@ -221,7 +313,9 @@
         json("data/race-recaps/index.json").catch(()=>({recaps:[]}))
       ]);
       renderSchedule(schedule);
-      renderLatest(latestReport(reports),schedule,recaps);
+      const latest=latestReport(reports);
+      renderLatest(latest,schedule,recaps);
+      renderPitTicker(snapshot,latest);
       relinkDrivers();
     }catch(err){
       console.warn("HLRN homepage data unavailable",err);
@@ -231,6 +325,7 @@
     setNetworkLive(false);
     connectLiveStatus();
     refresh();
+    setInterval(updatePitCountdown,30000);
     setInterval(()=>{if(document.visibilityState==="visible")refresh()},300000);
     document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")refresh()});
   }
