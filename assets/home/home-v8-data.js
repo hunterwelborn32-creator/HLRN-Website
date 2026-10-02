@@ -47,18 +47,53 @@
     const el=$(id);
     if(!el)return;
     el.hidden=true;
+
     const system=window.HLRNDrivers;
-    const src=system?.photoUrl?.(value,"cutout")||"";
+    const rawId=String(
+      value&&typeof value==="object"
+        ? (value.slug||value.id||value.driverId||"")
+        : (value||"")
+    ).trim();
+
+    const slug=/^[a-z0-9]+(?:-[a-z0-9]+)*$/i.test(rawId)
+      ? rawId.toLowerCase()
+      : "";
+
+    const rec=system?.resolve?.(value)||null;
+    const manifestSrc=system?.photoUrl?.(value,"cutout")||"";
+    const directSrc=slug
+      ? url("assets/driver-photos/cutout/"+encodeURIComponent(slug)+".webp")
+      : "";
+    const src=directSrc||manifestSrc;
+
     if(!src)return;
-    const rec=system?.resolve?.(value);
-    const nextAlt=(rec?.displayName||pretty(value?.driver||value?.name||value||"Driver"))+" driver photo";
-    const probe=new Image();
-    probe.onload=()=>{
-      el.src=src;
+
+    const nextAlt=(rec?.displayName||pretty(
+      value&&typeof value==="object"
+        ? (value.driver||value.name||value.slug||value.id||"Driver")
+        : value
+    ))+" driver photo";
+
+    const show=source=>{
+      el.src=source;
       el.alt=nextAlt;
       el.hidden=false;
     };
+
+    const probe=new Image();
+    probe.onload=()=>show(src);
     probe.onerror=()=>{
+      if(directSrc&&manifestSrc&&manifestSrc!==directSrc){
+        const fallback=new Image();
+        fallback.onload=()=>show(manifestSrc);
+        fallback.onerror=()=>{
+          el.removeAttribute("src");
+          el.alt="";
+          el.hidden=true;
+        };
+        fallback.src=manifestSrc;
+        return;
+      }
       el.removeAttribute("src");
       el.alt="";
       el.hidden=true;
@@ -187,7 +222,10 @@
     if(winner){
       setDriverPhoto("rdLatestWinnerPhoto",winnerKey);
       setDriverLink("rdLatestWinnerLink",winnerKey,"results/");
-      setExactDriverPhoto("rdLastWinnerPhoto",winnerKey);
+      setExactDriverPhoto("rdLastWinnerPhoto",{
+        id:String(report.winner?.id||"").trim(),
+        name:winner
+      });
       setDriverPhoto("pitLastWinnerPhoto",winnerKey);
       setDriverLink("pitLastWinnerLink",winnerKey,"results/");
     }
