@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-02T12:48:47.289Z",
+  "generatedAt": "2026-10-02T12:50:18.721Z",
   "leagues": {
     "sunday": {
       "drivers": [
@@ -11785,15 +11785,10 @@
   },
   "hosted": {
     "latest": {
-      "session": "High Line Racing Network Thursday Night Thunder",
       "track": "Talladega Superspeedway",
       "date": "10/1/2026",
-      "drivers": "53",
-      "strength": "1658",
       "totalLaps": "77",
       "cautions": "6",
-      "cautionLaps": "18",
-      "leadChanges": "14",
       "totalIncidents": 859,
       "winner": "Brian Hennings",
       "winnerCarNumber": "74",

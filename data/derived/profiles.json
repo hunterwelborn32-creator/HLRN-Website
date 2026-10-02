@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-01T14:27:44.773Z",
+  "generatedAt": "2026-10-02T12:50:18.721Z",
   "drivers": [
     {
       "series": "sunday",
@@ -9787,11 +9787,11 @@
       "photoSlug": "jim-segredo",
       "rank": 4,
       "points": null,
-      "races": 163,
+      "races": 165,
       "wins": 5,
       "top5": 24,
       "top10": 60,
-      "avgFinish": 16.4,
+      "avgFinish": 16.41,
       "results": []
     },
     {
@@ -9862,11 +9862,11 @@
       "photoSlug": "josh-mckinney",
       "rank": 9,
       "points": null,
-      "races": 106,
+      "races": 107,
       "wins": 4,
       "top5": 23,
       "top10": 44,
-      "avgFinish": 14.26,
+      "avgFinish": 14.23,
       "results": []
     },
     {
@@ -9877,11 +9877,11 @@
       "photoSlug": "jerry-fassett",
       "rank": 10,
       "points": null,
-      "races": 170,
+      "races": 172,
       "wins": 4,
-      "top5": 20,
-      "top10": 58,
-      "avgFinish": 14.9,
+      "top5": 21,
+      "top10": 59,
+      "avgFinish": 14.91,
       "results": []
     },
     {
@@ -9907,11 +9907,11 @@
       "photoSlug": "hunter-welborn",
       "rank": 12,
       "points": null,
-      "races": 73,
+      "races": 74,
       "wins": 4,
       "top5": 18,
       "top10": 36,
-      "avgFinish": 14.05,
+      "avgFinish": 14.08,
       "results": []
     },
     {
@@ -9937,11 +9937,11 @@
       "photoSlug": "craig-rowe",
       "rank": 14,
       "points": null,
-      "races": 68,
+      "races": 69,
       "wins": 4,
       "top5": 13,
       "top10": 22,
-      "avgFinish": 20.24,
+      "avgFinish": 20.64,
       "results": []
     },
     {
@@ -9967,11 +9967,11 @@
       "photoSlug": "eric-hayden",
       "rank": 16,
       "points": null,
-      "races": 174,
+      "races": 175,
       "wins": 3,
-      "top5": 32,
-      "top10": 73,
-      "avgFinish": 13.95,
+      "top5": 33,
+      "top10": 74,
+      "avgFinish": 13.9,
       "results": []
     },
     {
@@ -9982,11 +9982,11 @@
       "photoSlug": "gerry-bergeron",
       "rank": 17,
       "points": null,
-      "races": 107,
+      "races": 108,
       "wins": 3,
       "top5": 30,
-      "top10": 62,
-      "avgFinish": 10.77,
+      "top10": 63,
+      "avgFinish": 10.76,
       "results": []
     },
     {
@@ -10027,11 +10027,11 @@
       "photoSlug": "larkin-boyer",
       "rank": 20,
       "points": null,
-      "races": 79,
+      "races": 80,
       "wins": 3,
-      "top5": 20,
-      "top10": 32,
-      "avgFinish": 15.46,
+      "top5": 21,
+      "top10": 33,
+      "avgFinish": 15.31,
       "results": []
     }
   ]
