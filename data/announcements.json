@@ -1,12 +1,39 @@
 {
   "success": true,
-  "updatedAt": "2026-10-02T00:19:29Z",
+  "updatedAt": "2026-10-02T00:42:34Z",
   "channel": {
     "id": "1529356159906222201",
     "name": "🚨-high-line-announcements",
     "guild_id": "1401318372075114636"
   },
   "announcements": [
+    {
+      "id": "1555373985339015278",
+      "content": "",
+      "timestamp": "2026-10-02T00:20:55.556000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "1051673096463077386",
+        "username": "Jim Segredo",
+        "global_name": "Jim Segredo",
+        "avatar": "01471ecae9c8cda9f28601aab9db221d"
+      },
+      "attachments": [
+        {
+          "id": "1555373983933792256",
+          "filename": "CC932804-599C-4541-A0E3-E160C0D3B18F.png",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1555373983933792256/CC932804-599C-4541-A0E3-E160C0D3B18F.png?backend=b2&ex=6ac04a67&is=6abef8e7&hm=65708dc66e93a77257cacdf7640f42112d55b31be7ef10979a1d4813f64b4714&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1555373983933792256/CC932804-599C-4541-A0E3-E160C0D3B18F.png?backend=b2&ex=6ac04a67&is=6abef8e7&hm=65708dc66e93a77257cacdf7640f42112d55b31be7ef10979a1d4813f64b4714&",
+          "size": 2558395,
+          "content_type": "image/png",
+          "width": 1672,
+          "height": 941
+        }
+      ],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1555373985339015278"
+    },
     {
       "id": "1554973625575276564",
       "content": "",
@@ -158,8 +185,8 @@
         {
           "id": "1551030528910696448",
           "filename": "file_0000000007bc81fd9ac3f0319fd141ba.png",
-          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1551030528910696448/file_0000000007bc81fd9ac3f0319fd141ba.png?ex=6abfa67e&is=6abe54fe&hm=1316ad5f0d7ed280a1d837318f7d96db19f615c5800f63c88919a204e684596a&",
-          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1551030528910696448/file_0000000007bc81fd9ac3f0319fd141ba.png?ex=6abfa67e&is=6abe54fe&hm=1316ad5f0d7ed280a1d837318f7d96db19f615c5800f63c88919a204e684596a&",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1551030528910696448/file_0000000007bc81fd9ac3f0319fd141ba.png?ex=6ac04f3e&is=6abefdbe&hm=4c5d2019061827e60e4f8424f4c26c094da5af36bd9be5957764e4d27f432207&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1551030528910696448/file_0000000007bc81fd9ac3f0319fd141ba.png?ex=6ac04f3e&is=6abefdbe&hm=4c5d2019061827e60e4f8424f4c26c094da5af36bd9be5957764e4d27f432207&",
           "size": 3016785,
           "content_type": "image/png",
           "width": 1672,
