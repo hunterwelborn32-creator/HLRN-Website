@@ -496,7 +496,12 @@ export async function sync({
     try {
       const url = new URL(hostedEndpoint);
       url.searchParams.set('action', 'data');
-      hosted = validateHosted(await request(url, 'hosted/data'));
+      const refreshedHosted = validateHosted(await request(url, 'hosted/data'));
+      const priorHostedCount = Array.isArray(old?.hosted?.sessions) ? old.hosted.sessions.length : 0;
+      if (priorHostedCount && refreshedHosted.sessions.length < priorHostedCount) {
+        throw new Error(`Hosted source regressed from ${priorHostedCount} to ${refreshedHosted.sessions.length} session rows`);
+      }
+      hosted = refreshedHosted;
       console.log(`Hosted verified: ${hosted.sessions.length} session rows; ${hosted.rankings.length} rankings.`);
     } catch (e) {
       console.warn('Hosted refresh failed; retaining last Hosted snapshot:', e.message);
