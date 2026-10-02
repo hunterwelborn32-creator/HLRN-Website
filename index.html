@@ -51,7 +51,7 @@ content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="assets/site-shell.css?v=20261001control1">
 <link rel="stylesheet" href="assets/home/home-race-night.css?v=20260928p1">
 <link rel="stylesheet" href="assets/race-recaps.css?v=1">
-<link rel="stylesheet" href="assets/home/home-v9.css?v=20260930darkblackwhite1">
+<link rel="stylesheet" href="assets/home/home-v9.css?v=20261002pitwall1">
 
 
 <meta name="theme-color" content="#07090d">
@@ -113,28 +113,65 @@ content="width=device-width, initial-scale=1.0">
             </div>
           </a>
 
-          <aside class="h9-story-rail" aria-label="HLRN top stories">
-            <div class="h9-story-rail-head">Latest From HLRN</div>
+          <aside class="h9-pitwall" aria-label="HLRN Pit Wall">
+            <div class="h9-pitwall-head">
+              <div>
+                <small>Race Control Feed</small>
+                <strong>HLRN PIT WALL</strong>
+              </div>
+              <span id="pitWallStatus"><i></i> LIVE DATA</span>
+            </div>
 
-            <a class="h9-story" href="race-preview/">
-              <div class="h9-story-num">01</div>
-              <div><small>Race Week</small><strong>Everything you need before the next green flag</strong><span>Preview Sunday and Monday night competition, contenders and race-week data.</span></div>
+            <a class="h9-pit-next" id="pitNextLink" href="race-preview/">
+              <div class="h9-pit-next-top">
+                <small>Next Race</small>
+                <span id="pitNextLeague">CONNECTING</span>
+              </div>
+              <strong id="pitNextTrack">LOADING RACE WEEK</strong>
+              <span class="h9-pit-next-meta" id="pitNextDate">Schedule connecting…</span>
+              <div class="h9-pit-countdown" aria-label="Countdown to the next HLRN race">
+                <div><b id="pitDays">--</b><small>Days</small></div>
+                <div><b id="pitHours">--</b><small>Hrs</small></div>
+                <div><b id="pitMinutes">--</b><small>Min</small></div>
+                <em id="pitCountdownLabel">TO GREEN FLAG</em>
+              </div>
             </a>
 
-            <a class="h9-story" id="homeHotLink" href="drivers/">
-              <div class="h9-story-num">02</div>
-              <div><small>Driver Watch</small><strong id="homeHotDriver">CONNECTING</strong><span id="homeHotDetail">Calculating recent form…</span></div>
-            </a>
+            <div class="h9-pit-grid">
+              <a class="h9-pit-card hot" id="homeHotLink" href="drivers/">
+                <img id="pitHotPhoto" src="assets/driver-photos/cutout/ethan-eckert.webp" alt="HLRN hot driver" loading="lazy">
+                <div>
+                  <small>🔥 Hot Driver</small>
+                  <strong id="homeHotDriver">CONNECTING</strong>
+                  <span id="homeHotDetail">Calculating recent form…</span>
+                </div>
+              </a>
 
-            <a class="h9-story" href="broadcasters/">
-              <div class="h9-story-num">03</div>
-              <div><small>Watch HLRN</small><strong>Broadcast Center</strong><span>Live coverage, upcoming broadcasts and the latest Sunday and Monday replays.</span></div>
-            </a>
+              <a class="h9-pit-card winner" id="pitLastWinnerLink" href="results/">
+                <img id="pitLastWinnerPhoto" src="assets/driver-photos/cutout/ethan-eckert.webp" alt="Latest HLRN winner" loading="lazy">
+                <div>
+                  <small>🏁 Last Winner</small>
+                  <strong id="pitLastWinner">CONNECTING</strong>
+                  <span id="pitLastWinnerDetail">Loading latest result…</span>
+                </div>
+              </a>
 
-            <a class="h9-story" href="race-intelligence/">
-              <div class="h9-story-num">04</div>
-              <div><small>Data Desk</small><strong>Race Intelligence</strong><span>Favorites, momentum, trouble watch and performance analysis from HLRN data.</span></div>
-            </a>
+              <a class="h9-pit-card broadcast" id="pitBroadcastLink" href="broadcasters/">
+                <div class="h9-pit-live-dot"></div>
+                <div>
+                  <small id="pitBroadcastLabel">📡 HLRN TV</small>
+                  <strong id="pitBroadcastState">NEXT BROADCAST</strong>
+                  <span id="pitBroadcastDetail">Sunday + Monday coverage and latest replays →</span>
+                </div>
+              </a>
+            </div>
+
+            <div class="h9-pit-ticker" aria-label="HLRN newswire">
+              <b>HLRN NEWSWIRE</b>
+              <div class="h9-pit-ticker-window">
+                <span id="pitTickerText">CONNECTING TO THE HLRN DATA DESK • RACE INTELLIGENCE • RESULTS • BROADCAST CENTER</span>
+              </div>
+            </div>
           </aside>
         </div>
       </div>
@@ -388,8 +425,8 @@ content="width=device-width, initial-scale=1.0">
 
 <script defer src="assets/hlrn-core.js?v=home-v8-core1"></script>
 <script defer data-hlrn-driver-system src="assets/driver-system.js?v=20260930v7"></script>
-<script defer src="assets/home/home-v8-data.js?v=20260930brand2"></script>
-<script defer src="assets/home/home-championship-center.js?v=20260930photos6"></script>
+<script defer src="assets/home/home-v8-data.js?v=20261002pitwall1"></script>
+<script defer src="assets/home/home-championship-center.js?v=20261002pitwall1"></script>
 <script defer src="assets/home/home-login-reveal.js?v=20260929p1"></script>
 <script defer src="assets/home/home-race-night.js?v=20260928p1"></script>
 <script defer src="assets/race-recaps.js?v=1"></script>
