@@ -1,6 +1,6 @@
 {
   "success": true,
-  "updatedAt": "2026-10-01T23:58:35Z",
+  "updatedAt": "2026-10-02T00:19:29Z",
   "channel": {
     "id": "1529356159906222201",
     "name": "🚨-high-line-announcements",
@@ -395,8 +395,8 @@
         {
           "id": "1545588886904901765",
           "filename": "content.png",
-          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1545588886904901765/content.png?ex=6abfa112&is=6abe4f92&hm=2676d21435d9f2865ee76a5598001fbec684709d0e47f40a993e289fde02f58f&",
-          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1545588886904901765/content.png?ex=6abfa112&is=6abe4f92&hm=2676d21435d9f2865ee76a5598001fbec684709d0e47f40a993e289fde02f58f&",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1545588886904901765/content.png?ex=6ac049d2&is=6abef852&hm=3060a7e02fa5ef66440b441d1878786b9dbdb1b884637270e8bdc66ac7666ce8&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1545588886904901765/content.png?ex=6ac049d2&is=6abef852&hm=3060a7e02fa5ef66440b441d1878786b9dbdb1b884637270e8bdc66ac7666ce8&",
           "size": 2771433,
           "content_type": "image/png",
           "width": 1149,
