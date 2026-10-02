@@ -137,6 +137,7 @@
       hot.avg.toFixed(1)+' avg finish'
     );
     setHref('homeHotLink',driverLink(hot.key,hot.d));
+    setDriverPhoto('pitHotPhoto',{driverId:hot.d.driverId,driver:pretty(hot.d.driver)});
   }
 
   function easternParts(date){
