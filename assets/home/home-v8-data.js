@@ -192,6 +192,28 @@
       setDriverPhoto("rdTopDriverPhoto",topName);
       setDriverLink("rdTopDriverLink",topName,"standings/");
     }
+
+    const latestHosted=snapshot?.hosted?.latest||null;
+    const hostedWinner=pretty(latestHosted?.winner||"");
+    const hostedTrack=String(latestHosted?.track||"").trim();
+    const hostedDate=String(latestHosted?.date||"").trim();
+
+    put("pitHostedWinner",hostedWinner,"CONNECTING");
+
+    const hostedDetail=[];
+    if(hostedTrack)hostedDetail.push(hostedTrack);
+    if(hostedDate)hostedDetail.push(longDate(hostedDate));
+    put("pitHostedWinnerDetail",hostedDetail.join(" • "),"Latest Hosted result");
+
+    if(hostedWinner){
+      const rec=window.HLRNDrivers?.resolve?.(hostedWinner)||null;
+      const identity={
+        id:String(rec?.slug||"").trim(),
+        name:hostedWinner
+      };
+      setExactDriverPhoto("pitHostedWinnerPhoto",identity);
+      setDriverLink("pitHostedWinnerLink",hostedWinner,"standings/hosted.html");
+    }
   }
   function renderLatest(report,schedule,recapIndex){
     if(!report)return;
@@ -334,7 +356,6 @@
     const dot=$("h9NetworkDot");
     const state=$("h9NetworkState");
     const pitState=$("pitWallStatus");
-    const broadcast=$("pitBroadcastLink");
     if(label) label.textContent=isLive?"LIVE NOW":"OFF AIR";
     if(dot) dot.classList.toggle("is-live",!!isLive);
     if(state) state.classList.toggle("is-live",!!isLive);
@@ -342,10 +363,6 @@
       pitState.classList.toggle("is-live",!!isLive);
       pitState.innerHTML="<i></i> "+(isLive?"RACE LIVE":"LIVE DATA");
     }
-    if(broadcast)broadcast.classList.toggle("is-live",!!isLive);
-    put("pitBroadcastState",isLive?"LIVE NOW":"NEXT BROADCAST");
-    put("pitBroadcastLabel",isLive?"📡 HLRN TV • LIVE":"📡 HLRN TV");
-    put("pitBroadcastDetail",isLive?"Timing, flags and race coverage are live →":"Sunday + Monday coverage and latest replays →");
   }
 
   function connectLiveStatus(){
