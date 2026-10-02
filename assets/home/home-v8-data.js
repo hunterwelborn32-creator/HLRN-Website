@@ -242,7 +242,10 @@
     put("pitLastWinnerDetail",(track||"LATEST RESULT")+(report.date?" • "+longDate(report.date):""));
 
     if(winner){
-      setDriverPhoto("rdLatestWinnerPhoto",winnerKey);
+      setExactDriverPhoto("rdLatestWinnerPhoto",{
+        id:String(report.winner?.id||"").trim(),
+        name:winner
+      });
       setDriverLink("rdLatestWinnerLink",winnerKey,"results/");
       setExactDriverPhoto("rdLastWinnerPhoto",{
         id:String(report.winner?.id||"").trim(),
