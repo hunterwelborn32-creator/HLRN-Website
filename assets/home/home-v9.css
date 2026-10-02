@@ -370,7 +370,7 @@ body.rd-v5.home-v8-page{
 .h9-pit-card:hover{background:#f6f7f8}
 .h9-pit-card>div:not(.h9-pit-live-dot){
   position:relative;
-  z-index:2;
+  z-index:3;
   min-width:0;
   width:100%;
 }
@@ -404,23 +404,32 @@ body.rd-v5.home-v8-page{
 }
 .h9-pit-card>img{
   position:absolute;
-  z-index:1;
-  right:-4px;
+  z-index:2;
+  right:5px;
   bottom:0;
-  width:70px;
-  height:94px;
+  width:92px;
+  height:118px;
   object-fit:contain;
   object-position:center bottom;
-  filter:drop-shadow(0 4px 7px rgba(0,0,0,.17));
+  filter:drop-shadow(0 5px 8px rgba(0,0,0,.18));
+  image-rendering:auto;
+  opacity:1;
   pointer-events:none;
 }
 .h9-pit-card:after{
   content:"";
   position:absolute;
   z-index:1;
-  right:0;top:0;bottom:0;
-  width:82px;
-  background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.88));
+  right:0;
+  top:0;
+  bottom:0;
+  width:48px;
+  background:linear-gradient(
+    90deg,
+    rgba(255,255,255,0),
+    rgba(255,255,255,.18) 72%,
+    rgba(255,255,255,.36) 100%
+  );
   pointer-events:none;
 }
 .h9-pit-card.broadcast{
@@ -963,7 +972,12 @@ html[data-hlrn-theme="dark"] body.home-v8-page .h9-pit-next:hover{
   background:#090909!important;
 }
 html[data-hlrn-theme="dark"] body.home-v8-page .h9-pit-card:after{
-  background:linear-gradient(90deg,rgba(0,0,0,0),rgba(0,0,0,.92))!important;
+  background:linear-gradient(
+    90deg,
+    rgba(0,0,0,0),
+    rgba(0,0,0,.18) 72%,
+    rgba(0,0,0,.36) 100%
+  )!important;
 }
 html[data-hlrn-theme="dark"] body.home-v8-page .h9-pit-next-top span{
   background:#fff!important;
