@@ -162,6 +162,340 @@ body.rd-v5.home-v8-page{
 .h9-story strong{display:block;margin-top:5px;font-family:var(--h9-display);font-size:18px;line-height:1.03;font-weight:1000;text-transform:uppercase}
 .h9-story span{display:block;margin-top:6px;color:var(--h9-muted);font-size:9px;font-weight:700;line-height:1.35}
 
+
+/* HLRN PIT WALL — live homepage command center */
+.h9-pitwall{
+  min-height:565px;
+  display:grid;
+  grid-template-rows:auto auto 1fr auto;
+  align-content:stretch;
+  overflow:hidden;
+  border-top:5px solid #111;
+  border-right:1px solid var(--h9-line);
+  border-bottom:1px solid var(--h9-line);
+  border-left:1px solid var(--h9-line);
+  background:#fff;
+}
+.h9-pitwall-head{
+  min-height:65px;
+  padding:11px 14px 10px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  border-bottom:1px solid var(--h9-line);
+  background:#f7f8f9;
+}
+.h9-pitwall-head>div{min-width:0}
+.h9-pitwall-head small{
+  display:block;
+  color:var(--h9-red);
+  font-size:7px;
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.h9-pitwall-head strong{
+  display:block;
+  margin-top:5px;
+  font-family:var(--h9-display);
+  font-size:24px;
+  line-height:.88;
+  font-weight:1000;
+  font-style:italic;
+  letter-spacing:-.035em;
+  text-transform:uppercase;
+}
+.h9-pitwall-head>span{
+  flex:0 0 auto;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  min-height:24px;
+  padding:0 8px;
+  border:1px solid #cbd1d7;
+  border-radius:999px;
+  color:#49515a;
+  font-size:7px;
+  font-weight:1000;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.h9-pitwall-head>span i{
+  width:7px;height:7px;border-radius:50%;
+  background:#35b65a;
+  box-shadow:0 0 0 3px rgba(53,182,90,.12);
+}
+.h9-pitwall-head>span.is-live{
+  border-color:rgba(227,24,55,.35);
+  color:var(--h9-red);
+}
+.h9-pitwall-head>span.is-live i{
+  background:var(--h9-red);
+  box-shadow:0 0 0 3px rgba(227,24,55,.12),0 0 10px rgba(227,24,55,.35);
+}
+
+.h9-pit-next{
+  position:relative;
+  display:block;
+  min-height:174px;
+  padding:18px 18px 15px;
+  overflow:hidden;
+  border-bottom:1px solid var(--h9-line);
+  background:
+    linear-gradient(135deg,rgba(227,24,55,.055),transparent 42%),
+    #fff;
+}
+.h9-pit-next:after{
+  content:"";
+  position:absolute;
+  right:-26px;top:-28px;
+  width:116px;height:116px;
+  border:18px solid rgba(227,24,55,.06);
+  transform:rotate(19deg);
+  pointer-events:none;
+}
+.h9-pit-next:hover{background:#f8f9fa}
+.h9-pit-next-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  position:relative;
+  z-index:1;
+}
+.h9-pit-next-top small{
+  color:var(--h9-red);
+  font-size:7px;
+  font-weight:1000;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.h9-pit-next-top span{
+  padding:4px 7px;
+  background:#111;
+  color:#fff;
+  font-size:7px;
+  font-weight:1000;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.h9-pit-next>strong{
+  position:relative;
+  z-index:1;
+  display:block;
+  margin-top:10px;
+  padding-right:50px;
+  font-family:var(--h9-display);
+  font-size:29px;
+  line-height:.9;
+  font-weight:1000;
+  letter-spacing:-.035em;
+  text-transform:uppercase;
+}
+.h9-pit-next-meta{
+  position:relative;
+  z-index:1;
+  display:block;
+  margin-top:7px;
+  color:#69717c;
+  font-size:8px;
+  line-height:1.3;
+  font-weight:850;
+  letter-spacing:.025em;
+  text-transform:uppercase;
+}
+.h9-pit-countdown{
+  position:relative;
+  z-index:1;
+  display:grid;
+  grid-template-columns:repeat(3,54px) 1fr;
+  align-items:end;
+  gap:5px;
+  margin-top:13px;
+}
+.h9-pit-countdown>div{
+  min-height:47px;
+  display:grid;
+  place-items:center;
+  align-content:center;
+  border:1px solid var(--h9-line);
+  background:#f5f6f7;
+}
+.h9-pit-countdown b{
+  font-family:var(--h9-display);
+  font-size:20px;
+  line-height:.9;
+  font-weight:1000;
+}
+.h9-pit-countdown small{
+  margin-top:3px;
+  color:#6c747d;
+  font-size:6px;
+  font-weight:1000;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.h9-pit-countdown em{
+  align-self:center;
+  padding-left:6px;
+  color:#555d66;
+  font-size:7px;
+  line-height:1.2;
+  font-style:normal;
+  font-weight:1000;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+
+.h9-pit-grid{
+  min-height:0;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:1fr .78fr;
+}
+.h9-pit-card{
+  position:relative;
+  min-width:0;
+  min-height:105px;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  padding:13px 12px;
+  border-bottom:1px solid var(--h9-line);
+  background:#fff;
+}
+.h9-pit-card.hot{border-right:1px solid var(--h9-line)}
+.h9-pit-card:hover{background:#f6f7f8}
+.h9-pit-card>div:not(.h9-pit-live-dot){
+  position:relative;
+  z-index:2;
+  min-width:0;
+  width:100%;
+}
+.h9-pit-card small{
+  display:block;
+  color:var(--h9-red);
+  font-size:6px;
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+}
+.h9-pit-card strong{
+  display:block;
+  margin-top:6px;
+  padding-right:44px;
+  font-family:var(--h9-display);
+  font-size:18px;
+  line-height:.92;
+  font-weight:1000;
+  letter-spacing:-.02em;
+  text-transform:uppercase;
+}
+.h9-pit-card span{
+  display:block;
+  margin-top:6px;
+  color:#626b75;
+  font-size:7px;
+  line-height:1.35;
+  font-weight:750;
+}
+.h9-pit-card>img{
+  position:absolute;
+  z-index:1;
+  right:-4px;
+  bottom:0;
+  width:70px;
+  height:94px;
+  object-fit:contain;
+  object-position:center bottom;
+  filter:drop-shadow(0 4px 7px rgba(0,0,0,.17));
+  pointer-events:none;
+}
+.h9-pit-card:after{
+  content:"";
+  position:absolute;
+  z-index:1;
+  right:0;top:0;bottom:0;
+  width:82px;
+  background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.88));
+  pointer-events:none;
+}
+.h9-pit-card.broadcast{
+  grid-column:1/-1;
+  min-height:78px;
+  display:grid;
+  grid-template-columns:18px 1fr;
+  gap:7px;
+  border-bottom:0;
+  border-top:0;
+  padding:12px 15px;
+  background:#f7f8f9;
+}
+.h9-pit-card.broadcast:after{display:none}
+.h9-pit-card.broadcast strong{padding-right:0;font-size:19px}
+.h9-pit-card.broadcast small{color:#59626c}
+.h9-pit-card.broadcast.is-live{
+  background:linear-gradient(90deg,rgba(227,24,55,.07),transparent 58%),#fff;
+}
+.h9-pit-card.broadcast.is-live strong,
+.h9-pit-card.broadcast.is-live small{color:var(--h9-red)}
+.h9-pit-live-dot{
+  position:relative;
+  z-index:2;
+  width:9px;height:9px;
+  align-self:start;
+  margin-top:3px;
+  border-radius:50%;
+  background:#8f979f;
+}
+.h9-pit-card.broadcast.is-live .h9-pit-live-dot{
+  background:var(--h9-red);
+  box-shadow:0 0 0 4px rgba(227,24,55,.10),0 0 12px rgba(227,24,55,.30);
+}
+
+.h9-pit-ticker{
+  min-height:38px;
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr);
+  align-items:center;
+  overflow:hidden;
+  border-top:1px solid var(--h9-line);
+  background:#111318;
+  color:#fff;
+}
+.h9-pit-ticker>b{
+  align-self:stretch;
+  display:flex;
+  align-items:center;
+  padding:0 10px;
+  background:var(--h9-red);
+  color:#fff;
+  font-size:6px;
+  font-weight:1000;
+  letter-spacing:.09em;
+  white-space:nowrap;
+  text-transform:uppercase;
+}
+.h9-pit-ticker-window{min-width:0;overflow:hidden;white-space:nowrap}
+.h9-pit-ticker-window span{
+  display:inline-block;
+  min-width:max-content;
+  padding-left:100%;
+  color:#fff;
+  font-size:7px;
+  font-weight:900;
+  letter-spacing:.055em;
+  text-transform:uppercase;
+  animation:h9PitWire 24s linear infinite;
+}
+@keyframes h9PitWire{
+  from{transform:translateX(0)}
+  to{transform:translateX(-100%)}
+}
+
 /* SERIES SELECTOR / RACE WEEK */
 .h9-raceweek{padding:30px 0;background:#f2f3f5;border-bottom:1px solid var(--h9-line)}
 .h9-raceweek-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
@@ -610,4 +944,57 @@ html[data-hlrn-theme="dark"] body.home-v8-page .h9-recap .hlrn-recap-card-main p
 html[data-hlrn-theme="dark"] body.home-v8-page .h9-recap .hlrn-recap-card-foot,
 html[data-hlrn-theme="dark"] body.home-v8-page .h9-recap .hlrn-recap-card-foot b{
   color:#fff!important;
+}
+
+/* HLRN PIT WALL — Race Night */
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-pitwall,
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-pitwall-head,
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-pit-next,
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-pit-card,
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-pit-card.broadcast,
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-pit-countdown>div{
+  background:#000!important;
+  background-image:none!important;
+  color:#fff!important;
+  border-color:#2b2b2b!important;
+}
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-pit-card:hover,
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-pit-next:hover{
+  background:#090909!important;
+}
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-pit-card:after{
+  background:linear-gradient(90deg,rgba(0,0,0,0),rgba(0,0,0,.92))!important;
+}
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-pit-next-top span{
+  background:#fff!important;
+  color:#000!important;
+}
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-pitwall-head>span{
+  border-color:#3a3a3a!important;
+  color:#fff!important;
+}
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-pit-next-meta,
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-pit-countdown small,
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-pit-countdown em,
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-pit-card span,
+html[data-hlrn-theme="dark"] body.home-v8-page .h9-pit-card.broadcast small{
+  color:#fff!important;
+}
+
+@media(max-width:1050px){
+  .h9-pitwall{min-height:0}
+  .h9-pit-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:680px){
+  .h9-pitwall-head strong{font-size:21px}
+  .h9-pit-next{min-height:180px;padding:16px}
+  .h9-pit-next>strong{font-size:27px;padding-right:20px}
+  .h9-pit-countdown{grid-template-columns:repeat(3,50px) 1fr}
+  .h9-pit-grid{grid-template-columns:1fr;grid-template-rows:auto}
+  .h9-pit-card.hot{border-right:0}
+  .h9-pit-card.broadcast{grid-column:auto}
+  .h9-pit-card{min-height:96px}
+}
+@media(prefers-reduced-motion:reduce){
+  .h9-pit-ticker-window span{animation:none;padding-left:10px}
 }
