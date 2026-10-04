@@ -144,8 +144,41 @@
     const rows=schedule?.leagues?.[key]||[];
     return rows.find(x=>!x.off&&x.date>=today)||rows.filter(x=>!x.off).slice(-1)[0]||null;
   };
-  const latestReport=reports=>{
+  const latestReport=(reports,snapshot)=>{
     const rows=Array.isArray(reports?.reports)?reports.reports.slice():[];
+
+    // Treat the current Hosted snapshot as a first-class race report too.
+    // This makes the homepage update from new Hosted JSON immediately instead
+    // of depending on data/derived/reports.json being rebuilt first.
+    const hosted=snapshot?.hosted?.latest;
+    if(hosted&&Array.isArray(hosted.results)&&hosted.results.length){
+      const hostedWinner=pretty(
+        hosted.winner||
+        hosted.results.find(r=>Number(r?.position)===1)?.driver||
+        hosted.results[0]?.driver||
+        ""
+      );
+      rows.push({
+        key:"hosted:current-snapshot",
+        series:"hosted",
+        raceId:"latest",
+        track:String(hosted.track||"").trim(),
+        date:String(hosted.date||"").trim(),
+        winner:hostedWinner?{name:hostedWinner,id:""}:null,
+        classified:hosted.results.length,
+        results:hosted.results.map(r=>({
+          id:"",
+          name:pretty(r?.driver||""),
+          start:r?.start,
+          finish:r?.position,
+          lapsLed:r?.lapsLed,
+          incidents:r?.incidents,
+          carNumber:r?.carNumber,
+          status:""
+        }))
+      });
+    }
+
     rows.sort((a,b)=>Date.parse(b.date||0)-Date.parse(a.date||0));
     return rows[0]||null;
   };
@@ -409,7 +442,7 @@
         json("data/race-recaps/index.json").catch(()=>({recaps:[]}))
       ]);
       renderSchedule(schedule);
-      const latest=latestReport(reports);
+      const latest=latestReport(reports,snapshot);
       renderLatest(latest,schedule,recaps);
       renderPitTicker(snapshot,latest);
       relinkDrivers();
