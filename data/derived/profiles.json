@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03T02:00:58.288Z",
+  "generatedAt": "2026-10-04T23:38:08.991Z",
   "drivers": [
     {
       "series": "sunday",
@@ -9742,11 +9742,11 @@
       "photoSlug": "trevor-haley",
       "rank": 1,
       "points": null,
-      "races": 88,
+      "races": 89,
       "wins": 23,
-      "top5": 53,
-      "top10": 66,
-      "avgFinish": 7.75,
+      "top5": 54,
+      "top10": 67,
+      "avgFinish": 7.71,
       "results": []
     },
     {
@@ -9766,11 +9766,26 @@
     },
     {
       "series": "hosted",
+      "id": "ryan-wilson",
+      "name": "Ryan Wilson21",
+      "sourceName": "Ryan Wilson21",
+      "photoSlug": "ryan-wilson",
+      "rank": 3,
+      "points": null,
+      "races": 117,
+      "wins": 6,
+      "top5": 26,
+      "top10": 45,
+      "avgFinish": 14.37,
+      "results": []
+    },
+    {
+      "series": "hosted",
       "id": "ethan-moreno",
       "name": "Ethan Fonseca Moreno",
       "sourceName": "Ethan Fonseca Moreno",
       "photoSlug": "ethan-moreno",
-      "rank": 3,
+      "rank": 4,
       "points": null,
       "races": 18,
       "wins": 6,
@@ -9785,28 +9800,13 @@
       "name": "Jim Segredo",
       "sourceName": "Jim Segredo",
       "photoSlug": "jim-segredo",
-      "rank": 4,
-      "points": null,
-      "races": 165,
-      "wins": 5,
-      "top5": 24,
-      "top10": 60,
-      "avgFinish": 16.41,
-      "results": []
-    },
-    {
-      "series": "hosted",
-      "id": "ryan-wilson",
-      "name": "Ryan Wilson21",
-      "sourceName": "Ryan Wilson21",
-      "photoSlug": "ryan-wilson",
       "rank": 5,
       "points": null,
-      "races": 115,
+      "races": 167,
       "wins": 5,
-      "top5": 24,
-      "top10": 43,
-      "avgFinish": 14.57,
+      "top5": 25,
+      "top10": 61,
+      "avgFinish": 16.32,
       "results": []
     },
     {
@@ -9862,11 +9862,11 @@
       "photoSlug": "josh-mckinney",
       "rank": 9,
       "points": null,
-      "races": 107,
+      "races": 108,
       "wins": 4,
       "top5": 23,
       "top10": 44,
-      "avgFinish": 14.23,
+      "avgFinish": 14.24,
       "results": []
     },
     {
@@ -9877,11 +9877,11 @@
       "photoSlug": "jerry-fassett",
       "rank": 10,
       "points": null,
-      "races": 172,
+      "races": 174,
       "wins": 4,
       "top5": 21,
       "top10": 59,
-      "avgFinish": 14.91,
+      "avgFinish": 14.97,
       "results": []
     },
     {
@@ -9892,11 +9892,11 @@
       "photoSlug": "chris-james",
       "rank": 11,
       "points": null,
-      "races": 77,
+      "races": 78,
       "wins": 4,
       "top5": 20,
       "top10": 37,
-      "avgFinish": 11.88,
+      "avgFinish": 11.87,
       "results": []
     },
     {
@@ -9937,11 +9937,11 @@
       "photoSlug": "craig-rowe",
       "rank": 14,
       "points": null,
-      "races": 69,
+      "races": 70,
       "wins": 4,
       "top5": 13,
       "top10": 22,
-      "avgFinish": 20.64,
+      "avgFinish": 20.59,
       "results": []
     },
     {
@@ -9967,11 +9967,11 @@
       "photoSlug": "eric-hayden",
       "rank": 16,
       "points": null,
-      "races": 175,
+      "races": 176,
       "wins": 3,
       "top5": 33,
       "top10": 74,
-      "avgFinish": 13.9,
+      "avgFinish": 13.93,
       "results": []
     },
     {
@@ -9982,11 +9982,11 @@
       "photoSlug": "gerry-bergeron",
       "rank": 17,
       "points": null,
-      "races": 108,
+      "races": 110,
       "wins": 3,
-      "top5": 30,
-      "top10": 63,
-      "avgFinish": 10.76,
+      "top5": 31,
+      "top10": 64,
+      "avgFinish": 10.85,
       "results": []
     },
     {
@@ -9997,11 +9997,11 @@
       "photoSlug": "kyle-kammeron",
       "rank": 18,
       "points": null,
-      "races": 89,
+      "races": 90,
       "wins": 3,
       "top5": 23,
       "top10": 53,
-      "avgFinish": 12.08,
+      "avgFinish": 12.16,
       "results": []
     },
     {
