@@ -304,10 +304,11 @@ def build_episode(spec,messages):
 def episode_home_cover(entry):
     """Prefer Hunter's custom shelf covers when present, otherwise use the episode's published cover."""
     number = entry.get('number')
-    if entry.get('kind') == 'main' and number in {3, 4, 5, 6, 7, 8}:
-        custom = DEST / f"episode-{number:02d}-cover.webp"
-        if custom.exists():
-            return custom.name
+    if entry.get('kind') == 'main' and number:
+        for extension in ('webp', 'svg', 'png', 'jpg', 'jpeg'):
+            custom = DEST / f"episode-{number:02d}-cover.{extension}"
+            if custom.exists():
+                return custom.name
     return str(entry.get('cover') or f"{entry['id']}/images/001.webp")
 
 
