@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05T17:53:44.821Z",
+  "generatedAt": "2026-10-05T18:03:56.661Z",
   "reports": [
     {
       "key": "sunday:383380",
@@ -54,7 +54,7 @@
           "start": 1,
           "finish": 4,
           "gain": -3,
-          "points": 48,
+          "points": 49,
           "lapsLed": 5,
           "incidents": 34,
           "status": "Running"
@@ -109,7 +109,7 @@
           "start": 5,
           "finish": 9,
           "gain": -4,
-          "points": 42,
+          "points": 44,
           "lapsLed": 14,
           "incidents": 20,
           "status": "Running"
@@ -166,7 +166,7 @@
           "start": 1,
           "finish": 4,
           "gain": -3,
-          "points": 48,
+          "points": 49,
           "lapsLed": 5,
           "incidents": 34,
           "status": "Running"
@@ -221,7 +221,7 @@
           "start": 5,
           "finish": 9,
           "gain": -4,
-          "points": 42,
+          "points": 44,
           "lapsLed": 14,
           "incidents": 20,
           "status": "Running"
@@ -298,7 +298,7 @@
           "start": 29,
           "finish": 16,
           "gain": 13,
-          "points": 35,
+          "points": 38,
           "lapsLed": 4,
           "incidents": 26,
           "status": "Running"
@@ -386,7 +386,7 @@
           "start": 15,
           "finish": 24,
           "gain": -9,
-          "points": 27,
+          "points": 31,
           "lapsLed": 2,
           "incidents": 24,
           "status": "Running"

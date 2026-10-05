@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05T17:53:44.821Z",
+  "generatedAt": "2026-10-05T18:03:56.661Z",
   "leagues": {
     "sunday": {
       "drivers": [
@@ -551,32 +551,6 @@
           "team": "TWM"
         },
         {
-          "driver": "Ceballos, Darrel",
-          "rank": 22,
-          "change": 0,
-          "points": 334,
-          "stagePoints": 20,
-          "races": 10,
-          "starts": 10,
-          "wins": 0,
-          "top5": 0,
-          "top10": 4,
-          "avgFinish": 20,
-          "driverId": "126078",
-          "racesCounted": 10,
-          "racePoints": 310,
-          "bonus": 4,
-          "penalty": 0,
-          "laps": 1219,
-          "lapsLed": 4,
-          "incidents": 211,
-          "poles": 0,
-          "stageWins": 0,
-          "ratingTotal": 710.4008,
-          "avgRating": 71.04008,
-          "team": "Rowdy"
-        },
-        {
           "driver": "Boyer, Larkin",
           "rank": 22,
           "change": 2,
@@ -601,6 +575,32 @@
           "ratingTotal": 826.9457,
           "avgRating": 82.69457,
           "team": "LBS"
+        },
+        {
+          "driver": "Ceballos, Darrel",
+          "rank": 22,
+          "change": 0,
+          "points": 334,
+          "stagePoints": 20,
+          "races": 10,
+          "starts": 10,
+          "wins": 0,
+          "top5": 0,
+          "top10": 4,
+          "avgFinish": 20,
+          "driverId": "126078",
+          "racesCounted": 10,
+          "racePoints": 310,
+          "bonus": 4,
+          "penalty": 0,
+          "laps": 1219,
+          "lapsLed": 4,
+          "incidents": 211,
+          "poles": 0,
+          "stageWins": 0,
+          "ratingTotal": 710.4008,
+          "avgRating": 71.04008,
+          "team": "Rowdy"
         },
         {
           "driver": "Philpott, Jared",
@@ -8017,7 +8017,7 @@
           "start": 1,
           "finish": 4,
           "positionGain": -3,
-          "points": 48,
+          "points": 49,
           "lapsLed": 5,
           "incidents": 34,
           "status": "Running"
@@ -8087,7 +8087,7 @@
           "start": 5,
           "finish": 9,
           "positionGain": -4,
-          "points": 42,
+          "points": 44,
           "lapsLed": 14,
           "incidents": 20,
           "status": "Running"
@@ -8185,7 +8185,7 @@
           "start": 29,
           "finish": 16,
           "positionGain": 13,
-          "points": 35,
+          "points": 38,
           "lapsLed": 4,
           "incidents": 26,
           "status": "Running"
@@ -8297,7 +8297,7 @@
           "start": 15,
           "finish": 24,
           "positionGain": -9,
-          "points": 27,
+          "points": 31,
           "lapsLed": 2,
           "incidents": 24,
           "status": "Running"
