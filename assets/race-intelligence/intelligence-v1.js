@@ -94,11 +94,13 @@ function formatDriverName(name){
   if(raw.includes(",")){
     const parts = raw.split(",").map(p=>p.trim()).filter(Boolean);
     if(parts.length >= 2){
-      return parts.slice(1).join(" ") + " " + parts[0];
+      return (parts.slice(1).join(" ") + " " + parts[0]).replace(/([A-Za-z])\d+$/,"$1");
     }
   }
 
-  return raw;
+  /* iRacing can append account/name suffix digits to the display name
+     (for example "Matthew Graham20"). They are not part of the HLRN name. */
+  return raw.replace(/([A-Za-z])\d+$/,"$1");
 }
 
 
@@ -125,10 +127,15 @@ function hLrnPhotoSlug(driverOrName){
       .replace(/^-+|-+$/g,"");
   }
 
+  /* Match HLRN photo assets even when iRacing appends account suffix
+     digits to a driver name, e.g. Matthew Graham20 -> matthew-graham. */
+  slug=slug.replace(/\d+$/,"").replace(/-+$/,"");
+
   const fixes={
     "aaron-treubig":"aaron-truebig",
     "david-durand-jr":"david-durand",
-    "zach-harry":"zack-harry"
+    "zach-harry":"zack-harry",
+    "matthew-graham20":"matthew-graham"
   };
   return fixes[slug] || slug;
 }
@@ -196,7 +203,8 @@ function hLrnPhotoMarkup(driverOrName,type,className){
   const name = rec?.displayName || (typeof driverOrName === "string"
     ? formatDriverName(driverOrName)
     : formatDriverName(driverOrName?.name || driverOrName?.driver || "Driver"));
-  return `<img class="${className}" src="${esc(src)}" alt="${esc(name)}" loading="lazy" decoding="async" onerror="this.style.display='none'">`;
+  const fallback = hLrnDriverPhoto(driverOrName,type==="full"?"cutout":"full");
+  return `<img class="${className}" src="${esc(src)}" alt="${esc(name)}" loading="lazy" decoding="async" data-hlrn-photo-fallback="${esc(fallback)}" onerror="if(!this.dataset.hlrnFallbackTried&&this.dataset.hlrnPhotoFallback){this.dataset.hlrnFallbackTried='1';this.src=this.dataset.hlrnPhotoFallback}else{this.style.display='none'}">`;
 }
 
 function hLrnDriverPhotoMarkup(driverOrName,className){
