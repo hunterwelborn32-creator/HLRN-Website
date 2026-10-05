@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05T17:15:49.039Z",
+  "generatedAt": "2026-10-05T17:32:17.307Z",
   "leagues": {
     "sunday": {
       "drivers": [
@@ -213,6 +213,32 @@
           "team": "PrimeX"
         },
         {
+          "driver": "Guerrero2, Vicente",
+          "rank": 9,
+          "change": 1,
+          "points": 431,
+          "stagePoints": 45,
+          "races": 12,
+          "starts": 12,
+          "wins": 0,
+          "top5": 1,
+          "top10": 2,
+          "avgFinish": 20.17,
+          "driverId": "65049",
+          "racesCounted": 12,
+          "racePoints": 370,
+          "bonus": 16,
+          "penalty": 0,
+          "laps": 1611,
+          "lapsLed": 64,
+          "incidents": 200,
+          "poles": 1,
+          "stageWins": 0,
+          "ratingTotal": 894.7627,
+          "avgRating": 74.56355833333333,
+          "team": "VRX"
+        },
+        {
           "driver": "Brown49, Matthew",
           "rank": 10,
           "change": -1,
@@ -263,32 +289,6 @@
           "ratingTotal": 738.7933,
           "avgRating": 61.56610833333334,
           "team": "SMT"
-        },
-        {
-          "driver": "Guerrero2, Vicente",
-          "rank": 9,
-          "change": 1,
-          "points": 431,
-          "stagePoints": 45,
-          "races": 12,
-          "starts": 12,
-          "wins": 0,
-          "top5": 1,
-          "top10": 2,
-          "avgFinish": 20.17,
-          "driverId": "65049",
-          "racesCounted": 12,
-          "racePoints": 370,
-          "bonus": 16,
-          "penalty": 0,
-          "laps": 1611,
-          "lapsLed": 64,
-          "incidents": 200,
-          "poles": 1,
-          "stageWins": 0,
-          "ratingTotal": 894.7627,
-          "avgRating": 74.56355833333333,
-          "team": "VRX"
         },
         {
           "driver": "James, Chris",
@@ -1484,7 +1484,7 @@
           "stageWins": 0,
           "ratingTotal": 76.9584,
           "avgRating": 76.9584,
-          "team": ""
+          "team": "GEN X"
         },
         {
           "driver": "Moody, Nicholas",
@@ -1749,10 +1749,10 @@
           "wins": 0.4,
           "top5": 2.3,
           "top10": 4.5166666666666675,
-          "points": 469.5333333333333,
+          "points": 470.7833333333333,
           "racePoints": 416,
           "stagePoints": 35.333333333333336,
-          "bonus": 18.2,
+          "bonus": 19.45,
           "penalty": 0,
           "laps": 1708.5166666666667,
           "lapsLed": 64.14999999999999,
@@ -1883,6 +1883,24 @@
           "laps": 1173.9333333333334,
           "lapsLed": 27.666666666666664,
           "incidents": 165.86666666666665
+        },
+        {
+          "team": "GEN X",
+          "rank": 10,
+          "change": 0,
+          "starts": 1,
+          "racesCounted": 1,
+          "wins": 0,
+          "top5": 0,
+          "top10": 1,
+          "points": 41,
+          "racePoints": 41,
+          "stagePoints": 0,
+          "bonus": 0,
+          "penalty": 0,
+          "laps": 106,
+          "lapsLed": 1,
+          "incidents": 10
         }
       ],
       "results": [
@@ -8195,7 +8213,7 @@
           "start": 17,
           "finish": 18,
           "positionGain": -1,
-          "points": 34,
+          "points": 39,
           "lapsLed": 12,
           "incidents": 20,
           "status": "Running"
@@ -8418,6 +8436,12 @@
           {
             "driverId": "130000",
             "driver": "Tyler3, Timothy"
+          }
+        ],
+        "GEN X": [
+          {
+            "driverId": "122861",
+            "driver": "Craven, Patrick"
           }
         ],
         "Helix": [
