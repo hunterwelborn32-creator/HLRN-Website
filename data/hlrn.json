@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04T23:38:08.991Z",
+  "generatedAt": "2026-10-05T03:43:10.140Z",
   "leagues": {
     "sunday": {
       "drivers": [
@@ -59,7 +59,7 @@
         {
           "driver": "Moreno, Ethan",
           "rank": 3,
-          "change": 1,
+          "change": 0,
           "points": 437,
           "stagePoints": 46,
           "races": 9,
@@ -85,7 +85,7 @@
         {
           "driver": "Showers, Brandon",
           "rank": 4,
-          "change": -1,
+          "change": 0,
           "points": 431,
           "stagePoints": 44,
           "races": 11,
@@ -163,7 +163,7 @@
         {
           "driver": "Jones, Dylan",
           "rank": 7,
-          "change": 2,
+          "change": 0,
           "points": 408,
           "stagePoints": 49,
           "races": 8,
@@ -215,7 +215,7 @@
         {
           "driver": "Brown49, Matthew",
           "rank": 9,
-          "change": -3,
+          "change": 0,
           "points": 396,
           "stagePoints": 24,
           "races": 11,
@@ -267,7 +267,7 @@
         {
           "driver": "Hennings, Brian",
           "rank": 11,
-          "change": 1,
+          "change": 0,
           "points": 390,
           "stagePoints": 18,
           "races": 10,
@@ -293,7 +293,7 @@
         {
           "driver": "Wilson21, Ryan",
           "rank": 12,
-          "change": -1,
+          "change": 0,
           "points": 388,
           "stagePoints": 36,
           "races": 11,
@@ -319,7 +319,7 @@
         {
           "driver": "Beach, Donny",
           "rank": 13,
-          "change": 1,
+          "change": 0,
           "points": 383,
           "stagePoints": 41,
           "races": 11,
@@ -345,7 +345,7 @@
         {
           "driver": "McKinney2, Joshua",
           "rank": 14,
-          "change": 2,
+          "change": 0,
           "points": 370,
           "stagePoints": 27,
           "races": 11,
@@ -371,7 +371,7 @@
         {
           "driver": "Crowe, Justin",
           "rank": 15,
-          "change": -2,
+          "change": 0,
           "points": 361,
           "stagePoints": 33,
           "races": 10,
@@ -397,7 +397,7 @@
         {
           "driver": "Jeffries, Jeremy",
           "rank": 15,
-          "change": -1,
+          "change": 0,
           "points": 361,
           "stagePoints": 17,
           "races": 11,
@@ -449,7 +449,7 @@
         {
           "driver": "Segredo, Jim",
           "rank": 18,
-          "change": 2,
+          "change": 0,
           "points": 343,
           "stagePoints": 14,
           "races": 11,
@@ -475,7 +475,7 @@
         {
           "driver": "Kammeron, Kyle",
           "rank": 19,
-          "change": -1,
+          "change": 0,
           "points": 325,
           "stagePoints": 40,
           "races": 10,
@@ -501,7 +501,7 @@
         {
           "driver": "Hayden, Eric",
           "rank": 20,
-          "change": -1,
+          "change": 0,
           "points": 324,
           "stagePoints": 38,
           "races": 11,
@@ -553,7 +553,7 @@
         {
           "driver": "Ceballos, Darrel",
           "rank": 22,
-          "change": 2,
+          "change": 0,
           "points": 311,
           "stagePoints": 20,
           "races": 9,
@@ -579,7 +579,7 @@
         {
           "driver": "Escamilla, Juan",
           "rank": 23,
-          "change": 6,
+          "change": 0,
           "points": 295,
           "stagePoints": 15,
           "races": 9,
@@ -605,7 +605,7 @@
         {
           "driver": "Boyer, Larkin",
           "rank": 24,
-          "change": 7,
+          "change": 0,
           "points": 285,
           "stagePoints": 0,
           "races": 9,
@@ -631,7 +631,7 @@
         {
           "driver": "Welborn, Hunter",
           "rank": 25,
-          "change": 1,
+          "change": 0,
           "points": 277,
           "stagePoints": 26,
           "races": 9,
@@ -657,7 +657,7 @@
         {
           "driver": "Neagles, Kody",
           "rank": 26,
-          "change": -4,
+          "change": 0,
           "points": 276,
           "stagePoints": 0,
           "races": 8,
@@ -683,7 +683,7 @@
         {
           "driver": "Philpott, Jared",
           "rank": 26,
-          "change": 7,
+          "change": 0,
           "points": 276,
           "stagePoints": 0,
           "races": 6,
@@ -709,7 +709,7 @@
         {
           "driver": "Stamper, Shawn",
           "rank": 28,
-          "change": -5,
+          "change": 0,
           "points": 272,
           "stagePoints": 16,
           "races": 9,
@@ -735,7 +735,7 @@
         {
           "driver": "Ramsey, Kenwood",
           "rank": 29,
-          "change": 1,
+          "change": 0,
           "points": 271,
           "stagePoints": 0,
           "races": 7,
@@ -761,7 +761,7 @@
         {
           "driver": "Campoli, Ross",
           "rank": 30,
-          "change": -6,
+          "change": 0,
           "points": 263,
           "stagePoints": 22,
           "races": 8,
@@ -787,7 +787,7 @@
         {
           "driver": "Hinton2, Bryce",
           "rank": 31,
-          "change": -5,
+          "change": 0,
           "points": 255,
           "stagePoints": 39,
           "races": 6,
@@ -813,7 +813,7 @@
         {
           "driver": "Branch, Jason",
           "rank": 32,
-          "change": -4,
+          "change": 0,
           "points": 254,
           "stagePoints": 48,
           "races": 7,
@@ -839,7 +839,7 @@
         {
           "driver": "Graham20, Matthew",
           "rank": 33,
-          "change": 1,
+          "change": 0,
           "points": 241,
           "stagePoints": 23,
           "races": 11,
@@ -865,7 +865,7 @@
         {
           "driver": "Wessley2, Grant",
           "rank": 34,
-          "change": -2,
+          "change": 0,
           "points": 232,
           "stagePoints": 32,
           "races": 6,
@@ -891,7 +891,7 @@
         {
           "driver": "Tyler3, Timothy",
           "rank": 34,
-          "change": 3,
+          "change": 0,
           "points": 232,
           "stagePoints": 28,
           "races": 11,
@@ -917,7 +917,7 @@
         {
           "driver": "Schweitzer, Randy",
           "rank": 36,
-          "change": 4,
+          "change": 0,
           "points": 220,
           "stagePoints": 0,
           "races": 7,
@@ -943,7 +943,7 @@
         {
           "driver": "Cox, Keaton",
           "rank": 37,
-          "change": -2,
+          "change": 0,
           "points": 208,
           "stagePoints": 19,
           "races": 6,
@@ -969,7 +969,7 @@
         {
           "driver": "Richards, Benjamin",
           "rank": 38,
-          "change": -2,
+          "change": 0,
           "points": 200,
           "stagePoints": 43,
           "races": 5,
@@ -995,7 +995,7 @@
         {
           "driver": "Micheals, Sebastian",
           "rank": 39,
-          "change": -2,
+          "change": 0,
           "points": 199,
           "stagePoints": 12,
           "races": 8,
@@ -1021,7 +1021,7 @@
         {
           "driver": "Rowe, Craig",
           "rank": 40,
-          "change": 2,
+          "change": 0,
           "points": 196,
           "stagePoints": 0,
           "races": 4,
@@ -1047,7 +1047,7 @@
         {
           "driver": "Fletcher, Charles",
           "rank": 41,
-          "change": -2,
+          "change": 0,
           "points": 193,
           "stagePoints": 25,
           "races": 7,
@@ -1073,7 +1073,7 @@
         {
           "driver": "Hebbard2, Brian",
           "rank": 42,
-          "change": 1,
+          "change": 0,
           "points": 186,
           "stagePoints": 0,
           "races": 7,
@@ -1099,7 +1099,7 @@
         {
           "driver": "Hayes4, Brian",
           "rank": 43,
-          "change": -2,
+          "change": 0,
           "points": 169,
           "stagePoints": 29,
           "races": 6,
@@ -1177,7 +1177,7 @@
         {
           "driver": "Eckert, Ethan",
           "rank": 46,
-          "change": 1,
+          "change": 0,
           "points": 149,
           "stagePoints": 0,
           "races": 5,
@@ -1203,7 +1203,7 @@
         {
           "driver": "Beyke, Brandon",
           "rank": 47,
-          "change": 1,
+          "change": 0,
           "points": 140,
           "stagePoints": 0,
           "races": 4,
@@ -1229,7 +1229,7 @@
         {
           "driver": "Piper, Brock",
           "rank": 48,
-          "change": -2,
+          "change": 0,
           "points": 139,
           "stagePoints": 0,
           "races": 5,
@@ -1307,7 +1307,7 @@
         {
           "driver": "Collins, Easton",
           "rank": 51,
-          "change": 2,
+          "change": 0,
           "points": 63,
           "stagePoints": 0,
           "races": 4,
@@ -1333,7 +1333,7 @@
         {
           "driver": "Thompson, Javone",
           "rank": 52,
-          "change": -1,
+          "change": 0,
           "points": 56,
           "stagePoints": 0,
           "races": 2,
@@ -1359,7 +1359,7 @@
         {
           "driver": "Treubig, Aaron",
           "rank": 53,
-          "change": -1,
+          "change": 0,
           "points": 54,
           "stagePoints": 0,
           "races": 2,
@@ -1385,7 +1385,7 @@
         {
           "driver": "Lunn, Tj",
           "rank": 54,
-          "change": 5,
+          "change": 0,
           "points": 51,
           "stagePoints": 0,
           "races": 2,
@@ -1411,7 +1411,7 @@
         {
           "driver": "Moody, Nicholas",
           "rank": 55,
-          "change": -1,
+          "change": 0,
           "points": 37,
           "stagePoints": 0,
           "races": 1,
@@ -1437,7 +1437,7 @@
         {
           "driver": "Speicher, Greg",
           "rank": 56,
-          "change": -1,
+          "change": 0,
           "points": 31,
           "stagePoints": 0,
           "races": 1,
@@ -1463,7 +1463,7 @@
         {
           "driver": "Gothard, Tyler",
           "rank": 56,
-          "change": -1,
+          "change": 0,
           "points": 31,
           "stagePoints": 0,
           "races": 1,
@@ -1489,7 +1489,7 @@
         {
           "driver": "Fairman2, Larry",
           "rank": 58,
-          "change": -1,
+          "change": 0,
           "points": 25,
           "stagePoints": 0,
           "races": 1,
@@ -1515,7 +1515,7 @@
         {
           "driver": "Wells, Joe",
           "rank": 59,
-          "change": -1,
+          "change": 0,
           "points": 22,
           "stagePoints": 0,
           "races": 1,
@@ -1593,7 +1593,7 @@
         {
           "driver": "Rivera, Victor",
           "rank": 62,
-          "change": -1,
+          "change": 0,
           "points": 11,
           "stagePoints": 0,
           "races": 1,
