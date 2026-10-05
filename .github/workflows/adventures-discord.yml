@@ -1,9 +1,6 @@
 name: HLRN Adventures Discord Publisher
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - '.github/workflows/adventures-discord.yml'
   schedule:
     - cron: '*/15 * * * *'
 permissions:
