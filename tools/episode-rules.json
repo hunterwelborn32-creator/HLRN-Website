@@ -69,6 +69,13 @@
       "kind": "main",
       "number": 9,
       "opening_message_id": "1553724443639947336"
+    },
+    {
+      "slug": "episode-10",
+      "title": "Race Control Conflict Resolution",
+      "kind": "main",
+      "number": 10,
+      "opening_message_id": "1556260738430144532"
     }
   ]
 }
