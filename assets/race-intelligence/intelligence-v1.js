@@ -49,7 +49,7 @@ const categoryConfig = [
   {key:"mover", title:"Biggest Mover", icon:"↗", tag:"Racecraft", accent:"rgba(56,212,123,.20)"},
   {key:"recentWinner", title:"Most Recent Winner", icon:"🏁", tag:"Latest Winner", accent:"rgba(241,200,75,.23)"},
   {key:"trouble", title:"Trouble Watch", icon:"⚠", tag:"Risk Signal", accent:"rgba(239,37,37,.21)"},
-  {key:"bounce", title:"Cold Streak", icon:"↓", tag:"Cooling Off", accent:"rgba(162,119,255,.20)"},
+  {key:"bounce", title:"Needs a Bounce Back", icon:"↻", tag:"Recovery Watch", accent:"rgba(162,119,255,.20)"},
   {key:"darkHorse", title:"Dark Horse", icon:"♞", tag:"Upset Potential", accent:"rgba(162,119,255,.20)"},
   {key:"watch", title:"Driver To Watch", icon:"👁", tag:"Trending", accent:"rgba(86,164,255,.20)"}
 ];
@@ -664,13 +664,19 @@ function chooseCategories(){
     Math.max(0,d.recentAvgFinish-d.seasonAvgFinish)*3
   );
 
+  /* Broadcast graphics depend on this category always existing. Prefer
+     drivers with completed results, but fall back to the active field so
+     "Needs a Bounce Back" is never omitted while intelligence data exists. */
   let bouncePool = multiRace.filter(d=>d.latest && d.latest.finish>0);
   if(!bouncePool.length) bouncePool=all.filter(d=>d.latest && d.latest.finish>0);
+  if(!bouncePool.length) bouncePool=multiRace.length ? multiRace : all;
   const bounce = maxBy(bouncePool,d=>
     Math.max(0,-d.improvement)*12 +
     Math.max(0,d.recentAvgFinish-d.seasonAvgFinish)*10 +
-    Math.max(0,(d.latest?.finish||0)-d.seasonAvgFinish)*4 +
-    Math.max(0,d.recentInc-d.avgInc)*3
+    Math.max(0,(d.latest?.finish||d.recentAvgFinish||d.seasonAvgFinish||0)-d.seasonAvgFinish)*4 +
+    Math.max(0,d.recentInc-d.avgInc)*3 +
+    Math.max(0,(d.recentAvgFinish||d.seasonAvgFinish||0)-10)*1.5 +
+    Math.max(0,65-d.overall)*.25
   );
 
   let darkPool = all.filter(d=>d.rank>=6 && d.races.length>=2);
@@ -720,7 +726,9 @@ function chooseCategories(){
     makeCategory("bounce",bounce,
       bounce?.recentAvgFinish>bounce?.seasonAvgFinish
         ? "Recent form is " + round(bounce.recentAvgFinish-bounce.seasonAvgFinish,1) + " spots worse than the season average."
-        : "The latest result and incident trend put this driver on the cooling-off board.",
+        : bounce?.latest
+          ? "The latest result and incident trend make this the strongest bounce-back candidate."
+          : "Available championship data makes this the current bounce-back candidate.",
       "Recent Avg " + formatFinish(bounce?.recentAvgFinish)),
     makeCategory("darkHorse",darkHorse,
       "Outside the obvious favorites but combines top-10 ability, racecraft and consistency.",
