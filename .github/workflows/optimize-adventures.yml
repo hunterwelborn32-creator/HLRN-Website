@@ -48,3 +48,4 @@ jobs:
           else
             echo "No Adventure image changes to commit."
           fi
+
