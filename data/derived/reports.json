@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-06T02:32:43.221Z",
+  "generatedAt": "2026-10-06T02:49:30.731Z",
   "reports": [
     {
       "key": "monday:383476",
@@ -32,7 +32,7 @@
           "start": 4,
           "finish": 2,
           "gain": 2,
-          "points": 49,
+          "points": 0,
           "lapsLed": 0,
           "incidents": 0,
           "status": "Running"
@@ -43,7 +43,7 @@
           "start": 1,
           "finish": 3,
           "gain": -2,
-          "points": 49,
+          "points": 50,
           "lapsLed": 5,
           "incidents": 10,
           "status": "Running"
@@ -54,7 +54,7 @@
           "start": 13,
           "finish": 4,
           "gain": 9,
-          "points": 47,
+          "points": 48,
           "lapsLed": 0,
           "incidents": 4,
           "status": "Running"
@@ -65,7 +65,7 @@
           "start": 6,
           "finish": 5,
           "gain": 1,
-          "points": 46,
+          "points": 47,
           "lapsLed": 0,
           "incidents": 2,
           "status": "Running"
@@ -76,7 +76,7 @@
           "start": 14,
           "finish": 6,
           "gain": 8,
-          "points": 45,
+          "points": 46,
           "lapsLed": 0,
           "incidents": 6,
           "status": "Running"
@@ -87,7 +87,7 @@
           "start": 16,
           "finish": 7,
           "gain": 9,
-          "points": 44,
+          "points": 45,
           "lapsLed": 0,
           "incidents": 4,
           "status": "Running"
@@ -98,7 +98,7 @@
           "start": 3,
           "finish": 8,
           "gain": -5,
-          "points": 43,
+          "points": 44,
           "lapsLed": 2,
           "incidents": 2,
           "status": "Running"
@@ -109,7 +109,7 @@
           "start": 22,
           "finish": 9,
           "gain": 13,
-          "points": 42,
+          "points": 43,
           "lapsLed": 0,
           "incidents": 3,
           "status": "Running"
@@ -120,7 +120,7 @@
           "start": 19,
           "finish": 10,
           "gain": 9,
-          "points": 41,
+          "points": 42,
           "lapsLed": 0,
           "incidents": 4,
           "status": "Running"
@@ -144,7 +144,7 @@
           "start": 4,
           "finish": 2,
           "gain": 2,
-          "points": 49,
+          "points": 0,
           "lapsLed": 0,
           "incidents": 0,
           "status": "Running"
@@ -155,7 +155,7 @@
           "start": 1,
           "finish": 3,
           "gain": -2,
-          "points": 49,
+          "points": 50,
           "lapsLed": 5,
           "incidents": 10,
           "status": "Running"
@@ -166,7 +166,7 @@
           "start": 13,
           "finish": 4,
           "gain": 9,
-          "points": 47,
+          "points": 48,
           "lapsLed": 0,
           "incidents": 4,
           "status": "Running"
@@ -177,7 +177,7 @@
           "start": 6,
           "finish": 5,
           "gain": 1,
-          "points": 46,
+          "points": 47,
           "lapsLed": 0,
           "incidents": 2,
           "status": "Running"
@@ -188,7 +188,7 @@
           "start": 14,
           "finish": 6,
           "gain": 8,
-          "points": 45,
+          "points": 46,
           "lapsLed": 0,
           "incidents": 6,
           "status": "Running"
@@ -199,7 +199,7 @@
           "start": 16,
           "finish": 7,
           "gain": 9,
-          "points": 44,
+          "points": 45,
           "lapsLed": 0,
           "incidents": 4,
           "status": "Running"
@@ -210,7 +210,7 @@
           "start": 3,
           "finish": 8,
           "gain": -5,
-          "points": 43,
+          "points": 44,
           "lapsLed": 2,
           "incidents": 2,
           "status": "Running"
@@ -221,7 +221,7 @@
           "start": 22,
           "finish": 9,
           "gain": 13,
-          "points": 42,
+          "points": 43,
           "lapsLed": 0,
           "incidents": 3,
           "status": "Running"
@@ -232,7 +232,7 @@
           "start": 19,
           "finish": 10,
           "gain": 9,
-          "points": 41,
+          "points": 42,
           "lapsLed": 0,
           "incidents": 4,
           "status": "Running"
@@ -243,7 +243,7 @@
           "start": 17,
           "finish": 11,
           "gain": 6,
-          "points": 40,
+          "points": 41,
           "lapsLed": 0,
           "incidents": 8,
           "status": "Running"
@@ -254,7 +254,7 @@
           "start": 2,
           "finish": 12,
           "gain": -10,
-          "points": 40,
+          "points": 46,
           "lapsLed": 64,
           "incidents": 8,
           "status": "Running"
@@ -265,7 +265,7 @@
           "start": 7,
           "finish": 13,
           "gain": -6,
-          "points": 38,
+          "points": 39,
           "lapsLed": 0,
           "incidents": 0,
           "status": "Running"
@@ -276,7 +276,7 @@
           "start": 8,
           "finish": 14,
           "gain": -6,
-          "points": 38,
+          "points": 39,
           "lapsLed": 0,
           "incidents": 10,
           "status": "Running"
@@ -287,7 +287,7 @@
           "start": 23,
           "finish": 15,
           "gain": 8,
-          "points": 36,
+          "points": 40,
           "lapsLed": 0,
           "incidents": 4,
           "status": "Running"
@@ -298,7 +298,7 @@
           "start": 9,
           "finish": 16,
           "gain": -7,
-          "points": 35,
+          "points": 36,
           "lapsLed": 0,
           "incidents": 6,
           "status": "Running"
@@ -309,7 +309,7 @@
           "start": 11,
           "finish": 17,
           "gain": -6,
-          "points": 34,
+          "points": 39,
           "lapsLed": 0,
           "incidents": 4,
           "status": "Running"
@@ -320,7 +320,7 @@
           "start": 10,
           "finish": 18,
           "gain": -8,
-          "points": 33,
+          "points": 34,
           "lapsLed": 0,
           "incidents": 4,
           "status": "Running"
@@ -331,7 +331,7 @@
           "start": 12,
           "finish": 19,
           "gain": -7,
-          "points": 32,
+          "points": 34,
           "lapsLed": 0,
           "incidents": 2,
           "status": "Running"
@@ -342,7 +342,7 @@
           "start": 21,
           "finish": 20,
           "gain": 1,
-          "points": 31,
+          "points": 32,
           "lapsLed": 0,
           "incidents": 0,
           "status": "Running"
@@ -353,7 +353,7 @@
           "start": 15,
           "finish": 21,
           "gain": -6,
-          "points": 30,
+          "points": 31,
           "lapsLed": 0,
           "incidents": 2,
           "status": "Running"
@@ -364,7 +364,7 @@
           "start": 26,
           "finish": 22,
           "gain": 4,
-          "points": 29,
+          "points": 30,
           "lapsLed": 0,
           "incidents": 0,
           "status": "Running"
@@ -375,7 +375,7 @@
           "start": 18,
           "finish": 23,
           "gain": -5,
-          "points": 28,
+          "points": 29,
           "lapsLed": 0,
           "incidents": 8,
           "status": "Running"
@@ -386,7 +386,7 @@
           "start": 25,
           "finish": 24,
           "gain": 1,
-          "points": 27,
+          "points": 28,
           "lapsLed": 0,
           "incidents": 1,
           "status": "Running"
@@ -397,7 +397,7 @@
           "start": 24,
           "finish": 25,
           "gain": -1,
-          "points": 26,
+          "points": 27,
           "lapsLed": 0,
           "incidents": 5,
           "status": "Disconnected"
@@ -408,7 +408,7 @@
           "start": 5,
           "finish": 26,
           "gain": -21,
-          "points": 25,
+          "points": 28,
           "lapsLed": 1,
           "incidents": 2,
           "status": "Disconnected"
@@ -432,7 +432,7 @@
           "start": 22,
           "finish": 9,
           "gain": 13,
-          "points": 42,
+          "points": 43,
           "lapsLed": 0,
           "incidents": 3,
           "status": "Running"
@@ -443,7 +443,7 @@
           "start": 13,
           "finish": 4,
           "gain": 9,
-          "points": 47,
+          "points": 48,
           "lapsLed": 0,
           "incidents": 4,
           "status": "Running"
