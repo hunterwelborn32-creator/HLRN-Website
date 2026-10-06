@@ -1556,3 +1556,159 @@ html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mobile-theme{
   }
 }
 
+
+
+/* =========================================================
+   HLRN GLOBAL READABILITY PASS V3
+   Site-wide type sizing/accessibility only — no color changes.
+   ========================================================= */
+
+html{
+  font-size:16px!important;
+}
+
+body{
+  font-size:16px!important;
+  line-height:1.55!important;
+  font-family:var(--hlrn-body)!important;
+  font-kerning:normal;
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+body :where(button,input,select,textarea){
+  font-family:var(--hlrn-body)!important;
+  font-size:14px!important;
+  line-height:1.35!important;
+}
+
+body :where(p,li,dd,dt,blockquote){
+  font-size:clamp(15px,.92vw,17px)!important;
+  line-height:1.62!important;
+}
+
+body :where(small){
+  font-size:12px!important;
+  line-height:1.45!important;
+}
+
+/* Keep labels, metadata and race-control microcopy readable everywhere. */
+body :where(
+  [class*="eyebrow"],
+  [class*="kicker"],
+  [class*="label"],
+  [class*="meta"],
+  [class*="caption"],
+  [class*="tag"],
+  [class*="badge"],
+  [class*="count"],
+  [class*="status"],
+  [class*="footer-note"],
+  [class*="loading"]
+){
+  font-size:12px!important;
+  line-height:1.4!important;
+}
+
+/* Cards and stat panels previously used many 5–9px labels. */
+body :where(
+  [class*="card"],
+  [class*="stat"],
+  [class*="metric"],
+  [class*="fact"],
+  [class*="score"],
+  [class*="info"],
+  [class*="ticker"],
+  [class*="shortcut"],
+  [class*="summary"]
+) :where(small,span){
+  font-size:max(11px,.72rem)!important;
+  line-height:1.38!important;
+}
+
+/* Action text should stay compact, but never tiny. */
+body :where(
+  .hlrn-btn,
+  button,
+  [role="button"],
+  [class*="tab"],
+  [class*="filter"],
+  [class*="action"],
+  [class*="back"],
+  [class*="link"]
+){
+  font-size:max(12px,.75rem)!important;
+  line-height:1.3!important;
+}
+
+/* Tables are a major part of HLRN; make standings/results readable at a glance. */
+body table :where(th){
+  font-size:12px!important;
+  line-height:1.35!important;
+}
+body table :where(td){
+  font-size:14px!important;
+  line-height:1.42!important;
+}
+
+/* Preserve display hierarchy while improving text spacing. */
+body :where(h1,h2,h3,h4,h5,h6){
+  text-rendering:optimizeLegibility;
+}
+body h1{line-height:1.02!important}
+body h2{line-height:1.08!important}
+body h3{line-height:1.12!important}
+body :where(h4,h5,h6){line-height:1.2!important}
+
+/* Shared navigation — larger without changing its colors or structure. */
+#hlrn-global-nav .hgn-name{font-size:13px!important;line-height:1.08!important}
+#hlrn-global-nav .hgn-name small{font-size:9px!important;line-height:1.2!important}
+#hlrn-global-nav .hgn-link{font-size:11px!important;line-height:1.1!important}
+#hlrn-global-nav .hgn-more-item{font-size:11px!important;line-height:1.2!important}
+#hlrn-global-nav .hgn-login,
+#hlrn-global-nav .hgn-mobile-login,
+#hlrn-global-nav .hgn-live{font-size:10px!important;line-height:1.15!important}
+#hlrn-global-nav .hgn-account-title{font-size:10px!important}
+#hlrn-global-nav .hgn-account-name{font-size:17px!important}
+#hlrn-global-nav .hgn-account-discord{font-size:12px!important;line-height:1.4!important}
+#hlrn-global-nav .hgn-account-panel button{font-size:11px!important}
+
+/* Shared utilities. */
+.hlrn-eyebrow{font-size:12px!important;line-height:1.35!important}
+.hlrn-btn{font-size:12px!important;line-height:1.2!important}
+
+/* Shared footer — readable legal/navigation copy. */
+#hlrn-global-footer .hgf-brand strong{font-size:13px!important}
+#hlrn-global-footer .hgf-brand small{font-size:10px!important;line-height:1.3!important}
+#hlrn-global-footer .hgf-links a{font-size:11px!important;line-height:1.25!important}
+#hlrn-global-footer .hgf-copy{font-size:10px!important;line-height:1.65!important}
+
+/* Phone typography: larger touch/navigation labels and readable body text. */
+@media(max-width:760px){
+  body{
+    font-size:16px!important;
+    line-height:1.58!important;
+  }
+  body :where(p,li,dd,dt,blockquote){
+    font-size:15px!important;
+    line-height:1.6!important;
+  }
+  body :where(small){
+    font-size:11px!important;
+  }
+  body table :where(th){font-size:11px!important}
+  body table :where(td){font-size:13px!important}
+
+  #hlrn-global-nav .hgn-name{font-size:11px!important}
+  #hlrn-global-nav .hgn-name small{font-size:8px!important}
+  #hlrn-global-nav .hgn-mobile>a,
+  #hlrn-global-nav .hgn-mobile-more,
+  #hlrn-global-nav .hgn-mobile-login{font-size:11px!important}
+  #hlrn-global-nav .hgn-mobile-more-menu a{font-size:10px!important}
+
+  #hlrn-global-footer .hgf-brand strong{font-size:12px!important}
+  #hlrn-global-footer .hgf-brand small{font-size:9px!important}
+  #hlrn-global-footer .hgf-links a{font-size:10px!important}
+  #hlrn-global-footer .hgf-copy{font-size:9px!important}
+}
