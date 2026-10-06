@@ -1,17 +1,7 @@
-name: Publish HLRN Race Recaps — Automatic
+name: Publish HLRN Race Recaps — Manual Only
 
 on:
-  # The Live server freezes the authoritative recorder immediately at checkered.
-  # GitHub then sweeps the rolling /api/recaps archive and makes each frozen
-  # race permanent on the website without requiring a manual approval click.
-  schedule:
-    - cron: "*/5 * * * *"
   workflow_dispatch:
-  push:
-    paths:
-      - ".github/workflows/publish-race-recaps.yml"
-      - "tools/publish-race-recap.py"
-      - "tests/test_race_recap_publisher.py"
 
 permissions:
   contents: write
@@ -25,8 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       HLRN_RECAP_URL: https://hlrn-live-feed.onrender.com/api/recaps
-      # The publisher still has a hard safety gate; this workflow is the
-      # trusted automatic path that opens it after the recorder has frozen.
       HLRN_PUBLISH_APPROVED: "1"
 
     steps:
@@ -44,41 +32,24 @@ jobs:
       - name: Test race recap publisher
         run: python -m unittest tests/test_race_recap_publisher.py
 
-      - name: Publish newly frozen checkered races
+      - name: Publish recorder archive manually
         run: python tools/publish-race-recap.py
 
       - name: Refresh sitemap
         run: python tools/build-sitemap.py
 
-      - name: Save permanent race records
+      - name: Save manually published recorder archive
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "hlrn-race-recap-bot"
           git config user.email "actions@users.noreply.github.com"
-
-          for attempt in 1 2 3; do
-            git add data/race-recaps
-            if [ -d news/race-recaps ]; then git add news/race-recaps; fi
-            if [ -f sitemap.xml ]; then git add sitemap.xml; fi
-
-            if git diff --cached --quiet; then
-              echo "No new or richer frozen races to publish."
-              exit 0
-            fi
-
-            git commit -m "Publish frozen HLRN race recap"
-            if git push origin HEAD:main; then
-              echo "Permanent race record published."
-              exit 0
-            fi
-
-            echo "Main changed during recap publication; rebuilding on latest main (attempt $attempt)."
-            git fetch origin main
-            git reset --hard origin/main
-            python tools/publish-race-recap.py
-            python tools/build-sitemap.py
-          done
-
-          echo "Unable to publish race recap after 3 attempts."
-          exit 1
+          git add data/race-recaps
+          if [ -d news/race-recaps ]; then git add news/race-recaps; fi
+          if [ -f sitemap.xml ]; then git add sitemap.xml; fi
+          if git diff --cached --quiet; then
+            echo "No recorder archive changes."
+            exit 0
+          fi
+          git commit -m "Publish HLRN race recap manually"
+          git push origin HEAD:main
