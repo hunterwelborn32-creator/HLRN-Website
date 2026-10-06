@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { validateAction, buildSnapshot, sameData, seasonDriverTotals, mergeSeasonDriverTotals, parseTeamRostersHtml, parseStageBonusBreakdownHtml, combineStageAwardMaps, applyStageBonusReclassification } from '../tools/sync-data.mjs';
+import { validateAction, buildSnapshot, sameData, seasonDriverTotals, mergeSeasonDriverTotals, parseTeamRostersHtml, parseStageBonusBreakdownHtml, combineStageAwardMaps, applyStageBonusReclassification, parseSimRacerHubRaceResultsHtml, mergeSimRacerHubRaceResults } from '../tools/sync-data.mjs';
 const payloads = Object.fromEntries(['sunday','monday'].map(l => [l, {
   drivers: { success:true, drivers:[{driverId:l+'-1',name:'Example'}] },
   teams: { success:true, teams:[] },
@@ -130,4 +130,44 @@ test('stage parser survives SimRacerHub markup without bonus_form/jsTableRow cla
  assert.equal(map.get('10').points,5);
  assert.equal(map.get('10').wins,1);
  assert.equal(map.get('20').points,4);
+});
+
+
+test('SimRacerHub race result parser reads a standard finishing table', () => {
+ const html=`
+ <table class="table">
+  <thead><tr><th>Pos</th><th>Car #</th><th>Driver</th><th>Start</th><th>Pts</th><th>Laps Led</th><th>Inc</th><th>Status</th></tr></thead>
+  <tbody>
+   <tr><td>1</td><td>91</td><td><a href="driver_stats.php?season_id=30442&driver_id=93794">Bill Daniels</a></td><td>4</td><td>55</td><td>12</td><td>3</td><td>Running</td></tr>
+   <tr><td>2</td><td>56</td><td><a href="/driver_stats.php?driver_id=12345&season_id=30442">Benjamin Richards</a></td><td>1</td><td>49</td><td>20</td><td>2</td><td>Running</td></tr>
+  </tbody>
+ </table>`;
+ const rows=parseSimRacerHubRaceResultsHtml(html,'383476');
+ assert.equal(rows.length,2);
+ assert.equal(rows[0].driverId,'93794');
+ assert.equal(rows[0].finish,1);
+ assert.equal(rows[0].start,4);
+ assert.equal(rows[0].points,55);
+ assert.equal(rows[0].lapsLed,12);
+ assert.equal(rows[0].incidents,3);
+ assert.equal(rows[0].source,'SimRacerHub');
+});
+
+test('direct SimRacerHub race rows replace matching race while preserving HLRN race metadata', () => {
+ const base=[
+  {raceId:'383476',raceNumber:7,track:'Auto Club Speedway',date:'2026-10-05',driverId:'93794',driver:'Daniels, Bill',finish:2,start:4},
+  {raceId:'383476',raceNumber:7,track:'Auto Club Speedway',date:'2026-10-05',driverId:'12345',driver:'Richards, Benjamin',finish:1,start:1},
+  {raceId:'111',raceNumber:6,track:'Other Track',date:'2026-09-28',driverId:'9',finish:1}
+ ];
+ const direct=new Map([['383476',[
+  {raceId:'383476',driverId:'93794',driver:'Bill Daniels',finish:1,start:4,points:55,source:'SimRacerHub'},
+  {raceId:'383476',driverId:'12345',driver:'Benjamin Richards',finish:2,start:1,points:49,source:'SimRacerHub'}
+ ]]]); 
+ const rows=mergeSimRacerHubRaceResults(base,direct);
+ const auto=rows.find(x=>x.raceId==='383476'&&x.driverId==='93794');
+ assert.equal(auto.finish,1);
+ assert.equal(auto.raceNumber,7);
+ assert.equal(auto.track,'Auto Club Speedway');
+ assert.equal(auto.source,'SimRacerHub');
+ assert.ok(rows.some(x=>x.raceId==='111'));
 });
