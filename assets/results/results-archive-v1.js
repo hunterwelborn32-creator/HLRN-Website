@@ -587,8 +587,7 @@ function renderFrozenOnlyReport(item,archive){
     '<div class="report-feature-grid">'+
       feature('Cautions',rx.cautions.length,'Permanent frozen recorder')+
       feature('Penalties',rx.penalties.length,'Black flags / penalties preserved')+
-      feature('Lead Changes',rx.leadChanges??'—','Calculated from completed-lap snapshots',rx.leadChanges===null)+
-      feature('Lap Snapshots',rx.snapshots??'—','Completed laps preserved',rx.snapshots===null)+
+      feature('Lead Changes',rx.leadChanges??'—','Calculated from the frozen race record',rx.leadChanges===null)+
     '</div>'+
     '<h3 class="report-section-title">Race Control Log</h3>'+raceControlLog(fake)+
     '<h3 class="report-section-title">Recorded Final Order</h3>'+
