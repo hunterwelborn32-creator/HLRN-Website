@@ -386,13 +386,21 @@ body.rd-v5.home-v8-page{
 .h9-pit-card strong{
   display:block;
   margin-top:6px;
-  padding-right:44px;
+  padding-right:0;
   font-family:var(--h9-display);
   font-size:18px;
   line-height:.92;
   font-weight:1000;
   letter-spacing:-.02em;
   text-transform:uppercase;
+}
+.h9-pit-card:not(.hosted-winner) strong{
+  width:calc(100% - 96px);
+  max-width:calc(100% - 96px);
+}
+.h9-pit-card:not(.hosted-winner) span{
+  width:calc(100% - 72px);
+  max-width:calc(100% - 72px);
 }
 .h9-pit-card span{
   display:block;
@@ -596,6 +604,7 @@ html[data-hlrn-theme="dark"] body.home-v8-page .h9-pit-social-links a.youtube{co
   text-transform:uppercase;
 }
 .h9-pit-ticker-window{min-width:0;overflow:hidden;white-space:nowrap}
+.h9-pit-ticker-window:hover span{animation-play-state:paused}
 .h9-pit-ticker-window span{
   display:inline-block;
   min-width:max-content;
@@ -605,7 +614,7 @@ html[data-hlrn-theme="dark"] body.home-v8-page .h9-pit-social-links a.youtube{co
   font-weight:900;
   letter-spacing:.055em;
   text-transform:uppercase;
-  animation:h9PitWire 24s linear infinite;
+  animation:h9PitWire 60s linear infinite;
 }
 @keyframes h9PitWire{
   from{transform:translateX(0)}
