@@ -272,6 +272,127 @@ function stripHtml(value = '') {
 function norm(value = '') {
   return stripHtml(value).toLowerCase().replace(/[^a-z0-9]/g, '');
 }
+
+function resultHeaderKey(value = '') {
+  return stripHtml(value).toLowerCase().replace(/[^a-z0-9#]+/g, '');
+}
+function cellNumber(value) {
+  const text = stripHtml(value).replace(/,/g,'');
+  const match = text.match(/-?\d+(?:\.\d+)?/);
+  return match ? num(match[0]) : null;
+}
+function tableCells(rowHtml = '') {
+  return [...String(rowHtml).matchAll(/<(td|th)\b[^>]*>([\s\S]*?)<\/\1>/gi)]
+    .map(m => ({ tag:String(m[1]).toLowerCase(), html:m[2], text:stripHtml(m[2]) }));
+}
+function headerIndex(headers, aliases) {
+  for (let i=0;i<headers.length;i++) {
+    const key=resultHeaderKey(headers[i]);
+    if (aliases.includes(key)) return i;
+  }
+  return -1;
+}
+
+export function parseSimRacerHubRaceResultsHtml(html, raceId='') {
+  const source=String(html||'');
+  const tables=[...source.matchAll(/<table\b[^>]*>([\s\S]*?)<\/table>/gi)].map(m=>m[1]);
+  for (const table of tables) {
+    const rows=[...table.matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)].map(m=>m[1]);
+    if (!rows.length) continue;
+
+    let headerRow=-1, headers=[];
+    for (let i=0;i<Math.min(rows.length,6);i++) {
+      const cells=tableCells(rows[i]);
+      if (!cells.length) continue;
+      const texts=cells.map(c=>c.text);
+      const keys=texts.map(resultHeaderKey);
+      const hasDriver=keys.some(k=>['driver','drivername','name'].includes(k));
+      const hasFinish=keys.some(k=>['pos','position','finish','fin','place'].includes(k));
+      if (hasDriver && hasFinish) {
+        headerRow=i;
+        headers=texts;
+        break;
+      }
+    }
+    if (headerRow<0) continue;
+
+    const finishIdx=headerIndex(headers,['pos','position','finish','fin','place']);
+    const driverIdx=headerIndex(headers,['driver','drivername','name']);
+    const startIdx=headerIndex(headers,['start','startingpos','startingposition','grid','qual','qualifying']);
+    const pointsIdx=headerIndex(headers,['pts','points','racepts','racepoints']);
+    const ledIdx=headerIndex(headers,['led','lapsled','lapslead']);
+    const incIdx=headerIndex(headers,['inc','incident','incidents','incidentpoints']);
+    const statusIdx=headerIndex(headers,['status','finishstatus']);
+    const carIdx=headerIndex(headers,['#','car','carnumber','number','car#']);
+
+    const out=[];
+    for (const rowHtml of rows.slice(headerRow+1)) {
+      const cells=tableCells(rowHtml);
+      if (cells.length<=Math.max(finishIdx,driverIdx)) continue;
+      const driverCell=cells[driverIdx];
+      const driverMatch=(driverCell?.html||'').match(/driver_stats\.php\?[^"'<>]*driver_id=(\d+)/i)
+        || (driverCell?.html||'').match(/driver_id=(\d+)/i)
+        || rowHtml.match(/driver_id=(\d+)/i);
+      const driverId=driverMatch ? String(driverMatch[1]) : '';
+      const driver=stripHtml(driverCell?.html||driverCell?.text||'').trim();
+      const finish=cellNumber(cells[finishIdx]?.text);
+      if ((!driverId && !driver) || finish===null || finish<=0) continue;
+
+      const row={
+        raceId:String(raceId||''),
+        driverId,
+        driver,
+        finish,
+        source:'SimRacerHub'
+      };
+      if (startIdx>=0) row.start=cellNumber(cells[startIdx]?.text);
+      if (pointsIdx>=0) row.points=cellNumber(cells[pointsIdx]?.text);
+      if (ledIdx>=0) row.lapsLed=cellNumber(cells[ledIdx]?.text);
+      if (incIdx>=0) row.incidents=cellNumber(cells[incIdx]?.text);
+      if (statusIdx>=0) row.status=stripHtml(cells[statusIdx]?.text||'');
+      if (carIdx>=0) row.carNumber=stripHtml(cells[carIdx]?.text||'');
+      out.push(row);
+    }
+    if (out.length) return out;
+  }
+  return [];
+}
+
+export function mergeSimRacerHubRaceResults(baseResults=[], directByRace=new Map()) {
+  if (!(directByRace instanceof Map) || !directByRace.size) return baseResults || [];
+  const base=Array.isArray(baseResults)?baseResults:[];
+  const grouped=new Map();
+  for (const row of base) {
+    const key=String(row?.raceId??'');
+    if (!grouped.has(key)) grouped.set(key,[]);
+    grouped.get(key).push(row);
+  }
+
+  const output=[];
+  const used=new Set();
+  for (const [raceId,rows] of grouped.entries()) {
+    const direct=directByRace.get(String(raceId));
+    if (!Array.isArray(direct) || !direct.length) {
+      output.push(...rows);
+      continue;
+    }
+    used.add(String(raceId));
+    const template=rows[0]||{};
+    for (const srh of direct) {
+      const match=rows.find(r=>String(r?.driverId??'')===String(srh?.driverId??''))
+        || rows.find(r=>norm(r?.driver||r?.name||'')===norm(srh?.driver||''));
+      const merged={...(match||{}),...srh};
+      merged.raceId=String(raceId);
+      for (const key of ['raceNumber','track','date']) {
+        if ((merged[key]===null||merged[key]===undefined||merged[key]==='') && template[key]!=null) merged[key]=template[key];
+      }
+      output.push(merged);
+    }
+  }
+  // Only append direct races that already exist in the verified HLRN season data.
+  // This prevents unrelated/test SimRacerHub pages from entering HLRN results.
+  return output;
+}
 function driverVariants(name = '') {
   const raw = stripHtml(name).trim();
   const variants = new Set([norm(raw), norm(raw.replace(/\d+$/g,''))]);
@@ -408,6 +529,28 @@ async function requestTeamRosters(league, drivers) {
   return rosters;
 }
 
+async function requestSeasonRaceResults(raw, league) {
+  const raceIds=mainSeasonRaceIds(raw);
+  const out=new Map();
+  for (const raceId of raceIds) {
+    try {
+      const url=new URL('https://simracerhub.com/season_race.php');
+      url.searchParams.set('race_id',raceId);
+      url.searchParams.set('_',String(Date.now()));
+      const html=await requestText(url,`${league}/SimRacerHub race ${raceId}`,{
+        'User-Agent':'Mozilla/5.0',
+        'Accept':'text/html,application/xhtml+xml'
+      });
+      const rows=parseSimRacerHubRaceResultsHtml(html,raceId);
+      if (rows.length) out.set(String(raceId),rows);
+      else console.warn(`${league}/SimRacerHub race ${raceId}: finishing table not recognized; verified fallback retained`);
+    } catch (e) {
+      console.warn(`${league}/SimRacerHub race ${raceId}: ${e.message}; verified fallback retained`);
+    }
+  }
+  return out;
+}
+
 async function requestMondayStageTotals(raw) {
   const raceIds = mainSeasonRaceIds(raw);
   if (!raceIds.length) throw new Error('monday/stage breakdown: no completed race ids');
@@ -466,6 +609,22 @@ export async function sync({
     } catch (e) {
       seasonRaw[league] = null;
       console.warn(`${league} season enrichment failed; verified Data Hub fields retained:`, e.message);
+    }
+  }
+
+  // Race finishing order: SimRacerHub is the preferred published source.
+  // The existing HLRN Data Hub remains the safety fallback if a race page has
+  // not been updated yet or SimRacerHub changes its markup.
+  for (const league of LEAGUES) {
+    if (!seasonRaw[league]) continue;
+    try {
+      const direct=await requestSeasonRaceResults(seasonRaw[league],league);
+      const base=validateAction(payloads[league]?.results,'results',league);
+      const merged=mergeSimRacerHubRaceResults(base,direct);
+      payloads[league].results={success:true,results:merged};
+      console.log(`${league} race results: SimRacerHub preferred for ${direct.size} completed race(s); verified fallback retained for the rest.`);
+    } catch (e) {
+      console.warn(`${league} direct SimRacerHub race-result refresh failed; verified HLRN results retained: ${e.message}`);
     }
   }
 
