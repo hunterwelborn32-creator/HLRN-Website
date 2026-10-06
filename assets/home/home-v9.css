@@ -407,8 +407,9 @@ body.rd-v5.home-v8-page{
   z-index:2;
   right:5px;
   bottom:0;
-  width:92px;
+  width:auto;
   height:118px;
+  max-width:none;
   object-fit:contain;
   object-position:center bottom;
   filter:drop-shadow(0 5px 8px rgba(0,0,0,.18));
