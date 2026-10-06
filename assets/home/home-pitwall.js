@@ -68,6 +68,7 @@
 
 const PHOTO_BASE="https://hunterwelborn32-creator.github.io/HLRN-App/driver-photos/cutout/";
 const FULL_PHOTO_BASE="https://hunterwelborn32-creator.github.io/HLRN-App/driver-photos/full/";
+const PHOTO_VERSION="?v=20261006-photo-refresh-2";
 const PHOTO_MAP={"aarontruebig":"aaron-truebig.webp","alexleebaw":"alex-leebaw.webp","benjaminrichards":"benjamin-richards.webp","billdaniels":"bill-daniels.webp","brandonbeyke":"brandon-beyke.webp","brandonshowers":"brandon-showers.webp","brianhayes":"brian-hayes.webp","brianhebbard":"brian-hebbard.webp","brianhennings":"brian-hennings.webp","brockpiper":"brock-piper.webp","brycehinton":"bryce-hinton.webp","carsonfreeman":"carson-freeman.webp","charlesfletcher":"charles-fletcher.webp","chrisjames":"chris-james.webp","coricooke":"cori-cooke.webp","craigrowe":"craig-rowe.webp","darrelceballos":"darrel-ceballos.webp","daviddurand":"david-durand.webp","derekjacobs":"derek-jacobs.webp","donnybeach":"donny-beach.webp","dylanjones":"dylan-jones.webp","erichayden":"eric-hayden.webp","ethaneckert":"ethan-eckert.webp","ethanmoreno":"ethan-moreno.webp","evanfuqua":"evan-fuqua.webp","evankarlbon":"evan-karlbon.webp","evanparry":"evan-parry.webp","gerrybergeron":"gerry-bergeron.webp","grantwessley":"grant-wessley.webp","hunterwelborn":"hunter-welborn.webp","jaredphilpott":"jared-philpott.webp","jasonbranch":"jason-branch.webp","javonethompson":"javone-thompson.webp","jeremyjeffries":"jeremy-jeffries.webp","jerryfassett":"jerry-fassett.webp","jimsegredo":"jim-segredo.webp","joekonen":"joe-konen.webp","johnmiles":"john-miles.webp","joshmckinney":"josh-mckinney.webp","joshuaspragg":"joshua-spragg.webp","juanescamilla":"juan-escamilla.webp","justincrowe":"justin-crowe.webp","keatoncox":"keaton-cox.webp","kennyreel":"kenny-reel.webp","kenwoodramsey":"kenwood-ramsey.webp","kodyneagles":"kody-neagles.webp","kylekammeron":"kyle-kammeron.webp","larkinboyer":"larkin-boyer.webp","matthewbrown":"matthew-brown.webp","matthewgraham":"matthew-graham.webp","nicholasbaumann":"nicholas-baumann.webp","nicholasmoody":"nicholas-moody.webp","randyschweitzer":"randy-schweitzer.webp","randyshowers":"randy-showers.webp","rickymiles":"ricky-miles.webp","rosscampoli":"ross-campoli.webp","ryanwilson":"ryan-wilson.webp","scottwise":"scott-wise.webp","sebastianmichaels":"sebastian-michaels.webp","shanehatfield":"shane-hatfield.webp","shawnstamper":"shawn-stamper.webp","timothytyler":"timothy-tyler.webp","tjlunn":"tj-lunn.webp","tommyrogers":"tommy-rogers.webp","trevoraswarnauth":"trevor-aswarnauth.webp","trevorhaley":"trevor-haley.webp","vincenteguerrero":"vincente-guerrero.webp","zackharry":"zack-harry.webp"};
 const PHOTO_ALIASES={"sebastianmicheals":"sebastianmichaels","ericpedleyhayden":"erichayden","randyschweitzerrsi":"randyschweitzer","dyalnjones":"dylanjones","nicholasbaumann2":"nicholasbaumann","dylancjones":"dylanjones","ethanfonsecamoreno":"ethanmoreno","joshuamckinney":"joshmckinney","joshuamckinney2":"joshmckinney","jeremysjeffries":"jeremyjeffries","vicenteguerrero2":"vincenteguerrero","vincenteeguerrero":"vincenteguerrero","brianhebbard2":"brianhebbard","brianhayes4":"brianhayes","ryanwilson21":"ryanwilson","timothytyler3":"timothytyler","matthewbrown49":"matthewbrown","matthewgraham20":"matthewgraham","justincrowetransparent":"justincrowe"};
 const DISPLAY_VARIANTS={"Dylan C Jones":"dylanjones","Dyaln Jones":"dylanjones","Ethan Fonseca Moreno":"ethanmoreno","Joshua McKinney":"joshmckinney","Jeremy S Jeffries":"jeremyjeffries","Eric Pedley Hayden":"erichayden","Randy Schweitzer RSI":"randyschweitzer","Sebastian Micheals":"sebastianmichaels","Vicente Guerrero":"vincenteguerrero","Vincente Guerrero":"vincenteguerrero","Brian Hebbard2":"brianhebbard","Brian Hayes4":"brianhayes","Ryan Wilson21":"ryanwilson","Timothy Tyler3":"timothytyler","Matthew Brown49":"matthewbrown","Matthew Graham20":"matthewgraham","Nicholas Baumann2":"nicholasbaumann","Aaron Truebig":"aarontruebig","Alex Leebaw":"alexleebaw","Benjamin Richards":"benjaminrichards","Bill Daniels":"billdaniels","Brandon Beyke":"brandonbeyke","Brandon Showers":"brandonshowers","Brian Hayes":"brianhayes","Brian Hebbard":"brianhebbard","Brian Hennings":"brianhennings","Brock Piper":"brockpiper","Bryce Hinton":"brycehinton","Carson Freeman":"carsonfreeman","Charles Fletcher":"charlesfletcher","Chris James":"chrisjames","Cori Cooke":"coricooke","Craig Rowe":"craigrowe","Darrel Ceballos":"darrelceballos","David Durand":"daviddurand","Derek Jacobs":"derekjacobs","Donny Beach":"donnybeach","Dylan Jones":"dylanjones","Eric Hayden":"erichayden","Ethan Eckert":"ethaneckert","Ethan Moreno":"ethanmoreno","Evan Fuqua":"evanfuqua","Evan Karlbon":"evankarlbon","Evan Parry":"evanparry","Gerry Bergeron":"gerrybergeron","Grant Wessley":"grantwessley","Hunter Welborn":"hunterwelborn","Jared Philpott":"jaredphilpott","Jason Branch":"jasonbranch","Javone Thompson":"javonethompson","Jeremy Jeffries":"jeremyjeffries","Jerry Fassett":"jerryfassett","Jim Segredo":"jimsegredo","Joe Konen":"joekonen","John Miles":"johnmiles","Josh Mckinney":"joshmckinney","Joshua Spragg":"joshuaspragg","Juan Escamilla":"juanescamilla","Justin Crowe":"justincrowe","Keaton Cox":"keatoncox","Kenny Reel":"kennyreel","Kenwood Ramsey":"kenwoodramsey","Kody Neagles":"kodyneagles","Kyle Kammeron":"kylekammeron","Larkin Boyer":"larkinboyer","Matthew Brown":"matthewbrown","Matthew Graham":"matthewgraham","Nicholas Baumann":"nicholasbaumann","Nicholas Moody":"nicholasmoody","Randy Schweitzer":"randyschweitzer","Randy Showers":"randyshowers","Ricky Miles":"rickymiles","Ross Campoli":"rosscampoli","Ryan Wilson":"ryanwilson","Scott Wise":"scottwise","Sebastian Michaels":"sebastianmichaels","Shane Hatfield":"shanehatfield","Shawn Stamper":"shawnstamper","Timothy Tyler":"timothytyler","Tj Lunn":"tjlunn","Tommy Rogers":"tommyrogers","Trevor Aswarnauth":"trevoraswarnauth","Trevor Haley":"trevorhaley","Zack Harry":"zackharry"};
@@ -108,7 +109,7 @@ function photoKey(name){
 
 function photoURL(name){
     const file=PHOTO_MAP[photoKey(name)];
-    return file ? PHOTO_BASE+file : "";
+    return file ? PHOTO_BASE+file+PHOTO_VERSION : "";
 }
 
 function isPlaceholder(text){
@@ -136,8 +137,8 @@ function decorateNameElement(el){
     if(!file) return;
 
     const useFullPhoto=false;
-    const url=PHOTO_BASE+file;
-    const fallbackUrl=PHOTO_BASE+file;
+    const url=PHOTO_BASE+file+PHOTO_VERSION;
+    const fallbackUrl=PHOTO_BASE+file+PHOTO_VERSION;
 
     const existing=el.querySelector(":scope > .hlrn-photo-name-wrap");
     if(existing && el.dataset.hlrnPhotoName===name) return;
@@ -164,7 +165,7 @@ function findPhotoInSentence(text){
         if(lower.includes(display.toLowerCase())){
             const key=DISPLAY_VARIANTS[display];
             const file=PHOTO_MAP[key];
-            if(file) return {display:display,url:PHOTO_BASE+file};
+            if(file) return {display:display,url:PHOTO_BASE+file+PHOTO_VERSION};
         }
     }
     return null;
