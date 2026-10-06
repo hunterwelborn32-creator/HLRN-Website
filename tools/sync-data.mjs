@@ -529,6 +529,26 @@ async function requestTeamRosters(league, drivers) {
   return rosters;
 }
 
+function debugRacePageSummary(html) {
+  const source=String(html||'');
+  const text=stripHtml(source);
+  const keywords=['Fastest','Caution','Lead Change','Lead Changes','Penalty','Penalties','Lap Snapshot','Best Lap','Laps Led','Pole'];
+  const snippets=[];
+  for(const keyword of keywords){
+    const i=text.toLowerCase().indexOf(keyword.toLowerCase());
+    if(i>=0)snippets.push(text.slice(Math.max(0,i-120),Math.min(text.length,i+260)));
+  }
+  const headers=[];
+  for(const table of source.matchAll(/<table\b[^>]*>([\s\S]*?)<\/table>/gi)){
+    const first=[...table[1].matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)].slice(0,3);
+    for(const row of first){
+      const cells=tableCells(row[1]).map(c=>c.text).filter(Boolean);
+      if(cells.length)headers.push(cells.join(' | '));
+    }
+  }
+  return {snippets:[...new Set(snippets)].slice(0,20),headers:[...new Set(headers)].slice(0,20)};
+}
+
 async function requestSeasonRaceResults(raw, league) {
   const raceIds=mainSeasonRaceIds(raw);
   const out=new Map();
@@ -541,6 +561,9 @@ async function requestSeasonRaceResults(raw, league) {
         'User-Agent':'Mozilla/5.0',
         'Accept':'text/html,application/xhtml+xml'
       });
+      if (String(raceId)==='363739' || String(raceId)==='383476') {
+        console.log('SRH DEBUG '+league+' '+raceId+' '+JSON.stringify(debugRacePageSummary(html)));
+      }
       const rows=parseSimRacerHubRaceResultsHtml(html,raceId);
       if (rows.length) out.set(String(raceId),rows);
       else console.warn(`${league}/SimRacerHub race ${raceId}: finishing table not recognized; verified fallback retained`);
