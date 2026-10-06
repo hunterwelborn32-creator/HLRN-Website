@@ -746,7 +746,6 @@ export async function sync({
           cautions:metric.cautions,
           cautionLaps:metric.cautionLaps,
           penalties:metric.penalties,
-          lapSnapshots:null,
           fastestLap:metric.fastestLap
         });
       }
