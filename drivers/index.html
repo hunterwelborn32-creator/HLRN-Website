@@ -2011,7 +2011,15 @@ function openProfile(name,options={}){
   const clean=prettyName(name);
   const resolved=window.HLRNDrivers?.profileUrl?.(clean)||window.HLRNDrivers?.profileUrl?.(name);
   if(resolved){location.href=resolved;return;}
-  location.href="/drivers/"+driverPageSlug(clean)+"/";
+
+  // New drivers can appear in race data before the permanent-profile
+  // manifest is rebuilt. Keep their profile usable instead of sending
+  // them to a not-yet-generated URL.
+  const current=drivers.find(d=>hLrnSameDriverName(d.driver,clean))||null;
+  const driverId=String(current?.driverIds?.[activeLeague]||"").trim();
+  const q=new URLSearchParams({driver:clean,league:activeLeague});
+  if(driverId)q.set("driverId",driverId);
+  location.href="/drivers/?"+q.toString();
 }
 function leagueStatCards(d){
   const leagues=[activeLeague];
