@@ -8,6 +8,12 @@
   let root;
   try{root=new URL("../../",self&&self.src?self.src:location.href);}catch(_){root=new URL("/",location.origin);}
   const url=path=>new URL(path,root).href;
+  const PHOTO_VERSION="20261006-photo-refresh-2";
+  const freshPhoto=src=>{
+    const value=String(src||"").trim();
+    if(!value)return "";
+    return value+(value.includes("?")?"&":"?")+"v="+PHOTO_VERSION;
+  };
   const $=id=>document.getElementById(id);
   const put=(id,value,fallback="--")=>{
     const el=$(id);
@@ -23,7 +29,7 @@
     // image has successfully loaded. Never erase a valid homepage photo just
     // because the driver manifest is late or temporarily unavailable.
     const system=window.HLRNDrivers;
-    const src=system?.photoUrl?.(value,"cutout")||"";
+    const src=freshPhoto(system?.photoUrl?.(value,"cutout")||"");
     if(!src){
       el.hidden=false;
       return;
@@ -60,9 +66,9 @@
       : "";
 
     const rec=system?.resolve?.(value)||null;
-    const manifestSrc=system?.photoUrl?.(value,"cutout")||"";
+    const manifestSrc=freshPhoto(system?.photoUrl?.(value,"cutout")||"");
     const directSrc=slug
-      ? url("assets/driver-photos/cutout/"+encodeURIComponent(slug)+".webp")
+      ? freshPhoto(url("assets/driver-photos/cutout/"+encodeURIComponent(slug)+".webp"))
       : "";
     const src=directSrc||manifestSrc;
 
