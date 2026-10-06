@@ -637,15 +637,15 @@ async function loadRecorderArchive(){
       try{const r=await fetch(url+(url.includes('?')?'&':'?')+'v='+Date.now(),{cache:'no-store'});if(!r.ok)return null;return[item.slug,await r.json()]}catch(_){return null}
     }));
     recapArchives=new Map(loaded.filter(Boolean));
-    linkRecapsToRaces();
+    // Recorder archives are displayed separately and never merged into official Results.
     renderArchive();
     if(status)status.textContent=recapItems.length
-      ? recapItems.length+' FROZEN RACE'+(recapItems.length===1?'':'S')+' PUBLISHED'
-      : 'RECORDER READY';
+      ? recapItems.length+' MANUAL ARCHIVE'+(recapItems.length===1?'':'S')
+      : 'LOCAL REPORT MODE';
     grid.innerHTML=recapItems.length ? recapItems.map(recorderCard).join('') : '';
   }catch(err){
     if(status)status.textContent='ARCHIVE TEMPORARILY UNAVAILABLE';
-    grid.innerHTML='<div class="recorder-archive-empty">Frozen race records will appear here after the recorder publisher completes its next sync.</div>';
+    grid.innerHTML='<div class="recorder-archive-empty">Recorder archives are manual-only. Live races now generate a local race report on the race PC and do not automatically alter public Results.</div>';
   }
 }
 
