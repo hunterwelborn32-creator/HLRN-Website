@@ -179,6 +179,11 @@ function raceStats(race){
   )[0]||null;
   const totalInc=rows.reduce((t,r)=>t+num(r.incidents),0);
   const avgInc=rows.length?totalInc/rows.length:0;
+  const mostIncRow=rows
+    .filter(r=>rawNum(r.incidents)!==null)
+    .slice()
+    .sort((a,b)=>num(b.incidents)-num(a.incidents)||num(a.finish)-num(b.finish))[0]||null;
+  const mostIncDriver=mostIncRow?map.get(String(mostIncRow.driverId)):null;
   const dnf=rows.filter(r=>/(disconnect|disqual|(^|\s)dq($|\s)|retir|wreck|crash|engine|out|tow)/i.test(String(r.status||''))).length;
   const winnerDriver=winner?map.get(String(winner.driverId)):null;
   const poleDriver=pole?map.get(String(pole.driverId)):null;
@@ -201,6 +206,9 @@ function raceStats(race){
     mover,moverName:mover?pretty(moverDriver?.driver||driverName(race.league,mover.driverId)):'Unavailable',
     moverGain:mover?num(mover.positionGain ?? (num(mover.start)-num(mover.finish))):0,
     totalInc,avgInc,dnf,field:rows.length,
+    mostIncRow,
+    mostIncName:mostIncRow?pretty(mostIncDriver?.driver||driverName(race.league,mostIncRow.driverId)):'Unavailable',
+    mostIncPoints:mostIncRow?num(mostIncRow.incidents):null,
     fastestRow,
     fastest:first(fastestRow,['fastestLap','bestLap','bestLapTime','fastest_lap']),
     cautions,
@@ -507,7 +515,7 @@ function renderReport(race,updateUrl=true){
       feature('Lead Changes',leadValue??'—',leadDetail,leadValue===null)+
       feature('Leaders',leaderValue??'—',leaderValue!==null?'Drivers who led a lap':'Not published by the current race source',leaderValue===null)+
       feature('Race Laps',raceLapsValue??'—',raceLapsValue!==null?'Laps raced':'Not published by the current race source',raceLapsValue===null)+
-      feature('Incidents / Driver',s.avgInc.toFixed(1),fmt(s.totalInc)+' total across '+fmt(s.field)+' starters')+
+      feature('Most Incident Points',s.mostIncPoints!==null?fmt(s.mostIncPoints):'—',s.mostIncRow?s.mostIncName:'No incident data',!s.mostIncRow)+
     '</div>'+
     (race.recap?'<h3 class="report-section-title">Permanent Checkered Record</h3>'+recapButtons(race)+'<h3 class="report-section-title">Race Control Log</h3>'+raceControlLog(race):'')+
     '<h3 class="report-section-title">Finishing Order & Event-Points Movement</h3>'+
