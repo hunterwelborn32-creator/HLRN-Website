@@ -1,0 +1,56 @@
+name: Apply Driver Photo Refresh
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".driver-photo-update.tar.gz"
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Replace driver photos
+        shell: bash
+        run: |
+          set -euo pipefail
+          work="$(mktemp -d)"
+          tar -xzf .driver-photo-update.tar.gz -C "$work"
+
+          mkdir -p assets/driver-photos/cutout assets/driver-photos/full
+
+          cp "$work/chris-james-cutout.webp" assets/driver-photos/cutout/chris-james.webp
+          cp "$work/chris-james-full.webp" assets/driver-photos/full/chris-james.webp
+
+          cp "$work/kenwood-ramsey-cutout.webp" assets/driver-photos/cutout/kenwood-ramsey.webp
+          cp "$work/kenwood-ramsey-full.webp" assets/driver-photos/full/kenwood-ramsey.webp
+
+          cp "$work/ricky-miles-cutout.webp" assets/driver-photos/cutout/ricky-miles.webp
+          cp "$work/ricky-miles-full.webp" assets/driver-photos/full/ricky-miles.webp
+
+          cp "$work/james-smith-cutout.webp" assets/driver-photos/cutout/james-smith.webp
+          cp "$work/james-smith-full.webp" assets/driver-photos/full/james-smith.webp
+
+          cp "$work/javone-thompson-cutout.webp" assets/driver-photos/cutout/javone-thompson.webp
+          cp "$work/javone-thompson-full.webp" assets/driver-photos/full/javone-thompson.webp
+
+          cp "$work/easton-collins-cutout.webp" assets/driver-photos/cutout/easton-collins.webp
+          cp "$work/easton-collins-full.webp" assets/driver-photos/full/easton-collins.webp
+
+          git rm -f .driver-photo-update.tar.gz
+          git rm -f .github/workflows/driver-photo-refresh.yml
+
+          git config user.name "hlrn-photo-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add assets/driver-photos
+          git commit -m "Replace updated HLRN driver photos"
+          git push origin HEAD:main
