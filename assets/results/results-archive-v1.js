@@ -31,6 +31,7 @@ let activeFilter='all';
 let currentKey='';
 let recapItems=[];
 let recapArchives=new Map();
+let raceMetrics=new Map();
 
 function leagueLabel(key){return key==='sunday'?'Sunday Night League':'Monday Night League'}
 function leagueShort(key){return key==='sunday'?'SUNDAY':'MONDAY'}
@@ -97,6 +98,20 @@ function recapRawUrl(item){
 function recapStoryUrl(item){return item?.url||'../news/race-recaps/'}
 function recapResultsUrl(item){return item?.resultsUrl||(item?.slug?'./?recap='+encodeURIComponent(item.slug):'./#recorderArchive')}
 
+async function loadRaceMetrics(){
+  raceMetrics=new Map();
+  try{
+    const res=await fetch('../data/results-race-metrics.json?v='+Date.now(),{cache:'no-store'});
+    if(!res.ok)return;
+    const data=await res.json();
+    const items=Array.isArray(data?.races)?data.races:[];
+    items.forEach(item=>{
+      const key=String(item?.key||raceKey(item?.league,item?.raceNumber,item?.raceId));
+      if(key)raceMetrics.set(key,item);
+    });
+  }catch(_){}
+}
+
 function buildRaces(){
   const out=[];
   for(const key of ['sunday','monday']){
@@ -111,14 +126,16 @@ function buildRaces(){
       group.sort((a,b)=>num(a.finish)-num(b.finish)||num(a.start)-num(b.start));
       if(!group.length)continue;
       const head=group[0];
+      const keyId=raceKey(key,head.raceNumber,id);
       out.push({
-        key:raceKey(key,head.raceNumber,id),
+        key:keyId,
         league:key,
         raceId:String(id),
         raceNumber:num(head.raceNumber),
         track:String(head.track||'Unknown Track'),
         date:head.date||'',
-        rows:group
+        rows:group,
+        metrics:raceMetrics.get(keyId)||null
       });
     }
   }
@@ -399,18 +416,46 @@ function renderReport(race,updateUrl=true){
   ).join(''):'<div class="report-team-card"><span>TEAM DATA</span><strong class="report-unavailable">ROSTER SYNC UNAVAILABLE</strong><small>Team totals will appear once current roster mappings are available.</small></div>';
 
   const rx=recapLists(race);
+  const metrics=race.metrics||{};
   const recorderFast=rx.fastest&&rawNum(rx.fastest.time)!=null?rx.fastest:null;
-  const fastestValue=s.fastest!==null&&s.fastest!==undefined?s.fastest:(recorderFast?recorderFast.time:null);
+  const metricFast=metrics.fastestLap&&rawNum(metrics.fastestLap.time)!=null?metrics.fastestLap:null;
+  const fastestValue=s.fastest!==null&&s.fastest!==undefined
+    ? s.fastest
+    : recorderFast
+      ? recorderFast.time
+      : metricFast
+        ? metricFast.time
+        : null;
   const fastestText=fastestValue!==null&&fastestValue!==undefined?Number(fastestValue).toFixed(3)+'s':'Not in feed';
   const fastestDetail=s.fastest!==null&&s.fastest!==undefined
     ? 'Published race-feed value'
     : recorderFast
       ? 'Permanent frozen recorder • #'+String(recorderFast.number||'—')+' '+String(recorderFast.name||'Unknown Driver')
-      : 'This field is not currently published';
-  const cautionValue=race.recap?rx.cautions.length:s.cautions;
+      : metricFast
+        ? 'iRacing event result • #'+String(metricFast.carNumber||'—')+' '+String(metricFast.driver||'Unknown Driver')+(metricFast.lap?' • Lap '+String(metricFast.lap):'')
+        : 'This field is not currently published';
+  const metricCautions=rawNum(metrics.cautions);
+  const cautionValue=race.recap?rx.cautions.length:(s.cautions!==null&&s.cautions!==undefined?s.cautions:metricCautions);
   const penaltyValue=race.recap?rx.penalties.length:s.penalties;
+  const leadValue=race.recap?rx.leadChanges:rawNum(metrics.leadChanges);
+  const snapshotValue=race.recap?rx.snapshots:rawNum(metrics.lapSnapshots);
   const cautionText=cautionValue!==null&&cautionValue!==undefined?String(cautionValue):'Not in feed';
   const penaltyText=penaltyValue!==null&&penaltyValue!==undefined?fmt(penaltyValue):'Not in feed';
+  const cautionDetail=race.recap
+    ? 'Permanent frozen recorder'
+    : metricCautions!==null
+      ? 'iRacing event result'+(rawNum(metrics.cautionLaps)!==null?' • '+String(metrics.cautionLaps)+' caution laps':'')
+      : (s.cautions!==null&&s.cautions!==undefined?'Published race-feed value':'This field is not currently published');
+  const leadDetail=race.recap
+    ? 'Calculated from completed-lap snapshots'
+    : leadValue!==null
+      ? 'iRacing event result'
+      : 'Available after recorder publication';
+  const snapshotDetail=race.recap
+    ? 'Completed laps preserved at checkered'
+    : race.metrics
+      ? 'Lap-by-lap snapshots are not included in the iRacing event result'
+      : 'Available after recorder publication';
 
   $('raceReportContent').innerHTML=
     '<section class="report-hero '+race.league+'">'+
@@ -433,10 +478,10 @@ function renderReport(race,updateUrl=true){
       feature('Biggest Mover',s.moverName,s.mover?('P'+fmt(s.mover.start)+' → P'+fmt(s.mover.finish)+' • '+(s.moverGain>=0?'+':'')+fmt(s.moverGain)):'Unavailable',!s.mover)+
       feature('Event-Points Leader',standingsLeaderName,standingsLeader?fmt(standingsLeaderPts)+' cumulative published event pts':'Unavailable',!standingsLeader)+
       feature('Fastest Lap',fastestText,fastestDetail,fastestValue===null||fastestValue===undefined)+
-      feature('Cautions',cautionText,race.recap?'Permanent frozen recorder':(s.cautions!==null&&s.cautions!==undefined?'Published race-feed value':'This field is not currently published'),cautionValue===null||cautionValue===undefined)+
+      feature('Cautions',cautionText,cautionDetail,cautionValue===null||cautionValue===undefined)+
       feature('Penalties',penaltyText,race.recap?'Permanent frozen recorder':(s.penalties!==null?'Published race-feed total':'This field is not currently published'),penaltyValue===null||penaltyValue===undefined)+
-      feature('Lead Changes',race.recap?(rx.leadChanges??'—'):'—',race.recap?'Calculated from completed-lap snapshots':'Available after recorder publication',!race.recap||rx.leadChanges===null)+
-      feature('Lap Snapshots',race.recap?(rx.snapshots??'—'):'—',race.recap?'Completed laps preserved at checkered':'Available after recorder publication',!race.recap||rx.snapshots===null)+
+      feature('Lead Changes',leadValue??'—',leadDetail,leadValue===null)+
+      feature('Lap Snapshots',snapshotValue??'—',snapshotDetail,snapshotValue===null)+
       feature('Incidents / Driver',s.avgInc.toFixed(1),fmt(s.totalInc)+' total across '+fmt(s.field)+' starters')+
     '</div>'+
     (race.recap?'<h3 class="report-section-title">Permanent Checkered Record</h3>'+recapButtons(race)+'<h3 class="report-section-title">Race Control Log</h3>'+raceControlLog(race):'')+
@@ -609,6 +654,7 @@ async function load(){
   try{
     if(window.HLRNDrivers?.load)await window.HLRNDrivers.load();
     snapshot=await HLRNData.load();
+    await loadRaceMetrics();
     buildRaces();
     renderArchive();
     await loadRecorderArchive();
