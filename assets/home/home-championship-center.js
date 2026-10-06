@@ -13,33 +13,59 @@
   };
   const setText=(id,value)=>{const el=$(id);if(el)el.textContent=value};
   const setHref=(id,value)=>{const el=$(id);if(el)el.href=value};
+  const photoSlugFromName=value=>{
+    const raw=pretty(value?.driver||value?.name||value||"");
+    let slug=String(raw||"")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g,"-")
+      .replace(/^-+|-+$/g,"");
+    const fixes={
+      "aaron-treubig":"aaron-truebig",
+      "david-durand-jr":"david-durand",
+      "zach-harry":"zack-harry",
+      "vicente-guerrero":"vincente-guerrero"
+    };
+    return fixes[slug]||slug;
+  };
   const setDriverPhoto=(id,value)=>{
     const el=$(id);
     if(!el)return;
 
-    // Keep the server-rendered fallback photo visible unless a replacement
-    // image has successfully loaded. Never erase a valid homepage photo just
-    // because the driver manifest is late or temporarily unavailable.
+    // Dynamic winner/leader cards must never keep another driver's stale
+    // server-rendered photo. Resolve the identity first, then try the shared
+    // cutout library directly as a safe fallback.
     const system=window.HLRNDrivers;
-    const src=system?.photoUrl?.(value,"cutout")||"";
-    if(!src){
-      el.hidden=false;
+    const rec=system?.resolve?.(value);
+    const resolved=system?.photoUrl?.(value,"cutout")||"";
+    const slug=String(rec?.photoSlug||photoSlugFromName(value)||"").trim();
+    const local=slug ? "assets/driver-photos/cutout/"+encodeURIComponent(slug)+".webp" : "";
+    const candidates=[resolved,local].filter((src,i,list)=>src&&list.indexOf(src)===i);
+    const nextAlt=(rec?.displayName||pretty(value?.driver||value?.name||value||"Driver"))+" driver photo";
+
+    if(!candidates.length){
+      el.removeAttribute("src");
+      el.hidden=true;
       return;
     }
 
-    const rec=system?.resolve?.(value);
-    const nextAlt=(rec?.displayName||pretty(value?.driver||value?.name||value||"Driver"))+" driver photo";
-    const probe=new Image();
-    probe.onload=()=>{
-      el.src=src;
-      el.alt=nextAlt;
-      el.hidden=false;
+    let index=0;
+    const tryNext=()=>{
+      if(index>=candidates.length){
+        el.removeAttribute("src");
+        el.hidden=true;
+        return;
+      }
+      const src=candidates[index++];
+      const probe=new Image();
+      probe.onload=()=>{
+        el.src=src;
+        el.alt=nextAlt;
+        el.hidden=false;
+      };
+      probe.onerror=tryNext;
+      probe.src=src;
     };
-    probe.onerror=()=>{
-      // Leave the already-rendered local fallback untouched.
-      el.hidden=false;
-    };
-    probe.src=src;
+    tryNext();
   };
 
   function sortedDrivers(league){
