@@ -184,7 +184,10 @@ function raceStats(race){
   const poleDriver=pole?map.get(String(pole.driverId)):null;
   const ledDriver=led?map.get(String(led.driverId)):null;
   const moverDriver=mover?map.get(String(mover.driverId)):null;
-  const fastestRow=rows.find(r=>first(r,['fastestLap','bestLap','bestLapTime','fastest_lap'])!==null);
+  const fastestRow=rows
+    .filter(r=>rawNum(first(r,['fastestLap','bestLap','bestLapTime','fastest_lap']))!==null)
+    .slice()
+    .sort((a,b)=>num(first(a,['fastestLap','bestLap','bestLapTime','fastest_lap']))-num(first(b,['fastestLap','bestLap','bestLapTime','fastest_lap'])))[0]||null;
   const cautions=first(rows[0],['cautions','cautionCount','yellowFlags','yellow_flags']);
   const penalties=rows.reduce((t,r)=>{
     const p=rawNum(first(r,['penalties','penalty','penaltyCount','penalty_count']));
@@ -344,6 +347,7 @@ function recapButtons(race){
 function reportNarrative(race,s){
   const second=race.rows.find(r=>num(r.finish)===2);
   const third=race.rows.find(r=>num(r.finish)===3);
+  const metrics=race.metrics||{};
   let text='<strong>'+esc(s.winnerName)+'</strong> won Race '+esc(race.raceNumber)+' at <strong>'+esc(race.track)+'</strong>';
   if(second)text+=' over '+driverAnchor(race.league,second);
   if(third)text+=' and '+driverAnchor(race.league,third);
@@ -353,6 +357,17 @@ function reportNarrative(race,s){
   }
   if(s.led&&num(s.led.lapsLed)>0){
     text+='<strong>'+esc(s.ledName)+'</strong> led the most laps with '+esc(fmt(s.led.lapsLed))+'. ';
+  }
+  if(s.fastestRow&&rawNum(s.fastest)!==null){
+    const fastName=rowName(race.league,s.fastestRow);
+    text+='<strong>'+esc(fastName)+'</strong> set the fastest lap at '+esc(Number(s.fastest).toFixed(3))+' seconds'+(rawNum(s.fastestRow.fastLapNumber)!==null?' on lap '+esc(fmt(s.fastestRow.fastLapNumber)):'')+'. ';
+  }
+  if(rawNum(metrics.cautions)!==null){
+    text+='The race had '+esc(fmt(metrics.cautions))+' caution'+(num(metrics.cautions)===1?'':'s');
+    if(rawNum(metrics.cautionLaps)!==null)text+=' for '+esc(fmt(metrics.cautionLaps))+' laps';
+    if(rawNum(metrics.leadChanges)!==null)text+=' and '+esc(fmt(metrics.leadChanges))+' lead changes';
+    if(rawNum(metrics.leaders)!==null)text+=' among '+esc(fmt(metrics.leaders))+' leaders';
+    text+='. ';
   }
   text+='The '+esc(s.field)+'-driver field recorded '+esc(fmt(s.totalInc))+' total incident points.';
   if(s.dnf)text+=' '+esc(s.dnf)+' driver'+(s.dnf===1?' was':'s were')+' classified with an out/DQ/retirement-type status.';
@@ -426,36 +441,44 @@ function renderReport(race,updateUrl=true){
       : metricFast
         ? metricFast.time
         : null;
-  const fastestText=fastestValue!==null&&fastestValue!==undefined?Number(fastestValue).toFixed(3)+'s':'Not in feed';
+  const fastestText=fastestValue!==null&&fastestValue!==undefined?Number(fastestValue).toFixed(3)+'s':'Not published';
+  const fastestDriver=s.fastestRow?rowName(race.league,s.fastestRow):(metricFast?.driver||'Unknown Driver');
+  const fastestNumber=s.fastestRow?.carNumber||metricFast?.carNumber||'—';
+  const fastestLapNo=rawNum(s.fastestRow?.fastLapNumber)!==null?s.fastestRow.fastLapNumber:metricFast?.lap;
   const fastestDetail=s.fastest!==null&&s.fastest!==undefined
-    ? 'Published race-feed value'
+    ? 'SimRacerHub • #'+String(fastestNumber)+' '+String(fastestDriver)+(fastestLapNo?' • Lap '+String(fastestLapNo):'')
     : recorderFast
       ? 'Permanent frozen recorder • #'+String(recorderFast.number||'—')+' '+String(recorderFast.name||'Unknown Driver')
       : metricFast
-        ? 'iRacing event result • #'+String(metricFast.carNumber||'—')+' '+String(metricFast.driver||'Unknown Driver')+(metricFast.lap?' • Lap '+String(metricFast.lap):'')
-        : 'This field is not currently published';
+        ? 'SimRacerHub • #'+String(metricFast.carNumber||'—')+' '+String(metricFast.driver||'Unknown Driver')+(metricFast.lap?' • Lap '+String(metricFast.lap):'')
+        : 'Not published by the current race source';
+
   const metricCautions=rawNum(metrics.cautions);
   const cautionValue=race.recap?rx.cautions.length:(s.cautions!==null&&s.cautions!==undefined?s.cautions:metricCautions);
-  const penaltyValue=race.recap?rx.penalties.length:s.penalties;
+  const metricPenalties=rawNum(metrics.penalties);
+  const penaltyValue=race.recap?rx.penalties.length:(s.penalties!==null&&s.penalties!==undefined?s.penalties:metricPenalties);
   const leadValue=race.recap?rx.leadChanges:rawNum(metrics.leadChanges);
-  const snapshotValue=race.recap?rx.snapshots:rawNum(metrics.lapSnapshots);
-  const cautionText=cautionValue!==null&&cautionValue!==undefined?String(cautionValue):'Not in feed';
-  const penaltyText=penaltyValue!==null&&penaltyValue!==undefined?fmt(penaltyValue):'Not in feed';
+  const leaderValue=rawNum(metrics.leaders);
+  const cautionLapsValue=rawNum(metrics.cautionLaps);
+  const raceLapsValue=rawNum(metrics.raceLaps);
+  const cautionText=cautionValue!==null&&cautionValue!==undefined?String(cautionValue):'Not published';
+  const penaltyText=penaltyValue!==null&&penaltyValue!==undefined?fmt(penaltyValue):'Not published';
   const cautionDetail=race.recap
     ? 'Permanent frozen recorder'
     : metricCautions!==null
-      ? 'iRacing event result'+(rawNum(metrics.cautionLaps)!==null?' • '+String(metrics.cautionLaps)+' caution laps':'')
-      : (s.cautions!==null&&s.cautions!==undefined?'Published race-feed value':'This field is not currently published');
+      ? 'SimRacerHub race summary'+(cautionLapsValue!==null?' • '+String(cautionLapsValue)+' caution laps':'')
+      : 'Not published by the current race source';
   const leadDetail=race.recap
     ? 'Calculated from completed-lap snapshots'
     : leadValue!==null
-      ? 'iRacing event result'
-      : 'Available after recorder publication';
-  const snapshotDetail=race.recap
-    ? 'Completed laps preserved at checkered'
-    : race.metrics
-      ? 'Lap-by-lap snapshots are not included in the iRacing event result'
-      : 'Available after recorder publication';
+      ? 'SimRacerHub race summary'
+      : 'Not published by the current race source';
+  const penaltyDetail=race.recap
+    ? 'Permanent frozen recorder'
+    : metricPenalties!==null
+      ? 'SimRacerHub Driver Penalties section'
+      : (s.penalties!==null?'Published race-feed total':'Not published by the current race source');
+
 
   $('raceReportContent').innerHTML=
     '<section class="report-hero '+race.league+'">'+
@@ -479,9 +502,11 @@ function renderReport(race,updateUrl=true){
       feature('Event-Points Leader',standingsLeaderName,standingsLeader?fmt(standingsLeaderPts)+' cumulative published event pts':'Unavailable',!standingsLeader)+
       feature('Fastest Lap',fastestText,fastestDetail,fastestValue===null||fastestValue===undefined)+
       feature('Cautions',cautionText,cautionDetail,cautionValue===null||cautionValue===undefined)+
-      feature('Penalties',penaltyText,race.recap?'Permanent frozen recorder':(s.penalties!==null?'Published race-feed total':'This field is not currently published'),penaltyValue===null||penaltyValue===undefined)+
+      feature('Caution Laps',cautionLapsValue??'—',cautionLapsValue!==null?'SimRacerHub race summary':'Not published by the current race source',cautionLapsValue===null)+
+      feature('Penalties',penaltyText,penaltyDetail,penaltyValue===null||penaltyValue===undefined)+
       feature('Lead Changes',leadValue??'—',leadDetail,leadValue===null)+
-      feature('Lap Snapshots',snapshotValue??'—',snapshotDetail,snapshotValue===null)+
+      feature('Leaders',leaderValue??'—',leaderValue!==null?'SimRacerHub race summary':'Not published by the current race source',leaderValue===null)+
+      feature('Race Laps',raceLapsValue??'—',raceLapsValue!==null?'Completed race distance from SimRacerHub':'Not published by the current race source',raceLapsValue===null)+
       feature('Incidents / Driver',s.avgInc.toFixed(1),fmt(s.totalInc)+' total across '+fmt(s.field)+' starters')+
     '</div>'+
     (race.recap?'<h3 class="report-section-title">Permanent Checkered Record</h3>'+recapButtons(race)+'<h3 class="report-section-title">Race Control Log</h3>'+raceControlLog(race):'')+
