@@ -253,13 +253,26 @@ def movement(recap):
     return rows
 
 
-def classify_series(series):
+def classify_series(series, local_dt=None):
     raw = str(series or "").strip()
     lower = raw.lower()
     if "sunday" in lower:
         return "Sunday Night Series"
     if "monday" in lower:
         return "Monday Night Series"
+    if "hosted" in lower:
+        return raw or "HLRN Hosted"
+
+    # Custom iRacing sessions can expose only a generic SeriesName such as
+    # "Race". Use the frozen Eastern race date only for those generic values
+    # so the permanent recorder record can attach to Sunday/Monday Results.
+    generic = lower in {"", "race", "iracing", "hlrn live", "official", "league race"}
+    if generic and local_dt is not None:
+        if local_dt.weekday() == 6:
+            return "Sunday Night Series"
+        if local_dt.weekday() == 0:
+            return "Monday Night Series"
+
     return raw or "HLRN"
 
 
@@ -333,7 +346,7 @@ def build_model(recap):
 
     frozen_at = recap.get("raceFrozenAt")
     local_dt = local_date(frozen_at)
-    series = classify_series(race.get("series"))
+    series = classify_series(race.get("series"), local_dt)
     track = str(race.get("track") or "HLRN Race")
     total_laps = safe_int(race.get("totalLaps"))
     completed_laps = max(
