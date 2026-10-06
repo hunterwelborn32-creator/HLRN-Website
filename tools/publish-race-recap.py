@@ -852,18 +852,27 @@ def main():
                 return 0
 
     recaps = extract_recaps(payload)
-    if not recaps and not args.input and args.url.rstrip("/").endswith("/recaps"):
+
+    # Older/partially deployed live-feed builds have occasionally returned a
+    # non-frozen placeholder inside /api/recaps. Do not let that block the
+    # compatibility /api/recap endpoint, which may still hold the real
+    # checkered record.
+    frozen_recaps = [x for x in recaps if x.get("raceFrozen") is True]
+    if not frozen_recaps and not args.input and args.url.rstrip("/").endswith("/recaps"):
         fallback_url = args.url.rsplit("/", 1)[0] + "/recap"
         try:
             fallback_payload = fetch_json(fallback_url)
-            recaps = extract_recaps(fallback_payload)
-            if recaps and any(x.get("raceFrozen") for x in recaps):
-                print(f"[HLRN recap] Rolling archive was empty; recovered newest frozen race from {fallback_url}")
+            fallback_recaps = extract_recaps(fallback_payload)
+            recovered = [x for x in fallback_recaps if x.get("raceFrozen") is True]
+            if recovered:
+                recaps = recovered
+                frozen_recaps = recovered
+                print(f"[HLRN recap] Rolling archive had no frozen race; recovered newest frozen race from {fallback_url}")
         except Exception:
             pass
 
     if not recaps:
-        print("[HLRN recap] No frozen recorder races available.")
+        print("[HLRN recap] No recorder races available.")
         return 0
 
     published = 0
