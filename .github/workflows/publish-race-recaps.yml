@@ -1,13 +1,17 @@
-name: Publish HLRN Race Recaps — Manual Approval
+name: Publish HLRN Race Recaps — Automatic
 
 on:
+  # The Live server freezes the authoritative recorder immediately at checkered.
+  # GitHub then sweeps the rolling /api/recaps archive and makes each frozen
+  # race permanent on the website without requiring a manual approval click.
+  schedule:
+    - cron: "*/5 * * * *"
   workflow_dispatch:
-    inputs:
-      approve:
-        description: 'Approve publishing the frozen HLRN race recap'
-        required: true
-        type: boolean
-        default: false
+  push:
+    paths:
+      - ".github/workflows/publish-race-recaps.yml"
+      - "tools/publish-race-recap.py"
+      - "tests/test_race_recap_publisher.py"
 
 permissions:
   contents: write
@@ -18,25 +22,29 @@ concurrency:
 
 jobs:
   publish:
-    if: ${{ inputs.approve }}
     runs-on: ubuntu-latest
     env:
       HLRN_RECAP_URL: https://hlrn-live-feed.onrender.com/api/recaps
-      HLRN_PUBLISH_APPROVED: '1'
+      # The publisher still has a hard safety gate; this workflow is the
+      # trusted automatic path that opens it after the recorder has frozen.
+      HLRN_PUBLISH_APPROVED: "1"
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: "3.12"
 
       - name: Test race recap publisher
         run: python -m unittest tests/test_race_recap_publisher.py
 
-      - name: Publish any newly frozen races
+      - name: Publish newly frozen checkered races
         run: python tools/publish-race-recap.py
 
       - name: Refresh sitemap
@@ -45,6 +53,7 @@ jobs:
       - name: Save permanent race records
         shell: bash
         run: |
+          set -euo pipefail
           git config user.name "hlrn-race-recap-bot"
           git config user.email "actions@users.noreply.github.com"
 
@@ -54,12 +63,12 @@ jobs:
             if [ -f sitemap.xml ]; then git add sitemap.xml; fi
 
             if git diff --cached --quiet; then
-              echo "No new frozen races to publish."
+              echo "No new or richer frozen races to publish."
               exit 0
             fi
 
             git commit -m "Publish frozen HLRN race recap"
-            if git push origin main; then
+            if git push origin HEAD:main; then
               echo "Permanent race record published."
               exit 0
             fi
