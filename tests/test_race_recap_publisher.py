@@ -105,6 +105,26 @@ class PublisherTests(unittest.TestCase):
         self.assertEqual(ordered[0]["race"]["subSessionId"], 222)
         self.assertEqual(ordered[1]["race"]["subSessionId"], 333)
 
+    def test_generic_race_series_infers_monday_from_eastern_race_date(self):
+        recap = fixture()
+        recap["race"]["series"] = "Race"
+        # 2026-09-29 02:30 UTC is Monday Sep. 28 at 10:30 PM Eastern.
+        model = pub.build_model(recap)
+        self.assertEqual(model["series"], "Monday Night Series")
+
+    def test_generic_race_series_infers_sunday_from_eastern_race_date(self):
+        recap = fixture()
+        recap["race"]["series"] = "Race"
+        recap["raceFrozenAt"] = "2026-09-28T02:30:00Z"
+        model = pub.build_model(recap)
+        self.assertEqual(model["series"], "Sunday Night Series")
+
+    def test_hosted_series_is_not_reclassified_by_weekday(self):
+        recap = fixture()
+        recap["race"]["series"] = "HLRN Hosted"
+        model = pub.build_model(recap)
+        self.assertEqual(model["series"], "HLRN Hosted")
+
     def test_demo_is_never_published(self):
         recap = fixture(source="DEMO")
         ok, reason = pub.is_publishable(recap)
