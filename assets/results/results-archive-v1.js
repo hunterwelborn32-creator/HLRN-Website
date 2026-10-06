@@ -446,11 +446,11 @@ function renderReport(race,updateUrl=true){
   const fastestNumber=s.fastestRow?.carNumber||metricFast?.carNumber||'—';
   const fastestLapNo=rawNum(s.fastestRow?.fastLapNumber)!==null?s.fastestRow.fastLapNumber:metricFast?.lap;
   const fastestDetail=s.fastest!==null&&s.fastest!==undefined
-    ? 'SimRacerHub • #'+String(fastestNumber)+' '+String(fastestDriver)+(fastestLapNo?' • Lap '+String(fastestLapNo):'')
+    ? '#'+String(fastestNumber)+' '+String(fastestDriver)+(fastestLapNo?' • Lap '+String(fastestLapNo):'')
     : recorderFast
       ? 'Permanent frozen recorder • #'+String(recorderFast.number||'—')+' '+String(recorderFast.name||'Unknown Driver')
       : metricFast
-        ? 'SimRacerHub • #'+String(metricFast.carNumber||'—')+' '+String(metricFast.driver||'Unknown Driver')+(metricFast.lap?' • Lap '+String(metricFast.lap):'')
+        ? '#'+String(metricFast.carNumber||'—')+' '+String(metricFast.driver||'Unknown Driver')+(metricFast.lap?' • Lap '+String(metricFast.lap):'')
         : 'Not published by the current race source';
 
   const metricCautions=rawNum(metrics.cautions);
@@ -466,17 +466,17 @@ function renderReport(race,updateUrl=true){
   const cautionDetail=race.recap
     ? 'Permanent frozen recorder'
     : metricCautions!==null
-      ? 'SimRacerHub race summary'+(cautionLapsValue!==null?' • '+String(cautionLapsValue)+' caution laps':'')
+      ? (cautionLapsValue!==null?String(cautionLapsValue)+' caution laps':'Race cautions')
       : 'Not published by the current race source';
   const leadDetail=race.recap
     ? 'Calculated from completed-lap snapshots'
     : leadValue!==null
-      ? 'SimRacerHub race summary'
+      ? 'Race lead changes'
       : 'Not published by the current race source';
   const penaltyDetail=race.recap
     ? 'Permanent frozen recorder'
     : metricPenalties!==null
-      ? 'SimRacerHub Driver Penalties section'
+      ? 'Race penalties'
       : (s.penalties!==null?'Published race-feed total':'Not published by the current race source');
 
 
@@ -502,11 +502,11 @@ function renderReport(race,updateUrl=true){
       feature('Event-Points Leader',standingsLeaderName,standingsLeader?fmt(standingsLeaderPts)+' cumulative published event pts':'Unavailable',!standingsLeader)+
       feature('Fastest Lap',fastestText,fastestDetail,fastestValue===null||fastestValue===undefined)+
       feature('Cautions',cautionText,cautionDetail,cautionValue===null||cautionValue===undefined)+
-      feature('Caution Laps',cautionLapsValue??'—',cautionLapsValue!==null?'SimRacerHub race summary':'Not published by the current race source',cautionLapsValue===null)+
+      feature('Caution Laps',cautionLapsValue??'—',cautionLapsValue!==null?'Laps under caution':'Not published by the current race source',cautionLapsValue===null)+
       feature('Penalties',penaltyText,penaltyDetail,penaltyValue===null||penaltyValue===undefined)+
       feature('Lead Changes',leadValue??'—',leadDetail,leadValue===null)+
-      feature('Leaders',leaderValue??'—',leaderValue!==null?'SimRacerHub race summary':'Not published by the current race source',leaderValue===null)+
-      feature('Race Laps',raceLapsValue??'—',raceLapsValue!==null?'Completed race distance from SimRacerHub':'Not published by the current race source',raceLapsValue===null)+
+      feature('Leaders',leaderValue??'—',leaderValue!==null?'Drivers who led a lap':'Not published by the current race source',leaderValue===null)+
+      feature('Race Laps',raceLapsValue??'—',raceLapsValue!==null?'Laps raced':'Not published by the current race source',raceLapsValue===null)+
       feature('Incidents / Driver',s.avgInc.toFixed(1),fmt(s.totalInc)+' total across '+fmt(s.field)+' starters')+
     '</div>'+
     (race.recap?'<h3 class="report-section-title">Permanent Checkered Record</h3>'+recapButtons(race)+'<h3 class="report-section-title">Race Control Log</h3>'+raceControlLog(race):'')+
