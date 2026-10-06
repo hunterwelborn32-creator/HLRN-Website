@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-02T12:49:08Z",
-  "count": 83,
+  "generatedAt": "2026-10-06T19:56:51Z",
+  "count": 86,
   "drivers": [
     {
       "name": "Aaron Treubig",
@@ -44,13 +44,16 @@
       "number": "56",
       "photoSlug": "benjamin-richards",
       "series": [
+        "monday",
         "sunday"
       ],
       "ids": {
-        "sunday": "63510"
+        "sunday": "63510",
+        "monday": "63510"
       },
       "teams": {
-        "sunday": "VRX"
+        "sunday": "VRX",
+        "monday": null
       },
       "aliases": []
     },
@@ -473,12 +476,15 @@
       "number": "76",
       "photoSlug": "evan-fuqua",
       "series": [
-        "monday"
+        "monday",
+        "sunday"
       ],
       "ids": {
+        "sunday": "132994",
         "monday": "132994"
       },
       "teams": {
+        "sunday": null,
         "monday": "LBS"
       },
       "aliases": []
@@ -597,6 +603,23 @@
         "sunday": "Helix",
         "monday": "HLR",
         "hosted": null
+      },
+      "aliases": []
+    },
+    {
+      "name": "James Smith47",
+      "slug": "james-smith47",
+      "url": "/drivers/james-smith47/",
+      "number": "01",
+      "photoSlug": "james-smith",
+      "series": [
+        "sunday"
+      ],
+      "ids": {
+        "sunday": "73693"
+      },
+      "teams": {
+        "sunday": null
       },
       "aliases": []
     },
@@ -820,6 +843,23 @@
       "aliases": []
     },
     {
+      "name": "Jt Huskins",
+      "slug": "jt-huskins",
+      "url": "/drivers/jt-huskins/",
+      "number": "—",
+      "photoSlug": "jt-huskins",
+      "series": [
+        "sunday"
+      ],
+      "ids": {
+        "sunday": "141507"
+      },
+      "teams": {
+        "sunday": null
+      },
+      "aliases": []
+    },
+    {
       "name": "Juan Escamilla",
       "slug": "juan-escamilla",
       "url": "/drivers/juan-escamilla/",
@@ -1034,13 +1074,16 @@
       "number": "14",
       "photoSlug": "matthew-brown",
       "series": [
+        "monday",
         "sunday"
       ],
       "ids": {
-        "sunday": "116507"
+        "sunday": "116507",
+        "monday": "116507"
       },
       "teams": {
-        "sunday": "TWM"
+        "sunday": "TWM",
+        "monday": null
       },
       "aliases": []
     },
@@ -1149,6 +1192,23 @@
       "teams": {
         "sunday": null,
         "monday": "SMT Racing"
+      },
+      "aliases": []
+    },
+    {
+      "name": "Patrick Craven",
+      "slug": "patrick-craven",
+      "url": "/drivers/patrick-craven/",
+      "number": "20",
+      "photoSlug": "patrick-craven",
+      "series": [
+        "sunday"
+      ],
+      "ids": {
+        "sunday": "122861"
+      },
+      "teams": {
+        "sunday": "GEN X"
       },
       "aliases": []
     },
