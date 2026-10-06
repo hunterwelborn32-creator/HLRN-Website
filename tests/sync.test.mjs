@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { validateAction, buildSnapshot, sameData, seasonDriverTotals, mergeSeasonDriverTotals, parseTeamRostersHtml, parseStageBonusBreakdownHtml, combineStageAwardMaps, applyStageBonusReclassification, parseSimRacerHubRaceResultsHtml, mergeSimRacerHubRaceResults } from '../tools/sync-data.mjs';
+import { validateAction, buildSnapshot, sameData, seasonDriverTotals, mergeSeasonDriverTotals, parseTeamRostersHtml, parseStageBonusBreakdownHtml, combineStageAwardMaps, applyStageBonusReclassification, parseSimRacerHubRaceResultsHtml, parseSimRacerHubRaceMetricsHtml, mergeSimRacerHubRaceResults } from '../tools/sync-data.mjs';
 const payloads = Object.fromEntries(['sunday','monday'].map(l => [l, {
   drivers: { success:true, drivers:[{driverId:l+'-1',name:'Example'}] },
   teams: { success:true, teams:[] },
@@ -170,4 +170,49 @@ test('direct SimRacerHub race rows replace matching race while preserving HLRN r
  assert.equal(auto.track,'Auto Club Speedway');
  assert.equal(auto.source,'SimRacerHub');
  assert.ok(rows.some(x=>x.raceId==='111'));
+});
+
+
+test('SimRacerHub race metrics parser backfills cautions, lead changes and fastest lap', () => {
+ const html=`
+ <div>RACE 0h 52m · 75 laps · 5 Leaders · 8 Lead Changes · 1 caution (3 laps)</div>
+ <table>
+  <tr><th>Fin</th><th>St</th><th>Driver</th><th>Race Pts</th><th>Int</th><th>Laps</th><th>Laps Led</th><th>Fastest Lap</th><th>Fast Lap #</th><th>Avg Lap</th><th>Inc</th><th>Status</th><th>Car #</th></tr>
+  <tr><td>1</td><td>20</td><td><a href="driver_stats.php?driver_id=93794">Bill Daniels</a></td><td>50</td><td>-</td><td>75</td><td>3</td><td>39.281</td><td>3</td><td>42.886</td><td>2</td><td>Running</td><td>91</td></tr>
+  <tr><td>2</td><td>1</td><td><a href="driver_stats.php?driver_id=116">Benjamin Richards</a></td><td>49</td><td>-0.2</td><td>75</td><td>5</td><td>39.269</td><td>3</td><td>42.900</td><td>1</td><td>Running</td><td>56</td></tr>
+ </table>
+ <h3>Driver Penalties</h3><div>No penalties</div>
+ `;
+ const rows=parseSimRacerHubRaceResultsHtml(html,'383476');
+ assert.equal(rows[0].fastestLap,39.281);
+ assert.equal(rows[0].fastLapNumber,3);
+ assert.equal(rows[0].lapsCompleted,75);
+ const metrics=parseSimRacerHubRaceMetricsHtml(html,'383476',rows);
+ assert.equal(metrics.raceLaps,75);
+ assert.equal(metrics.leaders,5);
+ assert.equal(metrics.leadChanges,8);
+ assert.equal(metrics.cautions,1);
+ assert.equal(metrics.cautionLaps,3);
+ assert.equal(metrics.penalties,0);
+ assert.equal(metrics.fastestLap.driver,'Benjamin Richards');
+ assert.equal(metrics.fastestLap.time,39.269);
+ assert.equal(metrics.fastestLap.lap,3);
+});
+
+test('SimRacerHub metrics parser leaves unavailable recorder-only data unmade-up', () => {
+ const html=`
+ <div>RACE 2h 11m · 205 laps · 9 Leaders · 18 Lead Changes · 24 cautions (89 laps)</div>
+ <table>
+  <tr><th>Fin</th><th>St</th><th>Driver</th><th>Race Pts</th><th>Laps</th><th>Laps Led</th><th>Fastest Lap</th><th>Fast Lap #</th><th>Inc</th><th>Status</th><th>Car #</th></tr>
+  <tr><td>1</td><td>8</td><td><a href="driver_stats.php?driver_id=95192">Nicholas Baumann</a></td><td>50</td><td>205</td><td>19</td><td>23.407</td><td>13</td><td>4</td><td>Running</td><td>97</td></tr>
+ </table>
+ <h3>Driver Penalties</h3><div>No penalties</div>
+ `;
+ const metrics=parseSimRacerHubRaceMetricsHtml(html,'363739');
+ assert.equal(metrics.leadChanges,18);
+ assert.equal(metrics.cautions,24);
+ assert.equal(metrics.cautionLaps,89);
+ assert.equal(metrics.penalties,0);
+ assert.equal(metrics.fastestLap.time,23.407);
+ assert.equal('lapSnapshots' in metrics,false);
 });
