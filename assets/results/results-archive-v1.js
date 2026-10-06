@@ -60,10 +60,24 @@ function raceKey(key,raceNumber,raceId){return key+'|'+String(raceNumber)+'|'+St
 function raceUrl(r){
   return '?'+new URLSearchParams({league:r.league,race:String(r.raceNumber)}).toString();
 }
-function recapSeries(value){
-  const s=String(value||'').toLowerCase();
+function recapSeries(value,frozenAt){
+  const s=String(value||'').trim().toLowerCase();
   if(s.includes('sunday'))return 'sunday';
   if(s.includes('monday'))return 'monday';
+  if(s.includes('hosted'))return '';
+
+  // Legacy/custom iRacing sessions may identify the series only as "Race".
+  // Infer only generic records by Eastern weekday; never reclassify Hosted.
+  if(/^(?:|race|iracing|hlrn live|official|league race)$/i.test(s) && frozenAt){
+    const d=dateValue(frozenAt);
+    if(d){
+      try{
+        const day=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',weekday:'short'}).format(d);
+        if(day==='Sun')return 'sunday';
+        if(day==='Mon')return 'monday';
+      }catch(_){}
+    }
+  }
   return '';
 }
 function trackKey(value){
@@ -119,9 +133,10 @@ function linkRecapsToRaces(){
   races.forEach(r=>{delete r.recap});
   recapItems.forEach(item=>{
     const archive=recapArchives.get(String(item.slug||'')); if(!archive)return;
-    const series=recapSeries(item.series||archive?.article?.series||archive?.recorder?.race?.series);
+    const frozenAt=item.raceFrozenAt||archive?.article?.raceFrozenAt||item.publishedAt||archive?.article?.publishedAt;
+    const series=recapSeries(item.series||archive?.article?.series||archive?.recorder?.race?.series,frozenAt);
     const track=item.track||archive?.article?.track||archive?.recorder?.race?.track||'';
-    const when=dateValue(item.raceFrozenAt||archive?.article?.raceFrozenAt||item.publishedAt||archive?.article?.publishedAt)?.getTime()||0;
+    const when=dateValue(frozenAt)?.getTime()||0;
     const candidates=races.filter(r=>r.league===series&&sameTrack(r.track,track)).sort((a,b)=>{
       const da=Math.abs((dateValue(a.date)?.getTime()||0)-when),db=Math.abs((dateValue(b.date)?.getTime()||0)-when);
       return da-db;
@@ -279,7 +294,8 @@ function recapLists(race){
   return{
     article,recorder,cautions,penalties,
     leadChanges:rawNum(article.leadChanges),
-    snapshots:rawNum(article.completedLapsCaptured)??(Array.isArray(recorder.lapSnapshots)?recorder.lapSnapshots.length:null)
+    snapshots:rawNum(article.completedLapsCaptured)??(Array.isArray(recorder.lapSnapshots)?recorder.lapSnapshots.length:null),
+    fastest:article.fastestLap&&typeof article.fastestLap==='object'?article.fastestLap:null
   };
 }
 function raceControlLog(race){
@@ -383,7 +399,14 @@ function renderReport(race,updateUrl=true){
   ).join(''):'<div class="report-team-card"><span>TEAM DATA</span><strong class="report-unavailable">ROSTER SYNC UNAVAILABLE</strong><small>Team totals will appear once current roster mappings are available.</small></div>';
 
   const rx=recapLists(race);
-  const fastestText=s.fastest!==null&&s.fastest!==undefined?String(s.fastest):'Not in feed';
+  const recorderFast=rx.fastest&&rawNum(rx.fastest.time)!=null?rx.fastest:null;
+  const fastestValue=s.fastest!==null&&s.fastest!==undefined?s.fastest:(recorderFast?recorderFast.time:null);
+  const fastestText=fastestValue!==null&&fastestValue!==undefined?Number(fastestValue).toFixed(3)+'s':'Not in feed';
+  const fastestDetail=s.fastest!==null&&s.fastest!==undefined
+    ? 'Published race-feed value'
+    : recorderFast
+      ? 'Permanent frozen recorder • #'+String(recorderFast.number||'—')+' '+String(recorderFast.name||'Unknown Driver')
+      : 'This field is not currently published';
   const cautionValue=race.recap?rx.cautions.length:s.cautions;
   const penaltyValue=race.recap?rx.penalties.length:s.penalties;
   const cautionText=cautionValue!==null&&cautionValue!==undefined?String(cautionValue):'Not in feed';
@@ -409,7 +432,7 @@ function renderReport(race,updateUrl=true){
       feature('Most Laps Led',s.ledName,s.led?fmt(s.led.lapsLed)+' laps led':'No lap-led data',!s.led)+
       feature('Biggest Mover',s.moverName,s.mover?('P'+fmt(s.mover.start)+' → P'+fmt(s.mover.finish)+' • '+(s.moverGain>=0?'+':'')+fmt(s.moverGain)):'Unavailable',!s.mover)+
       feature('Event-Points Leader',standingsLeaderName,standingsLeader?fmt(standingsLeaderPts)+' cumulative published event pts':'Unavailable',!standingsLeader)+
-      feature('Fastest Lap',fastestText,s.fastest!==null&&s.fastest!==undefined?'Published race-feed value':'This field is not currently published',s.fastest===null||s.fastest===undefined)+
+      feature('Fastest Lap',fastestText,fastestDetail,fastestValue===null||fastestValue===undefined)+
       feature('Cautions',cautionText,race.recap?'Permanent frozen recorder':(s.cautions!==null&&s.cautions!==undefined?'Published race-feed value':'This field is not currently published'),cautionValue===null||cautionValue===undefined)+
       feature('Penalties',penaltyText,race.recap?'Permanent frozen recorder':(s.penalties!==null?'Published race-feed total':'This field is not currently published'),penaltyValue===null||penaltyValue===undefined)+
       feature('Lead Changes',race.recap?(rx.leadChanges??'—'):'—',race.recap?'Calculated from completed-lap snapshots':'Available after recorder publication',!race.recap||rx.leadChanges===null)+
@@ -477,7 +500,7 @@ function finalRecorderRows(archive){
 function renderFrozenOnlyReport(item,archive){
   const article=archive?.article||{},rows=finalRecorderRows(archive),winner=article.winner||item?.winner||{};
   const fake={
-    key:'recap:'+String(item?.slug||''),league:recapSeries(item?.series||article.series)||'sunday',
+    key:'recap:'+String(item?.slug||''),league:recapSeries(item?.series||article.series,article.raceFrozenAt||item?.raceFrozenAt||article.publishedAt||item?.publishedAt)||'sunday',
     raceId:String(article.subSessionId||article.sessionId||item?.subSessionId||item?.sessionId||'RECORDER'),
     raceNumber:rawNum(article.raceNumber)||'—',
     track:article.track||item?.track||archive?.recorder?.race?.track||'HLRN Race',
