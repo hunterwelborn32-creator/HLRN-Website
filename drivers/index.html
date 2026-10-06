@@ -1782,14 +1782,90 @@ function enrichLeagueDriversFromShared(league){
     }else renderActiveLeague();
   }
 }
+
+let hLrnDerivedProfilesPromise=null;
+function loadDerivedProfiles(){
+  if(!hLrnDerivedProfilesPromise){
+    hLrnDerivedProfilesPromise=fetch("../data/derived/profiles.json?v="+Date.now(),{cache:"no-store"})
+      .then(r=>{if(!r.ok)throw new Error("profiles HTTP "+r.status);return r.json();});
+  }
+  return hLrnDerivedProfilesPromise;
+}
+async function enrichLeagueHistoryFromDerived(league){
+  const state=leagueData[league];
+  if(!state||!Array.isArray(state.drivers)||!state.drivers.length)return;
+
+  const payload=await loadDerivedProfiles();
+  const profiles=(Array.isArray(payload?.drivers)?payload.drivers:[])
+    .filter(p=>String(p?.series||"").toLowerCase()===league);
+
+  if(!profiles.length)return;
+
+  const byId=new Map();
+  const byName=new Map();
+  profiles.forEach(p=>{
+    const id=String(p?.id||"").trim();
+    if(id)byId.set(id,p);
+    const names=[p?.name,p?.sourceName].filter(Boolean);
+    names.forEach(name=>byName.set(mergeKey(prettyName(name)),p));
+  });
+
+  state.drivers=state.drivers.map(driver=>{
+    const id=String(driver?.driverIds?.[league]||"").trim();
+    const key=mergeKey(prettyName(driver?.driver));
+    const p=(id&&byId.get(id))||byName.get(key)||null;
+    if(!p)return driver;
+
+    const history=(Array.isArray(p.results)?p.results:[]).map(r=>({
+      ...r,
+      league,
+      driverId:String(p.id||id||""),
+      driver:prettyName(driver.driver)
+    })).sort((a,b)=>{
+      const da=Date.parse(a.date||"")||0,db=Date.parse(b.date||"")||0;
+      if(db!==da)return db-da;
+      return num(b.raceNumber)-num(a.raceNumber);
+    });
+
+    driver.driverIds=driver.driverIds||{};
+    if(p.id!==undefined&&p.id!==null&&String(p.id)!=="")driver.driverIds[league]=String(p.id);
+
+    // The generated profile file is the canonical race-history fallback.
+    // Prefer it whenever it has rows because it is built from the published
+    // race results and is not dependent on live JSONP ID matching.
+    if(history.length)driver.history=history;
+
+    return driver;
+  });
+
+  if(activeLeague===league){
+    drivers=state.drivers;
+    const open=document.getElementById("profileView").style.display==="block";
+    if(open){
+      const name=document.querySelector("#profileContent h2")?.textContent;
+      const d=drivers.find(x=>hLrnSameDriverName(x.driver,name));
+      if(d)renderProfile(d);
+    }else renderActiveLeague();
+  }
+}
 async function loadSharedDriverMetrics(){
-  if(!window.HLRNData)return;
+  if(window.HLRNData){
+    try{
+      await window.HLRNData.load();
+      enrichLeagueDriversFromShared("sunday");
+      enrichLeagueDriversFromShared("monday");
+    }catch(e){console.warn("HLRN enriched driver metrics unavailable",e);}
+  }
+
   try{
-    await window.HLRNData.load();
-    enrichLeagueDriversFromShared("sunday");
-    enrichLeagueDriversFromShared("monday");
-    tryOpenRequestedProfile();
-  }catch(e){console.warn("HLRN enriched driver metrics unavailable",e);}
+    await Promise.all([
+      enrichLeagueHistoryFromDerived("sunday"),
+      enrichLeagueHistoryFromDerived("monday")
+    ]);
+    saveLeagueCache();
+  }catch(e){console.warn("HLRN derived driver history unavailable",e);}
+
+  tryOpenRequestedProfile();
 }
 function requestedDriver(){
   const list=leagueData[HLRN_PROFILE_REQUEST.league]?.drivers||[];
@@ -1909,6 +1985,7 @@ async function refreshLeague(league){
     // Show the league roster immediately; race history must not hold up the cards.
     state.drivers=makeLeagueDrivers(league,feed,null);
     await ensureJamesSmithFallback(league);
+    await enrichLeagueHistoryFromDerived(league);
     state.updated=Date.now();
     enrichLeagueDriversFromShared(league);
     saveLeagueCache();
@@ -1919,6 +1996,7 @@ async function refreshLeague(league){
       if(results&&results.success!==false&&Array.isArray(results.results)){
         state.drivers=makeLeagueDrivers(league,feed,results);
         await ensureJamesSmithFallback(league);
+        await enrichLeagueHistoryFromDerived(league);
         enrichLeagueDriversFromShared(league);
         saveLeagueCache();
         if(activeLeague===league){
