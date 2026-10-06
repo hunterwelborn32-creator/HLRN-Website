@@ -5724,3 +5724,42 @@ html[data-hlrn-theme="dark"] .ns-month-title{
   border-bottom:1px solid #2b2b2b!important;
   box-shadow:none!important;
 }
+
+
+/* HLRN RESULTS RACE INTELLIGENCE READABILITY */
+.report-feature{
+  min-height:108px;
+  padding:17px 18px;
+}
+.report-feature span{
+  color:#909ba5 !important;
+  font-size:10px !important;
+  line-height:1.25;
+  letter-spacing:.08em;
+}
+.report-feature strong{
+  margin-top:8px !important;
+  font-size:22px !important;
+  line-height:1.15;
+}
+.report-feature small{
+  margin-top:8px !important;
+  color:#aab3bb !important;
+  font-size:13px !important;
+  line-height:1.45 !important;
+}
+@media(max-width:620px){
+  .report-feature{
+    min-height:96px !important;
+    padding:13px !important;
+  }
+  .report-feature span{
+    font-size:9px !important;
+  }
+  .report-feature strong{
+    font-size:17px !important;
+  }
+  .report-feature small{
+    font-size:12px !important;
+  }
+}
