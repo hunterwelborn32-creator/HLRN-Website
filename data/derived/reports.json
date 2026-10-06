@@ -1,7 +1,459 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05T18:03:56.661Z",
+  "generatedAt": "2026-10-06T02:32:43.221Z",
   "reports": [
+    {
+      "key": "monday:383476",
+      "series": "monday",
+      "raceId": "383476",
+      "raceNumber": 7,
+      "track": "Auto Club Speedway",
+      "date": "2026-10-05T04:00:00.000Z",
+      "winner": {
+        "name": "Bill Daniels",
+        "id": "93794"
+      },
+      "classified": 26,
+      "top10": [
+        {
+          "id": "93794",
+          "name": "Bill Daniels",
+          "start": 20,
+          "finish": 1,
+          "gain": 19,
+          "points": 61,
+          "lapsLed": 3,
+          "incidents": 2,
+          "status": "Running"
+        },
+        {
+          "id": "98668",
+          "name": "Evan Karlbon",
+          "start": 4,
+          "finish": 2,
+          "gain": 2,
+          "points": 49,
+          "lapsLed": 0,
+          "incidents": 0,
+          "status": "Running"
+        },
+        {
+          "id": "116507",
+          "name": "Matthew Brown49",
+          "start": 1,
+          "finish": 3,
+          "gain": -2,
+          "points": 49,
+          "lapsLed": 5,
+          "incidents": 10,
+          "status": "Running"
+        },
+        {
+          "id": "135679",
+          "name": "Hunter Welborn",
+          "start": 13,
+          "finish": 4,
+          "gain": 9,
+          "points": 47,
+          "lapsLed": 0,
+          "incidents": 4,
+          "status": "Running"
+        },
+        {
+          "id": "132994",
+          "name": "Evan Fuqua",
+          "start": 6,
+          "finish": 5,
+          "gain": 1,
+          "points": 46,
+          "lapsLed": 0,
+          "incidents": 2,
+          "status": "Running"
+        },
+        {
+          "id": "116496",
+          "name": "Jerry Fassett",
+          "start": 14,
+          "finish": 6,
+          "gain": 8,
+          "points": 45,
+          "lapsLed": 0,
+          "incidents": 6,
+          "status": "Running"
+        },
+        {
+          "id": "139594",
+          "name": "Kenwood Ramsey",
+          "start": 16,
+          "finish": 7,
+          "gain": 9,
+          "points": 44,
+          "lapsLed": 0,
+          "incidents": 4,
+          "status": "Running"
+        },
+        {
+          "id": "62821",
+          "name": "Javone Thompson",
+          "start": 3,
+          "finish": 8,
+          "gain": -5,
+          "points": 43,
+          "lapsLed": 2,
+          "incidents": 2,
+          "status": "Running"
+        },
+        {
+          "id": "56823",
+          "name": "Shawn Stamper",
+          "start": 22,
+          "finish": 9,
+          "gain": 13,
+          "points": 42,
+          "lapsLed": 0,
+          "incidents": 3,
+          "status": "Running"
+        },
+        {
+          "id": "112020",
+          "name": "Brian Hebbard2",
+          "start": 19,
+          "finish": 10,
+          "gain": 9,
+          "points": 41,
+          "lapsLed": 0,
+          "incidents": 4,
+          "status": "Running"
+        }
+      ],
+      "results": [
+        {
+          "id": "93794",
+          "name": "Bill Daniels",
+          "start": 20,
+          "finish": 1,
+          "gain": 19,
+          "points": 61,
+          "lapsLed": 3,
+          "incidents": 2,
+          "status": "Running"
+        },
+        {
+          "id": "98668",
+          "name": "Evan Karlbon",
+          "start": 4,
+          "finish": 2,
+          "gain": 2,
+          "points": 49,
+          "lapsLed": 0,
+          "incidents": 0,
+          "status": "Running"
+        },
+        {
+          "id": "116507",
+          "name": "Matthew Brown49",
+          "start": 1,
+          "finish": 3,
+          "gain": -2,
+          "points": 49,
+          "lapsLed": 5,
+          "incidents": 10,
+          "status": "Running"
+        },
+        {
+          "id": "135679",
+          "name": "Hunter Welborn",
+          "start": 13,
+          "finish": 4,
+          "gain": 9,
+          "points": 47,
+          "lapsLed": 0,
+          "incidents": 4,
+          "status": "Running"
+        },
+        {
+          "id": "132994",
+          "name": "Evan Fuqua",
+          "start": 6,
+          "finish": 5,
+          "gain": 1,
+          "points": 46,
+          "lapsLed": 0,
+          "incidents": 2,
+          "status": "Running"
+        },
+        {
+          "id": "116496",
+          "name": "Jerry Fassett",
+          "start": 14,
+          "finish": 6,
+          "gain": 8,
+          "points": 45,
+          "lapsLed": 0,
+          "incidents": 6,
+          "status": "Running"
+        },
+        {
+          "id": "139594",
+          "name": "Kenwood Ramsey",
+          "start": 16,
+          "finish": 7,
+          "gain": 9,
+          "points": 44,
+          "lapsLed": 0,
+          "incidents": 4,
+          "status": "Running"
+        },
+        {
+          "id": "62821",
+          "name": "Javone Thompson",
+          "start": 3,
+          "finish": 8,
+          "gain": -5,
+          "points": 43,
+          "lapsLed": 2,
+          "incidents": 2,
+          "status": "Running"
+        },
+        {
+          "id": "56823",
+          "name": "Shawn Stamper",
+          "start": 22,
+          "finish": 9,
+          "gain": 13,
+          "points": 42,
+          "lapsLed": 0,
+          "incidents": 3,
+          "status": "Running"
+        },
+        {
+          "id": "112020",
+          "name": "Brian Hebbard2",
+          "start": 19,
+          "finish": 10,
+          "gain": 9,
+          "points": 41,
+          "lapsLed": 0,
+          "incidents": 4,
+          "status": "Running"
+        },
+        {
+          "id": "118360",
+          "name": "Donny Beach",
+          "start": 17,
+          "finish": 11,
+          "gain": 6,
+          "points": 40,
+          "lapsLed": 0,
+          "incidents": 8,
+          "status": "Running"
+        },
+        {
+          "id": "10188",
+          "name": "Trevor Aswarnauth",
+          "start": 2,
+          "finish": 12,
+          "gain": -10,
+          "points": 40,
+          "lapsLed": 64,
+          "incidents": 8,
+          "status": "Running"
+        },
+        {
+          "id": "106245",
+          "name": "Kyle Kammeron",
+          "start": 7,
+          "finish": 13,
+          "gain": -6,
+          "points": 38,
+          "lapsLed": 0,
+          "incidents": 0,
+          "status": "Running"
+        },
+        {
+          "id": "63510",
+          "name": "Benjamin Richards",
+          "start": 8,
+          "finish": 14,
+          "gain": -6,
+          "points": 38,
+          "lapsLed": 0,
+          "incidents": 10,
+          "status": "Running"
+        },
+        {
+          "id": "55068",
+          "name": "Joshua McKinney2",
+          "start": 23,
+          "finish": 15,
+          "gain": 8,
+          "points": 36,
+          "lapsLed": 0,
+          "incidents": 4,
+          "status": "Running"
+        },
+        {
+          "id": "103956",
+          "name": "Evan Parry",
+          "start": 9,
+          "finish": 16,
+          "gain": -7,
+          "points": 35,
+          "lapsLed": 0,
+          "incidents": 6,
+          "status": "Running"
+        },
+        {
+          "id": "88906",
+          "name": "Gerry Bergeron",
+          "start": 11,
+          "finish": 17,
+          "gain": -6,
+          "points": 34,
+          "lapsLed": 0,
+          "incidents": 4,
+          "status": "Running"
+        },
+        {
+          "id": "137810",
+          "name": "Joe Konen",
+          "start": 10,
+          "finish": 18,
+          "gain": -8,
+          "points": 33,
+          "lapsLed": 0,
+          "incidents": 4,
+          "status": "Running"
+        },
+        {
+          "id": "115120",
+          "name": "Nicholas Moody",
+          "start": 12,
+          "finish": 19,
+          "gain": -7,
+          "points": 32,
+          "lapsLed": 0,
+          "incidents": 2,
+          "status": "Running"
+        },
+        {
+          "id": "109391",
+          "name": "Ryan Wilson21",
+          "start": 21,
+          "finish": 20,
+          "gain": 1,
+          "points": 31,
+          "lapsLed": 0,
+          "incidents": 0,
+          "status": "Running"
+        },
+        {
+          "id": "99926",
+          "name": "John Miles4",
+          "start": 15,
+          "finish": 21,
+          "gain": -6,
+          "points": 30,
+          "lapsLed": 0,
+          "incidents": 2,
+          "status": "Running"
+        },
+        {
+          "id": "137126",
+          "name": "Shane Hatfield",
+          "start": 26,
+          "finish": 22,
+          "gain": 4,
+          "points": 29,
+          "lapsLed": 0,
+          "incidents": 0,
+          "status": "Running"
+        },
+        {
+          "id": "109389",
+          "name": "Tommy Rogers",
+          "start": 18,
+          "finish": 23,
+          "gain": -5,
+          "points": 28,
+          "lapsLed": 0,
+          "incidents": 8,
+          "status": "Running"
+        },
+        {
+          "id": "101290",
+          "name": "Ricky Miles",
+          "start": 25,
+          "finish": 24,
+          "gain": 1,
+          "points": 27,
+          "lapsLed": 0,
+          "incidents": 1,
+          "status": "Running"
+        },
+        {
+          "id": "49145",
+          "name": "Derek Jacobs",
+          "start": 24,
+          "finish": 25,
+          "gain": -1,
+          "points": 26,
+          "lapsLed": 0,
+          "incidents": 5,
+          "status": "Disconnected"
+        },
+        {
+          "id": "93056",
+          "name": "Eric Hayden",
+          "start": 5,
+          "finish": 26,
+          "gain": -21,
+          "points": 25,
+          "lapsLed": 1,
+          "incidents": 2,
+          "status": "Disconnected"
+        }
+      ],
+      "biggestGainers": [
+        {
+          "id": "93794",
+          "name": "Bill Daniels",
+          "start": 20,
+          "finish": 1,
+          "gain": 19,
+          "points": 61,
+          "lapsLed": 3,
+          "incidents": 2,
+          "status": "Running"
+        },
+        {
+          "id": "56823",
+          "name": "Shawn Stamper",
+          "start": 22,
+          "finish": 9,
+          "gain": 13,
+          "points": 42,
+          "lapsLed": 0,
+          "incidents": 3,
+          "status": "Running"
+        },
+        {
+          "id": "135679",
+          "name": "Hunter Welborn",
+          "start": 13,
+          "finish": 4,
+          "gain": 9,
+          "points": 47,
+          "lapsLed": 0,
+          "incidents": 4,
+          "status": "Running"
+        }
+      ],
+      "dataNotes": [
+        "Finishing results reflect published race rows.",
+        "Caution count, lead changes, penalties and incident causes are not available in this source."
+      ]
+    },
     {
       "key": "sunday:383380",
       "series": "sunday",
