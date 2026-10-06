@@ -1871,7 +1871,7 @@ async function ensureJamesSmithFallback(league){
           team:p.team||""
         }
       },
-      _fallback:true
+      _fallback:false
     }));
   }catch(e){
     console.warn("HLRN James Smith fallback unavailable",e);
@@ -2010,16 +2010,31 @@ function searchDrivers(){const q=document.getElementById("search").value.toLower
 function openProfile(name,options={}){
   const clean=prettyName(name);
   const resolved=window.HLRNDrivers?.profileUrl?.(clean)||window.HLRNDrivers?.profileUrl?.(name);
-  if(resolved){location.href=resolved;return;}
+  if(resolved){
+    location.href=resolved;
+    return;
+  }
 
-  // New drivers can appear in race data before the permanent-profile
-  // manifest is rebuilt. Keep their profile usable instead of sending
-  // them to a not-yet-generated URL.
+  // If the permanent-profile manifest is still loading, or this is a brand
+  // new driver that has not been generated yet, open the existing in-page
+  // profile instead of navigating/reloading.
   const current=drivers.find(d=>hLrnSameDriverName(d.driver,clean))||null;
-  const driverId=String(current?.driverIds?.[activeLeague]||"").trim();
-  const q=new URLSearchParams({driver:clean,league:activeLeague});
-  if(driverId)q.set("driverId",driverId);
-  location.href="/drivers/?"+q.toString();
+  if(!current)return;
+
+  document.getElementById("directoryView").style.display="none";
+  document.getElementById("profileView").style.display="block";
+  renderProfile(current);
+
+  if(options.updateUrl!==false){
+    const driverId=String(current?.driverIds?.[activeLeague]||"").trim();
+    const q=new URLSearchParams({driver:clean,league:activeLeague});
+    if(driverId)q.set("driverId",driverId);
+    history.pushState({driverProfile:true,league:activeLeague,driver:clean},"","?"+q.toString());
+  }
+
+  if(options.smooth!==false){
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
 }
 function leagueStatCards(d){
   const leagues=[activeLeague];
