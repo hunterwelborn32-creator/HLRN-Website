@@ -515,7 +515,7 @@ function renderReport(race,updateUrl=true){
       feature('Lead Changes',leadValue??'—',leadDetail,leadValue===null)+
       feature('Leaders',leaderValue??'—',leaderValue!==null?'Drivers who led a lap':'Not published by the current race source',leaderValue===null)+
       feature('Race Laps',raceLapsValue??'—',raceLapsValue!==null?'Laps raced':'Not published by the current race source',raceLapsValue===null)+
-      feature('Most Incident Points',s.mostIncPoints!==null?fmt(s.mostIncPoints):'—',s.mostIncRow?s.mostIncName:'No incident data',!s.mostIncRow)+
+      feature('Most Incident Points',s.mostIncRow?s.mostIncName:'Unavailable',s.mostIncRow?fmt(s.mostIncPoints)+' incident points':'No incident data',!s.mostIncRow)+
     '</div>'+
     (race.recap?'<h3 class="report-section-title">Permanent Checkered Record</h3>'+recapButtons(race)+'<h3 class="report-section-title">Race Control Log</h3>'+raceControlLog(race):'')+
     '<h3 class="report-section-title">Finishing Order & Event-Points Movement</h3>'+
