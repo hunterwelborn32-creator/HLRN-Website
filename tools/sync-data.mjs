@@ -7,6 +7,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const OUT = resolve(dirname(fileURLToPath(import.meta.url)), '../data/hlrn.json');
+const METRICS_OUT = resolve(dirname(fileURLToPath(import.meta.url)), '../data/results-race-metrics.json');
 export const LEAGUES = ['sunday', 'monday'];
 export const ACTIONS = ['drivers', 'teams', 'results'];
 export const SEASON_IDS = { sunday: 29832, monday: 30442 };
@@ -318,12 +319,27 @@ export function parseSimRacerHubRaceResultsHtml(html, raceId='') {
 
     const finishIdx=headerIndex(headers,['pos','position','finish','fin','place']);
     const driverIdx=headerIndex(headers,['driver','drivername','name']);
-    const startIdx=headerIndex(headers,['start','startingpos','startingposition','grid','qual','qualifying']);
-    const pointsIdx=headerIndex(headers,['pts','points','racepts','racepoints']);
+    const startIdx=headerIndex(headers,['st','start','startingpos','startingposition','grid','qual','qualifying']);
+    const totalPointsIdx=headerIndex(headers,['totpts','totalpts','totalpoints']);
+    const pointsIdx=headerIndex(headers,['racepts','racepoints','pts','points']);
+    const bonusIdx=headerIndex(headers,['bnspts','bonuspts','bonuspoints']);
+    const penaltyPointsIdx=headerIndex(headers,['penpts','penaltypts','penaltypoints']);
+    const intervalIdx=headerIndex(headers,['int','interval']);
+    const lapsIdx=headerIndex(headers,['laps']);
     const ledIdx=headerIndex(headers,['led','lapsled','lapslead']);
+    const fastestIdx=headerIndex(headers,['fastestlap','bestlap']);
+    const fastLapNoIdx=headerIndex(headers,['fastlap#','fastlapno','fastlapnumber']);
+    const avgLapIdx=headerIndex(headers,['avglap','averagelap']);
     const incIdx=headerIndex(headers,['inc','incident','incidents','incidentpoints']);
     const statusIdx=headerIndex(headers,['status','finishstatus']);
+    const avgPosIdx=headerIndex(headers,['avgpos','averagepos','averageposition']);
     const carIdx=headerIndex(headers,['#','car','carnumber','number','car#']);
+    const ratingIdx=headerIndex(headers,['driverrating','rating']);
+    const stagePtsIdx=headerIndex(headers,['stagepts','stagepoints']);
+    const srIdx=headerIndex(headers,['sr','safetyrating']);
+    const iratingIdx=headerIndex(headers,['irating']);
+    const qualTimeIdx=headerIndex(headers,['qualtime','qualifyingtime']);
+    const licenseIdx=headerIndex(headers,['iracinglicense','license']);
 
     const out=[];
     for (const rowHtml of rows.slice(headerRow+1)) {
@@ -346,16 +362,86 @@ export function parseSimRacerHubRaceResultsHtml(html, raceId='') {
         source:'SimRacerHub'
       };
       if (startIdx>=0) row.start=cellNumber(cells[startIdx]?.text);
+      if (totalPointsIdx>=0) row.totalPoints=cellNumber(cells[totalPointsIdx]?.text);
       if (pointsIdx>=0) row.points=cellNumber(cells[pointsIdx]?.text);
+      if (bonusIdx>=0) row.bonusPoints=cellNumber(cells[bonusIdx]?.text);
+      if (penaltyPointsIdx>=0) row.penaltyPoints=cellNumber(cells[penaltyPointsIdx]?.text);
+      if (intervalIdx>=0) row.interval=cellNumber(cells[intervalIdx]?.text);
+      if (lapsIdx>=0) row.lapsCompleted=cellNumber(cells[lapsIdx]?.text);
       if (ledIdx>=0) row.lapsLed=cellNumber(cells[ledIdx]?.text);
+      if (fastestIdx>=0) row.fastestLap=cellNumber(cells[fastestIdx]?.text);
+      if (fastLapNoIdx>=0) row.fastLapNumber=cellNumber(cells[fastLapNoIdx]?.text);
+      if (avgLapIdx>=0) row.avgLap=cellNumber(cells[avgLapIdx]?.text);
       if (incIdx>=0) row.incidents=cellNumber(cells[incIdx]?.text);
       if (statusIdx>=0) row.status=stripHtml(cells[statusIdx]?.text||'');
+      if (avgPosIdx>=0) row.avgPosition=cellNumber(cells[avgPosIdx]?.text);
       if (carIdx>=0) row.carNumber=stripHtml(cells[carIdx]?.text||'');
+      if (ratingIdx>=0) row.driverRating=cellNumber(cells[ratingIdx]?.text);
+      if (stagePtsIdx>=0) row.stagePoints=cellNumber(cells[stagePtsIdx]?.text);
+      if (srIdx>=0) row.safetyRating=cellNumber(cells[srIdx]?.text);
+      if (iratingIdx>=0) row.irating=cellNumber(cells[iratingIdx]?.text);
+      if (qualTimeIdx>=0) row.qualifyingTime=cellNumber(cells[qualTimeIdx]?.text);
+      if (licenseIdx>=0) row.iracingLicense=stripHtml(cells[licenseIdx]?.text||'');
       out.push(row);
     }
     if (out.length) return out;
   }
   return [];
+}
+
+function simRacerHubPenaltyCount(html) {
+  const source=String(html||'');
+  const text=stripHtml(source).replace(/\s+/g,' ');
+  if (/Driver Penalties\s+No penalties/i.test(text)) return 0;
+
+  const tables=[...source.matchAll(/<table\b[^>]*>([\s\S]*?)<\/table>/gi)].map(m=>m[1]);
+  for (const table of tables) {
+    const rows=[...table.matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)].map(m=>m[1]);
+    if (!rows.length) continue;
+    const header=tableCells(rows[0]).map(c=>resultHeaderKey(c.text));
+    const hasDriver=header.some(k=>['driver','drivername','name'].includes(k));
+    const hasPenalty=header.some(k=>k.includes('penalt')||k==='reason');
+    if (!hasDriver || !hasPenalty) continue;
+    let count=0;
+    for (const row of rows.slice(1)) {
+      const cells=tableCells(row);
+      if (!cells.length) continue;
+      if (/driver_id=\d+/i.test(row) || cells.some(c=>/\b\d+(?:\.\d+)?\b/.test(c.text))) count++;
+    }
+    return count;
+  }
+  return null;
+}
+
+export function parseSimRacerHubRaceMetricsHtml(html, raceId='', parsedRows=null) {
+  const text=stripHtml(html).replace(/\s+/g,' ').trim();
+  const rows=Array.isArray(parsedRows)?parsedRows:parseSimRacerHubRaceResultsHtml(html,raceId);
+  const summary=text.match(/\bRACE\s+([^·]{1,40})\s*·\s*(\d+)\s+laps\s*·\s*(\d+)\s+Leaders?\s*·\s*(\d+)\s+Lead Changes?\s*·\s*(\d+)\s+cautions?(?:\s*\((\d+)\s+laps?\))?/i);
+
+  const fastest=rows
+    .filter(r=>num(r?.fastestLap)!==null&&num(r.fastestLap)>0)
+    .slice()
+    .sort((a,b)=>num(a.fastestLap)-num(b.fastestLap))[0]||null;
+
+  return {
+    raceId:String(raceId||''),
+    source:'SimRacerHub',
+    duration:summary?String(summary[1]||'').trim():null,
+    raceLaps:summary?num(summary[2]):null,
+    leaders:summary?num(summary[3]):null,
+    leadChanges:summary?num(summary[4]):null,
+    cautions:summary?num(summary[5]):null,
+    cautionLaps:summary?num(summary[6]):null,
+    penalties:simRacerHubPenaltyCount(html),
+    fastestLap:fastest?{
+      time:num(fastest.fastestLap),
+      formatted:num(fastest.fastestLap)?.toFixed(3),
+      driver:fastest.driver||'',
+      driverId:String(fastest.driverId||''),
+      carNumber:String(fastest.carNumber||''),
+      lap:num(fastest.fastLapNumber)
+    }:null
+  };
 }
 
 export function mergeSimRacerHubRaceResults(baseResults=[], directByRace=new Map()) {
@@ -529,29 +615,10 @@ async function requestTeamRosters(league, drivers) {
   return rosters;
 }
 
-function debugRacePageSummary(html) {
-  const source=String(html||'');
-  const text=stripHtml(source);
-  const keywords=['Fastest','Caution','Lead Change','Lead Changes','Penalty','Penalties','Lap Snapshot','Best Lap','Laps Led','Pole'];
-  const snippets=[];
-  for(const keyword of keywords){
-    const i=text.toLowerCase().indexOf(keyword.toLowerCase());
-    if(i>=0)snippets.push(text.slice(Math.max(0,i-120),Math.min(text.length,i+260)));
-  }
-  const headers=[];
-  for(const table of source.matchAll(/<table\b[^>]*>([\s\S]*?)<\/table>/gi)){
-    const first=[...table[1].matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)].slice(0,3);
-    for(const row of first){
-      const cells=tableCells(row[1]).map(c=>c.text).filter(Boolean);
-      if(cells.length)headers.push(cells.join(' | '));
-    }
-  }
-  return {snippets:[...new Set(snippets)].slice(0,20),headers:[...new Set(headers)].slice(0,20)};
-}
-
 async function requestSeasonRaceResults(raw, league) {
   const raceIds=mainSeasonRaceIds(raw);
-  const out=new Map();
+  const rowsByRace=new Map();
+  const metricsByRace=new Map();
   for (const raceId of raceIds) {
     try {
       const url=new URL('https://simracerhub.com/season_race.php');
@@ -561,17 +628,18 @@ async function requestSeasonRaceResults(raw, league) {
         'User-Agent':'Mozilla/5.0',
         'Accept':'text/html,application/xhtml+xml'
       });
-      if (String(raceId)==='363739' || String(raceId)==='383476') {
-        console.log('SRH DEBUG '+league+' '+raceId+' '+JSON.stringify(debugRacePageSummary(html)));
-      }
       const rows=parseSimRacerHubRaceResultsHtml(html,raceId);
-      if (rows.length) out.set(String(raceId),rows);
-      else console.warn(`${league}/SimRacerHub race ${raceId}: finishing table not recognized; verified fallback retained`);
+      if (rows.length) {
+        rowsByRace.set(String(raceId),rows);
+        metricsByRace.set(String(raceId),parseSimRacerHubRaceMetricsHtml(html,raceId,rows));
+      } else {
+        console.warn(`${league}/SimRacerHub race ${raceId}: finishing table not recognized; verified fallback retained`);
+      }
     } catch (e) {
       console.warn(`${league}/SimRacerHub race ${raceId}: ${e.message}; verified fallback retained`);
     }
   }
-  return out;
+  return {rowsByRace,metricsByRace};
 }
 
 async function requestMondayStageTotals(raw) {
@@ -596,13 +664,23 @@ async function requestMondayStageTotals(raw) {
 export async function sync({
   endpoint = process.env.HLRN_LEAGUE_WEBAPP_URL,
   hostedEndpoint = process.env.HLRN_HOSTED_WEBAPP_URL,
-  output = OUT
+  output = OUT,
+  metricsOutput = METRICS_OUT
 } = {}) {
   if (!endpoint) throw new Error('Set HLRN_LEAGUE_WEBAPP_URL to your working League /exec URL.');
 
   let old = {};
   try { old = JSON.parse(await readFile(output, 'utf8')); }
   catch (e) { if (e.code !== 'ENOENT') throw e; }
+
+  let oldMetrics = { schemaVersion: 2, races: [] };
+  try { oldMetrics = JSON.parse(await readFile(metricsOutput, 'utf8')); }
+  catch (e) { if (e.code !== 'ENOENT') throw e; }
+  const metricsByKey = new Map(
+    (Array.isArray(oldMetrics?.races) ? oldMetrics.races : [])
+      .map(item=>[String(item?.key||''),item])
+      .filter(([key])=>key)
+  );
 
   const payloads = {};
   for (const league of LEAGUES) {
@@ -635,17 +713,45 @@ export async function sync({
     }
   }
 
-  // Race finishing order: SimRacerHub is the preferred published source.
-  // The existing HLRN Data Hub remains the safety fallback if a race page has
-  // not been updated yet or SimRacerHub changes its markup.
+  // Race finishing order + historical race intelligence: SimRacerHub is the
+  // preferred published source. The existing HLRN Data Hub remains the safety
+  // fallback if a race page has not been updated yet.
   for (const league of LEAGUES) {
     if (!seasonRaw[league]) continue;
     try {
       const direct=await requestSeasonRaceResults(seasonRaw[league],league);
       const base=validateAction(payloads[league]?.results,'results',league);
-      const merged=mergeSimRacerHubRaceResults(base,direct);
+      const merged=mergeSimRacerHubRaceResults(base,direct.rowsByRace);
       payloads[league].results={success:true,results:merged};
-      console.log(`${league} race results: SimRacerHub preferred for ${direct.size} completed race(s); verified fallback retained for the rest.`);
+
+      for (const [raceId,metric] of direct.metricsByRace.entries()) {
+        const template=merged.find(row=>String(row?.raceId??'')===String(raceId))
+          || base.find(row=>String(row?.raceId??'')===String(raceId))
+          || {};
+        const raceNumber=num(template.raceNumber);
+        const key=`${league}|${raceNumber??''}|${raceId}`;
+        metricsByKey.set(key,{
+          key,
+          league,
+          raceNumber,
+          raceId:String(raceId),
+          track:String(template.track||''),
+          date:template.date||null,
+          source:'SimRacerHub',
+          sourceRaceId:String(raceId),
+          duration:metric.duration,
+          raceLaps:metric.raceLaps,
+          leaders:metric.leaders,
+          leadChanges:metric.leadChanges,
+          cautions:metric.cautions,
+          cautionLaps:metric.cautionLaps,
+          penalties:metric.penalties,
+          lapSnapshots:null,
+          fastestLap:metric.fastestLap
+        });
+      }
+
+      console.log(`${league} race results: SimRacerHub preferred for ${direct.rowsByRace.size} completed race(s); historical race intelligence captured for ${direct.metricsByRace.size} race(s).`);
     } catch (e) {
       console.warn(`${league} direct SimRacerHub race-result refresh failed; verified HLRN results retained: ${e.message}`);
     }
@@ -693,15 +799,38 @@ export async function sync({
   }
 
   const next = buildSnapshot(payloads, old, hosted, seasonRaw, teamRosters, stageTotals);
-  if (sameData(old, next)) {
-    console.log('No data changes; prior snapshot kept.');
+  const dataChanged = !sameData(old, next);
+
+  const metricRaces=[...metricsByKey.values()]
+    .filter(item=>item&&['sunday','monday'].includes(String(item.league||'')))
+    .sort((a,b)=>String(a.league).localeCompare(String(b.league))||(num(a.raceNumber)??999)-(num(b.raceNumber)??999)||String(a.raceId).localeCompare(String(b.raceId)));
+  const metricsChanged = JSON.stringify(oldMetrics?.races||[]) !== JSON.stringify(metricRaces);
+
+  if (!dataChanged && !metricsChanged) {
+    console.log('No data or race-intelligence changes; prior snapshots kept.');
     return false;
   }
 
-  const tmp = output + '.tmp';
-  await writeFile(tmp, JSON.stringify(next, null, 2) + '\n', 'utf8');
-  await rename(tmp, output);
-  console.log('Published verified HLRN snapshot at', next.generatedAt);
+  if (dataChanged) {
+    const tmp = output + '.tmp';
+    await writeFile(tmp, JSON.stringify(next, null, 2) + '\n', 'utf8');
+    await rename(tmp, output);
+    console.log('Published verified HLRN snapshot at', next.generatedAt);
+  }
+
+  if (metricsChanged) {
+    const metricPayload={
+      schemaVersion:2,
+      generatedAt:new Date().toISOString(),
+      source:'SimRacerHub race pages',
+      races:metricRaces
+    };
+    const tmp=metricsOutput+'.tmp';
+    await writeFile(tmp, JSON.stringify(metricPayload,null,2)+'\n','utf8');
+    await rename(tmp,metricsOutput);
+    console.log(`Published SimRacerHub race intelligence for ${metricRaces.length} completed races.`);
+  }
+
   return true;
 }
 
