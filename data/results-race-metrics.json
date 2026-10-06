@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-10-06T14:00:00Z",
+  "sourceNote": "Manual official iRacing event-result metrics used only when the normal HLRN results feed does not publish these race-level fields.",
+  "races": [
+    {
+      "key": "monday|7|383476",
+      "league": "monday",
+      "raceNumber": 7,
+      "raceId": "383476",
+      "track": "Auto Club Speedway",
+      "date": "2026-10-05",
+      "source": "iRacing event result",
+      "sourceSubsessionId": 89153760,
+      "sourceSessionId": 323734858,
+      "lapsComplete": 75,
+      "cautions": 1,
+      "cautionLaps": 3,
+      "leadChanges": 8,
+      "lapSnapshots": null,
+      "penalties": null,
+      "fastestLap": {
+        "time": 39.2692,
+        "formatted": "39.269",
+        "driver": "Benjamin Richards",
+        "carNumber": "56",
+        "lap": 3
+      }
+    }
+  ]
+}
