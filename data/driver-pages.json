@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-07T19:46:16Z",
+  "generatedAt": "2026-10-07T20:24:08Z",
   "count": 86,
   "drivers": [
     {
@@ -999,7 +999,7 @@
       "number": "58",
       "photoSlug": "",
       "hasPhoto": false,
-      "iRating": 0,
+      "iRating": 3449,
       "series": [
         "hosted"
       ],
@@ -1248,7 +1248,7 @@
       "number": "10",
       "photoSlug": "",
       "hasPhoto": false,
-      "iRating": 0,
+      "iRating": 1221,
       "series": [
         "hosted"
       ],
@@ -1425,7 +1425,7 @@
       "number": "8",
       "photoSlug": "",
       "hasPhoto": false,
-      "iRating": 0,
+      "iRating": 5299,
       "series": [
         "hosted"
       ],
@@ -1753,7 +1753,7 @@
       "number": "6",
       "photoSlug": "",
       "hasPhoto": false,
-      "iRating": 0,
+      "iRating": 1828,
       "series": [
         "hosted"
       ],
