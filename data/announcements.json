@@ -1,6 +1,6 @@
 {
   "success": true,
-  "updatedAt": "2026-10-07T12:10:11Z",
+  "updatedAt": "2026-10-07T12:35:24Z",
   "channel": {
     "id": "1529356159906222201",
     "name": "🚨-high-line-announcements",
@@ -50,8 +50,8 @@
         {
           "id": "1555373983933792256",
           "filename": "CC932804-599C-4541-A0E3-E160C0D3B18F.png",
-          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1555373983933792256/CC932804-599C-4541-A0E3-E160C0D3B18F.png?backend=b2&ex=6ac6e1e7&is=6ac59067&hm=32ce9a1ff437004536c6fab14f43198adfee64dd0e73d7308a5597aad028e8d9&",
-          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1555373983933792256/CC932804-599C-4541-A0E3-E160C0D3B18F.png?backend=b2&ex=6ac6e1e7&is=6ac59067&hm=32ce9a1ff437004536c6fab14f43198adfee64dd0e73d7308a5597aad028e8d9&",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1555373983933792256/CC932804-599C-4541-A0E3-E160C0D3B18F.png?backend=b2&ex=6ac78aa7&is=6ac63927&hm=b0cff7a5680adfe56729003580f9c7e3969ebd2b3a2997aa250e9a47f43357cb&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1555373983933792256/CC932804-599C-4541-A0E3-E160C0D3B18F.png?backend=b2&ex=6ac78aa7&is=6ac63927&hm=b0cff7a5680adfe56729003580f9c7e3969ebd2b3a2997aa250e9a47f43357cb&",
           "size": 2558395,
           "content_type": "image/png",
           "width": 1672,
@@ -449,8 +449,8 @@
         {
           "id": "1545588886904901765",
           "filename": "content.png",
-          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1545588886904901765/content.png?ex=6ac6e152&is=6ac58fd2&hm=2eca956d2419d8e35129351557252c8e34c6550b8af87f3f3fcd1051792060a8&",
-          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1545588886904901765/content.png?ex=6ac6e152&is=6ac58fd2&hm=2eca956d2419d8e35129351557252c8e34c6550b8af87f3f3fcd1051792060a8&",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1545588886904901765/content.png?ex=6ac78a12&is=6ac63892&hm=6cff4a0f757ea5c3f3a55657f2354b8f35300a7c724b0f72eaff6eb365640849&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1545588886904901765/content.png?ex=6ac78a12&is=6ac63892&hm=6cff4a0f757ea5c3f3a55657f2354b8f35300a7c724b0f72eaff6eb365640849&",
           "size": 2771433,
           "content_type": "image/png",
           "width": 1149,
