@@ -55,7 +55,7 @@
   document.head.appendChild(schema);
 })();
 </script>
-<link rel="stylesheet" href="../assets/site-shell.css?v=20261001control1">
+<link rel="stylesheet" href="../assets/site-shell.css?v=20261007visual1">
 <style>
 :root{
   --hlrn-red:#d71920;
@@ -1482,6 +1482,14 @@ function hLrnPhotoKey(name){
   return k;
 }
 function photoUrl(name){const k=hLrnPhotoKey(name);if(HLRN_EMBEDDED_DRIVER_PHOTOS[k])return HLRN_EMBEDDED_DRIVER_PHOTOS[k];const f=HLRN_DRIVER_CUTOUT_PHOTOS[k];return f?HLRN_DRIVER_PHOTO_BASE+f:""}
+const HLRN_DRIVER_FALLBACK_BASE="../assets/driver-photos/fallback/";
+function iRatingFallbackPhoto(iRating){
+  const parsed=Number(iRating),rating=Number.isFinite(parsed)&&parsed>=0?parsed:0;
+  if(rating>=2000)return HLRN_DRIVER_FALLBACK_BASE+"red.webp";
+  if(rating>=1500)return HLRN_DRIVER_FALLBACK_BASE+"blue.webp";
+  if(rating>=1000)return HLRN_DRIVER_FALLBACK_BASE+"green.webp";
+  return HLRN_DRIVER_FALLBACK_BASE+"yellow.webp";
+}
 function lastName(name){const a=prettyName(name).trim().split(/\s+/);return (a[a.length-1]||"").toLowerCase()}
 
 function prettyName(name){
@@ -1539,7 +1547,8 @@ function normalizeDriver(d){
     top5:d.top5??0,
     top10:d.top10??0,
     averageFinish:d.averageFinish??d.avgFinish??"—",
-    points:d.points??0
+    points:d.points??0,
+    iRating:d.iRating??d.irating??null
   };
 }
 
@@ -1644,8 +1653,9 @@ function combineDriverFeeds(feeds, resultFeeds){
       if(!map.has(key)){
         map.set(key,{
           driver:prettyName(d.driver),carNumber:d.carNumber||KNOWN_DRIVER_NUMBERS[hLrnPhotoKey(d.driver)]||"—",
-          starts:0,wins:0,top5:0,top10:0,points:0,
+          starts:0,wins:0,top5:0,top10:0,points:0,iRating:null,
           _avgWeighted:0,_avgStarts:0,bestFinish:null,lapsLed:0,
+          _iRatingDate:0,_iRatingRace:0,
           driverIds:{},leagueStats:{},history:[],_fallback:false
         });
       }
@@ -1693,6 +1703,17 @@ function combineDriverFeeds(feeds, resultFeeds){
         if(out.bestFinish===null || finish<out.bestFinish) out.bestFinish=finish;
       }
       out.lapsLed+=num(r.lapsLed);
+      const rawIRating=r.iRating??r.irating;
+      const parsedIRating=Number(rawIRating);
+      if(Number.isFinite(parsedIRating)&&parsedIRating>0){
+        const ratingDate=Date.parse(r.date||"")||0;
+        const ratingRace=num(r.raceNumber);
+        if(ratingDate>out._iRatingDate || (ratingDate===out._iRatingDate&&ratingRace>=out._iRatingRace)){
+          out.iRating=Math.round(parsedIRating);
+          out._iRatingDate=ratingDate;
+          out._iRatingRace=ratingRace;
+        }
+      }
       const row={...r,league};
       out.history.push(row);
       allResults.push({...row,driver:out.driver});
@@ -1703,7 +1724,7 @@ function combineDriverFeeds(feeds, resultFeeds){
   return [...map.values()].map(d=>{
     d.averageFinish=d._avgStarts?(d._avgWeighted/d._avgStarts).toFixed(2):"—";
     d.bestFinish=d.bestFinish===null?"—":d.bestFinish;
-    delete d._avgWeighted; delete d._avgStarts;
+    delete d._avgWeighted; delete d._avgStarts; delete d._iRatingDate; delete d._iRatingRace;
     d.history.sort((a,b)=>{
       const da=Date.parse(a.date||"")||0, db=Date.parse(b.date||"")||0;
       if(db!==da) return db-da;
@@ -1739,7 +1760,25 @@ function hLrnSharedDriver(league,driver){
   return rows.find(row=>id&&String(row.driverId||"")===id)
     ||rows.find(row=>hLrnSameDriverName(row.driver,driver?.driver));
 }
+function hLrnLatestIRating(league,driver){
+  const rows=window.HLRNData?.league?.(league)?.results||[];
+  const id=String(driver?.driverIds?.[league]||"").trim();
+  let best=null;
+  rows.forEach(row=>{
+    const sameId=id&&String(row.driverId||"")===id;
+    const sameName=!id&&hLrnSameDriverName(row.driver,driver?.driver);
+    if(!sameId&&!sameName)return;
+    const rating=Number(row.irating??row.iRating);
+    if(!Number.isFinite(rating)||rating<=0)return;
+    const date=Date.parse(row.date||"")||0;
+    const race=num(row.raceNumber);
+    if(!best||date>best.date||(date===best.date&&race>=best.race))best={rating:Math.round(rating),date,race};
+  });
+  return best?.rating||0;
+}
 function enrichDriverFromShared(league,driver){
+  const latestIRating=hLrnLatestIRating(league,driver);
+  if(latestIRating>0)driver.iRating=latestIRating;
   const shared=hLrnSharedDriver(league,driver);
   if(!shared)return driver;
   const stats=driver.leagueStats?.[league]||{};
@@ -2026,7 +2065,7 @@ function initializeDrivers(){
 }
 
 function card(d,index=0){
- const name=prettyName(d.driver), n=getDriverNumber(name,d.carNumber), photo=photoUrl(name), wins=num(d.wins);
+ const name=prettyName(d.driver), n=getDriverNumber(name,d.carNumber), fallbackPhoto=iRatingFallbackPhoto(d.iRating), photo=photoUrl(name)||fallbackPhoto, wins=num(d.wins);
  const right=d._fallback?"STATS SYNCING":`${wins} ${wins===1?'Win':'Wins'}`;
  const car=n==="—"?"HLRN DRIVER":`Car <strong>#${esc(n)}</strong>`;
  const leagueStats=d.leagueStats&&d.leagueStats[activeLeague]?d.leagueStats[activeLeague]:{};
@@ -2041,7 +2080,7 @@ function card(d,index=0){
    <div class="driver-media">
      <div class="number-badge">${esc(n)}</div><div class="status-chip">HLRN DRIVER</div><div class="rank-chip">CHAMP <b>P${esc(leagueRank)}</b></div>
      <div class="driver-fallback">${n==="—"?"HLRN":"#"+esc(n)}</div>
-     ${photo?`<img class="driver-cutout" src="${esc(photo)}" alt="${esc(name)}" onerror="this.remove()" loading="${eager?"eager":"lazy"}" decoding="async" ${eager?'fetchpriority="high"':'fetchpriority="low"'}>`:``}
+     ${photo?`<img class="driver-cutout" src="${esc(photo)}" alt="${esc(name)}" onerror="this.onerror=null;this.src=\'${esc(fallbackPhoto)}\'" loading="${eager?"eager":"lazy"}" decoding="async" ${eager?'fetchpriority="high"':'fetchpriority="low"'}>`:``}
    </div>
    <div class="driver-info">
      <div class="driver-name">${esc(name)}</div>
@@ -2180,7 +2219,7 @@ function percentMetric(n,total){return !Number.isFinite(Number(total))||Number(t
 function renderProfile(d){
   const hist=Array.isArray(d.history)?d.history:[];
   d.driver=prettyName(d.driver);d.carNumber=getDriverNumber(d.driver,d.carNumber);
-  const photo=photoUrl(d.driver),key=hLrnPhotoKey(d.driver),league=d.leagueStats?.[activeLeague]||{};
+  const fallbackPhoto=iRatingFallbackPhoto(d.iRating),photo=photoUrl(d.driver)||fallbackPhoto,key=hLrnPhotoKey(d.driver),league=d.leagueStats?.[activeLeague]||{};
   const team=String(d.team||league.team||"").trim();
   const ready=!d._fallback;
   const value=v=>ready?displayMetric(v):"—";
@@ -2230,7 +2269,7 @@ function renderProfile(d){
         <div class="profile-identity-number">${esc(d.carNumber)}</div>
       </div>
       <div class="profile-photo">
-        ${photo?`<img class="profile-cutout" src="${esc(photo)}" alt="${esc(d.driver)}" onerror="this.remove()" loading="lazy" decoding="async">`:`<div class="profile-missing">#${esc(d.carNumber)}</div>`}
+        ${photo?`<img class="profile-cutout" src="${esc(photo)}" alt="${esc(d.driver)}" onerror="this.onerror=null;this.src=\'${esc(fallbackPhoto)}\'" loading="lazy" decoding="async">`:`<div class="profile-missing">#${esc(d.carNumber)}</div>`}
       </div>
       <aside class="profile-hero-stats"><h3>Driver Statistics</h3><div class="profile-hero-stat-grid">
         ${lead("League rank",league.rank!=null&&league.rank!=="—"?"#"+league.rank:"—")}
@@ -2308,6 +2347,6 @@ document.addEventListener("DOMContentLoaded",()=>{
   initializeDrivers();
 });
 </script>
-<script src="../assets/site-shell.js?v=20261001control1"></script>
+<script src="../assets/site-shell.js?v=20261007visual1"></script>
 </body>
 </html>
