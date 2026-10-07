@@ -108,6 +108,10 @@ function photoKey(name){
 }
 
 function photoURL(name){
+    const system=window.HLRNDrivers;
+    const rating=system?.verifiedIRating?.(name);
+    const shared=system?.displayPhotoUrl?.(name,rating,"cutout")||"";
+    if(shared) return shared;
     const file=PHOTO_MAP[photoKey(name)];
     return file ? PHOTO_BASE+file+PHOTO_VERSION : "";
 }
@@ -133,12 +137,10 @@ function decorateNameElement(el){
     const name=currentPlainText(el);
     if(isPlaceholder(name)) return;
 
-    const file=PHOTO_MAP[photoKey(name)];
-    if(!file) return;
-
     const useFullPhoto=false;
-    const url=PHOTO_BASE+file+PHOTO_VERSION;
-    const fallbackUrl=PHOTO_BASE+file+PHOTO_VERSION;
+    const url=photoURL(name);
+    if(!url) return;
+    const fallbackUrl=url;
 
     const existing=el.querySelector(":scope > .hlrn-photo-name-wrap");
     if(existing && el.dataset.hlrnPhotoName===name) return;
@@ -156,16 +158,31 @@ function decorateNameElement(el){
 function findPhotoInSentence(text){
     const source=String(text||"").trim();
     if(!source) return null;
-
-    /* Prefer the longest name to avoid partial matches. */
-    const names=Object.keys(DISPLAY_VARIANTS).sort((a,b)=>b.length-a.length);
     const lower=source.toLowerCase();
 
+    const sharedDrivers=window.HLRNDrivers?.getAll?.()||[];
+    const sharedNames=[];
+    sharedDrivers.forEach(rec=>{
+        [rec.displayName,rec.rawName,rec.name,...(rec.aliases||[])].forEach(name=>{
+            const display=String(name||"").trim();
+            if(display) sharedNames.push(display);
+        });
+    });
+    sharedNames.sort((a,b)=>b.length-a.length);
+    for(const display of sharedNames){
+        if(lower.includes(display.toLowerCase())){
+            const url=photoURL(display);
+            if(url) return {display:display,url:url};
+        }
+    }
+
+    /* Legacy photo-name list remains as a fallback while the shared
+       driver manifest is still loading. */
+    const names=Object.keys(DISPLAY_VARIANTS).sort((a,b)=>b.length-a.length);
     for(const display of names){
         if(lower.includes(display.toLowerCase())){
-            const key=DISPLAY_VARIANTS[display];
-            const file=PHOTO_MAP[key];
-            if(file) return {display:display,url:PHOTO_BASE+file+PHOTO_VERSION};
+            const url=photoURL(display);
+            if(url) return {display:display,url:url};
         }
     }
     return null;
