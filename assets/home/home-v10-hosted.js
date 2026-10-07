@@ -22,6 +22,11 @@
     return raw.replace(/([A-Za-z])\d+$/,"$1").trim();
   };
 
+  const slugify=value=>pretty(value)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g,"-")
+    .replace(/^-+|-+$/g,"");
+
   const longDate=value=>{
     const raw=String(value||"").trim();
     if(!raw)return "--";
@@ -41,26 +46,49 @@
     }).format(d).toUpperCase();
   };
 
+  function raceVehicle(rows,latest){
+    const cars=rows.map(r=>String(r?.car||"")).filter(Boolean);
+    const joined=cars.join(" | ").toLowerCase();
+    if(cars.length&&cars.every(c=>/truck|silverado|tundra|f150|ram/i.test(c)))return "NASCAR TRUCKS";
+    if(/arca/i.test(joined))return "ARCA";
+    if(/gen\s*7|next gen/i.test(joined))return "GEN 7";
+    if(/gen\s*6/i.test(joined))return "GEN 6";
+    return String(latest?.winnerCar||rows[0]?.car||"Hosted Racing")
+      .replace(/^NASCAR\s+/i,"")
+      .replace(/\s+(Chevrolet|Toyota|Ford|RAM).*$/i,"")
+      .trim()
+      .toUpperCase() || "HOSTED RACING";
+  }
+
   function winnerPhoto(name){
     const img=$("h10HostedWinnerPhoto");
     if(!img)return;
     img.hidden=true;
 
     const system=window.HLRNDrivers;
-    const src=system?.photoUrl?.(name,"cutout")||"";
-    if(!src)return;
+    const manifest=system?.photoUrl?.(name,"cutout")||"";
+    const slug=slugify(name);
+    const direct=slug ? "assets/driver-photos/cutout/"+encodeURIComponent(slug)+".webp" : "";
+    const candidates=[manifest,direct].filter((src,i,list)=>src&&list.indexOf(src)===i);
 
-    const probe=new Image();
-    probe.onload=()=>{
-      img.src=src;
-      img.alt=pretty(name)+" driver photo";
-      img.hidden=false;
+    let index=0;
+    const tryNext=()=>{
+      if(index>=candidates.length){
+        img.removeAttribute("src");
+        img.hidden=true;
+        return;
+      }
+      const src=candidates[index++];
+      const probe=new Image();
+      probe.onload=()=>{
+        img.src=src;
+        img.alt=pretty(name)+" driver photo";
+        img.hidden=false;
+      };
+      probe.onerror=tryNext;
+      probe.src=src;
     };
-    probe.onerror=()=>{
-      img.removeAttribute("src");
-      img.hidden=true;
-    };
-    probe.src=src;
+    tryNext();
   }
 
   function render(snapshot){
@@ -71,22 +99,22 @@
     const winnerRow=rows.find(r=>Number(r?.position)===1)||rows[0]||{};
     const winner=pretty(latest.winner||winnerRow.driver||"");
 
-    put("h10HostedWinner",winner,"Hosted Winner");
-    put("h10HostedNumber",latest.winnerCarNumber||winnerRow.carNumber);
-    put("h10HostedCar",latest.winnerCar||winnerRow.car,"Hosted Race");
     put("h10HostedTrack",latest.track,"Latest Hosted Race");
     put("h10HostedDate",longDate(latest.date));
+    put("h10HostedVehicle",raceVehicle(rows,latest),"Hosted Racing");
     put("h10HostedField",rows.length||"");
     put("h10HostedLaps",latest.totalLaps||winnerRow.laps);
     put("h10HostedCautions",latest.cautions);
-    put("h10HostedStart",winnerRow.start);
-    put("h10HostedLed",winnerRow.lapsLed);
-    put("h10HostedIncidents",winnerRow.incidents);
+    put("h10HostedTotalIncidents",latest.totalIncidents);
+
+    put("h10HostedWinner",winner,"Hosted Winner");
+    put("h10HostedNumber",latest.winnerCarNumber||winnerRow.carNumber);
 
     const link=$("h10HostedWinnerLink");
     if(link){
       const profile=window.HLRNDrivers?.profileUrl?.(winner);
       link.href=profile||"standings/hosted.html";
+      link.setAttribute("aria-label",winner ? "Open "+winner+" driver profile" : "Open Hosted standings");
     }
 
     winnerPhoto(winner);
