@@ -41,7 +41,37 @@ export function validateHosted(data) {
     throw new Error('Hosted /action=data: expected latest.results, sessions and rankings');
   if (!data.latest.results.length && !data.sessions.length && !data.rankings.length)
     throw new Error('Hosted data is empty; previous published Hosted snapshot preserved');
-  return { latest: data.latest, sessions: data.sessions, rankings: data.rankings };
+  return {
+    latest: data.latest,
+    sessions: data.sessions,
+    rankings: data.rankings,
+    driverRatings: data.driverRatings && typeof data.driverRatings === 'object' ? data.driverRatings : {}
+  };
+}
+
+const hostedDriverKey = value => String(value || '')
+  .trim()
+  .replace(/([A-Za-z])\d+$/, '$1')
+  .toLowerCase()
+  .replace(/[^a-z0-9]/g, '');
+
+export function mergeHostedDriverRatings(previousHosted, refreshedHosted) {
+  const ratings = { ...(previousHosted?.driverRatings || {}), ...(refreshedHosted?.driverRatings || {}) };
+  const raceDate = refreshedHosted?.latest?.date || null;
+
+  for (const row of refreshedHosted?.latest?.results || []) {
+    const driver = String(row?.driver || '').trim();
+    const key = hostedDriverKey(driver);
+    const rating = firstNum(row, ['iRating', 'irating', 'i_rating']);
+    if (!key || rating === null || rating <= 0) continue;
+    ratings[key] = {
+      driver,
+      iRating: Math.round(rating),
+      date: raceDate
+    };
+  }
+
+  return ratings;
 }
 
 export function seasonDriverTotals(raw) {
@@ -788,8 +818,11 @@ export async function sync({
       if (priorHostedCount && refreshedHosted.sessions.length < priorHostedCount) {
         throw new Error(`Hosted source regressed from ${priorHostedCount} to ${refreshedHosted.sessions.length} session rows`);
       }
-      hosted = refreshedHosted;
-      console.log(`Hosted verified: ${hosted.sessions.length} session rows; ${hosted.rankings.length} rankings.`);
+      hosted = {
+        ...refreshedHosted,
+        driverRatings: mergeHostedDriverRatings(old?.hosted, refreshedHosted)
+      };
+      console.log(`Hosted verified: ${hosted.sessions.length} session rows; ${hosted.rankings.length} rankings; ${Object.keys(hosted.driverRatings || {}).length} remembered iRatings.`);
     } catch (e) {
       console.warn('Hosted refresh failed; retaining last Hosted snapshot:', e.message);
     }
