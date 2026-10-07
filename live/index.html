@@ -2842,6 +2842,10 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
   }
 
   function hLrnDriverPhotoUrl(name){
+    const system=window.HLRNDrivers;
+    const rating=system?.verifiedIRating?.(name);
+    const shared=system?.displayPhotoUrl?.(name,rating,"cutout")||"";
+    if(shared)return shared;
     const file=HLRN_DRIVER_CUTOUT_PHOTOS[hLrnPhotoKey(name)];
     return file ? HLRN_DRIVER_PHOTO_BASE+file : "";
   }
