@@ -7,7 +7,7 @@
 <meta name="description" content="Follow High Line Racing Network live timing, race control, penalties, lap-by-lap recording, Race Replay and final race summaries.">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://highlineracingnetwork.com/live/">
-<script data-hlrn-driver-system src="../assets/driver-system.js?v=20261007v10"></script>
+<script data-hlrn-driver-system src="../assets/driver-system.js?v=20261007v12"></script>
 <style>
   :root{
     --bg:#f3f4f6;
@@ -2818,7 +2818,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
 
 
   /* ===== HLRN DRIVER PHOTO HELPERS ===== */
-  const HLRN_DRIVER_PHOTO_BASE = "https://hunterwelborn32-creator.github.io/HLRN-App/driver-photos/cutout/";
+  const HLRN_DRIVER_PHOTO_BASE = "../assets/driver-photos/cutout/";
   const HLRN_DRIVER_CUTOUT_PHOTOS = {"aarontruebig":"aaron-truebig.webp","alexleebaw":"alex-leebaw.webp","benjaminrichards":"benjamin-richards.webp","billdaniels":"bill-daniels.webp","brandonbeyke":"brandon-beyke.webp","brandonshowers":"brandon-showers.webp","brianhayes":"brian-hayes.webp","brianhebbard":"brian-hebbard.webp","brianhennings":"brian-hennings.webp","brockpiper":"brock-piper.webp","brycehinton":"bryce-hinton.webp","carsonfreeman":"carson-freeman.webp","charlesfletcher":"charles-fletcher.webp","chrisjames":"chris-james.webp","coricooke":"cori-cooke.webp","craigrowe":"craig-rowe.webp","darrelceballos":"darrel-ceballos.webp","daviddurand":"david-durand.webp","derekjacobs":"derek-jacobs.webp","donnybeach":"donny-beach.webp","dylanjones":"dylan-jones.webp","erichayden":"eric-hayden.webp","ethaneckert":"ethan-eckert.webp","ethanmoreno":"ethan-moreno.webp","evanfuqua":"evan-fuqua.webp","evankarlbon":"evan-karlbon.webp","evanparry":"evan-parry.webp","gerrybergeron":"gerry-bergeron.webp","grantwessley":"grant-wessley.webp","hunterwelborn":"hunter-welborn.webp","jaredphilpott":"jared-philpott.webp","jasonbranch":"jason-branch.webp","javonethompson":"javone-thompson.webp","jeremyjeffries":"jeremy-jeffries.webp","jerryfassett":"jerry-fassett.webp","jimsegredo":"jim-segredo.webp","joekonen":"joe-konen.webp","johnmiles":"john-miles.webp","joshmckinney":"josh-mckinney.webp","joshuaspragg":"joshua-spragg.webp","juanescamilla":"juan-escamilla.webp","justincrowe":"justin-crowe.webp","keatoncox":"keaton-cox.webp","kennyreel":"kenny-reel.webp","kenwoodramsey":"kenwood-ramsey.webp","kodyneagles":"kody-neagles.webp","kylekammeron":"kyle-kammeron.webp","larkinboyer":"larkin-boyer.webp","matthewbrown":"matthew-brown.webp","matthewgraham":"matthew-graham.webp","nicholasbaumann":"nicholas-baumann.webp","nicholasmoody":"nicholas-moody.webp","randyschweitzer":"randy-schweitzer.webp","randyshowers":"randy-showers.webp","rickymiles":"ricky-miles.webp","rosscampoli":"ross-campoli.webp","ryanwilson":"ryan-wilson.webp","scottwise":"scott-wise.webp","sebastianmichaels":"sebastian-michaels.webp","shanehatfield":"shane-hatfield.webp","shawnstamper":"shawn-stamper.webp","timothytyler":"timothy-tyler.webp","tjlunn":"tj-lunn.webp","tommyrogers":"tommy-rogers.webp","trevoraswarnauth":"trevor-aswarnauth.webp","trevorhaley":"trevor-haley.webp","vincenteguerrero":"vincente-guerrero.webp","zackharry":"zack-harry.webp"};
   const HLRN_DRIVER_PHOTO_ALIASES = {"sebastianmicheals":"sebastianmichaels","ericpedleyhayden":"erichayden","randyschweitzerrsi":"randyschweitzer","dyalnjones":"dylanjones","nicholasbaumann2":"nicholasbaumann","dylancjones":"dylanjones","ethanfonsecamoreno":"ethanmoreno","joshuamckinney":"joshmckinney","joshuamckinney2":"joshmckinney","jeremysjeffries":"jeremyjeffries","vicenteguerrero2":"vincenteguerrero","brianhebbard2":"brianhebbard","brianhayes4":"brianhayes","ryanwilson21":"ryanwilson","timothytyler3":"timothytyler","matthewbrown49":"matthewbrown","matthewgraham20":"matthewgraham"};
 
@@ -2842,25 +2842,60 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     return k;
   }
 
-  function hLrnDriverPhotoUrl(name){
-    const system=window.HLRNDrivers;
-    const rating=system?.verifiedIRating?.(name);
-    const shared=system?.displayPhotoUrl?.(name,rating,"cutout")||"";
-    if(shared)return shared;
-    const file=HLRN_DRIVER_CUTOUT_PHOTOS[hLrnPhotoKey(name)];
-    return file ? HLRN_DRIVER_PHOTO_BASE+file : "";
+  function hLrnLiveDriverByName(name){
+    const key=hLrnPhotoKey(name);
+    const drivers=Array.isArray(state?.drivers)?state.drivers:[];
+    return drivers.find(d=>hLrnPhotoKey(d?.name)===key)||null;
   }
 
-  function hLrnDriverPhotoTag(name,size=""){
-    const url=hLrnDriverPhotoUrl(name);
+  function hLrnDriverPhotoUrl(value,explicitIRating){
+    const driver=value&&typeof value==="object" ? value : hLrnLiveDriverByName(value);
+    const name=String(driver?.name ?? value ?? "").trim();
+    if(!name)return "";
+
+    // Real HLRN cutout ALWAYS wins over an iRating suit.
+    const file=HLRN_DRIVER_CUTOUT_PHOTOS[hLrnPhotoKey(name)];
+    if(file)return HLRN_DRIVER_PHOTO_BASE+file;
+
+    const system=window.HLRNDrivers;
+    const identity={
+      driver:name,
+      driverId:driver?.driverId ?? driver?.iracingId ?? driver?.id ?? ""
+    };
+    const liveRating=Number(
+      explicitIRating ??
+      driver?.irating ??
+      driver?.iRating ??
+      driver?.i_rating ??
+      0
+    );
+    const rating=system?.verifiedIRating?.(
+      identity,
+      Number.isFinite(liveRating)&&liveRating>0?liveRating:0
+    ) || (Number.isFinite(liveRating)&&liveRating>0?Math.round(liveRating):0);
+
+    const rec=system?.resolve?.(identity);
+    if(rec && rec.hasPhoto!==false && String(rec.photoSlug||"").trim()){
+      const real=system?.displayPhotoUrl?.(rec,rating,"cutout")||"";
+      if(real)return real;
+    }
+
+    // No real photo: use the LIVE iRacing iRating tier.
+    if(rating>0)return system?.iRatingFallbackPhoto?.(rating)||"";
+    return "";
+  }
+
+  function hLrnDriverPhotoTag(value,size=""){
+    const url=hLrnDriverPhotoUrl(value);
     if(!url) return "";
     const cls=size ? `hlrn-driver-inline ${size}` : "hlrn-driver-inline";
-    return `<img class="${cls}" src="${esc(url)}" alt="" onerror="this.remove()" loading="lazy" decoding="async">`;
+    const name=String((value&&typeof value==="object"?value.name:value)||"");
+    return `<img class="${cls}" src="${esc(url)}" alt="${esc(name)}" onerror="this.remove()" loading="lazy" decoding="async">`;
   }
 
   function hLrnDriverMetric(driver){
     if(!driver) return "—";
-    return `<span class="metric-driver-line">${hLrnDriverPhotoTag(driver.name,"small")}<span>#${esc(driver.number || "—")} ${esc(driver.name || "Unknown")}</span></span>`;
+    return `<span class="metric-driver-line">${hLrnDriverPhotoTag(driver,"small")}<span>#${esc(driver.number || "—")} ${esc(driver.name || "Unknown")}</span></span>`;
   }
 
   function lapTime(value){
@@ -3522,7 +3557,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
           <div class="battle-pos">P${esc(b.behind.position ?? "—")}</div>
           <div class="battle-main">
             <div class="battle-driver-line">
-              ${hLrnDriverPhotoTag(b.behind.name,"tiny")}
+              ${hLrnDriverPhotoTag(b.behind,"tiny")}
               <div class="battle-driver-copy">
                 <div class="battle-name">#${esc(b.behind.number || "—")} ${esc(b.behind.name || "Unknown")}</div>
                 <div class="battle-vs">chasing #${esc(b.ahead.number || "—")} ${esc(b.ahead.name || "Unknown")}</div>
@@ -3672,7 +3707,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
 
     const mobileCards = shown.map(driver => {
       const delta = positionDelta(driver);
-      const photo=hLrnDriverPhotoUrl(driver.name);
+      const photo=hLrnDriverPhotoUrl(driver);
       const status=driverStatus(driver);
       const penaltyText=driver.blackFlag
         ? (driver.penaltyReason || "Reason not exposed by iRacing")
@@ -4590,7 +4625,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     $("rcLeaderGap").textContent = raceMode ? "RACE LEADER • +0.000" : `P${leader.position ?? 1}`;
     $("rcLeaderLap").textContent = state?.lap != null ? `LAP ${state.lap}${state.totalLaps ? ` / ${state.totalLaps}` : ""}` : `LAPS ${leader.lapsCompleted ?? "—"}`;
     $("rcLeaderBest").textContent = `BEST ${lapTime(leader.bestLapTime)}`;
-    const leaderPhoto=hLrnDriverPhotoUrl(leader.name);
+    const leaderPhoto=hLrnDriverPhotoUrl(leader);
     if(leaderPhoto){photo.src=leaderPhoto;photo.style.display="block";}else{photo.style.display="none";photo.removeAttribute("src");}
 
     const top = [...drivers]
@@ -4599,7 +4634,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
       .sort((a,b)=>Number(a.position)-Number(b.position));
     $("rcFrontMeta").textContent = raceMode ? `LAP ${state?.lap ?? "—"}` : phaseLabel(state?.phase || "other");
     $("rcTopThree").innerHTML = top.length ? top.map(d=>{
-      const url=hLrnDriverPhotoUrl(d.name);
+      const url=hLrnDriverPhotoUrl(d);
       const gap=Number(d.position)===1 ? "LEADER" : gapText(d);
       return `<div class="rc-top3-row">
         <div class="rc-top3-pos">P${esc(d.position ?? "—")}</div>
@@ -4622,7 +4657,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     const best=Number(ranked[0].bestLapTime);
     el.innerHTML=ranked.map((d,i)=>{
       const delta=Number(d.bestLapTime)-best;
-      const url=hLrnDriverPhotoUrl(d.name);
+      const url=hLrnDriverPhotoUrl(d);
       return `<div class="rc-fast-card">
         <div class="rc-fast-rank">${i+1}</div>
         ${url ? `<img class="rc-fast-photo" src="${esc(url)}" alt="" onerror="this.remove()" loading="lazy" decoding="async">` : `<div></div>`}
@@ -4731,7 +4766,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     $("rc2OrderMeta").textContent=rc.oneToGreen ? "ONE TO GREEN • TOP 10" : "TOP 10";
     $("rc2RestartOrder").innerHTML=order.length ? order.map(d=>{
       const live = raceDrivers.find(x=>x.carIdx===d.carIdx) || d;
-      const url=hLrnDriverPhotoUrl(live.name);
+      const url=hLrnDriverPhotoUrl(live);
       return `<div class="rc2-order-row"><div class="rc2-order-pos">P${esc(live.position??d.position??"—")}</div>${url?`<img class="rc2-order-photo" src="${esc(url)}" alt="" onerror="this.remove()" loading="lazy" decoding="async">`:`<div></div>`}<div><div class="rc2-order-name">#${esc(live.number||"—")} ${esc(live.name||"Unknown")}</div><div class="rc2-order-sub">${esc(live.team||live.car||"HLRN")}</div></div><div class="rc2-order-status">${esc(driverStatus(live))}</div></div>`;
     }).join("") : `<div class="offline"><strong>No running order yet</strong>Waiting for race scoring.</div>`;
 
@@ -4817,7 +4852,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     }
 
     $("rcActiveFlags").innerHTML=active.length ? active.map(d=>{
-      const url=hLrnDriverPhotoUrl(d.name);
+      const url=hLrnDriverPhotoUrl(d);
       const label=d.disqualified||d.dqFlag?"DISQUALIFIED":"BLACK FLAG";
       const reason=d.blackFlag ? (d.penaltyReason || "Reason not exposed by iRacing") : "Driver disqualified";
       const source=String(d.penaltyReasonSource||"NOT_EXPOSED").toUpperCase();
