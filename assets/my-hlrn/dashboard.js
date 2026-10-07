@@ -174,8 +174,23 @@ async function init(){
     text("myhNumber","#"+numberValue);text("myhPhotoNumber",numberValue);
     const photoSlug=primary.photoSlug||nameKey(primary.name).replace(/([a-z])([A-Z])/g,"$1-$2");
     const photo=$("myhPhoto");
-    photo.src=PHOTO_BASE+encodeURIComponent(photoSlug)+".webp";
-    photo.onerror=()=>{photo.style.display="none"};
+    const system=window.HLRNDrivers;
+    const rating=system?.verifiedIRating?.(primary.name,primary.iRating??primary.irating);
+    const sharedPhoto=system?.displayPhotoUrl?.(primary.name,rating,"cutout")||"";
+    const legacyPhoto=photoSlug?PHOTO_BASE+encodeURIComponent(photoSlug)+".webp":"";
+    const photoSource=sharedPhoto||legacyPhoto;
+    if(photoSource){
+      photo.src=photoSource;
+      photo.style.display="";
+    }else{
+      photo.removeAttribute("src");
+      photo.style.display="none";
+    }
+    photo.onerror=()=>{
+      const fallback=system?.iRatingFallbackPhoto?.(rating)||"";
+      if(fallback&&photo.src!==fallback){photo.onerror=null;photo.src=fallback}
+      else photo.style.display="none";
+    };
 
     const srow=driverRow(snapshot,"sunday",sunday,login.driver);
     const mrow=driverRow(snapshot,"monday",monday,login.driver);
