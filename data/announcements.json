@@ -1,6 +1,6 @@
 {
   "success": true,
-  "updatedAt": "2026-10-07T13:54:21Z",
+  "updatedAt": "2026-10-07T15:34:52Z",
   "channel": {
     "id": "1529356159906222201",
     "name": "🚨-high-line-announcements",
@@ -534,8 +534,8 @@
         {
           "id": "1544005650927976468",
           "filename": "1029454B-56D5-453A-822D-26DEB63DB106.png",
-          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1544005650927976468/1029454B-56D5-453A-822D-26DEB63DB106.png?ex=6ac70d91&is=6ac5bc11&hm=0c4edce1df037dfcf6df3cbcdf46ce42b03660ca1d2cf969a272272230875b8b&",
-          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1544005650927976468/1029454B-56D5-453A-822D-26DEB63DB106.png?ex=6ac70d91&is=6ac5bc11&hm=0c4edce1df037dfcf6df3cbcdf46ce42b03660ca1d2cf969a272272230875b8b&",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1544005650927976468/1029454B-56D5-453A-822D-26DEB63DB106.png?ex=6ac7b651&is=6ac664d1&hm=d9f2eb8d66a6dc1a6256ec356fafd981f3e8449600cf4059d231eac18e947c74&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1544005650927976468/1029454B-56D5-453A-822D-26DEB63DB106.png?ex=6ac7b651&is=6ac664d1&hm=d9f2eb8d66a6dc1a6256ec356fafd981f3e8449600cf4059d231eac18e947c74&",
           "size": 3527518,
           "content_type": "image/png",
           "width": 1254,
@@ -1082,8 +1082,8 @@
         {
           "id": "1529869447706181632",
           "filename": "7EA7A848-F091-434D-BE56-B060D1E0E09E.png",
-          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1529869447706181632/7EA7A848-F091-434D-BE56-B060D1E0E09E.png?ex=6ac70ab3&is=6ac5b933&hm=b79175b3d04904855df068d653e2adcbf3c494d18ef0a7ac0c90bdaf94cbc7d0&",
-          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1529869447706181632/7EA7A848-F091-434D-BE56-B060D1E0E09E.png?ex=6ac70ab3&is=6ac5b933&hm=b79175b3d04904855df068d653e2adcbf3c494d18ef0a7ac0c90bdaf94cbc7d0&",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1529869447706181632/7EA7A848-F091-434D-BE56-B060D1E0E09E.png?ex=6ac7b373&is=6ac661f3&hm=a81077f654c9e120f9e8a0a9e092c91314c5bb746c9c913507f6065ca66ede47&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1529869447706181632/7EA7A848-F091-434D-BE56-B060D1E0E09E.png?ex=6ac7b373&is=6ac661f3&hm=a81077f654c9e120f9e8a0a9e092c91314c5bb746c9c913507f6065ca66ede47&",
           "size": 2529744,
           "content_type": "image/png",
           "width": 1254,
