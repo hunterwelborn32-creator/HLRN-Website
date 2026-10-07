@@ -60,16 +60,19 @@
       .toUpperCase() || "HOSTED RACING";
   }
 
-  function winnerPhoto(name){
+  function winnerPhoto(name,iRating){
     const img=$("h10HostedWinnerPhoto");
     if(!img)return;
     img.hidden=true;
 
     const system=window.HLRNDrivers;
-    const manifest=system?.photoUrl?.(name,"cutout")||"";
+    const manifest=system?.displayPhotoUrl?.(name,iRating,"cutout")
+      ||system?.photoUrl?.(name,"cutout")
+      ||"";
     const slug=slugify(name);
     const direct=slug ? "assets/driver-photos/cutout/"+encodeURIComponent(slug)+".webp" : "";
-    const candidates=[manifest,direct].filter((src,i,list)=>src&&list.indexOf(src)===i);
+    const tier=system?.iRatingFallbackPhoto?.(iRating)||"";
+    const candidates=[manifest,direct,tier].filter((src,i,list)=>src&&list.indexOf(src)===i);
 
     let index=0;
     const tryNext=()=>{
@@ -117,7 +120,7 @@
       link.setAttribute("aria-label",winner ? "Open "+winner+" driver profile" : "Open Hosted standings");
     }
 
-    winnerPhoto(winner);
+    winnerPhoto(winner,winnerRow.iRating??winnerRow.irating);
   }
 
   async function load(){
