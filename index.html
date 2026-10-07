@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
 <!-- HLRN browser-tab and mobile icons -->
 <link rel="icon" type="image/x-icon" href="/favicon.ico?v=3">
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=3">
@@ -11,37 +10,32 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3">
 
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>High Line Racing Network | HLRN iRacing League & Sim Racing</title>
-
-<meta name="description" content="High Line Racing Network (HLRN) is an iRacing league featuring Sunday and Monday NASCAR Truck racing, live broadcasts, standings, race results, driver statistics, race reports, records and more.">
-
+<meta name="description" content="High Line Racing Network (HLRN) is an iRacing league featuring Sunday and Monday NASCAR racing, live broadcasts, standings, race results, driver statistics and race stories.">
 <meta name="robots" content="index, follow, max-image-preview:large">
-
 <meta name="author" content="High Line Racing Network">
 <link rel="canonical" href="https://highlineracingnetwork.com/">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="High Line Racing Network | HLRN iRacing League">
-<meta property="og:description" content="Follow High Line Racing Network for Sunday and Monday iRacing league competition, race results, standings, broadcasts, driver statistics and race reports.">
+<meta property="og:description" content="Follow HLRN for Sunday and Monday iRacing competition, live broadcasts, standings, results and race stories.">
 <meta property="og:url" content="https://highlineracingnetwork.com/">
 
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="High Line Racing Network | HLRN iRacing League">
-<meta name="twitter:description" content="HLRN iRacing league racing, results, standings, broadcasts, driver statistics and race reports.">
+<meta name="twitter:description" content="HLRN iRacing league racing, results, standings, broadcasts and race stories.">
 
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "High Line Racing Network",
-  "alternateName": "HLRN",
-  "url": "https://highlineracingnetwork.com/",
-  "description": "High Line Racing Network (HLRN) is an iRacing league featuring Sunday and Monday NASCAR Truck racing, live broadcasts, standings, race results, driver statistics and race reports.",
-  "sameAs": [
+  "@context":"https://schema.org",
+  "@type":"Organization",
+  "name":"High Line Racing Network",
+  "alternateName":"HLRN",
+  "url":"https://highlineracingnetwork.com/",
+  "description":"High Line Racing Network (HLRN) is an iRacing league featuring Sunday and Monday racing, live broadcasts, standings, race results, driver statistics and race stories.",
+  "sameAs":[
     "https://www.youtube.com/@High_Line_Racing",
     "https://www.facebook.com/profile.php?id=61573411079339"
   ]
@@ -51,396 +45,163 @@ content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="assets/site-shell.css?v=20261001control1">
 <link rel="stylesheet" href="assets/home/home-race-night.css?v=20260928p1">
 <link rel="stylesheet" href="assets/race-recaps.css?v=1">
-<link rel="stylesheet" href="assets/home/home-v9.css?v=20261006pitwallread1">
-
+<link rel="stylesheet" href="assets/home/home-v10.css?v=20261007clean1">
 
 <meta name="theme-color" content="#07090d">
 </head>
 
+<body class="hlrn-v3 rd-v5 home-v10-page">
 
-<body class="hlrn-v3 rd-v5 home-v8-page">
+<div id="hlrnRaceDayHome" class="home10">
 
-<!-- =====================================================
-     HLRN V5 — RACE DAY EDITORIAL HOME
-     Intentionally lean: hero, top stories, race center, featured links.
-     Existing home/data DOM stays below, hidden, so all current feeds keep running.
-===================================================== -->
-
-<div id="hlrnRaceDayHome" class="home9">
-
-  <section class="h9-scorestrip" aria-label="HLRN live network information">
-    <div class="h9-shell h9-scoregrid">
-      <div class="h9-score-brand">
-        <div class="h9-network-mark" aria-hidden="true">HLRN</div>
-        <div class="h9-network-copy">
-          <small>HIGH LINE RACING NETWORK</small>
-        </div>
-        <div class="h9-network-state" id="h9NetworkState">
-          <span class="h9-score-dot" id="h9NetworkDot"></span>
-          <b id="h9NetworkStatus">OFF AIR</b>
-        </div>
+  <header class="h10-hero" aria-label="High Line Racing Network">
+    <img
+      src="https://drive.google.com/thumbnail?id=1p9xE92IXmLMfGRN0P8sE-SVjf0tWmBgg&sz=w2000"
+      alt="High Line Racing Network race action"
+      loading="eager"
+      decoding="async"
+      fetchpriority="high">
+    <div class="h10-hero-inner">
+      <div class="h10-eyebrow">High Line Racing Network</div>
+      <h1>Where The Racing Never Stops</h1>
+      <p>Sunday and Monday night iRacing competition, live coverage and everything HLRN in one place.</p>
+      <div class="h10-actions">
+        <a class="h10-btn primary" href="broadcasters/">Watch Live →</a>
+        <a class="h10-btn" href="results/">Latest Results →</a>
       </div>
-      <a class="h9-score-item driver-score" id="rdLatestWinnerLink" href="drivers/">
-  <img id="rdLatestWinnerPhoto" class="h9-score-driver-photo" src="" alt="" hidden>
-  <div class="h9-score-driver-copy"><small>Latest Winner</small><strong id="rdLatestWinner">CONNECTING</strong></div>
-</a>
-      <div class="h9-score-item sunday"><small>Next Sunday</small><strong id="rdSunday">--</strong></div>
-      <div class="h9-score-item monday"><small>Next Monday</small><strong id="rdMonday">--</strong></div>
-      <a class="h9-score-item hosted driver-score" id="rdTopDriverLink" href="standings/">
-  <img id="rdTopDriverPhoto" class="h9-score-driver-photo" src="assets/driver-photos/cutout/trevor-haley.webp" alt="Trevor Haley driver photo">
-  <div class="h9-score-driver-copy"><small>Hosted Leader</small><strong id="rdTopDriver">CONNECTING</strong></div>
-</a>
+    </div>
+  </header>
+
+  <section class="h10-info" aria-label="HLRN race information">
+    <div class="h10-shell h10-info-grid">
+      <a class="h10-info-item sunday" href="race-preview/?league=sunday">
+        <small>Next Sunday</small>
+        <strong id="rdSunday">Connecting…</strong>
+      </a>
+      <a class="h10-info-item monday" href="race-preview/?league=monday">
+        <small>Next Monday</small>
+        <strong id="rdMonday">Connecting…</strong>
+      </a>
+      <a class="h10-info-item winner" id="rdLatestWinnerLink" href="results/">
+        <small>Latest Winner</small>
+        <strong id="rdLatestWinner">Connecting…</strong>
+      </a>
     </div>
   </section>
 
   <main>
-    <section class="h9-top">
-      <div class="h9-shell">
-        <div class="h9-top-title"><h2>Top Stories</h2></div>
-
-        <div class="h9-lead-grid">
-          <a class="h9-lead-card" href="results/">
-            <img src="https://drive.google.com/thumbnail?id=1p9xE92IXmLMfGRN0P8sE-SVjf0tWmBgg&sz=w2000" alt="High Line Racing Network race action" loading="eager" decoding="async" fetchpriority="high">
-            <div class="h9-lead-shade"></div>
-            <div class="h9-lead-copy">
-              <div class="h9-lead-kicker">HLRN FEATURED</div>
-              <h1 id="rdLeadHeadline">HIGH LINE RACING NETWORK</h1>
-              <p id="rdLeadSub">Sunday and Monday night competition. Hosted racing. Live broadcasts.</p>
-              <div class="h9-lead-actions">
-                <span class="h9-btn primary">LATEST RESULTS →</span>
-                <span class="h9-btn">RACE CENTER →</span>
-              </div>
-            </div>
-          </a>
-
-          <aside class="h9-pitwall" aria-label="HLRN Pit Wall">
-            <div class="h9-pitwall-head">
-              <div>
-                <small>Race Control Feed</small>
-                <strong>HLRN PIT WALL</strong>
-              </div>
-              <span id="pitWallStatus"><i></i> LIVE DATA</span>
-            </div>
-
-            <a class="h9-pit-next" id="pitNextLink" href="race-preview/">
-              <div class="h9-pit-next-top">
-                <small>Next Race</small>
-                <span id="pitNextLeague">CONNECTING</span>
-              </div>
-              <strong id="pitNextTrack">LOADING RACE WEEK</strong>
-              <span class="h9-pit-next-meta" id="pitNextDate">Schedule connecting…</span>
-              <div class="h9-pit-countdown" aria-label="Countdown to the next HLRN race">
-                <div><b id="pitDays">--</b><small>Days</small></div>
-                <div><b id="pitHours">--</b><small>Hrs</small></div>
-                <div><b id="pitMinutes">--</b><small>Min</small></div>
-                <em id="pitCountdownLabel">TO GREEN FLAG</em>
-              </div>
-            </a>
-
-            <div class="h9-pit-grid">
-              <a class="h9-pit-card hot" id="pitSundayWinnerLink" href="drivers/">
-                <img id="pitSundayWinnerPhoto" src="" alt="Latest Sunday winner" hidden loading="lazy">
-                <div>
-                  <small>🏁 Latest Sunday Winner</small>
-                  <strong id="pitSundayWinner">CONNECTING</strong>
-                  <span id="pitSundayWinnerDetail">Loading latest Sunday result…</span>
-                </div>
-              </a>
-
-              <a class="h9-pit-card winner" id="pitMondayWinnerLink" href="drivers/">
-                <img id="pitMondayWinnerPhoto" src="" alt="Latest Monday winner" hidden loading="lazy">
-                <div>
-                  <small>🏁 Latest Monday Winner</small>
-                  <strong id="pitMondayWinner">CONNECTING</strong>
-                  <span id="pitMondayWinnerDetail">Loading latest Monday result…</span>
-                </div>
-              </a>
-
-              <a class="h9-pit-card hosted-winner" id="pitHostedWinnerLink" href="standings/hosted.html">
-                <img id="pitHostedWinnerPhoto" src="" alt="" hidden loading="lazy">
-                <div>
-                  <small>🏁 Last Hosted Winner</small>
-                  <strong id="pitHostedWinner">CONNECTING</strong>
-                  <span id="pitHostedWinnerDetail">Loading latest Hosted result…</span>
-                </div>
-              </a>
-            </div>
-
-            <div class="h9-pit-socials" aria-label="HLRN social media">
-              <span>Follow HLRN</span>
-              <div class="h9-pit-social-links">
-                <a class="discord" href="https://discord.gg/HpDfUQk23P" target="_blank" rel="noopener noreferrer" aria-label="Join HLRN on Discord" title="HLRN Discord">
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M19.5 5.3A16.3 16.3 0 0 0 15.4 4l-.5 1a14.2 14.2 0 0 0-5.8 0l-.5-1a16.3 16.3 0 0 0-4.1 1.3C1.9 9.1 1.2 12.8 1.5 16.5a16.8 16.8 0 0 0 5 2.5l1.2-1.7a10.4 10.4 0 0 1-1.9-.9l.5-.4c3.7 1.7 7.7 1.7 11.4 0l.5.4a10.4 10.4 0 0 1-1.9.9l1.2 1.7a16.8 16.8 0 0 0 5-2.5c.4-4.3-.7-7.9-3-11.2ZM8.5 14.4c-1.1 0-2-1-2-2.2s.9-2.2 2-2.2 2 1 2 2.2-.9 2.2-2 2.2Zm7 0c-1.1 0-2-1-2-2.2s.9-2.2 2-2.2 2 1 2 2.2-.9 2.2-2 2.2Z"/>
-                  </svg>
-                  <b>Discord</b>
-                </a>
-                <a class="facebook" href="https://www.facebook.com/profile.php?id=61573411079339" target="_blank" rel="noopener noreferrer" aria-label="Open HLRN on Facebook" title="HLRN Facebook">
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M14 8h3V4.4c-.5-.1-2.2-.2-4.2-.2-4.1 0-6.9 2.5-6.9 7.1V15H2v4h3.9v9h4.8v-9h4l.6-4h-4.6v-3.3C10.7 10.5 11 8 14 8Z" transform="scale(.8) translate(3 -2)"/>
-                  </svg>
-                  <b>Facebook</b>
-                </a>
-                <a class="youtube" href="https://www.youtube.com/@High_Line_Racing" target="_blank" rel="noopener noreferrer" aria-label="Watch HLRN on YouTube" title="HLRN YouTube">
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4L15.8 12l-6.2 3.6Z"/>
-                  </svg>
-                  <b>YouTube</b>
-                </a>
-              </div>
-            </div>
-
-            <div class="h9-pit-ticker" aria-label="HLRN newswire">
-              <b>HLRN NEWSWIRE</b>
-              <div class="h9-pit-ticker-window">
-                <span id="pitTickerText">CONNECTING TO THE HLRN DATA DESK • RACE INTELLIGENCE • RESULTS • BROADCAST CENTER</span>
-              </div>
-            </div>
-          </aside>
-        </div>
-      </div>
-    </section>
-
-    <section class="h9-raceweek">
-      <div class="h9-shell">
-        <div class="h9-section-head">
-          <div><span class="h9-eyebrow">This Week</span><h2>Race Week</h2></div>
+    <section class="h10-section">
+      <div class="h10-shell">
+        <div class="h10-section-head">
+          <div>
+            <small>This Week</small>
+            <h2>Race Week</h2>
+          </div>
           <a href="results/">Full Schedule →</a>
         </div>
 
-        <div class="h9-raceweek-grid">
-          <a class="h9-week-card sunday" href="race-preview/?league=sunday">
+        <div class="h10-week-grid">
+          <a class="h10-week-card sunday" href="race-preview/?league=sunday">
             <small>Sunday Night League • 8:30 PM ET</small>
             <h3 id="v7SundayDate">See Schedule</h3>
-            <p>Race preview, championship context and the drivers to watch.</p>
+            <p>Everything you need before Sunday night goes green.</p>
             <b>Sunday Preview →</b>
           </a>
 
-          <a class="h9-week-card monday" href="race-preview/?league=monday">
+          <a class="h10-week-card monday" href="race-preview/?league=monday">
             <small>Monday Night League • 8:30 PM ET</small>
             <h3 id="v7MondayDate">See Schedule</h3>
-            <p>Race preview, championship context and the drivers to watch.</p>
+            <p>Track information, race preview and what to watch Monday night.</p>
             <b>Monday Preview →</b>
           </a>
-
-          <a class="h9-week-card hosted" href="standings/">
-            <small>Hosted Racing</small>
-            <h3 id="v7TopDriverMirror">CONNECTING</h3>
-            <p>Hosted rankings, driver statistics, records, milestones and head-to-head data.</p>
-            <b>Hosted Center →</b>
-          </a>
         </div>
       </div>
     </section>
 
-    <section class="h9-series">
-      <div class="h9-shell">
-        <div class="h9-section-head">
-          <div><span class="h9-eyebrow">Championship Central</span><h2>Sunday + Monday</h2></div>
-          <a href="standings/">View Full Standings →</a>
-        </div>
-
-        <article class="h9-series-block sunday">
-          <div class="h9-series-header">
-            <div><strong>Sunday Night League</strong><small>Championship</small></div>
-            <a href="standings/">Full Sunday Standings →</a>
+    <section id="hlrnLatestRaceRecapSection" class="h10-section h10-story-section" hidden aria-label="Latest HLRN race story">
+      <div class="h10-shell">
+        <div class="h10-section-head">
+          <div>
+            <small>HLRN Newsroom</small>
+            <h2>Latest Story</h2>
           </div>
-          <div class="h9-series-grid">
-            <div class="h9-series-cell leader driver-feature">
-              <img id="homeSundayLeaderPhoto" class="h9-series-driver-photo" src="assets/driver-photos/cutout/trevor-haley.webp" alt="Trevor Haley driver photo">
-              <div class="h9-series-driver-copy">
-                <small>Points Leader</small>
-                <a id="homeSundayLeaderLink" href="standings/"><strong id="homeSundayLeader">CONNECTING</strong></a>
-                <span><b id="homeSundayPoints">--</b> points</span>
-              </div>
-            </div>
-            <div class="h9-series-cell">
-              <small>P2 Gap</small>
-              <strong id="homeSundayGap">--</strong>
-              <span id="homeSundaySecond">Loading second place…</span>
-            </div>
-            <a class="h9-series-cell driver-feature winner" id="homeSundayWinnerLink" href="drivers/">
-              <img id="homeSundayWinnerPhoto" class="h9-series-driver-photo" src="assets/driver-photos/cutout/trevor-haley.webp" alt="Trevor Haley driver photo">
-              <div class="h9-series-driver-copy">
-                <small>Latest Winner</small>
-                <strong id="homeSundayWinner">--</strong>
-                <span>Open driver profile →</span>
-              </div>
-            </a>
-            <a class="h9-series-cell" id="homeSundayTeamLink" href="teams/?league=sunday">
-              <small>Team Leader</small>
-              <strong id="homeSundayTeam">--</strong>
-              <span>Open team standings →</span>
-            </a>
-          </div>
-        </article>
-
-        <article class="h9-series-block monday">
-          <div class="h9-series-header">
-            <div><strong>Monday Night League</strong><small>Championship</small></div>
-            <a href="standings/">Full Monday Standings →</a>
-          </div>
-          <div class="h9-series-grid">
-            <div class="h9-series-cell leader driver-feature">
-              <img id="homeMondayLeaderPhoto" class="h9-series-driver-photo" src="assets/driver-photos/cutout/ethan-eckert.webp" alt="Ethan Eckert driver photo">
-              <div class="h9-series-driver-copy">
-                <small>Points Leader</small>
-                <a id="homeMondayLeaderLink" href="standings/"><strong id="homeMondayLeader">CONNECTING</strong></a>
-                <span><b id="homeMondayPoints">--</b> points</span>
-              </div>
-            </div>
-            <div class="h9-series-cell">
-              <small>P2 Gap</small>
-              <strong id="homeMondayGap">--</strong>
-              <span id="homeMondaySecond">Loading second place…</span>
-            </div>
-            <a class="h9-series-cell driver-feature winner" id="homeMondayWinnerLink" href="drivers/">
-              <img id="homeMondayWinnerPhoto" class="h9-series-driver-photo" src="assets/driver-photos/cutout/ethan-eckert.webp" alt="Ethan Eckert driver photo">
-              <div class="h9-series-driver-copy">
-                <small>Latest Winner</small>
-                <strong id="homeMondayWinner">--</strong>
-                <span>Open driver profile →</span>
-              </div>
-            </a>
-            <a class="h9-series-cell" id="homeMondayTeamLink" href="teams/?league=monday">
-              <small>Team Leader</small>
-              <strong id="homeMondayTeam">--</strong>
-              <span>Open team standings →</span>
-            </a>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="h9-racecenter">
-      <div class="h9-shell">
-        <div class="h9-section-head">
-          <div><span class="h9-eyebrow">Latest Race</span><h2>Race Center</h2></div>
-          <a id="homeChampUpdated" href="results/">LIVE DATA CONNECTING</a>
-        </div>
-
-        <div class="h9-racecenter-grid">
-          <article class="h9-result-card">
-            <div class="h9-result-main">
-              <div class="h9-result-meta"><b class="h9-final-label">FINAL</b><span id="rdLastDate">--</span></div>
-              <div class="h9-result-track" id="rdLastTrack">LATEST HLRN RESULT</div>
-              <div class="h9-winner">
-                <div class="h9-winner-pos">01</div>
-                <img id="rdLastWinnerPhoto" class="h9-race-winner-photo" src="" alt="" hidden>
-                <div class="h9-race-winner-copy"><small>Race Winner</small><strong id="rdLastWinner">--</strong></div>
-              </div>
-            </div>
-            <div class="h9-result-stats">
-              <div><strong id="rdLastDrivers">--</strong><span>Drivers</span></div>
-              <div><strong id="rdLastLaps">--</strong><span>Winner Laps Led</span></div>
-              <div><strong id="rdLastCautions">--</strong><span>Winner Incidents</span></div>
-            </div>
-          </article>
-
-          <div class="h9-race-menu">
-            <a class="h9-race-action live" href="live/">
-              <small>Race Night</small>
-              <strong>Live Race Center</strong>
-              <span>Timing, flags, battles and Race Control →</span>
-            </a>
-            <a class="h9-race-action watch" href="broadcasters/">
-              <small>HLRN TV</small>
-              <strong>Watch HLRN</strong>
-              <span>Live broadcasts and race replays →</span>
-            </a>
-            <a class="h9-race-action results" href="results/">
-              <small>Archive</small>
-              <strong>Results</strong>
-              <span>Full race record →</span>
-            </a>
-            <a class="h9-race-action recaps" href="news/race-recaps/">
-              <small>Newsroom</small>
-              <strong>Recaps</strong>
-              <span>Read the story →</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="h9-desk">
-      <div class="h9-shell">
-        <div class="h9-section-head">
-          <div><span class="h9-eyebrow">HLRN Data Desk</span><h2>Inside The Numbers</h2></div>
-          <a href="race-intelligence/">Open Race Intelligence →</a>
-        </div>
-
-        <div class="h9-desk-grid">
-          <a class="h9-desk-card" href="race-intelligence/">
-            <small>Next HLRN Race</small><strong id="homeNextRace">--</strong><span id="homeNextRaceDetail">8:30 PM EASTERN</span>
-          </a>
-          <a class="h9-desk-card" href="teams/?league=sunday">
-            <small>Sunday Team Leader</small><strong id="homeSundayTeamMini">--</strong><span>Open Sunday team standings →</span>
-          </a>
-          <a class="h9-desk-card" href="teams/?league=monday">
-            <small>Monday Team Leader</small><strong id="homeMondayTeamMini">--</strong><span>Open Monday team standings →</span>
-          </a>
-          <a class="h9-desk-card" href="standings/">
-            <small>Race Week Dates</small><strong><span id="v7SundayMirror">--</span> / <span id="v7MondayMirror">--</span></strong><span>Sunday and Monday championship schedules →</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section id="hlrnLatestRaceRecapSection" class="hlrn-recap-section h9-recap" hidden aria-label="Latest HLRN Race Recap">
-      <div class="h9-shell">
-        <div class="h9-section-head">
-          <div><span class="h9-eyebrow">HLRN Newsroom</span><h2>Latest Race Story</h2></div>
           <a href="news/race-recaps/">All Race Recaps →</a>
         </div>
-        <div id="hlrnLatestRaceRecap" class="hlrn-recap-grid">
-          <div class="hlrn-recap-empty" data-race-recaps-loading>Loading latest HLRN race recap…</div>
+
+        <div class="h10-story-layout">
+          <div class="h10-story-art" aria-hidden="true">
+            <img src="news/inside-the-garage.png" alt="" loading="lazy" decoding="async">
+          </div>
+          <div id="hlrnLatestRaceRecap" class="hlrn-recap-grid">
+            <div class="hlrn-recap-empty" data-race-recaps-loading>Loading latest HLRN race story…</div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="h9-more">
-      <div class="h9-shell">
-        <div class="h9-section-head">
-          <div><span class="h9-eyebrow">Fuel Your HLRN</span><h2>More From The Network</h2></div>
-          <a href="news/">Latest News →</a>
+    <section class="h10-section compact">
+      <div class="h10-shell">
+        <div class="h10-section-head">
+          <div>
+            <small>Explore HLRN</small>
+            <h2>Quick Links</h2>
+          </div>
         </div>
 
-        <div class="h9-more-grid">
-          <a class="h9-media-card" href="news/">
-            <img src="news/inside-the-garage.png" alt="Inside the HLRN garage" loading="lazy" decoding="async">
-            <div class="h9-media-shade"></div>
-            <div class="h9-media-copy"><small>Newsroom</small><h3>Inside The Garage</h3><p>Announcements, race stories and everything happening around HLRN.</p><b>Latest News →</b></div>
+        <div class="h10-links-grid">
+          <a class="h10-link-card" href="standings/">
+            <span>Championship</span>
+            <strong>Standings</strong>
+            <small>Sunday, Monday and Hosted standings.</small>
           </a>
 
-          <a class="h9-media-card" href="race-intelligence/">
-            <img src="assets/race-intelligence/hero.jpg" alt="HLRN Race Intelligence" loading="lazy" decoding="async">
-            <div class="h9-media-shade"></div>
-            <div class="h9-media-copy"><small>Data & Analysis</small><h3>Race Intelligence</h3><p>Performance trends, contenders, momentum and driver analysis.</p><b>Open Intelligence →</b></div>
+          <a class="h10-link-card" href="drivers/">
+            <span>Roster</span>
+            <strong>Drivers</strong>
+            <small>Driver profiles, numbers and statistics.</small>
           </a>
 
-          <a class="h9-media-card" href="adventures/">
-            <img src="adventures/series-cover.webp" alt="The Adventures of High Line" loading="lazy" decoding="async">
-            <div class="h9-media-shade"></div>
-            <div class="h9-media-copy"><small>HLRN Original</small><h3>Adventures of High Line</h3><p>Nine main episodes, one special and the stories behind the chaos.</p><b>Enter Adventures →</b></div>
+          <a class="h10-link-card" href="race-intelligence/">
+            <span>Data</span>
+            <strong>Race Intelligence</strong>
+            <small>Trends, form and performance analysis.</small>
+          </a>
+
+          <a class="h10-link-card" href="adventures/">
+            <span>HLRN Original</span>
+            <strong>Adventures</strong>
+            <small>Stories from the world of High Line.</small>
           </a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="h9-footer">
-    <div class="h9-shell h9-footer-inner">
-      <div class="h9-footer-brand"><strong>HLRN</strong><span>High Line Racing Network • Where The Racing Never Stops</span></div>
-      <nav><a href="live/">Live</a><a href="standings/">Standings</a><a href="results/">Results</a><a href="drivers/">Drivers</a><a href="news/">News</a><a href="broadcasters/">Watch</a></nav>
+  <footer class="h10-footer">
+    <div class="h10-shell h10-footer-inner">
+      <div class="h10-footer-brand">
+        <strong>High Line Racing Network</strong>
+        <span>Where The Racing Never Stops</span>
+      </div>
+      <nav aria-label="HLRN footer navigation">
+        <a href="live/">Live</a>
+        <a href="standings/">Standings</a>
+        <a href="results/">Results</a>
+        <a href="drivers/">Drivers</a>
+        <a href="news/">News</a>
+        <a href="broadcasters/">Watch</a>
+      </nav>
     </div>
   </footer>
 </div>
 
-<!-- =====================================================
-     HLRN HOME SUPPORT BRIDGE
-     Hidden controls only; the visible homepage no longer ships legacy DOM.
-===================================================== -->
+<!-- Hidden compatibility bridge keeps the existing live data, login and automatic
+     race-night systems working without putting extra information back on screen. -->
+<div class="h10-data-bridge" hidden aria-hidden="true">
+  <span id="homeSundayLeader">CONNECTING</span>
+  <span id="homeMondayLeader">CONNECTING</span>
+</div>
+
 <div id="hlrn-home-account-bridge" hidden aria-hidden="true">
   <a id="hlrnDriverSignIn" href="#">DRIVER SIGN IN</a>
   <button type="button" id="hlrnHeaderDriverLogin">DRIVER LOGIN</button>
