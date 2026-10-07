@@ -141,6 +141,9 @@ function hLrnPhotoSlug(driverOrName){
 }
 
 function hLrnDriverPhoto(driverOrName,type="full"){
+  const shared=window.HLRNDrivers?.photoUrl?.(driverOrName,type);
+  if(shared) return shared;
+
   const slug=hLrnPhotoSlug(driverOrName);
   if(!slug) return "";
 
