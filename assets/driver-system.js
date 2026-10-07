@@ -7,7 +7,7 @@
 */
 (function(global){
   "use strict";
-  const VERSION="20261007v11";
+  const VERSION="20261007v12";
   if(global.HLRNDrivers && global.HLRNDrivers.version===VERSION) return;
   const script=document.currentScript;
   let root;
@@ -446,6 +446,13 @@
         if(img.hasAttribute("hidden"))img.hidden=false;
       }
       return;
+    }
+
+    // A loose/alias identity may still be using a valid real photo supplied by
+    // the page itself. If that image loaded successfully, never replace it
+    // with an iRating suit just because the manifest name did not resolve.
+    if(rec.__hlrnLooseIdentity && current && !isFallback){
+      if(!img.complete || (img.naturalWidth>0 && img.naturalHeight>0)) return;
     }
 
     applyFallbackToImage(img,rec,rating);
