@@ -31,6 +31,8 @@ MANIFEST_PATH = ROOT / "data" / "driver-pages.json"
 DRIVERS_ROOT = ROOT / "drivers"
 ORIGIN = "https://highlineracingnetwork.com"
 PHOTO_BASE = "/assets/driver-photos/cutout/"
+FALLBACK_PHOTO_BASE = "/assets/driver-photos/fallback/"
+CUTOUT_ROOT = ROOT / "assets" / "driver-photos" / "cutout"
 
 SERIES_LABEL = {
     "sunday": "Sunday Night League",
@@ -77,6 +79,79 @@ def keyify(value):
 
 def load_json(path):
     return json.loads(Path(path).read_text(encoding="utf-8"))
+
+
+def irating_fallback_photo(irating):
+    """Return the HLRN fallback suit for a verified/current iRating."""
+    rating = num(irating, 0)
+    if rating >= 2000:
+        color = "red"
+    elif rating >= 1500:
+        color = "blue"
+    elif rating >= 1000:
+        color = "green"
+    else:
+        color = "yellow"
+    return f"{FALLBACK_PHOTO_BASE}{color}.webp"
+
+
+def result_date_rank(value):
+    """Turn HLRN's mixed date formats into a sortable YYYYMMDD integer."""
+    text = str(value or "").strip()
+    if not text:
+        return 0
+    match = re.search(r"(\d{4})-(\d{2})-(\d{2})", text)
+    if match:
+        return int("".join(match.groups()))
+    match = re.search(r"\b([A-Z][a-z]{2})\s+(\d{1,2})\s+(\d{4})\b", text)
+    if match:
+        months = {"Jan":1,"Feb":2,"Mar":3,"Apr":4,"May":5,"Jun":6,
+                  "Jul":7,"Aug":8,"Sep":9,"Oct":10,"Nov":11,"Dec":12}
+        month = months.get(match.group(1), 0)
+        return int(f"{match.group(3)}{month:02d}{int(match.group(2)):02d}") if month else 0
+    match = re.search(r"\b(\d{1,2})/(\d{1,2})/(\d{4})\b", text)
+    if match:
+        return int(f"{match.group(3)}{int(match.group(1)):02d}{int(match.group(2)):02d}")
+    return 0
+
+
+def latest_irating_maps(hlrn):
+    """Latest verified iRating by driver id/name from league + Hosted results."""
+    by_id = {}
+    by_name = {}
+
+    def remember(store, key, rating, date_value):
+        key = str(key or "").strip()
+        value = num(rating, 0)
+        if not key or value <= 0:
+            return
+        candidate = (result_date_rank(date_value), int(round(value)))
+        current = store.get(key)
+        if current is None or candidate[0] >= current[0]:
+            store[key] = candidate
+
+    leagues = (hlrn or {}).get("leagues") or {}
+    for series in ("sunday", "monday"):
+        for row in (leagues.get(series) or {}).get("results") or []:
+            rating = row.get("irating")
+            if rating in (None, ""):
+                rating = row.get("iRating")
+            remember(by_id, row.get("driverId"), rating, row.get("date"))
+            remember(by_name, keyify(row.get("driver")), rating, row.get("date"))
+
+    hosted = (hlrn or {}).get("hosted") or {}
+    latest = hosted.get("latest") or {}
+    latest_date = latest.get("date")
+    for row in latest.get("results") or []:
+        raw_name = str(row.get("driver") or "").strip()
+        name = canonical_hosted_name(raw_name) if raw_name else raw_name
+        rating = row.get("iRating")
+        if rating in (None, ""):
+            rating = row.get("irating")
+        remember(by_name, keyify(name), rating, latest_date)
+        remember(by_name, keyify(raw_name), rating, latest_date)
+
+    return by_id, by_name
 
 
 def extract_existing_number_map():
@@ -361,8 +436,12 @@ def render_page(driver):
     records = driver["records"]
     teams = driver["teams"]
     history = combined_history(records)
-    photo_slug = driver.get("photoSlug") or slug
-    photo = PHOTO_BASE + quote(photo_slug) + ".webp"
+    photo_slug = str(driver.get("photoSlug") or "").strip()
+    has_photo = driver.get("hasPhoto")
+    if has_photo is None:
+        has_photo = bool(photo_slug and (CUTOUT_ROOT / f"{photo_slug}.webp").is_file())
+    fallback_photo = irating_fallback_photo(driver.get("iRating"))
+    photo = PHOTO_BASE + quote(photo_slug) + ".webp" if has_photo and photo_slug else fallback_photo
 
     starts = sum(num(r.get("races")) for r in records.values())
     wins = sum(num(r.get("wins")) for r in records.values())
@@ -778,6 +857,7 @@ def main():
     number_map = extract_existing_number_map()
     teams_by_series = team_maps(hlrn)
     driver_rows_by_series = league_driver_maps(hlrn)
+    irating_by_id, irating_by_name = latest_irating_maps(hlrn)
     hosted_records, hosted_numbers, hosted_aliases = hosted_profile_records(hlrn)
 
     grouped = defaultdict(dict)
@@ -818,11 +898,30 @@ def main():
             did = id_by_series_name.get((series, name), "")
             teams[series] = teams_by_series.get(series, {}).get(did)
 
+        rating_candidates = []
+        name_rating = irating_by_name.get(keyify(name))
+        if name_rating:
+            rating_candidates.append(name_rating)
+        hosted_name_rating = irating_by_name.get(keyify(canonical_hosted_name(name)))
+        if hosted_name_rating:
+            rating_candidates.append(hosted_name_rating)
+        for series in records:
+            did = id_by_series_name.get((series, name), "")
+            if did and irating_by_id.get(did):
+                rating_candidates.append(irating_by_id[did])
+        i_rating = max(rating_candidates, key=lambda item: item[0])[1] if rating_candidates else 0
+
+        candidate_photo_slug = photo_slug_by_name.get(name, slug)
+        has_photo = bool(candidate_photo_slug and (CUTOUT_ROOT / f"{candidate_photo_slug}.webp").is_file())
+        photo_slug = candidate_photo_slug if has_photo else ""
+
         driver = {
             "name": name,
             "slug": slug,
             "number": record_number(name, number_map, hosted_numbers),
-            "photoSlug": photo_slug_by_name.get(name, slug),
+            "photoSlug": photo_slug,
+            "hasPhoto": has_photo,
+            "iRating": i_rating,
             "records": records,
             "teams": teams,
         }
@@ -837,6 +936,8 @@ def main():
             "url": f"/drivers/{slug}/",
             "number": driver["number"],
             "photoSlug": driver["photoSlug"],
+            "hasPhoto": driver["hasPhoto"],
+            "iRating": driver["iRating"],
             "series": sorted(records.keys()),
             "ids": {s: str(records[s].get("id") or "") for s in records},
             "teams": {s: teams.get(s) for s in records},
