@@ -9,7 +9,7 @@
   "use strict";
   if(global.HLRNDrivers && global.HLRNDrivers.version) return;
 
-  const VERSION="20261007v10";
+  const VERSION="20261007v11";
   const script=document.currentScript;
   let root;
   try{ root=new URL("../",script&&script.src?script.src:location.href); }
@@ -296,20 +296,35 @@
     node.parentNode.replaceChild(frag,node);
   }
 
+  function looseDriverIdentity(value){
+    let raw=String(value||"").trim();
+    try{raw=decodeURIComponent(raw)}catch(_){}
+    raw=cleanDisplay(raw);
+    if(!raw)return null;
+    return resolve(raw)||{
+      name:raw,
+      rawName:raw,
+      displayName:raw,
+      aliases:[],
+      ids:{},
+      photoSlug:"",
+      hasPhoto:false,
+      __hlrnLooseIdentity:true
+    };
+  }
+
   function driverRecordForImage(img){
     if(!img)return null;
 
-    const directName=img.dataset?.hlrnDriverName||img.dataset?.driverName||"";
+    const directName=img.dataset?.hlrnDriverName||img.dataset?.driverName||img.dataset?.driver||"";
     if(directName){
-      const hit=resolve(directName);
+      const hit=looseDriverIdentity(directName);
       if(hit)return hit;
     }
 
-    const namedHost=img.closest?.("[data-hlrn-driver-name]");
+    const namedHost=img.closest?.("[data-hlrn-driver-name],[data-driver-name]");
     if(namedHost){
-      let value=String(namedHost.dataset.hlrnDriverName||"");
-      try{value=decodeURIComponent(value)}catch(_){}
-      const hit=resolve(value);
+      const hit=looseDriverIdentity(namedHost.dataset.hlrnDriverName||namedHost.dataset.driverName||"");
       if(hit)return hit;
     }
 
@@ -319,71 +334,96 @@
         const u=new URL(link.getAttribute("href"),location.href);
         const m=u.pathname.match(/\/drivers\/([^/]+)\/?(?:index\.html)?$/i);
         if(m){
-          const hit=bySlug.get(decodeURIComponent(m[1]).toLowerCase());
+          const slug=decodeURIComponent(m[1]).toLowerCase();
+          const hit=bySlug.get(slug)||looseDriverIdentity(slug.replace(/-/g," "));
           if(hit)return hit;
         }
       }catch(_){}
+      const linkName=String(link.dataset?.hlrnDriverName||link.dataset?.driverName||"").trim();
+      if(linkName){
+        const hit=looseDriverIdentity(linkName);
+        if(hit)return hit;
+      }
     }
 
     const src=String(img.currentSrc||img.getAttribute("src")||"");
     const photoMatch=src.match(/\/driver-photos\/(?:cutout|full)\/([^/?#]+)\.webp/i);
     if(photoMatch){
       const slug=decodeURIComponent(photoMatch[1]).toLowerCase();
-      const hit=bySlug.get(slug)||resolve(slug.replace(/-/g," "));
+      const hit=bySlug.get(slug)||looseDriverIdentity(slug.replace(/-/g," "));
       if(hit)return hit;
     }
 
     const alt=String(img.getAttribute("alt")||"").trim();
-    if(alt){
-      const hit=resolve(alt);
-      if(hit)return hit;
+    if(alt&&!/^(driver|winner|leader|profile|photo|image)$/i.test(alt)){
+      const hit=looseDriverIdentity(alt);
+      if(hit&&verifiedIRating(hit)>0)return hit;
     }
 
-    const host=img.closest?.(".driver-card,.driver-profile,.profile-card,.story-card,.winner-card,.driver-row,.driver-stat,.fighter,.leader-card,.member-card,.profile-hero,.hero");
+    const host=img.closest?.(
+      ".driver-card,.driver-profile,.profile-card,.story-card,.winner-card,.driver-row,.driver-stat,.fighter,.leader-card,.member-card,.profile-hero,.hero,"+
+      "[class*='driver-'],[class*='winner-'],[class*='leader-'],[class*='fighter'],[class*='h2h'],[class*='head-to-head']"
+    );
     if(host){
       const candidates=[
         host.querySelector?.("[data-hlrn-driver-name]"),
+        host.querySelector?.("[data-driver-name]"),
         host.querySelector?.(".driver-name"),
         host.querySelector?.(".profile-name"),
         host.querySelector?.(".winner-name"),
+        host.querySelector?.("[id*='Winner']"),
+        host.querySelector?.("[id*='Driver']"),
+        host.querySelector?.("[id*='Leader']"),
         host.querySelector?.("h1"),
         host.querySelector?.("h2"),
         host.querySelector?.("h3"),
         host.querySelector?.("strong")
       ].filter(Boolean);
       for(const node of candidates){
-        let value=String(node.dataset?.hlrnDriverName||node.textContent||"").trim();
-        try{value=decodeURIComponent(value)}catch(_){}
-        const hit=resolve(value);
-        if(hit)return hit;
+        const value=String(node.dataset?.hlrnDriverName||node.dataset?.driverName||node.textContent||"").trim();
+        const hit=looseDriverIdentity(value);
+        if(hit&&verifiedIRating(hit)>0)return hit;
       }
     }
     return null;
   }
 
+  function imagePhotoType(img){
+    const src=String(img?.currentSrc||img?.getAttribute?.("src")||"");
+    if(/\/driver-photos\/full\//i.test(src))return "full";
+    const marker=String((img?.id||"")+" "+(img?.className||""));
+    return /(?:hero|profile|full)/i.test(marker)?"full":"cutout";
+  }
+
   function isDriverImage(img){
     if(!img||img.tagName!=="IMG")return false;
     const src=String(img.currentSrc||img.getAttribute("src")||"");
-    const cls=String(img.className||"");
-    if(/\/driver-photos\/(?:cutout|full)\//i.test(src))return true;
-    if(/(?:^|[\s_-])(driver|cutout|profile|winner)(?:[\s_-]|$)/i.test(cls)&&driverRecordForImage(img))return true;
+    const marker=String((img.id||"")+" "+(img.className||""));
+    if(/\/driver-photos\/(?:cutout|full|fallback)\//i.test(src))return true;
+    if(img.dataset?.hlrnDriverName||img.dataset?.driverName)return !!driverRecordForImage(img);
+    if(/(?:driver|cutout|profile|winner|leader|fighter|h2h|head[-_ ]?to[-_ ]?head|portrait|headshot)/i.test(marker)&&driverRecordForImage(img))return true;
     return false;
   }
 
-  function applyFallbackToImage(img,rec){
-    if(!img||img.dataset.hlrnTierFallback==="1")return false;
+  function applyFallbackToImage(img,rec,explicitRating){
+    if(!img)return false;
     rec=rec||driverRecordForImage(img);
     if(!rec)return false;
-    const rating=verifiedIRating(rec);
+    const rating=verifiedIRating(rec,explicitRating??img.dataset?.hlrnIRating);
     const fallback=iRatingFallbackPhoto(rating);
     if(!fallback)return false;
 
+    const tier=rating>=2000?"red":rating>=1500?"blue":rating>=1000?"green":"yellow";
+    const current=String(img.currentSrc||img.getAttribute("src")||"");
+    if(img.dataset.hlrnTierFallback==="1"&&img.dataset.hlrnIRating===String(rating)&&current===fallback)return false;
+
     img.dataset.hlrnTierFallback="1";
     img.dataset.hlrnIRating=String(rating);
-    img.dataset.hlrnTier=rating>=2000?"red":rating>=1500?"blue":rating>=1000?"green":"yellow";
+    img.dataset.hlrnTier=tier;
     img.removeAttribute("onerror");
     try{img.onerror=null}catch(_){}
     img.src=fallback;
+    if(img.hasAttribute("hidden"))img.hidden=false;
     return true;
   }
 
@@ -392,13 +432,24 @@
     const rec=driverRecordForImage(img);
     if(!rec)return;
 
-    const hasReal=!!(String(rec.photoSlug||"").trim()&&rec.hasPhoto!==false);
-    if(!hasReal){
-      applyFallbackToImage(img,rec);
+    const rating=verifiedIRating(rec,img.dataset?.hlrnIRating);
+    const real=realPhotoUrl(rec,imagePhotoType(img));
+    const current=String(img.currentSrc||img.getAttribute("src")||"");
+    const isFallback=/\/driver-photos\/fallback\/(?:red|blue|green|yellow)\.webp/i.test(current)||img.dataset.hlrnTierFallback==="1";
+
+    if(real){
+      if(!current||isFallback||(img.complete&&img.naturalWidth===0)){
+        delete img.dataset.hlrnTierFallback;
+        if(rating)img.dataset.hlrnIRating=String(rating);
+        img.removeAttribute("onerror");
+        try{img.onerror=null}catch(_){}
+        img.src=real;
+        if(img.hasAttribute("hidden"))img.hidden=false;
+      }
       return;
     }
 
-    if(img.complete&&img.naturalWidth===0)applyFallbackToImage(img,rec);
+    applyFallbackToImage(img,rec,rating);
   }
 
   function protectDriverImages(scope){
@@ -673,6 +724,8 @@
     displayPhotoUrl,
     iRatingFallbackPhoto,
     verifiedIRating,
+    protectDriverImage,
+    protectDriverImages,
     go(value){const u=profileUrl(value);if(u)location.href=u;return !!u;},
     scan,
     getAll(){return records.slice();}
