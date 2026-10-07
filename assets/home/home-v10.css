@@ -559,3 +559,15 @@ body.home-v10-page.rn-active #hlrnRaceNightTakeover :where(h1,h2,h3,strong,b){
 @media(prefers-reduced-motion:reduce){
   .h10-btn,.h10-week-card,.h10-link-card{transition:none!important}
 }
+
+/* Preserve the automatic Race Night takeover on the lean homepage. */
+body.rn-active .h10-hero{display:none!important}
+.rn-takeover .v7-shell{width:var(--h10-shell);margin-left:auto;margin-right:auto}
+
+html[data-hlrn-theme="light"] body.rn-active .rn-copy h1{color:#fff!important}
+html[data-hlrn-theme="light"] body.rn-active .rn-copy h2{color:var(--rn-accent)!important}
+html[data-hlrn-theme="light"] body.rn-active.rn-live .rn-copy h1{color:var(--rn-accent)!important}
+html[data-hlrn-theme="light"] body.rn-active.rn-live .rn-copy h2{color:#fff!important}
+html[data-hlrn-theme="light"] body.rn-active :where(.rn-board-head strong,.rn-clock strong,.rn-info strong,.rn-btn strong,.rn-eyebrow b){color:#fff!important}
+html[data-hlrn-theme="light"] body.rn-active :where(.rn-copy>p,.rn-eyebrow,.rn-trackline span,.rn-btn small,.rn-clock span,.rn-info span,.rn-crawl .v7-shell){color:#9ca6af!important}
+html[data-hlrn-theme="light"] body.rn-active .rn-btn.primary small{color:rgba(255,255,255,.72)!important}
