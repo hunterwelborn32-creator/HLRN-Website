@@ -74,6 +74,77 @@ export function mergeHostedDriverRatings(previousHosted, refreshedHosted) {
   return ratings;
 }
 
+
+export function hostedProfileIRating(profile) {
+  const direct = firstNum(profile, ['iRating', 'irating', 'i_rating', 'currentIRating', 'current_irating']);
+  if (direct !== null && direct > 0) return Math.round(direct);
+
+  const candidates = [];
+  const seen = new Set();
+
+  const walk = (value, depth = 0) => {
+    if (!value || typeof value !== 'object' || depth > 5 || seen.has(value)) return;
+    seen.add(value);
+
+    if (Array.isArray(value)) {
+      value.forEach(item => walk(item, depth + 1));
+      return;
+    }
+
+    const rating = firstNum(value, ['iRating', 'irating', 'i_rating', 'currentIRating', 'current_irating']);
+    if (rating !== null && rating > 0) {
+      const stamp = Date.parse(
+        value.date || value.raceDate || value.race_date ||
+        value.timestamp || value.createdAt || value.created_at || ''
+      ) || 0;
+      candidates.push({ rating: Math.round(rating), stamp });
+    }
+
+    Object.values(value).forEach(item => walk(item, depth + 1));
+  };
+
+  walk(profile);
+  candidates.sort((a, b) => b.stamp - a.stamp);
+  return candidates[0]?.rating || null;
+}
+
+async function requestHostedProfileRatings(hostedEndpoint, rankings) {
+  const names = [...new Set(
+    (rankings || [])
+      .map(row => String(row?.driver || '').trim())
+      .filter(Boolean)
+  )].slice(0, 20);
+
+  const out = {};
+  const batchSize = 5;
+
+  for (let i = 0; i < names.length; i += batchSize) {
+    const batch = names.slice(i, i + batchSize);
+    await Promise.all(batch.map(async driver => {
+      try {
+        const url = new URL(hostedEndpoint);
+        url.searchParams.set('action', 'profile');
+        url.searchParams.set('driver', driver);
+        url.searchParams.set('_', String(Date.now()));
+        const profile = await request(url, `hosted/profile/${driver}`);
+        const rating = hostedProfileIRating(profile);
+        const key = hostedDriverKey(driver);
+        if (key && rating !== null && rating > 0) {
+          out[key] = {
+            driver,
+            iRating: Math.round(rating),
+            date: new Date().toISOString()
+          };
+        }
+      } catch (e) {
+        console.warn(`Hosted profile iRating unavailable for ${driver}: ${e.message}`);
+      }
+    }));
+  }
+
+  return out;
+}
+
 export function seasonDriverTotals(raw) {
   const out = new Map();
   const rps = raw && typeof raw === 'object' ? raw.rps : null;
@@ -818,6 +889,11 @@ export async function sync({
       if (priorHostedCount && refreshedHosted.sessions.length < priorHostedCount) {
         throw new Error(`Hosted source regressed from ${priorHostedCount} to ${refreshedHosted.sessions.length} session rows`);
       }
+      const profileRatings = await requestHostedProfileRatings(hostedEndpoint, refreshedHosted.rankings);
+      refreshedHosted.driverRatings = {
+        ...(refreshedHosted.driverRatings || {}),
+        ...profileRatings
+      };
       hosted = {
         ...refreshedHosted,
         driverRatings: mergeHostedDriverRatings(old?.hosted, refreshedHosted)
