@@ -134,11 +134,12 @@
   }
 
   function ratingFor(frame,name){
+    let rating=0;
     try{
-      return Number(frame.contentWindow.__HLRNHostedLatestIRating?.(name))||0;
-    }catch(e){
-      return 0;
-    }
+      rating=Number(frame.contentWindow.__HLRNHostedLatestIRating?.(name))||0;
+    }catch(e){}
+    if(rating>0)return Math.round(rating);
+    return Number(window.HLRNDrivers?.verifiedIRating?.(name))||0;
   }
 
   function realPhotoFor(name){
