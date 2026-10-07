@@ -840,17 +840,17 @@ function start(){
     ["home","Home",""],
     ["live","Live","live/"],
     ["standings","Standings","standings/"],
-    ["intelligence","Intelligence","race-intelligence/"],
     ["results","Results","results/"],
     ["drivers","Drivers","drivers/"],
-    ["teams","Teams","teams/"],
+    ["intelligence","Intelligence","race-intelligence/"],
     ["news","News","news/"]
   ];
   const more=[
+    ["teams","Teams","teams/"],
+    ["broadcast","Watch HLRN","broadcasters/"],
+    ["rules","Rules","rules/"],
     ["adventures","Adventures","adventures/"],
     ["admins","Meet the Admins","meet-the-admins/"],
-    ["rules","Rules","rules/"],
-    ["broadcast","Watch HLRN","broadcasters/"],
     ["store","Store","store/"]
   ];
 
@@ -878,7 +878,6 @@ function start(){
       </div>
       <button class="hgn-login" type="button" aria-label="HLRN Driver Login">DRIVER LOGIN</button>
       <button class="hgn-theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Day Race theme is active"><span class="hgn-theme-switch" aria-hidden="true"><span class="hgn-theme-knob"></span></span><span class="hgn-theme-copy"><span class="hgn-theme-label">DAY RACE</span><span class="hgn-theme-status">OFF</span></span></button>
-      <a class="hgn-live" href="${url("live/")}"><i></i> RACE CENTER</a>
       <button class="hgn-menu" type="button" aria-expanded="false" aria-label="Open HLRN navigation">☰</button>
       <div class="hgn-account-panel" hidden>
         <div class="hgn-account-title">DRIVER ACCOUNT</div>
