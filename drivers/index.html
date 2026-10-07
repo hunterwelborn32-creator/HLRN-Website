@@ -1371,7 +1371,7 @@ html[data-hlrn-theme="dark"] .profile-race-link:focus-visible{outline-color:#fff
 <script src="../assets/hlrn-core.js?v=drivers-profile-2"></script>
 <script>
 const HLRN_API_URL="https://script.google.com/macros/s/AKfycbwo4C9RyV-H-F4ekKFcgmrYVpyOUsh9dmFf2jVhJwvieCTKpKzAR_k6lNcppBuehj58/exec";
-const HLRN_DRIVER_PHOTO_BASE="https://hunterwelborn32-creator.github.io/HLRN-App/driver-photos/cutout/";
+const HLRN_DRIVER_PHOTO_BASE="../assets/driver-photos/cutout/";
 const HLRN_EMBEDDED_DRIVER_PHOTOS={"vincenteguerrero":"./photos/vincente-guerrero.png"};
 
 const HLRN_DRIVER_CUTOUT_PHOTOS={"aarontruebig":"aaron-truebig.webp","alexleebaw":"alex-leebaw.webp","benjaminrichards":"benjamin-richards.webp","billdaniels":"bill-daniels.webp","brandonbeyke":"brandon-beyke.webp","brandonshowers":"brandon-showers.webp","brianhayes":"brian-hayes.webp","brianhebbard":"brian-hebbard.webp","brianhennings":"brian-hennings.webp","brockpiper":"brock-piper.webp","brycehinton":"bryce-hinton.webp","carsonfreeman":"carson-freeman.webp","charlesfletcher":"charles-fletcher.webp","chrisjames":"chris-james.webp","coricooke":"cori-cooke.webp","craigrowe":"craig-rowe.webp","darrelceballos":"darrel-ceballos.webp","daviddurand":"david-durand.webp","derekjacobs":"derek-jacobs.webp","donnybeach":"donny-beach.webp","dylanjones":"dylan-jones.webp","eastoncollins":"easton-collins.webp","erichayden":"eric-hayden.webp","ethaneckert":"ethan-eckert.webp","ethanmoreno":"ethan-moreno.webp","evanfuqua":"evan-fuqua.webp","evankarlbon":"evan-karlbon.webp","evanparry":"evan-parry.webp","gerrybergeron":"gerry-bergeron.webp","grantwessley":"grant-wessley.webp","hunterwelborn":"hunter-welborn.webp","jaredphilpott":"jared-philpott.webp","jasonbranch":"jason-branch.webp","jamessmith":"james-smith.webp","javonethompson":"javone-thompson.webp","jeremyjeffries":"jeremy-jeffries.webp","jerryfassett":"jerry-fassett.webp","jimsegredo":"jim-segredo.webp","joekonen":"joe-konen.webp","johnmiles":"john-miles.webp","joshmckinney":"josh-mckinney.webp","joshuaspragg":"joshua-spragg.webp","juanescamilla":"juan-escamilla.webp","justincrowe":"justin-crowe.webp","keatoncox":"keaton-cox.webp","kennyreel":"kenny-reel.webp","kenwoodramsey":"kenwood-ramsey.webp","kodyneagles":"kody-neagles.webp","kylekammeron":"kyle-kammeron.webp","larkinboyer":"larkin-boyer.webp","matthewbrown":"matthew-brown.webp","matthewgraham":"matthew-graham.webp","nicholasbaumann":"nicholas-baumann.webp","nicholasmoody":"nicholas-moody.webp","randyschweitzer":"randy-schweitzer.webp","randyshowers":"randy-showers.webp","rickymiles":"ricky-miles.webp","rosscampoli":"ross-campoli.webp","ryanwilson":"ryan-wilson.webp","scottwise":"scott-wise.webp","sebastianmichaels":"sebastian-michaels.webp","shanehatfield":"shane-hatfield.webp","shawnstamper":"shawn-stamper.webp","timothytyler":"timothy-tyler.webp","tjlunn":"tj-lunn.webp","tommyrogers":"tommy-rogers.webp","trevoraswarnauth":"trevor-aswarnauth.webp","trevorhaley":"trevor-haley.webp","vincenteguerrero":"vincente-guerrero.webp","zackharry":"zack-harry.webp"};
@@ -1495,7 +1495,22 @@ function driverDisplayPhoto(name,iRating,driverId){
   const system=window.HLRNDrivers;
   const identity={driver:name,driverId:driverId||""};
   const rating=system?.verifiedIRating?.(identity,iRating) || (Number(iRating)>0?Math.round(Number(iRating)):0);
-  return system?.displayPhotoUrl?.(identity,rating,"cutout") || photoUrl(name) || iRatingFallbackPhoto(rating);
+
+  // Drivers page rule: a known real HLRN cutout ALWAYS wins.
+  // Do this before asking the async shared driver directory for a fallback.
+  const localRealPhoto=photoUrl(name);
+  if(localRealPhoto) return localRealPhoto;
+
+  // If the shared directory is already loaded and explicitly knows a real photo,
+  // use it. Never let displayPhotoUrl create a suit before this check.
+  const rec=system?.resolve?.(identity);
+  if(rec && rec.hasPhoto!==false && String(rec.photoSlug||"").trim()){
+    const sharedReal=system?.displayPhotoUrl?.(rec,rating,"cutout")||"";
+    if(sharedReal) return sharedReal;
+  }
+
+  // Only drivers with no real photo reach the iRating fallback.
+  return iRatingFallbackPhoto(rating);
 }
 function lastName(name){const a=prettyName(name).trim().split(/\s+/);return (a[a.length-1]||"").toLowerCase()}
 
