@@ -1,23 +1,25 @@
-/* HLRN Hosted fallback photos — safe post-load enhancer
-   This file does NOT modify the Hosted loader. It only decorates finished
-   Hosted tables after the embedded racing page has rendered. */
+/* HLRN Hosted fallback photos — independent post-load enhancer v2
+   Never touches the Hosted loader. It scans completed table rows and inserts
+   a real HLRN cutout or iRating-tier fallback when the cell has no image. */
 (function(){
   "use strict";
 
   const FRAME_ID="hostedFrame-racing";
-  const STYLE_ID="hlrn-hosted-fallback-photo-addon-style";
-  const TARGETS="#rankingsResults a.driver-link,#latestResults a.driver-link,#sessionsResults a.driver-link";
-  let sharedSnapshot=null;
-  let sharedPromise=null;
+  const STYLE_ID="hlrn-hosted-fallback-photo-addon-style-v2";
+  const script=document.currentScript;
+  const root=new URL("../../",script&&script.src?script.src:location.href);
+  const MANIFEST_URL=new URL("data/driver-pages.json",root).href;
+  const DATA_URL=new URL("data/hlrn.json",root).href;
+  const CUTOUT_BASE=new URL("assets/driver-photos/cutout/",root).href;
+  const FALLBACK_BASE=new URL("assets/driver-photos/fallback/",root).href;
 
-  const normalize=value=>String(value||"")
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g,"");
+  let manifestMap=new Map();
+  let latestRatingMap=new Map();
+  let dataPromise=null;
+  let scanTimer=null;
 
-  function pretty(value){
+  const cleanName=value=>{
     let s=String(value||"").trim();
-    if(!s)return "";
     if(s.includes(",")){
       const parts=s.split(",");
       const last=(parts.shift()||"").trim().replace(/\d+$/,"");
@@ -25,37 +27,49 @@
       s=(first+" "+last).trim();
     }
     return s.replace(/([A-Za-z])\d+$/,"$1").trim();
+  };
+
+  const key=value=>cleanName(value).toLowerCase().replace(/[^a-z0-9]/g,"");
+
+  function fallbackUrl(rating){
+    const n=Number(rating)||0;
+    const color=n>=2000?"red":n>=1500?"blue":n>=1000?"green":"yellow";
+    return FALLBACK_BASE+color+".webp";
   }
 
-  async function loadShared(){
-    if(sharedPromise)return sharedPromise;
-    sharedPromise=(async()=>{
+  async function loadData(){
+    if(dataPromise)return dataPromise;
+    dataPromise=(async()=>{
       try{
-        if(window.HLRNDrivers?.load)await window.HLRNDrivers.load();
-      }catch(e){}
-      try{
-        if(window.HLRNData?.load){
-          sharedSnapshot=await window.HLRNData.load();
-        }else{
-          const response=await fetch("../data/hlrn.json?v="+Date.now(),{cache:"no-store"});
-          if(response.ok)sharedSnapshot=await response.json();
+        const [manifestResponse,dataResponse]=await Promise.all([
+          fetch(MANIFEST_URL+"?v="+Date.now(),{cache:"no-store"}),
+          fetch(DATA_URL+"?v="+Date.now(),{cache:"no-store"})
+        ]);
+
+        if(manifestResponse.ok){
+          const payload=await manifestResponse.json();
+          for(const rec of (payload?.drivers||[])){
+            const names=[rec.name,rec.displayName,rec.rawName,...(rec.aliases||[])];
+            for(const name of names){
+              const k=key(name);
+              if(k&&!manifestMap.has(k))manifestMap.set(k,rec);
+            }
+          }
         }
-      }catch(e){}
-      return sharedSnapshot;
-    })();
-    return sharedPromise;
-  }
 
-  function latestHostedRating(name){
-    const rows=sharedSnapshot?.hosted?.latest?.results||[];
-    const key=normalize(pretty(name));
-    let found=0;
-    for(const row of rows){
-      if(normalize(pretty(row?.driver))!==key)continue;
-      const rating=Number(row?.iRating??row?.irating);
-      if(Number.isFinite(rating)&&rating>0)found=Math.round(rating);
-    }
-    return found;
+        if(dataResponse.ok){
+          const snapshot=await dataResponse.json();
+          for(const row of (snapshot?.hosted?.latest?.results||[])){
+            const k=key(row?.driver);
+            const rating=Number(row?.iRating??row?.irating);
+            if(k&&Number.isFinite(rating)&&rating>0)latestRatingMap.set(k,Math.round(rating));
+          }
+        }
+      }catch(err){
+        console.warn("HLRN Hosted fallback photo data unavailable",err);
+      }
+    })();
+    return dataPromise;
   }
 
   function injectStyle(doc){
@@ -63,14 +77,14 @@
     const style=doc.createElement("style");
     style.id=STYLE_ID;
     style.textContent=`
-      .hlrn-hosted-driver-photo-addon-link{
+      .hlrn-hosted-photo-v2-wrap{
         display:inline-flex!important;
         align-items:center!important;
         gap:9px!important;
         min-width:0!important;
         vertical-align:middle!important;
       }
-      .hlrn-hosted-driver-photo-addon{
+      .hlrn-hosted-photo-v2{
         display:block!important;
         width:46px!important;
         height:54px!important;
@@ -82,13 +96,13 @@
         outline:0!important;
         filter:drop-shadow(0 3px 4px rgba(0,0,0,.22))!important;
       }
-      #rankingsResults .hlrn-hosted-driver-photo-addon{
+      #rankingsResults .hlrn-hosted-photo-v2{
         width:50px!important;
         height:58px!important;
         flex-basis:50px!important;
       }
       @media(max-width:700px){
-        .hlrn-hosted-driver-photo-addon{
+        .hlrn-hosted-photo-v2{
           width:36px!important;
           height:42px!important;
           flex-basis:36px!important;
@@ -98,99 +112,121 @@
     doc.head.appendChild(style);
   }
 
-  function recordFor(name){
-    return window.HLRNDrivers?.resolve?.(name)
-      ||window.HLRNDrivers?.resolve?.(pretty(name))
-      ||null;
+  function driverInfo(name){
+    const k=key(name);
+    const rec=manifestMap.get(k)||null;
+    const latest=latestRatingMap.get(k);
+    const rating=latest || Number(rec?.iRating??rec?.irating) || 0;
+    const hasReal=!!(rec?.hasPhoto && String(rec?.photoSlug||"").trim());
+    const real=hasReal?CUTOUT_BASE+encodeURIComponent(rec.photoSlug)+".webp":"";
+    return {
+      display:cleanName(rec?.name||name),
+      rating,
+      real,
+      fallback:fallbackUrl(rating)
+    };
   }
 
-  function sourceFor(name,rec){
-    const latestRating=latestHostedRating(name);
-    const rating=latestRating || Number(rec?.iRating??rec?.irating) || 0;
-    const system=window.HLRNDrivers;
-    const src=system?.displayPhotoUrl?.(rec||name,rating,"cutout")
-      ||system?.photoUrl?.(rec||name,"cutout")
-      ||system?.iRatingFallbackPhoto?.(rating)
-      ||"";
-    return {src,rating};
+  function usableExistingImage(cell){
+    return [...cell.querySelectorAll("img")].some(img=>{
+      if(img.classList.contains("hlrn-hosted-photo-v2"))return true;
+      // Existing Hosted images remove themselves on failure. If one is still
+      // present with a source, leave it alone rather than duplicating it.
+      return !!String(img.getAttribute("src")||"").trim();
+    });
   }
 
-  function enhanceLink(link){
-    if(!link||link.dataset.hlrnHostedAddonPhoto==="1")return;
-    const raw=String(link.textContent||"").trim();
+  function decorateCell(cell){
+    if(!cell||cell.dataset.hlrnHostedPhotoV2==="1")return;
+    if(usableExistingImage(cell)){
+      cell.dataset.hlrnHostedPhotoV2="1";
+      return;
+    }
+
+    const link=cell.querySelector("a.driver-link,a.hlrn-driver-link,a");
+    const raw=String((link||cell).textContent||"").trim();
     if(!raw)return;
 
-    const rec=recordFor(raw);
-    if(!rec)return;
-
-    const {src,rating}=sourceFor(raw,rec);
-    if(!src)return;
-
-    // A built-in Hosted image may have failed and removed itself. We add our
-    // independent image beside the existing name without changing click logic.
-    const img=link.ownerDocument.createElement("img");
-    img.className="hlrn-hosted-driver-photo-addon";
-    img.src=src;
+    const info=driverInfo(raw);
+    const doc=cell.ownerDocument;
+    const img=doc.createElement("img");
+    img.className="hlrn-hosted-photo-v2";
     img.alt="";
     img.loading="lazy";
     img.decoding="async";
-    img.dataset.hlrnIRating=String(rating||0);
+    img.dataset.hlrnIRating=String(info.rating);
+    img.dataset.hlrnTier=info.rating>=2000?"red":info.rating>=1500?"blue":info.rating>=1000?"green":"yellow";
+    img.src=info.real||info.fallback;
     img.onerror=()=>{
-      const fallback=window.HLRNDrivers?.iRatingFallbackPhoto?.(rating);
-      if(fallback&&img.src!==fallback){
+      if(img.src!==info.fallback){
         img.onerror=null;
-        img.src=fallback;
+        img.src=info.fallback;
       }else{
         img.remove();
       }
     };
 
-    link.classList.add("hlrn-hosted-driver-photo-addon-link");
-    link.prepend(img);
-    link.dataset.hlrnHostedAddonPhoto="1";
+    if(link){
+      link.classList.add("hlrn-hosted-photo-v2-wrap");
+      link.prepend(img);
+    }else{
+      const wrap=doc.createElement("span");
+      wrap.className="hlrn-hosted-photo-v2-wrap";
+      const text=doc.createElement("span");
+      text.textContent=raw;
+      cell.textContent="";
+      wrap.append(img,text);
+      cell.appendChild(wrap);
+    }
+
+    cell.dataset.hlrnHostedPhotoV2="1";
   }
 
-  async function enhanceFrame(){
-    await loadShared();
+  function scanRows(doc){
+    // Driver column: Rankings=2, Latest Results=2, Sessions=4.
+    doc.querySelectorAll("#rankingsResults tr").forEach(row=>decorateCell(row.cells?.[1]));
+    doc.querySelectorAll("#latestResults tr").forEach(row=>decorateCell(row.cells?.[1]));
+    doc.querySelectorAll("#sessionsResults tr").forEach(row=>decorateCell(row.cells?.[3]));
+  }
+
+  async function scan(){
+    await loadData();
     const frame=document.getElementById(FRAME_ID);
     if(!frame)return;
-
     let doc;
     try{doc=frame.contentDocument;}catch(e){return}
     if(!doc?.body)return;
 
     injectStyle(doc);
-    doc.querySelectorAll(TARGETS).forEach(enhanceLink);
+    scanRows(doc);
 
-    if(!frame.__hlrnFallbackPhotoObserver&&"MutationObserver" in window){
+    if(!frame.__hlrnHostedPhotoV2Observer&&"MutationObserver" in window){
       const observer=new MutationObserver(()=>{
-        try{
-          injectStyle(doc);
-          doc.querySelectorAll(TARGETS).forEach(enhanceLink);
-        }catch(e){}
+        clearTimeout(scanTimer);
+        scanTimer=setTimeout(()=>{
+          try{injectStyle(doc);scanRows(doc)}catch(e){}
+        },30);
       });
       observer.observe(doc.body,{childList:true,subtree:true});
-      frame.__hlrnFallbackPhotoObserver=observer;
+      frame.__hlrnHostedPhotoV2Observer=observer;
     }
   }
 
   function bind(){
     const frame=document.getElementById(FRAME_ID);
     if(!frame){
-      setTimeout(bind,250);
+      setTimeout(bind,200);
       return;
     }
-    if(!frame.__hlrnFallbackPhotoLoadBound){
-      frame.__hlrnFallbackPhotoLoadBound=true;
+
+    if(!frame.__hlrnHostedPhotoV2Bound){
+      frame.__hlrnHostedPhotoV2Bound=true;
       frame.addEventListener("load",()=>{
-        setTimeout(enhanceFrame,80);
-        setTimeout(enhanceFrame,500);
-        setTimeout(enhanceFrame,1400);
+        [50,250,700,1500,3000].forEach(ms=>setTimeout(()=>scan().catch(()=>{}),ms));
       });
     }
-    enhanceFrame().catch(()=>{});
-    setTimeout(()=>enhanceFrame().catch(()=>{}),600);
-    setTimeout(()=>enhanceFrame().catch(()=>{}),1800);
+
+    [0,300,900,1800,3500,6000].forEach(ms=>setTimeout(()=>scan().catch(()=>{}),ms));
   }
 
   if(document.readyState==="loading"){
