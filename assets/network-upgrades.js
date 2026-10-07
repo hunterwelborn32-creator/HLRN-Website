@@ -399,8 +399,12 @@ ready(async function(){
       const data=await loadData();
       const d=matchDriver(data,name,series);
       const profile=row.querySelector(".hlrn-driver-profile-link")?.getAttribute("href")||url("drivers/");
-      const img=row.querySelector(".name-col img")?.getAttribute("src")||"";
       const shown=d?displayDriverName(d.driver):name;
+      const system=window.HLRNDrivers;
+      const rating=system?.verifiedIRating?.(d||shown,d?.iRating??d?.irating);
+      const img=row.querySelector(".name-col img")?.getAttribute("src")
+        ||system?.displayPhotoUrl?.(d||shown,rating,"cutout")
+        ||"";
       const stats=[
         ["Points",d?.points],
         ["Wins",d?.wins],
