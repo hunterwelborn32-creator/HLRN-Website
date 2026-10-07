@@ -752,7 +752,7 @@ function start(){
     let driverRoot;
     try{driverRoot=new URL("../",shellSelf&&shellSelf.src?shellSelf.src:location.href);}catch(e){driverRoot=new URL("/",location.origin);}
     const driverScript=document.createElement("script");
-    driverScript.src=new URL("assets/driver-system.js?v=20261007v8",driverRoot).href;
+    driverScript.src=new URL("assets/driver-system.js?v=20261007v10",driverRoot).href;
     driverScript.defer=true;
     driverScript.setAttribute("data-hlrn-driver-system","");
     document.head.appendChild(driverScript);
