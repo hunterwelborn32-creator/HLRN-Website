@@ -9,13 +9,14 @@
   "use strict";
   if(global.HLRNDrivers && global.HLRNDrivers.version) return;
 
-  const VERSION="20260930v7";
+  const VERSION="20261007v8";
   const script=document.currentScript;
   let root;
   try{ root=new URL("../",script&&script.src?script.src:location.href); }
   catch(_){ root=new URL("/",location.origin); }
   const manifestUrl=new URL("data/driver-pages.json?v="+VERSION,root).href;
   const PHOTO_BASE=new URL("assets/driver-photos/",root).href;
+  const FALLBACK_PHOTO_BASE=new URL("assets/driver-photos/fallback/",root).href;
   const absolute=(path)=>new URL(String(path||"").replace(/^\//,""),root).href;
   const normalize=(value)=>String(value||"").toLowerCase().replace(/[^a-z0-9]/g,"");
   const cleanDisplay=(value)=>String(value||"").trim().replace(/([A-Za-z])\d+$/,"$1");
@@ -89,12 +90,34 @@
     return rec?rec.url:null;
   }
 
+  function iRatingFallbackPhoto(iRating){
+    const parsed=Number(iRating);
+    const rating=Number.isFinite(parsed)&&parsed>=0?parsed:0;
+    if(rating>=2000) return FALLBACK_PHOTO_BASE+"red.webp";
+    if(rating>=1500) return FALLBACK_PHOTO_BASE+"blue.webp";
+    if(rating>=1000) return FALLBACK_PHOTO_BASE+"green.webp";
+    return FALLBACK_PHOTO_BASE+"yellow.webp";
+  }
+
   function photoUrl(value,type="cutout"){
     const rec=resolve(value);
     const slug=String(rec?.photoSlug||"").trim();
-    if(!slug) return "";
-    const folder=String(type||"cutout").toLowerCase()==="full"?"full":"cutout";
-    return PHOTO_BASE+folder+"/"+encodeURIComponent(slug)+".webp";
+    if(slug && rec?.hasPhoto!==false){
+      const folder=String(type||"cutout").toLowerCase()==="full"?"full":"cutout";
+      return PHOTO_BASE+folder+"/"+encodeURIComponent(slug)+".webp";
+    }
+    if(rec) return iRatingFallbackPhoto(rec.iRating??rec.irating);
+    return "";
+  }
+
+  function displayPhotoUrl(value,iRating,type="cutout"){
+    const rec=resolve(value);
+    const real=rec&&String(rec.photoSlug||"").trim()&&rec.hasPhoto!==false
+      ? photoUrl(rec,type)
+      : "";
+    if(real) return real;
+    const rating=iRating??rec?.iRating??rec?.irating;
+    return iRatingFallbackPhoto(rating);
   }
 
   function buildRegex(){
@@ -435,6 +458,8 @@
     resolve,
     profileUrl,
     photoUrl,
+    displayPhotoUrl,
+    iRatingFallbackPhoto,
     go(value){const u=profileUrl(value);if(u)location.href=u;return !!u;},
     scan,
     getAll(){return records.slice();}
