@@ -287,7 +287,7 @@ input,select,button{color:#111!important}
 iframe{background:#fff!important;color-scheme:light!important}
 </style>
 <link rel="stylesheet" href="../assets/standings/nascar-standings-v1.css?v=20260930n1">
-<script data-hlrn-driver-system src="../assets/driver-system.js?v=20261007v8"></script>
+<script data-hlrn-driver-system src="../assets/driver-system.js?v=20261007v9"></script>
 <script>
 function hlrnHostedDarkModeActive(){
   try{
@@ -998,7 +998,63 @@ async function linkHostedDriverNames(key){
   });
   names.sort((a,b)=>b.length-a.length);
   if(!names.length)return;
+
+  // The embedded Hosted tables already render driver names as clickable
+  // .driver-link anchors. Enhance those existing links directly; the generic
+  // text walker below intentionally skips anchors.
+  const recordForName=value=>lookup.get(String(value||"").trim().toLowerCase().replace(/[^a-z0-9]/g,""))||null;
+  const enhanceExistingDriverLinks=()=>{
+    doc.querySelectorAll("#rankingsResults a.driver-link,#latestResults a.driver-link,#sessionsResults a.driver-link").forEach(a=>{
+      if(a.dataset.hlrnHostedPhotoReady==="1")return;
+      const raw=String(a.textContent||"").trim();
+      const rec=recordForName(raw);
+      if(!rec)return;
+      const rating=rec?.iRating??rec?.irating;
+      const src=system.displayPhotoUrl
+        ?system.displayPhotoUrl(rec,rating,"cutout")
+        :(system.photoUrl?system.photoUrl(rec,"cutout"):"");
+      if(!src)return;
+
+      a.dataset.hlrnHostedPhotoReady="1";
+      a.classList.add("hlrn-hosted-driver-photo-link");
+      a.textContent="";
+
+      const img=doc.createElement("img");
+      img.src=src;
+      img.alt="";
+      img.loading="lazy";
+      img.decoding="async";
+      img.className="hlrn-hosted-driver-photo";
+      img.dataset.hlrnIRating=String(rating??"");
+      img.onerror=()=>{
+        const fallback=system.iRatingFallbackPhoto?system.iRatingFallbackPhoto(rating):"";
+        if(fallback&&img.src!==fallback){
+          img.onerror=null;
+          img.src=fallback;
+        }else{
+          img.remove();
+        }
+      };
+
+      const span=doc.createElement("span");
+      span.textContent=rec.displayName||rec.name||raw;
+      a.append(img,span);
+
+      const profile=system.profileUrl?system.profileUrl(rec):"";
+      if(profile){
+        a.href=profile;
+        a.target="_top";
+        a.onclick=null;
+        a.removeAttribute("onclick");
+      }
+    });
+  };
+  enhanceExistingDriverLinks();
+
+  const escRe=v=>String(v).replace(/[|\\{}()[\]^$+*?.-]/g,"\\  names.sort((a,b)=>b.length-a.length);
+  if(!names.length)return;
   const escRe=v=>String(v).replace(/[|\\{}()[\]^$+*?.-]/g,"\\$&");
+");
   const rx=new RegExp("(^|[^A-Za-z0-9])("+names.map(escRe).join("|")+")(?![A-Za-z0-9])","gi");
   const nf=doc.defaultView&&doc.defaultView.NodeFilter?doc.defaultView.NodeFilter:NodeFilter;
   const walker=doc.createTreeWalker(doc.body,nf.SHOW_TEXT,{
@@ -1062,6 +1118,10 @@ async function linkHostedDriverNames(key){
     if(last<text.length)frag.appendChild(doc.createTextNode(text.slice(last)));
     if(last>0)node.parentNode.replaceChild(frag,node);
   });
+
+  // Tables can be re-rendered by the embedded Hosted app after the initial
+  // pass, so run the direct anchor enhancement again at the end.
+  enhanceExistingDriverLinks();
 }
 function queueHostedDriverLinks(key){
   clearTimeout(hostedDriverLinkTimers[key]);
