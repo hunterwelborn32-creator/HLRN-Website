@@ -15,7 +15,7 @@ function num(v){var n=Number(v);return Number.isFinite(n)?n:0}
 function fmt(v,d){if(d==null)d=1;var n=Number(v);if(!Number.isFinite(n))return "—";return Math.abs(n-Math.round(n))<.0001?String(Math.round(n)):n.toFixed(d)}
 function pretty(name){var s=String(name||"").trim();if(s.indexOf(",")>=0){var p=s.split(","),last=(p.shift()||"").trim().replace(/\d+$/,""),first=p.join(" ").trim();return(first+" "+last).trim()}return s.replace(/\d+$/,"").trim()}
 function slug(v){return String(v||"").trim().toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")}
-function photo(name){var p=pretty(name),key=p.toLowerCase().replace(/[^a-z0-9]/g,""),s=PHOTO_ALIASES[key]||slug(p);return s?PHOTO_BASE+s+".webp":""}
+function photo(name){var system=window.HLRNDrivers,rating=system&&system.verifiedIRating?system.verifiedIRating(name):0,shared=system&&system.displayPhotoUrl?system.displayPhotoUrl(name,rating,"cutout"):"";if(shared)return shared;var p=pretty(name),key=p.toLowerCase().replace(/[^a-z0-9]/g,""),s=PHOTO_ALIASES[key]||slug(p);return s?PHOTO_BASE+s+".webp":""}
 
 function league(){return snapshot&&snapshot.leagues&&snapshot.leagues[activeLeague]||{drivers:[],teams:[],results:[],teamRosters:{}}}
 function teams(){return (league().teams||[]).slice().sort(function(a,b){return num(a.rank)-num(b.rank)||num(b.points)-num(a.points)})}
