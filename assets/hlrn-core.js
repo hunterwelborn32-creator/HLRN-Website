@@ -3,6 +3,20 @@
 (function (global) {
   'use strict';
   const script = document.currentScript;
+
+  // Backup loader for the unified site-wide driver photo/identity system.
+  // site-shell.js also loads this, but older/custom pages may only include hlrn-core.js.
+  if (!global.HLRNDrivers || global.HLRNDrivers.version !== '20261007v11') {
+    const existing = [...document.scripts].some(s => /(?:^|\/)driver-system\.js(?:\?|$)/i.test(s.src || "") && /20261007v11/.test(s.src || ""));
+    if (!existing) {
+      const driverScript = document.createElement('script');
+      driverScript.src = new URL('./driver-system.js?v=20261007v11', script ? script.src : location.href).href;
+      driverScript.defer = true;
+      driverScript.setAttribute('data-hlrn-driver-system', '');
+      document.head.appendChild(driverScript);
+    }
+  }
+
   const DATA_URL = new URL('../data/hlrn.json', script ? script.src : location.href).href;
   const CACHE_NAME = 'hlrn-data-v1';
   const subscribers = new Set();
