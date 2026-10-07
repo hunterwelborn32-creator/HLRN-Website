@@ -1484,11 +1484,18 @@ function hLrnPhotoKey(name){
 function photoUrl(name){const k=hLrnPhotoKey(name);if(HLRN_EMBEDDED_DRIVER_PHOTOS[k])return HLRN_EMBEDDED_DRIVER_PHOTOS[k];const f=HLRN_DRIVER_CUTOUT_PHOTOS[k];return f?HLRN_DRIVER_PHOTO_BASE+f:""}
 const HLRN_DRIVER_FALLBACK_BASE="../assets/driver-photos/fallback/";
 function iRatingFallbackPhoto(iRating){
-  const parsed=Number(iRating),rating=Number.isFinite(parsed)&&parsed>=0?parsed:0;
+  const parsed=Number(iRating),rating=Number.isFinite(parsed)&&parsed>0?Math.round(parsed):0;
+  if(!rating)return "";
   if(rating>=2000)return HLRN_DRIVER_FALLBACK_BASE+"red.webp";
   if(rating>=1500)return HLRN_DRIVER_FALLBACK_BASE+"blue.webp";
   if(rating>=1000)return HLRN_DRIVER_FALLBACK_BASE+"green.webp";
   return HLRN_DRIVER_FALLBACK_BASE+"yellow.webp";
+}
+function driverDisplayPhoto(name,iRating,driverId){
+  const system=window.HLRNDrivers;
+  const identity={driver:name,driverId:driverId||""};
+  const rating=system?.verifiedIRating?.(identity,iRating) || (Number(iRating)>0?Math.round(Number(iRating)):0);
+  return system?.displayPhotoUrl?.(identity,rating,"cutout") || photoUrl(name) || iRatingFallbackPhoto(rating);
 }
 function lastName(name){const a=prettyName(name).trim().split(/\s+/);return (a[a.length-1]||"").toLowerCase()}
 
@@ -2065,7 +2072,7 @@ function initializeDrivers(){
 }
 
 function card(d,index=0){
- const name=prettyName(d.driver), n=getDriverNumber(name,d.carNumber), fallbackPhoto=iRatingFallbackPhoto(d.iRating), photo=photoUrl(name)||fallbackPhoto, wins=num(d.wins);
+ const name=prettyName(d.driver), n=getDriverNumber(name,d.carNumber), driverId=d.driverIds?.[activeLeague]||d.driverId||"", verifiedRating=window.HLRNDrivers?.verifiedIRating?.({driver:name,driverId:driverId},d.iRating)||d.iRating, fallbackPhoto=iRatingFallbackPhoto(verifiedRating), photo=driverDisplayPhoto(name,verifiedRating,driverId), wins=num(d.wins);
  const right=d._fallback?"STATS SYNCING":`${wins} ${wins===1?'Win':'Wins'}`;
  const car=n==="—"?"HLRN DRIVER":`Car <strong>#${esc(n)}</strong>`;
  const leagueStats=d.leagueStats&&d.leagueStats[activeLeague]?d.leagueStats[activeLeague]:{};
@@ -2219,7 +2226,7 @@ function percentMetric(n,total){return !Number.isFinite(Number(total))||Number(t
 function renderProfile(d){
   const hist=Array.isArray(d.history)?d.history:[];
   d.driver=prettyName(d.driver);d.carNumber=getDriverNumber(d.driver,d.carNumber);
-  const fallbackPhoto=iRatingFallbackPhoto(d.iRating),photo=photoUrl(d.driver)||fallbackPhoto,key=hLrnPhotoKey(d.driver),league=d.leagueStats?.[activeLeague]||{};
+  const driverId=d.driverIds?.[activeLeague]||d.driverId||"",verifiedRating=window.HLRNDrivers?.verifiedIRating?.({driver:d.driver,driverId:driverId},d.iRating)||d.iRating,fallbackPhoto=iRatingFallbackPhoto(verifiedRating),photo=driverDisplayPhoto(d.driver,verifiedRating,driverId),key=hLrnPhotoKey(d.driver),league=d.leagueStats?.[activeLeague]||{};
   const team=String(d.team||league.team||"").trim();
   const ready=!d._fallback;
   const value=v=>ready?displayMetric(v):"—";
