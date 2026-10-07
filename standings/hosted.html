@@ -287,9 +287,8 @@ input,select,button{color:#111!important}
 iframe{background:#fff!important;color-scheme:light!important}
 </style>
 <link rel="stylesheet" href="../assets/standings/nascar-standings-v1.css?v=20260930n1">
-<script data-hlrn-driver-system src="../assets/driver-system.js?v=20261007v10"></script>
+<script data-hlrn-driver-system src="../assets/driver-system.js?v=20261007v11"></script>
 <script defer src="../assets/hosted/hosted-fallback-photos.js?v=20261007v5"></script>
-<script defer src="../assets/hosted/hosted-h2h-fallback-photos.js?v=20261007v2"></script>
 <script defer src="../assets/hosted/hosted-driver-stats-fallback-photos.js?v=20261007v2"></script>
 <script>
 function hlrnHostedDarkModeActive(){
@@ -2621,6 +2620,107 @@ function applyHostedSeriesMatch(frame){
   }catch(e){}
 }
 
+
+async function renderHostedH2HPhotos(frame){
+  if(!frame)return;
+  const system=hostedDriverSystem();
+  if(!system||typeof system.load!=="function")return;
+
+  let doc;
+  try{doc=frame.contentDocument;}catch(e){return}
+  if(!doc||!doc.body)return;
+
+  await system.load();
+
+  let style=doc.getElementById("HLRN_H2H_DIRECT_PHOTOS_20261007");
+  if(!style){
+    style=doc.createElement("style");
+    style.id="HLRN_H2H_DIRECT_PHOTOS_20261007";
+    style.textContent=`
+      .fighter .hlrn-h2h-photo-direct{
+        display:block!important;
+        width:150px!important;
+        height:150px!important;
+        max-width:42vw!important;
+        margin:0 auto 10px!important;
+        object-fit:contain!important;
+        object-position:center bottom!important;
+        background:transparent!important;
+        border:0!important;
+        outline:0!important;
+        box-shadow:none!important;
+        filter:drop-shadow(0 8px 12px rgba(0,0,0,.28))!important;
+        position:relative!important;
+        z-index:2!important;
+      }
+      @media(max-width:900px){
+        .fighter .hlrn-h2h-photo-direct{width:125px!important;height:125px!important}
+      }
+      @media(max-width:520px){
+        .fighter .hlrn-h2h-photo-direct{width:100px!important;height:100px!important;margin-bottom:7px!important}
+      }
+    `;
+    (doc.head||doc.documentElement).appendChild(style);
+  }
+
+  doc.querySelectorAll(".fighter").forEach(fighter=>{
+    const nameEl=fighter.querySelector(".driver-name");
+    const name=String(nameEl?.textContent||"").trim();
+    if(!name)return;
+
+    const current=fighter.querySelector("img.hlrn-h2h-photo-direct");
+    if(current&&current.dataset.hlrnDriverName===name)return;
+    if(current)current.remove();
+
+    // Remove the old experimental enhancer image if it exists so only one photo renders.
+    fighter.querySelectorAll("img.hlrn-h2h-driver-photo").forEach(img=>img.remove());
+
+    const rec=system.resolve?.(name)||null;
+    const rating=Number(system.verifiedIRating?.(rec||name))||0;
+
+    // IMPORTANT: displayPhotoUrl always chooses a real HLRN photo first.
+    // The iRating suit is used only when no real driver photo exists.
+    const src=system.displayPhotoUrl?.(rec||name,rating,"cutout")||"";
+    if(!src)return;
+
+    const img=doc.createElement("img");
+    img.className="hlrn-h2h-photo-direct";
+    img.src=src;
+    img.alt=name;
+    img.loading="eager";
+    img.decoding="async";
+    img.dataset.hlrnDriverName=name;
+    if(rating>0)img.dataset.hlrnIRating=String(rating);
+
+    img.onerror=()=>{
+      // Only fall back to a suit if there is no usable real photo.
+      const realPhoto=rec&&rec.hasPhoto!==false&&String(rec.photoSlug||"").trim();
+      if(realPhoto){
+        img.remove();
+        return;
+      }
+      const fallback=rating>0?system.iRatingFallbackPhoto?.(rating):"";
+      if(fallback&&img.src!==fallback){
+        img.onerror=null;
+        img.src=fallback;
+      }else{
+        img.remove();
+      }
+    };
+
+    fighter.insertBefore(img,nameEl);
+  });
+
+  if(!frame.__hlrnDirectH2HObserver&&"MutationObserver" in window){
+    let timer=null;
+    frame.__hlrnDirectH2HObserver=new MutationObserver(()=>{
+      clearTimeout(timer);
+      timer=setTimeout(()=>renderHostedH2HPhotos(frame).catch(()=>{}),30);
+    });
+    frame.__hlrnDirectH2HObserver.observe(doc.body,{childList:true,subtree:true,characterData:true});
+  }
+}
+
 function loadHostedTab(key){
   const frame=hostedFrame(key);
   const loading=document.getElementById("hostedLoading");
@@ -2635,9 +2735,10 @@ function loadHostedTab(key){
     if(loading) loading.style.display="none";
     installHostedResize(key);
     if(key!=="h2h") queueHostedDriverLinks(key);
-    setTimeout(()=>{resizeHostedFrame(key);if(key!=="h2h")queueHostedDriverLinks(key)},80);
-    setTimeout(()=>{resizeHostedFrame(key);if(key!=="h2h")queueHostedDriverLinks(key)},350);
-    setTimeout(()=>{resizeHostedFrame(key);if(key!=="h2h")queueHostedDriverLinks(key)},900);
+    else renderHostedH2HPhotos(frame).catch(()=>{});
+    setTimeout(()=>{resizeHostedFrame(key);if(key!=="h2h")queueHostedDriverLinks(key);else renderHostedH2HPhotos(frame).catch(()=>{})},80);
+    setTimeout(()=>{resizeHostedFrame(key);if(key!=="h2h")queueHostedDriverLinks(key);else renderHostedH2HPhotos(frame).catch(()=>{})},350);
+    setTimeout(()=>{resizeHostedFrame(key);if(key!=="h2h")queueHostedDriverLinks(key);else renderHostedH2HPhotos(frame).catch(()=>{})},900);
     setTimeout(()=>{
       try{
         const doc=frame.contentDocument;
