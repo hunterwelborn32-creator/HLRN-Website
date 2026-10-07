@@ -747,15 +747,20 @@ function start(){
 
   // Load the unified driver identity layer on every HLRN page before any early return.
   // This keeps permanent driver profiles working even on pages that render their own nav.
-  if(!document.querySelector("script[data-hlrn-driver-system]")){
+  {
+    const DRIVER_SYSTEM_VERSION="20261007v11";
     const shellSelf=[...document.scripts].slice().reverse().find(s=>/(?:^|\/)site-shell\.js(?:\?|$)/i.test(s.src||""));
     let driverRoot;
     try{driverRoot=new URL("../",shellSelf&&shellSelf.src?shellSelf.src:location.href);}catch(e){driverRoot=new URL("/",location.origin);}
-    const driverScript=document.createElement("script");
-    driverScript.src=new URL("assets/driver-system.js?v=20261007v11",driverRoot).href;
-    driverScript.defer=true;
-    driverScript.setAttribute("data-hlrn-driver-system","");
-    document.head.appendChild(driverScript);
+    const hasCurrent=[...document.scripts].some(s=>/(?:^|\/)driver-system\.js(?:\?|$)/i.test(s.src||"")&&String(s.src||"").includes(DRIVER_SYSTEM_VERSION));
+    if(!hasCurrent){
+      const driverScript=document.createElement("script");
+      driverScript.src=new URL("assets/driver-system.js?v="+DRIVER_SYSTEM_VERSION,driverRoot).href;
+      driverScript.defer=true;
+      driverScript.setAttribute("data-hlrn-driver-system","");
+      driverScript.setAttribute("data-hlrn-driver-system-version",DRIVER_SYSTEM_VERSION);
+      document.head.appendChild(driverScript);
+    }
   }
 
   // Keep only one shared HLRN navigation instance.
