@@ -10,7 +10,7 @@ const $=id=>document.getElementById(id);
 const name=d=>v(d?.name||'Unknown driver');
 const path=(series,id)=>base+'driver-hub/?series='+encodeURIComponent(series)+'&id='+encodeURIComponent(id);
 const date=d=>d&&Number.isFinite(Date.parse(d))?new Date(d).toLocaleDateString('en-US',{timeZone:'America/New_York',year:'numeric',month:'short',day:'numeric'}):'Date not published';
-const photo=d=>{const slug=String(d?.photoSlug||'').replace(/[^a-z0-9-]/g,'');return slug?'https://hunterwelborn32-creator.github.io/HLRN-App/driver-photos/cutout/'+encodeURIComponent(slug)+'.webp':''};
+const photo=d=>{const system=window.HLRNDrivers;const rating=system?.verifiedIRating?.(d,d?.iRating??d?.irating);const shared=system?.displayPhotoUrl?.(d,rating,'cutout')||'';if(shared)return shared;const slug=String(d?.photoSlug||'').replace(/[^a-z0-9-]/g,'');return slug?'https://hunterwelborn32-creator.github.io/HLRN-App/driver-photos/cutout/'+encodeURIComponent(slug)+'.webp':''};
 const portrait=d=>{let initials=String(d.name||'?').split(' ').map(x=>x.charAt(0)).slice(0,2).join('').toUpperCase();return '<div class="portrait">'+(photo(d)?'<img loading="lazy" decoding="async" src="'+photo(d)+'" alt="" onerror="this.remove()">':'')+'<span>'+esc(initials)+'</span></div>';};
 async function data(filename){const rsp=await fetch(base+'data/derived/'+filename+'.json',{cache:'no-store'});if(!rsp.ok)throw new Error('HTTP '+rsp.status);const obj=await rsp.json();if(obj.schemaVersion!==1)throw new Error('Invalid data');return obj;}
 function initTheme(series){document.documentElement.style.setProperty('--accent',series==='monday'?'#43a026':series==='hosted'?'#c79300':'#d71920');}
