@@ -164,6 +164,14 @@
 
         if(dataResponse.ok){
           const snapshot=await dataResponse.json();
+
+          // Persistent Hosted iRating memory maintained by the data sync.
+          for(const item of Object.values(snapshot?.hosted?.driverRatings||{})){
+            const rating=positiveRating(item?.iRating??item?.irating);
+            if(rating)rememberRating(item?.driver,rating);
+          }
+
+          // Latest race always wins when it has a newer verified value.
           for(const row of (snapshot?.hosted?.latest?.results||[])){
             const rating=positiveRating(row?.iRating??row?.irating);
             if(rating)rememberRating(row?.driver,rating);
