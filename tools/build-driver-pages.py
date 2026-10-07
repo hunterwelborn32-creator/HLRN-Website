@@ -140,6 +140,14 @@ def latest_irating_maps(hlrn):
             remember(by_name, keyify(row.get("driver")), rating, row.get("date"))
 
     hosted = (hlrn or {}).get("hosted") or {}
+
+    for item in (hosted.get("driverRatings") or {}).values():
+        name = str(item.get("driver") or "").strip()
+        rating = item.get("iRating")
+        if rating in (None, ""):
+            rating = item.get("irating")
+        remember(by_name, keyify(name), rating, item.get("date"))
+
     latest = hosted.get("latest") or {}
     latest_date = latest.get("date")
     for row in latest.get("results") or []:
