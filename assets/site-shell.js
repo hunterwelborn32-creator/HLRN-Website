@@ -748,7 +748,7 @@ function start(){
   // Load the unified driver identity layer on every HLRN page before any early return.
   // This keeps permanent driver profiles working even on pages that render their own nav.
   {
-    const DRIVER_SYSTEM_VERSION="20261007v11";
+    const DRIVER_SYSTEM_VERSION="20261007v12";
     const shellSelf=[...document.scripts].slice().reverse().find(s=>/(?:^|\/)site-shell\.js(?:\?|$)/i.test(s.src||""));
     let driverRoot;
     try{driverRoot=new URL("../",shellSelf&&shellSelf.src?shellSelf.src:location.href);}catch(e){driverRoot=new URL("/",location.origin);}
