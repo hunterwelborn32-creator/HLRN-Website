@@ -307,7 +307,9 @@
     if(state==="pending")return;
 
     const rec=recordFor(name);
-    let rating=ratingMap.get(key(name))||positiveRating(rec?.iRating??rec?.irating);
+    let rating=ratingMap.get(key(name))
+      ||positiveRating(window.HLRNDrivers?.verifiedIRating?.(name))
+      ||positiveRating(rec?.iRating??rec?.irating);
     const real=realPhotoFor(rec);
 
     if(real){
