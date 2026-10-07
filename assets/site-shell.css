@@ -1712,3 +1712,319 @@ body :where(h4,h5,h6){line-height:1.2!important}
   #hlrn-global-footer .hgf-links a{font-size:10px!important}
   #hlrn-global-footer .hgf-copy{font-size:9px!important}
 }
+
+
+/* =========================================================
+   HLRN VISUAL STANDARD V4 — 2026-10-07
+   Shared visual language across the network.
+   Content/layout logic stays page-owned; this layer standardizes
+   surfaces, headings, controls, spacing and Day/Night treatment.
+   ========================================================= */
+
+:root{
+  --hlrn-ui-radius:8px;
+  --hlrn-ui-radius-sm:6px;
+  --hlrn-ui-gap:16px;
+  --hlrn-ui-section-gap:56px;
+  --hlrn-ui-control-h:40px;
+  --hlrn-ui-focus:0 0 0 3px rgba(227,24,55,.22);
+}
+
+html[data-hlrn-theme="light"]{
+  --hlrn-ui-bg:#f6f7f9;
+  --hlrn-ui-surface:#ffffff;
+  --hlrn-ui-surface-2:#f1f3f6;
+  --hlrn-ui-border:#d7dde4;
+  --hlrn-ui-border-strong:#c7cfd8;
+  --hlrn-ui-text:#11161c;
+  --hlrn-ui-muted:#66717d;
+  --hlrn-ui-shadow:0 8px 24px rgba(17,22,28,.06);
+}
+
+html[data-hlrn-theme="dark"]{
+  --hlrn-ui-bg:#07090d;
+  --hlrn-ui-surface:#0d1117;
+  --hlrn-ui-surface-2:#121820;
+  --hlrn-ui-border:#29313b;
+  --hlrn-ui-border-strong:#384451;
+  --hlrn-ui-text:#f5f7f9;
+  --hlrn-ui-muted:#9ba6b2;
+  --hlrn-ui-shadow:0 12px 30px rgba(0,0,0,.22);
+}
+
+/* Consistent page canvas without disturbing intentional photo/video heroes. */
+html[data-hlrn-route] body{
+  background-color:var(--hlrn-ui-bg)!important;
+  color:var(--hlrn-ui-text)!important;
+  transition:background-color .16s ease,color .16s ease;
+}
+
+/* Standard card/panel language used throughout HLRN. */
+html[data-hlrn-route] body :where(
+  .status-box,.metric,.panel,.flag-box,.tracker-card,.race-pulse-stat,.rc-front-battle,
+  .driver-command,.driver-metric,.driver-card,.profile-stat,.profile-insight,.history-wrap,.roster-tools,
+  .race-card,.info-box,.time-box,.sponsor-box,.race-preview-launch,.race-report-view,
+  .nr-desk-card,.nr-side-story,.nr-recap-feature,.nr-shortcuts,.nr-feed,
+  .intel-card,.category-deep,.deep-box,.detail-wrap,.detail-box,.stat,
+  .tc-summary,.tc-leader-card,.tc-stat-card,.tc-section,.tc-team-card,.tc-compare,
+  .bc-network-card,.bc-player-card,.bc-sidecard,.bc-section,.bc-replay-card,.bc-person,.bc-flow-card,
+  .quick-card,.notice,.rc-rule-tools,.tab-content,.section-body,.rule,.penalty,.escalation,
+  .hlrn-shop-cat,.product,.product-info,
+  .team-summary,.team-tools,.team-closing,.closing-panel,.member-card,
+  .series-intro,.episode-tile,.about-show,
+  .pv-race-card,.pv-fact,.pv-section,.pv-card,.pv-panel,.pv-history-item
+){
+  border-radius:var(--hlrn-ui-radius)!important;
+  border-color:var(--hlrn-ui-border)!important;
+  box-shadow:var(--hlrn-ui-shadow)!important;
+}
+
+/* Flat utility rows should use the same border rhythm but not floating shadows. */
+html[data-hlrn-route] body :where(
+  .metric-strip,.session-flow,.live-ticker-bar,.tabs,.toolbar,
+  .tc-tabs,.bc-tabs,.bc-filterbar,.filter-row,.rules-jump-nav,
+  .hlrn-shop-nav,.hlrn-shop-utility,.hlrn-shop-mainbar
+){
+  border-color:var(--hlrn-ui-border)!important;
+  box-shadow:none!important;
+}
+
+/* Day Race: one clear paper/surface system. */
+html[data-hlrn-theme="light"][data-hlrn-route] body :where(
+  .status-box,.metric,.panel,.flag-box,.tracker-card,.race-pulse-stat,.rc-front-battle,
+  .driver-command,.driver-metric,.driver-card,.driver-info,.profile-stat,.profile-insight,.history-wrap,.roster-tools,
+  .race-card,.info-box,.time-box,.sponsor-box,.race-preview-launch,.race-report-view,
+  .nr-desk-card,.nr-side-story,.nr-recap-feature,.nr-shortcuts,.nr-feed,
+  .intel-card,.category-deep,.deep-box,.detail-wrap,.detail-box,.stat,
+  .tc-summary,.tc-leader-card,.tc-stat-card,.tc-section,.tc-team-card,.tc-compare,
+  .bc-network-card,.bc-player-card,.bc-sidecard,.bc-section,.bc-replay-card,.bc-person,.bc-flow-card,
+  .quick-card,.notice,.rc-rule-tools,.tab-content,.section-body,.rule,.penalty,.escalation,
+  .hlrn-shop-cat,.product,.product-info,
+  .team-summary,.team-tools,.team-closing,.closing-panel,.member-card,
+  .series-intro,.episode-tile,.about-show,
+  .pv-race-card,.pv-fact,.pv-section,.pv-card,.pv-panel,.pv-history-item
+){
+  background-color:var(--hlrn-ui-surface)!important;
+  color:var(--hlrn-ui-text)!important;
+}
+
+/* Night Race: consistent charcoal instead of unrelated blacks/grays. */
+html[data-hlrn-theme="dark"][data-hlrn-route] body :where(
+  .status-box,.metric,.panel,.flag-box,.tracker-card,.race-pulse-stat,.rc-front-battle,
+  .driver-command,.driver-metric,.driver-card,.driver-info,.profile-stat,.profile-insight,.history-wrap,.roster-tools,
+  .race-card,.info-box,.time-box,.sponsor-box,.race-preview-launch,.race-report-view,
+  .nr-desk-card,.nr-side-story,.nr-recap-feature,.nr-shortcuts,.nr-feed,
+  .intel-card,.category-deep,.deep-box,.detail-wrap,.detail-box,.stat,
+  .tc-summary,.tc-leader-card,.tc-stat-card,.tc-section,.tc-team-card,.tc-compare,
+  .bc-network-card,.bc-player-card,.bc-sidecard,.bc-section,.bc-replay-card,.bc-person,.bc-flow-card,
+  .quick-card,.notice,.rc-rule-tools,.tab-content,.section-body,.rule,.penalty,.escalation,
+  .hlrn-shop-cat,.product,.product-info,
+  .team-summary,.team-tools,.team-closing,.closing-panel,.member-card,
+  .series-intro,.episode-tile,.about-show,
+  .pv-race-card,.pv-fact,.pv-section,.pv-card,.pv-panel,.pv-history-item
+){
+  background-color:var(--hlrn-ui-surface)!important;
+  color:var(--hlrn-ui-text)!important;
+}
+
+/* Reusable section-heading hierarchy. */
+html[data-hlrn-route] body :where(
+  .section-title,.section-heading,.section-top,
+  .tc-section-head,.bc-section-head,.nr-section-head,
+  .story-head,.history-head,.panel-head,.team-section-head,
+  .next-events-heading,.profile-section-heading
+){
+  border-color:var(--hlrn-ui-border)!important;
+}
+
+html[data-hlrn-theme="light"][data-hlrn-route] body :where(
+  .section-title,.section-heading,.section-top,
+  .tc-section-head,.bc-section-head,.nr-section-head,
+  .story-title,.history-head,.panel-title,.team-section-head,
+  .next-events-heading,.profile-section-heading
+){
+  color:var(--hlrn-ui-text)!important;
+  -webkit-text-fill-color:var(--hlrn-ui-text)!important;
+  text-shadow:none!important;
+}
+
+html[data-hlrn-theme="dark"][data-hlrn-route] body :where(
+  .section-title,.section-heading,.section-top,
+  .tc-section-head,.bc-section-head,.nr-section-head,
+  .story-title,.history-head,.panel-title,.team-section-head,
+  .next-events-heading,.profile-section-heading
+){
+  color:var(--hlrn-ui-text)!important;
+  -webkit-text-fill-color:var(--hlrn-ui-text)!important;
+}
+
+/* Secondary copy uses one muted tone. */
+html[data-hlrn-theme="light"][data-hlrn-route] body :where(
+  .driver-sub,.card-reason,.detail-category,.deep-summary,.story-sub,.story-copy p,
+  .race-summary,.track-description,.tc-summary-main p,.tc-leader-meta,
+  .bc-player-meta,.bc-side-bottom,.nr-sub,.nr-lead-meta,.summary-sub,
+  .hero-meta,.profile-label,.profile-insight p
+){
+  color:var(--hlrn-ui-muted)!important;
+  -webkit-text-fill-color:var(--hlrn-ui-muted)!important;
+}
+
+html[data-hlrn-theme="dark"][data-hlrn-route] body :where(
+  .driver-sub,.card-reason,.detail-category,.deep-summary,.story-sub,.story-copy p,
+  .race-summary,.track-description,.tc-summary-main p,.tc-leader-meta,
+  .bc-player-meta,.bc-side-bottom,.nr-sub,.nr-lead-meta,.summary-sub,
+  .hero-meta,.profile-label,.profile-insight p
+){
+  color:var(--hlrn-ui-muted)!important;
+  -webkit-text-fill-color:var(--hlrn-ui-muted)!important;
+}
+
+/* Buttons/tabs/filters should feel like one control family. */
+html[data-hlrn-route] body :where(
+  .league-tab,.league-btn,.tc-tab,.bc-tab,.bc-filter,.filter-btn,
+  .rules-jump-btn,.tab,.refresh,.report-back,.profile-back,.tc-back,
+  .bc-btn,.btn,.shop-button,.profile-btn,.image-btn,.mini-action
+){
+  min-height:var(--hlrn-ui-control-h)!important;
+  border-radius:var(--hlrn-ui-radius-sm)!important;
+  border-color:var(--hlrn-ui-border-strong)!important;
+  font-weight:900!important;
+  letter-spacing:.035em!important;
+  transition:background-color .14s ease,border-color .14s ease,color .14s ease,transform .14s ease!important;
+}
+
+html[data-hlrn-route] body :where(
+  .league-tab,.league-btn,.tc-tab,.bc-tab,.bc-filter,.filter-btn,
+  .rules-jump-btn,.tab,.refresh,.report-back,.profile-back,.tc-back,
+  .bc-btn,.btn,.shop-button,.profile-btn,.image-btn,.mini-action
+):hover{
+  transform:translateY(-1px);
+}
+
+html[data-hlrn-route] body :where(
+  a,button,input,select,textarea,[role="button"]
+):focus-visible{
+  outline:none!important;
+  box-shadow:var(--hlrn-ui-focus)!important;
+}
+
+/* Sunday = HLRN red, Monday = green everywhere the league is selectable. */
+html[data-hlrn-route] body :where(
+  .league-tab.sunday.active,.tc-tab.sunday.active,.bc-tab.sunday.active,
+  .league-btn[data-league="sunday"].active,.nr-desk-grid .sunday
+){
+  --hlrn-series-accent:#e31837;
+}
+html[data-hlrn-route] body :where(
+  .league-tab.monday.active,.tc-tab.monday.active,.bc-tab.monday.active,
+  .league-btn[data-league="monday"].active,.nr-desk-grid .monday
+){
+  --hlrn-series-accent:#23894c;
+}
+
+html[data-hlrn-route] body :where(
+  .league-tab.sunday.active,.tc-tab.sunday.active,.bc-tab.sunday.active,
+  .league-btn[data-league="sunday"].active
+){
+  background:#e31837!important;
+  border-color:#e31837!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+html[data-hlrn-route] body :where(
+  .league-tab.monday.active,.tc-tab.monday.active,.bc-tab.monday.active,
+  .league-btn[data-league="monday"].active
+){
+  background:#23894c!important;
+  border-color:#23894c!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Tables: shared scan rhythm without changing page-specific sticky behavior. */
+html[data-hlrn-route] body table{
+  border-color:var(--hlrn-ui-border)!important;
+}
+html[data-hlrn-theme="light"][data-hlrn-route] body table thead th{
+  background:#eef1f4!important;
+  color:#252c34!important;
+  border-color:var(--hlrn-ui-border)!important;
+}
+html[data-hlrn-theme="dark"][data-hlrn-route] body table thead th{
+  background:#151b23!important;
+  color:#f5f7f9!important;
+  border-color:var(--hlrn-ui-border)!important;
+}
+html[data-hlrn-route] body table tbody td{
+  border-color:var(--hlrn-ui-border)!important;
+}
+
+/* Form fields and search controls. */
+html[data-hlrn-route] body :where(input[type="search"],input[type="text"],select,textarea){
+  min-height:40px!important;
+  border-radius:var(--hlrn-ui-radius-sm)!important;
+  border:1px solid var(--hlrn-ui-border-strong)!important;
+}
+html[data-hlrn-theme="light"][data-hlrn-route] body :where(input[type="search"],input[type="text"],select,textarea){
+  background:#fff!important;
+  color:#11161c!important;
+}
+html[data-hlrn-theme="dark"][data-hlrn-route] body :where(input[type="search"],input[type="text"],select,textarea){
+  background:#0b1016!important;
+  color:#f5f7f9!important;
+}
+
+/* Keep intentional hero/media overlays untouched while aligning their frames. */
+html[data-hlrn-route] body :where(
+  .driver-heading,.nr-mast,.bc-mast,.tc-mast,.team-hero,
+  .hlrn-shop-hero,.event-shell,.hero
+){
+  border-color:var(--hlrn-ui-border)!important;
+}
+
+/* Page-bottom spacing should feel consistent instead of abruptly ending. */
+html[data-hlrn-route] body :where(
+  .footer,.bc-footer,.tc-footer,.nr-footer-note,.foot,
+  #hlrn-global-footer
+){
+  margin-top:32px;
+}
+
+/* Mobile consistency: cards become easier to scan and controls easier to tap. */
+@media(max-width:760px){
+  :root{
+    --hlrn-ui-gap:12px;
+    --hlrn-ui-section-gap:40px;
+    --hlrn-ui-control-h:44px;
+  }
+
+  html[data-hlrn-route] body :where(
+    .status-box,.metric,.panel,.flag-box,.tracker-card,.race-pulse-stat,
+    .driver-command,.driver-metric,.driver-card,.profile-stat,.profile-insight,
+    .race-card,.info-box,.time-box,
+    .nr-desk-card,.nr-side-story,.nr-recap-feature,.nr-shortcuts,
+    .intel-card,.category-deep,.deep-box,.detail-wrap,.detail-box,.stat,
+    .tc-summary,.tc-leader-card,.tc-stat-card,.tc-section,.tc-team-card,.tc-compare,
+    .bc-network-card,.bc-player-card,.bc-sidecard,.bc-section,.bc-replay-card,.bc-person,
+    .quick-card,.notice,.tab-content,.section-body,.rule,.penalty,
+    .product,.member-card,.episode-tile,.pv-race-card,.pv-card
+  ){
+    border-radius:7px!important;
+  }
+
+  html[data-hlrn-route] body :where(
+    .league-tab,.league-btn,.tc-tab,.bc-tab,.bc-filter,.filter-btn,
+    .rules-jump-btn,.tab,.refresh,.report-back,.profile-back,.tc-back,
+    .bc-btn,.btn,.shop-button,.profile-btn,.image-btn,.mini-action
+  ){
+    min-height:44px!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  html[data-hlrn-route] body,
+  html[data-hlrn-route] body :where(a,button,[role="button"]){
+    transition:none!important;
+  }
+}
