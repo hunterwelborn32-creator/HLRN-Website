@@ -287,7 +287,7 @@ input,select,button{color:#111!important}
 iframe{background:#fff!important;color-scheme:light!important}
 </style>
 <link rel="stylesheet" href="../assets/standings/nascar-standings-v1.css?v=20260930n1">
-<script data-hlrn-driver-system src="../assets/driver-system.js?v=20260930v7"></script>
+<script data-hlrn-driver-system src="../assets/driver-system.js?v=20261007v8"></script>
 <script>
 function hlrnHostedDarkModeActive(){
   try{
@@ -1031,12 +1031,20 @@ async function linkHostedDriverNames(key){
         const inRankings=!!node.parentElement?.closest?.("#rankingsResults");
         if(inRankings){
           a.className="hlrn-hosted-driver-photo-link";
-          const src=system.photoUrl?system.photoUrl(rec,"cutout"):"";
+          const rating=rec?.iRating??rec?.irating;
+          const src=system.displayPhotoUrl
+            ?system.displayPhotoUrl(rec,rating,"cutout")
+            :(system.photoUrl?system.photoUrl(rec,"cutout"):"");
           if(src){
             const img=doc.createElement("img");
             img.src=src;img.alt="";img.loading="lazy";img.decoding="async";
             img.className="hlrn-hosted-driver-photo";
-            img.onerror=()=>img.remove();
+            img.dataset.hlrnIRating=String(rating??"");
+            img.onerror=()=>{
+              const fallback=system.iRatingFallbackPhoto?system.iRatingFallbackPhoto(rating):"";
+              if(fallback&&img.src!==fallback){img.onerror=null;img.src=fallback}
+              else img.remove();
+            };
             a.appendChild(img);
           }
           const span=doc.createElement("span");
@@ -2787,6 +2795,6 @@ input,select,button,textarea{background:#000!important;color:#fff!important;bord
   sync();
 })();
 </script>
-<script src="../assets/site-shell.js?v=20261001control1standings1"></script>
+<script src="../assets/site-shell.js?v=20261007visual1"></script>
 </body>
 </html>
