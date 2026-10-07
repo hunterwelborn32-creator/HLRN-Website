@@ -9,12 +9,13 @@
   "use strict";
   if(global.HLRNDrivers && global.HLRNDrivers.version) return;
 
-  const VERSION="20261007v8";
+  const VERSION="20261007v10";
   const script=document.currentScript;
   let root;
   try{ root=new URL("../",script&&script.src?script.src:location.href); }
   catch(_){ root=new URL("/",location.origin); }
   const manifestUrl=new URL("data/driver-pages.json?v="+VERSION,root).href;
+  const dataUrl=new URL("data/hlrn.json?v="+VERSION,root).href;
   const PHOTO_BASE=new URL("assets/driver-photos/",root).href;
   const FALLBACK_PHOTO_BASE=new URL("assets/driver-photos/fallback/",root).href;
   const absolute=(path)=>new URL(String(path||"").replace(/^\//,""),root).href;
@@ -30,6 +31,8 @@
   let nameRegex=null;
   let observer=null;
   let scanQueued=false;
+  let ratingByName=new Map();
+  let ratingById=new Map();
 
   function style(){
     if(document.getElementById("hlrn-driver-system-style")) return;
@@ -90,34 +93,108 @@
     return rec?rec.url:null;
   }
 
+  function positiveRating(value){
+    const parsed=Number(value);
+    return Number.isFinite(parsed)&&parsed>0?Math.round(parsed):0;
+  }
+
+  function rememberRating(name,id,value,stamp=0,race=0){
+    const rating=positiveRating(value);
+    if(!rating)return;
+    const meta={rating,stamp:Number(stamp)||0,race:Number(race)||0};
+    const nameKey=normalize(name);
+    if(nameKey){
+      const prev=ratingByName.get(nameKey);
+      if(!prev||meta.stamp>prev.stamp||(meta.stamp===prev.stamp&&meta.race>=prev.race)){
+        ratingByName.set(nameKey,meta);
+      }
+    }
+    const idKey=String(id||"").trim();
+    if(idKey){
+      const prev=ratingById.get(idKey);
+      if(!prev||meta.stamp>prev.stamp||(meta.stamp===prev.stamp&&meta.race>=prev.race)){
+        ratingById.set(idKey,meta);
+      }
+    }
+  }
+
+  function ingestRatings(snapshot){
+    ratingByName=new Map();
+    ratingById=new Map();
+
+    records.forEach(rec=>{
+      const r=positiveRating(rec?.iRating??rec?.irating);
+      if(r)rememberRating(rec.rawName||rec.name,Object.values(rec.ids||{})[0]||"",r,0,0);
+    });
+
+    for(const series of ["sunday","monday"]){
+      const rows=snapshot?.leagues?.[series]?.results||[];
+      rows.forEach((row,index)=>{
+        const stamp=Date.parse(row?.date||"")||0;
+        rememberRating(row?.driver,row?.driverId,row?.iRating??row?.irating??row?.i_rating,stamp,Number(row?.raceNumber)||index);
+      });
+    }
+
+    const hosted=snapshot?.hosted||{};
+    Object.values(hosted?.driverRatings||{}).forEach(item=>{
+      rememberRating(item?.driver,"",item?.iRating??item?.irating,Date.parse(item?.date||"")||0,0);
+    });
+    const hostedStamp=Date.parse(hosted?.latest?.date||"")||0;
+    (hosted?.latest?.results||[]).forEach((row,index)=>{
+      rememberRating(row?.driver,row?.driverId,row?.iRating??row?.irating??row?.i_rating,hostedStamp,index);
+    });
+  }
+
+  function verifiedIRating(value,explicit){
+    const direct=positiveRating(explicit);
+    if(direct)return direct;
+    const rec=resolve(value);
+    const id=value&&typeof value==="object"
+      ?(value.driverId||value.iracingId||value.id)
+      :null;
+    if(id!=null){
+      const hit=ratingById.get(String(id));
+      if(hit?.rating)return hit.rating;
+    }
+    const recIds=rec?Object.values(rec.ids||{}):[];
+    for(const rid of recIds){
+      const hit=ratingById.get(String(rid||""));
+      if(hit?.rating)return hit.rating;
+    }
+    const names=[];
+    if(rec)names.push(rec.rawName,rec.displayName,rec.name,...(rec.aliases||[]));
+    if(value&&typeof value==="object")names.push(value.driver,value.name,value.driverName);
+    else names.push(value);
+    for(const name of names){
+      const hit=ratingByName.get(normalize(name));
+      if(hit?.rating)return hit.rating;
+    }
+    return positiveRating(rec?.iRating??rec?.irating);
+  }
+
   function iRatingFallbackPhoto(iRating){
-    const parsed=Number(iRating);
-    const rating=Number.isFinite(parsed)&&parsed>=0?parsed:0;
+    const rating=positiveRating(iRating);
+    if(!rating)return "";
     if(rating>=2000) return FALLBACK_PHOTO_BASE+"red.webp";
     if(rating>=1500) return FALLBACK_PHOTO_BASE+"blue.webp";
     if(rating>=1000) return FALLBACK_PHOTO_BASE+"green.webp";
     return FALLBACK_PHOTO_BASE+"yellow.webp";
   }
 
-  function photoUrl(value,type="cutout"){
+  function realPhotoUrl(value,type="cutout"){
     const rec=resolve(value);
     const slug=String(rec?.photoSlug||"").trim();
-    if(slug && rec?.hasPhoto!==false){
-      const folder=String(type||"cutout").toLowerCase()==="full"?"full":"cutout";
-      return PHOTO_BASE+folder+"/"+encodeURIComponent(slug)+".webp";
-    }
-    if(rec) return iRatingFallbackPhoto(rec.iRating??rec.irating);
-    return "";
+    if(!slug||rec?.hasPhoto===false)return "";
+    const folder=String(type||"cutout").toLowerCase()==="full"?"full":"cutout";
+    return PHOTO_BASE+folder+"/"+encodeURIComponent(slug)+".webp";
+  }
+
+  function photoUrl(value,type="cutout"){
+    return realPhotoUrl(value,type)||iRatingFallbackPhoto(verifiedIRating(value));
   }
 
   function displayPhotoUrl(value,iRating,type="cutout"){
-    const rec=resolve(value);
-    const real=rec&&String(rec.photoSlug||"").trim()&&rec.hasPhoto!==false
-      ? photoUrl(rec,type)
-      : "";
-    if(real) return real;
-    const rating=iRating??rec?.iRating??rec?.irating;
-    return iRatingFallbackPhoto(rating);
+    return realPhotoUrl(value,type)||iRatingFallbackPhoto(verifiedIRating(value,iRating));
   }
 
   function buildRegex(){
@@ -219,9 +296,136 @@
     node.parentNode.replaceChild(frag,node);
   }
 
+  function driverRecordForImage(img){
+    if(!img)return null;
+
+    const directName=img.dataset?.hlrnDriverName||img.dataset?.driverName||"";
+    if(directName){
+      const hit=resolve(directName);
+      if(hit)return hit;
+    }
+
+    const namedHost=img.closest?.("[data-hlrn-driver-name]");
+    if(namedHost){
+      let value=String(namedHost.dataset.hlrnDriverName||"");
+      try{value=decodeURIComponent(value)}catch(_){}
+      const hit=resolve(value);
+      if(hit)return hit;
+    }
+
+    const link=img.closest?.("a[href]");
+    if(link){
+      try{
+        const u=new URL(link.getAttribute("href"),location.href);
+        const m=u.pathname.match(/\/drivers\/([^/]+)\/?(?:index\.html)?$/i);
+        if(m){
+          const hit=bySlug.get(decodeURIComponent(m[1]).toLowerCase());
+          if(hit)return hit;
+        }
+      }catch(_){}
+    }
+
+    const src=String(img.currentSrc||img.getAttribute("src")||"");
+    const photoMatch=src.match(/\/driver-photos\/(?:cutout|full)\/([^/?#]+)\.webp/i);
+    if(photoMatch){
+      const slug=decodeURIComponent(photoMatch[1]).toLowerCase();
+      const hit=bySlug.get(slug)||resolve(slug.replace(/-/g," "));
+      if(hit)return hit;
+    }
+
+    const alt=String(img.getAttribute("alt")||"").trim();
+    if(alt){
+      const hit=resolve(alt);
+      if(hit)return hit;
+    }
+
+    const host=img.closest?.(".driver-card,.driver-profile,.profile-card,.story-card,.winner-card,.driver-row,.driver-stat,.fighter,.leader-card,.member-card,.profile-hero,.hero");
+    if(host){
+      const candidates=[
+        host.querySelector?.("[data-hlrn-driver-name]"),
+        host.querySelector?.(".driver-name"),
+        host.querySelector?.(".profile-name"),
+        host.querySelector?.(".winner-name"),
+        host.querySelector?.("h1"),
+        host.querySelector?.("h2"),
+        host.querySelector?.("h3"),
+        host.querySelector?.("strong")
+      ].filter(Boolean);
+      for(const node of candidates){
+        let value=String(node.dataset?.hlrnDriverName||node.textContent||"").trim();
+        try{value=decodeURIComponent(value)}catch(_){}
+        const hit=resolve(value);
+        if(hit)return hit;
+      }
+    }
+    return null;
+  }
+
+  function isDriverImage(img){
+    if(!img||img.tagName!=="IMG")return false;
+    const src=String(img.currentSrc||img.getAttribute("src")||"");
+    const cls=String(img.className||"");
+    if(/\/driver-photos\/(?:cutout|full)\//i.test(src))return true;
+    if(/(?:^|[\s_-])(driver|cutout|profile|winner)(?:[\s_-]|$)/i.test(cls)&&driverRecordForImage(img))return true;
+    return false;
+  }
+
+  function applyFallbackToImage(img,rec){
+    if(!img||img.dataset.hlrnTierFallback==="1")return false;
+    rec=rec||driverRecordForImage(img);
+    if(!rec)return false;
+    const rating=verifiedIRating(rec);
+    const fallback=iRatingFallbackPhoto(rating);
+    if(!fallback)return false;
+
+    img.dataset.hlrnTierFallback="1";
+    img.dataset.hlrnIRating=String(rating);
+    img.dataset.hlrnTier=rating>=2000?"red":rating>=1500?"blue":rating>=1000?"green":"yellow";
+    img.removeAttribute("onerror");
+    try{img.onerror=null}catch(_){}
+    img.src=fallback;
+    return true;
+  }
+
+  function protectDriverImage(img){
+    if(!isDriverImage(img))return;
+    const rec=driverRecordForImage(img);
+    if(!rec)return;
+
+    const hasReal=!!(String(rec.photoSlug||"").trim()&&rec.hasPhoto!==false);
+    if(!hasReal){
+      applyFallbackToImage(img,rec);
+      return;
+    }
+
+    if(img.complete&&img.naturalWidth===0)applyFallbackToImage(img,rec);
+  }
+
+  function protectDriverImages(scope){
+    const base=scope?.nodeType===1||scope?.nodeType===9?scope:document;
+    if(base?.tagName==="IMG")protectDriverImage(base);
+    base?.querySelectorAll?.("img").forEach(protectDriverImage);
+  }
+
+  function installDriverImageErrorGuard(){
+    if(document.documentElement.dataset.hlrnDriverImageGuard==="1")return;
+    document.documentElement.dataset.hlrnDriverImageGuard="1";
+    document.addEventListener("error",event=>{
+      const img=event.target;
+      if(!(img instanceof HTMLImageElement)||!isDriverImage(img))return;
+      const rec=driverRecordForImage(img);
+      if(!rec)return;
+      if(applyFallbackToImage(img,rec)){
+        event.preventDefault();
+        event.stopImmediatePropagation();
+      }
+    },true);
+  }
+
   function scan(scope){
     if(!scope||!nameRegex) return;
     rewriteLegacyAnchors(scope.nodeType===1||scope.nodeType===9?scope:document);
+    protectDriverImages(scope);
     const target=scope.nodeType===3?scope.parentElement:scope;
     if(!target) return;
     const walker=document.createTreeWalker(target,NodeFilter.SHOW_TEXT,{
@@ -437,14 +641,22 @@
     if(readyPromise) return readyPromise;
     readyPromise=(async()=>{
       style();
-      const response=await fetch(manifestUrl,{cache:"no-store"});
-      if(!response.ok) throw new Error("Driver directory HTTP "+response.status);
-      const data=await response.json();
+      const [manifestResponse,snapshotResponse]=await Promise.all([
+        fetch(manifestUrl,{cache:"no-store"}),
+        fetch(dataUrl,{cache:"no-store"}).catch(()=>null)
+      ]);
+      if(!manifestResponse.ok) throw new Error("Driver directory HTTP "+manifestResponse.status);
+      const data=await manifestResponse.json();
       records=[];byName=new Map();byId=new Map();bySlug=new Map();
       (data.drivers||[]).forEach(register);
+      let snapshot=null;
+      try{if(snapshotResponse?.ok)snapshot=await snapshotResponse.json()}catch(_){}
+      ingestRatings(snapshot||{});
       buildRegex();
+      installDriverImageErrorGuard();
       rewriteLegacyAnchors(document);
       scan(document.body);
+      protectDriverImages(document);
       enhanceProfile();
       installObserver();
       return records;
@@ -460,6 +672,7 @@
     photoUrl,
     displayPhotoUrl,
     iRatingFallbackPhoto,
+    verifiedIRating,
     go(value){const u=profileUrl(value);if(u)location.href=u;return !!u;},
     scan,
     getAll(){return records.slice();}
