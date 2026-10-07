@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-06T20:16:54Z",
+  "generatedAt": "2026-10-07T18:57:24Z",
   "count": 86,
   "drivers": [
     {
@@ -8,7 +8,9 @@
       "slug": "aaron-treubig",
       "url": "/drivers/aaron-treubig/",
       "number": "18",
-      "photoSlug": "aaron-treubig",
+      "photoSlug": "",
+      "hasPhoto": false,
+      "iRating": 1797,
       "series": [
         "sunday"
       ],
@@ -26,6 +28,8 @@
       "url": "/drivers/alex-leebaw/",
       "number": "23",
       "photoSlug": "alex-leebaw",
+      "hasPhoto": true,
+      "iRating": 3054,
       "series": [
         "monday"
       ],
@@ -43,6 +47,8 @@
       "url": "/drivers/benjamin-richards/",
       "number": "56",
       "photoSlug": "benjamin-richards",
+      "hasPhoto": true,
+      "iRating": 2073,
       "series": [
         "monday",
         "sunday"
@@ -63,6 +69,8 @@
       "url": "/drivers/bill-daniels/",
       "number": "91",
       "photoSlug": "bill-daniels",
+      "hasPhoto": true,
+      "iRating": 3875,
       "series": [
         "monday",
         "sunday"
@@ -83,6 +91,8 @@
       "url": "/drivers/brandon-beyke/",
       "number": "27",
       "photoSlug": "brandon-beyke",
+      "hasPhoto": true,
+      "iRating": 5486,
       "series": [
         "sunday"
       ],
@@ -100,6 +110,8 @@
       "url": "/drivers/brandon-showers/",
       "number": "27",
       "photoSlug": "brandon-showers",
+      "hasPhoto": true,
+      "iRating": 3366,
       "series": [
         "sunday"
       ],
@@ -117,6 +129,8 @@
       "url": "/drivers/brian-hayes4/",
       "number": "47",
       "photoSlug": "brian-hayes",
+      "hasPhoto": true,
+      "iRating": 1640,
       "series": [
         "monday",
         "sunday"
@@ -137,6 +151,8 @@
       "url": "/drivers/brian-hebbard2/",
       "number": "87",
       "photoSlug": "brian-hebbard",
+      "hasPhoto": true,
+      "iRating": 1652,
       "series": [
         "monday",
         "sunday"
@@ -157,6 +173,8 @@
       "url": "/drivers/brian-hennings/",
       "number": "74",
       "photoSlug": "brian-hennings",
+      "hasPhoto": true,
+      "iRating": 3950,
       "series": [
         "sunday"
       ],
@@ -174,6 +192,8 @@
       "url": "/drivers/brock-piper/",
       "number": "51",
       "photoSlug": "brock-piper",
+      "hasPhoto": true,
+      "iRating": 1748,
       "series": [
         "sunday"
       ],
@@ -191,6 +211,8 @@
       "url": "/drivers/bryce-hinton2/",
       "number": "28",
       "photoSlug": "bryce-hinton",
+      "hasPhoto": true,
+      "iRating": 2827,
       "series": [
         "monday",
         "sunday"
@@ -211,6 +233,8 @@
       "url": "/drivers/carson-freeman/",
       "number": "4",
       "photoSlug": "carson-freeman",
+      "hasPhoto": true,
+      "iRating": 3588,
       "series": [
         "monday"
       ],
@@ -228,6 +252,8 @@
       "url": "/drivers/charles-fletcher/",
       "number": "67",
       "photoSlug": "charles-fletcher",
+      "hasPhoto": true,
+      "iRating": 2342,
       "series": [
         "sunday"
       ],
@@ -245,6 +271,8 @@
       "url": "/drivers/chris-james/",
       "number": "82",
       "photoSlug": "chris-james",
+      "hasPhoto": true,
+      "iRating": 5124,
       "series": [
         "hosted",
         "monday",
@@ -268,6 +296,8 @@
       "url": "/drivers/cori-cooke/",
       "number": "61",
       "photoSlug": "cori-cooke",
+      "hasPhoto": true,
+      "iRating": 3814,
       "series": [
         "sunday"
       ],
@@ -285,6 +315,8 @@
       "url": "/drivers/craig-rowe/",
       "number": "24",
       "photoSlug": "craig-rowe",
+      "hasPhoto": true,
+      "iRating": 2778,
       "series": [
         "hosted",
         "sunday"
@@ -305,6 +337,8 @@
       "url": "/drivers/darrel-ceballos/",
       "number": "9",
       "photoSlug": "darrel-ceballos",
+      "hasPhoto": true,
+      "iRating": 2012,
       "series": [
         "sunday"
       ],
@@ -321,7 +355,9 @@
       "slug": "david-durand-jr",
       "url": "/drivers/david-durand-jr/",
       "number": "—",
-      "photoSlug": "david-durand-jr",
+      "photoSlug": "",
+      "hasPhoto": false,
+      "iRating": 4363,
       "series": [
         "monday"
       ],
@@ -339,6 +375,8 @@
       "url": "/drivers/derek-jacobs/",
       "number": "44",
       "photoSlug": "derek-jacobs",
+      "hasPhoto": true,
+      "iRating": 2365,
       "series": [
         "monday"
       ],
@@ -356,6 +394,8 @@
       "url": "/drivers/donny-beach/",
       "number": "11",
       "photoSlug": "donny-beach",
+      "hasPhoto": true,
+      "iRating": 2230,
       "series": [
         "monday",
         "sunday"
@@ -376,6 +416,8 @@
       "url": "/drivers/dylan-jones/",
       "number": "56",
       "photoSlug": "dylan-jones",
+      "hasPhoto": true,
+      "iRating": 4688,
       "series": [
         "sunday"
       ],
@@ -393,6 +435,8 @@
       "url": "/drivers/easton-collins/",
       "number": "63",
       "photoSlug": "easton-collins",
+      "hasPhoto": true,
+      "iRating": 1183,
       "series": [
         "sunday"
       ],
@@ -410,6 +454,8 @@
       "url": "/drivers/eric-hayden/",
       "number": "100",
       "photoSlug": "eric-hayden",
+      "hasPhoto": true,
+      "iRating": 2050,
       "series": [
         "hosted",
         "monday",
@@ -433,6 +479,8 @@
       "url": "/drivers/ethan-eckert/",
       "number": "012",
       "photoSlug": "ethan-eckert",
+      "hasPhoto": true,
+      "iRating": 5289,
       "series": [
         "monday",
         "sunday"
@@ -453,6 +501,8 @@
       "url": "/drivers/ethan-moreno/",
       "number": "88",
       "photoSlug": "ethan-moreno",
+      "hasPhoto": true,
+      "iRating": 4173,
       "series": [
         "hosted",
         "sunday"
@@ -475,6 +525,8 @@
       "url": "/drivers/evan-fuqua/",
       "number": "76",
       "photoSlug": "evan-fuqua",
+      "hasPhoto": true,
+      "iRating": 1329,
       "series": [
         "monday",
         "sunday"
@@ -495,6 +547,8 @@
       "url": "/drivers/evan-karlbon/",
       "number": "58",
       "photoSlug": "evan-karlbon",
+      "hasPhoto": true,
+      "iRating": 4230,
       "series": [
         "monday"
       ],
@@ -512,6 +566,8 @@
       "url": "/drivers/evan-parry/",
       "number": "72",
       "photoSlug": "evan-parry",
+      "hasPhoto": true,
+      "iRating": 2644,
       "series": [
         "monday",
         "sunday"
@@ -532,6 +588,8 @@
       "url": "/drivers/gerry-bergeron/",
       "number": "1",
       "photoSlug": "gerry-bergeron",
+      "hasPhoto": true,
+      "iRating": 2578,
       "series": [
         "hosted",
         "monday",
@@ -555,6 +613,8 @@
       "url": "/drivers/grant-wessley2/",
       "number": "888",
       "photoSlug": "grant-wessley",
+      "hasPhoto": true,
+      "iRating": 4187,
       "series": [
         "sunday"
       ],
@@ -571,7 +631,9 @@
       "slug": "greg-speicher",
       "url": "/drivers/greg-speicher/",
       "number": "65",
-      "photoSlug": "greg-speicher",
+      "photoSlug": "",
+      "hasPhoto": false,
+      "iRating": 1716,
       "series": [
         "sunday"
       ],
@@ -589,6 +651,8 @@
       "url": "/drivers/hunter-welborn/",
       "number": "66",
       "photoSlug": "hunter-welborn",
+      "hasPhoto": true,
+      "iRating": 1453,
       "series": [
         "hosted",
         "monday",
@@ -612,6 +676,8 @@
       "url": "/drivers/james-smith47/",
       "number": "01",
       "photoSlug": "james-smith",
+      "hasPhoto": true,
+      "iRating": 1648,
       "series": [
         "sunday"
       ],
@@ -629,6 +695,8 @@
       "url": "/drivers/jared-philpott/",
       "number": "8",
       "photoSlug": "jared-philpott",
+      "hasPhoto": true,
+      "iRating": 3467,
       "series": [
         "sunday"
       ],
@@ -646,6 +714,8 @@
       "url": "/drivers/jason-branch/",
       "number": "22",
       "photoSlug": "jason-branch",
+      "hasPhoto": true,
+      "iRating": 4131,
       "series": [
         "sunday"
       ],
@@ -663,6 +733,8 @@
       "url": "/drivers/javone-thompson/",
       "number": "93",
       "photoSlug": "javone-thompson",
+      "hasPhoto": true,
+      "iRating": 3611,
       "series": [
         "monday",
         "sunday"
@@ -683,6 +755,8 @@
       "url": "/drivers/jeremy-jeffries/",
       "number": "01",
       "photoSlug": "jeremy-jeffries",
+      "hasPhoto": true,
+      "iRating": 1656,
       "series": [
         "sunday"
       ],
@@ -700,6 +774,8 @@
       "url": "/drivers/jerry-fassett/",
       "number": "71",
       "photoSlug": "jerry-fassett",
+      "hasPhoto": true,
+      "iRating": 1345,
       "series": [
         "hosted",
         "monday"
@@ -720,6 +796,8 @@
       "url": "/drivers/jim-segredo/",
       "number": "21",
       "photoSlug": "jim-segredo",
+      "hasPhoto": true,
+      "iRating": 1272,
       "series": [
         "hosted",
         "sunday"
@@ -740,6 +818,8 @@
       "url": "/drivers/joe-konen/",
       "number": "70",
       "photoSlug": "joe-konen",
+      "hasPhoto": true,
+      "iRating": 1792,
       "series": [
         "monday"
       ],
@@ -756,7 +836,9 @@
       "slug": "joe-wells",
       "url": "/drivers/joe-wells/",
       "number": "—",
-      "photoSlug": "joe-wells",
+      "photoSlug": "",
+      "hasPhoto": false,
+      "iRating": 2055,
       "series": [
         "sunday"
       ],
@@ -774,6 +856,8 @@
       "url": "/drivers/john-miles4/",
       "number": "69",
       "photoSlug": "john-miles",
+      "hasPhoto": true,
+      "iRating": 2115,
       "series": [
         "monday"
       ],
@@ -790,7 +874,9 @@
       "slug": "jordan-whiting",
       "url": "/drivers/jordan-whiting/",
       "number": "88",
-      "photoSlug": "jordan-whiting",
+      "photoSlug": "",
+      "hasPhoto": false,
+      "iRating": 2210,
       "series": [
         "monday"
       ],
@@ -808,6 +894,8 @@
       "url": "/drivers/joshua-mckinney2/",
       "number": "3",
       "photoSlug": "josh-mckinney",
+      "hasPhoto": true,
+      "iRating": 2686,
       "series": [
         "hosted",
         "monday",
@@ -831,6 +919,8 @@
       "url": "/drivers/joshua-spragg/",
       "number": "37",
       "photoSlug": "joshua-spragg",
+      "hasPhoto": true,
+      "iRating": 1969,
       "series": [
         "sunday"
       ],
@@ -847,7 +937,9 @@
       "slug": "jt-huskins",
       "url": "/drivers/jt-huskins/",
       "number": "—",
-      "photoSlug": "jt-huskins",
+      "photoSlug": "",
+      "hasPhoto": false,
+      "iRating": 1442,
       "series": [
         "sunday"
       ],
@@ -865,6 +957,8 @@
       "url": "/drivers/juan-escamilla/",
       "number": "99",
       "photoSlug": "juan-escamilla",
+      "hasPhoto": true,
+      "iRating": 3286,
       "series": [
         "hosted",
         "sunday"
@@ -885,6 +979,8 @@
       "url": "/drivers/justin-crowe/",
       "number": "86",
       "photoSlug": "justin-crowe",
+      "hasPhoto": true,
+      "iRating": 5159,
       "series": [
         "sunday"
       ],
@@ -901,7 +997,9 @@
       "slug": "justin-lee-pearson",
       "url": "/drivers/justin-lee-pearson/",
       "number": "58",
-      "photoSlug": "justin-lee-pearson",
+      "photoSlug": "",
+      "hasPhoto": false,
+      "iRating": 0,
       "series": [
         "hosted"
       ],
@@ -919,6 +1017,8 @@
       "url": "/drivers/keaton-cox/",
       "number": "57",
       "photoSlug": "keaton-cox",
+      "hasPhoto": true,
+      "iRating": 1580,
       "series": [
         "sunday"
       ],
@@ -936,6 +1036,8 @@
       "url": "/drivers/kenny-reel/",
       "number": "20",
       "photoSlug": "kenny-reel",
+      "hasPhoto": true,
+      "iRating": 4869,
       "series": [
         "monday"
       ],
@@ -953,6 +1055,8 @@
       "url": "/drivers/kenwood-ramsey/",
       "number": "54",
       "photoSlug": "kenwood-ramsey",
+      "hasPhoto": true,
+      "iRating": 4131,
       "series": [
         "monday",
         "sunday"
@@ -972,7 +1076,9 @@
       "slug": "knox-thompson",
       "url": "/drivers/knox-thompson/",
       "number": "8",
-      "photoSlug": "knox-thompson",
+      "photoSlug": "",
+      "hasPhoto": false,
+      "iRating": 3256,
       "series": [
         "monday"
       ],
@@ -990,6 +1096,8 @@
       "url": "/drivers/kody-neagles/",
       "number": "16",
       "photoSlug": "kody-neagles",
+      "hasPhoto": true,
+      "iRating": 6307,
       "series": [
         "monday",
         "sunday"
@@ -1010,6 +1118,8 @@
       "url": "/drivers/kyle-kammeron/",
       "number": "55",
       "photoSlug": "kyle-kammeron",
+      "hasPhoto": true,
+      "iRating": 1633,
       "series": [
         "hosted",
         "monday",
@@ -1033,6 +1143,8 @@
       "url": "/drivers/larkin-boyer/",
       "number": "10",
       "photoSlug": "larkin-boyer",
+      "hasPhoto": true,
+      "iRating": 1903,
       "series": [
         "hosted",
         "monday",
@@ -1055,7 +1167,9 @@
       "slug": "larry-fairman2",
       "url": "/drivers/larry-fairman2/",
       "number": "—",
-      "photoSlug": "larry-fairman",
+      "photoSlug": "",
+      "hasPhoto": false,
+      "iRating": 1872,
       "series": [
         "sunday"
       ],
@@ -1073,6 +1187,8 @@
       "url": "/drivers/matthew-brown49/",
       "number": "14",
       "photoSlug": "matthew-brown",
+      "hasPhoto": true,
+      "iRating": 2829,
       "series": [
         "monday",
         "sunday"
@@ -1093,6 +1209,8 @@
       "url": "/drivers/matthew-graham20/",
       "number": "2",
       "photoSlug": "matthew-graham",
+      "hasPhoto": true,
+      "iRating": 810,
       "series": [
         "sunday"
       ],
@@ -1109,7 +1227,9 @@
       "slug": "max-dynda",
       "url": "/drivers/max-dynda/",
       "number": "021",
-      "photoSlug": "max-dynda",
+      "photoSlug": "",
+      "hasPhoto": false,
+      "iRating": 4684,
       "series": [
         "monday"
       ],
@@ -1126,7 +1246,9 @@
       "slug": "michael-tokarz",
       "url": "/drivers/michael-tokarz/",
       "number": "10",
-      "photoSlug": "michael-tokarz",
+      "photoSlug": "",
+      "hasPhoto": false,
+      "iRating": 0,
       "series": [
         "hosted"
       ],
@@ -1143,7 +1265,9 @@
       "slug": "nate-blasdell",
       "url": "/drivers/nate-blasdell/",
       "number": "27",
-      "photoSlug": "nate-blasdell",
+      "photoSlug": "",
+      "hasPhoto": false,
+      "iRating": 1052,
       "series": [
         "monday"
       ],
@@ -1161,6 +1285,8 @@
       "url": "/drivers/nicholas-baumann/",
       "number": "97",
       "photoSlug": "nicholas-baumann",
+      "hasPhoto": true,
+      "iRating": 4952,
       "series": [
         "hosted",
         "sunday"
@@ -1181,6 +1307,8 @@
       "url": "/drivers/nicholas-moody/",
       "number": "60",
       "photoSlug": "nicholas-moody",
+      "hasPhoto": true,
+      "iRating": 1231,
       "series": [
         "monday",
         "sunday"
@@ -1200,7 +1328,9 @@
       "slug": "patrick-craven",
       "url": "/drivers/patrick-craven/",
       "number": "20",
-      "photoSlug": "patrick-craven",
+      "photoSlug": "",
+      "hasPhoto": false,
+      "iRating": 1459,
       "series": [
         "sunday"
       ],
@@ -1218,6 +1348,8 @@
       "url": "/drivers/randy-schweitzer/",
       "number": "78",
       "photoSlug": "randy-schweitzer",
+      "hasPhoto": true,
+      "iRating": 1276,
       "series": [
         "sunday"
       ],
@@ -1235,6 +1367,8 @@
       "url": "/drivers/randy-showers/",
       "number": "22",
       "photoSlug": "randy-showers",
+      "hasPhoto": true,
+      "iRating": 2169,
       "series": [
         "sunday"
       ],
@@ -1252,6 +1386,8 @@
       "url": "/drivers/ricky-miles/",
       "number": "05",
       "photoSlug": "ricky-miles",
+      "hasPhoto": true,
+      "iRating": 1331,
       "series": [
         "monday"
       ],
@@ -1269,6 +1405,8 @@
       "url": "/drivers/ross-campoli/",
       "number": "146",
       "photoSlug": "ross-campoli",
+      "hasPhoto": true,
+      "iRating": 1814,
       "series": [
         "sunday"
       ],
@@ -1285,7 +1423,9 @@
       "slug": "rusty-chancey",
       "url": "/drivers/rusty-chancey/",
       "number": "8",
-      "photoSlug": "rusty-chancey",
+      "photoSlug": "",
+      "hasPhoto": false,
+      "iRating": 0,
       "series": [
         "hosted"
       ],
@@ -1303,6 +1443,8 @@
       "url": "/drivers/ryan-wilson21/",
       "number": "23",
       "photoSlug": "ryan-wilson",
+      "hasPhoto": true,
+      "iRating": 1475,
       "series": [
         "hosted",
         "monday",
@@ -1326,6 +1468,8 @@
       "url": "/drivers/scott-wise/",
       "number": "31",
       "photoSlug": "scott-wise",
+      "hasPhoto": true,
+      "iRating": 2288,
       "series": [
         "sunday"
       ],
@@ -1343,6 +1487,8 @@
       "url": "/drivers/sebastian-micheals/",
       "number": "26",
       "photoSlug": "sebastian-michaels",
+      "hasPhoto": true,
+      "iRating": 1466,
       "series": [
         "monday",
         "sunday"
@@ -1363,6 +1509,8 @@
       "url": "/drivers/shane-hatfield/",
       "number": "15",
       "photoSlug": "shane-hatfield",
+      "hasPhoto": true,
+      "iRating": 900,
       "series": [
         "monday",
         "sunday"
@@ -1383,6 +1531,8 @@
       "url": "/drivers/shawn-stamper/",
       "number": "09",
       "photoSlug": "shawn-stamper",
+      "hasPhoto": true,
+      "iRating": 3044,
       "series": [
         "monday",
         "sunday"
@@ -1403,6 +1553,8 @@
       "url": "/drivers/timothy-tyler3/",
       "number": "83",
       "photoSlug": "timothy-tyler",
+      "hasPhoto": true,
+      "iRating": 1807,
       "series": [
         "sunday"
       ],
@@ -1420,6 +1572,8 @@
       "url": "/drivers/tj-lunn/",
       "number": "02",
       "photoSlug": "tj-lunn",
+      "hasPhoto": true,
+      "iRating": 1091,
       "series": [
         "monday",
         "sunday"
@@ -1440,6 +1594,8 @@
       "url": "/drivers/tommy-rogers/",
       "number": "34",
       "photoSlug": "tommy-rogers",
+      "hasPhoto": true,
+      "iRating": 1760,
       "series": [
         "hosted",
         "monday"
@@ -1459,7 +1615,9 @@
       "slug": "trace-mcdowell",
       "url": "/drivers/trace-mcdowell/",
       "number": "20",
-      "photoSlug": "trace-mcdowell",
+      "photoSlug": "",
+      "hasPhoto": false,
+      "iRating": 3731,
       "series": [
         "sunday"
       ],
@@ -1477,6 +1635,8 @@
       "url": "/drivers/trevor-aswarnauth/",
       "number": "89",
       "photoSlug": "trevor-aswarnauth",
+      "hasPhoto": true,
+      "iRating": 4329,
       "series": [
         "monday"
       ],
@@ -1494,6 +1654,8 @@
       "url": "/drivers/trevor-haley/",
       "number": "12",
       "photoSlug": "trevor-haley",
+      "hasPhoto": true,
+      "iRating": 4309,
       "series": [
         "hosted",
         "sunday"
@@ -1513,7 +1675,9 @@
       "slug": "tyler-gothard",
       "url": "/drivers/tyler-gothard/",
       "number": "7",
-      "photoSlug": "tyler-gothard",
+      "photoSlug": "",
+      "hasPhoto": false,
+      "iRating": 1797,
       "series": [
         "sunday"
       ],
@@ -1531,6 +1695,8 @@
       "url": "/drivers/vicente-guerrero2/",
       "number": "41",
       "photoSlug": "vincente-guerrero",
+      "hasPhoto": true,
+      "iRating": 2927,
       "series": [
         "sunday"
       ],
@@ -1547,7 +1713,9 @@
       "slug": "victor-rivera",
       "url": "/drivers/victor-rivera/",
       "number": "—",
-      "photoSlug": "victor-rivera",
+      "photoSlug": "",
+      "hasPhoto": false,
+      "iRating": 2021,
       "series": [
         "sunday"
       ],
@@ -1564,7 +1732,9 @@
       "slug": "zach-harry",
       "url": "/drivers/zach-harry/",
       "number": "07",
-      "photoSlug": "zach-harry",
+      "photoSlug": "",
+      "hasPhoto": false,
+      "iRating": 2387,
       "series": [
         "sunday"
       ],
@@ -1581,7 +1751,9 @@
       "slug": "zachary-cato",
       "url": "/drivers/zachary-cato/",
       "number": "6",
-      "photoSlug": "zachary-cato",
+      "photoSlug": "",
+      "hasPhoto": false,
+      "iRating": 0,
       "series": [
         "hosted"
       ],
