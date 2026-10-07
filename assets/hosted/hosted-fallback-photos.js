@@ -127,19 +127,50 @@
     };
   }
 
-  function usableExistingImage(cell){
-    return [...cell.querySelectorAll("img")].some(img=>{
-      if(img.classList.contains("hlrn-hosted-photo-v2"))return true;
-      // Existing Hosted images remove themselves on failure. If one is still
-      // present with a source, leave it alone rather than duplicating it.
-      return !!String(img.getAttribute("src")||"").trim();
-    });
+  function existingImageState(cell){
+    const images=[...cell.querySelectorAll("img")].filter(img=>!img.classList.contains("hlrn-hosted-photo-v2"));
+    if(!images.length)return "none";
+
+    let pending=false;
+    for(const img of images){
+      if(img.complete){
+        if(img.naturalWidth>0&&img.naturalHeight>0)return "loaded";
+        // Broken legacy Hosted image: remove it so the fallback can take over.
+        img.remove();
+        continue;
+      }
+
+      pending=true;
+      if(!img.dataset.hlrnFallbackWatch){
+        img.dataset.hlrnFallbackWatch="1";
+        const retry=()=>{
+          try{
+            const cellNow=img.closest("td");
+            if(cellNow){
+              cellNow.dataset.hlrnHostedPhotoV2="";
+              decorateCell(cellNow);
+            }
+          }catch(e){}
+        };
+        img.addEventListener("load",retry,{once:true});
+        img.addEventListener("error",retry,{once:true});
+      }
+    }
+
+    return pending?"pending":"none";
   }
 
   function decorateCell(cell){
     if(!cell||cell.dataset.hlrnHostedPhotoV2==="1")return;
-    if(usableExistingImage(cell)){
+
+    const imageState=existingImageState(cell);
+    if(imageState==="loaded"){
       cell.dataset.hlrnHostedPhotoV2="1";
+      return;
+    }
+    if(imageState==="pending"){
+      // Do not mark this row complete. The image's load/error handler or the
+      // mutation observer will retry after the legacy Hosted image resolves.
       return;
     }
 
