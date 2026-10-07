@@ -58,7 +58,7 @@ body.home-v10-page{
   background:#05070a;
 }
 
-.h10-hero img{
+.h10-hero > img{
   position:absolute;
   inset:0;
   width:100%;
@@ -571,3 +571,369 @@ html[data-hlrn-theme="light"] body.rn-active.rn-live .rn-copy h2{color:#fff!impo
 html[data-hlrn-theme="light"] body.rn-active :where(.rn-board-head strong,.rn-clock strong,.rn-info strong,.rn-btn strong,.rn-eyebrow b){color:#fff!important}
 html[data-hlrn-theme="light"] body.rn-active :where(.rn-copy>p,.rn-eyebrow,.rn-trackline span,.rn-btn small,.rn-clock span,.rn-info span,.rn-crawl .v7-shell){color:#9ca6af!important}
 html[data-hlrn-theme="light"] body.rn-active .rn-btn.primary small{color:rgba(255,255,255,.72)!important}
+
+
+/* =========================================================
+   V10 HERO — LATEST HOSTED RACE CARD
+   ========================================================= */
+.h10-hero-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.18fr) minmax(390px,.82fr);
+  gap:58px;
+  align-items:end;
+}
+
+.h10-hero-copy{
+  min-width:0;
+}
+
+.h10-hero-copy h1{
+  max-width:760px;
+}
+
+.h10-hosted-card{
+  width:100%;
+  max-width:470px;
+  justify-self:end;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.24);
+  border-top:5px solid var(--h10-yellow);
+  background:rgba(7,9,13,.90);
+  color:#fff;
+  box-shadow:0 28px 70px rgba(0,0,0,.42);
+  backdrop-filter:blur(12px);
+}
+
+.h10-hosted-head{
+  min-height:64px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:13px 16px;
+  border-bottom:1px solid rgba(255,255,255,.13);
+}
+
+.h10-hosted-head>div{
+  min-width:0;
+  display:grid;
+  gap:3px;
+}
+
+.h10-hosted-head small{
+  color:#aab3bd!important;
+  font-size:7px;
+  font-weight:1000;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+
+.h10-hosted-head strong{
+  color:#fff!important;
+  font-size:14px;
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+
+.h10-hosted-head>span{
+  flex:0 0 auto;
+  padding:7px 9px;
+  background:var(--h10-yellow);
+  color:#080a0d!important;
+  font-size:8px;
+  font-weight:1000;
+  letter-spacing:.1em;
+}
+
+.h10-hosted-winner{
+  min-height:126px;
+  display:grid;
+  grid-template-columns:92px minmax(0,1fr);
+  gap:16px;
+  align-items:center;
+  padding:15px 16px;
+  border-bottom:1px solid rgba(255,255,255,.13);
+}
+
+.h10-hosted-photo-wrap{
+  position:relative;
+  height:94px;
+  overflow:hidden;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  border:1px solid rgba(255,255,255,.15);
+  background:
+    linear-gradient(145deg,rgba(246,200,0,.20),rgba(227,24,55,.10)),
+    #11161d;
+  color:#fff;
+  text-decoration:none;
+}
+
+.h10-hosted-photo-wrap img{
+  position:absolute;
+  inset:auto 0 0;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center bottom;
+  filter:none;
+  z-index:1;
+}
+
+.h10-hosted-number{
+  position:relative;
+  z-index:2;
+  margin:0 0 7px;
+  padding:5px 7px;
+  background:rgba(5,7,10,.86);
+  color:#fff!important;
+  font-size:10px;
+  font-weight:1000;
+  letter-spacing:.04em;
+}
+
+.h10-hosted-number b{
+  color:#fff!important;
+}
+
+.h10-hosted-winner-copy{
+  min-width:0;
+}
+
+.h10-hosted-winner-copy small{
+  display:block;
+  margin-bottom:5px;
+  color:var(--h10-yellow)!important;
+  font-size:7px;
+  font-weight:1000;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+
+.h10-hosted-winner-copy strong{
+  display:block;
+  overflow:hidden;
+  color:#fff!important;
+  font-size:clamp(23px,2.5vw,35px);
+  line-height:.95;
+  font-weight:1000;
+  letter-spacing:-.035em;
+  text-overflow:ellipsis;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+
+.h10-hosted-winner-copy span{
+  display:block;
+  margin-top:8px;
+  overflow:hidden;
+  color:#aeb7c1!important;
+  font-size:9px;
+  line-height:1.35;
+  font-weight:800;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.h10-hosted-track{
+  padding:14px 16px;
+  border-bottom:1px solid rgba(255,255,255,.13);
+}
+
+.h10-hosted-track small{
+  display:block;
+  color:#7f8993!important;
+  font-size:7px;
+  font-weight:1000;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+
+.h10-hosted-track strong{
+  display:block;
+  margin-top:4px;
+  overflow:hidden;
+  color:#fff!important;
+  font-size:16px;
+  line-height:1.1;
+  font-weight:1000;
+  text-overflow:ellipsis;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+
+.h10-hosted-track span{
+  display:block;
+  margin-top:4px;
+  color:#aab3bd!important;
+  font-size:8px;
+  font-weight:800;
+  letter-spacing:.06em;
+}
+
+.h10-hosted-stats{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  border-bottom:1px solid rgba(255,255,255,.13);
+}
+
+.h10-hosted-stats>div{
+  min-width:0;
+  padding:12px 7px;
+  text-align:center;
+  border-right:1px solid rgba(255,255,255,.11);
+}
+
+.h10-hosted-stats>div:last-child{
+  border-right:0;
+}
+
+.h10-hosted-stats b{
+  display:block;
+  overflow:hidden;
+  color:#fff!important;
+  font-size:18px;
+  line-height:1;
+  font-weight:1000;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.h10-hosted-stats span{
+  display:block;
+  margin-top:5px;
+  color:#7f8993!important;
+  font-size:6px;
+  font-weight:1000;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+}
+
+.h10-hosted-stats.secondary{
+  background:rgba(255,255,255,.035);
+}
+
+.h10-hosted-stats.secondary b{
+  font-size:15px;
+}
+
+.h10-hosted-link{
+  min-height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  padding:0 16px;
+  color:#fff!important;
+  text-decoration:none;
+  font-size:8px;
+  font-weight:1000;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+}
+
+.h10-hosted-link:hover,
+.h10-hosted-link:focus-visible{
+  background:rgba(246,200,0,.10);
+  color:var(--h10-yellow)!important;
+  outline:none;
+}
+
+/* Day Race gets a light glass card; Night Race keeps the dark command-card look. */
+html[data-hlrn-theme="light"] .h10-hosted-card{
+  background:rgba(255,255,255,.94)!important;
+  color:#11161c!important;
+  border-color:rgba(255,255,255,.80)!important;
+  box-shadow:0 24px 60px rgba(5,10,16,.28);
+}
+
+html[data-hlrn-theme="light"] .h10-hosted-head,
+html[data-hlrn-theme="light"] .h10-hosted-winner,
+html[data-hlrn-theme="light"] .h10-hosted-track,
+html[data-hlrn-theme="light"] .h10-hosted-stats{
+  border-color:#d9dee5!important;
+}
+
+html[data-hlrn-theme="light"] .h10-hosted-head strong,
+html[data-hlrn-theme="light"] .h10-hosted-winner-copy strong,
+html[data-hlrn-theme="light"] .h10-hosted-track strong,
+html[data-hlrn-theme="light"] .h10-hosted-stats b{
+  color:#11161c!important;
+}
+
+html[data-hlrn-theme="light"] .h10-hosted-head small,
+html[data-hlrn-theme="light"] .h10-hosted-winner-copy span,
+html[data-hlrn-theme="light"] .h10-hosted-track small,
+html[data-hlrn-theme="light"] .h10-hosted-track span,
+html[data-hlrn-theme="light"] .h10-hosted-stats span{
+  color:#66717d!important;
+}
+
+html[data-hlrn-theme="light"] .h10-hosted-winner-copy small{
+  color:#9a7600!important;
+}
+
+html[data-hlrn-theme="light"] .h10-hosted-photo-wrap{
+  border-color:#d6dce3;
+  background:
+    linear-gradient(145deg,rgba(246,200,0,.24),rgba(227,24,55,.08)),
+    #edf0f3;
+}
+
+html[data-hlrn-theme="light"] .h10-hosted-stats.secondary{
+  background:#f6f8fa!important;
+}
+
+html[data-hlrn-theme="light"] .h10-hosted-link{
+  color:#11161c!important;
+}
+
+html[data-hlrn-theme="light"] .h10-hosted-link:hover,
+html[data-hlrn-theme="light"] .h10-hosted-link:focus-visible{
+  background:#f3f5f7!important;
+  color:#b10f29!important;
+}
+
+@media(max-width:1120px){
+  .h10-hero-grid{
+    grid-template-columns:minmax(0,1fr) minmax(340px,.72fr);
+    gap:30px;
+  }
+  .h10-hosted-card{max-width:420px}
+  .h10-hero-copy h1{font-size:clamp(50px,7.4vw,82px)}
+}
+
+@media(max-width:900px){
+  .h10-hero{
+    min-height:0;
+    align-items:stretch;
+  }
+  .h10-hero-inner{
+    padding:70px 0 42px;
+  }
+  .h10-hero-grid{
+    grid-template-columns:1fr;
+    gap:28px;
+  }
+  .h10-hosted-card{
+    max-width:none;
+    justify-self:stretch;
+  }
+}
+
+@media(max-width:520px){
+  .h10-hosted-winner{
+    grid-template-columns:78px minmax(0,1fr);
+  }
+  .h10-hosted-photo-wrap{
+    height:82px;
+  }
+  .h10-hosted-winner-copy strong{
+    font-size:24px;
+  }
+  .h10-hosted-stats b{
+    font-size:16px;
+  }
+}
