@@ -86,9 +86,10 @@ function renderRecent(rows){
     const finish=num(r.finish);
     const cls=finish===1?" win":finish<=5?" top5":"";
     const league=String(r.series||"").toUpperCase();
-    return '<div class="myh-result'+cls+'"><div class="myh-result-pos">P'+esc(finish||"—")+'</div>'+
+    const url=(r.series==="sunday"||r.series==="monday")&&Number(r.raceNumber)>0?'../results/?league='+encodeURIComponent(r.series)+'&race='+encodeURIComponent(r.raceNumber)+'#raceReportView':'../results/';
+    return '<a class="myh-result myh-result-link'+cls+'" href="'+esc(url)+'" aria-label="Open '+esc(r.series)+' race '+esc(r.raceNumber||"")+' results"><div class="myh-result-pos">P'+esc(finish||"—")+'</div>'+
       '<div class="myh-result-copy"><strong>'+esc(r.track||"HLRN Race")+'</strong><span>'+esc(league)+' • RACE '+esc(r.raceNumber||"—")+' • START P'+esc(r.start||"—")+' • '+esc(formatDate(r.date))+'</span></div>'+
-      '<div class="myh-result-pts"><b>'+esc(r.points??"—")+'</b><small>POINTS</small></div></div>';
+      '<div class="myh-result-pts"><b>'+esc(r.points??"—")+'</b><small>POINTS</small></div></a>';
   }).join("");
 }
 function renderTracks(rows){
@@ -157,7 +158,7 @@ async function init(){
   text("myhName",displayName(login.driver));
   text("myhDiscord",login.discordUsername?"SIGNED IN VIA DISCORD • @"+login.discordUsername:login.discordDisplayName?"SIGNED IN VIA DISCORD • "+login.discordDisplayName:"SIGNED-IN HLRN DRIVER ACCOUNT");
   if(window.HLRNDrivers?.load)await window.HLRNDrivers.load();
-  $("myhProfileLink").href=window.HLRNDrivers?.profileUrl?.(login.driver)||"../drivers/";
+  $("myhProfileLink").href=window.HLRNDrivers?.profileUrl?.({driverId:login.driverId||login.iracingId,driver:login.driver})||"../drivers/";
 
   try{
     const [profileData,numberData,scheduleData,snapshot]=await Promise.all([
@@ -168,7 +169,12 @@ async function init(){
     const monday=profiles.find(d=>d.series==="monday")||null;
     const hosted=profiles.find(d=>d.series==="hosted")||null;
     const primary=sunday||monday||hosted;
-    if(!primary)throw new Error("No driver profile matched "+login.driver);
+    if(!primary){
+      text("myhDataStatus","PROFILE NOT MATCHED");
+      ["myhRecent","myhTracks","myhHosted","myhPenalties"].forEach(id=>{if($(id))$(id).innerHTML='<div class="myh-loading">NO PUBLISHED RACING PROFILE IS CONNECTED TO THIS DRIVER NAME YET.</div>'});
+      $("myhNextGrid").innerHTML=renderNext("sunday",nextRace(scheduleData?.leagues?.sunday))+renderNext("monday",nextRace(scheduleData?.leagues?.monday));
+      return;
+    }
 
     const numberValue=numberData?.numbers?.[nameKey(login.driver)]||numberData?.numbers?.[nameKey(primary.name)]||"—";
     text("myhNumber","#"+numberValue);text("myhPhotoNumber",numberValue);
