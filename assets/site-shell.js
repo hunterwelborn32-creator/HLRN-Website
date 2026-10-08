@@ -871,8 +871,7 @@ function start(){
   nav.innerHTML=`
     <div class="hgn-inner">
       <a class="hgn-brand" href="${url("")}" aria-label="High Line Racing Network home">
-        <span class="hgn-mini-track" aria-hidden="true"><canvas class="hgn-mini-canvas" width="156" height="66"></canvas><span class="hgn-mark">HL</span><span class="hgn-mini-lap">LAP 1/100</span></span>
-        <span class="hgn-name">HIGH LINE RACING NETWORK<small>HLRN // OFFICIAL NETWORK</small></span>
+        <span class="hgn-mini-track"><canvas class="hgn-mini-canvas" width="420" height="68" aria-hidden="true"></canvas><span class="hgn-mark">HL</span><span class="hgn-name">HIGH LINE RACING NETWORK<small>HLRN // OFFICIAL NETWORK</small></span><span class="hgn-mini-lap">LAP 1/100</span></span>
       </a>
       <div class="hgn-links">
         ${primaryLinks}
@@ -911,14 +910,7 @@ function start(){
   if(!canvas)return;
   const style=document.createElement("style");
   style.id="hlrn-mini-nav-racing";
-  style.textContent=`
-    #hlrn-global-nav .hgn-mini-track{width:156px;height:66px;display:block;position:relative;flex:0 0 156px;pointer-events:none;overflow:hidden}
-    #hlrn-global-nav .hgn-mini-canvas{display:block;width:156px;height:66px;position:absolute;inset:0}
-    #hlrn-global-nav .hgn-mini-track .hgn-mark{position:absolute!important;left:53px!important;top:17px!important;z-index:2!important;width:46px!important;height:34px!important}
-    #hlrn-global-nav .hgn-mini-lap{position:absolute;left:52px;bottom:0;font:900 7px system-ui;letter-spacing:.07em;color:#d5e0ee;background:#090e15d9;padding:1px 3px}
-    @media(max-width:1150px){#hlrn-global-nav .hgn-mini-track{width:109px;flex-basis:109px}#hlrn-global-nav .hgn-mini-canvas{transform:scale(.72);transform-origin:left center}#hlrn-global-nav .hgn-mini-track .hgn-mark{left:31px!important}#hlrn-global-nav .hgn-mini-lap{left:34px}}
-    @media(prefers-reduced-motion:reduce){#hlrn-global-nav .hgn-mini-canvas{opacity:.75}}
-  `;
+  style.textContent="#hlrn-global-nav .hgn-mini-track{position:relative;display:block;width:420px;height:68px;flex:0 0 420px;overflow:hidden;pointer-events:none}\n#hlrn-global-nav .hgn-mini-canvas{position:absolute;inset:0;width:420px;height:68px;display:block}\n#hlrn-global-nav .hgn-mini-track .hgn-mark{position:absolute!important;left:35px!important;top:19px!important;width:46px!important;height:34px!important;z-index:2}\n#hlrn-global-nav .hgn-mini-track .hgn-name{position:absolute!important;left:96px!important;top:24px!important;font-size:11px!important;z-index:2}\n#hlrn-global-nav .hgn-mini-lap{position:absolute;left:180px;bottom:1px;z-index:3;color:#dae2ec;font:900 7px system-ui;background:#080f19;padding:1px 3px}\n@media(max-width:1350px){#hlrn-global-nav .hgn-mini-track{width:335px;flex-basis:335px}#hlrn-global-nav .hgn-mini-canvas{width:335px}#hlrn-global-nav .hgn-mini-track .hgn-name{left:79px!important;font-size:9px!important}#hlrn-global-nav .hgn-mini-track .hgn-mark{left:25px!important;width:40px!important;height:30px!important;top:21px!important}#hlrn-global-nav .hgn-mini-lap{left:140px}}\n@media(max-width:700px){#hlrn-global-nav .hgn-mini-track{width:275px;flex-basis:275px;height:62px}#hlrn-global-nav .hgn-mini-canvas{width:275px;height:62px}#hlrn-global-nav .hgn-mini-track .hgn-name{left:68px!important;top:22px!important;font-size:8px!important}#hlrn-global-nav .hgn-mini-track .hgn-name small{font-size:6px!important}#hlrn-global-nav .hgn-mini-track .hgn-mark{left:19px!important;top:18px!important;width:36px!important;height:28px!important}#hlrn-global-nav .hgn-mini-lap{left:114px;bottom:0}}";
   document.head.appendChild(style);
   const ctx=canvas.getContext("2d");if(!ctx)return;
   const colors=["#f02543","#258afa","#ffd22c","#40cf68","#d789f3","#f3842a","#f7f7f7","#14bec8","#df4c9e","#9ad2fc","#e62b35","#a98fff","#fff261","#74d948","#e37942","#6092ff","#f5c7e3","#f9a41c","#83ccd3","#cae055"];
@@ -943,28 +935,23 @@ function start(){
       if(p>=99&&flag!=="YELLOW")flag="WHITE";
       if(p>=100){flag="CHECKERED";won=true;finishTime=now}
     }
-    ctx.clearRect(0,0,156,66);
+    ctx.clearRect(0,0,420,68);
     // Narrow, banked tri-oval track, with room for multiple lanes.
-    const path=new Path2D();
-    path.moveTo(31,12);path.bezierCurveTo(50,5,110,7,129,15);
-    path.bezierCurveTo(154,27,142,51,110,53);
-    path.bezierCurveTo(100,54,85,61,72,58);
-    path.bezierCurveTo(47,54,24,57,13,40);
-    path.bezierCurveTo(4,26,12,17,31,12);path.closePath();
-    ctx.strokeStyle="#3f454f";ctx.lineWidth=12;ctx.stroke(path);
-    ctx.strokeStyle="#a3acb644";ctx.lineWidth=1;ctx.setLineDash([4,5]);ctx.stroke(path);ctx.setLineDash([]);
-    ctx.strokeStyle="#f01946";ctx.lineWidth=1.5;ctx.stroke(path);
-    // Finish stripe across racing direction at the frontstretch.
-    ctx.save();ctx.translate(109,54);ctx.rotate(-.38);
-    for(let x=0;x<2;x++)for(let y=0;y<4;y++){ctx.fillStyle=(x+y)%2?"#141922":"#fff";ctx.fillRect(-3+x*3,-7+y*3.5,3,3.5)}
-    ctx.restore();
+    const cx=210,cy=34,rx=199,ry=25;
+    ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2);ctx.strokeStyle="#303944";ctx.lineWidth=14;ctx.stroke();
+    ctx.strokeStyle="#586270";ctx.lineWidth=10;ctx.stroke();
+    ctx.setLineDash([7,8]);ctx.strokeStyle="#d4dee866";ctx.lineWidth=1;ctx.stroke();ctx.setLineDash([]);
+    ctx.beginPath();ctx.ellipse(cx,cy,rx+7,ry+6,0,0,Math.PI*2);ctx.strokeStyle="#f01946";ctx.lineWidth=2;ctx.stroke();
+    ctx.beginPath();ctx.ellipse(cx,cy,rx-7,ry-6,0,0,Math.PI*2);ctx.strokeStyle="#e0e6ef";ctx.lineWidth=1;ctx.stroke();
+    // Start/finish stripe spanning asphalt, across the lower straight.
+    ctx.save();ctx.translate(223,58);for(let a=0;a<2;a++)for(let b=0;b<4;b++){ctx.fillStyle=(a+b)%2?"#141922":"#fff";ctx.fillRect(-4+a*4,-7+b*3.5,4,3.5)}ctx.restore();
     // Cars move along actual path, independently, with three racing grooves.
     const length=430;
     for(const c of [...cars].sort((a,b)=>a.distance-b.distance)){
       const f=((c.distance%1)+1)%1;
       const point=ctx.isPointInPath; // keep the track geometry independent of the logo.
-      const x=78+66*Math.cos(f*Math.PI*2),y=33+22*Math.sin(f*Math.PI*2);
-      const dx=-66*Math.sin(f*Math.PI*2),dy=22*Math.cos(f*Math.PI*2),d=Math.hypot(dx,dy);
+      const x=210+199*Math.cos(f*Math.PI*2),y=34+25*Math.sin(f*Math.PI*2);
+      const dx=-199*Math.sin(f*Math.PI*2),dy=25*Math.cos(f*Math.PI*2),d=Math.hypot(dx,dy);
       const px=x-dy/d*c.offset,py=y+dx/d*c.offset;
       ctx.save();ctx.translate(px,py);ctx.rotate(Math.atan2(dy,dx)+Math.PI/2);
       ctx.fillStyle=c.color;ctx.strokeStyle="#080b10";ctx.lineWidth=.6;ctx.fillRect(-2.6,-4,5.2,8);ctx.strokeRect(-2.6,-4,5.2,8);
