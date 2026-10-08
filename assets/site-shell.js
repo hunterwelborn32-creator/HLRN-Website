@@ -871,7 +871,7 @@ function start(){
   nav.innerHTML=`
     <div class="hgn-inner">
       <a class="hgn-brand" href="${url("")}" aria-label="High Line Racing Network home">
-        <span class="hgn-mini-track"><canvas class="hgn-mini-canvas" width="420" height="68" aria-hidden="true"></canvas><span class="hgn-mark">HL</span><span class="hgn-name">HIGH LINE RACING NETWORK<small>HLRN // OFFICIAL NETWORK</small></span><span class="hgn-mini-lap">LAP 1/100</span></span>
+        <span class="hgn-mini-track"><canvas class="hgn-mini-canvas" width="420" height="68" aria-hidden="true"></canvas><span class="hgn-mark">HL</span><span class="hgn-name">HIGH LINE RACING NETWORK<small>HLRN // OFFICIAL NETWORK</small></span></span>
       </a>
       <div class="hgn-links">
         ${primaryLinks}
@@ -906,7 +906,7 @@ function start(){
 // This is visual-only and never blocks the menu or login controls.
 (function(){
   const canvas=nav.querySelector(".hgn-mini-canvas");
-  const lapLabel=nav.querySelector(".hgn-mini-lap");
+
   if(!canvas)return;
   const style=document.createElement("style");
   style.id="hlrn-mini-nav-racing";
@@ -971,7 +971,6 @@ function start(){
       ctx.fillStyle="#fff";ctx.font="900 4px Arial";ctx.textAlign="center";ctx.fillText(c.number,0,1.7);
       ctx.restore();
     }
-    lapLabel.textContent=flag==="CHECKERED"?"🏁 WINNER!":flag==="YELLOW"?"🟡 LAP "+lap:flag==="WHITE"?"⚪ WHITE FLAG":"LAP "+lap+"/100";
     if(document.visibilityState!=="hidden")requestAnimationFrame(frame);
     else{last=0;document.addEventListener("visibilitychange",function resume(){document.removeEventListener("visibilitychange",resume);requestAnimationFrame(frame)},{once:true})}
   }
