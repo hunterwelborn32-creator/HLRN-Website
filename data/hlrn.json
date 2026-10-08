@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-08T10:17:16.475Z",
+  "generatedAt": "2026-10-08T10:39:04.360Z",
   "leagues": {
     "sunday": {
       "drivers": [
@@ -28016,77 +28016,77 @@
       "trevorhaley": {
         "driver": "Trevor Haley",
         "iRating": 4309,
-        "date": "2026-10-08T10:17:05.120Z"
+        "date": "2026-10-08T10:38:52.398Z"
       },
       "ethanfonsecamoreno": {
         "driver": "Ethan Fonseca Moreno",
         "iRating": 4154,
-        "date": "2026-10-08T10:17:04.928Z"
+        "date": "2026-10-08T10:38:52.081Z"
       },
       "nicholasbaumann": {
         "driver": "Nicholas Baumann",
         "iRating": 4952,
-        "date": "2026-10-08T10:17:05.645Z"
+        "date": "2026-10-08T10:38:52.873Z"
       },
       "joshuamckinney": {
         "driver": "Joshua McKinney2",
         "iRating": 2686,
-        "date": "2026-10-08T10:17:09.221Z"
+        "date": "2026-10-08T10:38:55.755Z"
       },
       "zacharycato": {
         "driver": "Zachary Cato",
         "iRating": 1828,
-        "date": "2026-10-08T10:17:09.089Z"
+        "date": "2026-10-08T10:38:55.065Z"
       },
       "rustychancey": {
         "driver": "Rusty Chancey",
         "iRating": 5299,
-        "date": "2026-10-08T10:17:08.567Z"
+        "date": "2026-10-08T10:38:56.095Z"
       },
       "justinleepearson": {
         "driver": "Justin Lee Pearson",
         "iRating": 3449,
-        "date": "2026-10-08T10:17:08.284Z"
+        "date": "2026-10-08T10:38:56.716Z"
       },
       "chrisjames": {
         "driver": "Chris James",
         "iRating": 5124,
-        "date": "2026-10-08T10:17:12.677Z"
+        "date": "2026-10-08T10:39:00.223Z"
       },
       "michaeltokarz": {
         "driver": "Michael Tokarz",
         "iRating": 1221,
-        "date": "2026-10-08T10:17:11.476Z"
+        "date": "2026-10-08T10:38:59.672Z"
       },
       "juanescamilla": {
         "driver": "Juan Escamilla",
         "iRating": 3286,
-        "date": "2026-10-08T10:17:12.117Z"
+        "date": "2026-10-08T10:38:59.468Z"
       },
       "hunterwelborn": {
         "driver": "Hunter Welborn",
         "iRating": 1453,
-        "date": "2026-10-08T10:17:11.061Z"
+        "date": "2026-10-08T10:38:59.679Z"
       },
       "craigrowe": {
         "driver": "Craig Rowe",
         "iRating": 2778,
-        "date": "2026-10-08T10:17:11.849Z"
+        "date": "2026-10-08T10:39:00.825Z"
       },
       "tommyrogers": {
         "driver": "Tommy Rogers",
         "iRating": 1760,
-        "date": "2026-10-08T10:17:15.010Z"
+        "date": "2026-10-08T10:39:04.357Z"
       },
       "erichayden": {
         "driver": "Eric Hayden",
         "iRating": 2050,
-        "date": "2026-10-08T10:17:16.471Z"
+        "date": "2026-10-08T10:39:02.740Z"
       },
       "larkinboyer": {
         "driver": "Larkin Boyer",
         "iRating": 1903,
-        "date": "2026-10-08T10:17:14.882Z"
+        "date": "2026-10-08T10:39:03.515Z"
       }
     }
   }
