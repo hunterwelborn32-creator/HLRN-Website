@@ -889,7 +889,6 @@ function start(){
         <div class="hgn-account-name"></div>
         <div class="hgn-account-discord"></div>
         <button type="button" class="hgn-account-dashboard">MY HLRN</button>
-        <button type="button" class="hgn-account-profile">MY PROFILE</button>
         <button type="button" class="hgn-account-control" hidden>NETWORK CONTROL</button>
         <button type="button" class="hgn-account-signout">SIGN OUT</button>
       </div>
