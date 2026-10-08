@@ -310,9 +310,14 @@ function rowName(key,row){
 }
 function driverAnchor(key,row){
   const name=rowName(key,row);
-  const known=driverMap(key).has(String(row?.driverId??''));
-  return known
-    ? '<a class="report-driver-link" href="'+esc(driverLink(key,row.driverId))+'">'+esc(name)+'</a>'
+  const id=String(row?.driverId??'').trim();
+  const rosterMatch=!!id && driverMap(key).has(id);
+  // Use the permanent driver identity directory for past participants too.
+  // Only create a link when a real profile is known; never invent a slug.
+  const identityUrl=window.HLRNDrivers?.profileUrl?.({driverId:id,driver:name});
+  const url=identityUrl || (rosterMatch ? driverLink(key,id) : '');
+  return url
+    ? '<a class="report-driver-link" href="'+esc(url)+'">'+esc(name)+'</a>'
     : '<span class="report-driver-link">'+esc(name)+'</span>';
 }
 function recapLists(race){
