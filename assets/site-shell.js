@@ -936,22 +936,34 @@ function start(){
       if(p>=100){flag="CHECKERED";won=true;finishTime=now}
     }
     ctx.clearRect(0,0,420,68);
-    // Narrow, banked tri-oval track, with room for multiple lanes.
-    const cx=210,cy=34,rx=199,ry=25;
-    ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2);ctx.strokeStyle="#303944";ctx.lineWidth=14;ctx.stroke();
-    ctx.strokeStyle="#586270";ctx.lineWidth=10;ctx.stroke();
-    ctx.setLineDash([7,8]);ctx.strokeStyle="#d4dee866";ctx.lineWidth=1;ctx.stroke();ctx.setLineDash([]);
-    ctx.beginPath();ctx.ellipse(cx,cy,rx+7,ry+6,0,0,Math.PI*2);ctx.strokeStyle="#f01946";ctx.lineWidth=2;ctx.stroke();
-    ctx.beginPath();ctx.ellipse(cx,cy,rx-7,ry-6,0,0,Math.PI*2);ctx.strokeStyle="#e0e6ef";ctx.lineWidth=1;ctx.stroke();
-    // Start/finish stripe spanning asphalt, across the lower straight.
+    // Long, wide, rounded Talladega-style oval around the entire brand.
+    const left=49,right=371,cy=34,turnX=40,turnY=24;
+    const track=new Path2D();track.moveTo(left,cy-turnY);track.lineTo(right,cy-turnY);
+    track.bezierCurveTo(right+turnX*.55,cy-turnY,right+turnX,cy-turnY*.55,right+turnX,cy);
+    track.bezierCurveTo(right+turnX,cy+turnY*.55,right+turnX*.55,cy+turnY,right,cy+turnY);
+    track.lineTo(left,cy+turnY);
+    track.bezierCurveTo(left-turnX*.55,cy+turnY,left-turnX,cy+turnY*.55,left-turnX,cy);
+    track.bezierCurveTo(left-turnX,cy-turnY*.55,left-turnX*.55,cy-turnY,left,cy-turnY);track.closePath();
+    ctx.strokeStyle="#303944";ctx.lineWidth=14;ctx.stroke(track);
+    ctx.strokeStyle="#586270";ctx.lineWidth=10;ctx.stroke(track);
+    ctx.setLineDash([7,8]);ctx.strokeStyle="#d4dee866";ctx.lineWidth=1;ctx.stroke(track);ctx.setLineDash([]);
+    ctx.strokeStyle="#f01946";ctx.lineWidth=1.8;ctx.stroke(track);
+    // Clean checkerboard stripe across the lower straight.
     ctx.save();ctx.translate(223,58);for(let a=0;a<2;a++)for(let b=0;b<4;b++){ctx.fillStyle=(a+b)%2?"#141922":"#fff";ctx.fillRect(-4+a*4,-7+b*3.5,4,3.5)}ctx.restore();
-    // Cars move along actual path, independently, with three racing grooves.
-    const length=430;
+    // Arc-length table keeps all cars on the exact same widened oval, in reverse direction.
+    const samples=[],push=(x,y)=>samples.push({x,y});
+    for(let i=0;i<=120;i++)push(left+(right-left)*i/120,cy-turnY);
+    for(let i=1;i<=70;i++){let t=-Math.PI/2+Math.PI*i/70;push(right+turnX*Math.cos(t),cy+turnY*Math.sin(t))}
+    for(let i=1;i<=120;i++)push(right-(right-left)*i/120,cy+turnY);
+    for(let i=1;i<=70;i++){let t=Math.PI/2+Math.PI*i/70;push(left+turnX*Math.cos(t),cy+turnY*Math.sin(t))}
+    const cumulative=[0];for(let i=1;i<=samples.length;i++){let p=samples[i-1],q=samples[i%samples.length];cumulative.push(cumulative[i-1]+Math.hypot(q.x-p.x,q.y-p.y))}
+    const total=cumulative[cumulative.length-1];
     for(const c of [...cars].sort((a,b)=>a.distance-b.distance)){
-      const f=((c.distance%1)+1)%1;
-      const point=ctx.isPointInPath; // keep the track geometry independent of the logo.
-      const x=210+199*Math.cos(f*Math.PI*2),y=34+25*Math.sin(f*Math.PI*2);
-      const dx=-199*Math.sin(f*Math.PI*2),dy=25*Math.cos(f*Math.PI*2),d=Math.hypot(dx,dy);
+      // Reverse travel while lap progression and timing continue forward.
+      const f=1-(((c.distance%1)+1)%1),dist=f*total;
+      let lo=0,hi=samples.length;while(lo+1<hi){let mid=(lo+hi)>>1;if(cumulative[mid]<=dist)lo=mid;else hi=mid}
+      let p=samples[lo],q=samples[(lo+1)%samples.length],u=(dist-cumulative[lo])/(cumulative[lo+1]-cumulative[lo]||1);
+      let x=p.x+(q.x-p.x)*u,y=p.y+(q.y-p.y)*u,dx=p.x-q.x,dy=p.y-q.y,d=Math.hypot(dx,dy)||1;
       const px=x-dy/d*c.offset,py=y+dx/d*c.offset;
       ctx.save();ctx.translate(px,py);ctx.rotate(Math.atan2(dy,dx)+Math.PI/2);
       ctx.fillStyle=c.color;ctx.strokeStyle="#080b10";ctx.lineWidth=.6;ctx.fillRect(-2.6,-4,5.2,8);ctx.strokeRect(-2.6,-4,5.2,8);
