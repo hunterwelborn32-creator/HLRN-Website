@@ -1311,6 +1311,48 @@ html[data-hlrn-theme="dark"] .profile-race-link:hover td{background:#0c0c0c!impo
 html[data-hlrn-theme="dark"] .profile-race-link:focus-visible{outline-color:#fff!important}
 </style>
 
+
+<style id="HLRN_DRIVERS_LAYOUT_ONLY_20261008">
+/* Presentation-only roster polish. Driver photos, rendering, data, and profiles unchanged. */
+#directoryView{--roster-surface:#fff;--roster-ink:#14171b;--roster-muted:#626a74;--roster-stroke:#d9dfe5;--roster-page:#f3f5f7;--roster-photo:#e9edf1;background:var(--roster-page)!important}
+#directoryView .driver-heading-inner,#directoryView .driver-command,#directoryView .driver-grid{width:min(1360px,calc(100% - 40px))!important}
+#directoryView .driver-heading-inner{padding-top:42px!important;padding-bottom:39px!important}
+#directoryView .driver-command{margin-top:25px;border:1px solid var(--roster-stroke);border-radius:12px;overflow:hidden;background:var(--roster-surface);box-shadow:0 6px 26px rgba(10,18,30,.04)}
+#directoryView .league-tab{min-height:65px!important;padding-inline:24px!important}
+#directoryView .driver-metric{padding:19px 23px}
+#directoryView .driver-metric small{font-size:9px;letter-spacing:.1em}
+#directoryView .driver-metric strong{font-size:clamp(17px,1.9vw,24px)}
+#directoryView .roster-tools{padding:20px 23px!important;gap:14px}
+#directoryView .roster-title{font-size:20px!important}
+#directoryView .roster-count{font-size:11px}
+#directoryView .search-wrap input,#directoryView .driver-sort{border-radius:7px;border-color:var(--roster-stroke)}
+#directoryView .driver-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:22px!important;margin-top:25px!important}
+#directoryView .driver-card{border:1px solid var(--roster-stroke)!important;border-radius:12px;overflow:hidden;background:var(--roster-surface);color:var(--roster-ink);box-shadow:0 3px 14px rgba(10,20,35,.055);transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+#directoryView .driver-card:hover{transform:translateY(-4px)!important;box-shadow:0 14px 32px rgba(10,20,35,.13)!important}
+#directoryView .driver-media{height:310px!important}
+#directoryView .driver-info{background:var(--roster-surface);padding:18px 19px 19px!important;border-color:var(--roster-stroke);min-height:144px!important}
+#directoryView .driver-name{font-size:clamp(18px,1.7vw,23px)!important;line-height:1.13;white-space:normal;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#directoryView .driver-sub{color:var(--roster-muted);line-height:1.4}
+#directoryView .driver-sub strong,#directoryView .driver-name,#directoryView .mini-stat b{color:var(--roster-ink)}
+#directoryView .driver-stats{border-color:var(--roster-stroke);gap:7px}
+#directoryView .mini-stat span{font-size:8px!important;line-height:1.35;color:var(--roster-muted);white-space:normal}
+#directoryView .mini-stat b{font-size:17px!important}
+#directoryView .driver-card:focus-visible{outline:3px solid var(--v8-red);outline-offset:3px}
+html[data-hlrn-theme="dark"] #directoryView{--roster-surface:#101216;--roster-ink:#f7f8fa;--roster-muted:#acb3be;--roster-stroke:#303741;--roster-page:#050607;--roster-photo:#171b20;background:#050607!important}
+html[data-hlrn-theme="dark"] #directoryView .driver-command,
+html[data-hlrn-theme="dark"] #directoryView .driver-card,
+html[data-hlrn-theme="dark"] #directoryView .driver-info{background:#101216!important;background-color:#101216!important;color:#f7f8fa!important;border-color:#303741!important}
+html[data-hlrn-theme="dark"] #directoryView .driver-card :is(.driver-name,.driver-sub strong,.mini-stat b){color:#f7f8fa!important;-webkit-text-fill-color:#f7f8fa!important}
+html[data-hlrn-theme="dark"] #directoryView .driver-card :is(.driver-sub,.mini-stat span){color:#acb3be!important;-webkit-text-fill-color:#acb3be!important}
+html[data-hlrn-theme="dark"] #directoryView .driver-stats{border-color:#303741!important}
+html[data-hlrn-theme="dark"] #directoryView .driver-card:hover{border-color:#6b7581!important}
+@media(max-width:1150px){#directoryView .driver-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:830px){#directoryView .driver-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#directoryView .driver-heading-inner,#directoryView .driver-command,#directoryView .driver-grid{width:calc(100% - 28px)!important}#directoryView .driver-info{min-height:130px!important}}
+@media(max-width:620px){#directoryView .driver-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px!important;margin-top:14px!important}#directoryView .driver-media{height:230px!important}#directoryView .driver-info{padding:12px!important;min-height:138px!important}#directoryView .driver-name{font-size:17px!important}#directoryView .mini-stat b{font-size:14px!important}#directoryView .mini-stat span{font-size:7px!important}#directoryView .driver-command{margin-top:15px}#directoryView .roster-tools{padding:15px!important}#directoryView .driver-metric{padding:13px}#directoryView .league-tab{padding-inline:8px!important}#directoryView .number-badge{transform:scale(.78);transform-origin:top left}}
+@media(max-width:380px){#directoryView .driver-grid{grid-template-columns:1fr}#directoryView .driver-media{height:315px!important}}
+@media(prefers-reduced-motion:reduce){#directoryView .driver-card{transition:none!important}}
+</style>
+
 </head>
 <body>
 <div id="directoryView" class="driver-page">
