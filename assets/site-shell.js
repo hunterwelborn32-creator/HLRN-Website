@@ -871,7 +871,7 @@ function start(){
   nav.innerHTML=`
     <div class="hgn-inner">
       <a class="hgn-brand" href="${url("")}" aria-label="High Line Racing Network home">
-        <span class="hgn-mark">HL</span>
+        <span class="hgn-mini-track" aria-hidden="true"><canvas class="hgn-mini-canvas" width="156" height="66"></canvas><span class="hgn-mark">HL</span><span class="hgn-mini-lap">LAP 1/100</span></span>
         <span class="hgn-name">HIGH LINE RACING NETWORK<small>HLRN // OFFICIAL NETWORK</small></span>
       </a>
       <div class="hgn-links">
@@ -902,6 +902,83 @@ function start(){
     </div>`;
 
   document.body.insertBefore(nav,document.body.firstChild);
+
+// Mini Talladega race fitted around the ORIGINAL brand mark in shared navigation.
+// This is visual-only and never blocks the menu or login controls.
+(function(){
+  const canvas=nav.querySelector(".hgn-mini-canvas");
+  const lapLabel=nav.querySelector(".hgn-mini-lap");
+  if(!canvas)return;
+  const style=document.createElement("style");
+  style.id="hlrn-mini-nav-racing";
+  style.textContent=`
+    #hlrn-global-nav .hgn-mini-track{width:156px;height:66px;display:block;position:relative;flex:0 0 156px;pointer-events:none;overflow:hidden}
+    #hlrn-global-nav .hgn-mini-canvas{display:block;width:156px;height:66px;position:absolute;inset:0}
+    #hlrn-global-nav .hgn-mini-track .hgn-mark{position:absolute!important;left:53px!important;top:17px!important;z-index:2!important;width:46px!important;height:34px!important}
+    #hlrn-global-nav .hgn-mini-lap{position:absolute;left:52px;bottom:0;font:900 7px system-ui;letter-spacing:.07em;color:#d5e0ee;background:#090e15d9;padding:1px 3px}
+    @media(max-width:1150px){#hlrn-global-nav .hgn-mini-track{width:109px;flex-basis:109px}#hlrn-global-nav .hgn-mini-canvas{transform:scale(.72);transform-origin:left center}#hlrn-global-nav .hgn-mini-track .hgn-mark{left:31px!important}#hlrn-global-nav .hgn-mini-lap{left:34px}}
+    @media(prefers-reduced-motion:reduce){#hlrn-global-nav .hgn-mini-canvas{opacity:.75}}
+  `;
+  document.head.appendChild(style);
+  const ctx=canvas.getContext("2d");if(!ctx)return;
+  const colors=["#f02543","#258afa","#ffd22c","#40cf68","#d789f3","#f3842a","#f7f7f7","#14bec8","#df4c9e","#9ad2fc","#e62b35","#a98fff","#fff261","#74d948","#e37942","#6092ff","#f5c7e3","#f9a41c","#83ccd3","#cae055"];
+  const cars=colors.map((color,i)=>({color,number:1+((i*17+32)%99),distance:-i*.007,offset:(i%3-1)*3.5,power:.2+Math.random()*.016,phase:i*1.23}));
+  let last=0,raceStart=0,finishTime=0,flag="GREEN",cautions=0,yellowUntil=0,won=false;
+  const rand=()=>Math.random();
+  function frame(now){
+    if(!last){last=now;raceStart=now}
+    const dt=Math.min(.05,(now-last)/1000);last=now;
+    const lead=Math.max(...cars.map(c=>c.distance));
+    const lap=Math.min(100,Math.max(1,Math.floor(lead)+1));
+    if(won&&now-finishTime>4500){for(let i=0;i<cars.length;i++){let c=cars[i];c.distance=-i*.007;c.power=.2+rand()*.016;c.phase=i*1.23}won=false;flag="GREEN";cautions=0}
+    if(!won){
+      if(flag==="YELLOW"&&lead>=yellowUntil)flag="GREEN";
+      if(flag!=="YELLOW"&&lap>4&&lap<96&&lap%17===0&&now-raceStart>4500&&rand()<dt*.02){flag="YELLOW";yellowUntil=lead+2.1;cautions++}
+      for(const c of cars){let drift=Math.sin(now/1800+c.phase)*.010;
+        let pace=flag==="YELLOW"?.075:c.power+drift;
+        c.distance+=dt*pace;
+        c.offset+=(Math.sin(now/830+c.phase)*3.5-c.offset)*Math.min(.08,dt*.6);
+      }
+      const p=Math.max(...cars.map(c=>c.distance));
+      if(p>=99&&flag!=="YELLOW")flag="WHITE";
+      if(p>=100){flag="CHECKERED";won=true;finishTime=now}
+    }
+    ctx.clearRect(0,0,156,66);
+    // Narrow, banked tri-oval track, with room for multiple lanes.
+    const path=new Path2D();
+    path.moveTo(31,12);path.bezierCurveTo(50,5,110,7,129,15);
+    path.bezierCurveTo(154,27,142,51,110,53);
+    path.bezierCurveTo(100,54,85,61,72,58);
+    path.bezierCurveTo(47,54,24,57,13,40);
+    path.bezierCurveTo(4,26,12,17,31,12);path.closePath();
+    ctx.strokeStyle="#3f454f";ctx.lineWidth=12;ctx.stroke(path);
+    ctx.strokeStyle="#a3acb644";ctx.lineWidth=1;ctx.setLineDash([4,5]);ctx.stroke(path);ctx.setLineDash([]);
+    ctx.strokeStyle="#f01946";ctx.lineWidth=1.5;ctx.stroke(path);
+    // Finish stripe across racing direction at the frontstretch.
+    ctx.save();ctx.translate(109,54);ctx.rotate(-.38);
+    for(let x=0;x<2;x++)for(let y=0;y<4;y++){ctx.fillStyle=(x+y)%2?"#141922":"#fff";ctx.fillRect(-3+x*3,-7+y*3.5,3,3.5)}
+    ctx.restore();
+    // Cars move along actual path, independently, with three racing grooves.
+    const length=430;
+    for(const c of [...cars].sort((a,b)=>a.distance-b.distance)){
+      const f=((c.distance%1)+1)%1;
+      const point=ctx.isPointInPath; // keep the track geometry independent of the logo.
+      const x=78+66*Math.cos(f*Math.PI*2),y=33+22*Math.sin(f*Math.PI*2);
+      const dx=-66*Math.sin(f*Math.PI*2),dy=22*Math.cos(f*Math.PI*2),d=Math.hypot(dx,dy);
+      const px=x-dy/d*c.offset,py=y+dx/d*c.offset;
+      ctx.save();ctx.translate(px,py);ctx.rotate(Math.atan2(dy,dx)+Math.PI/2);
+      ctx.fillStyle=c.color;ctx.strokeStyle="#080b10";ctx.lineWidth=.6;ctx.fillRect(-2.6,-4,5.2,8);ctx.strokeRect(-2.6,-4,5.2,8);
+      ctx.fillStyle="#111923";ctx.fillRect(-2,-2.7,4,1.6);
+      ctx.fillStyle="#fff";ctx.font="900 4px Arial";ctx.textAlign="center";ctx.fillText(c.number,0,1.7);
+      ctx.restore();
+    }
+    lapLabel.textContent=flag==="CHECKERED"?"🏁 WINNER!":flag==="YELLOW"?"🟡 LAP "+lap:flag==="WHITE"?"⚪ WHITE FLAG":"LAP "+lap+"/100";
+    if(document.visibilityState!=="hidden")requestAnimationFrame(frame);
+    else{last=0;document.addEventListener("visibilitychange",function resume(){document.removeEventListener("visibilitychange",resume);requestAnimationFrame(frame)},{once:true})}
+  }
+  requestAnimationFrame(frame);
+})();
+
 
 
   // -----------------------------
