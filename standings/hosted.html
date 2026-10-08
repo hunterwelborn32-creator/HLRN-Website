@@ -560,8 +560,7 @@ html,body,.hosted-hub{background:#fff!important;color:#111214!important;height:a
       '\nhtml,body{background:#000!important;background-color:#000!important;background-image:none!important;color:#fff!important;color-scheme:dark!important}' +
       '</style>';
     return /<\/head>/i.test(markup)
-      ? markup.replace(/<\/head>/i,darkBoot+'<link rel="stylesheet" href="../assets/phase2-standings-results.css?v=20261008p2a">
-</head>')
+      ? markup.replace(/<\/head>/i,darkBoot+'<link rel="stylesheet" href="../assets/phase2-standings-results.css?v=20261008p2a">\n</head>')
       : darkBoot+markup;
   }
 
