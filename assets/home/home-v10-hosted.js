@@ -169,6 +169,12 @@
     load();
   }
 
+  // Keep the card fresh even when visitors leave the homepage open.
+  // Hosted data is published by GitHub Actions every five minutes.
+  setInterval(()=>{
+    if(document.visibilityState==="visible")load();
+  },60000);
+
   document.addEventListener("visibilitychange",()=>{
     if(document.visibilityState==="visible")load();
   });
