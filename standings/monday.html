@@ -1770,7 +1770,8 @@ input,select,button{color:#111!important}
 iframe{background:#fff!important;color-scheme:light!important}
 `;
   const tag='<style id="HLRN_STATIC_LIGHT_INNER">'+css+'</style>';
-  return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'</head>') : tag+markup;
+  return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'<link rel="stylesheet" href="../assets/phase2-standings-results.css?v=20261008p2a">
+</head>') : tag+markup;
 }
 </script>
 
