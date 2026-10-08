@@ -1358,6 +1358,14 @@ html[data-hlrn-theme="dark"] #directoryView .driver-card:hover{border-color:#6b7
 @media(prefers-reduced-motion:reduce){#directoryView .driver-card{transition:none!important}}
 </style>
 
+
+<style id="HLRN_PHASE3_RECENT_FORM_LINKS">
+/* Recent form now links to the same verified race view as the history table. */
+.profile-form a.profile-form-race{display:inline-flex;text-decoration:none;color:inherit}
+.profile-form a.profile-form-race:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.profile-form a.profile-form-race:hover{filter:brightness(1.1)}
+@media(prefers-reduced-motion:reduce){.profile-form a.profile-form-race{transition:none}}
+</style>
 </head>
 <body>
 <div id="directoryView" class="driver-page">
@@ -2310,7 +2318,7 @@ function renderProfile(d){
   }).join(""):`<tr><td colspan="9">${ready?"No race history available for this league.":"Race history is syncing."}</td></tr>`;
   const form=hist.filter(r=>Number(r.finish)>0).slice(0,5).map(r=>{
     const finish=Number(r.finish),cls=finish===1?"form-win":finish<=5?"form-top5":"";
-    return `<span class="${cls}" title="${esc(r.track||"Race")}">P${esc(finish)}</span>`;
+    return `<a href="${esc(raceResultUrl(r))}" class="profile-form-race" aria-label="View ${esc(r.track||"race")} results"><span class="${cls}" title="${esc(r.track||"Race")}">P${esc(finish)}</span></a>`;
   }).join("");
   const mobileResults=hist.length?hist.slice(0,10).map(r=>{
     const finish=Number(r.finish),finishClass=finish===1?"win":finish>1&&finish<=5?"top5":"";
