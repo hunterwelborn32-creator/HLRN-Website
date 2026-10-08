@@ -68,16 +68,21 @@ function exactResultsUrl(item){
       r.trackKey.includes(targetTrack)||targetTrack.includes(r.trackKey)
     ));
   }
+  // Prefer a verified race number if the published story includes it.
+  const statedRace=Number(item?.raceNumber);
+  if(Number.isSafeInteger(statedRace)&&statedRace>0){
+    const verified=(raceIndex[league]||[]).find(r=>r.race===statedRace);
+    if(verified&&(!targetTrack||verified.trackKey===targetTrack)&&(!targetDate||verified.dateKey===targetDate)){
+      return "/results/?league="+league+"&race="+verified.race+"#raceReportView";
+    }
+  }
+  // A matching date and track identify a race; never choose the nearest date.
   if(targetDate){
-    const sameDate=candidates.find(r=>r.dateKey===targetDate);
-    if(sameDate)return "/results/?league="+league+"&race="+sameDate.race+"#raceReportView";
+    const matches=candidates.filter(r=>r.dateKey===targetDate);
+    if(matches.length===1)return "/results/?league="+league+"&race="+matches[0].race+"#raceReportView";
+    return "";
   }
   if(candidates.length===1)return "/results/?league="+league+"&race="+candidates[0].race+"#raceReportView";
-  if(candidates.length&&item?.raceFrozenAt){
-    const targetMs=Date.parse(item.raceFrozenAt)||0;
-    candidates.sort((a,b)=>Math.abs(a.dateMs-targetMs)-Math.abs(b.dateMs-targetMs));
-    if(candidates[0])return "/results/?league="+league+"&race="+candidates[0].race+"#raceReportView";
-  }
   return "";
 }
 function resultsUrl(item){
