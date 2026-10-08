@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Apply the saved Race Day/Night mode before styles paint. Shared theme manager remains authoritative. -->
+<script id="hlrn-theme-early-boot">
+(function(){try{var t=localStorage.getItem("hlrn_site_theme_v2")==="dark"?"dark":"light";document.documentElement.setAttribute("data-hlrn-theme",t);document.documentElement.style.colorScheme=t;}catch(e){document.documentElement.setAttribute("data-hlrn-theme","light");document.documentElement.style.colorScheme="light";}})();
+</script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HLRN Sunday Night League</title>
