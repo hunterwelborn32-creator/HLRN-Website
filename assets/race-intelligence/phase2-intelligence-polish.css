@@ -1,0 +1,20 @@
+/* HLRN Phase 2: Race Intelligence visual polish only.
+   Existing data, profile links, photos, responsive structure and theme logic unchanged. */
+html[data-hlrn-theme="light"]{--ri-p2-edge:#d9dee5;--ri-p2-focus:#b71920;--ri-p2-muted:#586470}
+html[data-hlrn-theme="dark"]{--ri-p2-edge:#30343c;--ri-p2-focus:#ef3340;--ri-p2-muted:#bac2cc}
+.shell :is(.toolbar,.cc-command-deck,.live-control-strip,.hero,.intel-grid,.story-section,.detail-wrap){max-width:100%;min-width:0}
+.shell :is(.section-label,.story-title,.box-title){letter-spacing:.025em;line-height:1.2;text-wrap:balance}
+.shell :is(.deep-title,.detail-name,.cc-command-title){overflow-wrap:anywhere;line-height:1.09}
+.shell :is(.deep-summary,.story-sub,.cc-command-sub){line-height:1.55}
+.shell :is(.intel-card,.deep-box,.category-deep,.stat,.detail-box){min-width:0}
+.shell :is(.score-num,.stat-value,.cc-command-stat){font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.shell :is(.stat-label,.score-label,.deep-label){line-height:1.35;letter-spacing:.06em}
+.shell :is(.league-btn,.refresh,.deep-action){transition:filter .16s ease,background-color .16s ease,border-color .16s ease}
+.shell :is(.league-btn,.refresh,.deep-action,a,button):focus-visible{outline:2px solid var(--ri-p2-focus)!important;outline-offset:2px}
+.shell :is(.detail-wrap,.story-section,.category-deep,.deep-box,.stat,.detail-box){border-color:var(--ri-p2-edge)}
+@media(max-width:760px){
+ .shell :is(.toolbar,.detail-head,.deep-head){min-width:0}
+ .shell :is(.deep-title,.detail-name){hyphens:auto}
+ .shell :is(.stat-label,.score-label){font-size:clamp(9px,2.3vw,12px)}
+}
+@media(prefers-reduced-motion:reduce){.shell :is(.league-btn,.refresh,.deep-action){transition:none}}
