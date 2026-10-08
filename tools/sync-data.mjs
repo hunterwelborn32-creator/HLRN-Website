@@ -647,7 +647,7 @@ export function sameData(a, b) {
     JSON.stringify(a?.hosted) === JSON.stringify(b?.hosted);
 }
 
-async function request(url, description, headers = {}) {
+async function request(url, description, headers = {}, timeoutMs = 20000) {
   let last;
   for (let attempt = 1; attempt <= 3; attempt++) {
     try {
@@ -655,7 +655,7 @@ async function request(url, description, headers = {}) {
         redirect: 'follow',
         cache: 'no-store',
         headers,
-        signal: AbortSignal.timeout(20000)
+        signal: AbortSignal.timeout(timeoutMs)
       });
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const data = await res.json();
@@ -884,7 +884,7 @@ export async function sync({
     try {
       const url = new URL(hostedEndpoint);
       url.searchParams.set('action', 'data');
-      const refreshedHosted = validateHosted(await request(url, 'hosted/data'));
+      const refreshedHosted = validateHosted(await request(url, 'hosted/data', {}, 90000));
       const priorHostedCount = Array.isArray(old?.hosted?.sessions) ? old.hosted.sessions.length : 0;
       if (priorHostedCount && refreshedHosted.sessions.length < priorHostedCount) {
         throw new Error(`Hosted source regressed from ${priorHostedCount} to ${refreshedHosted.sessions.length} session rows`);
@@ -900,7 +900,8 @@ export async function sync({
       };
       console.log(`Hosted verified: ${hosted.sessions.length} session rows; ${hosted.rankings.length} rankings; ${Object.keys(hosted.driverRatings || {}).length} remembered iRatings.`);
     } catch (e) {
-      console.warn('Hosted refresh failed; retaining last Hosted snapshot:', e.message);
+      console.warn('HOSTED DATA STALE: Hosted refresh failed; retaining last Hosted snapshot:', e.message);
+      console.warn('Check the Hosted web app URL, deployment and response time. The homepage cannot show a newer race until this source responds.');
     }
   } else {
     console.log('HLRN_HOSTED_WEBAPP_URL not configured; existing Hosted snapshot retained.');
