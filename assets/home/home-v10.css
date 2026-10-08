@@ -1088,3 +1088,49 @@ html[data-hlrn-theme="light"] .h10-hosted-winner-photo{
   .h10-hosted-race-stats>div:nth-child(-n+2){border-bottom:1px solid rgba(255,255,255,.11)}
   html[data-hlrn-theme="light"] .h10-hosted-race-stats>div:nth-child(-n+2){border-bottom-color:#d9dee5!important}
 }
+
+
+/* Phase 2 / homepage visual polish — layout & typography only.
+   No image sources, live state, Hosted data, themes, or links are changed. */
+.home10 .h10-section{scroll-margin-top:24px}
+.home10 .h10-section-head{gap:18px;align-items:end}
+.home10 .h10-section-head h2{letter-spacing:-.038em;text-wrap:balance}
+.home10 .h10-section-head>a{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 14px;border:1px solid var(--h10-line);border-radius:6px;text-decoration:none;white-space:nowrap;transition:background-color .18s,border-color .18s}
+.home10 .h10-section-head>a:hover,.home10 .h10-section-head>a:focus-visible{background:var(--h10-soft);border-color:var(--h10-muted)}
+.home10 .h10-week-grid,.home10 .h10-links-grid{gap:18px}
+.home10 .h10-week-card,.home10 .h10-link-card{border-radius:10px;overflow:hidden;box-shadow:var(--h10-shadow);transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+.home10 .h10-week-card:hover,.home10 .h10-link-card:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(0,0,0,.16)}
+.home10 .h10-week-card h3{line-height:1.12;overflow-wrap:anywhere;text-wrap:balance}
+.home10 .h10-link-card strong{line-height:1.12}
+.home10 .h10-link-card small{line-height:1.5}
+.home10 .h10-info-item{min-width:0;transition:background-color .18s}
+.home10 .h10-info-item strong{overflow-wrap:anywhere;line-height:1.1}
+.home10 .h10-hosted-card{border-radius:10px;overflow:hidden;box-shadow:0 22px 54px rgba(0,0,0,.22)}
+.home10 .h10-hosted-race>strong{line-height:1.04;overflow-wrap:anywhere;text-wrap:balance}
+.home10 .h10-hosted-race-stats b{font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.home10 .h10-hosted-winner-feature .h10-hosted-winner-copy strong{white-space:normal;overflow-wrap:anywhere;line-height:1.03}
+.home10 .h10-hosted-link{min-height:48px}
+.home10 .h10-story-layout .hlrn-recap-card{border-radius:10px;overflow:hidden}
+.home10 .h10-hero-copy h1{max-width:820px;text-wrap:balance;line-height:.99}
+.home10 .h10-hero-copy p{max-width:620px;line-height:1.55}
+.home10 .h10-btn{border-radius:5px}
+html[data-hlrn-theme="light"] .home10 .h10-week-card,
+html[data-hlrn-theme="light"] .home10 .h10-link-card{box-shadow:0 8px 24px rgba(15,23,42,.07)}
+html[data-hlrn-theme="light"] .home10 .h10-week-card:hover,
+html[data-hlrn-theme="light"] .home10 .h10-link-card:hover{box-shadow:0 15px 32px rgba(15,23,42,.13)}
+@media(max-width:720px){
+  .home10 .h10-section-head{align-items:flex-start;flex-wrap:wrap}
+  .home10 .h10-section-head>a{min-height:38px}
+  .home10 .h10-week-grid,.home10 .h10-links-grid{gap:12px}
+  .home10 .h10-hero-copy h1{line-height:1.02}
+  .home10 .h10-hosted-race-stats b{font-size:clamp(15px,4vw,18px)}
+}
+@media(max-width:420px){
+  .home10 .h10-hosted-winner-feature{grid-template-columns:78px minmax(0,1fr);gap:12px;padding-inline:12px}
+  .home10 .h10-hosted-winner-photo{height:80px}
+  .home10 .h10-hosted-winner-feature .h10-hosted-winner-copy strong{font-size:clamp(18px,6vw,26px)}
+}
+@media(prefers-reduced-motion:reduce){
+  .home10 .h10-week-card,.home10 .h10-link-card,.home10 .h10-section-head>a{transition:none}
+  .home10 .h10-week-card:hover,.home10 .h10-link-card:hover{transform:none}
+}
