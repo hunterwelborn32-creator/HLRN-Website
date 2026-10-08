@@ -2293,7 +2293,7 @@ function renderProfile(d){
   const seasonLapsLed=value(league.lapsLed??(hist.length?d.lapsLed:"—"));
   const seasonIncidents=value(league.incidents??(hist.length?hist.reduce((t,r)=>t+num(r.incidents),0):"—"));
   const avgFinish=value(league.averageFinish??d.averageFinish);
-  const avgRating=value(league.avgRating);
+  const avgRating=league.avgRating!=null && league.avgRating!=='' && Number.isFinite(Number(league.avgRating)) ? Number(league.avgRating).toFixed(2) : '—';
   const poles=value(league.poles);
   const stat=(label,v)=>`<div class="profile-stat"><b>${esc(v)}</b><span>${esc(label)}</span></div>`;
   const lead=(label,v)=>`<div class="profile-hero-stat"><span>${esc(label)}</span><b>${esc(v)}</b></div>`;
