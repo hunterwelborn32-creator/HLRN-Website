@@ -902,81 +902,91 @@ function start(){
 
   document.body.insertBefore(nav,document.body.firstChild);
 
-// Mini Talladega race fitted around the ORIGINAL brand mark in shared navigation.
-// This is visual-only and never blocks the menu or login controls.
+// Polished, compact racing oval framing the complete HLRN brand.
+// Never obstructs navigation; respects tab visibility and reduced-motion preference.
 (function(){
-  const canvas=nav.querySelector(".hgn-mini-canvas");
-
-  if(!canvas)return;
-  const style=document.createElement("style");
-  style.id="hlrn-mini-nav-racing";
-  style.textContent="#hlrn-global-nav .hgn-mini-track{position:relative;display:block;width:420px;height:68px;flex:0 0 420px;overflow:hidden;pointer-events:none}\n#hlrn-global-nav .hgn-mini-canvas{position:absolute;inset:0;width:420px;height:68px;display:block}\n#hlrn-global-nav .hgn-mini-track .hgn-mark{position:absolute!important;left:35px!important;top:19px!important;width:46px!important;height:34px!important;z-index:2}\n#hlrn-global-nav .hgn-mini-track .hgn-name{position:absolute!important;left:96px!important;top:24px!important;font-size:11px!important;z-index:2}\n#hlrn-global-nav .hgn-mini-lap{position:absolute;left:180px;bottom:1px;z-index:3;color:#dae2ec;font:900 7px system-ui;background:#080f19;padding:1px 3px}\n@media(max-width:1350px){#hlrn-global-nav .hgn-mini-track{width:335px;flex-basis:335px}#hlrn-global-nav .hgn-mini-canvas{width:335px}#hlrn-global-nav .hgn-mini-track .hgn-name{left:79px!important;font-size:9px!important}#hlrn-global-nav .hgn-mini-track .hgn-mark{left:25px!important;width:40px!important;height:30px!important;top:21px!important}#hlrn-global-nav .hgn-mini-lap{left:140px}}\n@media(max-width:700px){#hlrn-global-nav .hgn-mini-track{width:275px;flex-basis:275px;height:62px}#hlrn-global-nav .hgn-mini-canvas{width:275px;height:62px}#hlrn-global-nav .hgn-mini-track .hgn-name{left:68px!important;top:22px!important;font-size:8px!important}#hlrn-global-nav .hgn-mini-track .hgn-name small{font-size:6px!important}#hlrn-global-nav .hgn-mini-track .hgn-mark{left:19px!important;top:18px!important;width:36px!important;height:28px!important}#hlrn-global-nav .hgn-mini-lap{left:114px;bottom:0}}";
-  document.head.appendChild(style);
-  const ctx=canvas.getContext("2d");if(!ctx)return;
-  const colors=["#f02543","#258afa","#ffd22c","#40cf68","#d789f3","#f3842a","#f7f7f7","#14bec8","#df4c9e","#9ad2fc","#e62b35","#a98fff","#fff261","#74d948","#e37942","#6092ff","#f5c7e3","#f9a41c","#83ccd3","#cae055"];
-  const cars=colors.map((color,i)=>({color,number:1+((i*17+32)%99),distance:-i*.007,offset:(i%3-1)*3.5,power:.2+Math.random()*.016,phase:i*1.23}));
-  let last=0,raceStart=0,finishTime=0,flag="GREEN",cautions=0,yellowUntil=0,won=false;
-  const rand=()=>Math.random();
-  function frame(now){
-    if(!last){last=now;raceStart=now}
-    const dt=Math.min(.05,(now-last)/1000);last=now;
-    const lead=Math.max(...cars.map(c=>c.distance));
-    const lap=Math.min(100,Math.max(1,Math.floor(lead)+1));
-    if(won&&now-finishTime>4500){for(let i=0;i<cars.length;i++){let c=cars[i];c.distance=-i*.007;c.power=.2+rand()*.016;c.phase=i*1.23}won=false;flag="GREEN";cautions=0}
-    if(!won){
-      if(flag==="YELLOW"&&lead>=yellowUntil)flag="GREEN";
-      if(flag!=="YELLOW"&&lap>4&&lap<96&&lap%17===0&&now-raceStart>4500&&rand()<dt*.02){flag="YELLOW";yellowUntil=lead+2.1;cautions++}
-      for(const c of cars){let drift=Math.sin(now/1800+c.phase)*.010;
-        let pace=flag==="YELLOW"?.075:c.power+drift;
-        c.distance+=dt*pace;
-        c.offset+=(Math.sin(now/830+c.phase)*3.5-c.offset)*Math.min(.08,dt*.6);
-      }
-      const p=Math.max(...cars.map(c=>c.distance));
-      if(p>=99&&flag!=="YELLOW")flag="WHITE";
-      if(p>=100){flag="CHECKERED";won=true;finishTime=now}
-    }
-    ctx.clearRect(0,0,420,68);
-    // Long, wide, rounded Talladega-style oval around the entire brand.
-    const left=49,right=371,cy=34,turnX=40,turnY=24;
-    const track=new Path2D();track.moveTo(left,cy-turnY);track.lineTo(right,cy-turnY);
-    track.bezierCurveTo(right+turnX*.55,cy-turnY,right+turnX,cy-turnY*.55,right+turnX,cy);
-    track.bezierCurveTo(right+turnX,cy+turnY*.55,right+turnX*.55,cy+turnY,right,cy+turnY);
-    track.lineTo(left,cy+turnY);
-    track.bezierCurveTo(left-turnX*.55,cy+turnY,left-turnX,cy+turnY*.55,left-turnX,cy);
-    track.bezierCurveTo(left-turnX,cy-turnY*.55,left-turnX*.55,cy-turnY,left,cy-turnY);track.closePath();
-    ctx.strokeStyle="#303944";ctx.lineWidth=14;ctx.stroke(track);
-    ctx.strokeStyle="#586270";ctx.lineWidth=10;ctx.stroke(track);
-    ctx.setLineDash([7,8]);ctx.strokeStyle="#d4dee866";ctx.lineWidth=1;ctx.stroke(track);ctx.setLineDash([]);
-    ctx.strokeStyle="#f01946";ctx.lineWidth=1.8;ctx.stroke(track);
-    // Clean checkerboard stripe across the lower straight.
-    ctx.save();ctx.translate(223,58);for(let a=0;a<2;a++)for(let b=0;b<4;b++){ctx.fillStyle=(a+b)%2?"#141922":"#fff";ctx.fillRect(-4+a*4,-7+b*3.5,4,3.5)}ctx.restore();
-    // Arc-length table keeps all cars on the exact same widened oval, in reverse direction.
-    const samples=[],push=(x,y)=>samples.push({x,y});
-    for(let i=0;i<=120;i++)push(left+(right-left)*i/120,cy-turnY);
-    for(let i=1;i<=70;i++){let t=-Math.PI/2+Math.PI*i/70;push(right+turnX*Math.cos(t),cy+turnY*Math.sin(t))}
-    for(let i=1;i<=120;i++)push(right-(right-left)*i/120,cy+turnY);
-    for(let i=1;i<=70;i++){let t=Math.PI/2+Math.PI*i/70;push(left+turnX*Math.cos(t),cy+turnY*Math.sin(t))}
-    const cumulative=[0];for(let i=1;i<=samples.length;i++){let p=samples[i-1],q=samples[i%samples.length];cumulative.push(cumulative[i-1]+Math.hypot(q.x-p.x,q.y-p.y))}
-    const total=cumulative[cumulative.length-1];
-    for(const c of [...cars].sort((a,b)=>a.distance-b.distance)){
-      // Reverse travel while lap progression and timing continue forward.
-      const f=1-(((c.distance%1)+1)%1),dist=f*total;
-      let lo=0,hi=samples.length;while(lo+1<hi){let mid=(lo+hi)>>1;if(cumulative[mid]<=dist)lo=mid;else hi=mid}
-      let p=samples[lo],q=samples[(lo+1)%samples.length],u=(dist-cumulative[lo])/(cumulative[lo+1]-cumulative[lo]||1);
-      let x=p.x+(q.x-p.x)*u,y=p.y+(q.y-p.y)*u,dx=p.x-q.x,dy=p.y-q.y,d=Math.hypot(dx,dy)||1;
-      const px=x-dy/d*c.offset,py=y+dx/d*c.offset;
-      ctx.save();ctx.translate(px,py);ctx.rotate(Math.atan2(dy,dx)+Math.PI/2);
-      ctx.fillStyle=c.color;ctx.strokeStyle="#080b10";ctx.lineWidth=.6;ctx.fillRect(-2.6,-4,5.2,8);ctx.strokeRect(-2.6,-4,5.2,8);
-      ctx.fillStyle="#111923";ctx.fillRect(-2,-2.7,4,1.6);
-      ctx.fillStyle="#fff";ctx.font="900 4px Arial";ctx.textAlign="center";ctx.fillText(c.number,0,1.7);
-      ctx.restore();
-    }
-    if(document.visibilityState!=="hidden")requestAnimationFrame(frame);
-    else{last=0;document.addEventListener("visibilitychange",function resume(){document.removeEventListener("visibilitychange",resume);requestAnimationFrame(frame)},{once:true})}
+ const canvas=nav.querySelector(".hgn-mini-canvas");
+ if(!canvas)return;
+ const ctx=canvas.getContext("2d");if(!ctx)return;
+ const style=document.createElement("style");style.id="hlrn-navigation-racing-v5";
+ style.textContent=[
+ "#hlrn-global-nav .hgn-mini-track{display:block;position:relative;width:420px;height:68px;flex:0 0 420px;overflow:hidden;pointer-events:none}",
+ "#hlrn-global-nav .hgn-mini-canvas{position:absolute;inset:0;width:100%;height:68px;display:block}",
+ "#hlrn-global-nav .hgn-mini-track .hgn-mark{position:absolute!important;left:35px!important;top:19px!important;width:46px!important;height:34px!important;z-index:2}",
+ "#hlrn-global-nav .hgn-mini-track .hgn-name{position:absolute!important;left:96px!important;top:24px!important;font-size:11px!important;z-index:2;text-shadow:0 1px 2px #000}",
+ "@media(max-width:1350px){#hlrn-global-nav .hgn-mini-track{width:335px;flex-basis:335px}#hlrn-global-nav .hgn-mini-track .hgn-name{left:79px!important;font-size:9px!important}#hlrn-global-nav .hgn-mini-track .hgn-mark{left:25px!important;width:40px!important;height:30px!important;top:21px!important}}",
+ "@media(max-width:700px){#hlrn-global-nav .hgn-mini-track{width:275px;flex-basis:275px;height:62px}#hlrn-global-nav .hgn-mini-canvas{height:62px}#hlrn-global-nav .hgn-mini-track .hgn-name{left:68px!important;top:22px!important;font-size:8px!important}#hlrn-global-nav .hgn-mini-track .hgn-name small{font-size:6px!important}#hlrn-global-nav .hgn-mini-track .hgn-mark{left:19px!important;top:18px!important;width:36px!important;height:28px!important}}",
+ "@media(max-width:390px){#hlrn-global-nav .hgn-mini-track{width:240px;flex-basis:240px}#hlrn-global-nav .hgn-mini-track .hgn-name{left:61px!important;font-size:7px!important}#hlrn-global-nav .hgn-mini-track .hgn-mark{left:15px!important}}"
+ ].join("\n");document.head.appendChild(style);
+ const reduced=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+ const palette=["#ff274d","#148cff","#ffcd28","#21d2a9","#bc65ff","#fd7f30","#f6f8fb","#fa50c6","#7ce458","#74d9fb","#e53346","#6381ff","#fad566","#8fd66a","#ff8a65","#2ce2e2","#fff","#cf6eff","#61b6ee","#efc94d"];
+ const cars=palette.map((color,i)=>({color,no:1+(i*13+31)%99,p:-i*.015,lane:(i%3-1)*2.35,desired:(i%3-1)*2.35,pace:.165+Math.random()*.018,phase:i*1.9,next:1+Math.random()*3,damage:0}));
+ let last=0,race=0,yellow=0,endAt=0,finished=false,nextCrash=15000;
+ const left=46,right=374,cy=34,rx=38,ry=22;
+ // Rounded superspeedway with long straights and broad, smoothly banked ends.
+ const pts=[],steps=110;
+ for(let i=0;i<=steps;i++)pts.push({x:left+(right-left)*i/steps,y:cy-ry});
+ for(let i=1;i<=90;i++){let t=-Math.PI/2+Math.PI*i/90;pts.push({x:right+rx*Math.cos(t),y:cy+ry*Math.sin(t)})}
+ for(let i=1;i<=steps;i++)pts.push({x:right-(right-left)*i/steps,y:cy+ry});
+ for(let i=1;i<=90;i++){let t=Math.PI/2+Math.PI*i/90;pts.push({x:left-rx*Math.cos(t-Math.PI),y:cy+ry*Math.sin(t)})}
+ // Correct left turn via direct center-left half ellipse.
+ for(let i=steps+90+steps+1;i<pts.length;i++){const t=Math.PI/2+Math.PI*(i-(steps+90+steps))/90;pts[i]={x:left+rx*Math.cos(t),y:cy+ry*Math.sin(t)}}
+ const accum=[0];for(let i=1;i<=pts.length;i++){const p=pts[i-1],q=pts[i%pts.length];accum.push(accum[i-1]+Math.hypot(q.x-p.x,q.y-p.y))}
+ const total=accum[accum.length-1];
+ function pos(distance){const f=((1-distance%1)%1+1)%1,dist=f*total;let lo=0,hi=pts.length;while(lo+1<hi){const m=(lo+hi)>>1;if(accum[m]<=dist)lo=m;else hi=m}const p=pts[lo],q=pts[(lo+1)%pts.length],u=(dist-accum[lo])/(accum[lo+1]-accum[lo]||1);const dx=p.x-q.x,dy=p.y-q.y,z=Math.hypot(dx,dy)||1;return{x:p.x+(q.x-p.x)*u,y:p.y+(q.y-p.y)*u,dx:dx/z,dy:dy/z}}
+ function track(){
+  ctx.clearRect(0,0,420,68);ctx.save();
+  ctx.lineCap="round";ctx.lineJoin="round";
+  ctx.beginPath();pts.forEach((p,i)=>{if(i)ctx.lineTo(p.x,p.y);else ctx.moveTo(p.x,p.y)});ctx.closePath();
+  ctx.strokeStyle="#0b141e";ctx.lineWidth=18;ctx.stroke();
+  ctx.strokeStyle="#333c47";ctx.lineWidth=14;ctx.stroke();
+  ctx.strokeStyle="#515a65";ctx.lineWidth=10;ctx.stroke();
+  ctx.setLineDash([7,11]);ctx.strokeStyle="#cdd7e688";ctx.lineWidth=.8;ctx.stroke();ctx.setLineDash([]);
+  ctx.strokeStyle="#ef204a";ctx.lineWidth=1.4;ctx.stroke();
+  // Across the lower straight, no pit-road illustration.
+  for(let a=0;a<2;a++)for(let b=0;b<5;b++){ctx.fillStyle=(a+b)%2?"#13171e":"#f8f9fc";ctx.fillRect(210+a*3.5,cy+ry-7+b*2.8,3.5,2.8)}
+  ctx.restore();
+ }
+ function drawCars(){
+  const sorted=[...cars].sort((a,b)=>a.p-b.p);
+  for(const c of sorted){
+   const q=pos(c.p),x=q.x-q.dy*c.lane,y=q.y+q.dx*c.lane;
+   ctx.save();ctx.translate(x,y);ctx.rotate(Math.atan2(q.dy,q.dx)-Math.PI/2);
+   ctx.shadowColor="#000";ctx.shadowBlur=2.3;
+   ctx.fillStyle="#11161e";ctx.fillRect(-3.4,-5.5,6.8,11);
+   ctx.shadowBlur=0;ctx.fillStyle=c.color;ctx.beginPath();ctx.roundRect(-2.8,-5,5.6,10,1.2);ctx.fill();
+   ctx.fillStyle="#101b2a";ctx.fillRect(-2,-2.6,4,2.1);ctx.fillRect(-2,2.8,4,1.3);
+   ctx.fillStyle="#fff";ctx.font="900 5px Arial";ctx.textAlign="center";ctx.strokeStyle="#12151c";ctx.lineWidth=1.4;ctx.strokeText(c.no,0,1.6);ctx.fillText(c.no,0,1.6);
+   ctx.restore();
   }
-  requestAnimationFrame(frame);
+ }
+ function tick(now){
+  if(!last)last=now;
+  const dt=Math.min(.05,(now-last)/1000);last=now;
+  if(!reduced&&document.visibilityState==="visible"){
+   const leader=Math.max(...cars.map(c=>c.p));
+   if(finished){if(now-endAt>4000){cars.forEach((c,i)=>{c.p=-i*.015;c.lane=(i%3-1)*2.35;c.damage=0});finished=false;yellow=0;race++}}
+   else{
+    if(yellow>0)yellow=Math.max(0,yellow-dt);
+    for(const c of cars){
+     c.next-=dt;
+     let ahead=cars.filter(o=>o!==c&&o.p>c.p&&o.p-c.p<.035).sort((a,b)=>a.p-b.p)[0];
+     if(c.next<=0){if(ahead&&Math.abs(c.lane-ahead.lane)<2.3)c.desired=([-3.7,0,3.7]).filter(v=>Math.abs(v-ahead.lane)>1.8)[Math.floor(Math.random()*2)]??0;else c.desired=[-3.7,0,3.7][Math.floor(Math.random()*3)];c.next=1.2+Math.random()*3.2}
+     if(yellow>0)c.desired=(c.no%3-1)*2.2;
+     c.lane+=(c.desired-c.lane)*Math.min(1,dt*1.4);
+     const tow=ahead&&ahead.p-c.p<.02?.012:0;
+     c.p+=dt*(yellow>0?.078:(c.pace+tow+.006*Math.sin(c.p*35+c.phase)))*(1-c.damage);
+    }
+    if(now>nextCrash&&leader>2&&leader<97){yellow=8;nextCrash=now+18000+Math.random()*24000;const victim=cars[Math.floor(Math.random()*cars.length)];victim.damage=Math.min(.14,victim.damage+.025)}
+    if(Math.max(...cars.map(c=>c.p))>=100){finished=true;endAt=now}
+   }
+  }
+  track();drawCars();
+  if(document.visibilityState==="visible")requestAnimationFrame(tick);
+  else{last=0;document.addEventListener("visibilitychange",function resume(){document.removeEventListener("visibilitychange",resume);requestAnimationFrame(tick)},{once:true})}
+ }
+ requestAnimationFrame(tick);
 })();
-
 
 
   // -----------------------------
