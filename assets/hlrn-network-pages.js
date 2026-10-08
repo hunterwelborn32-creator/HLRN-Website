@@ -8,7 +8,7 @@ const page=document.body.dataset.page;
 const base=document.body.dataset.root||'../';
 const $=id=>document.getElementById(id);
 const name=d=>v(d?.name||'Unknown driver');
-const path=(series,id,name='')=>window.HLRNDrivers?.profileUrl?.({driverId:id,driver:name}) || base+'driver-hub/?series='+encodeURIComponent(series)+'&id='+encodeURIComponent(id);
+const path=(series,id,name='')=>window.HLRNDrivers?.profileUrl?.({driverId:id,driver:name}) || base+'drivers/?driverId='+encodeURIComponent(id)+'&league='+encodeURIComponent(series)+(name?'&driver='+encodeURIComponent(name):'');
 const officialRaceUrl=r=>r&&['sunday','monday'].includes(r.series)&&Number.isSafeInteger(Number(r.raceNumber))&&Number(r.raceNumber)>0?base+'results/?league='+encodeURIComponent(r.series)+'&race='+encodeURIComponent(r.raceNumber)+'#raceReportView':'';
 const date=d=>d&&Number.isFinite(Date.parse(d))?new Date(d).toLocaleDateString('en-US',{timeZone:'America/New_York',year:'numeric',month:'short',day:'numeric'}):'Date not published';
 const photo=d=>{const system=window.HLRNDrivers;const rating=system?.verifiedIRating?.(d,d?.iRating??d?.irating);const shared=system?.displayPhotoUrl?.(d,rating,'cutout')||'';if(shared)return shared;const slug=String(d?.photoSlug||'').replace(/[^a-z0-9-]/g,'');return slug?'https://hunterwelborn32-creator.github.io/HLRN-App/driver-photos/cutout/'+encodeURIComponent(slug)+'.webp':''};
