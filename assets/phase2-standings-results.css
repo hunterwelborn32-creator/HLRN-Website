@@ -1,0 +1,25 @@
+/* HLRN Phase 2: Standings + Results presentation-only polish.
+   Preserves sticky table headers, source data, photos, theme switching and page JS. */
+html[data-hlrn-theme="light"]{--p2-surface:#fff;--p2-ink:#151a20;--p2-muted:#5e6975;--p2-border:#dce1e7;--p2-hover:#f5f7fa}
+html[data-hlrn-theme="dark"]{--p2-surface:#090a0d;--p2-ink:#f6f7f9;--p2-muted:#b4bdc7;--p2-border:#30343c;--p2-hover:#141820}
+.hlrn-series-switcher a{letter-spacing:.035em!important;transition:background-color .16s,color .16s!important}
+.hlrn-series-switcher a:focus-visible{outline:2px solid #e31837!important;outline-offset:-3px!important}
+.hlrn-series-switcher a.active{font-weight:900!important}
+html[data-hlrn-theme] .hlrn-series-switcher{border-color:var(--p2-border)!important}
+html[data-hlrn-theme] .hlrn-series-switcher a{border-color:var(--p2-border)!important}
+html[data-hlrn-theme] .hlrn-series-switcher a:focus-visible{box-shadow:inset 0 0 0 2px var(--p2-ink)!important}
+html[data-hlrn-theme] body :is(.table-wrap,.table-container,.table-shell,.results-table-wrap,.standings-table-wrap){max-width:100%}
+html[data-hlrn-theme] body :is(.table-wrap,.table-container,.table-shell,.results-table-wrap,.standings-table-wrap) table{font-variant-numeric:tabular-nums}
+html[data-hlrn-theme] body :is(.table-wrap,.table-container,.table-shell,.results-table-wrap,.standings-table-wrap) :is(th,td){line-height:1.45}
+html[data-hlrn-theme] body :is(.table-wrap,.table-container,.table-shell,.results-table-wrap,.standings-table-wrap) th{letter-spacing:.045em}
+html[data-hlrn-theme] body :is(button,a,select,input):focus-visible{outline:2px solid #e31837;outline-offset:2px}
+html[data-hlrn-theme] body :is(input[type="search"],select){max-width:100%;font:inherit}
+html[data-hlrn-theme] body :is(.report-feature,.recorder-card,.rc-report-stat,.rc-stat){min-width:0}
+html[data-hlrn-theme] body :is(.report-feature,.recorder-card,.rc-report-stat,.rc-stat) strong{overflow-wrap:anywhere;line-height:1.2}
+html[data-hlrn-theme="light"] body .report-feature small{color:#536171!important}
+html[data-hlrn-theme="dark"] body .report-feature small{color:#b4bdc7!important}
+@media(max-width:700px){
+  .hlrn-series-switcher a{min-height:48px!important;line-height:1.2!important}
+  html[data-hlrn-theme] body :is(.report-feature,.recorder-card,.rc-report-stat,.rc-stat){max-width:100%}
+}
+@media(prefers-reduced-motion:reduce){.hlrn-series-switcher a{transition:none!important}}
