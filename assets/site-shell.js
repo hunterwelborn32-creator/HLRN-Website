@@ -994,17 +994,6 @@ function start(){
     if(d) location.href=url("my-hlrn/");
     else location.href=url("")+"#hlrnDriverSignIn";
   });
-  accountPanel.querySelector(".hgn-account-profile").addEventListener("click",async()=>{
-    const d=readLogin();
-    closeAccount();
-    if(!d){location.href=url("drivers/");return;}
-    try{
-      await window.HLRNDrivers?.load?.();
-      const profile=window.HLRNDrivers?.profileUrl?.(d.driver);
-      if(profile){location.href=profile;return;}
-    }catch(e){}
-    location.href=url("drivers/"+hgnDriverSlug(d.driver)+"/");
-  });
   accountPanel.querySelector(".hgn-account-control")?.addEventListener("click",()=>{
     const d=readLogin();
     closeAccount();
