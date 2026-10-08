@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-07T21:03:04Z",
+  "generatedAt": "2026-10-08T13:11:53Z",
   "count": 86,
   "drivers": [
     {
@@ -936,10 +936,10 @@
       "name": "Jt Huskins",
       "slug": "jt-huskins",
       "url": "/drivers/jt-huskins/",
-      "number": "—",
+      "number": "23",
       "photoSlug": "",
       "hasPhoto": false,
-      "iRating": 1442,
+      "iRating": 1395,
       "series": [
         "sunday"
       ],
@@ -1146,19 +1146,16 @@
       "hasPhoto": true,
       "iRating": 1903,
       "series": [
-        "hosted",
         "monday",
         "sunday"
       ],
       "ids": {
         "sunday": "120507",
-        "monday": "120507",
-        "hosted": ""
+        "monday": "120507"
       },
       "teams": {
         "sunday": "LBS",
-        "monday": "LBS",
-        "hosted": null
+        "monday": "LBS"
       },
       "aliases": []
     },
@@ -1188,7 +1185,7 @@
       "number": "14",
       "photoSlug": "matthew-brown",
       "hasPhoto": true,
-      "iRating": 2829,
+      "iRating": 2746,
       "series": [
         "monday",
         "sunday"
@@ -1327,7 +1324,7 @@
       "name": "Patrick Craven",
       "slug": "patrick-craven",
       "url": "/drivers/patrick-craven/",
-      "number": "20",
+      "number": "—",
       "photoSlug": "",
       "hasPhoto": false,
       "iRating": 1459,
@@ -1534,16 +1531,19 @@
       "hasPhoto": true,
       "iRating": 3044,
       "series": [
+        "hosted",
         "monday",
         "sunday"
       ],
       "ids": {
         "sunday": "56823",
-        "monday": "56823"
+        "monday": "56823",
+        "hosted": ""
       },
       "teams": {
         "sunday": "HLR",
-        "monday": "HLR"
+        "monday": "HLR",
+        "hosted": null
       },
       "aliases": []
     },
