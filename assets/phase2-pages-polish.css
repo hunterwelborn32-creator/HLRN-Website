@@ -1,0 +1,17 @@
+/* HLRN Phase 2 — secondary public pages: cosmetic refinements only.
+   All selectors are presentation-only; existing image rendering, scripts and interactions remain intact. */
+html[data-hlrn-theme="light"]{--p2-public-border:#dce1e7;--p2-public-muted:#586574;--p2-public-focus:#c71e2b}
+html[data-hlrn-theme="dark"]{--p2-public-border:#343941;--p2-public-muted:#bbc3ce;--p2-public-focus:#f23846}
+html[data-hlrn-theme] body :is(.nr-desk-card,.nr-side-story,.nr-recap-feature,.rule,.penalty,.escalation,.tc-team-card,.tc-leader-card,.tc-stat-card,.bc-player-card,.bc-network-card,.bc-replay-card,.member-card,.admin-card,.product,.pv-race-card,.pv-card,.episode-tile){min-width:0;overflow-wrap:break-word}
+html[data-hlrn-theme] body :is(.nr-desk-card,.nr-side-story,.nr-recap-feature,.rule,.penalty,.escalation,.tc-team-card,.tc-leader-card,.tc-stat-card,.bc-player-card,.bc-network-card,.bc-replay-card,.member-card,.admin-card,.product,.pv-race-card,.pv-card,.episode-tile){border-color:var(--p2-public-border)}
+html[data-hlrn-theme] body :is(.nr-desk-card,.nr-side-story,.tc-team-card,.bc-player-card,.bc-replay-card,.member-card,.product,.pv-race-card,.episode-tile) :is(h2,h3,h4,strong){overflow-wrap:anywhere;line-height:1.16}
+html[data-hlrn-theme] body :is(.nr-desk-card,.nr-side-story,.tc-team-card,.bc-player-card,.bc-replay-card,.member-card,.product,.pv-race-card,.episode-tile) :is(p,small){line-height:1.5}
+html[data-hlrn-theme] body :is(.nr-desk-card,.nr-side-story,.tc-team-card,.bc-player-card,.bc-replay-card,.member-card,.product,.pv-race-card,.episode-tile) :is(img,video){max-width:100%}
+html[data-hlrn-theme] body :is(.tc-stat-card,.pv-fact,.bc-network-card) :is(b,strong){font-variant-numeric:tabular-nums}
+html[data-hlrn-theme] body :is(.nr-desk-card,.nr-side-story,.tc-team-card,.bc-player-card,.bc-replay-card,.member-card,.product,.pv-race-card,.episode-tile){transition:border-color .16s ease,box-shadow .16s ease}
+html[data-hlrn-theme] body :is(a,button,input,select,textarea,[role="button"]):focus-visible{outline:2px solid var(--p2-public-focus)!important;outline-offset:2px}
+@media(max-width:700px){
+ html[data-hlrn-theme] body :is(.nr-desk-card,.nr-side-story,.tc-team-card,.bc-player-card,.bc-replay-card,.member-card,.product,.pv-race-card,.episode-tile){max-width:100%}
+ html[data-hlrn-theme] body :is(input[type="search"],select){max-width:100%}
+}
+@media(prefers-reduced-motion:reduce){html[data-hlrn-theme] body :is(.nr-desk-card,.nr-side-story,.tc-team-card,.bc-player-card,.bc-replay-card,.member-card,.product,.pv-race-card,.episode-tile){transition:none}}
