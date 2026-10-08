@@ -66,13 +66,38 @@
     img.hidden=true;
 
     const system=window.HLRNDrivers;
-    const manifest=system?.displayPhotoUrl?.(name,iRating,"cutout")
-      ||system?.photoUrl?.(name,"cutout")
-      ||"";
     const slug=slugify(name);
-    const direct=slug ? "assets/driver-photos/cutout/"+encodeURIComponent(slug)+".webp" : "";
-    const tier=system?.iRatingFallbackPhoto?.(iRating)||"";
-    const candidates=[manifest,direct,tier].filter((src,i,list)=>src&&list.indexOf(src)===i);
+    // Hosted results often omit the trailing iRacing name suffix (e.g.
+    // "John Miles" vs the directory's "John Miles4"). Match photoSlug,
+    // display name, or an alias before considering a generated suit.
+    const normalized=value=>String(value||"").toLowerCase().replace(/[^a-z0-9]/g,"");
+    const key=normalized(name);
+    const record=system?.resolve?.(name)
+      ||system?.getAll?.().find(rec=>
+        normalized(rec.photoSlug)===key||
+        normalized(rec.displayName)===key||
+        normalized(rec.rawName)===key||
+        (rec.aliases||[]).some(alias=>normalized(alias)===key)
+      );
+    const actualName=record?.rawName||record?.name||name;
+    img.dataset.hlrnDriverName=actualName;
+    if(Number(iRating)>0)img.dataset.hlrnIRating=String(iRating);
+    else delete img.dataset.hlrnIRating;
+    delete img.dataset.hlrnTierFallback;
+
+    const photoSlug=record?.hasPhoto!==false&&record?.photoSlug
+      ?String(record.photoSlug).trim():slug;
+    const real=record?.hasPhoto===false?"":(
+      photoSlug?"assets/driver-photos/cutout/"+encodeURIComponent(photoSlug)+".webp":""
+    );
+    const explicit=system?.resolve?.(actualName);
+    const manifestReal=explicit?.hasPhoto!==false&&explicit?.photoSlug
+      ?"assets/driver-photos/cutout/"+encodeURIComponent(explicit.photoSlug)+".webp":"";
+    const tier=system?.iRatingFallbackPhoto?.(
+      system?.verifiedIRating?.(record||actualName,iRating)||iRating
+    )||"";
+    // Never place an iRating fallback ahead of an existing real photograph.
+    const candidates=[manifestReal,real,tier].filter((src,i,list)=>src&&list.indexOf(src)===i);
 
     let index=0;
     const tryNext=()=>{
