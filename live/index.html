@@ -2269,7 +2269,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
    note.textContent="SIMULATED LAP "+(info.lap??"—")+" • "+(info.viewers??0)+" connected viewer(s)";
   }catch(err){note.textContent="Demo error: "+err.message;clearInterval(timer);timer=null}
  }
- document.getElementById("cf-test-start").onclick=function(){if(timer)return;tick();timer=setInterval(tick,1400)};
+ document.getElementById("cf-test-start").onclick=function(){if(timer)return;tick();timer=setInterval(tick,450)};
  document.getElementById("cf-test-stop").onclick=function(){clearInterval(timer);timer=null;note.textContent="Simulation paused"};
  document.addEventListener("visibilitychange",function(){if(document.hidden&&timer){clearInterval(timer);timer=null;note.textContent="Simulation paused while tab hidden"}});
 })();
