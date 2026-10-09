@@ -93,6 +93,45 @@ class PublisherTests(unittest.TestCase):
         index2 = json.loads(pub.INDEX_PATH.read_text(encoding="utf-8"))
         self.assertEqual(len(index2["recaps"]), 1)
 
+    def test_cloudflare_frozen_recap_end_to_end_in_temporary_workspace(self):
+        """Exercise Cloudflare recorder-shaped data through the real publisher."""
+        recap = fixture(source="iRacing")
+        recap["sessionKey"] = "cf-subsession|cf-session|0|Race Test|Talladega"
+        recap["raceFrozenAt"] = "2026-10-09T18:00:00Z"
+        recap["race"]["source"] = "iRacing"
+        recap["race"]["track"] = "Talladega Superspeedway"
+        recap["race"]["sessionName"] = "Race Test"
+        recap["race"]["raceRecorder"] = {
+            "source": "HLRN Cloudflare server recorder",
+            "completedLapsCaptured": 3,
+            "frozen": True,
+        }
+        recap["timelineEvents"] = [
+            {"type": "lap", "lap": 1, "title": "LAP 1 COMPLETED", "text": "Running order saved."},
+            {"type": "flag", "lap": 2, "title": "CAUTION #1", "text": "Caution detected."},
+            {"type": "flag", "lap": 3, "title": "GREEN FLAG / RESTART", "text": "Restart observed."},
+        ]
+        response = {"recaps": [recap], "latestFrozenKey": recap["sessionKey"]}
+        records = pub.extract_recaps(response)
+        self.assertEqual(len(records), 1)
+        self.assertTrue(pub.publish(records[0]))
+
+        index = json.loads(pub.INDEX_PATH.read_text(encoding="utf-8"))
+        self.assertEqual(len(index["recaps"]), 1)
+        item = index["recaps"][0]
+        self.assertEqual(item["winner"]["name"], "Hunter Welborn")
+        self.assertIn("Talladega", item["track"])
+        data = json.loads((pub.DATA_DIR / f'{item["slug"]}.json').read_text(encoding="utf-8"))
+        self.assertEqual(len(data["recorder"]["lapSnapshots"]), 3)
+        self.assertEqual(len(data["recorder"]["cautionHistory"]), 1)
+        self.assertEqual(len(data["recorder"]["penaltyHistory"]), 1)
+        self.assertEqual(len(data["recorder"]["timelineEvents"]), 3)
+        article = pub.ARTICLE_DIR / item["slug"] / "index.html"
+        self.assertTrue(article.exists())
+        self.assertIn("Talladega", article.read_text(encoding="utf-8"))
+        self.assertFalse(pub.publish(records[0]))
+        self.assertEqual(len(json.loads(pub.INDEX_PATH.read_text())["recaps"]), 1)
+
     def test_archive_envelope_exposes_every_recap(self):
         older = fixture()
         newer = fixture()
