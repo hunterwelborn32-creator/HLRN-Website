@@ -100,7 +100,7 @@ class PublisherTests(unittest.TestCase):
         recap["raceFrozenAt"] = "2026-10-09T18:00:00Z"
         recap["race"]["source"] = "iRacing"
         recap["race"]["track"] = "Talladega Superspeedway"
-        recap["race"]["sessionName"] = "Race Test"
+        recap["race"]["sessionName"] = "Race"  # Production-shaped metadata, isolated filesystem
         recap["race"]["raceRecorder"] = {
             "source": "HLRN Cloudflare server recorder",
             "completedLapsCaptured": 3,
