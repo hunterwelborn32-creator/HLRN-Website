@@ -136,44 +136,6 @@ function showFrame(frame,url,fallback){
 
 let active="sunday";
 
-let pastRaceArchive=[];
-let archiveFilter="all";
-function renderPastRaces(){
- const grid=$("#bcArchiveGrid"),status=$("#bcArchiveStatus");
- if(!grid||!status)return;
- const races=pastRaceArchive.filter(r=>archiveFilter==="all"||r.league===archiveFilter).slice(0,45);
- grid.replaceChildren(...races.map(r=>{
-   const card=document.createElement("article");card.className="bc-past-card";
-   const caption=document.createElement("small");caption.textContent=r.league.toUpperCase()+" • RACE "+r.race;
-   const heading=document.createElement("h3");heading.textContent=r.track||"Race "+r.race;
-   const details=document.createElement("p");details.textContent=(r.date?String(r.date)+" • ":"")+"Completed HLRN event";
-   const results=document.createElement("a");results.href="../results/?league="+encodeURIComponent(r.league)+"&race="+r.race+"#raceReportView";results.textContent="RACE RESULTS →";
-   const video=document.createElement("a");
-   const search=r.league==="sunday"?"https://www.youtube.com/@High_Line_Racing/search?query=":"https://www.youtube.com/@rsibroadcasting/search?query=";
-   video.href=search+encodeURIComponent(r.track||"HLRN race "+r.race);
-   video.target="_blank";video.rel="noopener noreferrer";video.textContent="FIND BROADCAST ↗";
-   card.append(caption,heading,details,results,video);return card;
- }));
- status.textContent=races.length?pastRaceArchive.length+" recorded Sunday and Monday race entries • Broadcast links search the official channels until exact videos are matched.":"No historical race entries available yet.";
-}
-function loadPastRaces(snapshot){
- const all=[];
- for(const league of ["sunday","monday"]){
-  const rows=snapshot?.leagues?.[league]?.results;
-  if(!Array.isArray(rows))continue;
-  const races=new Map();
-  for(const row of rows){
-   const number=Number(row?.raceNumber);
-   if(!Number.isInteger(number)||number<=0||races.has(number))continue;
-   races.set(number,{league,race:number,track:String(row.track||""),date:row.date||""});
-  }
-  all.push(...races.values());
- }
- pastRaceArchive=all.sort((a,b)=>(Date.parse(b.date)||0)-(Date.parse(a.date)||0)||b.race-a.race);
- renderPastRaces();
-}
-
-
 function render(){
   const state=currentAndNext();
   const q=new URLSearchParams(location.search).get("league");
@@ -310,7 +272,6 @@ async function loadBroadcastData(){
         const snapshot=await snapshotRes.json();
         latestRace.sunday=buildLatestRace(snapshot,"sunday");
         latestRace.monday=buildLatestRace(snapshot,"monday");
-        loadPastRaces(snapshot);
       }catch(_){}
     }
   }catch(err){
