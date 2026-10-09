@@ -7,6 +7,8 @@ var params=new URLSearchParams(location.search);
 var activeLeague=["sunday","monday"].indexOf((params.get("league")||"").toLowerCase())>=0?params.get("league").toLowerCase():"sunday";
 var requestedTeam=params.get("team")||"";
 var snapshot=null;
+var teamSearch="";
+var teamSort="rank";
 
 function q(s){return document.querySelector(s)}
 function qa(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
@@ -104,8 +106,13 @@ function teamCard(t,leader){
 function renderDirectory(){
   setLeagueUi();updateSummary();renderBoard();
   var ts=teams(),leader=ts[0];
+  var filtered=ts.filter(function(t){return (t.team+" "+rosterDrivers(t.team).map(function(d){return pretty(d.driver)}).join(" ")).toLowerCase().includes(teamSearch)});
+  if(teamSort==="wins")filtered.sort(function(a,b){return num(b.wins)-num(a.wins)||num(a.rank)-num(b.rank)});
+  else if(teamSort==="form")filtered.sort(function(a,b){return (formAvg(a.team)==null?Infinity:formAvg(a.team))-(formAvg(b.team)==null?Infinity:formAvg(b.team))||num(a.rank)-num(b.rank)});
+  else if(teamSort==="name")filtered.sort(function(a,b){return a.team.localeCompare(b.team)});
+  q("#tcTeamCount").textContent=filtered.length+" of "+ts.length+" teams";
   q("#tcStandingsTitle").textContent=(activeLeague==="sunday"?"Sunday":"Monday")+" Team Championship";
-  q("#tcTeamGrid").innerHTML=ts.length?ts.map(function(t){return teamCard(t,leader)}).join(""):'<div class="tc-empty">No team championship data is available yet.</div>';
+  q("#tcTeamGrid").innerHTML=filtered.length?filtered.map(function(t){return teamCard(t,leader)}).join(""):'<div class="tc-empty">No teams match your search, or championship data is unavailable.</div>';
   q("#tcDirectory").style.display="block";q("#tcProfile").style.display="none";fillCompare()
 }
 function compareOptions(selected){
@@ -157,6 +164,8 @@ function openTeam(name,push){
 }
 function setLeague(v,push){if(push==null)push=true;activeLeague=v;requestedTeam="";renderDirectory();if(push)history.pushState({team:false},"","?league="+encodeURIComponent(v))}
 function bind(){
+  q("#tcTeamSearch").addEventListener("input",function(e){teamSearch=e.target.value.trim().toLowerCase();if(snapshot)renderDirectory()});
+  q("#tcTeamSort").addEventListener("change",function(e){teamSort=e.target.value;if(snapshot)renderDirectory()});
   qa(".tc-tab").forEach(function(b){b.addEventListener("click",function(){setLeague(b.dataset.league)})});
   q("#tcTeamGrid").addEventListener("click",function(e){var c=e.target.closest(".tc-team-card");if(c)openTeam(c.dataset.team)});
   q("#tcBack").addEventListener("click",function(){setLeague(activeLeague)});
