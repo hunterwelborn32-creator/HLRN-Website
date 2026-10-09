@@ -1,0 +1,52 @@
+name: Cloudflare Recap Integration Check
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/cloudflare-recap-integration-check.yml
+      - tests/test_race_recap_publisher.py
+      - tools/publish-race-recap.py
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout source only
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run existing recap publisher tests
+        run: python -m unittest tests/test_race_recap_publisher.py
+
+      - name: Validate Cloudflare recorder archive without publishing
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, urllib.request
+          url="https://hlrn-live-feed.hunterwelborn32.workers.dev/api/recaps"
+          with urllib.request.urlopen(urllib.request.Request(url,headers={"User-Agent":"HLRN-Recap-Integration-Test"}),timeout=20) as response:
+              data=json.load(response)
+          assert isinstance(data,dict), "Archive response must be an object"
+          recaps=data.get("recaps")
+          assert isinstance(recaps,list), "Cloudflare archive needs a recaps list"
+          for i,recap in enumerate(recaps):
+              assert isinstance(recap,dict), f"Recap {i} must be an object"
+              assert recap.get("raceFrozen") is True, f"Recap {i} isn't frozen"
+              assert isinstance(recap.get("race"),dict), f"Recap {i} missing race"
+              assert isinstance(recap.get("lapSnapshots"),list), f"Recap {i} missing laps"
+              assert isinstance(recap.get("cautionHistory"),list), f"Recap {i} missing cautions"
+              assert isinstance(recap.get("penaltyHistory"),list), f"Recap {i} missing penalties"
+              assert isinstance(recap.get("timelineEvents"),list), f"Recap {i} missing timeline"
+          print(f"PASS: Cloudflare archive schema checked; {len(recaps)} frozen race(s).")
+          if not recaps:
+              print("No real frozen races yet. Synthetic publisher tests passed; end-to-end real race publication remains pending.")
+          PY
