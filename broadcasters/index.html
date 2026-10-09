@@ -231,6 +231,7 @@ html[data-hlrn-theme="dark"] .bc-replay-results{
 </style>
 
 <link rel="stylesheet" href="../assets/phase2-pages-polish.css?v=20261008p2">
+<style id="hlrn-race-moments-style">.bc-moments-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}.bc-moment{display:block;padding:17px;border:1px solid #363c45;background:var(--bc-panel,#141920);text-decoration:none;color:inherit!important}.bc-moment:hover{border-color:#e31837}.bc-moment strong{display:block;font-size:15px;margin:6px 0}.bc-moment small,.bc-moment span{font-size:11px}#bcMomentsStatus{font-size:12px;opacity:.85;line-height:1.6}</style>
 </head>
 <body class="bc-page">
 
@@ -377,6 +378,12 @@ html[data-hlrn-theme="dark"] .bc-replay-results{
       </div>
     </section>
 
+
+    <section class="bc-section" id="race-moments" aria-label="Jump to race moments">
+      <div class="bc-section-head"><div><div class="bc-section-kicker">HLRN // QUICK WATCH</div><h2>Race Moments</h2></div><a href="#replays">FULL REPLAYS ↑</a></div>
+      <p id="bcMomentsStatus" aria-live="polite">Checking for verified replay timestamps…</p>
+      <div id="bcMomentsList" class="bc-moments-list"></div>
+    </section>
     <section class="bc-section" id="broadcasters">
       <div class="bc-section-head">
         <div><div class="bc-section-kicker">BEHIND THE MIC</div><h2>HLRN Broadcasters</h2></div>
@@ -428,7 +435,7 @@ html[data-hlrn-theme="dark"] .bc-replay-results{
   </div>
 </main>
 
-<script src="../assets/broadcast-center/broadcast-center.js?v=20261001connected2"></script>
+<script src="../assets/broadcast-center/broadcast-center.js?v=20261009moments1"></script>
 <script src="../assets/site-shell.js?v=20261001control1"></script>
 </body>
 </html>
