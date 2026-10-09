@@ -2,6 +2,15 @@ name: Publish HLRN Race Recaps — Manual Only
 
 on:
   workflow_dispatch:
+    inputs:
+      source:
+        description: "Which recorder archive to publish?"
+        required: true
+        type: choice
+        default: render
+        options:
+          - render
+          - cloudflare
 
 permissions:
   contents: write
@@ -14,7 +23,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     env:
-      HLRN_RECAP_URL: https://hlrn-live-feed.onrender.com/api/recaps
+      HLRN_RECAP_URL: ${{ inputs.source == 'cloudflare' && 'https://hlrn-live-feed.hunterwelborn32.workers.dev/api/recaps' || 'https://hlrn-live-feed.onrender.com/api/recaps' }}
       HLRN_PUBLISH_APPROVED: "1"
 
     steps:
@@ -31,6 +40,9 @@ jobs:
 
       - name: Test race recap publisher
         run: python -m unittest tests/test_race_recap_publisher.py
+
+      - name: Confirm selected archive source
+        run: echo "HLRN recap source is ${{ inputs.source }}"
 
       - name: Publish recorder archive manually
         run: python tools/publish-race-recap.py
