@@ -5213,6 +5213,9 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     ws = new WebSocket(FEED_WS);
 
     ws.onopen = () => {
+      // Background tabs stop consuming full Render race-state broadcasts.
+      try{ ws.send(JSON.stringify({type:"visibility",visible:!document.hidden})); }catch{}
+
       $("socketStatus").textContent = "CONNECTED";
       $("connectionText").textContent = "Live website feed connected";
       retryMs = 1000;
@@ -5238,6 +5241,12 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
       try{ ws.close(); }catch{}
     };
   }
+
+  document.addEventListener("visibilitychange", () => {
+    if(ws && ws.readyState === WebSocket.OPEN){
+      try{ ws.send(JSON.stringify({type:"visibility",visible:!document.hidden})); }catch{}
+    }
+  });
 
   document.querySelectorAll(".tab").forEach(btn => {
     btn.addEventListener("click", () => {
