@@ -280,8 +280,42 @@ async function loadBroadcastData(){
   render();
 }
 
+
+// Optional verified timeline file: /data/replay-moments.json.
+// No synthetic times: hidden until a matching replay video and timestamps are published.
+async function loadReplayMoments(){
+  const status=$("#bcMomentsStatus"),list=$("#bcMomentsList");
+  if(!status||!list)return;
+  const videoId=sundayReplay()?.videoId;
+  try{
+    const response=await fetch("../data/replay-moments.json",{cache:"no-store"});
+    if(!response.ok)throw new Error("Moments not published");
+    const payload=await response.json();
+    const entries=Array.isArray(payload?.replays)?payload.replays:[];
+    const verified=entries.filter(x=>x&&x.verified===true&&typeof x.videoId==="string"&&/^[A-Za-z0-9_-]{11}$/.test(x.videoId)&&
+      (x.league==="monday"||x.league==="sunday")&&
+      (x.league!=="sunday"||x.videoId===videoId));
+    const moments=verified.flatMap(x=>(Array.isArray(x.moments)?x.moments:[]).filter(m=>
+      Number.isInteger(m.seconds)&&m.seconds>=0&&m.seconds<=86400&&typeof m.label==="string"&&m.label.length<=100
+    ).map(m=>({league:x.league,videoId:x.videoId,seconds:m.seconds,label:m.label}))).slice(0,24);
+    if(!moments.length)throw new Error("No verified moments");
+    list.replaceChildren(...moments.map(m=>{
+      const a=document.createElement("a");a.className="bc-moment";a.target="_blank";a.rel="noopener noreferrer";
+      a.href="https://www.youtube.com/watch?v="+encodeURIComponent(m.videoId)+"&t="+m.seconds+"s";
+      const sm=document.createElement("small");sm.textContent=m.league.toUpperCase()+" • REPLAY";
+      const b=document.createElement("strong");b.textContent=m.label;
+      const time=document.createElement("span");time.textContent="WATCH FROM "+Math.floor(m.seconds/60)+":"+String(m.seconds%60).padStart(2,"0")+" →";
+      a.append(sm,b,time);return a;
+    }));
+    status.textContent="Jump to verified moments in the saved broadcasts.";
+  }catch(_){
+    list.replaceChildren();
+    status.textContent="No verified highlight timestamps yet. Watch the latest Sunday or Monday replay above; moments will appear when broadcast times are synchronized.";
+  }
+}
+
 document.addEventListener("DOMContentLoaded",()=>{
-  bind();refreshReplayFrames();render();loadBroadcastData();
+  bind();refreshReplayFrames();render();loadBroadcastData();loadReplayMoments();
   setInterval(render,1000);
   setInterval(loadBroadcastData,5*60*1000);
 });
