@@ -2274,6 +2274,10 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
 .hlrn-sim-controls label{font-size:13px}#hlrn-sim-status{font-weight:800;font-size:13px}
 #hlrn-simulation-panel a{color:#c5dbff;text-decoration:underline}
 </style>
+<style id="hlrn-race-reset-countdown-style">
+  .hlrn-race-reset-countdown{font-size:12px;font-weight:800;letter-spacing:.02em;white-space:nowrap;color:inherit}
+  .hlrn-race-reset-countdown[hidden]{display:none!important}
+</style>
 </head>
 <body>
 
@@ -2601,6 +2605,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
         </div>
         <div class="report-toolbar">
           <div id="reportStatus" class="report-status">Waiting for race-night data</div>
+          <span id="hlrnRaceResetCountdown" class="hlrn-race-reset-countdown" role="timer" hidden></span>
           <div class="report-actions">
             <button id="postRacePreviewBtn" class="story-btn recap-preview-btn" type="button" hidden>PREVIEW RACE RECAP</button>
             <a id="postRaceResultsBtn" class="story-btn" href="/results/" hidden>VIEW PUBLISHED RESULTS →</a>
@@ -5163,6 +5168,27 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     return Number.isFinite(timestamp) && timestamp <= LIVE_MANUAL_RESET_AT;
   }
 
+  // Report-toolbar countdown uses the same finish time and 60-minute deadline
+  // as automatic Live cleanup. It is not a server timer or a Results feature.
+  function refreshRaceResetCountdown(){
+    const el=$("hlrnRaceResetCountdown");
+    if(!el)return;
+    const race=localFrozenRaceState || state;
+    if(!race || !isRacePayload(race) || !(race.raceFrozen || raceFinished(race))){
+      el.hidden=true;el.textContent="";return;
+    }
+    const timestamp=race.raceFrozenAt || race.finishedAt || race.updatedAt;
+    const finishMs=Date.parse(timestamp);
+    if(!Number.isFinite(finishMs)){
+      el.hidden=true;el.textContent="";return;
+    }
+    const remaining=Math.max(0,finishMs+LIVE_FINAL_RETENTION_MS-Date.now());
+    const minutes=Math.floor(remaining/60000);
+    const seconds=Math.floor(remaining%60000/1000);
+    el.textContent="LIVE PAGE CLEARS IN "+String(minutes).padStart(2,"0")+":"+
+      String(seconds).padStart(2,"0");
+    el.hidden=false;
+  }
   function finalRaceExpired(s){
     if(!s || !isRacePayload(s) || !(s.raceFrozen || raceFinished(s))) return false;
     const stamp = s.raceFrozenAt || s.finishedAt || s.updatedAt;
@@ -5176,6 +5202,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     lastAutoSessionKey = null;
     manualTabSelection = false;
     render({online:false,drivers:[],events:[]});
+    refreshRaceResetCountdown();
     return true;
   }
 
@@ -5437,6 +5464,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     renderRaceStorylines(drivers, available);
 
     renderReport();
+    refreshRaceResetCountdown();
     $("rawFeed").textContent = JSON.stringify(state, null, 2);
   }
 
@@ -5762,6 +5790,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
   }, 4500);
 
   setInterval(clearExpiredLiveRace, 1000);
+  setInterval(refreshRaceResetCountdown, 1000);
   setInterval(refreshLiveHealth, 1000);
   refreshLiveHealth();
   // A dropped connection preserves the last leaderboard briefly, marked stale.
