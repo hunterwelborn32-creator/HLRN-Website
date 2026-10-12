@@ -5173,13 +5173,37 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
       firstSeenPosition.clear();
       lastPhase = state.phase || null;
     }
-    const drivers = Array.isArray(state.drivers) ? [...state.drivers] : [];
+    let drivers = Array.isArray(state.drivers) ? [...state.drivers] : [];
 
+    // In a completed race, protect final classification against a contradictory
+    // live position feed. Use scored laps first only when EVERY entry has a
+    // reliable non-negative completed-lap count. Keep official position order
+    // among cars on the same lap, and preserve all underlying result sources.
+    const isFinalRace = state.phase === "race" && raceFinished(state);
+    const hasCompleteLapScoring = drivers.length > 0 && drivers.every(d =>
+      d.lapsCompleted !== null && d.lapsCompleted !== undefined &&
+      d.lapsCompleted !== "" && Number.isInteger(Number(d.lapsCompleted)) &&
+      Number(d.lapsCompleted) >= 0
+    );
+    const officialPosition = d => {
+      const n = Number(d.position);
+      return d.position == null || d.position === "" || !Number.isFinite(n) || n < 1 ? 9999 : n;
+    };
     drivers.sort((a,b) => {
-      const ap = a.position == null ? 9999 : Number(a.position);
-      const bp = b.position == null ? 9999 : Number(b.position);
-      return ap - bp;
+      if(isFinalRace && hasCompleteLapScoring){
+        // Explicit disqualifications remain behind classified finishers.
+        const dqA = !!a.disqualified || String(a.status||"").toUpperCase()==="DQ";
+        const dqB = !!b.disqualified || String(b.status||"").toUpperCase()==="DQ";
+        if(dqA!==dqB) return dqA ? 1 : -1;
+        const byLaps=Number(b.lapsCompleted)-Number(a.lapsCompleted);
+        if(byLaps) return byLaps;
+      }
+      return officialPosition(a)-officialPosition(b);
     });
+    if(isFinalRace && hasCompleteLapScoring){
+      // Display ranking is local to Live; it does not modify the JSON source.
+      drivers=drivers.map((d,i)=>({...d,position:i+1,iracingReportedPosition:d.position}));
+    }
 
     $("liveBadge").classList.toggle("on", online && !frozen);
     $("liveBadgeText").textContent = frozen ? "FINAL • FROZEN" : (online ? "LIVE NOW" : "OFFLINE");
