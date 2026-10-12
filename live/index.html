@@ -3480,7 +3480,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
             : "The checkered flag has fallen. Final race data is locked.",
           exact:true
         };
-      }else if(rc.oneToGreen){
+      }else if(confirmedOneToGreen){
         controlItem = {
           type:"flag", lap:state?.lap,
           title:`ONE TO GREEN • CAUTION #${rc.cautionCount || "—"}`,
@@ -4863,18 +4863,33 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
 
   function renderRaceControl(drivers, online){
     const raceState=getPhaseState("race");
-    const rc=raceState?.raceControl || {};
+    const rawControl=raceState?.raceControl || {};
+    const validCounter=value=>value!==null && value!==undefined && value!=="" && Number.isFinite(Number(value)) && Number(value)>=0 ? Number(value) : null;
+    const rc={...rawControl};
+    // Never convert missing counters to a seemingly verified zero.
+    const cautionCount=validCounter(rc.cautionCount);
+    const cautionLaps=validCounter(rc.totalCautionLaps);
+    const cautionStart=validCounter(rc.cautionStartLap);
+    const currentYellowLaps=validCounter(rc.currentCautionLaps);
+    const paceLap=validCounter(rc.paceLap);
+    const restartLap=validCounter(rc.lastRestartLap);
+    const confirmedOneToGreen=rc.oneToGreen===true && (rc.active===true || ["YELLOW","CAUTION","ONE TO GREEN"].includes(normalizeFlag(raceState?.flag)));
+    const controlFlagHistory=accurateRaceEvents(raceState).filter(e=>{
+      const title=String(e?.title||"").toUpperCase();
+      return String(e?.type||"").toLowerCase()==="flag" ||
+        /GREEN FLAG|YELLOW FLAG|RED FLAG|WHITE FLAG|CHECKERED|RESTART|ONE TO GREEN|CAUTION/.test(title);
+    });
     const raceDrivers=Array.isArray(raceState?.drivers) ? [...raceState.drivers].sort((a,b)=>Number(a.position??9999)-Number(b.position??9999)) : [];
     const liveRace=online && state?.phase==="race";
     const flag=liveRace ? normalizeFlag(state?.flag) : normalizeFlag(raceState?.flag || "OFFLINE");
 
     $("rc2Flag").textContent=flag;
     $("rc2Flag").className=flagClass(flag);
-    $("rc2Caution").textContent=Number(rc.cautionCount)>0 ? `#${rc.cautionCount}` : "—";
-    $("rc2YellowLaps").textContent=Number(rc.totalCautionLaps||0);
-    $("rc2CautionLap").textContent=rc.oneToGreen
-      ? (rc.paceLap!=null ? `LAP ${rc.paceLap} • 1 TO GREEN` : "1 TO GREEN")
-      : (rc.active && rc.paceLap!=null ? `LAP ${rc.paceLap}` : "—");
+    $("rc2Caution").textContent=cautionCount!==null && cautionCount>0 ? `#${cautionCount}` : "—";
+    $("rc2YellowLaps").textContent=cautionLaps===null ? "—" : cautionLaps;
+    $("rc2CautionLap").textContent=confirmedOneToGreen
+      ? (paceLap!==null ? `LAP ${paceLap} • 1 TO GREEN` : "1 TO GREEN")
+      : (rc.active && paceLap!==null ? `LAP ${paceLap}` : "—");
     $("rc2GreenRun").textContent=Number(rc.currentGreenRun||0);
     $("rc2LongestGreen").textContent=Number(rc.longestGreenRun||0);
     $("rc2ControlMeta").textContent=rc.sessionCautionsExact || rc.sessionCautionLapsExact ? "IRACING COUNTERS + HLRN TRACKING" : (raceState ? "HLRN TRACKING" : "WAITING FOR RACE");
@@ -4886,15 +4901,15 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     }else if(flag==="RED"){
       banner.classList.add("red");
       banner.textContent=`RED FLAG — race stopped on lap ${raceState.lap ?? "—"}.`;
-    }else if(rc.oneToGreen){
+    }else if(confirmedOneToGreen){
       banner.classList.add("restart");
-      banner.textContent=`ONE TO GREEN — Caution #${rc.cautionCount || "—"}. Current scored order below is the restart order snapshot.`;
+      banner.textContent=`ONE TO GREEN — Caution #${cautionCount ?? "—"}. ${Array.isArray(rc.restartOrder)&&rc.restartOrder.length?"Confirmed restart-order snapshot shown below.":"Restart order not yet confirmed by feed."}`;
     }else if(rc.active){
       banner.classList.add("caution");
-      banner.textContent=`CAUTION #${rc.cautionCount || "—"} — began on lap ${rc.cautionStartLap ?? "—"}. Currently caution lap ${rc.currentCautionLaps || "—"}; ${rc.totalCautionLaps || 0} total yellow laps tracked.`;
-    }else if(Number(rc.lastRestartLap)>0){
+      banner.textContent=`CAUTION #${cautionCount ?? "—"} — began on lap ${cautionStart ?? "—"}. Currently caution lap ${currentYellowLaps ?? "—"}; ${cautionLaps ?? "—"} total yellow laps tracked.`;
+    }else if(restartLap!==null && restartLap>0){
       banner.classList.add("restart");
-      banner.textContent=`GREEN — last restart was lap ${rc.lastRestartLap}. Current green run: ${rc.currentGreenRun || 0} laps. Longest green run: ${rc.longestGreenRun || 0} laps.`;
+      banner.textContent=`GREEN — last restart was lap ${restartLap}. Current green run: ${rc.currentGreenRun ?? "—"} laps. Longest green run: ${rc.longestGreenRun ?? "—"} laps.`;
     }else{
       banner.textContent=`GREEN FLAG — ${rc.longestGreenRun || 0} laps is the longest green run tracked so far.`;
     }
@@ -4902,9 +4917,9 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     if($("mrcFlag")){
       $("mrcFlag").textContent=flag;
       $("mrcFlag").className=flagClass(flag);
-      $("mrcCaution").textContent=Number(rc.cautionCount)>0 ? `#${rc.cautionCount}` : "—";
+      $("mrcCaution").textContent=cautionCount!==null && cautionCount>0 ? `#${cautionCount}` : "—";
       $("mrcGreenRun").textContent=Number(rc.currentGreenRun||0);
-      $("mrcRestart").textContent=rc.oneToGreen
+      $("mrcRestart").textContent=confirmedOneToGreen
         ? "1 TO GREEN"
         : (Number(rc.lastRestartLap)>0 ? `LAP ${rc.lastRestartLap}` : "—");
       const mobileMessage=$("mrcMessage");
@@ -4916,10 +4931,10 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
         mobileMessage.textContent=`RED FLAG • Race stopped on lap ${raceState.lap??"—"}.`;
       }else if(rc.oneToGreen){
         mobileMessage.classList.add("restart");
-        mobileMessage.textContent=`ONE TO GREEN • Caution #${rc.cautionCount||"—"} • Restart order is set.`;
+        mobileMessage.textContent=`ONE TO GREEN • Caution #${cautionCount??"—"} • ${Array.isArray(rc.restartOrder)&&rc.restartOrder.length?"Restart order confirmed.":"Awaiting restart order."}`;
       }else if(rc.active){
         mobileMessage.classList.add("caution");
-        mobileMessage.textContent=`CAUTION #${rc.cautionCount||"—"} • Started lap ${rc.cautionStartLap??"—"} • Yellow lap ${rc.currentCautionLaps||"—"}.`;
+        mobileMessage.textContent=`CAUTION #${cautionCount??"—"} • Started lap ${cautionStart??"—"} • Yellow lap ${currentYellowLaps??"—"}.`;
       }else{
         mobileMessage.classList.add("green");
         mobileMessage.textContent=Number(rc.lastRestartLap)>0
@@ -4929,16 +4944,17 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     }
 
     let order=[];
-    if(Array.isArray(rc.restartOrder) && rc.restartOrder.length) order=rc.restartOrder;
+    if(confirmedOneToGreen && Array.isArray(rc.restartOrder) && rc.restartOrder.length) order=rc.restartOrder;
     else if(Array.isArray(rc.currentOrder) && rc.currentOrder.length) order=rc.currentOrder;
     else order=raceDrivers;
     order=order.slice(0,10);
-    $("rc2OrderTitle").textContent=rc.oneToGreen ? "Restart Order" : (rc.active ? "Current Caution Order" : "Current Running Order");
-    $("rc2OrderMeta").textContent=rc.oneToGreen ? "ONE TO GREEN • TOP 10" : "TOP 10";
+    const verifiedRestart=confirmedOneToGreen && Array.isArray(rc.restartOrder) && rc.restartOrder.length>0;
+    $("rc2OrderTitle").textContent=verifiedRestart ? "Restart Order" : (rc.active ? "Current Caution Order" : "Current Running Order");
+    $("rc2OrderMeta").textContent=verifiedRestart ? "CONFIRMED SNAPSHOT • TOP 10" : "TOP 10";
     $("rc2RestartOrder").innerHTML=order.length ? order.map(d=>{
       const live = raceDrivers.find(x=>x.carIdx===d.carIdx) || d;
       const url=hLrnDriverPhotoUrl(live);
-      return `<div class="rc2-order-row"><div class="rc2-order-pos">P${esc(live.position??d.position??"—")}</div>${url?`<img class="rc2-order-photo" src="${esc(url)}" alt="" onerror="this.remove()" loading="lazy" decoding="async">`:`<div></div>`}<div><div class="rc2-order-name">#${esc(live.number||"—")} ${esc(live.name||"Unknown")}</div><div class="rc2-order-sub">${esc(live.team||live.car||"HLRN")}</div></div><div class="rc2-order-status">${esc(driverStatus(live))}</div></div>`;
+      return `<div class="rc2-order-row"><div class="rc2-order-pos">P${esc(verifiedRestart ? (d.position??"—") : (live.position??d.position??"—"))}</div>${url?`<img class="rc2-order-photo" src="${esc(url)}" alt="" onerror="this.remove()" loading="lazy" decoding="async">`:`<div></div>`}<div><div class="rc2-order-name">#${esc(live.number||"—")} ${esc(live.name||"Unknown")}</div><div class="rc2-order-sub">${esc(live.team||live.car||"HLRN")}</div></div><div class="rc2-order-status">${esc(driverStatus(live))}</div></div>`;
     }).join("") : `<div class="offline"><strong>No running order yet</strong>Waiting for race scoring.</div>`;
 
     const alerts=raceDrivers.filter(d=>{
@@ -4952,12 +4968,14 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     }).join("") : `<div class="offline"><strong>No active alerts</strong>No active penalties, DQs, disconnects or cars out.</div>`;
 
     const history=Array.isArray(rc.history) ? [...rc.history].reverse().slice(0,8) : [];
-    $("rc2HistoryMeta").textContent=`${rc.cautionCount || history.length || 0} CAUTIONS`;
-    $("rc2CautionHistory").innerHTML=history.length ? history.map(c=>{
+    $("rc2HistoryMeta").textContent=`${cautionCount ?? history.length} CAUTIONS • ${controlFlagHistory.length} FLAG EVENTS`;
+    const cautionRows=history.map(c=>{
       const reason=c.reason || "Reason not supplied by iRacing telemetry";
       const source=String(c.reasonSource||"UNAVAILABLE").toUpperCase();
       return `<div class="rc2-history-row"><strong>Caution #${esc(c.number??"—")} • Lap ${esc(c.startLap??"—")}</strong><span>${c.restartLap!=null?`Restarted lap ${esc(c.restartLap)}`:"Restart pending"} • Reason: ${esc(reason)}${source!=="UNAVAILABLE"?` [${esc(source)}]`:""}</span></div>`;
-    }).join("") : `<div class="offline"><strong>No completed cautions yet</strong>Each caution and restart lap will be stored here.</div>`;
+    }).join("");
+    const flagRows=controlFlagHistory.slice(-8).reverse().map(e=>`<div class="rc2-history-row"><strong>${esc(e.title||"FLAG UPDATE")} • ${e.lap!=null?`Lap ${esc(e.lap)}`:"Session"}</strong><span>${esc(e.text||"Recorded flag transition")}</span></div>`).join("");
+    $("rc2CautionHistory").innerHTML=cautionRows+flagRows || `<div class="offline"><strong>No cautions or flag transitions yet</strong>Verified feed events will appear here.</div>`;
   }
 
   function renderLiveStats(online){
