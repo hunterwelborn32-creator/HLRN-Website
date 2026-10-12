@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-08T03:41:28.278Z",
+  "generatedAt": "2026-10-12T09:31:58.159Z",
   "source": "SimRacerHub race pages",
   "races": [
     {
@@ -476,6 +476,31 @@
         "driverId": "65049",
         "carNumber": "41",
         "lap": 81
+      }
+    },
+    {
+      "key": "sunday|13|384760",
+      "league": "sunday",
+      "raceNumber": 13,
+      "raceId": "384760",
+      "track": "Kansas Speedway",
+      "date": "Sun Oct 11 2026 00:00:00 GMT-0400 (Eastern Daylight Time)",
+      "source": "SimRacerHub",
+      "sourceRaceId": "384760",
+      "duration": "1h 26m",
+      "raceLaps": 130,
+      "leaders": 6,
+      "leadChanges": 13,
+      "cautions": 10,
+      "cautionLaps": 30,
+      "penalties": 0,
+      "fastestLap": {
+        "time": 29.091,
+        "formatted": "29.091",
+        "driver": "Ethan Fonseca Moreno",
+        "driverId": "77498",
+        "carNumber": "88",
+        "lap": 28
       }
     }
   ]
