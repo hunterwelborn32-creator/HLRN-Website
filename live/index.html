@@ -2741,6 +2741,36 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
   let state = null;
   let ws = null;
   let retryMs = 1000;
+  let reconnectTimer = null;
+  let lastGoodLiveState = null;
+  let lastGoodLiveAt = 0;
+  const LIVE_RECONNECT_HOLD_MS = 90000;
+  function liveConnectionNotice(kind){
+    if(SIMULATION_MODE || DEMO_MODE) return;
+    const age = Date.now() - lastGoodLiveAt;
+    const canHold = !!lastGoodLiveState && !!lastGoodLiveState.online &&
+      !lastGoodLiveState.raceFrozen && age < LIVE_RECONNECT_HOLD_MS;
+    if(kind==="connected"){
+      $("socketStatus").textContent = "CONNECTED";
+      $("connectionText").textContent = "Live website feed connected";
+    }else if(canHold){
+      $("socketStatus").textContent = "RECONNECTING";
+      $("connectionText").textContent = "Connection interrupted — last confirmed timing ("+
+        Math.ceil(age/1000)+"s old). Not live.";
+      $("liveBadge").classList.remove("on");
+      $("liveBadgeText").textContent = "RECONNECTING • STALE";
+    }else{
+      $("socketStatus").textContent = "RECONNECTING";
+      $("connectionText").textContent = "Live feed unavailable — waiting for fresh scoring";
+      if(lastGoodLiveState && !lastGoodLiveState.raceFrozen){
+        lastGoodLiveState = null;
+        render({online:false,drivers:[],events:[]});
+      }
+      $("liveBadge").classList.remove("on");
+      $("liveBadgeText").textContent = "FEED OFFLINE";
+    }
+  }
+
   let showFullField = false;
   let selectedCarIdx = null;
   let lastPhase = null;
@@ -5159,6 +5189,12 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
       return true;
     }
 
+    if(next.online && Array.isArray(next.drivers) && next.drivers.length){
+      lastGoodLiveState = {...next};
+      lastGoodLiveAt = Date.now();
+    }else if(!next.online){
+      lastGoodLiveState = null;
+    }
     render(next);
     return true;
   }
@@ -5493,14 +5529,14 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
 
   function connect(){
     $("socketStatus").textContent = "CONNECTING";
+    if(reconnectTimer){clearTimeout(reconnectTimer);reconnectTimer=null;}
     ws = new WebSocket(FEED_WS);
 
     ws.onopen = () => {
       // Background tabs stop consuming full Render race-state broadcasts.
       try{ ws.send(JSON.stringify({type:"visibility",visible:!document.hidden})); }catch{}
 
-      $("socketStatus").textContent = "CONNECTED";
-      $("connectionText").textContent = "Live website feed connected";
+      liveConnectionNotice("connected");
       retryMs = 1000;
     };
 
@@ -5514,9 +5550,9 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     };
 
     ws.onclose = () => {
-      $("socketStatus").textContent = "RECONNECTING";
-      $("connectionText").textContent = "Reconnecting to live feed";
-      setTimeout(connect, retryMs);
+      liveConnectionNotice("disconnected");
+      if(reconnectTimer) clearTimeout(reconnectTimer);
+      reconnectTimer = setTimeout(connect, retryMs);
       retryMs = Math.min(retryMs * 1.6, 15000);
     };
 
@@ -5622,6 +5658,12 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
   }, 4500);
 
   setInterval(clearExpiredLiveRace, 1000);
+  // A dropped connection preserves the last leaderboard briefly, marked stale.
+  setInterval(() => {
+    if(SIMULATION_MODE || DEMO_MODE || !lastGoodLiveState || !ws ||
+       ws.readyState === WebSocket.OPEN) return;
+    liveConnectionNotice("disconnected");
+  }, 1000);
 
   setInterval(() => {
     if(state && state.updatedAt){
