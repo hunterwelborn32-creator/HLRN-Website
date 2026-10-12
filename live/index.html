@@ -4425,7 +4425,19 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     }
 
     if(race && Array.isArray(race.drivers) && race.drivers.length){
-      const rDrivers = [...race.drivers].sort((a,b) => Number(a.position ?? 9999) - Number(b.position ?? 9999));
+      const rDrivers = [...race.drivers].sort((a,b) => {
+        // Mirror the final Live leaderboard safeguard; never mutate saved scoring.
+        const finished=raceFinished(race);
+        const allLaps=race.drivers.every(d=>d.lapsCompleted!=null && d.lapsCompleted!=="" &&
+          Number.isInteger(Number(d.lapsCompleted)) && Number(d.lapsCompleted)>=0);
+        if(finished && allLaps){
+          const dq=d=>!!d.disqualified || String(d.status||"").toUpperCase()==="DQ";
+          if(dq(a)!==dq(b)) return dq(a)?1:-1;
+          const laps=Number(b.lapsCompleted)-Number(a.lapsCompleted);
+          if(laps) return laps;
+        }
+        return Number(a.position ?? 9999)-Number(b.position ?? 9999);
+      });
       const winner = rDrivers[0] || null;
       const raceFast = fastestDriver(rDrivers);
       const qDrivers = qualifying && Array.isArray(qualifying.drivers) ? qualifying.drivers : [];
@@ -4444,13 +4456,36 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
 
       lines.push("RACE SUMMARY");
       lines.push("------------");
-      if(winner) lines.push(`Winner: #${winner.number || "—"} ${winner.name}`);
+      if(winner) lines.push(`${raceFinished(race)?"Winner":"Current Leader"}: #${winner.number || "—"} ${winner.name}`);
+      if(raceFinished(race)){
+        lines.push("");
+        lines.push("FINAL TOP 10");
+        lines.push("------------");
+        rDrivers.slice(0,10).forEach((d,i)=>{
+          const lapText=d.lapsCompleted!=null ? ` • ${d.lapsCompleted} laps` : "";
+          const dq=(d.disqualified || String(d.status||"").toUpperCase()==="DQ")?" • DQ":"";
+          lines.push(`${String(i+1).padStart(2," ")}. #${d.number||"—"} ${d.name||"Unknown"}${lapText}${dq}`);
+        });
+        lines.push("");
+        const movers=rDrivers.map((d,i)=>{
+          const q=findMatchingDriver(qualifying,d);
+          const rawStart=q?.position ?? d.liveStats?.startPosition;
+          const start=rawStart==null || rawStart==="" ? NaN : Number(rawStart);
+          return {d,finish:i+1,start,gain:start-(i+1)};
+        }).filter(x=>Number.isInteger(x.start) && x.start>0);
+        const gains=movers.filter(x=>x.gain>0).sort((a,b)=>b.gain-a.gain || a.finish-b.finish);
+        lines.push("BIGGEST MOVERS");
+        lines.push("--------------");
+        if(gains.length){
+          gains.slice(0,5).forEach(x=>lines.push(`#${x.d.number||"—"} ${x.d.name||"Unknown"} • P${x.start} to P${x.finish} (+${x.gain})`));
+        }else lines.push("No verified position gains available.");
+      }
       if(raceFast) lines.push(`Fastest Lap: #${raceFast.number || "—"} ${raceFast.name} — ${lapTime(raceFast.bestLapTime)}`);
       lines.push(`Race Distance: ${race.totalLaps || race.lap || "—"} laps`);
       lines.push(`Lead Changes: ${leadChanges}`);
-      lines.push(`Cautions: ${cautions}`);
-      lines.push(`Caution Laps: ${cautionLaps}`);
-      lines.push(`Longest Green Run: ${longestGreen} laps`);
+      lines.push(`Cautions: ${Number.isFinite(cautions) ? cautions : "—"}`);
+      lines.push(`Caution Laps: ${rc.totalCautionLaps == null ? "—" : cautionLaps}`);
+      lines.push(`Longest Green Run: ${rc.longestGreenRun == null ? "—" : longestGreen} laps`);
       if(rc.lastRestartLap != null) lines.push(`Last Restart: Lap ${rc.lastRestartLap}`);
       lines.push(`Black Flags Logged: ${penalties.length}`);
       lines.push(`Disqualifications: ${dqs.length}`);
@@ -4462,6 +4497,21 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
         lines.push(`Recorder Status: FINAL / FROZEN AT ${race.raceFrozenAt || race.updatedAt || "CHECKERED"}`);
       }else{
         lines.push("Recorder Status: LIVE");
+      }
+      lines.push("");
+
+      const raceHighlights=events.filter(e=>{
+        const type=String(e?.type||"").toLowerCase();
+        const title=String(e?.title||"").toUpperCase();
+        return type==="flag" || type==="fastest" || title.includes("CAUTION") ||
+          title.includes("RESTART") || title.includes("CHECKERED");
+      });
+      lines.push("RACE HIGHLIGHTS");
+      lines.push("---------------");
+      if(raceHighlights.length){
+        raceHighlights.slice(-12).forEach(e=>lines.push(formatEventLine(e)));
+      }else{
+        lines.push("No verified race highlights recorded.");
       }
       lines.push("");
 
