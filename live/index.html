@@ -2756,6 +2756,10 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
       last.textContent="LOCAL ONLY";
       return;
     }
+    if(Date.now()<scoringWarningUntil){
+      label.textContent="SCORING WARNING";
+      return;
+    }
     const connected=!!ws && ws.readyState===WebSocket.OPEN;
     const seconds=lastStateReceivedAt?Math.floor((Date.now()-lastStateReceivedAt)/1000):null;
     last.textContent=seconds===null?"NO DATA":seconds<60?seconds+"s AGO":Math.floor(seconds/60)+"m "+seconds%60+"s AGO";
@@ -5175,6 +5179,65 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     return true;
   }
 
+  // Validate live scoring snapshots without altering the incoming source or Results.
+  let lastAcceptedScoring = null;
+  let scoringWarningUntil = 0;
+  let scoringWarningText = "";
+  function checkLiveScoring(snapshot){
+    if(!snapshot.online || !Array.isArray(snapshot.drivers) || !snapshot.drivers.length) return null;
+    const list=snapshot.drivers;
+    const positions=new Set(), carIds=new Set();
+    const total=Number(snapshot.totalLaps);
+    const bounded=Number.isInteger(total) && total>0;
+    for(const d of list){
+      if(!d || typeof d!=="object") return "Invalid driver entry";
+      const pos=d.position;
+      if(pos!=null && pos!==""){
+        const p=Number(pos);
+        if(!Number.isInteger(p) || p<1) return "Invalid scoring position";
+        if(positions.has(p)) return "Duplicate scoring position";
+        positions.add(p);
+      }
+      // Only flag duplicate stable car indices; car numbers alone can be reused.
+      if(d.carIdx!=null && d.carIdx!==""){
+        const key=String(d.carIdx);
+        if(carIds.has(key)) return "Duplicate driver identity";
+        carIds.add(key);
+      }
+      if(d.lapsCompleted!=null && d.lapsCompleted!==""){
+        const laps=Number(d.lapsCompleted);
+        if(!Number.isInteger(laps) || laps<0 || (bounded && laps>total+1))
+          return "Invalid completed-lap count";
+      }
+      if(d.lapsDown!=null && d.lapsDown!==""){
+        const behind=Number(d.lapsDown);
+        if(!Number.isInteger(behind) || behind<0) return "Invalid laps-down count";
+      }
+    }
+    const currentLap=Number(snapshot.lap);
+    if(snapshot.lap!=null && snapshot.lap!=="" &&
+       (!Number.isFinite(currentLap) || currentLap<0 || (bounded && currentLap>total+1)))
+      return "Invalid race lap";
+    // A session change/reconnect can legitimately skip many laps. Only reject
+    // jumps during two closely spaced updates for the same race and phase.
+    const prior=lastAcceptedScoring;
+    if(prior && prior.key===incomingRaceIdentity(snapshot) &&
+       prior.phase===snapshot.phase && snapshot.phase==="race" &&
+       !raceFinished(snapshot) && !prior.finished &&
+       Date.now()-prior.receivedAt<5000 &&
+       Number.isFinite(currentLap) && Number.isFinite(prior.lap) &&
+       currentLap-prior.lap>5) return "Unexpected race-lap jump";
+    return null;
+  }
+  function noteScoringRejection(reason){
+    scoringWarningText=reason;
+    scoringWarningUntil=Date.now()+15000;
+    const health=$("hlrnFeedHealth");
+    if(health)health.textContent="SCORING WARNING";
+    const text=$("connectionText");
+    if(text)text.textContent="Invalid scoring update ignored: "+reason;
+  }
+
   function acceptIncomingState(incoming){
     const next=incoming && typeof incoming==="object" ? {...incoming} : {};
     next.phase=detectedPhase(next);
@@ -5192,6 +5255,14 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
       return false;
     }
     const key=incomingRaceIdentity(next);
+    if(!SIMULATION_MODE && !DEMO_MODE){
+      const issue=checkLiveScoring(next);
+      if(issue){noteScoringRejection(issue);return false;}
+      if(next.online && Array.isArray(next.drivers) && next.drivers.length){
+        lastAcceptedScoring={key,phase:next.phase,lap:Number(next.lap),
+          finished:raceFinished(next),receivedAt:Date.now()};
+      }
+    }
 
     if(localFrozenRaceState){
       if(key===localFrozenRaceKey){
