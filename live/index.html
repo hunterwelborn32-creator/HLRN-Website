@@ -2792,11 +2792,12 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     }
     if(Date.now()<scoringWarningUntil){
       label.textContent="SCORING WARNING";
-      return;
+      // Preserve an accurate age display even when bad packets arrive.
     }
     const connected=!!ws && ws.readyState===WebSocket.OPEN;
     const seconds=lastStateReceivedAt?Math.floor((Date.now()-lastStateReceivedAt)/1000):null;
     last.textContent=seconds===null?"NO DATA":seconds<60?seconds+"s AGO":Math.floor(seconds/60)+"m "+seconds%60+"s AGO";
+    if(Date.now()<scoringWarningUntil)return;
     if(!connected){label.textContent="RECONNECTING";return;}
     if(seconds===null){label.textContent="WAITING FOR DATA";return;}
     if(seconds>90){label.textContent="STALE";return;}
@@ -5378,6 +5379,15 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
       clearExpiredLiveRace();
       return false;
     }
+    // Ignore out-of-order snapshots from the same session if both carry a
+    // trustworthy producer timestamp. Reset naturally for a new session.
+    if(!SIMULATION_MODE && !DEMO_MODE && next.online && state?.online &&
+       incomingRaceIdentity(next)===incomingRaceIdentity(state)){
+      const incomingTime=Date.parse(next.updatedAt||"");
+      const shownTime=Date.parse(state.updatedAt||"");
+      if(Number.isFinite(incomingTime) && Number.isFinite(shownTime) &&
+         incomingTime+1500<shownTime) return false;
+    }
     const key=incomingRaceIdentity(next);
     if(!SIMULATION_MODE && !DEMO_MODE){
       const issue=checkLiveScoring(next);
@@ -5765,12 +5775,12 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
         if(msg.type === "state"){
           // Track feed receipt independently from the iRacing timestamp.
           // A socket connection alone does not prove iRacing is transmitting.
-          if(msg.data && typeof msg.data==="object"){
+          const accepted=acceptIncomingState(msg.data);
+          if(accepted && msg.data && typeof msg.data==="object"){
             lastStateReceivedAt=Date.now();
             const sourceTime=Date.parse(msg.data.updatedAt||"");
             lastStateSourceAt=Number.isFinite(sourceTime)?sourceTime:0;
           }
-          acceptIncomingState(msg.data);
           refreshLiveHealth();
         }
       }catch(err){
