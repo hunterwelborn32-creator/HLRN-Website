@@ -2954,7 +2954,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     if(driver.gap == null || driver.gap === "") return "—";
     const gap = Number(driver.gap);
     if(!Number.isFinite(gap) || gap < 0) return "—";
-    return `+${gap.toFixed(3)}${driver.gapSource === "TRACK EST" ? " ~" : ""}`;
+    return `+${gap.toFixed(3)}`;
   }
 
   function speedText(driver, includeSource=false){
@@ -3731,7 +3731,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     }
 
     const shown = showFullField ? drivers : drivers.slice(0,10);
-    const gapHeading = state && state.phase === "race" ? "BEHIND (~ EST.)" : "GAP";
+    const gapHeading = state && state.phase === "race" ? "BEHIND" : "GAP";
     const hotBattleKeys = new Set();
     if(state && state.phase === "race"){
       getBattles(drivers).filter(b => b.interval <= .75).forEach(b => {
