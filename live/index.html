@@ -2246,6 +2246,11 @@ html[data-hlrn-theme="light"] #rc2CautionLap{color:#8b6800!important}
 html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
 </style>
 
+<style id="hlrn-real-racing-flags">
+  .hlrn-racing-flag{display:inline-block;width:2.6em;height:1.8em;vertical-align:middle;max-width:100%;filter:drop-shadow(0 2px 2px rgba(0,0,0,.15))}
+  #flagHero .hlrn-racing-flag{width:118px;height:86px;display:block;margin:0 auto}
+  #flag .hlrn-racing-flag{width:45px;height:35px}
+</style>
 </head>
 <body>
 
@@ -3015,13 +3020,27 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
   }
 
   // Visual race flags; retain the original status for screen readers and logic.
+  // Real vector racing flags, rather than platform-dependent emoji characters.
   function liveFlagGraphic(flag){
-    const status = normalizeFlag(flag).replaceAll("_"," ").replaceAll("-"," ");
-    if(status==="GREEN") return "🟩";
-    if(status==="YELLOW" || status==="CAUTION" || status==="FULL COURSE YELLOW") return "🟨";
-    if(status==="WHITE") return "⬜";
-    if(status==="CHECKERED" || status==="CHECKERED FLAG" || status==="CHEQUERED") return "🏁";
-    return "";
+    const status=normalizeFlag(flag).replaceAll("_"," ").replaceAll("-"," ");
+    let fill=null,checkered=false;
+    if(status==="GREEN") fill="#159447";
+    else if(["YELLOW","CAUTION","FULL COURSE YELLOW"].includes(status)) fill="#f5cb22";
+    else if(status==="WHITE") fill="#ffffff";
+    else if(["CHECKERED","CHECKERED FLAG","CHEQUERED"].includes(status)) checkered=true;
+    else return "";
+    const id="hlrn-checkers";
+    const tiles=checkered?Array.from({length:24},(_,i)=>{
+      const col=i%6,row=Math.floor(i/6);
+      return '<rect x="'+(23+col*9)+'" y="'+(12+row*8)+'" width="9" height="8" fill="'+((col+row)%2?"#fff":"#101820")+'"/>';
+    }).join(""):'';
+    return '<svg class="hlrn-racing-flag" viewBox="0 0 104 76" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">'+
+      '<defs><clipPath id="'+id+'"><path d="M23 11 Q38 5 53 12 T83 12 L83 48 Q68 56 53 48 T23 48 Z"/></clipPath></defs>'+
+      '<path d="M17 6 V70" stroke="#89929b" stroke-width="5" stroke-linecap="round"/>'+
+      '<path d="M23 11 Q38 5 53 12 T83 12 L83 48 Q68 56 53 48 T23 48 Z" fill="'+(fill||"#fff")+'" stroke="#29313b" stroke-width="2"/>'+
+      (checkered?'<g clip-path="url(#'+id+')">'+tiles+'</g>':'')+
+      '<path d="M23 11 Q38 5 53 12 T83 12 M23 48 Q38 42 53 48 T83 48" fill="none" stroke="#29313b" stroke-width="1.5"/>'+
+      '</svg>';
   }
 
   function flagClass(flag){
@@ -5164,11 +5183,11 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
 
     const flag = available ? normalizeFlag(state.flag) : "OFFLINE";
     const flagGraphic = liveFlagGraphic(flag);
-    $("flag").textContent = flagGraphic ? flagGraphic + " " : flag;
+    $("flag").innerHTML = flagGraphic || flag;
     $("flag").setAttribute("aria-label", flag);
     $("flag").title = flag;
     $("flag").className = "status-value " + flagClass(flag);
-    $("flagHero").textContent = flagGraphic || flag;
+    $("flagHero").innerHTML = flagGraphic || flag;
     $("flagHero").setAttribute("aria-label", flag);
     $("flagHero").title = flag;
     $("flagHero").className = "flag-hero " + flagClass(flag);
