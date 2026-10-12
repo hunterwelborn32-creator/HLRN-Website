@@ -2255,6 +2255,17 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
 .hlrn-racing-flag-image{display:inline-block;width:45px;height:45px;object-fit:contain;vertical-align:middle}
 #flagHero .hlrn-racing-flag-image{width:122px;height:122px;display:block;margin:auto}
 </style>
+<style id="hlrn-local-flag-test-style">
+#hlrn-flag-test-panel{position:relative;z-index:1000;padding:18px 16px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;background:#172337;color:#fff;border-bottom:3px solid #e31837;font-family:Arial,sans-serif}
+#hlrn-flag-test-panel>strong{font-size:16px;letter-spacing:.04em}
+#hlrn-flag-test-panel>span{font-size:12px;color:#d2d9e3}
+.hlrn-flag-test-buttons{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.hlrn-flag-test-buttons button{background:#fff;color:#14202c;border:2px solid transparent;border-radius:7px;padding:10px 14px;cursor:pointer;font-weight:800}
+.hlrn-flag-test-buttons button[aria-pressed="true"]{border-color:#ff4b65;background:#ffeaee}
+.hlrn-flag-test-preview{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;min-height:150px}
+.hlrn-flag-test-preview .hlrn-racing-flag-image{height:112px;width:145px;object-fit:contain}
+#hlrn-flag-test-panel>a{color:#c7dfff;text-decoration:underline}
+</style>
 </head>
 <body>
 
@@ -2693,6 +2704,30 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
   const FEED_WS = new URLSearchParams(location.search).get("render-fallback") === "1" ? "wss://hlrn-live-feed.onrender.com/ws?role=viewer" : "wss://hlrn-live-feed.hunterwelborn32.workers.dev/ws?role=viewer";
   const DEMO_MODE = new URLSearchParams(location.search).get("demo") === "1";
   const $ = id => document.getElementById(id);
+  // Query-only, browser-local flag preview. Never sends state to the feed.
+  const FLAG_TEST_MODE = new URLSearchParams(location.search).get("flag-test") === "1";
+  let selectedTestFlag = "GREEN";
+  function setupFlagTestPanel(){
+    if(!FLAG_TEST_MODE) return;
+    const panel=document.createElement("section");
+    panel.id="hlrn-flag-test-panel";
+    panel.innerHTML='<strong>HLRN FLAG TEST • LOCAL PREVIEW ONLY</strong><span>This changes only what you see in this browser. No race feed updates.</span><div class="hlrn-flag-test-buttons"></div><div class="hlrn-flag-test-preview" aria-live="polite"></div><a href="/live/">Exit test mode</a>';
+    document.body.prepend(panel);
+    const buttons=panel.querySelector(".hlrn-flag-test-buttons");
+    const preview=panel.querySelector(".hlrn-flag-test-preview");
+    function update(){
+      preview.innerHTML=liveFlagGraphic(selectedTestFlag)+'<b>'+selectedTestFlag+'</b>';
+      buttons.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.flag===selectedTestFlag)));
+    }
+    ["GREEN","YELLOW","WHITE","CHECKERED"].forEach(flag=>{
+      const button=document.createElement("button");
+      button.type="button";button.dataset.flag=flag;button.textContent=flag;
+      button.addEventListener("click",()=>{selectedTestFlag=flag;update();});
+      buttons.appendChild(button);
+    });
+    update();
+  }
+
 
   let state = null;
   let ws = null;
@@ -5427,6 +5462,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
   });
 
 
+  setupFlagTestPanel();
   if(DEMO_MODE){
     startDemoMode();
   }else{
