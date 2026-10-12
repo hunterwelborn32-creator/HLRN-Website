@@ -4215,7 +4215,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     const recorder=race?.raceRecorder || {};
     const frozen=!!race?.raceFrozen;
     const lastRecorded=Math.max(0,...recordedSnapshots.map(s=>Number(s?.lap)||0));
-    const finalLap=Number(race?.totalLaps)||0;
+    const finalLap=Number(race?.totalLaps)||Number(race?.lap)||0;
     const observedOrder=Array.isArray(race?.drivers)?race.drivers:[];
     // Display the final checkered order when telemetry froze before a final
     // *scored* lap snapshot. Do not call this provisional result official scoring.
