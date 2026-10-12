@@ -2278,6 +2278,35 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
   .hlrn-race-reset-countdown{font-size:12px;font-weight:800;letter-spacing:.02em;white-space:nowrap;color:inherit}
   .hlrn-race-reset-countdown[hidden]{display:none!important}
 </style>
+<style id="hlrn-live-mobile-finishing">
+/* Phone-only finishing touches; desktop layout and Results are untouched. */
+@media(max-width:620px){
+  .event-meta{display:flex;flex-wrap:wrap;gap:5px 9px;min-width:0}
+  .event-meta #sessionName,.event-meta #connectionText{min-width:0;overflow-wrap:anywhere}
+  .event-status{width:100%;min-width:0;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .status-box{min-width:0;padding:9px}
+  .status-value{overflow-wrap:anywhere}
+  #flag img,#flagHero img{max-width:100%;height:auto;object-fit:contain}
+  .table-shell{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .table-shell table{min-width:680px}
+  .rc2-order-row{grid-template-columns:30px 34px minmax(0,1fr);gap:5px;min-width:0}
+  .rc2-order-photo{width:34px;height:40px}
+  .rc2-order-name,.rc2-order-sub{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .rc2-order-status{grid-column:3;justify-self:start;max-width:100%;overflow-wrap:anywhere}
+  .rc2-history-row,.rc2-alert-row,.rc-feed-item{min-width:0;overflow-wrap:anywhere}
+  .report-toolbar{flex-wrap:wrap;align-items:stretch;gap:8px}
+  #reportStatus{flex:1 1 100%;min-width:0;overflow-wrap:anywhere}
+  #hlrnRaceResetCountdown{flex:1 1 100%;white-space:normal}
+  .report-actions{flex:1 1 100%;justify-content:flex-start;min-width:0}
+  .report-actions .story-btn,.report-actions .copy-btn{max-width:100%;white-space:normal;text-align:center}
+  #reportText,#recapPreviewText{max-width:100%;overflow-x:auto;overflow-wrap:anywhere}
+}
+@media(max-width:380px){
+  .status-label{font-size:8px;letter-spacing:.5px}
+  .status-value{font-size:15px}
+  .report-actions .story-btn,.report-actions .copy-btn{width:100%}
+}
+</style>
 </head>
 <body>
 
