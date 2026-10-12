@@ -2266,6 +2266,14 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
 .hlrn-flag-test-preview .hlrn-racing-flag-image{height:112px;width:145px;object-fit:contain}
 #hlrn-flag-test-panel>a{color:#c7dfff;text-decoration:underline}
 </style>
+<style id="hlrn-simulation-style">
+#hlrn-simulation-panel{position:relative;z-index:1000;background:#162439;color:#fff;border-bottom:4px solid #e31837;padding:15px;display:flex;flex-direction:column;gap:10px;align-items:center;text-align:center;font-family:Arial,sans-serif}
+#hlrn-simulation-panel strong{font-size:18px}#hlrn-simulation-panel small{color:#aebed0}
+.hlrn-sim-controls{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;align-items:center}
+.hlrn-sim-controls button,.hlrn-sim-controls select{padding:9px 12px;border-radius:6px;border:1px solid #8699b0;background:#f7f9fc;color:#15253b;font-weight:800;cursor:pointer}
+.hlrn-sim-controls label{font-size:13px}#hlrn-sim-status{font-weight:800;font-size:13px}
+#hlrn-simulation-panel a{color:#c5dbff;text-decoration:underline}
+</style>
 </head>
 <body>
 
@@ -2703,6 +2711,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
   const CLOUDFLARE_TEST = new URLSearchParams(location.search).get("cloudflare-test") === "1";
   const FEED_WS = new URLSearchParams(location.search).get("render-fallback") === "1" ? "wss://hlrn-live-feed.onrender.com/ws?role=viewer" : "wss://hlrn-live-feed.hunterwelborn32.workers.dev/ws?role=viewer";
   const DEMO_MODE = new URLSearchParams(location.search).get("demo") === "1";
+  const SIMULATION_MODE = new URLSearchParams(location.search).get("simulation") === "1";
   const $ = id => document.getElementById(id);
   // Query-only, browser-local flag preview. Never sends state to the feed.
   const FLAG_TEST_MODE = new URLSearchParams(location.search).get("flag-test") === "1";
@@ -5349,6 +5358,100 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     document.title = "HLRN Live Results — DEMO MODE";
   }
 
+  // Completely browser-local test runner. This mode never opens the racing WebSocket.
+  let simStage=0,simLap=1,simCautions=0,simTimer=null,simSpeed=1,simFinishedAt=null;
+  const simStages=[
+    {phase:"practice",flag:"GREEN",label:"PRACTICE"},
+    {phase:"qualifying",flag:"GREEN",label:"QUALIFYING"},
+    {phase:"race",flag:"GREEN",label:"GREEN FLAG"},
+    {phase:"race",flag:"YELLOW",label:"CAUTION"},
+    {phase:"race",flag:"GREEN",label:"RESTART"},
+    {phase:"race",flag:"WHITE",label:"WHITE FLAG"},
+    {phase:"race",flag:"CHECKERED",label:"CHECKERED / RESULTS"}
+  ];
+  function stopSimulationClock(){
+    if(simTimer!==null){clearInterval(simTimer);simTimer=null;}
+  }
+  function simulationSnapshot(){
+    const stage=simStages[simStage];
+    const base=buildPhotoDemoState();
+    const baseDrivers=stage.phase==="practice"?base.sessionArchive.practice.drivers:
+      stage.phase==="qualifying"?base.sessionArchive.qualifying.drivers:base.drivers;
+    const lap=stage.phase==="race"?simLap:0;
+    const drivers=baseDrivers.map((d,i)=>({
+      ...d,position:stage.phase==="race"?1+((i+Math.floor(simLap/8))%baseDrivers.length):d.position,
+      lapsCompleted:stage.phase==="race"?Math.max(0,lap-(d.lapsDown||0)):d.lapsCompleted,
+      gap:i===0?0:Number((i*.31).toFixed(3)),
+      lastLapTime:Number((29.8+i*.08+Math.sin(simLap+i)*.05).toFixed(3))
+    })).sort((a,b)=>a.position-b.position);
+    const finished=simStage===6;
+    return {
+      ...base,online:!finished,raceFrozen:finished,
+      raceFrozenAt:finished?new Date(simFinishedAt||Date.now()).toISOString():undefined,
+      phase:stage.phase,flag:stage.flag,
+      track:"HLRN SIMULATED SPEEDWAY",
+      sessionName:"PRIVATE BROWSER SIMULATION",
+      sessionState:finished?"CHECKERED":stage.label,
+      lap,totalLaps:100,driverCount:drivers.length,drivers,
+      timeRemaining:finished?0:Math.max(0,(100-lap)*30),
+      updatedAt:new Date().toISOString(),source:"LOCAL SIMULATION",
+      raceControl:{...base.raceControl,flag:stage.flag,active:stage.flag==="YELLOW",
+        cautionCount:simCautions,oneToGreen:false,currentOrder:drivers,
+        currentCautionLaps:stage.flag==="YELLOW"?1:0},
+      events:[{type:"flag",title:stage.label,text:"Browser-only simulated "+stage.label.toLowerCase(),lap,capturedAt:Date.now()}]
+    };
+  }
+  function paintSimulation(){
+    if(simStage===6 && !simFinishedAt) simFinishedAt=Date.now();
+    render(simulationSnapshot());
+    $("socketStatus").textContent="SIMULATION";
+    $("connectionText").textContent="Private simulation — real feed untouched";
+    $("liveBadgeText").textContent="SIMULATION";
+    const status=document.getElementById("hlrn-sim-status");
+    if(status)status.textContent=simStages[simStage].label+" • LAP "+simLap+"/100"+(simTimer?" • PLAYING":" • PAUSED");
+  }
+  function advanceSimulation(){
+    if(simStage===6){stopSimulationClock();paintSimulation();return;}
+    if(simStage<2)simStage++;
+    else if(simStage===2){simLap=Math.min(40,simLap+5);if(simLap>=40){simStage=3;simCautions++;}}
+    else if(simStage===3){simLap=Math.min(44,simLap+1);if(simLap>=44)simStage=4;}
+    else if(simStage===4){simLap=Math.min(99,simLap+8);if(simLap>=99)simStage=5;}
+    else if(simStage===5){simLap=100;simStage=6;simFinishedAt=Date.now();stopSimulationClock();}
+    paintSimulation();
+  }
+  function resetSimulation(){
+    stopSimulationClock();simStage=0;simLap=1;simCautions=0;simFinishedAt=null;paintSimulation();
+  }
+  function startSimulationMode(){
+    document.title="HLRN Live — PRIVATE RACE SIMULATION";
+    const panel=document.createElement("section");
+    panel.id="hlrn-simulation-panel";
+    panel.innerHTML='<strong>HLRN FULL RACE SIMULATION</strong><small>LOCAL TEST ONLY — DOES NOT CONNECT TO THE LIVE FEED</small><div class="hlrn-sim-controls"><button type="button" data-act="play">PLAY</button><button type="button" data-act="pause">PAUSE</button><button type="button" data-act="next">NEXT STEP</button><button type="button" data-act="restart">RESTART</button><button type="button" data-act="expiry">TEST 1-HOUR RESET</button><label>Speed <select id="hlrn-sim-speed"><option value="1">1×</option><option value="4">4×</option><option value="10">10×</option></select></label></div><div id="hlrn-sim-status" aria-live="polite"></div><a href="/live/">EXIT SIMULATION</a>';
+    document.body.prepend(panel);
+    panel.querySelector('[data-act="play"]').onclick=()=>{
+      if(simStage===6)resetSimulation();
+      stopSimulationClock();simTimer=setInterval(advanceSimulation,1200/simSpeed);paintSimulation();
+    };
+    panel.querySelector('[data-act="pause"]').onclick=()=>{stopSimulationClock();paintSimulation();};
+    panel.querySelector('[data-act="next"]').onclick=()=>{stopSimulationClock();advanceSimulation();};
+    panel.querySelector('[data-act="restart"]').onclick=resetSimulation;
+    panel.querySelector("#hlrn-sim-speed").onchange=e=>{
+      simSpeed=Number(e.target.value)||1;
+      if(simTimer){stopSimulationClock();simTimer=setInterval(advanceSimulation,1200/simSpeed);}
+    };
+    panel.querySelector('[data-act="expiry"]').onclick=()=>{
+      stopSimulationClock();
+      simStage=6;simLap=100;simFinishedAt=Date.now()-3600001;
+      paintSimulation();
+      render({online:false,drivers:[],events:[]});
+      $("socketStatus").textContent="SIMULATION";
+      $("connectionText").textContent="Simulated one-hour expiry complete — live display cleared";
+      $("liveBadgeText").textContent="SIMULATION";
+      document.getElementById("hlrn-sim-status").textContent="1-HOUR EXPIRY TEST PASSED • DISPLAY CLEARED";
+    };
+    resetSimulation();
+  }
+
   function connect(){
     $("socketStatus").textContent = "CONNECTING";
     ws = new WebSocket(FEED_WS);
@@ -5463,7 +5566,9 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
 
 
   setupFlagTestPanel();
-  if(DEMO_MODE){
+  if(SIMULATION_MODE){
+    startSimulationMode();
+  }else if(DEMO_MODE){
     startDemoMode();
   }else{
     render({online:false,drivers:[],events:[]});
