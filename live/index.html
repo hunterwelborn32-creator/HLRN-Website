@@ -5034,6 +5034,15 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
   // Clear only the public Live view one hour after the final checkered flag.
   // Stored race recaps/results are deliberately not deleted.
   const LIVE_FINAL_RETENTION_MS = 60 * 60 * 1000;
+  // Manual public display reset requested 2026-10-12.
+  // Old snapshots stay off the Live page; future bridge updates still appear.
+  const LIVE_MANUAL_RESET_AT = Date.parse("2026-10-12T17:40:49Z");
+  function isBeforeLiveManualReset(snapshot){
+    if(!snapshot || typeof snapshot !== "object") return false;
+    const timestamp = Date.parse(snapshot.updatedAt || snapshot.raceFrozenAt || "");
+    return Number.isFinite(timestamp) && timestamp <= LIVE_MANUAL_RESET_AT;
+  }
+
   function finalRaceExpired(s){
     if(!s || !isRacePayload(s) || !(s.raceFrozen || raceFinished(s))) return false;
     const stamp = s.raceFrozenAt || s.finishedAt || s.updatedAt;
@@ -5053,6 +5062,14 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
   function acceptIncomingState(incoming){
     const next=incoming && typeof incoming==="object" ? {...incoming} : {};
     next.phase=detectedPhase(next);
+    if(isBeforeLiveManualReset(next)){
+      if(localFrozenRaceState || (state && (state.online || state.raceFrozen))){
+        localFrozenRaceState=null;
+        localFrozenRaceKey=null;
+        render({online:false,drivers:[],events:[]});
+      }
+      return false;
+    }
     // A reconnect can replay an old frozen race. Never show it past the hour.
     if(finalRaceExpired(next)){
       clearExpiredLiveRace();
