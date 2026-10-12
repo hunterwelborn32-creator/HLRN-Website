@@ -3014,6 +3014,16 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     return String(flag || "UNKNOWN").trim().toUpperCase();
   }
 
+  // Visual race flags; retain the original status for screen readers and logic.
+  function liveFlagGraphic(flag){
+    const status = normalizeFlag(flag).replaceAll("_"," ").replaceAll("-"," ");
+    if(status==="GREEN") return "🟩";
+    if(status==="YELLOW" || status==="CAUTION" || status==="FULL COURSE YELLOW") return "🟨";
+    if(status==="WHITE") return "⬜";
+    if(status==="CHECKERED" || status==="CHECKERED FLAG" || status==="CHEQUERED") return "🏁";
+    return "";
+  }
+
   function flagClass(flag){
     return "flag-" + normalizeFlag(flag).toLowerCase().replaceAll(" ","-");
   }
@@ -5153,9 +5163,14 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
       : "No active session";
 
     const flag = available ? normalizeFlag(state.flag) : "OFFLINE";
-    $("flag").textContent = flag;
+    const flagGraphic = liveFlagGraphic(flag);
+    $("flag").textContent = flagGraphic ? flagGraphic + " " : flag;
+    $("flag").setAttribute("aria-label", flag);
+    $("flag").title = flag;
     $("flag").className = "status-value " + flagClass(flag);
-    $("flagHero").textContent = flag;
+    $("flagHero").textContent = flagGraphic || flag;
+    $("flagHero").setAttribute("aria-label", flag);
+    $("flagHero").title = flag;
     $("flagHero").className = "flag-hero " + flagClass(flag);
 
     $("lap").textContent = state.lap != null
