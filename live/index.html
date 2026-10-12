@@ -4211,13 +4211,24 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
   function renderLapRecap(race){
     const el=$("lapRecap");
     if(!el) return;
-    const snapshots=raceLapSnapshots(race);
+    const recordedSnapshots=raceLapSnapshots(race);
     const recorder=race?.raceRecorder || {};
     const frozen=!!race?.raceFrozen;
-    const captured=Number(recorder.completedLapsCaptured || (Array.isArray(race?.lapSnapshots)?race.lapSnapshots.length:0) || 0);
+    const lastRecorded=Math.max(0,...recordedSnapshots.map(s=>Number(s?.lap)||0));
+    const finalLap=Number(race?.totalLaps)||0;
+    const observedOrder=Array.isArray(race?.drivers)?race.drivers:[];
+    // Display the final checkered order when telemetry froze before a final
+    // *scored* lap snapshot. Do not call this provisional result official scoring.
+    const checkeredFallback=frozen&&finalLap>lastRecorded&&observedOrder.length
+      ? [{lap:finalLap,flag:"CHECKERED",provisional:true,source:"OBSERVED CHECKERED ORDER",
+          order:observedOrder.map(d=>({...d})),capturedAt:race?.raceFrozenAt||race?.updatedAt}]
+      : [];
+    const snapshots=[...recordedSnapshots,...checkeredFallback];
+    const captured=recordedSnapshots.filter(s=>!s.provisional).length;
+    const checkeredCount=snapshots.length-captured;
 
     $("lapRecapCoverage").textContent = frozen
-      ? captured+" completed lap"+(captured===1?"":"s")+" captured"
+      ? captured+" completed lap"+(captured===1?"":"s")+" captured"+(checkeredCount?" • checkered order available":"")
       : captured
         ? captured+" completed lap"+(captured===1?"":"s")+" stored on server • newest lap shown live"
         : "Waiting for the first completed leader lap";
@@ -4235,7 +4246,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
       const order=Array.isArray(snap?.order)?snap.order:[];
       const flag=String(snap?.flag||"").toUpperCase();
       return '<div class="lap-recap-row">'
-        +'<div class="lap-recap-meta"><strong>LAP '+esc(snap?.lap??"—")+'</strong><span>'+esc(flag||"SCORING SNAPSHOT")+'</span></div>'
+        +'<div class="lap-recap-meta"><strong>LAP '+esc(snap?.lap??"—")+(snap?.provisional?" • CHECKERED ORDER":"")+'</strong><span>'+esc(snap?.provisional?"OBSERVED ORDER • NOT OFFICIAL SCORING":flag||"SCORING SNAPSHOT")+'</span></div>'
         +'<div class="lap-recap-order">'
         +order.map(entry=>{
           const down=Number(entry?.lapsDown)>0;
