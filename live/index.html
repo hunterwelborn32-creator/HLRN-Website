@@ -5031,9 +5031,33 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     return raw || "other";
   }
 
+  // Clear only the public Live view one hour after the final checkered flag.
+  // Stored race recaps/results are deliberately not deleted.
+  const LIVE_FINAL_RETENTION_MS = 60 * 60 * 1000;
+  function finalRaceExpired(s){
+    if(!s || !isRacePayload(s) || !(s.raceFrozen || raceFinished(s))) return false;
+    const stamp = s.raceFrozenAt || s.finishedAt || s.updatedAt;
+    const finishedAt = Date.parse(stamp);
+    return Number.isFinite(finishedAt) && Date.now() - finishedAt >= LIVE_FINAL_RETENTION_MS;
+  }
+  function clearExpiredLiveRace(){
+    if(!finalRaceExpired(localFrozenRaceState || state)) return false;
+    localFrozenRaceState = null;
+    localFrozenRaceKey = null;
+    lastAutoSessionKey = null;
+    manualTabSelection = false;
+    render({online:false,drivers:[],events:[]});
+    return true;
+  }
+
   function acceptIncomingState(incoming){
     const next=incoming && typeof incoming==="object" ? {...incoming} : {};
     next.phase=detectedPhase(next);
+    // A reconnect can replay an old frozen race. Never show it past the hour.
+    if(finalRaceExpired(next)){
+      clearExpiredLiveRace();
+      return false;
+    }
     const key=incomingRaceIdentity(next);
 
     if(localFrozenRaceState){
@@ -5375,6 +5399,8 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
       renderTickerFrame();
     }
   }, 4500);
+
+  setInterval(clearExpiredLiveRace, 1000);
 
   setInterval(() => {
     if(state && state.updatedAt){
