@@ -5378,12 +5378,27 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     const baseDrivers=stage.phase==="practice"?base.sessionArchive.practice.drivers:
       stage.phase==="qualifying"?base.sessionArchive.qualifying.drivers:base.drivers;
     const lap=stage.phase==="race"?simLap:0;
+    // Order the simulated classification by completed laps first, then running order.
+    // A lapped car can never lead a car that has completed more laps.
     const drivers=baseDrivers.map((d,i)=>({
-      ...d,position:stage.phase==="race"?1+((i+Math.floor(simLap/8))%baseDrivers.length):d.position,
+      ...d,
+      simulatedRunningOrder:stage.phase==="race"?1+((i+Math.floor(simLap/8))%baseDrivers.length):d.position,
       lapsCompleted:stage.phase==="race"?Math.max(0,lap-(d.lapsDown||0)):d.lapsCompleted,
-      gap:i===0?0:Number((i*.31).toFixed(3)),
       lastLapTime:Number((29.8+i*.08+Math.sin(simLap+i)*.05).toFixed(3))
-    })).sort((a,b)=>a.position-b.position);
+    }));
+    if(stage.phase==="race"){
+      drivers.sort((a,b)=>(b.lapsCompleted-a.lapsCompleted)||
+        (a.simulatedRunningOrder-b.simulatedRunningOrder));
+    }else{
+      drivers.sort((a,b)=>a.simulatedRunningOrder-b.simulatedRunningOrder);
+    }
+    const leaderLaps=drivers[0]?.lapsCompleted||0;
+    drivers.forEach((d,i)=>{
+      d.position=i+1;
+      d.lapsDown=stage.phase==="race"?Math.max(0,leaderLaps-d.lapsCompleted):0;
+      d.gap=i===0?0:Number((i*.31).toFixed(3));
+      d.interval=i===0?0:.31;
+    });
     const finished=simStage===6;
     return {
       ...base,online:!finished,raceFrozen:finished,
