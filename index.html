@@ -53,6 +53,29 @@
 <link rel="stylesheet" href="assets/home/home-v10.css?v=20261008phase2polish1">
 
 <meta name="theme-color" content="#07090d">
+<style id="hlrn-home-v20-pulse">
+/* Homepage 2.0: additive styles only; honors existing Race Day/Night tokens. */
+.h20-pulse{padding-top:clamp(34px,5vw,68px)}
+.h20-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.h20-panel{min-width:0;padding:clamp(22px,3vw,36px);background:var(--h10-panel);border:1px solid var(--h10-line);border-top:4px solid #e31837;border-radius:12px;box-shadow:var(--h10-shadow);color:var(--h10-text)}
+.h20-panel.monday{border-top-color:#269d52}
+.h20-panel-top{display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:12px;font-weight:850;letter-spacing:.08em;text-transform:uppercase}
+.h20-live-label{color:var(--h10-muted);font-size:10px}
+.h20-panel h3{font-size:clamp(23px,2.5vw,36px);line-height:1.14;margin:22px 0 6px;color:var(--h10-text)}
+.h20-panel p{color:var(--h10-muted);margin:0 0 22px}
+.h20-numbers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:17px 0;border-top:1px solid var(--h10-line);border-bottom:1px solid var(--h10-line)}
+.h20-numbers div{display:flex;flex-direction:column;gap:4px;min-width:0}
+.h20-numbers b{font-size:clamp(19px,2.3vw,30px);font-variant-numeric:tabular-nums}
+.h20-numbers small{font-size:11px;color:var(--h10-muted)}
+.h20-panel>a{display:inline-block;margin-top:20px;color:var(--h10-text);font-weight:850;text-decoration:underline;text-underline-offset:4px}
+.h20-utility{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}
+.h20-utility a{display:flex;flex-direction:column;gap:8px;padding:21px;text-decoration:none;background:var(--h10-panel2);border:1px solid var(--h10-line);border-radius:9px;color:var(--h10-text)}
+.h20-utility a>span{color:var(--h10-muted);font-size:10px;font-weight:800;letter-spacing:.12em}
+.h20-utility strong{font-size:15px}
+.h20-utility a:hover,.h20-panel>a:hover{filter:brightness(.88)}
+.h20-utility a:focus-visible,.h20-panel>a:focus-visible{outline:3px solid var(--h10-red);outline-offset:3px}
+@media(max-width:720px){.h20-grid{grid-template-columns:1fr}.h20-utility{grid-template-columns:1fr}.h20-panel{padding:22px}}
+</style>
 </head>
 
 <body class="hlrn-v3 rd-v5 home-v10-page">
@@ -185,6 +208,37 @@
       </div>
     </section>
 
+    <!-- Homepage 2.0: read-only championship pulse; existing home systems remain untouched. -->
+    <section class="h10-section h20-pulse" aria-labelledby="h20PulseTitle">
+      <div class="h10-shell">
+        <div class="h10-section-head">
+          <div><small>Championship Watch</small><h2 id="h20PulseTitle">The Points Picture</h2></div>
+          <a href="standings/">Full Standings →</a>
+        </div>
+        <div class="h20-grid">
+          <article class="h20-panel sunday">
+            <div class="h20-panel-top"><span>Sunday Night League</span><span class="h20-live-label">POINTS LEADER</span></div>
+            <h3 id="h20SundayName">View Sunday standings</h3>
+            <p id="h20SundayNote">Check the latest championship battle.</p>
+            <div class="h20-numbers"><div><b id="h20SundayPoints">—</b><small>Points</small></div><div><b id="h20SundayWins">—</b><small>Wins</small></div><div><b id="h20SundayGap">—</b><small>Lead over P2</small></div></div>
+            <a href="standings/">Sunday Championship →</a>
+          </article>
+          <article class="h20-panel monday">
+            <div class="h20-panel-top"><span>Monday Night League</span><span class="h20-live-label">POINTS LEADER</span></div>
+            <h3 id="h20MondayName">View Monday standings</h3>
+            <p id="h20MondayNote">Check the latest championship battle.</p>
+            <div class="h20-numbers"><div><b id="h20MondayPoints">—</b><small>Points</small></div><div><b id="h20MondayWins">—</b><small>Wins</small></div><div><b id="h20MondayGap">—</b><small>Lead over P2</small></div></div>
+            <a href="standings/">Monday Championship →</a>
+          </article>
+        </div>
+        <div class="h20-utility" aria-label="More racing coverage">
+          <a href="live/"><span>RACE CENTER</span><strong>Follow Live Timing <span aria-hidden="true">↗</span></strong></a>
+          <a href="race-intelligence/"><span>DRIVER FORM</span><strong>Explore Race Intelligence <span aria-hidden="true">↗</span></strong></a>
+          <a href="news/"><span>LATEST HEADLINES</span><strong>Visit the Newsroom <span aria-hidden="true">↗</span></strong></a>
+        </div>
+      </div>
+    </section>
+
     <section class="h10-section compact">
       <div class="h10-shell">
         <div class="h10-section-head">
@@ -269,5 +323,35 @@
 <script defer src="assets/home/home-v10-hosted.js?v=20261008autorefresh1"></script>
 <script defer src="assets/race-recaps.js?v=1"></script>
 <script defer src="assets/site-shell.js?v=20261008racingv6"></script>
+<script id="hlrn-home-v20-data">
+(function(){
+  "use strict";
+  const show=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=String(value);};
+  const pretty=value=>{const s=String(value||"").trim();if(!s)return "";if(s.includes(",")){const p=s.split(",");return (p.slice(1).join(" ").trim()+" "+p[0].trim()).replace(/([a-z])\\d+$/i,"$1").trim();}return s.replace(/([a-z])\\d+$/i,"$1");};
+  const number=value=>{if(value===null||value===undefined||value==="")return null;const n=Number(value);return Number.isFinite(n)?n:null;};
+  async function load(){
+    try{
+      const r=await fetch("/data/hlrn.json",{cache:"no-store"});
+      if(!r.ok)throw new Error("Snapshot HTTP "+r.status);
+      const data=await r.json();
+      for(const league of ["sunday","monday"]){
+        const prefix=league==="sunday"?"h20Sunday":"h20Monday";
+        const drivers=data?.leagues?.[league]?.drivers;
+        if(!Array.isArray(drivers)||!drivers.length)continue;
+        const ordered=drivers.filter(d=>d&&number(d.points)!==null).sort((a,b)=>(number(a.rank)??9999)-(number(b.rank)??9999)||number(b.points)-number(a.points));
+        if(!ordered.length)continue;
+        const first=ordered[0],second=ordered[1],points=number(first.points);
+        show(prefix+"Name",pretty(first.driver||first.name)||"Championship leader");
+        show(prefix+"Note","Current points leader • published HLRN standings");
+        show(prefix+"Points",points===null?"—":points.toLocaleString("en-US"));
+        show(prefix+"Wins",number(first.wins)??"—");
+        const runner=second?number(second.points):null;
+        show(prefix+"Gap",points!==null&&runner!==null?Math.max(0,points-runner).toLocaleString("en-US"):"—");
+      }
+    }catch(e){console.warn("HLRN homepage championship pulse unavailable; keeping standings links.",e);}
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",load,{once:true});else load();
+})();
+</script>
 </body>
 </html>
