@@ -327,7 +327,7 @@
 (function(){
   "use strict";
   const show=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=String(value);};
-  const pretty=value=>{const s=String(value||"").trim();if(!s)return "";if(s.includes(",")){const p=s.split(",");return (p.slice(1).join(" ").trim()+" "+p[0].trim()).replace(/([a-z])\\d+$/i,"$1").trim();}return s.replace(/([a-z])\\d+$/i,"$1");};
+  const pretty=value=>{const s=String(value||"").trim();if(!s)return "";if(s.includes(",")){const p=s.split(",");return (p.slice(1).join(" ").trim()+" "+p[0].trim()).replace(/([a-z])\d+$/i,"$1").trim();}return s.replace(/([a-z])\d+$/i,"$1");};
   const number=value=>{if(value===null||value===undefined||value==="")return null;const n=Number(value);return Number.isFinite(n)?n:null;};
   async function load(){
     try{
