@@ -20,6 +20,12 @@
   const absolute=(path)=>new URL(String(path||"").replace(/^\//,""),root).href;
   const normalize=(value)=>String(value||"").toLowerCase().replace(/[^a-z0-9]/g,"");
   const cleanDisplay=(value)=>String(value||"").trim().replace(/([A-Za-z])\d+$/,"$1");
+  const commaName=(value)=>{
+    const name=String(value||"").trim();
+    if(!name || name.includes(",")) return name;
+    const parts=name.split(/\s+/);
+    return parts.length>1 ? parts.slice(1).join(" ")+", "+parts[0] : name;
+  };
   const escRe=(value)=>String(value).replace(/[|\\{}()[\]^$+*?.-]/g,"\\$&");
 
   let readyPromise=null;
