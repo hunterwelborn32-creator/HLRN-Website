@@ -76,6 +76,24 @@
 .h20-utility a:focus-visible,.h20-panel>a:focus-visible{outline:3px solid var(--h10-red);outline-offset:3px}
 @media(max-width:720px){.h20-grid{grid-template-columns:1fr}.h20-utility{grid-template-columns:1fr}.h20-panel{padding:22px}}
 </style>
+<style id="hlrn-home-v20-results-css">
+.h20-results-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.h20-results-panel{border:1px solid var(--h10-line);border-radius:12px;overflow:hidden;background:var(--h10-panel);color:var(--h10-text);min-width:0;padding:26px}
+.h20-results-panel.sunday{border-top:4px solid #e31837}
+.h20-results-panel.monday{border-top:4px solid #269d52}
+.h20-results-header{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:11px;font-weight:900;letter-spacing:.09em;text-transform:uppercase}
+.h20-results-header strong{color:var(--h10-muted);font-size:10px}
+.h20-results-panel h3{font-size:clamp(22px,2.3vw,30px);line-height:1.1;margin:20px 0 8px}
+.h20-results-panel p{color:var(--h10-muted);margin:0 0 16px;font-size:13px}
+.h20-finish-list{list-style:none;padding:0;margin:0 0 18px;counter-reset:finisher}
+.h20-finish-list li{counter-increment:finisher;display:flex;gap:12px;align-items:center;border-top:1px solid var(--h10-line);padding:12px 0;font-weight:750;min-width:0}
+.h20-finish-list li:before{content:counter(finisher,decimal-leading-zero);color:var(--h10-muted);font-size:12px;font-weight:900;min-width:25px}
+.h20-finish-list .h20-result-name{flex:1;min-width:0;overflow-wrap:anywhere}
+.h20-finish-list .h20-result-car{font-size:12px;color:var(--h10-muted);font-variant-numeric:tabular-nums}
+.h20-results-panel>a{color:var(--h10-text);font-weight:850;text-decoration:underline;text-underline-offset:4px}
+.h20-results-panel>a:focus-visible{outline:3px solid var(--h10-red);outline-offset:4px}
+@media(max-width:720px){.h20-results-grid{grid-template-columns:1fr}.h20-results-panel{padding:20px}}
+</style>
 </head>
 
 <body class="hlrn-v3 rd-v5 home-v10-page">
@@ -239,6 +257,32 @@
       </div>
     </section>
 
+    <!-- Homepage 2.0: latest verified Sunday / Monday results -->
+    <section class="h10-section h20-results" aria-labelledby="h20ResultsTitle">
+      <div class="h10-shell">
+        <div class="h10-section-head">
+          <div><small>From The Checkered Flag</small><h2 id="h20ResultsTitle">Latest Race Results</h2></div>
+          <a href="results/">All Race Results →</a>
+        </div>
+        <div class="h20-results-grid">
+          <article class="h20-results-panel sunday" aria-label="Sunday latest top five">
+            <div class="h20-results-header"><span>Sunday Night League</span><strong>FINAL RESULTS</strong></div>
+            <h3 id="h20ResultSundayTrack">Latest Sunday Race</h3>
+            <p id="h20ResultSundayMeta">See the latest verified Sunday results.</p>
+            <ol id="h20ResultSundayList" class="h20-finish-list"><li>Race finishers will appear when published.</li></ol>
+            <a href="results/">View Sunday Results →</a>
+          </article>
+          <article class="h20-results-panel monday" aria-label="Monday latest top five">
+            <div class="h20-results-header"><span>Monday Night League</span><strong>FINAL RESULTS</strong></div>
+            <h3 id="h20ResultMondayTrack">Latest Monday Race</h3>
+            <p id="h20ResultMondayMeta">See the latest verified Monday results.</p>
+            <ol id="h20ResultMondayList" class="h20-finish-list"><li>Race finishers will appear when published.</li></ol>
+            <a href="results/">View Monday Results →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section class="h10-section compact">
       <div class="h10-shell">
         <div class="h10-section-head">
@@ -351,6 +395,43 @@
     }catch(e){console.warn("HLRN homepage championship pulse unavailable; keeping standings links.",e);}
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",load,{once:true});else load();
+})();
+</script>
+<script id="hlrn-home-v20-results-data">
+(function(){
+"use strict";
+const put=(id,val)=>{const node=document.getElementById(id);if(node)node.textContent=String(val||"");};
+const dateLabel=val=>{const d=new Date(val);return Number.isFinite(d.getTime())?new Intl.DateTimeFormat("en-US",{timeZone:"America/New_York",month:"short",day:"numeric",year:"numeric"}).format(d):"";};
+async function load(){
+ try{
+  const response=await fetch("/data/derived/reports.json",{cache:"no-store"});
+  if(!response.ok)throw new Error("Reports HTTP "+response.status);
+  const payload=await response.json();
+  const records=Array.isArray(payload.reports)?payload.reports:[];
+  for(const league of ["sunday","monday"]){
+   const prefix=league==="sunday"?"h20ResultSunday":"h20ResultMonday";
+   const matching=records.filter(r=>String(r?.series||"").toLowerCase()===league&&Array.isArray(r?.top10)&&r.top10.length>=5);
+   matching.sort((a,b)=>(Date.parse(b.date)||0)-(Date.parse(a.date)||0)||(Number(b.raceNumber)||0)-(Number(a.raceNumber)||0));
+   const report=matching[0];if(!report)continue;
+   put(prefix+"Track",report.track||"Latest "+league+" race");
+   put(prefix+"Meta",[dateLabel(report.date),report.raceNumber?"Race "+report.raceNumber:"",report.classified?"Field: "+report.classified:""].filter(Boolean).join(" • "));
+   const list=document.getElementById(prefix+"List");if(!list)continue;
+   const top=report.top10.slice().sort((a,b)=>(Number(a.finish)||999)-(Number(b.finish)||999)).slice(0,5);
+   const items=document.createDocumentFragment();
+   for(const driver of top){
+    const li=document.createElement("li");
+    const name=document.createElement("span");name.className="h20-result-name";name.textContent=String(driver.name||"Driver");
+    li.append(name);
+    if(driver.carNumber!==null&&driver.carNumber!==undefined&&String(driver.carNumber).trim()){
+     const car=document.createElement("span");car.className="h20-result-car";car.textContent="#"+String(driver.carNumber);li.append(car);
+    }
+    items.append(li);
+   }
+   list.replaceChildren(items);
+  }
+ }catch(error){console.warn("HLRN latest results unavailable; keeping Results links.",error);}
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",load,{once:true});else load();
 })();
 </script>
 </body>
