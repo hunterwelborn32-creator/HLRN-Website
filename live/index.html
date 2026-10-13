@@ -12,7 +12,7 @@
 <meta name="description" content="Follow High Line Racing Network live timing, race control, penalties, lap-by-lap recording, Race Replay and final race summaries.">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://highlineracingnetwork.com/live/">
-<script data-hlrn-driver-system src="../assets/driver-system.js?v=20261007v12"></script>
+<script data-hlrn-driver-system src="../assets/driver-system.js?v=20261013v13"></script>
 <style>
   :root{
     --bg:#f3f4f6;
@@ -2314,7 +2314,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
   CLOUDFLARE TEST MODE &nbsp;
   <button id="cf-test-start" type="button" style="background:#e31837;color:#fff;padding:10px 14px;border:0;border-radius:5px;cursor:pointer;font-weight:800">START SIMULATED RACE</button>
   <button id="cf-test-stop" type="button" style="background:#4d586c;color:#fff;padding:10px 14px;border:0;border-radius:5px;cursor:pointer;font-weight:800">STOP</button>
-  <span id="cf-test-note" style="display:inline-block;margin-left:12px;font-weight:normal">Cloudflare staging only — Render unchanged</span>
+  <span id="cf-test-note" style="display:inline-block;margin-left:12px;font-weight:normal">Cloudflare test mode — no published Results changes</span>
 </div>
 <script>
 (function(){
@@ -2745,7 +2745,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
 <script>
 (() => {
   const CLOUDFLARE_TEST = new URLSearchParams(location.search).get("cloudflare-test") === "1";
-  const FEED_WS = new URLSearchParams(location.search).get("render-fallback") === "1" ? "wss://hlrn-live-feed.onrender.com/ws?role=viewer" : "wss://hlrn-live-feed.hunterwelborn32.workers.dev/ws?role=viewer";
+  const FEED_WS = "wss://hlrn-live-feed.hunterwelborn32.workers.dev/ws?role=viewer";
   const DEMO_MODE = new URLSearchParams(location.search).get("demo") === "1";
   const SIMULATION_MODE = new URLSearchParams(location.search).get("simulation") === "1";
   const $ = id => document.getElementById(id);
