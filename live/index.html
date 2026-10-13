@@ -5331,7 +5331,10 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
       }
       if(d.lapsCompleted!=null && d.lapsCompleted!==""){
         const laps=Number(d.lapsCompleted);
-        if(!Number.isInteger(laps) || laps<0 || (bounded && laps>total+1))
+        // iRacing uses -1 before a completed qualifying/practice lap.
+        // Race scoring continues to require non-negative completed laps.
+        const preRacePhase=["practice","qualifying"].includes(String(snapshot.phase||"").toLowerCase());
+        if(!Number.isInteger(laps) || laps<(preRacePhase?-1:0) || (bounded && laps>total+1))
           return "Invalid completed-lap count";
       }
       if(d.lapsDown!=null && d.lapsDown!==""){
