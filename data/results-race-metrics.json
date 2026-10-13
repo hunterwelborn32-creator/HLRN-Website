@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-12T09:31:58.159Z",
+  "generatedAt": "2026-10-13T08:02:54.272Z",
   "source": "SimRacerHub race pages",
   "races": [
     {
@@ -176,6 +176,31 @@
         "driverId": "63510",
         "carNumber": "56",
         "lap": 3
+      }
+    },
+    {
+      "key": "monday|8|385004",
+      "league": "monday",
+      "raceNumber": 8,
+      "raceId": "385004",
+      "track": "Talladega Superspeedway",
+      "date": "Mon Oct 12 2026 00:00:00 GMT-0400 (Eastern Daylight Time)",
+      "source": "SimRacerHub",
+      "sourceRaceId": "385004",
+      "duration": "1h 32m",
+      "raceLaps": 76,
+      "leaders": 5,
+      "leadChanges": 6,
+      "cautions": 7,
+      "cautionLaps": 21,
+      "penalties": 0,
+      "fastestLap": {
+        "time": 51.025,
+        "formatted": "51.025",
+        "driver": "Trevor Aswarnauth",
+        "driverId": "10188",
+        "carNumber": "89",
+        "lap": 24
       }
     },
     {
