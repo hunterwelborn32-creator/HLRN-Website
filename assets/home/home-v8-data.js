@@ -209,6 +209,34 @@
     const event=rows.find(x=>!x.off&&Number(x.week)===Number(report.raceNumber));
     return event?.laps??null;
   };
+  // Hero cards require genuinely upcoming events; do not reuse the Race Week
+  // fallback that intentionally shows the season's last event after it ends.
+  const nextUpcomingEvent=(schedule,league,now=new Date())=>{
+    const parts=new Intl.DateTimeFormat("en-US",{
+      timeZone:"America/New_York",year:"numeric",month:"2-digit",day:"2-digit",
+      hour:"2-digit",minute:"2-digit",hourCycle:"h23"
+    }).formatToParts(now).reduce((o,part)=>(o[part.type]=part.value,o),{});
+    const today=parts.year+"-"+parts.month+"-"+parts.day;
+    const time=Number(parts.hour)*60+Number(parts.minute);
+    const rows=Array.isArray(schedule?.leagues?.[league])?schedule.leagues[league]:[];
+    return rows.filter(event=>
+      event&&!event.off&&/^\d{4}-\d{2}-\d{2}$/.test(String(event.date||""))&&
+      String(event.track||"").trim()&&
+      (event.date>today||(event.date===today&&time<20*60+30))
+    ).sort((a,b)=>a.date.localeCompare(b.date))[0]||null;
+  };
+  function renderUpcomingRaces(schedule){
+    for(const [league,prefix] of [["sunday","Sunday"],["monday","Monday"]]){
+      const event=nextUpcomingEvent(schedule,league);
+      put("h10Upcoming"+prefix+"Track",event?String(event.track).trim():"Next Race To Be Announced");
+      put("h10Upcoming"+prefix+"Date",event?longDate(event.date):"Schedule pending");
+      const time=$("h10Upcoming"+prefix+"Time");
+      if(time){
+        time.hidden=!event;
+        if(event)time.textContent=String(schedule?.greenFlag||"8:30 PM ET");
+      }
+    }
+  }
   function renderSchedule(schedule){
     [["sunday","Sunday"],["monday","Monday"]].forEach(([key,prefix])=>{
       const event=nextEvent(schedule,key);
@@ -448,6 +476,7 @@
         json("data/race-recaps/index.json").catch(()=>({recaps:[]}))
       ]);
       renderSchedule(schedule);
+      renderUpcomingRaces(schedule);
       const latest=latestReport(reports,snapshot);
       renderLatest(latest,schedule,recaps);
       renderPitTicker(snapshot,latest);

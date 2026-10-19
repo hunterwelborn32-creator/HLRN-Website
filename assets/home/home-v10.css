@@ -1134,3 +1134,19 @@ html[data-hlrn-theme="light"] .home10 .h10-link-card:hover{box-shadow:0 15px 32p
   .home10 .h10-week-card,.home10 .h10-link-card,.home10 .h10-section-head>a{transition:none}
   .home10 .h10-week-card:hover,.home10 .h10-link-card:hover{transform:none}
 }
+
+/* Homepage hero: upcoming league races. Scoped to the hero to leave other sections intact. */
+.h10-hero-copy .h10-upcoming{margin-top:28px;max-width:760px}
+.h10-hero-copy .h10-upcoming-title{margin:0 0 12px;font-size:12px;letter-spacing:.11em;text-transform:uppercase;color:#f5f7fa}
+.h10-upcoming-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.h10-upcoming-card{min-width:0;padding:18px;background:rgba(9,16,27,.89);border:1px solid rgba(255,255,255,.22);border-top:4px solid #e31837;border-radius:9px;color:#fff}
+.h10-upcoming-card.monday{border-top-color:#36b96c}
+.h10-upcoming-card small{display:block;color:#ff9ba9;font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+.h10-upcoming-card.monday small{color:#85eab1}
+.h10-upcoming-card h3{margin:10px 0 7px;font-size:clamp(18px,2vw,23px);line-height:1.14;color:#fff;overflow-wrap:anywhere}
+.h10-hero .h10-upcoming-card p{margin:0 0 8px;font-size:13px;color:#d9e0e9;line-height:1.4}
+.h10-upcoming-time{display:block;color:#fff;font-size:13px;font-weight:750;margin-bottom:12px}
+.h10-upcoming-time[hidden]{display:none}
+.h10-upcoming-card a{display:inline-block;color:#fff;font-size:13px;font-weight:800;text-underline-offset:3px}
+.h10-upcoming-card a:focus-visible{outline:3px solid #fff;outline-offset:4px}
+@media(max-width:600px){.h10-upcoming-grid{grid-template-columns:1fr}.h10-upcoming-card{padding:16px}.h10-hero-copy .h10-upcoming{margin-top:24px}}
