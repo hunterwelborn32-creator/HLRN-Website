@@ -1172,3 +1172,15 @@ html[data-hlrn-theme="light"] .home10 .h10-link-card:hover{box-shadow:0 15px 32p
 .home10 .h20-position-change.down{color:#d94b58}
 .home10 .h20-position-change.even{color:var(--h10-muted)}
 @media(max-width:720px){.home10 .h20-results-grid{grid-template-columns:1fr}.home10 .h20-results-panel{padding:20px}.home10 .h20-finish-list li{gap:8px}.home10 .h20-position-change{min-width:35px}}
+
+/* Homepage Championship Watch 2.0 — scoped card hierarchy. */
+.home10 .h20-panel .h20-live-label{color:#c39b38;font-weight:900;letter-spacing:.1em}
+.home10 .h20-panel h3{font-size:clamp(26px,2.9vw,39px);line-height:1.12;overflow-wrap:anywhere;margin:20px 0 8px}
+.home10 .h20-championship-total{display:flex;flex-direction:column;gap:4px;padding:15px 0 17px;border-top:1px solid var(--h10-line)}
+.home10 .h20-championship-total b{color:var(--h10-text);font-size:clamp(35px,4vw,52px);font-variant-numeric:tabular-nums;line-height:1}
+.home10 .h20-championship-total span{color:var(--h10-muted);font-size:10px;text-transform:uppercase;letter-spacing:.09em;font-weight:850}
+.home10 .h20-numbers{grid-template-columns:repeat(2,minmax(0,1fr));padding:17px 0}
+.home10 .h20-numbers div:last-child b{color:#279c59;overflow-wrap:anywhere}
+.home10 .h20-numbers div:last-child small{line-height:1.3}
+@media(max-width:720px){.home10 .h20-grid{grid-template-columns:1fr}.home10 .h20-panel{padding:22px}.home10 .h20-numbers{gap:12px}}
+@media(max-width:390px){.home10 .h20-panel-top{flex-wrap:wrap}.home10 .h20-numbers b{font-size:clamp(16px,5vw,23px)}}

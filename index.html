@@ -50,7 +50,7 @@
 <link rel="stylesheet" href="assets/site-shell.css?v=20261001control1">
 <link rel="stylesheet" href="assets/home/home-race-night.css?v=20260928p1">
 <link rel="stylesheet" href="assets/race-recaps.css?v=1">
-<link rel="stylesheet" href="assets/home/home-v10.css?v=20261019results3">
+<link rel="stylesheet" href="assets/home/home-v10.css?v=20261019championship2">
 
 <meta name="theme-color" content="#07090d">
 <style id="hlrn-home-v20-pulse">
@@ -265,14 +265,14 @@
             <div class="h20-panel-top"><span>Sunday Night League</span><span class="h20-live-label">POINTS LEADER</span></div>
             <h3 id="h20SundayName">View Sunday standings</h3>
             <p id="h20SundayNote">Check the latest championship battle.</p>
-            <div class="h20-numbers"><div><b id="h20SundayPoints">—</b><small>Points</small></div><div><b id="h20SundayWins">—</b><small>Wins</small></div><div><b id="h20SundayGap">—</b><small>Lead over P2</small></div></div>
+            <div class="h20-championship-total"><b id="h20SundayPoints">—</b><span>Championship Points</span></div><div class="h20-numbers"><div><b id="h20SundayWins">—</b><small>Wins</small></div><div><b id="h20SundayGap">—</b><small id="h20SundayGapLabel">Lead over P2</small></div></div>
             <a href="standings/">Sunday Championship →</a>
           </article>
           <article class="h20-panel monday">
             <div class="h20-panel-top"><span>Monday Night League</span><span class="h20-live-label">POINTS LEADER</span></div>
             <h3 id="h20MondayName">View Monday standings</h3>
             <p id="h20MondayNote">Check the latest championship battle.</p>
-            <div class="h20-numbers"><div><b id="h20MondayPoints">—</b><small>Points</small></div><div><b id="h20MondayWins">—</b><small>Wins</small></div><div><b id="h20MondayGap">—</b><small>Lead over P2</small></div></div>
+            <div class="h20-championship-total"><b id="h20MondayPoints">—</b><span>Championship Points</span></div><div class="h20-numbers"><div><b id="h20MondayWins">—</b><small>Wins</small></div><div><b id="h20MondayGap">—</b><small id="h20MondayGapLabel">Lead over P2</small></div></div>
             <a href="standings/">Monday Championship →</a>
           </article>
         </div>
@@ -408,16 +408,19 @@
       for(const league of ["sunday","monday"]){
         const prefix=league==="sunday"?"h20Sunday":"h20Monday";
         const drivers=data?.leagues?.[league]?.drivers;
-        if(!Array.isArray(drivers)||!drivers.length)continue;
-        const ordered=drivers.filter(d=>d&&number(d.points)!==null).sort((a,b)=>(number(a.rank)??9999)-(number(b.rank)??9999)||number(b.points)-number(a.points));
-        if(!ordered.length)continue;
+        if(!Array.isArray(drivers)||!drivers.length){show(prefix+"Note","Standings currently unavailable");continue;}
+        const ordered=drivers.filter(d=>d&&number(d.points)!==null)
+          .sort((a,b)=>number(b.points)-number(a.points)||(number(a.rank)??9999)-(number(b.rank)??9999));
+        if(!ordered.length){show(prefix+"Note","Standings currently unavailable");continue;}
         const first=ordered[0],second=ordered[1],points=number(first.points);
-        show(prefix+"Name",pretty(first.driver||first.name)||"Championship leader");
-        show(prefix+"Note","Current points leader • published HLRN standings");
-        show(prefix+"Points",points===null?"—":points.toLocaleString("en-US"));
-        show(prefix+"Wins",number(first.wins)??"—");
         const runner=second?number(second.points):null;
-        show(prefix+"Gap",points!==null&&runner!==null?Math.max(0,points-runner).toLocaleString("en-US"):"—");
+        const gap=runner===null?null:points-runner;
+        show(prefix+"Name",pretty(first.driver||first.name)||"Championship leader");
+        show(prefix+"Note",gap===0?"Championship tied on points":"Current points leader • published HLRN standings");
+        show(prefix+"Points",points.toLocaleString("en-US"));
+        show(prefix+"Wins",number(first.wins)??"—");
+        show(prefix+"Gap",gap===null?"—":gap===0?"Tied":("+"+gap.toLocaleString("en-US")));
+        show(prefix+"GapLabel",gap===0?"Tied on points":"Lead over P2");
       }
     }catch(e){console.warn("HLRN homepage championship pulse unavailable; keeping standings links.",e);}
   }
