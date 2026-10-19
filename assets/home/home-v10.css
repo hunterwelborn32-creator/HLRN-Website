@@ -1161,3 +1161,14 @@ html[data-hlrn-theme="light"] .home10 .h10-link-card:hover{box-shadow:0 15px 32p
 .home10 .h10-week-details strong{color:var(--h10-text);font-size:15px;font-weight:900;letter-spacing:0;overflow-wrap:anywhere}
 .home10 .h10-week-card b{margin-top:18px}
 @media(max-width:720px){.home10 .h10-week-card{padding:22px;min-height:0}.home10 .h10-week-details{gap:20px}}
+
+/* Homepage results 3.0 — top-five leaderboard enhancements. */
+.home10 .h20-finish-list li{min-width:0;gap:10px;flex-wrap:wrap}
+.home10 .h20-finish-list .h20-result-name{flex:1 1 130px}
+.home10 .h20-result-winner{background:color-mix(in srgb,#e9ba44 9%,transparent);border-radius:5px;padding-inline:10px!important;border-left:3px solid #d9ab35}
+.home10 .h20-result-winner:before{color:#c99520!important}
+.home10 .h20-position-change{min-width:44px;text-align:right;font-size:12px;font-weight:900;font-variant-numeric:tabular-nums;white-space:nowrap}
+.home10 .h20-position-change.up{color:#279c59}
+.home10 .h20-position-change.down{color:#d94b58}
+.home10 .h20-position-change.even{color:var(--h10-muted)}
+@media(max-width:720px){.home10 .h20-results-grid{grid-template-columns:1fr}.home10 .h20-results-panel{padding:20px}.home10 .h20-finish-list li{gap:8px}.home10 .h20-position-change{min-width:35px}}
