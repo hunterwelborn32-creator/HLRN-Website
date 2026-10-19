@@ -4025,6 +4025,24 @@ html[style*="color-scheme: dark"] body #drivers a.hlrn-driver-profile-link .hlrn
 }
 </style>
 
+<style id="hlrn-monday-standings-v2">
+/* Monday driver leaderboard enhancements, scoped to driver standings. */
+#drivers .m2-driver-search-wrap{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:0 0 14px}
+#drivers .m2-driver-search-wrap label{font-size:12px;font-weight:800;color:inherit}
+#drivers #m2DriverSearch{flex:1 1 240px;min-width:0;min-height:44px;border-radius:6px;border:1px solid #647082;background:#161b21;color:#fff;padding:10px 13px;font:inherit}
+html[data-hlrn-theme="light"] #drivers #m2DriverSearch{background:#fff;color:#161b21;border-color:#697588}
+#drivers #m2DriverSearch:focus-visible,#drivers #m2DriverSearchClear:focus-visible{outline:3px solid #8adea1;outline-offset:2px}
+#drivers #m2DriverSearchClear{border:1px solid #7d8795;border-radius:5px;background:transparent;color:inherit;min-height:40px;padding:8px 12px;cursor:pointer}
+#drivers #m2DriverSearchClear[hidden]{display:none!important}
+#drivers .m2-search-status{font-size:12px;color:inherit;opacity:.8}
+#drivers .movement.up{color:#3bc978!important;border-left-color:#3bc978!important}
+#drivers .movement.down{color:#ef6671!important;border-left-color:#ef6671!important}
+#drivers tbody tr:has(.position.top1){box-shadow:inset 3px 0 #d9b344}
+#drivers tbody tr:has(.position.top2){box-shadow:inset 3px 0 #b5bfcd}
+#drivers tbody tr:has(.position.top3){box-shadow:inset 3px 0 #c1844d}
+#drivers .m2-no-matches td{text-align:center;padding:28px 12px;white-space:normal}
+@media(max-width:700px){#drivers .m2-driver-search-wrap{align-items:stretch}#drivers .m2-driver-search-wrap label{flex:1 0 100%}#drivers #m2DriverSearch{flex-basis:100%}#drivers .m2-search-status{width:100%}#drivers .hlrn-mobile-driver-card{min-width:0}}
+</style>
 </head>
 <body>
 <nav class="hlrn-series-switcher" aria-label="HLRN standings series">
@@ -4107,6 +4125,12 @@ Last Race
 <div id="driverCount" class="count">
 Loading...
 </div>
+</div>
+<div class="m2-driver-search-wrap">
+<label for="m2DriverSearch">Find a driver</label>
+<input id="m2DriverSearch" type="search" autocomplete="off" placeholder="Search driver name…" aria-controls="driverBody" aria-describedby="m2DriverSearchStatus">
+<button type="button" id="m2DriverSearchClear" hidden>Clear</button>
+<span id="m2DriverSearchStatus" class="m2-search-status" role="status" aria-live="polite"></span>
 </div>
 <div class="hlrn-mobile-scroll-hint">Swipe for more stats → Driver stays pinned</div>
 <div class="table-shell">
@@ -4989,17 +5013,31 @@ function hlrnMetricText(value,decimals){
   return value===null || value===undefined ? "—" : formatNumber(value,decimals||0);
 }
 
+function m2BindDriverSearch(){
+  const input=document.getElementById("m2DriverSearch"),clear=document.getElementById("m2DriverSearchClear");
+  if(!input||input.dataset.bound)return;
+  input.dataset.bound="true";
+  input.addEventListener("input",()=>renderDrivers());
+  if(clear)clear.addEventListener("click",()=>{input.value="";renderDrivers();input.focus();});
+}
 function renderDrivers(){
+  m2BindDriverSearch();
   const body=document.getElementById("driverBody");
   const sorted=drivers.slice().sort(function(a,b){
     if(num(a.rank)!==num(b.rank)) return num(a.rank)-num(b.rank);
     return num(b.points)-num(a.points);
   });
-  document.getElementById("driverCount").textContent=sorted.length+" Drivers";
+  const query=(document.getElementById("m2DriverSearch")?.value||"").trim().toLocaleLowerCase();
+  const visible=query?sorted.filter(d=>String(d.driver||d.name||"").toLocaleLowerCase().includes(query)):sorted;
+  document.getElementById("driverCount").textContent=query?(visible.length+" of "+sorted.length+" Drivers"):sorted.length+" Drivers";
+  const searchStatus=document.getElementById("m2DriverSearchStatus");
+  if(searchStatus)searchStatus.textContent=query?(visible.length?visible.length+" matching drivers":"No drivers match your search"):"";
+  const clear=document.getElementById("m2DriverSearchClear");if(clear)clear.hidden=!query;
 
   const leaderPoints=sorted.length ? num(sorted[0].points) : 0;
 
-  body.innerHTML=sorted.map(function(driver,index){
+  body.innerHTML=visible.map(function(driver){
+    const index=sorted.indexOf(driver);
     const totals=getDriverTotals(driver.driverId);
     const pos=num(driver.rank)||index+1;
     const points=hlrnFirstMetric(driver,["points"]) ?? 0;
@@ -5061,6 +5099,7 @@ function renderDrivers(){
 <td class="team-name">${team?escapeHTML(team):'—'}</td>
 </tr>`;
   }).join("");
+  if(!visible.length&&query)body.innerHTML='<tr class="m2-no-matches"><td colspan="21">No drivers found. Try another name or clear the search.</td></tr>';
 }
 function getDriverTotals(driverId){
 let led=0;
