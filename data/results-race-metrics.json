@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-13T08:02:54.272Z",
+  "generatedAt": "2026-10-19T06:20:00.925Z",
   "source": "SimRacerHub race pages",
   "races": [
     {
@@ -526,6 +526,31 @@
         "driverId": "77498",
         "carNumber": "88",
         "lap": 28
+      }
+    },
+    {
+      "key": "sunday|14|386131",
+      "league": "sunday",
+      "raceNumber": 14,
+      "raceId": "386131",
+      "track": "Las Vegas Motor Speedway",
+      "date": "Sun Oct 18 2026 00:00:00 GMT-0400 (Eastern Daylight Time)",
+      "source": "SimRacerHub",
+      "sourceRaceId": "386131",
+      "duration": "1h 24m",
+      "raceLaps": 133,
+      "leaders": 7,
+      "leadChanges": 14,
+      "cautions": 8,
+      "cautionLaps": 16,
+      "penalties": 0,
+      "fastestLap": {
+        "time": 30.107,
+        "formatted": "30.107",
+        "driver": "Shawn Stamper",
+        "driverId": "56823",
+        "carNumber": "09",
+        "lap": 60
       }
     }
   ]
