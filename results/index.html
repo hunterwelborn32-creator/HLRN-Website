@@ -659,21 +659,13 @@ html[data-hlrn-theme="dark"] .ns-race-row.clickable-result[data-results-href]:ho
 <div class="next-events-grid" id="nextEventsGrid"></div>
 </section>
 
-<section id="raceArchive" class="archive-v2" aria-labelledby="archiveV2Title">
-  <div class="archive-v2-header">
-    <div><span class="archive-v2-kicker">HLRN RACE CENTER</span><h2 id="archiveV2Title">COMPLETED RACES</h2><p>Explore previous Sunday and Monday races, winners, and full results.</p></div>
-    <div class="archive-tabs" role="group" aria-label="Filter completed races">
-      <button type="button" class="archive-tab active" data-archive-league="all" aria-pressed="true">All Races</button>
-      <button type="button" class="archive-tab sunday" data-archive-league="sunday" aria-pressed="false">Sunday</button>
-      <button type="button" class="archive-tab monday" data-archive-league="monday" aria-pressed="false">Monday</button>
-    </div>
-  </div>
-  <div class="archive-v2-summary"><span id="archiveVisibleCount" role="status" aria-live="polite">Loading completed races…</span><span id="archiveUpdated"></span></div>
-  <div id="archiveGrid" class="archive-grid"><div class="archive-loading">Loading completed race results…</div></div>
+<div id="raceArchive" hidden aria-hidden="true">
+  <div id="archiveGrid"></div>
+  <span id="archiveUpdated"></span>
   <span id="archiveRaceCount"></span>
   <span id="archiveWinnerCount"></span>
-  <span id="archiveDriverCount" hidden></span>
-</section>
+  <span id="archiveDriverCount"></span>
+</div>
 <div id="recorderArchive" hidden aria-hidden="true">
   <div id="recorderArchiveGrid"></div>
   <span id="recorderArchiveStatus"></span>
