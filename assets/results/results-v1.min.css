@@ -38,3 +38,22 @@
     font-size:12px !important;
   }
 }
+
+/* HLRN Completed Race Navigation 2.0 — scoped archive presentation */
+#raceArchive.archive-v2{display:block;margin:38px 0 30px;padding:22px;border:1px solid #323b45;background:#10151b;color:#fff;scroll-margin-top:22px}
+#raceArchive .archive-v2-header{display:flex;justify-content:space-between;align-items:end;flex-wrap:wrap;gap:20px;margin-bottom:16px}
+#raceArchive .archive-v2-kicker{color:#e37b8a;font-size:11px;font-weight:800;letter-spacing:.12em}
+#raceArchive .archive-v2-header h2{margin:5px 0;font-size:clamp(26px,4vw,42px);line-height:1.05;color:#fff}
+#raceArchive .archive-v2-header p{margin:0;color:#bac6d0;font-size:14px;line-height:1.45}
+#raceArchive .archive-tabs{display:flex;flex-wrap:wrap;gap:6px}
+#raceArchive .archive-tab{font-size:13px;min-height:44px;padding:10px 16px;border-radius:4px}
+#raceArchive .archive-tab:focus-visible,#raceArchive .archive-card:focus-visible{outline:3px solid #f3c959;outline-offset:3px}
+#raceArchive .archive-v2-summary{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;color:#bac6d0;font-size:12px;margin-bottom:12px}
+#raceArchive .archive-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+#raceArchive .archive-card{min-width:0}
+#raceArchive .archive-card .archive-open{font-size:11px}
+@media(max-width:960px){#raceArchive .archive-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){#raceArchive.archive-v2{padding:14px;margin:24px 0}#raceArchive .archive-grid{grid-template-columns:1fr}#raceArchive .archive-v2-header{align-items:stretch}#raceArchive .archive-tabs{width:100%}#raceArchive .archive-tab{flex:1 1 auto}}
+html[data-hlrn-theme="light"] #raceArchive.archive-v2{background:#fff;color:#141a20;border-color:#d6dce2}
+html[data-hlrn-theme="light"] #raceArchive .archive-v2-header h2{color:#141a20}
+html[data-hlrn-theme="light"] #raceArchive .archive-v2-header p,html[data-hlrn-theme="light"] #raceArchive .archive-v2-summary{color:#4b5966}
