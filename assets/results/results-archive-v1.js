@@ -291,6 +291,8 @@ function cardHtml(race){
 function renderArchive(){
   const filtered=activeFilter==='all'?races:races.filter(r=>r.league===activeFilter);
   $('archiveGrid').innerHTML=filtered.length?filtered.map(cardHtml).join(''):'<div class="archive-empty">NO COMPLETED RACES FOUND FOR THIS FILTER.</div>';
+  const visibleCount=$('archiveVisibleCount');
+  if(visibleCount)visibleCount.textContent=filtered.length+' completed '+(filtered.length===1?'race':'races')+(activeFilter==='all'?'':' • '+leagueShort(activeFilter)+' NIGHT');
   $('archiveRaceCount').textContent=races.length;
   const winnerIds=new Set(),driverIds=new Set();
   races.forEach(r=>{
@@ -704,12 +706,17 @@ async function load(){
     console.error('HLRN race archive:',err);
     $('archiveGrid').innerHTML='<div class="archive-empty">RACE ARCHIVE DATA IS TEMPORARILY UNAVAILABLE.</div>';
     $('archiveUpdated').textContent='DATA UNAVAILABLE';
+    if($('archiveVisibleCount'))$('archiveVisibleCount').textContent='Completed races temporarily unavailable';
   }
 }
 
 document.querySelectorAll('.archive-tab').forEach(btn=>btn.addEventListener('click',()=>{
   activeFilter=btn.dataset.archiveLeague||'all';
-  document.querySelectorAll('.archive-tab').forEach(b=>b.classList.toggle('active',b===btn));
+  document.querySelectorAll('.archive-tab').forEach(b=>{
+    const on=b===btn;
+    b.classList.toggle('active',on);
+    b.setAttribute('aria-pressed',on?'true':'false');
+  });
   renderArchive();
 }));
 $('archiveGrid')?.addEventListener('click',e=>{
