@@ -239,13 +239,23 @@
   }
   function renderSchedule(schedule){
     [["sunday","Sunday"],["monday","Monday"]].forEach(([key,prefix])=>{
-      const event=nextEvent(schedule,key);
-      if(!event)return;
-      const date=shortDate(event.date);
-      const track=String(event.track||"").trim();
-      put("rd"+prefix,date);
-      put("v7"+prefix+"Date",date+(track?" • "+track:""));
-      put("v7"+prefix+"Mirror",date);
+      // Preserve legacy race-day schedule outputs separately from the Race Week cards.
+      const existing=nextEvent(schedule,key);
+      if(existing){
+        const date=shortDate(existing.date);
+        put("rd"+prefix,date);
+        put("v7"+prefix+"Mirror",date);
+      }
+      // A Race Week card must never advertise a completed event as upcoming.
+      const event=nextUpcomingEvent(schedule,key);
+      put("v7"+prefix+"Track",event?String(event.track).trim():"Schedule To Be Announced");
+      put("v7"+prefix+"Date",event?longDate(event.date)+" • "+String(schedule?.greenFlag||"8:30 PM ET"):"Next race date pending");
+      const car=String(event?.car||"").trim();
+      const laps=Number(event?.laps);
+      put("v7"+prefix+"Car",car||"—");
+      put("v7"+prefix+"Laps",Number.isFinite(laps)&&laps>0?String(laps):"—");
+      const details=$("v7"+prefix+"Details");
+      if(details)details.hidden=!event||(!car&&!(Number.isFinite(laps)&&laps>0));
     });
     renderPitNext(schedule);
   }
