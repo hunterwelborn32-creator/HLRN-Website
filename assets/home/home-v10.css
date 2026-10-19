@@ -1184,3 +1184,23 @@ html[data-hlrn-theme="light"] .home10 .h10-link-card:hover{box-shadow:0 15px 32p
 .home10 .h20-numbers div:last-child small{line-height:1.3}
 @media(max-width:720px){.home10 .h20-grid{grid-template-columns:1fr}.home10 .h20-panel{padding:22px}.home10 .h20-numbers{gap:12px}}
 @media(max-width:390px){.home10 .h20-panel-top{flex-wrap:wrap}.home10 .h20-numbers b{font-size:clamp(16px,5vw,23px)}}
+
+/* Homepage Quick Links 2.0 — scoped to the Explore HLRN navigation hub. */
+.home10 .h10-quick-links .h10-links-intro{color:var(--h10-muted);font-size:14px;margin:9px 0 0;line-height:1.5}
+.home10 .h10-quick-links .h10-links-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.home10 .h10-quick-links .h10-link-card{--ql-accent:var(--h10-red);min-height:185px;gap:10px;justify-content:flex-start;border-top:3px solid var(--ql-accent);border-radius:12px;padding:22px}
+.home10 .h10-quick-links .h10-link-icons{display:flex;align-items:center;justify-content:space-between;margin-bottom:auto}
+.home10 .h10-quick-links .h10-link-icon{width:27px;height:27px;color:var(--ql-accent);flex:none}
+.home10 .h10-quick-links .h10-link-arrow{font-size:22px;color:var(--h10-muted);line-height:1}
+.home10 .h10-quick-links .h10-link-card>span{color:var(--ql-accent)!important}
+.home10 .h10-quick-links .h10-link-card strong{font-size:clamp(19px,2vw,24px);line-height:1.15}
+.home10 .h10-quick-links .h10-link-card small{font-size:12px;line-height:1.5}
+.home10 .h10-quick-links .h10-link-gold{--ql-accent:#bd963c}
+.home10 .h10-quick-links .h10-link-red{--ql-accent:#d45168}
+.home10 .h10-quick-links .h10-link-blue{--ql-accent:#508bc3}
+.home10 .h10-quick-links .h10-link-green{--ql-accent:#319a69}
+.home10 .h10-quick-links .h10-link-purple{--ql-accent:#9674c1}
+.home10 .h10-quick-links .h10-link-featured{grid-column:1/-1;min-height:155px}
+.home10 .h10-quick-links .h10-link-card:focus-visible{outline:3px solid var(--ql-accent);outline-offset:4px}
+@media(max-width:720px){.home10 .h10-quick-links .h10-links-grid{grid-template-columns:1fr;gap:12px}.home10 .h10-quick-links .h10-link-featured{grid-column:auto}.home10 .h10-quick-links .h10-link-card{min-height:150px;padding:20px}}
+@media(prefers-reduced-motion:reduce){.home10 .h10-quick-links .h10-link-card{transition:none!important;transform:none!important}}
