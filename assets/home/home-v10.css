@@ -1150,3 +1150,14 @@ html[data-hlrn-theme="light"] .home10 .h10-link-card:hover{box-shadow:0 15px 32p
 .h10-upcoming-card a{display:inline-block;color:#fff;font-size:13px;font-weight:800;text-underline-offset:3px}
 .h10-upcoming-card a:focus-visible{outline:3px solid #fff;outline-offset:4px}
 @media(max-width:600px){.h10-upcoming-grid{grid-template-columns:1fr}.h10-upcoming-card{padding:16px}.h10-hero-copy .h10-upcoming{margin-top:24px}}
+
+/* Race Week 2.0 — scoped, schedule-driven metadata for both league cards. */
+.home10 .h10-week-card{justify-content:flex-end;gap:0}
+.home10 .h10-week-card h3{margin:12px 0 9px;font-size:clamp(28px,3.4vw,43px);overflow-wrap:anywhere}
+.home10 .h10-week-card p{font-size:14px;font-weight:700;line-height:1.45}
+.home10 .h10-week-details{display:flex;gap:20px;flex-wrap:wrap;margin-top:17px;padding-top:14px;border-top:1px solid var(--h10-line)}
+.home10 .h10-week-details[hidden]{display:none}
+.home10 .h10-week-details>span{display:flex;flex-direction:column;gap:5px;color:var(--h10-muted);font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.home10 .h10-week-details strong{color:var(--h10-text);font-size:15px;font-weight:900;letter-spacing:0;overflow-wrap:anywhere}
+.home10 .h10-week-card b{margin-top:18px}
+@media(max-width:720px){.home10 .h10-week-card{padding:22px;min-height:0}.home10 .h10-week-details{gap:20px}}
