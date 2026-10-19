@@ -220,7 +220,7 @@
     const time=Number(parts.hour)*60+Number(parts.minute);
     const rows=Array.isArray(schedule?.leagues?.[league])?schedule.leagues[league]:[];
     return rows.filter(event=>
-      event&&!event.off&&/^\\d{4}-\\d{2}-\\d{2}$/.test(String(event.date||""))&&
+      event&&!event.off&&/^\d{4}-\d{2}-\d{2}$/.test(String(event.date||""))&&
       String(event.track||"").trim()&&
       (event.date>today||(event.date===today&&time<20*60+30))
     ).sort((a,b)=>a.date.localeCompare(b.date))[0]||null;
