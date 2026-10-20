@@ -2046,9 +2046,17 @@ html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track{
     inset 0 0 0 6px #e31837,
     0 2px 7px rgba(13,28,49,.14)!important;
 }
-/* The canvas cars were crossing the brand caption and causing visual overlap. */
+/* Keep the same animated race cars as Night Race. The label above them
+   uses an opaque center plaque, so the racing oval stays visible without
+   letting moving cars obscure the network name or subtitle. */
 html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-mini-canvas{
-  display:none!important;
+  display:block!important;
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  z-index:0!important;
+  pointer-events:none!important;
 }
 html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-mark{
   position:absolute!important;
@@ -2056,7 +2064,7 @@ html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-mark{
   top:14px!important;
   width:48px!important;
   height:33px!important;
-  z-index:2!important;
+  z-index:3!important;
   display:grid!important;
   place-items:center!important;
   background:#142c48!important;
@@ -2071,7 +2079,7 @@ html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-name{
   left:98px!important;
   top:14px!important;
   max-width:calc(100% - 119px)!important;
-  z-index:2!important;
+  z-index:3!important;
   display:block!important;
   overflow:hidden!important;
   color:#162a43!important;
@@ -2082,6 +2090,10 @@ html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-name{
   text-shadow:none!important;
   text-transform:uppercase!important;
   white-space:nowrap!important;
+  background:#fff!important;
+  border-radius:5px!important;
+  padding:3px 8px 4px!important;
+  box-shadow:0 0 0 3px rgba(255,255,255,.92),0 1px 5px rgba(20,45,77,.12)!important;
 }
 html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-name small{
   display:block!important;
@@ -2134,6 +2146,7 @@ html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-name small{
     max-width:calc(100% - 78px)!important;
     font-size:8px!important;
     letter-spacing:.015em!important;
+    padding:2px 5px 3px!important;
   }
   html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-name small{
     margin-top:4px!important;
