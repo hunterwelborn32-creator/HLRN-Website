@@ -713,6 +713,53 @@ html[data-hlrn-theme="dark"] #tab-race .table-shell tbody tr:hover{background:#2
 @media(max-width:760px){.primary-tabs{justify-content:flex-start;scroll-snap-type:x proximity}.primary-tabs .tab{flex:0 0 auto;min-width:112px;scroll-snap-align:start}.mobile-timing-card{max-width:100%}.live-ticker-text{overflow-wrap:anywhere}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
 
+
+/* Between-races hub: public source is the same championship JSON as Standings. */
+#hlrnLiveShell.hlrn-offair > :not(#hlrnOffAir){display:none!important}
+#hlrnOffAir{display:none}
+#hlrnLiveShell.hlrn-offair #hlrnOffAir{display:block}
+.hlrn-offair-hub{color:var(--ink);background:var(--paper)}
+.hlrn-offair-hero{padding:clamp(22px,4vw,52px);background:linear-gradient(120deg,#0a111d,#23374b);color:#fff}
+.hlrn-offair-eyebrow{color:#afc1d5;font-size:11px;font-weight:900;letter-spacing:1.4px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.hlrn-offair-state{border:1px solid #b4c0ce;padding:5px 9px;border-radius:20px;font-size:10px;color:#e9edf2}
+.hlrn-offair-hero h1{font-weight:1000;font-size:clamp(27px,4.6vw,54px);line-height:1.05;margin:22px 0 12px}
+.hlrn-offair-hero h1 em{font-style:normal;color:#fa5369}
+.hlrn-offair-hero p{max-width:700px;color:#c1ccda;font-size:15px;line-height:1.55}
+.hlrn-offair-countdown{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;background:#142333;border:1px solid #415469;border-radius:12px;padding:20px;margin-top:25px}
+.hlrn-offair-countdown small{display:block;font-size:11px;color:#adbed0;letter-spacing:1px;font-weight:900}
+.hlrn-offair-countdown strong{display:block;font-size:21px;margin-top:6px}
+.hlrn-countdown-numbers{font-variant-numeric:tabular-nums;font-size:clamp(21px,3vw,35px);font-weight:1000;white-space:nowrap}
+.hlrn-offair-time{color:#aabed3;margin-top:12px;font-size:12px}
+.hlrn-offair-content{padding:clamp(16px,3vw,34px);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.hlrn-league-card{min-width:0;border:1px solid var(--line);background:var(--paper);border-radius:12px;overflow:hidden}
+.hlrn-league-top{background:#172333;color:#fff;padding:19px}
+.hlrn-league-top h2{margin:4px 0;font-size:23px}
+.hlrn-league-top small{color:#adbed0;font-size:11px;font-weight:900;letter-spacing:1px}
+.hlrn-league-inner{padding:16px}
+.hlrn-league-inner h3{font-size:13px;text-transform:uppercase;letter-spacing:.8px;margin:5px 0 12px}
+.hlrn-league-standings{width:100%;border-collapse:collapse;font-size:12px}
+.hlrn-league-standings th,.hlrn-league-standings td{padding:9px 5px;border-bottom:1px solid var(--line);text-align:left}
+.hlrn-league-standings th{font-size:10px;color:var(--muted)}
+.hlrn-league-standings td:last-child,.hlrn-league-standings th:last-child{text-align:right}
+.hlrn-league-standings .hlrn-numeric{text-align:right}
+.hlrn-league-standings strong{font-size:12px}
+.hlrn-result-card{margin-top:18px;padding:14px;background:rgba(125,141,160,.09);border-radius:9px}
+.hlrn-result-card h3{margin:0 0 8px}
+.hlrn-result-card p{margin:5px 0;font-size:12px;line-height:1.5}
+.hlrn-result-winner{font-size:17px;font-weight:900}
+.hlrn-result-top{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.hlrn-result-top span{border:1px solid var(--line);border-radius:6px;padding:6px;font-size:11px}
+.hlrn-league-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
+.hlrn-league-links a,.hlrn-offair-bottom a{color:#b51835;font-weight:900;font-size:12px}
+.hlrn-offair-bottom{padding:18px 28px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:20px}
+html[data-hlrn-theme="dark"] .hlrn-offair-hub{background:#101923;color:#e7eef7}
+html[data-hlrn-theme="dark"] .hlrn-league-card{background:#1d2836;border-color:#485567}
+html[data-hlrn-theme="dark"] .hlrn-league-standings th,html[data-hlrn-theme="dark"] .hlrn-league-standings td{border-color:#485567}
+html[data-hlrn-theme="dark"] .hlrn-league-standings th{color:#acbfd3}
+html[data-hlrn-theme="dark"] .hlrn-result-card{background:#29374a}
+html[data-hlrn-theme="dark"] .hlrn-league-links a,html[data-hlrn-theme="dark"] .hlrn-offair-bottom a{color:#ff8396}
+@media(max-width:820px){.hlrn-offair-content{grid-template-columns:1fr}.hlrn-offair-countdown{align-items:flex-start}}
+
 </style>
 
 <style id="HLRN_RC_CROWN_V1">
@@ -2435,7 +2482,18 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
 </div>
 
 <div class="page">
-  <main class="event-shell">
+  <main class="event-shell hlrn-offair" id="hlrnLiveShell">
+    <section id="hlrnOffAir" class="hlrn-offair-hub" aria-label="HLRN between races">
+      <div class="hlrn-offair-hero">
+        <div class="hlrn-offair-eyebrow">HLRN • RACE DAY CENTER <span class="hlrn-offair-state">OFF AIR</span></div>
+        <h1>THE TRACK IS QUIET. <em>FOR NOW.</em></h1>
+        <p>Catch up with Sunday's and Monday's championship battles while we get ready for the next green flag.</p>
+        <div class="hlrn-offair-countdown"><div><small id="hlrnNextLeague">NEXT RACE NIGHT</small><strong id="hlrnNextRaceName">Calculating…</strong></div><div id="hlrnCountdown" class="hlrn-countdown-numbers" role="timer">—</div></div>
+        <div id="hlrnNextRaceDetails" class="hlrn-offair-time">HLRN race nights • 8:30 PM Eastern</div>
+      </div>
+      <div id="hlrnOffAirData" class="hlrn-offair-content" aria-live="polite"><p>Loading HLRN league standings and recent race results…</p></div>
+      <div class="hlrn-offair-bottom"><a href="/standings/sunday.html">Full Sunday Standings →</a><a href="/standings/monday.html">Full Monday Standings →</a><a href="/results/">Complete Results &amp; Schedule →</a></div>
+    </section>
     <section class="event-head">
       <div>
         <div class="series"><span class="series-mark"></span><span id="series">HIGH LINE RACING NETWORK</span></div>
@@ -5576,6 +5634,8 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     const online = !!state.online;
     const frozen = !!state.raceFrozen;
     const available = online || frozen;
+    const liveShell=document.getElementById("hlrnLiveShell");
+    if(liveShell) liveShell.classList.toggle("hlrn-offair",!available);
 
     if(state.phase !== lastPhase){
       firstSeenPosition.clear();
@@ -6104,6 +6164,57 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
       $("feedAge").textContent = state.raceFrozen ? "FROZEN" : `${(age/1000).toFixed(1)}s`;
     }
   }, 1000);
+})();
+</script>
+
+
+<script id="hlrn-offair-information">
+(function(){
+ const e=id=>document.getElementById(id);
+ const safe=v=>String(v??"—").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+ const eastern=()=>{const parts=new Intl.DateTimeFormat("en-US",{timeZone:"America/New_York",year:"numeric",month:"numeric",day:"numeric",weekday:"short",hour:"numeric",minute:"numeric",second:"numeric",hourCycle:"h23"}).formatToParts(new Date());return Object.fromEntries(parts.map(p=>[p.type,p.value]));};
+ function updateCountdown(){
+   const now=eastern(), weekday=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].indexOf(now.weekday);
+   if(weekday<0)return;
+   const elapsed=((weekday*24+Number(now.hour))*60+Number(now.minute))*60+Number(now.second);
+   const targets=[{day:0,name:"Sunday Night League"},{day:1,name:"Monday Night League"}].map(x=>({...x,seconds:(((x.day*24+20)*60+30)*60-elapsed+604800)%604800}));
+   targets.sort((a,b)=>a.seconds-b.seconds);
+   const next=targets[0],sec=next.seconds;
+   e("hlrnNextLeague").textContent="NEXT SCHEDULED RACE NIGHT";
+   e("hlrnNextRaceName").textContent=next.name;
+   e("hlrnCountdown").textContent=Math.floor(sec/86400)+"d "+String(Math.floor(sec%86400/3600)).padStart(2,"0")+"h "+String(Math.floor(sec%3600/60)).padStart(2,"0")+"m "+String(sec%60).padStart(2,"0")+"s";
+   e("hlrnNextRaceDetails").textContent="Weekly race-night countdown to 8:30 PM Eastern • Check the official schedule for race-week changes";
+ }
+ updateCountdown();setInterval(updateCountdown,1000);
+ function leagueCard(key,data){
+   const label=key==="sunday"?"Sunday":"Monday";
+   const league=data.leagues?.[key]||{};
+   const standings=[...(league.drivers||[])].sort((a,b)=>Number(a.rank)-Number(b.rank)).slice(0,10);
+   const resultRows=(league.results||[]).filter(x=>x.raceId&&x.finish!=null);
+   const ids=[...new Set(resultRows.map(x=>x.raceId))];
+   const lastId=ids[ids.length-1]; // If upstream rows are not in date order, compare dates below.
+   const latest=resultRows.reduce((best,x)=>{const date=Date.parse(x.date)||0;return !best||date>best.date?{date,id:x.raceId,track:x.track,rawDate:x.date}:best;},null);
+   const finishers=latest?resultRows.filter(x=>x.raceId===latest.id).sort((a,b)=>Number(a.finish)-Number(b.finish)).slice(0,5):[];
+   const winner=finishers.find(x=>Number(x.finish)===1);
+   const formatted=latest&&latest.date?new Intl.DateTimeFormat("en-US",{timeZone:"America/New_York",month:"short",day:"numeric",year:"numeric"}).format(new Date(latest.date)):"Date unavailable";
+   return '<section class="hlrn-league-card"><header class="hlrn-league-top"><small>HLRN • 2026 CHAMPIONSHIP</small><h2>'+label+' Night League</h2><small>DRIVER STANDINGS & LATEST RESULTS</small></header><div class="hlrn-league-inner"><h3>Championship Top 10</h3>'+
+     '<table class="hlrn-league-standings"><thead><tr><th>POS</th><th>DRIVER</th><th class="hlrn-numeric">WINS</th><th>PTS</th></tr></thead><tbody>'+
+     standings.map(d=>'<tr><td>'+safe(d.rank)+'</td><td><strong>'+safe(d.driver)+'</strong></td><td class="hlrn-numeric">'+safe(d.wins)+'</td><td><strong>'+safe(d.points)+'</strong></td></tr>').join('')+'</tbody></table>'+
+     '<div class="hlrn-result-card"><h3>Most Recent Race</h3>'+(latest?'<p><strong>'+safe(latest.track)+'</strong> • '+safe(formatted)+'</p><p>Winner</p><div class="hlrn-result-winner">'+safe(winner?.driver||"Not available")+'</div><div class="hlrn-result-top">'+finishers.map(f=>'<span>P'+safe(f.finish)+' '+safe(f.driver)+'</span>').join('')+'</div>':'<p>No published race results are available yet.</p>')+'</div>'+
+     '<div class="hlrn-league-links"><a href="/standings/'+key+'.html">Full '+label+' Standings →</a><a href="/results/">All Race Results →</a></div></div></section>';
+ }
+ async function load(){
+   try{
+     const response=await fetch("/data/hlrn.json",{cache:"no-cache"});
+     if(!response.ok)throw Error("HTTP "+response.status);
+     const data=await response.json();
+     e("hlrnOffAirData").innerHTML=leagueCard("sunday",data)+leagueCard("monday",data);
+   }catch(err){
+     e("hlrnOffAirData").innerHTML='<div class="hlrn-league-card"><div class="hlrn-league-inner"><h2>League information temporarily unavailable</h2><p>You can still view official standings and results through the links below.</p></div></div>';
+   }
+ }
+ load();
+ setInterval(()=>{if(!document.hidden)load();},300000);
 })();
 </script>
 
