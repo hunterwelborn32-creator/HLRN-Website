@@ -2520,6 +2520,10 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
 
 
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/live-offair-broadcast-v2.css?v=20261020broadcast2">
 </head>
 <body>
 
@@ -2537,13 +2541,22 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
   <main class="event-shell hlrn-offair" id="hlrnLiveShell">
     <section id="hlrnOffAir" class="hlrn-offair-hub" aria-label="HLRN between races">
       <div class="hlrn-offair-hero">
+        <div class="hlrn-broadcast-ribbon" aria-label="HLRN Race Night Broadcast">
+          <strong>HLRN SPORTS NETWORK</strong><span class="hlrn-ribbon-divider"></span>
+          <span class="hlrn-ribbon-live">BETWEEN RACES</span><span class="hlrn-ribbon-divider"></span>
+          <span>SUNDAY + MONDAY RACE NIGHT</span>
+        </div>
         <div class="hlrn-offair-eyebrow"><span class="hlrn-offair-brand"><b>/// HLRN</b><span>RACE DAY CENTER</span></span><span class="hlrn-offair-state"><i></i> OFF AIR</span></div>
-        <h1>THE TRACK IS QUIET. <em>FOR NOW.</em></h1>
-        <p>Catch up with Sunday's and Monday's championship battles while we get ready for the next green flag.</p>
+        <h1>THE NEXT GREEN FLAG <em>AWAITS.</em></h1>
+        <p>Race night never truly stops. Follow the championship fight, catch up on the latest checkered flags, and count down to the next HLRN broadcast.</p>
         <div class="hlrn-offair-countdown"><div class="hlrn-next-race"><span class="hlrn-countdown-icon" aria-hidden="true">▣</span><div><small id="hlrnNextLeague">NEXT RACE NIGHT</small><strong id="hlrnNextRaceName">Calculating…</strong></div></div><div id="hlrnCountdown" class="hlrn-countdown-numbers" role="timer">—</div></div>
         <div id="hlrnNextRaceDetails" class="hlrn-offair-time">HLRN race nights • 8:30 PM Eastern</div>
       </div>
-      <div id="hlrnOffAirData" class="hlrn-offair-content" aria-live="polite"><p>Loading HLRN league standings and recent race results…</p></div>
+      <div class="hlrn-offair-intro">
+        <h2>CHAMPIONSHIP CENTRAL</h2>
+        <p>Sunday and Monday league standings and verified race results, refreshed from official HLRN data.</p>
+      </div>
+      <div id="hlrnOffAirData" class="hlrn-offair-content" aria-live="polite"><div class="hlrn-loading-state">Loading championship standings and the latest checkered flags…</div></div>
       <div class="hlrn-offair-bottom"><a href="/standings/sunday.html">Full Sunday Standings →</a><a href="/standings/monday.html">Full Monday Standings →</a><a href="/results/">Complete Results &amp; Schedule →</a></div>
     </section>
     <section class="event-head">
@@ -6238,31 +6251,85 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
    e("hlrnNextRaceDetails").textContent="Weekly race-night countdown to 8:30 PM Eastern • Check the official schedule for race-week changes";
  }
  updateCountdown();setInterval(updateCountdown,1000);
+ function displayName(value){
+   let name=String(value||"").trim();
+   if(name.includes(",")){
+     const bits=name.split(",").map(x=>x.trim()).filter(Boolean);
+     if(bits.length>=2)name=bits.slice(1).join(" ")+" "+bits[0];
+   }
+   return name.replace(/([A-Za-z])\d+$/,"$1") || "Unknown Driver";
+ }
+ function portrait(row,kind){
+   const name=displayName(row?.driver||row?.name);
+   const initials=name.split(/\s+/).filter(Boolean).slice(0,2).map(x=>x.charAt(0)).join("").toUpperCase();
+   const identity={driverId:row?.driverId,driver:row?.driver||name};
+   let url="";
+   try{url=window.HLRNDrivers?.photoUrl?.(identity,"full")||"";}catch(e){}
+   const cls=kind==="winner"?"hlrn-winner-portrait":"hlrn-champ-portrait";
+   return '<div class="'+cls+'"><span class="hlrn-portrait-fallback" aria-hidden="true">'+safe(initials)+'</span>'+
+     (url?'<img src="'+safe(url)+'" alt="Portrait of '+safe(name)+'" loading="lazy" decoding="async" onerror="this.remove()">':"")+'</div>';
+ }
  function leagueCard(key,data){
    const label=key==="sunday"?"Sunday":"Monday";
    const league=data.leagues?.[key]||{};
-   const standings=[...(league.drivers||[])].sort((a,b)=>Number(a.rank)-Number(b.rank)).slice(0,10);
-   const resultRows=(league.results||[]).filter(x=>x.raceId&&x.finish!=null);
-   const ids=[...new Set(resultRows.map(x=>x.raceId))];
-   const lastId=ids[ids.length-1]; // If upstream rows are not in date order, compare dates below.
-   const latest=resultRows.reduce((best,x)=>{const date=Date.parse(x.date)||0;return !best||date>best.date?{date,id:x.raceId,track:x.track,rawDate:x.date}:best;},null);
-   const finishers=latest?resultRows.filter(x=>x.raceId===latest.id).sort((a,b)=>Number(a.finish)-Number(b.finish)).slice(0,5):[];
-   const winner=finishers.find(x=>Number(x.finish)===1);
-   const formatted=latest&&latest.date?new Intl.DateTimeFormat("en-US",{timeZone:"America/New_York",month:"short",day:"numeric",year:"numeric"}).format(new Date(latest.date)):"Date unavailable";
-   return '<section class="hlrn-league-card"><header class="hlrn-league-top"><div><small>HLRN • 2026 CHAMPIONSHIP</small><h2>'+label+' Night League</h2><small>DRIVER STANDINGS & LATEST RESULTS</small></div><a class="hlrn-standings-cta" href="/standings/'+key+'.html">VIEW FULL STANDINGS ↗</a></header><div class="hlrn-league-inner"><h3>Championship Top 10</h3>'+
-     '<table class="hlrn-league-standings"><thead><tr><th>POS</th><th>DRIVER</th><th class="hlrn-numeric">WINS</th><th>PTS</th></tr></thead><tbody>'+
-     standings.map(d=>'<tr><td><span class="hlrn-position-badge">'+safe(d.rank)+'</span></td><td><strong>'+safe(d.driver)+'</strong></td><td class="hlrn-numeric">'+safe(d.wins)+'</td><td><strong>'+safe(d.points)+'</strong></td></tr>').join('')+'</tbody></table>'+
-     '<div class="hlrn-result-card"><h3>Most Recent Race</h3>'+(latest?'<p><strong>'+safe(latest.track)+'</strong> • '+safe(formatted)+'</p><p>Winner</p><div class="hlrn-result-winner">'+safe(winner?.driver||"Not available")+'</div><div class="hlrn-result-top">'+finishers.map(f=>'<span>P'+safe(f.finish)+' '+safe(f.driver)+'</span>').join('')+'</div>':'<p>No published race results are available yet.</p>')+'</div>'+
-     '<div class="hlrn-league-links"><a href="/standings/'+key+'.html">Full '+label+' Standings →</a><a href="/results/">All Race Results →</a></div></div></section>';
+   const standings=[...(league.drivers||[])].filter(d=>Number(d.rank)>0)
+     .sort((a,b)=>Number(a.rank)-Number(b.rank)||Number(b.points)-Number(a.points)).slice(0,10);
+   const leader=standings[0]||null;
+   const firstPoints=Number(leader?.points)||0;
+   const runner=standings[1]||null;
+   const leadMargin=runner?Math.max(0,firstPoints-(Number(runner.points)||0)):0;
+   const resultRows=(league.results||[]).filter(x=>Number(x.raceNumber)>0&&Number(x.finish)>0);
+   const completed=[...new Set(resultRows.filter(x=>Number(x.finish)===1).map(x=>Number(x.raceNumber)))].sort((a,b)=>b-a);
+   const raceNo=completed[0]||0;
+   const finishers=raceNo?resultRows.filter(x=>Number(x.raceNumber)===raceNo)
+      .sort((a,b)=>Number(a.finish)-Number(b.finish)).slice(0,5):[];
+   const winner=finishers.find(x=>Number(x.finish)===1)||null;
+   const dateValue=winner?.date?new Date(winner.date):null;
+   const raceDate=dateValue&&Number.isFinite(dateValue.getTime())
+     ?new Intl.DateTimeFormat("en-US",{timeZone:"America/New_York",month:"short",day:"numeric",year:"numeric"}).format(dateValue)
+     :"Date unavailable";
+   const track=winner?.track||finishers[0]?.track||"Latest completed race";
+   let html='<section class="hlrn-league-card" data-league="'+key+'"><header class="hlrn-league-top">'+
+     '<div><small class="hlrn-league-kicker">HLRN • '+label.toUpperCase()+' NIGHT LEAGUE</small><h2>'+label+' Championship</h2><small>2026 STANDINGS & RACE RECAPS</small></div>'+
+     '<a class="hlrn-standings-cta" href="/standings/'+key+'.html">FULL STANDINGS ↗</a></header><div class="hlrn-league-inner">';
+   if(leader){
+     html+='<div class="hlrn-champ-leader">'+portrait(leader,"leader")+
+       '<div class="hlrn-leader-detail"><small>CHAMPIONSHIP LEADER</small><strong>'+safe(displayName(leader.driver))+'</strong>'+
+       '<div class="hlrn-leader-meta"><span><b>'+safe(leader.points)+'</b> PTS</span><span><b>'+safe(leader.wins)+'</b> WINS</span>'+
+       (runner?'<span><b>+'+safe(leadMargin)+'</b> PTS OVER P2</span>':"")+'</div></div></div>';
+   }
+   html+='<h3>CHAMPIONSHIP TOP 10</h3><table class="hlrn-league-standings"><thead><tr><th>POS</th><th>DRIVER</th><th class="hlrn-numeric">W</th><th>PTS</th><th>BACK</th></tr></thead><tbody>';
+   html+=standings.map(d=>{
+     const delta=Math.max(0,firstPoints-(Number(d.points)||0));
+     return '<tr><td><span class="hlrn-position-badge">'+safe(d.rank)+'</span></td>'+
+       '<td class="hlrn-standings-name">'+safe(displayName(d.driver))+'</td>'+
+       '<td class="hlrn-numeric">'+safe(d.wins)+'</td><td><strong>'+safe(d.points)+'</strong></td>'+
+       '<td class="hlrn-standings-gap">'+(d===leader?"LEAD":"-"+safe(delta))+'</td></tr>';
+   }).join("");
+   html+='</tbody></table><div class="hlrn-result-card"><span class="hlrn-result-label">LATEST CHECKERED FLAG • RACE '+safe(raceNo||"—")+'</span>'+
+     '<h3>'+safe(track)+'</h3><div class="hlrn-result-date">'+safe(raceDate)+'</div>';
+   if(winner){
+     html+='<div class="hlrn-winner-block">'+portrait(winner,"winner")+
+       '<div class="hlrn-winner-detail"><small>RACE WINNER'+(winner.carNumber?' • #'+safe(winner.carNumber):"")+'</small>'+
+       '<strong>'+safe(displayName(winner.driver))+'</strong><span>'+safe(label)+' Night League • Race '+safe(raceNo)+'</span></div></div>'+
+       '<span class="hlrn-result-label">TOP 5 FINISHERS</span><div class="hlrn-result-top">'+finishers.map(f=>
+         '<span><b>P'+safe(f.finish)+'</b>'+safe(displayName(f.driver))+'</span>').join("")+'</div>';
+   }else{
+     html+='<p>No published final results yet. Check the Results Center.</p>';
+   }
+   html+='</div><div class="hlrn-league-links"><a href="/results/">VIEW ALL RACE RESULTS →</a></div></div></section>';
+   return html;
  }
  async function load(){
    try{
      const response=await fetch("/data/hlrn.json",{cache:"no-cache"});
      if(!response.ok)throw Error("HTTP "+response.status);
      const data=await response.json();
+     // Driver portraits use the existing HLRN driver system, if available.
+     try{await window.HLRNDrivers?.load?.();}catch(e){}
      e("hlrnOffAirData").innerHTML=leagueCard("sunday",data)+leagueCard("monday",data);
    }catch(err){
-     e("hlrnOffAirData").innerHTML='<div class="hlrn-league-card"><div class="hlrn-league-inner"><h2>League information temporarily unavailable</h2><p>You can still view official standings and results through the links below.</p></div></div>';
+     e("hlrnOffAirData").innerHTML='<div class="hlrn-loading-state">Championship data is temporarily unavailable. Use the links below to view standings and results directly.</div>';
    }
  }
  load();
