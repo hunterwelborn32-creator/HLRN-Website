@@ -569,3 +569,338 @@ body:has(#hlrnLiveShell.hlrn-offair) .brandbar .live-badge{
 @media(prefers-reduced-motion:reduce){
   #hlrnLiveShell.hlrn-offair *{scroll-behavior:auto!important;animation:none!important;transition:none!important}
 }
+
+/* HLRN OFF AIR DAY BROADCAST THEME V3 — 2026-10-20
+   Day Race: light network studio colors. Night Race: prior cinematic look.
+   All rules are scoped to the offline hub, not live race control. */
+
+/* Center the constrained race center on ultra-wide or zoomed-out screens. */
+body .page:has(#hlrnLiveShell.hlrn-offair){
+  width:min(1700px,100%)!important;
+  max-width:1700px!important;
+  margin-inline:auto!important;
+}
+
+html[data-hlrn-theme="light"] body:has(#hlrnLiveShell.hlrn-offair){
+  background:#eaf0f8!important;
+  color:#14243d!important;
+}
+html[data-hlrn-theme="light"] body .page:has(#hlrnLiveShell.hlrn-offair){
+  background:transparent!important;
+  color:#14243d!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair{
+  background:#f6f9fe!important;
+  border:1px solid #b9cbe0!important;
+  box-shadow:0 17px 42px rgba(28,54,94,.13)!important;
+  color:#12243c!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair #hlrnOffAir{
+  background:#f4f8fe!important;
+  color:#15263e!important;
+}
+
+/* A daytime TV studio look: light sky-blue, a little racing red, navy type. */
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-offair-hero{
+  color:#0e2342!important;
+  background:
+    radial-gradient(ellipse at 88% 12%,rgba(244,71,91,.19),transparent 38%),
+    radial-gradient(ellipse at 92% 84%,rgba(74,137,234,.22),transparent 43%),
+    linear-gradient(115deg,#fcfdff 0%,#e9f2fe 55%,#dbeaf9 100%)!important;
+  border-bottom:1px solid #c5d8ec!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-offair-hero::before{
+  opacity:.32!important;
+  background:
+    repeating-linear-gradient(145deg,transparent 0 55px,rgba(38,88,160,.15) 56px 57px,transparent 58px 110px),
+    linear-gradient(160deg,transparent 43%,rgba(100,158,231,.16) 46% 49%,transparent 50% 63%,rgba(226,48,69,.12) 64% 66%,transparent 67%)!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-offair-hero::after{
+  border-color:rgba(51,107,190,.10)!important;
+  box-shadow:0 0 55px #538fe216,inset 0 0 80px #3876ca18!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-broadcast-ribbon{
+  background:linear-gradient(90deg,#112945,#1c3c64)!important;
+  border-color:#25486c!important;
+  color:#dbe9fa!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-broadcast-ribbon strong{
+  color:#fff!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-broadcast-ribbon .hlrn-ribbon-live{
+  color:#ffacb9!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-offair-brand b{
+  color:#12365b!important;
+  -webkit-text-fill-color:#12365b!important;
+  text-shadow:none!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-offair-brand b::first-letter{
+  color:#d91d41!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-offair-brand span{
+  color:#445f7e!important;
+  border-color:#e53151!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-offair-state{
+  background:#fff!important;
+  color:#a81734!important;
+  border-color:#e7a7b3!important;
+  box-shadow:0 3px 12px #d6436517!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-offair-hero h1{
+  color:#112946!important;
+  -webkit-text-fill-color:#112946!important;
+  text-shadow:none!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-offair-hero h1 em{
+  color:#d92e4e!important;
+  -webkit-text-fill-color:#d92e4e!important;
+  text-shadow:none!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-offair-hero p{
+  color:#445d7a!important;
+  -webkit-text-fill-color:#445d7a!important;
+}
+
+/* Countdown resembles a bright broadcast graphics strip. */
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-offair-countdown{
+  background:linear-gradient(110deg,#fff,#edf5ff)!important;
+  border-color:#b0c9e7!important;
+  border-left-color:#ed3553!important;
+  box-shadow:0 10px 28px rgba(40,72,128,.12)!important;
+  color:#12304f!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-countdown-icon{
+  color:#e52746!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-offair-countdown small{
+  color:#53708f!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-offair-countdown .hlrn-next-race strong{
+  color:#102d4f!important;
+  -webkit-text-fill-color:#102d4f!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-time-unit{
+  background:#eaf3ff!important;
+  border-color:#c5d9ef!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-time-unit strong{
+  color:#102b4b!important;
+  -webkit-text-fill-color:#102b4b!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-time-unit small{
+  color:#5d7796!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-offair-time{
+  color:#476784!important;
+}
+
+/* League panels: Sunday red, Monday green, both readable on white. */
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-offair-intro{
+  background:#f3f7fd!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-offair-intro h2{
+  color:#112a46!important;
+  -webkit-text-fill-color:#112a46!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-offair-intro p{
+  color:#58708b!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-offair-content{
+  background:linear-gradient(180deg,#f3f7fd,#ebf2fa)!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-league-card{
+  --league-soft:#fff0f4;
+  --league-accent:#cf2645;
+  background:#fff!important;
+  border:1px solid #c2d0e0!important;
+  border-top:3px solid var(--league-accent)!important;
+  box-shadow:0 11px 27px rgba(27,59,109,.09)!important;
+  color:#162a44!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-league-card[data-league="monday"]{
+  --league-soft:#e8f8f0;
+  --league-accent:#167e4a;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-league-top{
+  background:linear-gradient(110deg,var(--league-soft),#f8fbff 85%)!important;
+  border-color:#d1ddea!important;
+  color:#142944!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-league-top h2{
+  color:#142944!important;
+  -webkit-text-fill-color:#142944!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-league-top small{
+  color:#586e87!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-league-top .hlrn-league-kicker{
+  color:var(--league-accent)!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-standings-cta{
+  background:#fff!important;
+  color:var(--league-accent)!important;
+  border-color:var(--league-accent)!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-standings-cta:hover{
+  background:var(--league-soft)!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-league-inner{
+  background:#fff!important;
+  color:#142741!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-champ-leader{
+  background:linear-gradient(105deg,var(--league-soft),#f5f9fe)!important;
+  border-color:#d2dfe9!important;
+  border-left-color:var(--league-accent)!important;
+  color:#142944!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-champ-portrait,
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-winner-portrait{
+  background:linear-gradient(145deg,#d5e5f7,#a5bfdc)!important;
+  border-color:#bed0e2!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-portrait-fallback{
+  color:#233d5a!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-leader-detail strong,
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-winner-detail strong{
+  color:#102945!important;
+  -webkit-text-fill-color:#102945!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-leader-detail small,
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-winner-detail small{
+  color:var(--league-accent)!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-leader-meta{
+  color:#425d7b!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-leader-meta b{
+  color:#112945!important;
+  -webkit-text-fill-color:#112945!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-league-inner > h3{
+  background:linear-gradient(90deg,#dfebf7,#f0f6fd)!important;
+  color:#123254!important;
+  -webkit-text-fill-color:#123254!important;
+  border-color:var(--league-accent)!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-league-standings{
+  background:#fff!important;
+  color:#172b45!important;
+  border-color:#d6e0ec!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-league-standings thead,
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-league-standings thead tr,
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-league-standings th{
+  background:#e9f1fb!important;
+  border-color:#c9d8e9!important;
+  color:#465f7a!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-league-standings tbody td{
+  background:#fff!important;
+  color:#1a2d47!important;
+  border-color:#dfebf5!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-league-standings tbody tr:nth-child(even) td{
+  background:#f4f8fd!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-league-standings tbody tr:first-child td{
+  background:var(--league-soft)!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-league-standings td strong{
+  color:#172c47!important;
+  -webkit-text-fill-color:#172c47!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-position-badge{
+  background:#dae6f3!important;
+  color:#193654!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-league-standings tbody tr:first-child .hlrn-position-badge{
+  background:var(--league-accent)!important;
+  color:#fff!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-standings-gap{
+  color:#526e8e!important;
+}
+
+/* Bright race recap: actual latest winner, track and top five. */
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-result-card{
+  background:linear-gradient(135deg,#f5f9ff,#eaf2fc)!important;
+  color:#152e4d!important;
+  border-color:#cfdeee!important;
+  border-left-color:var(--league-accent)!important;
+  box-shadow:none!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-result-label{
+  color:var(--league-accent)!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-result-card h3{
+  color:#183957!important;
+  -webkit-text-fill-color:#183957!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-result-date,
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-winner-detail span{
+  color:#546f8b!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-winner-block{
+  border-color:#d0deeb!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-result-top span{
+  background:#fff!important;
+  color:#284460!important;
+  border-color:#c9dbea!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-result-top span b{
+  color:var(--league-accent)!important;
+  -webkit-text-fill-color:var(--league-accent)!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-league-links a,
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-offair-bottom a{
+  color:#19578e!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-offair-bottom{
+  background:#eaf2fc!important;
+  border-color:#c8d8ea!important;
+}
+html[data-hlrn-theme="light"] #hlrnLiveShell.hlrn-offair .hlrn-loading-state{
+  background:#fff!important;
+  border-color:#c2d5ea!important;
+  color:#45607c!important;
+}
+
+/* The global theme forces headings and table cells !important. Reassert
+   broadcast white headings in Night Mode while keeping Day Mode ink-dark. */
+html[data-hlrn-theme="dark"] #hlrnLiveShell.hlrn-offair .hlrn-offair-hero h1,
+html[data-hlrn-theme="dark"] #hlrnLiveShell.hlrn-offair .hlrn-offair-intro h2,
+html[data-hlrn-theme="dark"] #hlrnLiveShell.hlrn-offair .hlrn-league-top h2,
+html[data-hlrn-theme="dark"] #hlrnLiveShell.hlrn-offair .hlrn-league-inner > h3,
+html[data-hlrn-theme="dark"] #hlrnLiveShell.hlrn-offair .hlrn-result-card h3{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+html[data-hlrn-theme="dark"] #hlrnLiveShell.hlrn-offair .hlrn-offair-hero h1 em{
+  color:#ff3659!important;
+  -webkit-text-fill-color:#ff3659!important;
+}
+html[data-hlrn-theme="dark"] #hlrnLiveShell.hlrn-offair .hlrn-league-standings tbody td{
+  background-color:#101d30!important;
+  color:#eaf2ff!important;
+  border-color:#344968!important;
+}
+html[data-hlrn-theme="dark"] #hlrnLiveShell.hlrn-offair .hlrn-league-standings tbody tr:nth-child(even) td{
+  background-color:#172a42!important;
+}
+html[data-hlrn-theme="dark"] #hlrnLiveShell.hlrn-offair .hlrn-league-standings tbody tr:first-child td{
+  background-color:var(--league-soft)!important;
+}
+html[data-hlrn-theme="dark"] #hlrnLiveShell.hlrn-offair .hlrn-league-standings thead th{
+  background:#203451!important;
+  color:#d8e7f9!important;
+  border-color:#4d6582!important;
+}
+html[data-hlrn-theme="dark"] #hlrnLiveShell.hlrn-offair .hlrn-league-standings td strong{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
