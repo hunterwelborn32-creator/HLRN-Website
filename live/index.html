@@ -7,30 +7,39 @@
 <meta name="description" content="HLRN Live Race Center — live iRacing timing through Cloudflare.">
 <title>HLRN Live Race Center</title>
 <link rel="canonical" href="https://highlineracingnetwork.com/live/">
+<script>
+(function(){try{var t=localStorage.getItem("hlrn_site_theme_v2")==="dark"?"dark":"light";document.documentElement.setAttribute("data-hlrn-theme",t);document.documentElement.style.colorScheme=t;}catch(e){document.documentElement.setAttribute("data-hlrn-theme","light");document.documentElement.style.colorScheme="light";}})();
+</script>
 <style>
-:root{color-scheme:dark;--bg:#0b0e14;--panel:#151b24;--line:#303a48;--text:#f4f6fa;--muted:#a2adbb;--red:#ec2441;--green:#29d778;--amber:#ffc44b}
+:root{--bg:#f1f3f7;--panel:#fff;--line:#d6dde6;--text:#171f2a;--muted:#596679;--red:#d91d3b;--green:#08783f;--amber:#876100;--thead:#e9edf3;--divider:#e0e5ec;--head:#fff;--warning-bg:#fff5dd;--warning-text:#6b4b00;--warning-border:#cf9c35;--status-neutral-bg:#eaf0f6;--status-neutral-border:#b6c3d0;--status-neutral-text:#263646;--status-white-bg:#e6ebf2;--status-white-border:#aab9ca;--status-white-text:#25384b;--status-green-bg:#e0f5e9;--status-green-border:#62b88a;--status-green-text:#076e37;--status-yellow-bg:#fff1bd;--status-yellow-border:#d2af32;--status-yellow-text:#795900;--status-checkered-bg:#e5e8ef;--status-checkered-border:#aeb8c6;--status-checkered-text:#192633}
+html[data-hlrn-theme="dark"]{--bg:#0b0e14;--panel:#151b24;--line:#303a48;--text:#f4f6fa;--muted:#a2adbb;--red:#ec2441;--green:#29d778;--amber:#ffc44b;--thead:#1c2430;--divider:#2b3441;--head:#11161e;--warning-bg:#211f1b;--warning-text:#f6deb0;--warning-border:#a47e26;--status-neutral-bg:#212b37;--status-neutral-border:#506077;--status-neutral-text:#dfe7f0;--status-white-bg:#d2dbe7;--status-white-border:#9eafbf;--status-white-text:#1d3146;--status-green-bg:#143a28;--status-green-border:#21844e;--status-green-text:#7ef1ac;--status-yellow-bg:#443613;--status-yellow-border:#97771d;--status-yellow-text:#ffe07c;--status-checkered-bg:#dbe1e9;--status-checkered-border:#9cabbc;--status-checkered-text:#182737}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,Arial,sans-serif}a{color:inherit}
-header{background:#11161e;border-bottom:3px solid var(--red)}.wrap{width:min(1320px,100%);margin:auto;padding:18px 20px}
+header{background:var(--head);border-bottom:3px solid var(--red)}.wrap{width:min(1320px,100%);margin:auto;padding:18px 20px}
 .head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}.brand{font-size:24px;font-weight:950;letter-spacing:.08em;text-decoration:none}.brand b{color:var(--red)}.brand small{display:block;font-size:10px;letter-spacing:.16em;color:var(--muted)}
 .status{border:1px solid var(--line);border-radius:999px;padding:8px 13px;color:var(--muted);font-size:12px;font-weight:850;display:inline-flex;align-items:center;gap:9px}.dot{height:9px;width:9px;border-radius:50%;background:var(--amber)}.status.good{color:var(--green);border-color:#28583d}.status.good .dot{background:var(--green)}.status.bad{color:var(--amber)}
 h1{font-size:clamp(30px,5vw,55px);line-height:1.05;margin:22px 0 7px;font-weight:950;text-transform:uppercase;letter-spacing:-.04em}h2{font-size:16px;letter-spacing:.06em;text-transform:uppercase;margin:0}.muted{color:var(--muted)}
 .hero{display:flex;align-items:end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}.updated{color:var(--muted);font-size:12px}
-.cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:18px}.card,.panel{background:var(--panel);border:1px solid var(--line);border-radius:9px}.card{padding:14px;min-width:0}.card label{display:block;text-transform:uppercase;letter-spacing:.11em;font-size:10px;color:var(--muted);font-weight:850}.card strong{display:block;overflow-wrap:anywhere;font-size:clamp(17px,2vw,24px);padding-top:5px}
-.panel{overflow:hidden}.panelhead{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:15px 17px;border-bottom:1px solid var(--line);flex-wrap:wrap}.tablewrap{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:770px}th{text-align:left;font-size:11px;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;background:#1c2430}th,td{padding:12px 14px;border-bottom:1px solid #2b3441}tr:last-child td{border-bottom:0}td{font-variant-numeric:tabular-nums}td.pos{font-size:19px;font-weight:900}td.name{font-weight:800}td.name small{display:block;color:var(--muted);font-size:11px;font-weight:500}td.num{font-weight:900;color:#fff}.empty{padding:45px 15px;text-align:center;color:var(--muted)}.flag-green{color:var(--green)}.flag-yellow,.flag-caution{color:var(--amber)}.flag-red{color:var(--red)}.flag-checkered{color:white}.foot{padding:18px 0 28px;color:var(--muted);font-size:12px}.msg{margin:14px 0 18px;border-left:3px solid var(--amber);padding:9px 12px;background:#211f1b;color:#f6deb0;font-size:13px}.msg[hidden]{display:none}
-@media(max-width:900px){.cards{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:560px){.wrap{padding:15px 12px}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.card{padding:11px}.brand{font-size:19px}}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:18px}.card,.panel{background:var(--panel);border:1px solid var(--line);border-radius:9px}.card{padding:14px;min-width:0}.card label{display:block;text-transform:uppercase;letter-spacing:.11em;font-size:10px;color:var(--muted);font-weight:850}.card strong{display:block;overflow-wrap:anywhere;font-size:clamp(17px,2vw,24px);padding-top:5px}
+.panel{overflow:hidden}.panelhead{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:15px 17px;border-bottom:1px solid var(--line);flex-wrap:wrap}.tablewrap{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:770px}th{text-align:left;font-size:11px;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;background:var(--thead)}th,td{padding:12px 14px;border-bottom:1px solid var(--divider)}tr:last-child td{border-bottom:0}td{font-variant-numeric:tabular-nums}td.pos{font-size:19px;font-weight:900}td.name{font-weight:800}td.name small{display:block;color:var(--muted);font-size:11px;font-weight:500}td.num{font-weight:900;color:var(--text)}.empty{padding:45px 15px;text-align:center;color:var(--muted)}.live-status{display:inline-flex;align-items:center;justify-content:center;font-size:clamp(18px,2.5vw,27px);font-weight:950;letter-spacing:.08em;padding:12px 22px;border:2px solid;border-radius:9px;min-width:210px;background:var(--status-neutral-bg);border-color:var(--status-neutral-border);color:var(--status-neutral-text)}
+.live-status.status-neutral{background:var(--status-neutral-bg);border-color:var(--status-neutral-border);color:var(--status-neutral-text)}
+.live-status.status-green{background:var(--status-green-bg);border-color:var(--status-green-border);color:var(--status-green-text)}
+.live-status.status-yellow{background:var(--status-yellow-bg);border-color:var(--status-yellow-border);color:var(--status-yellow-text)}
+.live-status.status-white{background:var(--status-white-bg);border-color:var(--status-white-border);color:var(--status-white-text)}
+.live-status.status-checkered{background:var(--status-checkered-bg);border-color:var(--status-checkered-border);color:var(--status-checkered-text)}.foot{padding:18px 0 28px;color:var(--muted);font-size:12px}.msg{margin:14px 0 18px;border-left:3px solid var(--warning-border);padding:9px 12px;background:var(--warning-bg);color:var(--warning-text);font-size:13px}.msg[hidden]{display:none}
+@media(max-width:900px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){.wrap{padding:15px 12px}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.card{padding:11px}.brand{font-size:19px}}
 </style>
 </head>
 <body>
 <header><div class="wrap head"><a class="brand" href="../">HL<b>R</b>N<small>HIGH LINE RACING NETWORK</small></a><div id="status" class="status" role="status" aria-live="polite"><span class="dot"></span><span id="statusText">CONNECTING TO CLOUDFLARE</span></div></div></header>
 <main class="wrap">
 <div class="hero"><div><h1>Live Race Center</h1><div class="muted" id="raceTitle">Waiting for live iRacing session…</div></div><div class="updated" id="lastUpdate">No live data yet</div></div>
+<div id="liveStatus" class="live-status status-neutral" aria-live="polite">—</div>
 <div class="msg" id="alert" hidden></div>
 <section class="cards" aria-label="Live session summary">
-<div class="card"><label>Session</label><strong id="phase">—</strong></div>
-<div class="card"><label>Session state</label><strong id="sessionState">—</strong></div>
-<div class="card"><label>Flag</label><strong id="flag">—</strong></div>
+<div class="card"><label>Status</label><strong id="statusSummary">—</strong></div>
 <div class="card"><label>Leader lap</label><strong id="lap">—</strong></div>
 <div class="card"><label>Drivers</label><strong id="count">—</strong></div>
+<div class="card"><label>Track</label><strong id="track">—</strong></div>
 </section>
 <section class="panel" aria-label="Live timing">
 <div class="panelhead"><h2>Live Timing &amp; Scoring</h2><span class="muted" id="clock">Cloudflare feed only</span></div>
@@ -51,9 +60,28 @@ const number=v=>{const n=Number(v);return Number.isFinite(n)?n:null};
 const lapTime=v=>{const n=number(v);if(n===null||n<=0)return "—";const m=Math.floor(n/60),s=(n%60).toFixed(3).padStart(6,"0");return m?m+":"+s:s+"s"};
 function setStatus(label,kind){el("status").className="status"+(kind?" "+kind:"");el("statusText").textContent=label}
 function alert(message){el("alert").hidden=!message;el("alert").textContent=message||""}
+function unifiedStatus(data){
+ const phase=String(data.phase||"").toUpperCase(), st=String(data.sessionState||"").toUpperCase().replaceAll("_"," ").trim();
+ const flag=String(data.flag||"").toUpperCase();
+ if(flag==="CHECKERED"||st==="CHECKERED"||st==="COOL DOWN"||st==="COOLDOWN")return ["CHECKERED","status-checkered"];
+ if(st==="GET IN CAR")return ["GET IN CAR","status-neutral"];
+ if(st==="WARMUP"||st==="WARM UP")return ["WARMUP","status-neutral"];
+ if(phase==="QUALIFYING"||/QUALIF/i.test(String(data.sessionName||"")))return ["QUALIFYING","status-neutral"];
+ if(phase==="PRACTICE"||/PRACTICE/i.test(String(data.sessionName||"")))return ["PRACTICE","status-neutral"];
+ if(flag==="WHITE")return ["WHITE","status-white"];
+ if(flag==="YELLOW"||flag==="CAUTION"||flag==="ONE TO GREEN")return ["YELLOW","status-yellow"];
+ if(flag==="GREEN"||st==="RACING")return ["GREEN","status-green"];
+ return ["GET IN CAR","status-neutral"];
+}
+function showUnifiedStatus(data){
+ const [label,css]=unifiedStatus(data);
+ el("liveStatus").textContent=label;el("liveStatus").className="live-status "+css;
+ el("statusSummary").textContent=label;
+}
 function clear(message){
  hasData=false;
- for(const id of ["phase","sessionState","flag","lap","count"])el(id).textContent="—";
+ for(const id of ["lap","count","track","statusSummary"])el(id).textContent="—";
+ el("liveStatus").textContent="—";el("liveStatus").className="live-status status-neutral";
  el("raceTitle").textContent="Waiting for live iRacing session…";
  el("drivers").innerHTML='<tr><td colspan="8" class="empty">'+escape(message||"Waiting for live timing…")+'</td></tr>';
  el("clock").textContent="Cloudflare feed only";
@@ -62,12 +90,8 @@ function clear(message){
 function draw(data){
  if(!data||typeof data!=="object"||Array.isArray(data))return;
  receivedAt=Date.now();
- const phase=shown(data.phase||data.sessionName).toUpperCase();
- el("phase").textContent=phase;
- el("sessionState").textContent=shown(data.sessionState);
- const flag=shown(data.flag).toUpperCase();
- el("flag").textContent=flag;
- el("flag").className="flag-"+flag.toLowerCase().replace(/[^a-z]+/g,"-");
+ showUnifiedStatus(data);
+ el("track").textContent=shown(data.track);
  el("lap").textContent=shown(data.lap)+(data.totalLaps!=null&&data.totalLaps!==""?" / "+data.totalLaps:"");
  const ds=Array.isArray(data.drivers)?data.drivers:[];
  el("count").textContent=shown(data.driverCount!=null?data.driverCount:ds.length);
