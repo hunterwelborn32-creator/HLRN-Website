@@ -696,6 +696,27 @@ html[style*="color-scheme: dark"] .hlrn-lap-order-controls select option{
   background:#121925!important;color:#f4f6fa!important;
 }
 
+
+/* HLRN unified race viewer: readability, mobile, day/night and motion comfort. */
+.hlrn-more-tools{background:var(--paper);border-bottom:1px solid var(--line)}
+#hlrnMoreToggle{display:block;width:100%;background:transparent;color:var(--muted);font-weight:900;text-align:left;border:0;padding:11px 20px;cursor:pointer}
+.hlrn-extra-tabs[hidden]{display:none!important}
+.primary-tabs{display:flex;justify-content:space-between}
+.primary-tabs .tab{flex:1 1 0;text-align:center;min-width:110px;padding:15px 10px 12px}
+#tab-race .table-shell tbody tr{transition:background-color .16s ease}
+#tab-race .table-shell tbody tr:hover{background:#eaf2fc}
+#tab-race .table-shell tbody tr.leader{box-shadow:inset 4px 0 0 #d6a000}
+#tab-race .table-shell tbody tr:has(.hlrn-fav-star.is-favorite){background:rgba(255,193,7,.09)}
+.mobile-timing-card:has(.hlrn-fav-star.is-favorite){border-left:4px solid #e0ac21}
+#hlrnMoreToggle:focus-visible,.primary-tabs .tab:focus-visible{outline:3px solid #3478e6;outline-offset:-3px}
+html[data-hlrn-theme="dark"] .hlrn-more-tools{background:#18212c;border-color:#445268}
+html[data-hlrn-theme="dark"] #hlrnMoreToggle{color:#cad7e7}
+html[data-hlrn-theme="dark"] #tab-race .table-shell tbody tr:hover{background:#243449}
+html[data-hlrn-theme="dark"] #tab-race .table-shell tbody tr:has(.hlrn-fav-star.is-favorite){background:rgba(239,181,40,.15)}
+@media(max-width:760px){.primary-tabs{justify-content:flex-start;scroll-snap-type:x proximity}.primary-tabs .tab{flex:0 0 auto;min-width:112px;scroll-snap-align:start}.mobile-timing-card{max-width:100%}.live-ticker-text{overflow-wrap:anywhere}}
+@media(max-width:420px){.hlrn-driver-tool-row{display:flex;flex-wrap:wrap}#hlrnDriverSearch{flex:1 1 100%}#hlrnFavoritesOnly,#hlrnDriverClear{flex:1 1 auto}.brand-sub{display:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
 </style>
 
 <style id="HLRN_RC_CROWN_V1">
@@ -2501,15 +2522,12 @@ html[data-hlrn-theme="dark"] #hlrnFavoritesOnly.active{background:#614d17;color:
 
     <nav class="tabs primary-tabs" aria-label="Race Center">
       <button class="tab active" data-tab="race">Leaderboard</button>
-      <button class="tab" data-tab="timeline">Timeline</button>
-      <button class="tab" data-tab="lap-positions">Lap-by-Lap Positions</button>
-      <button class="tab" data-tab="fastest">Fastest Laps</button>
-      <button class="tab" data-tab="battles">Battles</button>
+      <button class="tab" data-tab="timeline">Race Timeline</button>
+      <button class="tab" data-tab="lap-positions">Lap History</button>
       <button class="tab" data-tab="control">Race Control</button>
-      <button class="tab" data-tab="stats">Live Stats</button>
-      <button class="tab" data-tab="flags">Penalties</button>
-      <button class="tab" data-tab="radio">Radio / Feed</button>
+      <button class="tab" data-tab="stats">Statistics</button>
     </nav>
+    <div class="hlrn-more-tools"><button id="hlrnMoreToggle" type="button" aria-expanded="false" aria-controls="hlrnExtraTabs">More race views +</button><nav id="hlrnExtraTabs" class="tabs hlrn-extra-tabs" aria-label="Additional race views" hidden><button class="tab" data-tab="fastest">Fastest Laps</button><button class="tab" data-tab="battles">Battles</button><button class="tab" data-tab="flags">Penalties</button><button class="tab" data-tab="radio">Driver Scanner</button></nav></div>
     <nav class="tabs session-tools" aria-label="Session tools">
       <button class="tab" data-tab="practice">Practice Results</button>
       <button class="tab" data-tab="qualifying">Qualifying Results</button>
@@ -3463,6 +3481,7 @@ html[data-hlrn-theme="dark"] #hlrnFavoritesOnly.active{background:#614d17;color:
     document.querySelectorAll(".section").forEach(x=>x.classList.remove("active"));
     btn.classList.add("active");
     section.classList.add("active");
+    const extra=$("hlrnExtraTabs");if(extra&&extra.contains(btn)){extra.hidden=false;$("hlrnMoreToggle").setAttribute("aria-expanded","true");$("hlrnMoreToggle").textContent="Fewer race views −";}
     scheduleLiveFloatingHeader();
   }
 
@@ -3578,6 +3597,7 @@ html[data-hlrn-theme="dark"] #hlrnFavoritesOnly.active{background:#614d17;color:
     return title;
   }
 
+  let hlrnTickerPaused=false;
   function renderTickerFrame(){
     const bar = $("liveTickerBar");
     if(!bar) return;
@@ -6044,7 +6064,8 @@ html[data-hlrn-theme="dark"] #hlrnFavoritesOnly.active{background:#614d17;color:
     render(state || {});
   });
 
-    $("top10Btn").addEventListener("click", () => {
+    $("hlrnMoreToggle").addEventListener("click",()=>{const v=$("hlrnExtraTabs"),b=$("hlrnMoreToggle");v.hidden=!v.hidden;b.setAttribute("aria-expanded",String(!v.hidden));b.textContent=v.hidden?"More race views +":"Fewer race views −";});
+  $("top10Btn").addEventListener("click", () => {
     showFullField = false;
     $("top10Btn").classList.add("active");
     $("fullBtn").classList.remove("active");
@@ -6148,8 +6169,12 @@ html[data-hlrn-theme="dark"] #hlrnFavoritesOnly.active{background:#614d17;color:
     connect();
   }
 
+  $("liveTickerBar")?.addEventListener("mouseenter",()=>hlrnTickerPaused=true);
+  $("liveTickerBar")?.addEventListener("mouseleave",()=>hlrnTickerPaused=false);
+  $("liveTickerBar")?.addEventListener("focusin",()=>hlrnTickerPaused=true);
+  $("liveTickerBar")?.addEventListener("focusout",()=>hlrnTickerPaused=false);
   setInterval(() => {
-    if(liveTickerItems.length > 1){
+    if(liveTickerItems.length > 1 && !hlrnTickerPaused && !document.hidden && !window.matchMedia("(prefers-reduced-motion: reduce)").matches){
       liveTickerIndex = (liveTickerIndex + 1) % liveTickerItems.length;
       renderTickerFrame();
     }
