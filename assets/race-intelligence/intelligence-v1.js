@@ -628,7 +628,9 @@ function buildAnalytics(){
 }
 
 function validDrivers(minRaces=1,includePaused=false){
-  const eligible=analytics.filter(d=>includePaused || !d.paused);
+  // Forward-looking selections use only drivers from the most recent
+  // completed league race. Championship history remains intact elsewhere.
+  const eligible=analytics.filter(d=>(includePaused || !d.paused) && d.racedLatestLeagueRace);
   let list = eligible.filter(d=>d.races.length>=minRaces);
   if(!list.length && minRaces>1) list = eligible.filter(d=>d.races.length>=1);
   if(!list.length) list = eligible;
@@ -875,7 +877,9 @@ function renderStorylines(){
   const label = document.getElementById("storyLeagueLabel");
   label.textContent = currentLeague === "monday" ? "Monday League" : "Sunday League";
 
-  const all = validDrivers(1);
+  // Championship leader/points gaps reflect the official entire season,
+  // including those who missed last week; pick categories stay active-only.
+  const all = analytics.filter(d=>!d.paused && d.races.length>0);
   if(!all.length){
     grid.innerHTML = '<div class="loading show" style="grid-column:1/-1">Storylines will appear once race results are available.</div>';
     return;
@@ -1445,7 +1449,7 @@ document.addEventListener("visibilitychange",()=>{
     const grid=$('v3ContenderGrid');if(!grid)return;
     let list=[];
     try{list=Array.isArray(analytics)?analytics.slice():[]}catch(e){}
-    list=list.filter(d=>d&&!d.paused&&Number(d.races?.length||0)>0).sort((a,b)=>Number(b.overall)-Number(a.overall)).slice(0,3);
+    list=list.filter(d=>d&&!d.paused&&d.racedLatestLeagueRace&&Number(d.races?.length||0)>0).sort((a,b)=>Number(b.overall)-Number(a.overall)).slice(0,3);
     grid.innerHTML=list.length?list.map((d,i)=>{
       const rating=clamp(d.overall);
       const displayName=formatDriverName(d?.name||d?.driver||"");
