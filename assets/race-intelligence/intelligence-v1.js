@@ -655,50 +655,60 @@ function chooseCategories(){
     return;
   }
 
-  const favorite = maxBy(all,d=>d.overall);
+  // Assign at most one prediction category per driver. The actual last-race
+  // winner can also appear in the factual Most Recent Winner slot.
+  const assigned = new Set();
+  function distinctPick(pools,score){
+    for(const pool of pools){
+      const candidate=maxBy((pool||[]).filter(d=>d && !assigned.has(d.id)),score);
+      if(candidate){assigned.add(candidate.id);return candidate;}
+    }
+    return null;
+  }
+  const favorite = distinctPick([all],d=>d.overall);
 
   // Momentum and recovery picks must have actually raced the immediately
   // preceding completed league race; stale personal form cannot qualify.
   const previousRaceField = all.filter(d=>d.racedLatestLeagueRace);
   const recentMultiRace = previousRaceField.filter(d=>d.races.length>=2);
   const hotPool = recentMultiRace.length ? recentMultiRace : previousRaceField;
-  const hot = maxBy(hotPool,d=>
+  const hot = distinctPick([hotPool,previousRaceField],d=>
     d.trendScore +
     Math.max(0,15-d.recentAvgFinish)*3 +
     d.winRate*.35
   );
 
-  let sleeperPool = recentMultiRace.filter(d=>d.rank>=6);
-  if(!sleeperPool.length) sleeperPool = previousRaceField.filter(d=>d.rank>=4);
-  if(!sleeperPool.length) sleeperPool = previousRaceField;
-  const sleeper = maxBy(sleeperPool,d=>
+  const sleeper = distinctPick([
+    recentMultiRace.filter(d=>d.rank>=6),
+    previousRaceField.filter(d=>d.rank>=4),
+    previousRaceField
+  ],d=>
     d.improvement*12 +
     d.recentGain*5 +
     d.top10Rate*.35 +
     Math.max(0,18-d.recentAvgFinish)*2
   );
 
-  const consistent = maxBy(experienced.length ? experienced : multiRace,d=>
+  const consistent = distinctPick([experienced,multiRace,all],d=>
     d.consistency +
     Math.max(0,18-d.seasonAvgFinish)*2
   );
 
-  const mover = maxBy(multiRace,d=>
+  const mover = distinctPick([multiRace,all],d=>
     d.recentGain*7 + d.avgGain*4 + d.top10Rate*.15
   );
 
-  const latestRaceNo = results.reduce((m,r)=>Math.max(m,number(r.raceNumber)),0);
-  const latestRaceResults = results.filter(r=>number(r.raceNumber)===latestRaceNo && number(r.finish)>0);
-  const latestWinnerResult =
-    latestRaceResults.find(r=>number(r.finish)===1) ||
-    latestRaceResults.slice().sort((a,b)=>number(a.finish)-number(b.finish))[0] ||
-    null;
-  const recentWinner =
-    latestWinnerResult
-      ? analytics.find(d=>d.id===String(latestWinnerResult.driverId)) || favorite
-      : favorite;
+  const latestRaceNo = latestCompletedRaceInfo(results).raceNumber;
+  // Only a verified P1 gets the historical winner category: never substitute
+  // the favorite or best available finisher.
+  const latestWinnerResult = results.find(r=>
+    number(r.raceNumber)===latestRaceNo && number(r.finish)===1
+  ) || null;
+  const recentWinner = latestWinnerResult
+    ? analytics.find(d=>d.id===String(latestWinnerResult.driverId)) || null
+    : null;
 
-  const trouble = maxBy(multiRace,d=>
+  const trouble = distinctPick([multiRace,all],d=>
     d.recentInc*8 +
     d.avgInc*4 +
     Math.max(0,d.recentAvgFinish-d.seasonAvgFinish)*3
@@ -706,9 +716,10 @@ function chooseCategories(){
 
   // No forced fallback to absent drivers. A missing eligible entry
   // should leave Bounce Back empty rather than manufacture a current pick.
-  let bouncePool = recentMultiRace.filter(d=>d.latest && d.latest.finish>0);
-  if(!bouncePool.length) bouncePool=previousRaceField.filter(d=>d.latest && d.latest.finish>0);
-  const bounce = maxBy(bouncePool,d=>
+  const bounce = distinctPick([
+    recentMultiRace.filter(d=>d.latest && d.latest.finish>0),
+    previousRaceField.filter(d=>d.latest && d.latest.finish>0)
+  ],d=>
     Math.max(0,-d.improvement)*12 +
     Math.max(0,d.recentAvgFinish-d.seasonAvgFinish)*10 +
     Math.max(0,(d.latest?.finish||d.recentAvgFinish||d.seasonAvgFinish||0)-d.seasonAvgFinish)*4 +
@@ -720,18 +731,18 @@ function chooseCategories(){
   // Dark Horse needs at least half of all completed league race weeks
   // AND a start in the most recent race (ceil handles odd race counts).
   const qualifiedDarkHorses = previousRaceField.filter(d=>d.darkHorseEligible);
-  let darkPool = qualifiedDarkHorses.filter(d=>d.rank>=6);
-  if(!darkPool.length) darkPool = qualifiedDarkHorses.filter(d=>d.rank>=4);
-  if(!darkPool.length) darkPool = qualifiedDarkHorses;
-  const darkHorse = maxBy(darkPool,d=>
+  const darkHorse = distinctPick([
+    qualifiedDarkHorses.filter(d=>d.rank>=6),
+    qualifiedDarkHorses.filter(d=>d.rank>=4),
+    qualifiedDarkHorses
+  ],d=>
     d.top10Rate*.42 +
     d.avgGain*5 +
     d.consistency*.25 +
     Math.max(0,15-d.recentAvgFinish)*2
   );
 
-  const watchPool = all.filter(d=>!hot || d.id!==hot.id);
-  const watch = maxBy(watchPool.length ? watchPool : all,d=>
+  const watch = distinctPick([all],d=>
     d.trendScore*1.4 +
     d.recentGain*5 +
     d.consistency*.25 +
@@ -757,9 +768,7 @@ function chooseCategories(){
       "Best average forward progress from starting position to finishing position.",
       signed(mover?.recentGain ?? mover?.avgGain) + " spots"),
     makeCategory("recentWinner",recentWinner,
-      latestWinnerResult && number(latestWinnerResult.finish)===1
-        ? "Winner of the most recently completed HLRN race."
-        : "No winner was found in the latest data, so this shows the best latest finisher.",
+      "Winner of the most recently completed HLRN race.",
       latestWinnerResult ? "Race " + number(latestWinnerResult.raceNumber) : "Latest Result"),
     makeCategory("trouble",trouble,
       "Recent incidents and finishing drop-off put this driver on the risk radar.",
