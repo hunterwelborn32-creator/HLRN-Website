@@ -407,6 +407,15 @@ async function loadLeague(league,options={}){
 function buildAnalytics(){
   const resultsByDriver = {};
 
+  // Eligibility is based on the league's latest COMPLETED race, not a
+  // driver's last personal appearance. Sunday/Monday data are loaded separately.
+  const completedRaceNumbers = new Set(
+    results.filter(r=>number(r.raceNumber)>0 && number(r.finish)>0)
+      .map(r=>number(r.raceNumber))
+  );
+  const latestCompletedRaceNo = latestCompletedRaceInfo(results).raceNumber;
+  const minimumDarkHorseRaces = Math.ceil(completedRaceNumbers.size / 2);
+
   results.forEach(r=>{
     const id = String(r.driverId ?? "");
     if(!id) return;
@@ -469,6 +478,15 @@ function buildAnalytics(){
     const id = String(d.driverId ?? "");
     const races = resultsByDriver[id] || [];
     const completed = races.filter(r=>r.finish>0);
+    const completedDriverRaceNumbers = new Set(
+      completed.map(r=>r.raceNumber).filter(n=>completedRaceNumbers.has(n))
+    );
+    const racedLatestLeagueRace = latestCompletedRaceNo>0 &&
+      completedDriverRaceNumbers.has(latestCompletedRaceNo);
+    const completedLeagueRaces = completedDriverRaceNumbers.size;
+    const darkHorseEligible = racedLatestLeagueRace &&
+      completedRaceNumbers.size>0 &&
+      completedLeagueRaces >= minimumDarkHorseRaces;
     const recent = completed.slice(-3);
     const lastFive = completed.slice(-5);
     const latest = completed[completed.length-1] || null;
@@ -558,6 +576,11 @@ function buildAnalytics(){
       avgRating:number(d.avgRating),
       totalIncidents:number(d.incidents) || completed.reduce((sum,r)=>sum+number(r.incidents),0),
       starts,
+      racedLatestLeagueRace,
+      completedLeagueRaces,
+      completedLeagueRaceCount:completedRaceNumbers.size,
+      minimumDarkHorseRaces,
+      darkHorseEligible,
       wins,
       top5,
       top10,
@@ -632,16 +655,20 @@ function chooseCategories(){
 
   const favorite = maxBy(all,d=>d.overall);
 
-  const hotPool = multiRace.length ? multiRace : all;
+  // Momentum and recovery picks must have actually raced the immediately
+  // preceding completed league race; stale personal form cannot qualify.
+  const previousRaceField = all.filter(d=>d.racedLatestLeagueRace);
+  const recentMultiRace = previousRaceField.filter(d=>d.races.length>=2);
+  const hotPool = recentMultiRace.length ? recentMultiRace : previousRaceField;
   const hot = maxBy(hotPool,d=>
     d.trendScore +
     Math.max(0,15-d.recentAvgFinish)*3 +
     d.winRate*.35
   );
 
-  let sleeperPool = all.filter(d=>d.rank>=6 && d.races.length>=2);
-  if(!sleeperPool.length) sleeperPool = all.filter(d=>d.rank>=4);
-  if(!sleeperPool.length) sleeperPool = all;
+  let sleeperPool = recentMultiRace.filter(d=>d.rank>=6);
+  if(!sleeperPool.length) sleeperPool = previousRaceField.filter(d=>d.rank>=4);
+  if(!sleeperPool.length) sleeperPool = previousRaceField;
   const sleeper = maxBy(sleeperPool,d=>
     d.improvement*12 +
     d.recentGain*5 +
@@ -675,12 +702,10 @@ function chooseCategories(){
     Math.max(0,d.recentAvgFinish-d.seasonAvgFinish)*3
   );
 
-  /* Broadcast graphics depend on this category always existing. Prefer
-     drivers with completed results, but fall back to the active field so
-     "Needs a Bounce Back" is never omitted while intelligence data exists. */
-  let bouncePool = multiRace.filter(d=>d.latest && d.latest.finish>0);
-  if(!bouncePool.length) bouncePool=all.filter(d=>d.latest && d.latest.finish>0);
-  if(!bouncePool.length) bouncePool=multiRace.length ? multiRace : all;
+  // No forced fallback to absent drivers. A missing eligible entry
+  // should leave Bounce Back empty rather than manufacture a current pick.
+  let bouncePool = recentMultiRace.filter(d=>d.latest && d.latest.finish>0);
+  if(!bouncePool.length) bouncePool=previousRaceField.filter(d=>d.latest && d.latest.finish>0);
   const bounce = maxBy(bouncePool,d=>
     Math.max(0,-d.improvement)*12 +
     Math.max(0,d.recentAvgFinish-d.seasonAvgFinish)*10 +
@@ -690,9 +715,12 @@ function chooseCategories(){
     Math.max(0,65-d.overall)*.25
   );
 
-  let darkPool = all.filter(d=>d.rank>=6 && d.races.length>=2);
-  if(!darkPool.length) darkPool = all.filter(d=>d.rank>=4);
-  if(!darkPool.length) darkPool = all;
+  // Dark Horse needs at least half of all completed league race weeks
+  // AND a start in the most recent race (ceil handles odd race counts).
+  const qualifiedDarkHorses = previousRaceField.filter(d=>d.darkHorseEligible);
+  let darkPool = qualifiedDarkHorses.filter(d=>d.rank>=6);
+  if(!darkPool.length) darkPool = qualifiedDarkHorses.filter(d=>d.rank>=4);
+  if(!darkPool.length) darkPool = qualifiedDarkHorses;
   const darkHorse = maxBy(darkPool,d=>
     d.top10Rate*.42 +
     d.avgGain*5 +
