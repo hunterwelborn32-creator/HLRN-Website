@@ -2402,6 +2402,26 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
 .metric-strip>.metric{flex:1 1 170px;min-width:0}
 @media(max-width:620px){.metric-strip>.metric{flex:1 1 calc(50% - 10px)}}
 
+
+/* Viewer-selected drivers: day/night and phone-friendly. */
+.hlrn-driver-tools{padding:12px 15px;background:var(--paper);border-bottom:1px solid var(--line)}
+.hlrn-search-label{display:block;font-weight:900;font-size:11px;margin-bottom:7px;color:var(--ink)}
+.hlrn-driver-tool-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+#hlrnDriverSearch{flex:1 1 210px;min-width:0;border:1px solid var(--line);border-radius:7px;padding:10px 12px;background:var(--paper);color:var(--ink);font-size:14px}
+#hlrnFavoritesOnly,#hlrnDriverClear{padding:10px 12px;border-radius:7px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font-size:12px;font-weight:800;cursor:pointer}
+#hlrnFavoritesOnly.active{background:#ffefb2;color:#463300;border-color:#d6af3a}
+.hlrn-driver-search-info{font-size:11px;color:var(--muted);margin-top:7px}
+.hlrn-fav-star{cursor:pointer;border:0;background:transparent;color:#777f8b;font-size:23px;line-height:1;padding:4px;min-width:32px;min-height:32px}
+.hlrn-fav-star.is-favorite{color:#d49b08}
+.hlrn-fav-star:focus-visible,#hlrnDriverSearch:focus-visible,#hlrnFavoritesOnly:focus-visible{outline:3px solid #3478e6;outline-offset:2px}
+.hlrn-no-driver-results{padding:22px;text-align:center;color:var(--muted);font-size:13px;font-weight:700}
+html[data-hlrn-theme="dark"] .hlrn-driver-tools{background:#18212c;border-color:#3b4a5b}
+html[data-hlrn-theme="dark"] .hlrn-search-label{color:#edf2f8}
+html[data-hlrn-theme="dark"] #hlrnDriverSearch,html[data-hlrn-theme="dark"] #hlrnFavoritesOnly,html[data-hlrn-theme="dark"] #hlrnDriverClear{background:#263244;color:#f0f4fa;border-color:#506079}
+html[data-hlrn-theme="dark"] .hlrn-driver-search-info{color:#b4c2d4}
+html[data-hlrn-theme="dark"] #hlrnFavoritesOnly.active{background:#614d17;color:#ffe39b;border-color:#b9973d}
+@media(max-width:620px){.hlrn-driver-tool-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto}#hlrnDriverSearch{flex:auto;width:100%}.hlrn-fav-star{min-width:36px;min-height:36px}}
+
 </style>
 </head>
 <body>
@@ -2532,6 +2552,15 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
               <button id="top10Btn" class="active">Top 10</button>
               <button id="fullBtn">Full Field</button>
             </div>
+          </div>
+          <div class="hlrn-driver-tools">
+            <label class="hlrn-search-label" for="hlrnDriverSearch">Find a driver</label>
+            <div class="hlrn-driver-tool-row">
+              <input id="hlrnDriverSearch" type="search" placeholder="Search name or car number" autocomplete="off" aria-label="Search drivers by name or car number">
+              <button id="hlrnFavoritesOnly" type="button" aria-pressed="false">☆ Favorites</button>
+              <button id="hlrnDriverClear" type="button" hidden>Clear</button>
+            </div>
+            <div id="hlrnDriverSearchInfo" class="hlrn-driver-search-info" role="status" aria-live="polite">Star a driver to follow them.</div>
           </div>
           <div id="leaderboard"></div>
         </div>
@@ -3955,6 +3984,39 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     }).join("");
   }
 
+  const HLRN_FAVORITES_KEY = "hlrn_live_favorites_v1";
+  let hlrnFavorites = new Set();
+  let hlrnSearch = "";
+  let hlrnFavoritesOnly = false;
+  try {
+    const stored = JSON.parse(localStorage.getItem(HLRN_FAVORITES_KEY) || "[]");
+    if(Array.isArray(stored)) hlrnFavorites = new Set(stored.filter(x => typeof x === "string").slice(0,200));
+  } catch(e) {}
+  // Car number and normalized name survive changes to iRacing car index across sessions.
+  function hlrnFavoriteKey(driver){
+    return String(driver?.name || "").trim().toLowerCase() + "|" + String(driver?.number ?? "").trim().toLowerCase();
+  }
+  function hlrnFavoriteButton(driver){
+    const key = hlrnFavoriteKey(driver);
+    const active = hlrnFavorites.has(key);
+    return `<button type="button" class="hlrn-fav-star ${active?"is-favorite":""}" data-favorite-key="${esc(key)}" aria-pressed="${active}" aria-label="${active?"Remove":"Add"} ${esc(driver.name||"driver")} ${active?"from":"to"} favorites" title="${active?"Remove from favorites":"Add to favorites"}">${active?"★":"☆"}</button>`;
+  }
+  function hlrnRefreshDriverControls(drivers){
+    const matches = drivers.filter(d => {
+      const q = hlrnSearch.trim().toLowerCase();
+      return (!q || String(d.name||"").toLowerCase().includes(q) || String(d.number??"").toLowerCase().includes(q))
+        && (!hlrnFavoritesOnly || hlrnFavorites.has(hlrnFavoriteKey(d)));
+    });
+    const info = document.getElementById("hlrnDriverSearchInfo");
+    if(info) info.textContent = (hlrnSearch || hlrnFavoritesOnly)
+      ? matches.length + " of " + drivers.length + " drivers matching"
+      : "Star a driver to follow them. " + hlrnFavorites.size + " saved.";
+    const clear = document.getElementById("hlrnDriverClear");
+    if(clear) clear.hidden = !hlrnSearch && !hlrnFavoritesOnly;
+    const btn = document.getElementById("hlrnFavoritesOnly");
+    if(btn){ btn.classList.toggle("active",hlrnFavoritesOnly); btn.setAttribute("aria-pressed",String(hlrnFavoritesOnly)); btn.textContent = hlrnFavoritesOnly ? "★ Favorites" : "☆ Favorites"; }
+    return matches;
+  }
   function renderLeaderboard(drivers, online){
     const el = $("leaderboard");
 
@@ -3971,7 +4033,9 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
       return;
     }
 
-    const shown = showFullField ? drivers : drivers.slice(0,10);
+    const filtering = !!hlrnSearch.trim() || hlrnFavoritesOnly;
+    const matches = hlrnRefreshDriverControls(drivers);
+    const shown = filtering ? matches : (showFullField ? drivers : drivers.slice(0,10));
     const gapHeading = state && state.phase === "race" ? "BEHIND" : "GAP";
     const hotBattleKeys = new Set();
     if(state && state.phase === "race"){
@@ -3990,7 +4054,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
         : (driver.disqualified ? "Driver disqualified" : "");
       return `<article class="mobile-timing-card ${driver.position===1?"leader":""} ${hotBattleKeys.has(driverKey(driver))?"battle":""}">
         <div class="mobile-timing-main">
-          <div class="mobile-timing-pos"><b>P${esc(driver.position??"—")}</b><span class="${delta.cls}">${esc(delta.text)}</span></div>
+          <div class="mobile-timing-pos"><b>P${esc(driver.position??"—")}</b><span class="${delta.cls}">${esc(delta.text)}</span>${hlrnFavoriteButton(driver)}</div>
           ${photo?`<img class="mobile-timing-photo" src="${esc(photo)}" alt="" onerror="this.remove()" loading="lazy" decoding="async">`:`<div class="mobile-timing-photo-fallback">#${esc(driver.number||"—")}</div>`}
           <div class="mobile-timing-driver">
             <strong>#${esc(driver.number||"—")} ${esc(driver.name||"Unknown")}</strong>
@@ -4010,12 +4074,13 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     }).join("");
 
     el.innerHTML = `
-      <div class="mobile-live-board">${mobileCards}</div>
+      <div class="mobile-live-board">${mobileCards || (filtering ? `<div class="hlrn-no-driver-results">No matching drivers. Try another name or car number.</div>` : "")}</div>
       <div class="table-shell">
       <table>
         <thead>
           <tr>
             <th style="text-align:center">POS</th>
+            <th aria-label="Favorite">★</th>
             <th>POS +/-</th>
             <th>CAR</th>
             <th>DRIVER</th>
@@ -4032,6 +4097,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
             return `
               <tr class="${driver.position === 1 ? "leader" : ""} ${hotBattleKeys.has(driverKey(driver)) ? "battle-hot" : ""}">
                 <td class="pos-cell">${esc(driver.position ?? "—")}</td>
+                <td>${hlrnFavoriteButton(driver)}</td>
                 <td class="delta ${delta.cls}">${esc(delta.text)}</td>
                 <td><span class="car-num"><span>${esc(driver.number || "—")}</span></span></td>
                 <td class="driver-cell">
@@ -4062,7 +4128,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
           }).join("")}
         </tbody>
       </table>
-      </div>`;
+      </div>${filtering && !shown.length ? `<div class="hlrn-no-driver-results">No matching drivers. Try another name or car number.</div>` : ""}`;
 
     const newTableShell = el.querySelector(".table-shell");
     if(newTableShell){
@@ -5953,7 +6019,32 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     });
   });
 
-  $("top10Btn").addEventListener("click", () => {
+  $("hlrnDriverSearch").addEventListener("input", event => {
+    hlrnSearch = event.target.value;
+    renderLeaderboard(Array.isArray(state?.drivers) ? [...state.drivers].sort((a,b)=>Number(a.position??9999)-Number(b.position??9999)) : [], !!(state?.online || state?.raceFrozen));
+  });
+  $("hlrnFavoritesOnly").addEventListener("click", () => {
+    hlrnFavoritesOnly = !hlrnFavoritesOnly;
+    render(state || {});
+  });
+  $("hlrnDriverClear").addEventListener("click", () => {
+    hlrnSearch = "";
+    hlrnFavoritesOnly = false;
+    $("hlrnDriverSearch").value = "";
+    render(state || {});
+  });
+  $("leaderboard").addEventListener("click", event => {
+    const button = event.target.closest(".hlrn-fav-star");
+    if(!button) return;
+    const key = button.dataset.favoriteKey;
+    if(!key) return;
+    if(hlrnFavorites.has(key)) hlrnFavorites.delete(key);
+    else hlrnFavorites.add(key);
+    try { localStorage.setItem(HLRN_FAVORITES_KEY,JSON.stringify([...hlrnFavorites])); } catch(e) {}
+    render(state || {});
+  });
+
+    $("top10Btn").addEventListener("click", () => {
     showFullField = false;
     $("top10Btn").classList.add("active");
     $("fullBtn").classList.remove("active");
