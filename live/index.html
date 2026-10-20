@@ -2383,36 +2383,30 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
   .status-value{font-size:15px}
   .report-actions .story-btn,.report-actions .copy-btn{width:100%}
 }
+
+/* HLRN viewer comfort cleanup — leave live-feed and recorder IDs intact. */
+#tab-raw,#tab-report,.tab[data-tab="raw"],.tab[data-tab="report"]{display:none!important}
+/* One public lap explorer lives in Lap-by-Lap Positions; older replay/report remains inactive. */
+#raceReplay,#lapRecap,.lap-recap-head,#recapApprovalPanel,.recap-approval-actions,
+.recap-publish-btn,.recap-dont-publish-btn,[data-recap-publish]{display:none!important}
+/* Status and field count already live in the race header; leader and battles have dedicated cards. */
+#tab-race .side-stack>.panel:has(#trackerLeader){display:none!important}
+/* Only one stream of event cards: Race Events & Timeline. Keep the four pulse counts. */
+#racePulseList{display:none!important}
+/* The live badge and event-meta status replace the verbose connection diagnostics. */
+#tab-race .side-stack>.panel:has(#socketStatus){display:none!important}
+/* Prevent repeated headline figures; Best Lap and Fastest Driver remain in the metrics strip. */
+.metric-strip>.metric:has(#leaderName),.metric-strip>.metric:has(#closestBattleMetric),
+.metric-strip>.metric:has(#sessionState),.metric-strip>.metric:has(#lastUpdate){display:none!important}
+.metric-strip{display:flex;flex-wrap:wrap;gap:10px}
+.metric-strip>.metric{flex:1 1 170px;min-width:0}
+@media(max-width:620px){.metric-strip>.metric{flex:1 1 calc(50% - 10px)}}
+
 </style>
 </head>
 <body>
 
-<div id="hlrn-cloudflare-test-tools" style="display:none;background:#172337;color:#fff;padding:12px 16px;border-bottom:3px solid #e31837;text-align:center;font:800 13px Arial,sans-serif;position:relative;z-index:9999">
-  CLOUDFLARE TEST MODE &nbsp;
-  <button id="cf-test-start" type="button" style="background:#e31837;color:#fff;padding:10px 14px;border:0;border-radius:5px;cursor:pointer;font-weight:800">START SIMULATED RACE</button>
-  <button id="cf-test-stop" type="button" style="background:#4d586c;color:#fff;padding:10px 14px;border:0;border-radius:5px;cursor:pointer;font-weight:800">STOP</button>
-  <span id="cf-test-note" style="display:inline-block;margin-left:12px;font-weight:normal">Cloudflare test mode — no published Results changes</span>
-</div>
-<script>
-(function(){
- if(new URLSearchParams(location.search).get("cloudflare-test")!=="1")return;
- document.title="HLRN Live Race Center — Cloudflare Test";
- document.getElementById("hlrn-cloudflare-test-tools").style.display="block";
- let timer=null;
- const note=document.getElementById("cf-test-note");
- async function tick(){
-  try{
-   const r=await fetch("https://hlrn-live-feed.hunterwelborn32.workers.dev/api/demo/tick",{method:"POST"});
-   const info=await r.json();if(!r.ok)throw Error(info.error||("HTTP "+r.status));
-   note.textContent="SIMULATED LAP "+(info.lap??"—")+" • "+(info.viewers??0)+" connected viewer(s)";
-  }catch(err){note.textContent="Demo error: "+err.message;clearInterval(timer);timer=null}
- }
- document.getElementById("cf-test-start").onclick=function(){if(timer)return;tick();timer=setInterval(tick,450)};
- document.getElementById("cf-test-stop").onclick=function(){clearInterval(timer);timer=null;note.textContent="Simulation paused"};
- document.addEventListener("visibilitychange",function(){if(document.hidden&&timer){clearInterval(timer);timer=null;note.textContent="Simulation paused while tab hidden"}});
-})();
-</script>
-
+<!-- Public race center: Cloudflare simulation controls are not exposed here. -->
 
 <div class="brandbar">
   <div class="brandbar-inner">
@@ -2577,7 +2571,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
 
           <div class="panel">
             <div class="panel-head">
-              <div class="panel-title">Race Pulse</div>
+              <div class="panel-title">Race at a Glance</div>
               <button id="openRaceFeedBtn" class="mini-action" type="button">Open Feed</button>
             </div>
             <div class="race-pulse-stats" style="grid-template-columns:repeat(4,1fr)">
@@ -2705,7 +2699,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     <section id="tab-timeline" class="section">
       <div class="panel">
         <div class="panel-head">
-          <div class="panel-title">HLRN Race Feed</div>
+          <div class="panel-title">Race Events &amp; Timeline</div>
           <div id="timelineCount" style="font-size:10px;font-weight:900;color:#7b8490">0 EVENTS</div>
         </div>
         <div class="timeline-toolbar">
