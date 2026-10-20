@@ -904,3 +904,79 @@ html[data-hlrn-theme="dark"] #hlrnLiveShell.hlrn-offair .hlrn-league-standings t
   color:#fff!important;
   -webkit-text-fill-color:#fff!important;
 }
+
+
+/* HLRN LIVE DAY MODE HEADER + OFFLINE STATUS CLEANUP V4
+   The Race Day header must be readable against its own background.
+   Restrict this to /live/ and leave Night Race + live timing untouched. */
+html[data-hlrn-theme="light"] body:has(#hlrnLiveShell) .brandbar{
+  background:linear-gradient(107deg,#ffffff 0%,#f2f7ff 56%,#e5effc 100%)!important;
+  background-color:#f5f9ff!important;
+  color:#112c4c!important;
+  border-color:#c8d8ea!important;
+  box-shadow:0 5px 18px rgba(29,61,104,.11)!important;
+}
+html[data-hlrn-theme="light"] body:has(#hlrnLiveShell) .brandbar .brand{
+  color:#123154!important;
+  -webkit-text-fill-color:#123154!important;
+  font-family:"Barlow Condensed",Impact,"Arial Narrow",sans-serif!important;
+  font-size:clamp(25px,2.2vw,31px)!important;
+  font-weight:900!important;
+  font-style:italic!important;
+  letter-spacing:.005em!important;
+  line-height:1.1!important;
+  text-shadow:none!important;
+}
+html[data-hlrn-theme="light"] body:has(#hlrnLiveShell) .brandbar .brand .red{
+  color:#de284a!important;
+  -webkit-text-fill-color:#de284a!important;
+}
+html[data-hlrn-theme="light"] body:has(#hlrnLiveShell) .brandbar .brand-sub{
+  color:#526984!important;
+  -webkit-text-fill-color:#526984!important;
+  font-family:Inter,Arial,sans-serif!important;
+  font-size:11px!important;
+  font-weight:850!important;
+  letter-spacing:.105em!important;
+  text-shadow:none!important;
+}
+html[data-hlrn-theme="light"] body:has(#hlrnLiveShell) .brandbar .brand-sub:before{
+  background:#e0b000!important;
+}
+html[data-hlrn-theme="light"] body:has(#hlrnLiveShell) .brandbar .live-badge{
+  background:#ffffff!important;
+  background-image:none!important;
+  color:#29425e!important;
+  -webkit-text-fill-color:#29425e!important;
+  border:1px solid #bdcde2!important;
+  box-shadow:0 3px 11px rgba(30,56,95,.08)!important;
+  font-size:11px!important;
+}
+html[data-hlrn-theme="light"] body:has(#hlrnLiveShell) .brandbar .live-badge.on{
+  border-color:#329b63!important;
+  background:#e4f8ed!important;
+  color:#11673b!important;
+  -webkit-text-fill-color:#11673b!important;
+}
+html[data-hlrn-theme="light"] body:has(#hlrnLiveShell) .brandbar .live-badge .dot{
+  background:#899bad!important;
+  box-shadow:none!important;
+}
+html[data-hlrn-theme="light"] body:has(#hlrnLiveShell) .brandbar .live-badge.on .dot{
+  background:#17b65f!important;
+  box-shadow:0 0 10px #1ccc6c50!important;
+}
+/* Off-air hub is the entire pre-race experience: extra placeholder command
+   widgets inserted alongside <main> should not show an empty statistics row.
+   The real Race Command display reappears when .hlrn-offair is removed. */
+body .page:has(> #hlrnLiveShell.hlrn-offair) > :not(#hlrnLiveShell):not(.footer){
+  display:none!important;
+}
+@media(max-width:650px){
+  html[data-hlrn-theme="light"] body:has(#hlrnLiveShell) .brandbar .brand{
+    font-size:24px!important;
+  }
+  html[data-hlrn-theme="light"] body:has(#hlrnLiveShell) .brandbar .brand-sub{
+    font-size:10px!important;
+  }
+}
