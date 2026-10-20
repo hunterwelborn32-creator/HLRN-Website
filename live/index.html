@@ -648,6 +648,26 @@ html[data-hlrn-theme="dark"] .hlrn-unified-yellow{color:#ffcf4f!important}
 .hlrn-lap-order-car{display:block;font-size:10px;color:var(--muted)}
 html[data-hlrn-theme="dark"] .hlrn-lap-order,html[data-hlrn-theme="dark"] .hlrn-lap-order-driver{background:var(--paper);color:var(--ink)}
 @media(max-width:760px){.hlrn-lap-order{margin:0}.hlrn-lap-order-controls{width:100%}.hlrn-lap-order-controls select{flex:1;min-width:95px}}
+/* Night-theme position cards: do not inherit the site's light card backgrounds. */
+html[data-hlrn-theme="dark"] #tab-lap-positions .hlrn-lap-order-driver,
+html[style*="color-scheme: dark"] #tab-lap-positions .hlrn-lap-order-driver{
+  background:#151c27!important;
+  border:1px solid #344155!important;
+  color:#f1f5fb!important;
+  -webkit-text-fill-color:#f1f5fb!important;
+}
+html[data-hlrn-theme="dark"] #tab-lap-positions .hlrn-lap-order-pos,
+html[data-hlrn-theme="dark"] #tab-lap-positions .hlrn-lap-order-name,
+html[style*="color-scheme: dark"] #tab-lap-positions .hlrn-lap-order-pos,
+html[style*="color-scheme: dark"] #tab-lap-positions .hlrn-lap-order-name{
+  color:#f1f5fb!important;
+  -webkit-text-fill-color:#f1f5fb!important;
+}
+html[data-hlrn-theme="dark"] #tab-lap-positions .hlrn-lap-order-car,
+html[style*="color-scheme: dark"] #tab-lap-positions .hlrn-lap-order-car{
+  color:#aebcd0!important;
+  -webkit-text-fill-color:#aebcd0!important;
+}
 /* Explicit night theme: override legacy global button styles including disabled controls. */
 html[data-hlrn-theme="dark"] .hlrn-lap-order-controls button,
 html[data-hlrn-theme="dark"] .hlrn-lap-order-controls select,
