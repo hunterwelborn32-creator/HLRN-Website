@@ -5457,13 +5457,45 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
 
   let hlrnSelectedLap=null;
   let hlrnRecordedLaps=[];
+  let hlrnLapHistory=[];
+  let hlrnLapRaceKey="";
+  let hlrnLapFetchAt=0;
+  let hlrnLapFetching=false;
+  function liveLapRaceKey(race){
+    return String(race?.subSessionId??"")+"|"+String(race?.sessionId??"")+"|"+String(race?.sessionNum??"")+"|"+String(race?.sessionName??"")+"|"+String(race?.track??"");
+  }
+  async function fetchLiveLapHistory(race){
+    if(!race?.online||String(race.phase||"").toLowerCase()!=="race")return;
+    if(hlrnLapFetching||Date.now()-hlrnLapFetchAt<5000)return;
+    hlrnLapFetchAt=Date.now();hlrnLapFetching=true;
+    const expected=liveLapRaceKey(race);
+    try{
+      const response=await fetch("https://hlrn-live-feed.hunterwelborn32.workers.dev/api/laps",{cache:"no-store"});
+      if(!response.ok)throw Error("Lap feed unavailable");
+      const data=await response.json();
+      if(data?.sessionKey===expected&&data.online===true&&Array.isArray(data.lapSnapshots)
+         &&liveLapRaceKey(state)===expected){
+        hlrnLapHistory=data.lapSnapshots;
+        renderLiveLapOrder(state);
+      }
+    }catch(err){console.warn("HLRN lap positions update delayed",err);}
+    finally{hlrnLapFetching=false;}
+  }
   function renderLiveLapOrder(race){
     const select=$("hlrnLapSelect"), content=$("hlrnLapOrderContent");
     if(!select||!content)return;
     // Only current live race scoring; no recap or archived-result requests.
-    const snapshots=race&&race.online&&race.phase==="race"
-      ?raceLapSnapshots(race).filter(x=>!x?.provisional&&Array.isArray(x?.order)&&x.order.length)
+    const raceActive=!!race?.online&&String(race.phase||"").toLowerCase()==="race";
+    const key=raceActive?liveLapRaceKey(race):"";
+    if(key!==hlrnLapRaceKey){
+      hlrnLapRaceKey=key;hlrnLapHistory=[];hlrnSelectedLap=null;
+      hlrnLapFetchAt=0;
+    }
+    const snapshots=raceActive
+      ?[...hlrnLapHistory,...raceLapSnapshots(race)].filter(x=>!x?.provisional&&Array.isArray(x?.order)&&x.order.length)
       :[];
+    if(raceActive&&document.querySelector('.tab[data-tab="lap-positions"]')?.classList.contains("active"))
+      void fetchLiveLapHistory(race);
     const valid=[...new Map(snapshots.map(x=>[Number(x.lap),x])).values()]
       .filter(x=>Number.isInteger(Number(x.lap))&&Number(x.lap)>0)
       .sort((a,b)=>Number(a.lap)-Number(b.lap));
@@ -5920,6 +5952,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     activateTab(requestedTab);
   }
 
+  document.querySelector('.tab[data-tab="lap-positions"]')?.addEventListener("click",()=>{hlrnLapFetchAt=0;void fetchLiveLapHistory(state);});
   $("hlrnLapSelect")?.addEventListener("change",e=>{const n=Number(e.target.value);if(Number.isInteger(n)){hlrnSelectedLap=n;renderLiveLapOrder(state)}});
   $("hlrnLapPrevious")?.addEventListener("click",()=>changeLiveLapOrder(-1));
   $("hlrnLapNext")?.addEventListener("click",()=>changeLiveLapOrder(1));
