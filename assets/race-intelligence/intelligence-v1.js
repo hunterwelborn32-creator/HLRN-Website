@@ -841,7 +841,6 @@ function renderBoard(){
         </div>
                 <div class="card-title">${esc(cfg.title)}</div>
         <div class="card-driver">${hLrnDriverNameMarkup(cat.driver)}</div>
-        <div class="ri-card-team">${cat.driver.team?hLrnTeamMarkup(cat.driver.team):'<span>Independent</span>'}</div>
         <div class="card-reason">${esc(cat.reason)}</div>
         <div class="ri-card-metrics">
           <div><span>Rank</span><b>#${cat.driver.rank||"—"} <em class="ri-rank-trend ${rankTrendClass(cat.driver)}">${esc(rankTrendLabel(cat.driver,true))}</em></b></div>
@@ -1466,7 +1465,7 @@ document.addEventListener("visibilitychange",()=>{
       const ethanFallback="/assets/driver-photos/full/ethan-moreno.webp?v=20261001contenders2";
       const fallbackPhoto=/^ethan\s+(?:fonseca\s+)?moreno$/i.test(displayName)?ethanFallback:directPhoto;
       const photo=`<div class="v3-contender-photo-wrap"><img class="hlrn-contender-full-photo" src="${esc(directPhoto)}" alt="${esc(displayName)}" loading="eager" decoding="async" onerror="this.onerror=null;this.src='${esc(fallbackPhoto)}';"></div>`;
-      return `<article class="v3-contender">${photo}<div class="v3-contender-copy"><div class="v3-contender-label">${i===0?'Performance Leader':'Contender '+(i+1)}</div><div class="v3-contender-name">${hLrnDriverNameMarkup(d)}</div><div class="v3-contender-team">${d.team?hLrnTeamMarkup(d.team):"Independent"}</div><div class="v3-contender-meta"><span>Rating ${d.avgRating?Number(d.avgRating).toFixed(1):rating.toFixed(0)}</span><span>Avg ${formatFinish(d.seasonAvgFinish)}</span><span class="ri-rank-trend ${rankTrendClass(d)}">#${d.rank||"—"} ${esc(rankTrendLabel(d,true))}</span></div><div class="v3-contender-meter"><span style="width:${rating}%"></span></div></div></article>`;
+      return `<article class="v3-contender">${photo}<div class="v3-contender-copy"><div class="v3-contender-label">${i===0?'Performance Leader':'Contender '+(i+1)}</div><div class="v3-contender-name">${hLrnDriverNameMarkup(d)}</div><div class="v3-contender-meta"><span>Rating ${d.avgRating?Number(d.avgRating).toFixed(1):rating.toFixed(0)}</span><span>Avg ${formatFinish(d.seasonAvgFinish)}</span><span class="ri-rank-trend ${rankTrendClass(d)}">#${d.rank||"—"} ${esc(rankTrendLabel(d,true))}</span></div><div class="v3-contender-meter"><span style="width:${rating}%"></span></div></div></article>`;
     }).join(''):'<div style="padding:18px;color:#7f8992;font-size:10px">Waiting for enough race history to build the contender board.</div>';
   }
 
