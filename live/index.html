@@ -5455,6 +5455,16 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     return true;
   }
 
+  const HLRN_LAP_BROWSER_TEST=new URLSearchParams(location.search).get("lap-browser-test")==="1";
+  const HLRN_LAP_TEST_STATE=(()=>{
+    const names=["Driver A","Driver B","Driver C","Driver D"];
+    const snapshots=Array.from({length:10},(_,i)=>{
+      const lap=i+1,sequence=lap%2?[0,2,1,3]:[1,0,2,3];
+      return {lap,flag:lap===10?"CHECKERED":lap===9?"WHITE":lap===4||lap===5?"YELLOW":"GREEN",
+        order:sequence.map((idx,pos)=>({position:pos+1,carIdx:idx,number:String(12+idx*11),name:names[idx],lapsCompleted:lap,lapsDown:0}))};
+    });
+    return {online:true,phase:"race",sessionName:"Isolated Browser Test",subSessionId:"browser-test",sessionId:"browser-test",sessionNum:3,track:"Test Speedway",lapSnapshots:snapshots,drivers:snapshots[9].order};
+  })();
   let hlrnSelectedLap=null;
   let hlrnRecordedLaps=[];
   let hlrnLapHistory=[];
@@ -5465,7 +5475,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     return String(race?.subSessionId??"")+"|"+String(race?.sessionId??"")+"|"+String(race?.sessionNum??"")+"|"+String(race?.sessionName??"")+"|"+String(race?.track??"");
   }
   async function fetchLiveLapHistory(race){
-    if(!race?.online||String(race.phase||"").toLowerCase()!=="race")return;
+    if(HLRN_LAP_BROWSER_TEST||!race?.online||String(race.phase||"").toLowerCase()!=="race")return;
     if(hlrnLapFetching||Date.now()-hlrnLapFetchAt<5000)return;
     hlrnLapFetchAt=Date.now();hlrnLapFetching=true;
     const expected=liveLapRaceKey(race);
@@ -5482,6 +5492,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     finally{hlrnLapFetching=false;}
   }
   function renderLiveLapOrder(race){
+    if(HLRN_LAP_BROWSER_TEST)race=HLRN_LAP_TEST_STATE;
     const select=$("hlrnLapSelect"), content=$("hlrnLapOrderContent");
     if(!select||!content)return;
     // Only current live race scoring; no recap or archived-result requests.
@@ -5494,7 +5505,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     const snapshots=raceActive
       ?[...hlrnLapHistory,...raceLapSnapshots(race)].filter(x=>!x?.provisional&&Array.isArray(x?.order)&&x.order.length)
       :[];
-    if(raceActive&&document.querySelector('.tab[data-tab="lap-positions"]')?.classList.contains("active"))
+    if(!HLRN_LAP_BROWSER_TEST&&raceActive&&document.querySelector('.tab[data-tab="lap-positions"]')?.classList.contains("active"))
       void fetchLiveLapHistory(race);
     const valid=[...new Map(snapshots.map(x=>[Number(x.lap),x])).values()]
       .filter(x=>Number.isInteger(Number(x.lap))&&Number(x.lap)>0)
@@ -6002,6 +6013,31 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     startSimulationMode();
   }else if(DEMO_MODE){
     startDemoMode();
+  }else if(HLRN_LAP_BROWSER_TEST){
+    // Browser-only fixture; never establishes a WebSocket or contacts the live API.
+    document.title="HLRN Lap-by-Lap — Isolated Browser Test";
+    render({online:false,drivers:[],events:[]});
+    activateTab("lap-positions");
+    renderLiveLapOrder(HLRN_LAP_TEST_STATE);
+    const panel=document.createElement("div");
+    panel.id="hlrnLapBrowserResults";
+    panel.setAttribute("role","status");
+    panel.style.cssText="padding:12px 16px;margin:10px;border:1px solid #376a53;background:#12251c;color:#e6fff0;font:700 12px Arial,sans-serif";
+    $("hlrnLapOrderPanel").prepend(panel);
+    const checks={};
+    const select=$("hlrnLapSelect"),prev=$("hlrnLapPrevious"),next=$("hlrnLapNext");
+    checks.tenLapOptions=select.options.length===10;
+    checks.latestLapDefault=select.value==="10";
+    checks.onlyOneLapDisplayed=$("hlrnLapOrderContent").querySelectorAll(".hlrn-lap-order-driver").length===4;
+    select.value="5";select.dispatchEvent(new Event("change",{bubbles:true}));
+    checks.dropdownSelectsLap5=select.value==="5"&&hlrnSelectedLap===5;
+    prev.click();checks.previousArrowSelectsLap4=select.value==="4"&&hlrnSelectedLap===4;
+    next.click();checks.nextArrowSelectsLap5=select.value==="5"&&hlrnSelectedLap===5;
+    checks.positionChangesBetweenLaps=HLRN_LAP_TEST_STATE.lapSnapshots[0].order[0].carIdx!==HLRN_LAP_TEST_STATE.lapSnapshots[1].order[0].carIdx;
+    checks.allDriverNamesVisible=["Driver A","Driver B","Driver C","Driver D"].every(name=>$("hlrnLapOrderContent").textContent.includes(name));
+    const ok=Object.values(checks).every(Boolean);
+    panel.textContent=(ok?"PASS":"FAIL")+" — ISOLATED BROWSER TEST: "+Object.values(checks).filter(Boolean).length+"/"+Object.keys(checks).length+" checks. No live feed connection. "+Object.entries(checks).map(([k,v])=>k+": "+(v?"PASS":"FAIL")).join(" • ");
+    const exit=document.createElement("a");exit.href="/live/";exit.textContent="  • Exit test";exit.style.color="#a9f7cc";panel.appendChild(exit);
   }else{
     render({online:false,drivers:[],events:[]});
     connect();
