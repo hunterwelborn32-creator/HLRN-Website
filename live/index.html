@@ -648,6 +648,34 @@ html[data-hlrn-theme="dark"] .hlrn-unified-yellow{color:#ffcf4f!important}
 .hlrn-lap-order-car{display:block;font-size:10px;color:var(--muted)}
 html[data-hlrn-theme="dark"] .hlrn-lap-order,html[data-hlrn-theme="dark"] .hlrn-lap-order-driver{background:var(--paper);color:var(--ink)}
 @media(max-width:760px){.hlrn-lap-order{margin:0}.hlrn-lap-order-controls{width:100%}.hlrn-lap-order-controls select{flex:1;min-width:95px}}
+/* Explicit night theme: override legacy global button styles including disabled controls. */
+html[data-hlrn-theme="dark"] .hlrn-lap-order-controls button,
+html[data-hlrn-theme="dark"] .hlrn-lap-order-controls select,
+html[style*="color-scheme: dark"] .hlrn-lap-order-controls button,
+html[style*="color-scheme: dark"] .hlrn-lap-order-controls select{
+  appearance:auto!important;
+  background:#121925!important;
+  color:#f4f6fa!important;
+  -webkit-text-fill-color:#f4f6fa!important;
+  border:1px solid #43546e!important;
+  min-height:38px;
+  font-size:11px!important;
+  font-weight:900!important;
+  opacity:1!important;
+}
+html[data-hlrn-theme="dark"] .hlrn-lap-order-controls button:disabled,
+html[style*="color-scheme: dark"] .hlrn-lap-order-controls button:disabled{
+  background:#202b39!important;
+  color:#c5cfde!important;
+  -webkit-text-fill-color:#c5cfde!important;
+  opacity:.75!important;
+  cursor:default;
+}
+html[data-hlrn-theme="dark"] .hlrn-lap-order-controls select option,
+html[style*="color-scheme: dark"] .hlrn-lap-order-controls select option{
+  background:#121925!important;color:#f4f6fa!important;
+}
+
 </style>
 
 <style id="HLRN_RC_CROWN_V1">
