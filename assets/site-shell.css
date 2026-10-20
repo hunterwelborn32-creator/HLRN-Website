@@ -2030,7 +2030,7 @@ html[data-hlrn-route] body :where(
 }
 
 
-/* HLRN Day Race navigation / side-by-side racetrack brand (2026-10-20).
+/* HLRN Day Race navigation / prominent readable full network name (2026-10-20).
    Cars continue racing in the oval at left. The network name is OUTSIDE
    the track at right; no white placard covers the animation. Night unchanged. */
 html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track{
@@ -2090,7 +2090,8 @@ html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-mark{
 html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-name{
   position:absolute!important;
   left:232px!important;
-  top:15px!important;
+  top:50%!important;
+  transform:translateY(-50%)!important;
   z-index:3!important;
   width:calc(100% - 241px)!important;
   max-width:calc(100% - 241px)!important;
@@ -2103,11 +2104,11 @@ html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-name{
   background:transparent!important;
   color:#10263f!important;
   font-family:"Barlow Condensed",Impact,"Arial Narrow",sans-serif!important;
-  font-size:16px!important;
+  font-size:22px!important;
   font-weight:900!important;
   font-style:normal!important;
-  letter-spacing:.012em!important;
-  line-height:1.03!important;
+  letter-spacing:0!important;
+  line-height:1.08!important;
   text-transform:uppercase!important;
   text-shadow:none!important;
   white-space:normal!important;
@@ -2124,7 +2125,7 @@ html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-name::before
   background:#e31837;
 }
 html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-name small{
-  display:block!important;
+  display:none!important; /* Day Race: let the full network name read at headline size */
   margin-top:5px!important;
   color:#53647a!important;
   font-family:Arial,Helvetica,sans-serif!important;
@@ -2152,9 +2153,9 @@ html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-name small{
     left:63px!important;top:18px!important;width:37px!important;height:28px!important;font-size:17px!important;
   }
   html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-name{
-    left:182px!important;top:14px!important;
+    left:182px!important;top:50%!important;
     width:calc(100% - 191px)!important;max-width:calc(100% - 191px)!important;
-    font-size:12.5px!important;
+    font-size:18px!important;
   }
   html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-name small{font-size:7px!important}
 }
@@ -2172,9 +2173,9 @@ html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-name small{
     left:52px!important;top:17px!important;width:29px!important;height:26px!important;font-size:14px!important;
   }
   html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-name{
-    left:147px!important;top:13px!important;
+    left:147px!important;top:50%!important;
     width:calc(100% - 153px)!important;max-width:calc(100% - 153px)!important;
-    font-size:10.5px!important;
+    font-size:14px!important;
     letter-spacing:0!important;
   }
   html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-name::before{left:-9px;height:32px;width:2px}
@@ -2196,9 +2197,9 @@ html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-name small{
     left:43px!important;top:16px!important;width:28px!important;height:25px!important;font-size:13px!important;
   }
   html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-name{
-    left:127px!important;top:12px!important;
+    left:127px!important;top:50%!important;
     width:calc(100% - 132px)!important;max-width:calc(100% - 132px)!important;
-    font-size:9.5px!important;
+    font-size:12.5px!important;
   }
   html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-name small{
     font-size:6px!important;
