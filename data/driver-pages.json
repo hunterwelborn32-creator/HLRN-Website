@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-08T15:28:20Z",
-  "count": 86,
+  "generatedAt": "2026-10-20T20:30:47Z",
+  "count": 87,
   "drivers": [
     {
       "name": "Aaron Treubig",
@@ -48,7 +48,7 @@
       "number": "56",
       "photoSlug": "benjamin-richards",
       "hasPhoto": true,
-      "iRating": 2073,
+      "iRating": 1736,
       "series": [
         "monday",
         "sunday"
@@ -72,16 +72,19 @@
       "hasPhoto": true,
       "iRating": 3875,
       "series": [
+        "hosted",
         "monday",
         "sunday"
       ],
       "ids": {
         "sunday": "93794",
-        "monday": "93794"
+        "monday": "93794",
+        "hosted": ""
       },
       "teams": {
         "sunday": null,
-        "monday": null
+        "monday": null,
+        "hosted": null
       },
       "aliases": []
     },
@@ -92,15 +95,18 @@
       "number": "27",
       "photoSlug": "brandon-beyke",
       "hasPhoto": true,
-      "iRating": 5486,
+      "iRating": 5475,
       "series": [
+        "monday",
         "sunday"
       ],
       "ids": {
-        "sunday": "55842"
+        "sunday": "55842",
+        "monday": "55842"
       },
       "teams": {
-        "sunday": null
+        "sunday": null,
+        "monday": null
       },
       "aliases": []
     },
@@ -174,7 +180,7 @@
       "number": "74",
       "photoSlug": "brian-hennings",
       "hasPhoto": true,
-      "iRating": 3950,
+      "iRating": 4005,
       "series": [
         "sunday"
       ],
@@ -234,7 +240,7 @@
       "number": "4",
       "photoSlug": "carson-freeman",
       "hasPhoto": true,
-      "iRating": 3588,
+      "iRating": 3658,
       "series": [
         "monday"
       ],
@@ -449,6 +455,25 @@
       "aliases": []
     },
     {
+      "name": "Edward Fiedler",
+      "slug": "edward-fiedler",
+      "url": "/drivers/edward-fiedler/",
+      "number": "66",
+      "photoSlug": "",
+      "hasPhoto": false,
+      "iRating": 2495,
+      "series": [
+        "sunday"
+      ],
+      "ids": {
+        "sunday": "71413"
+      },
+      "teams": {
+        "sunday": null
+      },
+      "aliases": []
+    },
+    {
       "name": "Eric Hayden",
       "slug": "eric-hayden",
       "url": "/drivers/eric-hayden/",
@@ -480,7 +505,7 @@
       "number": "012",
       "photoSlug": "ethan-eckert",
       "hasPhoto": true,
-      "iRating": 5289,
+      "iRating": 5224,
       "series": [
         "monday",
         "sunday"
@@ -502,7 +527,7 @@
       "number": "88",
       "photoSlug": "ethan-moreno",
       "hasPhoto": true,
-      "iRating": 4173,
+      "iRating": 4025,
       "series": [
         "hosted",
         "sunday"
@@ -567,7 +592,7 @@
       "number": "72",
       "photoSlug": "evan-parry",
       "hasPhoto": true,
-      "iRating": 2644,
+      "iRating": 2973,
       "series": [
         "monday",
         "sunday"
@@ -819,7 +844,7 @@
       "number": "70",
       "photoSlug": "joe-konen",
       "hasPhoto": true,
-      "iRating": 1792,
+      "iRating": 1644,
       "series": [
         "monday"
       ],
@@ -857,15 +882,18 @@
       "number": "69",
       "photoSlug": "john-miles",
       "hasPhoto": true,
-      "iRating": 2115,
+      "iRating": 2104,
       "series": [
+        "hosted",
         "monday"
       ],
       "ids": {
-        "monday": "99926"
+        "monday": "99926",
+        "hosted": ""
       },
       "teams": {
-        "monday": null
+        "monday": null,
+        "hosted": null
       },
       "aliases": []
     },
@@ -920,7 +948,7 @@
       "number": "37",
       "photoSlug": "joshua-spragg",
       "hasPhoto": true,
-      "iRating": 1969,
+      "iRating": 1995,
       "series": [
         "sunday"
       ],
@@ -936,7 +964,7 @@
       "name": "Jt Huskins",
       "slug": "jt-huskins",
       "url": "/drivers/jt-huskins/",
-      "number": "23",
+      "number": "—",
       "photoSlug": "",
       "hasPhoto": false,
       "iRating": 1395,
@@ -958,7 +986,7 @@
       "number": "99",
       "photoSlug": "juan-escamilla",
       "hasPhoto": true,
-      "iRating": 3286,
+      "iRating": 3136,
       "series": [
         "hosted",
         "sunday"
@@ -999,7 +1027,7 @@
       "number": "58",
       "photoSlug": "",
       "hasPhoto": false,
-      "iRating": 3449,
+      "iRating": 3348,
       "series": [
         "hosted"
       ],
@@ -1121,19 +1149,16 @@
       "hasPhoto": true,
       "iRating": 1633,
       "series": [
-        "hosted",
         "monday",
         "sunday"
       ],
       "ids": {
         "sunday": "106245",
-        "monday": "106245",
-        "hosted": ""
+        "monday": "106245"
       },
       "teams": {
         "sunday": "PrimeX",
-        "monday": "AWR",
-        "hosted": null
+        "monday": "AWR"
       },
       "aliases": []
     },
@@ -1185,7 +1210,7 @@
       "number": "14",
       "photoSlug": "matthew-brown",
       "hasPhoto": true,
-      "iRating": 2746,
+      "iRating": 2992,
       "series": [
         "monday",
         "sunday"
@@ -1327,7 +1352,7 @@
       "number": "—",
       "photoSlug": "",
       "hasPhoto": false,
-      "iRating": 1459,
+      "iRating": 1378,
       "series": [
         "sunday"
       ],
@@ -1346,7 +1371,7 @@
       "number": "78",
       "photoSlug": "randy-schweitzer",
       "hasPhoto": true,
-      "iRating": 1276,
+      "iRating": 1247,
       "series": [
         "sunday"
       ],
@@ -1384,7 +1409,7 @@
       "number": "05",
       "photoSlug": "ricky-miles",
       "hasPhoto": true,
-      "iRating": 1331,
+      "iRating": 1339,
       "series": [
         "monday"
       ],
@@ -1597,16 +1622,13 @@
       "hasPhoto": true,
       "iRating": 1760,
       "series": [
-        "hosted",
         "monday"
       ],
       "ids": {
-        "monday": "109389",
-        "hosted": ""
+        "monday": "109389"
       },
       "teams": {
-        "monday": "HLR",
-        "hosted": null
+        "monday": "HLR"
       },
       "aliases": []
     },
@@ -1636,7 +1658,7 @@
       "number": "89",
       "photoSlug": "trevor-aswarnauth",
       "hasPhoto": true,
-      "iRating": 4329,
+      "iRating": 4155,
       "series": [
         "monday"
       ],
