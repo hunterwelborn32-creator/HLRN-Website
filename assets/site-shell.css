@@ -2205,3 +2205,179 @@ html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-name small{
     font-size:6px!important;
   }
 }
+
+/* HLRN Night Race matching split-oval brand (2026-10-20).
+   Same precise layout and animated oval as Day Race; dark cockpit palette,
+   bright readable type, and no panel over the racing cars. */
+html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track{
+  position:relative!important;
+  display:block!important;
+  flex:0 0 420px!important;
+  width:420px!important;
+  height:68px!important;
+  overflow:hidden!important;
+  isolation:isolate!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track::before{
+  content:"";
+  position:absolute;
+  left:2px;top:4px;
+  width:204px;height:58px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#15263d,#0a1323);
+  border:1px solid #364c6a;
+  box-shadow:0 2px 8px rgba(0,0,0,.25);
+  z-index:0;
+  pointer-events:none;
+}
+html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track .hgn-mini-canvas{
+  display:block!important;
+  position:absolute!important;
+  left:0!important;
+  top:0!important;
+  right:auto!important;
+  bottom:auto!important;
+  width:210px!important;
+  height:68px!important;
+  z-index:1!important;
+  pointer-events:none!important;
+}
+html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track .hgn-mark{
+  position:absolute!important;
+  left:82px!important;
+  top:18px!important;
+  width:44px!important;
+  height:32px!important;
+  min-width:0!important;
+  z-index:3!important;
+  display:grid!important;
+  place-items:center!important;
+  background:#101e30!important;
+  color:#fff!important;
+  font-size:20px!important;
+  line-height:1!important;
+  text-shadow:none!important;
+  box-shadow:inset -5px 0 0 #e31837,0 2px 6px #0002!important;
+}
+html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track .hgn-name{
+  position:absolute!important;
+  left:232px!important;
+  top:50%!important;
+  transform:translateY(-50%)!important;
+  z-index:3!important;
+  width:calc(100% - 241px)!important;
+  max-width:calc(100% - 241px)!important;
+  display:block!important;
+  padding:0!important;
+  margin:0!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  background:transparent!important;
+  color:#f7faff!important;
+  font-family:"Barlow Condensed",Impact,"Arial Narrow",sans-serif!important;
+  font-size:22px!important;
+  font-weight:900!important;
+  font-style:normal!important;
+  letter-spacing:0!important;
+  line-height:1.08!important;
+  text-transform:uppercase!important;
+  text-shadow:0 1px 6px rgba(0,0,0,.3)!important;
+  white-space:normal!important;
+  overflow:visible!important;
+}
+html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track .hgn-name::before{
+  content:"";
+  position:absolute;
+  width:3px;
+  height:35px;
+  left:-12px;
+  top:0;
+  border-radius:3px;
+  background:#e31837;
+}
+html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track .hgn-name small{
+  display:none!important; /* Night Race: main network name stays prominent */
+  margin-top:5px!important;
+  color:#bac9db!important;
+  font-family:Arial,Helvetica,sans-serif!important;
+  font-size:8px!important;
+  font-weight:800!important;
+  letter-spacing:.06em!important;
+  line-height:1.15!important;
+  text-shadow:none!important;
+  white-space:normal!important;
+  overflow:visible!important;
+}
+@media(max-width:1350px){
+  html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track{
+    flex-basis:335px!important;
+    width:335px!important;
+    height:64px!important;
+  }
+  html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track::before{
+    width:159px;height:54px;left:2px;top:5px;
+  }
+  html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track .hgn-mini-canvas{
+    width:164px!important;height:64px!important;
+  }
+  html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track .hgn-mark{
+    left:63px!important;top:18px!important;width:37px!important;height:28px!important;font-size:17px!important;
+  }
+  html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track .hgn-name{
+    left:182px!important;top:50%!important;
+    width:calc(100% - 191px)!important;max-width:calc(100% - 191px)!important;
+    font-size:18px!important;
+  }
+  html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track .hgn-name small{font-size:7px!important}
+}
+@media(max-width:700px){
+  html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track{
+    flex-basis:275px!important;width:275px!important;height:61px!important;
+  }
+  html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track::before{
+    width:131px;height:51px;left:1px;top:4px;
+  }
+  html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track .hgn-mini-canvas{
+    width:133px!important;height:59px!important;
+  }
+  html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track .hgn-mark{
+    left:52px!important;top:17px!important;width:29px!important;height:26px!important;font-size:14px!important;
+  }
+  html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track .hgn-name{
+    left:147px!important;top:50%!important;
+    width:calc(100% - 153px)!important;max-width:calc(100% - 153px)!important;
+    font-size:14px!important;
+    letter-spacing:0!important;
+  }
+  html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track .hgn-name::before{left:-9px;height:32px;width:2px}
+  html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track .hgn-name small{
+    margin-top:4px!important;font-size:6.5px!important;letter-spacing:0!important;
+  }
+}
+@media(max-width:390px){
+  html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track{
+    flex-basis:240px!important;width:240px!important;height:58px!important;
+  }
+  html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track::before{
+    width:111px;height:46px;left:1px;top:5px;
+  }
+  html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track .hgn-mini-canvas{
+    width:115px!important;height:57px!important;
+  }
+  html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track .hgn-mark{
+    left:43px!important;top:16px!important;width:28px!important;height:25px!important;font-size:13px!important;
+  }
+  html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track .hgn-name{
+    left:127px!important;top:50%!important;
+    width:calc(100% - 132px)!important;max-width:calc(100% - 132px)!important;
+    font-size:12.5px!important;
+  }
+  html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track .hgn-name small{
+    font-size:6px!important;
+  }
+}
