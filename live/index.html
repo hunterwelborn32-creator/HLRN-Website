@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HLRN Live Results — Race Center</title>
-<meta name="description" content="Follow High Line Racing Network live timing, race control, penalties, lap-by-lap recording, Race Replay and final race summaries.">
+<meta name="description" content="Follow High Line Racing Network live iRacing timing, leaderboard, and race control on Cloudflare.">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://highlineracingnetwork.com/live/">
 <script data-hlrn-driver-system src="../assets/driver-system.js?v=20261013v13"></script>
@@ -619,6 +619,18 @@
   .rc-penalty-category{margin-top:5px;font-size:10px;font-weight:1000;letter-spacing:.7px;text-transform:uppercase;color:#8fa1b8}
   @media(max-width:760px){.session-flow{grid-template-columns:1fr 1fr}.flow-step{min-height:44px;padding:8px 9px}.flow-step strong{font-size:11px}}
 
+
+/* Live-only cleanup: preserve complete original Race Command Center layout. */
+.tab[data-tab="report"],#tab-report,
+.recap-preview-overlay,.recap-review-dialog,
+#hlrnRaceResetCountdown,[data-recap-publish] {display:none!important}
+#flowFinal strong{font-size:0}
+#flowFinal strong::after{content:"Checkered";font-size:13px}
+html[data-hlrn-theme="dark"] .hlrn-unified-white{background:#d4deea!important;color:#22364b!important;border:1px solid #96a9be}
+.hlrn-unified-white{background:#e4ecf5!important;color:#243b53!important;border:1px solid #b5c6d8;padding:4px 8px}
+.hlrn-unified-green{color:#13a957!important}
+.hlrn-unified-yellow{color:#b88a00!important}
+html[data-hlrn-theme="dark"] .hlrn-unified-yellow{color:#ffcf4f!important}
 </style>
 
 <style id="HLRN_RC_CROWN_V1">
@@ -2421,7 +2433,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     <nav class="tabs session-tools" aria-label="Session tools">
       <button class="tab" data-tab="practice">Practice Results</button>
       <button class="tab" data-tab="qualifying">Qualifying Results</button>
-      <button class="tab" data-tab="report">Race Replay / Final Summary</button>
+      
     </nav>
 
     <section id="tab-race" class="section active">
@@ -2806,7 +2818,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     if(state?.online){label.textContent="HEALTHY";return;}
     label.textContent="CONNECTED / IDLE";
   }
-  const LIVE_RECONNECT_HOLD_MS = 90000;
+  const LIVE_RECONNECT_HOLD_MS = 0;
   function liveConnectionNotice(kind){
     if(SIMULATION_MODE || DEMO_MODE) return;
     const age = Date.now() - lastGoodLiveAt;
@@ -5366,65 +5378,18 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     if(text)text.textContent="Invalid scoring update ignored: "+reason;
   }
 
+  // Live-only: display every current Cloudflare state without frozen-race,
+  // old-session fallback, recorder retention, or scoring gate.
   function acceptIncomingState(incoming){
     const next=incoming && typeof incoming==="object" ? {...incoming} : {};
     next.phase=detectedPhase(next);
-    if(isBeforeLiveManualReset(next)){
-      if(localFrozenRaceState || (state && (state.online || state.raceFrozen))){
-        localFrozenRaceState=null;
-        localFrozenRaceKey=null;
-        render({online:false,drivers:[],events:[]});
-      }
-      return false;
-    }
-    // A reconnect can replay an old frozen race. Never show it past the hour.
-    if(finalRaceExpired(next)){
-      clearExpiredLiveRace();
-      return false;
-    }
-    // Ignore out-of-order snapshots from the same session if both carry a
-    // trustworthy producer timestamp. Reset naturally for a new session.
-    if(!SIMULATION_MODE && !DEMO_MODE && next.online && state?.online &&
-       incomingRaceIdentity(next)===incomingRaceIdentity(state)){
-      const incomingTime=Date.parse(next.updatedAt||"");
-      const shownTime=Date.parse(state.updatedAt||"");
-      if(Number.isFinite(incomingTime) && Number.isFinite(shownTime) &&
-         incomingTime+1500<shownTime) return false;
-    }
-    const key=incomingRaceIdentity(next);
-    if(!SIMULATION_MODE && !DEMO_MODE){
-      const issue=checkLiveScoring(next);
-      if(issue){noteScoringRejection(issue);return false;}
-      if(next.online && Array.isArray(next.drivers) && next.drivers.length){
-        lastAcceptedScoring={key,phase:next.phase,lap:Number(next.lap),
-          finished:raceFinished(next),receivedAt:Date.now()};
-      }
-    }
-
-    if(localFrozenRaceState){
-      if(key===localFrozenRaceKey){
-        return false;
-      }
-      if(isRacePayload(next) && key!==localFrozenRaceKey){
-        localFrozenRaceState=null;
-        localFrozenRaceKey=null;
-      }
-    }
-
-    if(isRacePayload(next) && (next.raceFrozen || raceFinished(next))){
-      localFrozenRaceState=JSON.parse(JSON.stringify(next));
-      localFrozenRaceKey=key;
-      localFrozenRaceState.raceFrozen=true;
-      localFrozenRaceState.raceFrozenAt=localFrozenRaceState.raceFrozenAt || localFrozenRaceState.updatedAt || new Date().toISOString();
-      render(localFrozenRaceState);
+    next.raceFrozen=false;
+    localFrozenRaceState=null;
+    localFrozenRaceKey=null;
+    if(!next.online){
+      lastGoodLiveState=null;
+      render({online:false,drivers:[],events:[]});
       return true;
-    }
-
-    if(next.online && Array.isArray(next.drivers) && next.drivers.length){
-      lastGoodLiveState = {...next};
-      lastGoodLiveAt = Date.now();
-    }else if(!next.online){
-      lastGoodLiveState = null;
     }
     render(next);
     return true;
@@ -5506,16 +5471,28 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
       ? sessionBits.join(" • ") + (frozen ? " • DATA FROZEN" : "")
       : "No active session";
 
-    const flag = available ? normalizeFlag(state.flag) : "OFFLINE";
-    const flagGraphic = liveFlagGraphic(flag);
+    const statusText=String(state.sessionState||"").toUpperCase().replaceAll("_"," ").trim();
+    const livePhase=String(state.phase||"").toLowerCase();
+    const rawFlag=available?normalizeFlag(state.flag):"OFFLINE";
+    const flag=!available?"OFFLINE":
+      (rawFlag==="CHECKERED"||statusText==="COOL DOWN"||statusText==="CHECKERED")?"CHECKERED":
+      (statusText==="GET IN CAR")?"GET IN CAR":
+      (statusText==="WARMUP"||statusText==="WARM UP")?"WARMUP":
+      livePhase==="practice"?"PRACTICE":
+      livePhase==="qualifying"?"QUALIFYING":
+      rawFlag==="WHITE"?"WHITE":
+      ["YELLOW","CAUTION","ONE TO GREEN"].includes(rawFlag)?"YELLOW":
+      rawFlag==="GREEN"||statusText==="RACING"?"GREEN":"GET IN CAR";
+    const flagGraphic = ["GREEN","YELLOW","WHITE","CHECKERED"].includes(flag)?liveFlagGraphic(flag):"";
+    const unifiedClass=flag==="WHITE"?" hlrn-unified-white":flag==="GREEN"?" hlrn-unified-green":flag==="YELLOW"?" hlrn-unified-yellow":"";
     $("flag").innerHTML = flagGraphic || flag;
     $("flag").setAttribute("aria-label", flag);
     $("flag").title = flag;
-    $("flag").className = "status-value " + flagClass(flag);
+    $("flag").className = "status-value " + flagClass(flag)+unifiedClass;
     $("flagHero").innerHTML = flagGraphic || flag;
     $("flagHero").setAttribute("aria-label", flag);
     $("flagHero").title = flag;
-    $("flagHero").className = "flag-hero " + flagClass(flag);
+    $("flagHero").className = "flag-hero " + flagClass(flag)+unifiedClass;
 
     $("lap").textContent = state.lap != null
       ? (state.totalLaps ? `${state.lap} / ${state.totalLaps}` : String(state.lap))
@@ -5523,7 +5500,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
 
     $("timeRemaining").textContent = duration(state.timeRemaining);
     $("carCount").textContent = state.driverCount ?? drivers.length;
-    $("sessionState").textContent = state.sessionState || "—";
+    $("sessionState").textContent = available ? flag : "—";
 
     updateVerifiedLeader(drivers, online);
 
@@ -5573,8 +5550,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     renderRacePulse(raceState);
     renderRaceStorylines(drivers, available);
 
-    renderReport();
-    refreshRaceResetCountdown();
+    // Post-race report and recap intentionally disabled for live-only page.
     $("rawFeed").textContent = JSON.stringify(state, null, 2);
   }
 
@@ -5899,11 +5875,11 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     }
   }, 4500);
 
-  setInterval(clearExpiredLiveRace, 1000);
-  setInterval(refreshRaceResetCountdown, 1000);
+  // No frozen-state display or post-race retention.
+
   setInterval(refreshLiveHealth, 1000);
   refreshLiveHealth();
-  // A dropped connection preserves the last leaderboard briefly, marked stale.
+  // No cached-race fallback on connection loss.
   setInterval(() => {
     if(SIMULATION_MODE || DEMO_MODE || !lastGoodLiveState || !ws ||
        ws.readyState === WebSocket.OPEN) return;
