@@ -2028,3 +2028,133 @@ html[data-hlrn-route] body :where(
     transition:none!important;
   }
 }
+
+
+/* HLRN DAY NAV BRAND CLEANUP 20261020
+   Keep the familiar oval identity, but separate the network name from
+   the race animation in Day Race mode. Night Race remains unchanged. */
+html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track{
+  position:relative!important;
+  width:420px;
+  height:64px!important;
+  overflow:hidden!important;
+  border:2px solid #21344a!important;
+  border-radius:999px!important;
+  background:linear-gradient(95deg,#fff 0%,#fff 70%,#eef3fa 100%)!important;
+  box-shadow:
+    inset 0 0 0 3px #f2f4f8,
+    inset 0 0 0 6px #e31837,
+    0 2px 7px rgba(13,28,49,.14)!important;
+}
+/* The canvas cars were crossing the brand caption and causing visual overlap. */
+html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-mini-canvas{
+  display:none!important;
+}
+html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-mark{
+  position:absolute!important;
+  left:30px!important;
+  top:14px!important;
+  width:48px!important;
+  height:33px!important;
+  z-index:2!important;
+  display:grid!important;
+  place-items:center!important;
+  background:#142c48!important;
+  color:#fff!important;
+  box-shadow:inset -5px 0 0 #e31837!important;
+  font-size:19px!important;
+  line-height:1!important;
+  text-shadow:none!important;
+}
+html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-name{
+  position:absolute!important;
+  left:98px!important;
+  top:14px!important;
+  max-width:calc(100% - 119px)!important;
+  z-index:2!important;
+  display:block!important;
+  overflow:hidden!important;
+  color:#162a43!important;
+  font-size:12px!important;
+  font-weight:1000!important;
+  letter-spacing:.045em!important;
+  line-height:1.15!important;
+  text-shadow:none!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+}
+html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-name small{
+  display:block!important;
+  margin-top:5px!important;
+  color:#536a85!important;
+  font-size:8px!important;
+  font-weight:850!important;
+  letter-spacing:.085em!important;
+  line-height:1.2!important;
+  text-shadow:none!important;
+  white-space:nowrap!important;
+}
+@media(max-width:1350px){
+  html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track{
+    width:335px;
+    height:62px!important;
+  }
+  html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-mark{
+    left:23px!important;
+    top:15px!important;
+    width:41px!important;
+    height:29px!important;
+    font-size:17px!important;
+  }
+  html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-name{
+    left:78px!important;
+    top:15px!important;
+    max-width:calc(100% - 92px)!important;
+    font-size:10px!important;
+  }
+  html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-name small{
+    font-size:7px!important;
+  }
+}
+@media(max-width:700px){
+  html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track{
+    width:275px;
+    height:57px!important;
+  }
+  html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-mark{
+    left:17px!important;
+    top:13px!important;
+    width:37px!important;
+    height:27px!important;
+    font-size:16px!important;
+  }
+  html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-name{
+    left:66px!important;
+    top:13px!important;
+    max-width:calc(100% - 78px)!important;
+    font-size:8px!important;
+    letter-spacing:.015em!important;
+  }
+  html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-name small{
+    margin-top:4px!important;
+    font-size:6.8px!important;
+    letter-spacing:.03em!important;
+  }
+}
+@media(max-width:390px){
+  html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track{
+    width:240px;
+  }
+  html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-mark{
+    left:14px!important;
+    width:34px!important;
+  }
+  html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-name{
+    left:58px!important;
+    font-size:7.5px!important;
+    max-width:calc(100% - 70px)!important;
+  }
+  html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track .hgn-name small{
+    font-size:6px!important;
+  }
+}
