@@ -631,6 +631,23 @@ html[data-hlrn-theme="dark"] .hlrn-unified-white{background:#d4deea!important;co
 .hlrn-unified-green{color:#13a957!important}
 .hlrn-unified-yellow{color:#b88a00!important}
 html[data-hlrn-theme="dark"] .hlrn-unified-yellow{color:#ffcf4f!important}
+
+/* Additive lap-by-lap panel; preserve the original Race Command Center design. */
+.hlrn-lap-order{margin:16px 18px}
+.hlrn-lap-order-head{flex-wrap:wrap;gap:12px}
+.hlrn-lap-order-note{font-size:10px;color:var(--muted);margin-top:4px;font-weight:700}
+.hlrn-lap-order-controls{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.hlrn-lap-order-controls button,.hlrn-lap-order-controls select{background:var(--paper);color:var(--ink);border:1px solid var(--line);font-size:11px;font-weight:900;padding:9px 11px;border-radius:3px}
+.hlrn-lap-order-controls button{cursor:pointer}
+.hlrn-lap-order-controls button:disabled{opacity:.4;cursor:default}
+.hlrn-lap-order-content{padding:12px 16px}
+.hlrn-lap-order-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:7px}
+.hlrn-lap-order-driver{display:flex;align-items:center;gap:9px;padding:10px;background:var(--paper);border:1px solid var(--line);min-width:0}
+.hlrn-lap-order-pos{flex:0 0 35px;font-size:20px;font-weight:1000;color:var(--ink);text-align:center}
+.hlrn-lap-order-name{font-size:12px;font-weight:900;overflow-wrap:anywhere}
+.hlrn-lap-order-car{display:block;font-size:10px;color:var(--muted)}
+html[data-hlrn-theme="dark"] .hlrn-lap-order,html[data-hlrn-theme="dark"] .hlrn-lap-order-driver{background:var(--paper);color:var(--ink)}
+@media(max-width:760px){.hlrn-lap-order{margin:10px}.hlrn-lap-order-controls{width:100%}.hlrn-lap-order-controls select{flex:1;min-width:95px}}
 </style>
 
 <style id="HLRN_RC_CROWN_V1">
@@ -2391,6 +2408,17 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
       <div class="metric"><small>Last Update</small><strong id="lastUpdate">—</strong></div>
     </section>
 
+    <section id="hlrnLapOrderPanel" class="panel hlrn-lap-order" aria-label="Lap-by-lap positions">
+      <div class="panel-head hlrn-lap-order-head">
+        <div><div class="panel-title">Lap-by-Lap Positions</div><div id="hlrnLapOrderNote" class="hlrn-lap-order-note">Recorded running order at each completed lap</div></div>
+        <div class="hlrn-lap-order-controls">
+          <button type="button" id="hlrnLapPrevious" aria-label="Previous recorded lap">← Previous</button>
+          <select id="hlrnLapSelect" aria-label="Choose completed lap"><option value="">Waiting for race</option></select>
+          <button type="button" id="hlrnLapNext" aria-label="Next recorded lap">Next →</button>
+        </div>
+      </div>
+      <div id="hlrnLapOrderContent" class="hlrn-lap-order-content"><div class="archive-empty"><strong>Waiting for completed laps</strong>Driver positions will appear when Cloudflare records the first completed leader lap.</div></div>
+    </section>
     <section class="rc-crown" aria-label="HLRN race leader and front battle">
       <article class="rc-leader-hero">
         <div class="rc-leader-copy">
@@ -5395,6 +5423,48 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     return true;
   }
 
+  let hlrnSelectedLap=null;
+  let hlrnRecordedLaps=[];
+  function renderLiveLapOrder(race){
+    const select=$("hlrnLapSelect"), content=$("hlrnLapOrderContent");
+    if(!select||!content)return;
+    // Only current live race scoring; no recap or archived-result requests.
+    const snapshots=race&&race.online&&race.phase==="race"
+      ?raceLapSnapshots(race).filter(x=>!x?.provisional&&Array.isArray(x?.order)&&x.order.length)
+      :[];
+    const valid=[...new Map(snapshots.map(x=>[Number(x.lap),x])).values()]
+      .filter(x=>Number.isInteger(Number(x.lap))&&Number(x.lap)>0)
+      .sort((a,b)=>Number(a.lap)-Number(b.lap));
+    hlrnRecordedLaps=valid;
+    if(!valid.length){
+      hlrnSelectedLap=null;
+      select.innerHTML='<option value="">Waiting for laps</option>';
+      $("hlrnLapPrevious").disabled=true;$("hlrnLapNext").disabled=true;
+      $("hlrnLapOrderNote").textContent="Recorded running order at each completed lap";
+      content.innerHTML='<div class="archive-empty"><strong>Waiting for completed laps</strong>Positions appear when Cloudflare captures the first completed leader lap.</div>';
+      return;
+    }
+    if(hlrnSelectedLap===null||!valid.some(x=>Number(x.lap)===hlrnSelectedLap))
+      hlrnSelectedLap=Number(valid[valid.length-1].lap);
+    select.innerHTML=valid.map(x=>'<option value="'+Number(x.lap)+'"'+(Number(x.lap)===hlrnSelectedLap?' selected':'')+'>Lap '+Number(x.lap)+'</option>').join("");
+    const idx=valid.findIndex(x=>Number(x.lap)===hlrnSelectedLap);
+    $("hlrnLapPrevious").disabled=idx<=0;$("hlrnLapNext").disabled=idx>=valid.length-1;
+    const snap=valid[idx];
+    $("hlrnLapOrderNote").textContent=valid.length+" completed lap"+(valid.length===1?"":"s")+" captured • Lap "+hlrnSelectedLap+" selected";
+    const drivers=[...snap.order].sort((a,b)=>(Number(a?.position)||9999)-(Number(b?.position)||9999));
+    content.innerHTML='<div class="hlrn-lap-order-grid">'+drivers.map(d=>{
+      const name=esc(d?.name||race?.drivers?.find(x=>Number(x.carIdx)===Number(d?.carIdx))?.name||"Unknown Driver");
+      const num=esc(d?.number??"—");
+      const pos=esc(d?.position??"—");
+      return '<div class="hlrn-lap-order-driver"><span class="hlrn-lap-order-pos">'+pos+'</span><div><span class="hlrn-lap-order-name">'+name+'</span><span class="hlrn-lap-order-car">#'+num+(Number(d?.lapsDown)>0?' • '+Number(d.lapsDown)+' lap(s) down':'')+'</span></div></div>';
+    }).join("")+'</div>';
+  }
+  function changeLiveLapOrder(delta){
+    const idx=hlrnRecordedLaps.findIndex(x=>Number(x.lap)===hlrnSelectedLap);
+    const next=hlrnRecordedLaps[idx+delta];
+    if(next){hlrnSelectedLap=Number(next.lap);renderLiveLapOrder(state);}
+  }
+
   function render(s){
     state = s || {};
     const online = !!state.online;
@@ -5530,6 +5600,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     }
 
     renderLeaderboard(drivers, available);
+    renderLiveLapOrder(state);
     scheduleLiveFloatingHeader();
     renderScanner(drivers);
     renderLiveTicker(available, drivers);
@@ -5817,6 +5888,9 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     activateTab(requestedTab);
   }
 
+  $("hlrnLapSelect")?.addEventListener("change",e=>{const n=Number(e.target.value);if(Number.isInteger(n)){hlrnSelectedLap=n;renderLiveLapOrder(state)}});
+  $("hlrnLapPrevious")?.addEventListener("click",()=>changeLiveLapOrder(-1));
+  $("hlrnLapNext")?.addEventListener("click",()=>changeLiveLapOrder(1));
   $("replayLapSlider")?.addEventListener("input",event=>setReplayIndex(Number(event.target.value)));
   $("replayPrevLap")?.addEventListener("click",()=>setReplayIndex((replaySelectedIndex??0)-1));
   $("replayNextLap")?.addEventListener("click",()=>setReplayIndex((replaySelectedIndex??0)+1));
