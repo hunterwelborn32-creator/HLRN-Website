@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-19T06:20:00.925Z",
+  "generatedAt": "2026-10-20T06:39:15.259Z",
   "source": "SimRacerHub race pages",
   "races": [
     {
@@ -201,6 +201,31 @@
         "driverId": "10188",
         "carNumber": "89",
         "lap": 24
+      }
+    },
+    {
+      "key": "monday|9|386278",
+      "league": "monday",
+      "raceNumber": 9,
+      "raceId": "386278",
+      "track": "Homestead Miami Speedway",
+      "date": "Mon Oct 19 2026 00:00:00 GMT-0400 (Eastern Daylight Time)",
+      "source": "SimRacerHub",
+      "sourceRaceId": "386278",
+      "duration": "1h 13m",
+      "raceLaps": 125,
+      "leaders": 7,
+      "leadChanges": 14,
+      "cautions": 3,
+      "cautionLaps": 9,
+      "penalties": 0,
+      "fastestLap": {
+        "time": 32.462,
+        "formatted": "32.462",
+        "driver": "Ethan Eckert",
+        "driverId": "87070",
+        "carNumber": "012",
+        "lap": 100
       }
     },
     {
