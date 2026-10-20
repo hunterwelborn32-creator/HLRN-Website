@@ -633,7 +633,7 @@ html[data-hlrn-theme="dark"] .hlrn-unified-white{background:#d4deea!important;co
 html[data-hlrn-theme="dark"] .hlrn-unified-yellow{color:#ffcf4f!important}
 
 /* Additive lap-by-lap panel; preserve the original Race Command Center design. */
-.hlrn-lap-order{margin:16px 18px}
+.hlrn-lap-order{margin:0}
 .hlrn-lap-order-head{flex-wrap:wrap;gap:12px}
 .hlrn-lap-order-note{font-size:10px;color:var(--muted);margin-top:4px;font-weight:700}
 .hlrn-lap-order-controls{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
@@ -647,7 +647,7 @@ html[data-hlrn-theme="dark"] .hlrn-unified-yellow{color:#ffcf4f!important}
 .hlrn-lap-order-name{font-size:12px;font-weight:900;overflow-wrap:anywhere}
 .hlrn-lap-order-car{display:block;font-size:10px;color:var(--muted)}
 html[data-hlrn-theme="dark"] .hlrn-lap-order,html[data-hlrn-theme="dark"] .hlrn-lap-order-driver{background:var(--paper);color:var(--ink)}
-@media(max-width:760px){.hlrn-lap-order{margin:10px}.hlrn-lap-order-controls{width:100%}.hlrn-lap-order-controls select{flex:1;min-width:95px}}
+@media(max-width:760px){.hlrn-lap-order{margin:0}.hlrn-lap-order-controls{width:100%}.hlrn-lap-order-controls select{flex:1;min-width:95px}}
 </style>
 
 <style id="HLRN_RC_CROWN_V1">
@@ -2408,17 +2408,6 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
       <div class="metric"><small>Last Update</small><strong id="lastUpdate">—</strong></div>
     </section>
 
-    <section id="hlrnLapOrderPanel" class="panel hlrn-lap-order" aria-label="Lap-by-lap positions">
-      <div class="panel-head hlrn-lap-order-head">
-        <div><div class="panel-title">Lap-by-Lap Positions</div><div id="hlrnLapOrderNote" class="hlrn-lap-order-note">Recorded running order at each completed lap</div></div>
-        <div class="hlrn-lap-order-controls">
-          <button type="button" id="hlrnLapPrevious" aria-label="Previous recorded lap">← Previous</button>
-          <select id="hlrnLapSelect" aria-label="Choose completed lap"><option value="">Waiting for race</option></select>
-          <button type="button" id="hlrnLapNext" aria-label="Next recorded lap">Next →</button>
-        </div>
-      </div>
-      <div id="hlrnLapOrderContent" class="hlrn-lap-order-content"><div class="archive-empty"><strong>Waiting for completed laps</strong>Driver positions will appear when Cloudflare records the first completed leader lap.</div></div>
-    </section>
     <section class="rc-crown" aria-label="HLRN race leader and front battle">
       <article class="rc-leader-hero">
         <div class="rc-leader-copy">
@@ -2451,6 +2440,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     <nav class="tabs primary-tabs" aria-label="Race Center">
       <button class="tab active" data-tab="race">Leaderboard</button>
       <button class="tab" data-tab="timeline">Timeline</button>
+      <button class="tab" data-tab="lap-positions">Lap-by-Lap Positions</button>
       <button class="tab" data-tab="fastest">Fastest Laps</button>
       <button class="tab" data-tab="battles">Battles</button>
       <button class="tab" data-tab="control">Race Control</button>
@@ -2463,6 +2453,20 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
       <button class="tab" data-tab="qualifying">Qualifying Results</button>
       
     </nav>
+
+    <section id="tab-lap-positions" class="section" aria-label="Lap-by-lap positions">
+    <section id="hlrnLapOrderPanel" class="panel hlrn-lap-order" aria-label="Lap-by-lap positions">
+      <div class="panel-head hlrn-lap-order-head">
+        <div><div class="panel-title">Lap-by-Lap Positions</div><div id="hlrnLapOrderNote" class="hlrn-lap-order-note">Recorded running order at each completed lap</div></div>
+        <div class="hlrn-lap-order-controls">
+          <button type="button" id="hlrnLapPrevious" aria-label="Previous recorded lap">← Previous</button>
+          <select id="hlrnLapSelect" aria-label="Choose completed lap"><option value="">Waiting for race</option></select>
+          <button type="button" id="hlrnLapNext" aria-label="Next recorded lap">Next →</button>
+        </div>
+      </div>
+      <div id="hlrnLapOrderContent" class="hlrn-lap-order-content"><div class="archive-empty"><strong>Waiting for completed laps</strong>Driver positions will appear when Cloudflare records the first completed leader lap.</div></div>
+    </section>
+    </section>
 
     <section id="tab-race" class="section active">
       <div class="mobile-live-command" aria-label="Mobile race control">
@@ -5884,7 +5888,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
   });
 
   const requestedTab = new URLSearchParams(location.search).get("section");
-  if(["race","timeline","fastest","battles","control","stats","flags","radio","practice","qualifying","report"].includes(requestedTab)){
+  if(["race","timeline","lap-positions","fastest","battles","control","stats","flags","radio","practice","qualifying","report"].includes(requestedTab)){
     activateTab(requestedTab);
   }
 
