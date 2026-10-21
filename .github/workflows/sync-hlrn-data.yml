@@ -1,6 +1,7 @@
 name: Sync HLRN data
 on:
   push:
+    branches: [main]
     paths:
       - 'tools/**'
       - 'tests/**'
