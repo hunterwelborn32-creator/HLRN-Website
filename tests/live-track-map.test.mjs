@@ -37,7 +37,7 @@ assert.ok(live.includes('data-tab="track-map"'),"Live tab exists");
 assert.ok(live.includes('id="tab-track-map"'),"Live panel exists");
 assert.ok(live.includes('src="../track-map/"'),"Live tab uses isolated track map");
 assert.ok(page.includes('DEMO=new URLSearchParams(location.search).get("demo")==="1"'));
-assert.ok(page.includes("0.5-pct+1"),"Ovals must run counterclockwise from frontstretch start/finish");
+assert.ok(page.includes("lapToPathPct(pct,activeGeometry,activeProfile)"),"Map must use direction-calibrated geometry");
 assert.ok(page.includes("430 396"),"Daytona frontstretch must have a broad curved tri-oval, not a pointed apex");
 assert.ok(page.includes("daytonaDecor")&&page.includes("FRONT TRI-OVAL"),"Daytona broadcast artwork must be present");
 assert.ok(page.includes("Will Pittenger"),"Reference attribution must remain visible");
