@@ -69,7 +69,16 @@ h2{margin:0;font-size:18px;text-transform:uppercase;letter-spacing:-.02em}
 </div>
 <div class="layout">
 <section class="panel"><div class="section-head"><h2 id="trackName">Track status</h2><span class="hint">Approximate silhouette • NOT GPS</span></div>
-<div id="geometryDisclosure" class="hint" style="margin-top:8px">Venue mapping and geometry source pending</div><div class="map-frame"><svg id="map" viewBox="0 0 860 470" role="img" aria-label="Schematic race track showing car positions">
+<div id="geometryDisclosure" class="hint" style="margin-top:8px">Venue mapping and geometry source pending</div><div id="calibrationPanel" hidden style="margin:12px 0;padding:12px;background:var(--panel2);border:1px solid var(--line);border-radius:10px">
+<strong>DAYTONA LIVE CALIBRATION • DIAGNOSTIC ONLY</strong>
+<p class="hint">Adjust alignment while comparing one known car to iRacing. Does not affect the bridge or other viewers. Current public map is approximate.</p>
+<label for="calOffset">Position offset: <output id="calOffsetValue">0%</output></label>
+<input id="calOffset" type="range" min="0" max="100" step="0.5" value="0" style="width:100%">
+<label style="display:block;margin-top:8px"><input id="calReverse" type="checkbox"> Reverse movement direction</label>
+<p id="calReadout" class="hint">Select a car to see its reported progress.</p>
+<button id="calCopy" type="button" class="action" style="cursor:pointer">Copy calibration details</button>
+</div>
+<div class="map-frame"><svg id="map" viewBox="0 0 860 470" role="img" aria-label="Schematic race track showing car positions">
 <defs><linearGradient id="broadcastGround" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#0b1c30"/><stop offset="1" stop-color="#143b38"/></linearGradient><linearGradient id="trackAsphalt" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#374f69"/><stop offset="1" stop-color="#182a40"/></linearGradient></defs>
 <rect width="860" height="470" fill="url(#broadcastGround)"/>
 <g id="daytonaDecor" hidden>
@@ -105,7 +114,10 @@ import {resolveTrack,geometryStatus,trackCatalog} from "./catalog.mjs";
 const $=id=>document.getElementById(id);
 const NS="http://www.w3.org/2000/svg";
 const API="wss://hlrn-live-feed.hunterwelborn32.workers.dev/ws?role=viewer";
-const DEMO=new URLSearchParams(location.search).get("demo")==="1";
+const params=new URLSearchParams(location.search);
+const DEMO=params.get("demo")==="1";
+const CALIBRATE=params.get("calibrate")==="1";
+let calibrationOffset=0,calibrationReverse=false;
 const shapes={
  daytona:"M 211 91 C 330 88 545 88 649 91 C 735 94 796 147 796 209 C 796 274 765 307 676 331 C 603 350 516 396 430 396 C 344 396 257 350 184 331 C 95 307 64 274 64 209 C 64 147 125 94 211 91 Z",
  oval:"M 235 74 H 625 C 775 74 814 147 814 233 C 814 320 775 390 625 390 H 235 C 85 390 46 320 46 233 C 46 147 85 74 235 74 Z",
@@ -168,11 +180,15 @@ function renderMarkers(){
    smooth.set(d.key,pct);
    // The SVG contour is drawn clockwise from the backstretch. NASCAR ovals
    // are run counterclockwise, with the start/finish on the front tri-oval.
-   const travelPct=["daytona","trioval","oval","short"].includes(activeProfile)
-    ?((0.5-pct+1)%1):pct;
+   const base=["daytona","trioval","oval","short"].includes(activeProfile)?0.5-pct:pct;
+   const delta=CALIBRATE&&activeProfile==="daytona"?(calibrationReverse?2*pct:0)+calibrationOffset:0;
+   const travelPct=((base+delta)%1+1)%1;
    const pt=$("road").getPointAtLength(travelPct*total);
    x=pt.x;y=pt.y;
   }else {node.style.display="none";continue}
+  if(CALIBRATE&&d.key===selected){
+   setText("calReadout","Selected #"+d.number+" • telemetry progress: "+(d.lapDistPct===null?"unavailable":(d.lapDistPct*100).toFixed(2)+"%")+" • displayed path: "+(d.onPitRoad?"PIT ROAD":(((["daytona","trioval","oval","short"].includes(activeProfile)?0.5-(smooth.get(d.key)??0):(smooth.get(d.key)??0))+(calibrationReverse?2*(smooth.get(d.key)??0):0)+calibrationOffset+10)%1*100).toFixed(2)+"%")+" • Track: "+(source?.track||"—"));
+  }
   node.style.display="";
   node.setAttribute("transform","translate("+x.toFixed(1)+" "+y.toFixed(1)+")");
   node.setAttribute("class","marker"+(d.position===1?" leader":"")+(d.onPitRoad?" pit":"")+(selected===d.key?" selected":""));
@@ -241,6 +257,16 @@ function loop(){
   source=null;setStatus();renderList();setText("lap","—");setText("cars","—");setText("pits","—");setText("fieldCount","No live field");
  }
  renderMarkers();requestAnimationFrame(loop);
+}
+if(CALIBRATE){
+ $("calibrationPanel").hidden=false;
+ $("calOffset").addEventListener("input",e=>{calibrationOffset=Number(e.target.value)/100;setText("calOffsetValue",e.target.value+"%");});
+ $("calReverse").addEventListener("change",e=>{calibrationReverse=e.target.checked;});
+ $("calCopy").addEventListener("click",()=>{
+  const driver=drivers.find(d=>d.key===selected);
+  const detail=JSON.stringify({track:source?.track,car:driver?.number,lapDistPct:driver?.lapDistPct,offset:calibrationOffset,reversed:calibrationReverse,sessionId:source?.sessionId},null,2);
+  navigator.clipboard?.writeText(detail).then(()=>setText("calReadout","Calibration details copied."),()=>setText("calReadout",detail));
+ });
 }
 if(DEMO){$("demoBanner").hidden=false;$("demoAction").href=location.pathname;$("demoAction").textContent="Exit demo — show real race";connected=true}
 setShape("speedway");connect();requestAnimationFrame(loop);
