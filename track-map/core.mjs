@@ -45,7 +45,7 @@ export function smoothProgress(current,target,blend=0.3){
 export function flagType(flag){
  const x=String(flag||"").toUpperCase();
  if(/YELLOW|CAUTION|ONE TO GREEN/.test(x))return "yellow";
- if(/RED/.test(x))return "red";
+ if(/\bRED\b/.test(x))return "red";
  if(/CHECKERED/.test(x))return "checkered";
  if(/WHITE/.test(x))return "white";
  return "green";
