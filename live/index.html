@@ -3351,7 +3351,29 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
 
 
 
-  function driverStatus(driver){
+  function leaderboardCompletedLaps(driver){
+    const n=Number(driver?.lapsCompleted);
+    if(driver?.lapsCompleted==null || driver.lapsCompleted==="" || !Number.isInteger(n) || n<0) return null;
+    const total=Number(state?.totalLaps);
+    const final=state?.phase==="race" && raceFinished(state) && Number.isInteger(total) && total>0;
+    const down=Number(driver?.lapsDown);
+    // Some bridge snapshots finish at total-1 despite a completed checkered lap.
+    // Correct only known lead-lap finishers; never add a lap to known lapped cars.
+    if(final && n===total-1 && Number.isFinite(down) && down===0) return total;
+    return n;
+  }
+
+  function leaderboardLapsDown(driver, drivers){
+    const explicit=Number(driver?.lapsDown);
+    if(driver?.lapsDown!=null && driver.lapsDown!=="" && Number.isInteger(explicit) && explicit>0) return explicit;
+    const leader=drivers.find(d=>Number(d.position)===1);
+    const leadLaps=leaderboardCompletedLaps(leader);
+    const carLaps=leaderboardCompletedLaps(driver);
+    if(leadLaps!=null && carLaps!=null && leadLaps>carLaps) return leadLaps-carLaps;
+    return 0;
+  }
+
+  function driverStatus(driver, fieldDrivers){
     if(!driver) return "—";
     if(driver.disqualified) return "DQ";
     if(driver.blackFlag) return "BLACK FLAG";
@@ -3365,8 +3387,8 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     if(raw==="OUT" || raw.includes("OUT OF CAR") || track.includes("OUT OF CAR")) return "OUT";
     if(driver.onPitRoad || raw.includes("PIT ROAD") || track.includes("PIT ROAD")) return "PIT ROAD";
 
-    const lapsDown=Number(driver.lapsDown);
-    if(Number.isFinite(lapsDown) && lapsDown>0) return lapsDown===1 ? "1 LAP DOWN" : lapsDown+" LAPS DOWN";
+    const lapsDown=leaderboardLapsDown(driver, fieldDrivers || state?.drivers || []);
+    if(lapsDown>0) return lapsDown===1 ? "1 LAP DOWN" : lapsDown+" LAPS DOWN";
 
     if(state?.phase==="race" && raceFinished(state)) return "FINISHED";
     if(track==="OFF TRACK" || raw==="OFF TRACK") return "OFF TRACK";
@@ -4128,7 +4150,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     const mobileCards = shown.map(driver => {
       const delta = positionDelta(driver);
       const photo=hLrnDriverPhotoUrl(driver);
-      const status=driverStatus(driver);
+      const status=driverStatus(driver, drivers);
       const penaltyText=driver.blackFlag
         ? (driver.penaltyReason || "Reason not exposed by iRacing")
         : (driver.disqualified ? "Driver disqualified" : "");
@@ -4145,7 +4167,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
         <div class="mobile-timing-stats">
           <span><b>${esc(lapTime(driver.lastLapTime))}</b><small>LAST</small></span>
           <span><b>${esc(lapTime(driver.bestLapTime))}</b><small>BEST</small></span>
-          <span><b>${driver.lapsCompleted!=null&&Number(driver.lapsCompleted)>=0?esc(driver.lapsCompleted):"—"}</b><small>LAPS</small></span>
+          <span><b>${leaderboardCompletedLaps(driver) ?? "—"}</b><small>LAPS</small></span>
           <span class="mobile-timing-status ${esc(statusClass(driver))}"><b>${esc(status)}</b><small>STATUS</small></span>
         </div>
         ${hotBattleKeys.has(driverKey(driver))&&state&&state.phase==="race"?`<div class="mobile-timing-alert battle-alert">CLOSE BATTLE</div>`:""}
@@ -4200,8 +4222,8 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
                 <td class="gap-cell">${esc(gapText(driver))}</td>
                 <td class="lap-cell">${esc(lapTime(driver.lastLapTime))}</td>
                 <td class="lap-cell">${esc(lapTime(driver.bestLapTime))}</td>
-                <td>${driver.lapsCompleted != null && Number(driver.lapsCompleted) >= 0 ? esc(driver.lapsCompleted) : "—"}</td>
-                <td><span class="track-status ${esc(statusClass(driver))}">${esc(driverStatus(driver))}</span></td>
+                <td>${leaderboardCompletedLaps(driver) ?? "—"}</td>
+                <td><span class="track-status ${esc(statusClass(driver))}">${esc(driverStatus(driver, drivers))}</span></td>
               </tr>`;
           }).join("")}
         </tbody>
