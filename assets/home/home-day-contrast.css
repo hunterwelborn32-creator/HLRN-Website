@@ -1,0 +1,53 @@
+/* HLRN homepage — readable Race Day mode. Night mode is intentionally untouched. */
+html[data-hlrn-theme="light"] body.home-v10-page .h10-hero {
+  background:#dfe5ea;
+}
+html[data-hlrn-theme="light"] body.home-v10-page .h10-hero > img {
+  filter:saturate(1.05) contrast(1.02) brightness(1.12);
+}
+html[data-hlrn-theme="light"] body.home-v10-page .h10-hero::before {
+  background:
+    linear-gradient(90deg,rgba(5,12,22,.76) 0%,rgba(5,12,22,.47) 45%,rgba(5,12,22,.08) 100%),
+    linear-gradient(0deg,rgba(5,12,22,.57) 0%,rgba(5,12,22,.04) 65%,rgba(5,12,22,.15) 100%);
+}
+html[data-hlrn-theme="light"] body.home-v10-page .h10-hero-copy .h10-upcoming-title {
+  color:#fff !important;
+  text-shadow:0 2px 8px rgba(0,0,0,.7);
+}
+html[data-hlrn-theme="light"] body.home-v10-page .h10-upcoming-card {
+  background:rgba(255,255,255,.96);
+  border-color:#d1d9e2;
+  border-top-color:#e31837;
+  color:#111827 !important;
+  box-shadow:0 12px 32px rgba(0,0,0,.20);
+  backdrop-filter:blur(8px);
+}
+html[data-hlrn-theme="light"] body.home-v10-page .h10-upcoming-card.monday {
+  border-top-color:#219553;
+}
+html[data-hlrn-theme="light"] body.home-v10-page .h10-upcoming-card small {
+  color:#bc1530 !important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page .h10-upcoming-card.monday small {
+  color:#167744 !important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page .h10-upcoming-card h3 {
+  color:#101820 !important;
+  text-shadow:none !important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page .h10-hero .h10-upcoming-card p {
+  color:#344256 !important;
+  text-shadow:none !important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page .h10-upcoming-time {
+  color:#152238 !important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page .h10-upcoming-card a {
+  color:#152238 !important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page .h10-upcoming-card a:hover {
+  color:#ba1630 !important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page .h10-upcoming-card a:focus-visible {
+  outline:3px solid #bc1530;
+}
