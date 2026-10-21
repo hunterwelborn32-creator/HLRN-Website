@@ -94,12 +94,13 @@ const NS="http://www.w3.org/2000/svg";
 const API="wss://hlrn-live-feed.hunterwelborn32.workers.dev/ws?role=viewer";
 const DEMO=new URLSearchParams(location.search).get("demo")==="1";
 const shapes={
+ daytona:"M 252 82 L 608 82 C 736 82 807 133 807 220 C 807 285 757 327 676 351 L 512 398 Q 430 423 348 398 L 184 351 C 103 327 53 285 53 220 C 53 133 124 82 252 82 Z",
  oval:"M 235 74 H 625 C 775 74 814 147 814 233 C 814 320 775 390 625 390 H 235 C 85 390 46 320 46 233 C 46 147 85 74 235 74 Z",
  trioval:"M 224 92 C 344 64 529 66 637 94 C 763 115 811 166 799 237 Q 780 265 687 302 Q 641 395 516 398 H 344 Q 226 394 178 309 Q 87 280 61 241 C 39 174 93 121 224 92 Z",
  short:"M 305 85 H 555 C 696 85 780 135 780 233 C 780 336 696 383 555 383 H 305 C 166 383 80 336 80 233 C 80 135 166 85 305 85 Z",
  road:"M 193 104 C 320 68 354 119 450 96 C 571 64 650 107 684 152 L 744 163 C 807 164 797 242 738 257 L 661 255 C 629 254 600 323 542 344 L 483 324 C 434 310 394 409 324 391 C 263 379 272 327 211 318 C 159 313 117 359 92 310 C 63 254 150 240 134 192 C 122 152 153 121 193 104 Z"
 };
-const labels={oval:"OVAL",trioval:"TRI-OVAL",short:"SHORT TRACK",road:"ROAD COURSE"};
+const labels={daytona:"DAYTONA TRI-OVAL",oval:"OVAL",trioval:"TRI-OVAL",short:"SHORT TRACK",road:"ROAD COURSE"};
 let source=null,drivers=[],selected=null,socket=null,retry=null,connected=false,received=0,frameSeen=0,demoStart=performance.now(),raceKey="",activeProfile="";
 const markers=new Map(),smooth=new Map();
 function setText(id,s){$(id).textContent=String(s)}
