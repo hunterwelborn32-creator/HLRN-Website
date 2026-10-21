@@ -6,7 +6,7 @@ for(const [id,r] of Object.entries(CIRCUIT_ART_SOURCES)){
  assert.ok(/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/.test(r.url));
  assert.ok(r.author&&r.license&&r.status&&r.layout);
  assert.equal(referenceFor(id),r);
- assert.equal(geometryFor(id),null,"Artwork reference is not a calibrated car path");
+ if(id==="daytona-oval")assert.match(geometryFor(id).calibration,/provisional/);else assert.equal(geometryFor(id),null,"Artwork reference is not a calibrated car path");
 }
 assert.match(referenceFor("sonoma").status,/configuration requires review/);
 assert.equal(referenceFor("unknown"),null);
