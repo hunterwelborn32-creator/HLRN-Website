@@ -129,7 +129,26 @@ const shapes={
 };
 const labels={daytona:"DAYTONA TRI-OVAL",oval:"OVAL",trioval:"TRI-OVAL",short:"SHORT TRACK",road:"ROAD COURSE"};
 let source=null,drivers=[],selected=null,socket=null,retry=null,connected=false,received=0,frameSeen=0,demoStart=performance.now(),raceKey="",activeProfile="";
-const markers=new Map(),smooth=new Map();
+const markers=new Map(),smooth=new Map(),motion=new Map();
+// Maintain per-driver velocity estimates to render continuously between packets.
+function circularDelta(a,b){return ((b-a+1.5)%1)-0.5}
+function motionSample(key,pct,now){
+ if(pct===null)return;
+ const old=motion.get(key);
+ if(!old){motion.set(key,{pct,at:now,rate:0});return}
+ const dt=(now-old.at)/1000;
+ if(dt<0.04)return;
+ const diff=circularDelta(old.pct,pct);
+ // Reject telemetry spikes; never extrapolate a teleport around the oval.
+ if(Math.abs(diff)>0.12){motion.set(key,{pct,at:now,rate:0});return}
+ const measured=Math.max(-0.045,Math.min(0.045,diff/dt));
+ motion.set(key,{pct,at:now,rate:old.rate*0.35+measured*0.65});
+}
+function predictedProgress(key,pct,now){
+ const m=motion.get(key);if(!m)return pct;
+ const age=Math.min(0.65,Math.max(0,(now-m.at)/1000));
+ return ((m.pct+m.rate*age)%1+1)%1;
+}
 function setText(id,s){$(id).textContent=String(s)}
 function setShape(track){
  const venue=resolveTrack(track);
@@ -168,7 +187,7 @@ function shapePitY(i){return 280+Math.floor(i/10)*16}
 function renderMarkers(){
  const current=dataHealth()?drivers:[];
  const keys=new Set(current.map(d=>d.key));
- for(const [key,node] of markers)if(!keys.has(key)){node.remove();markers.delete(key);smooth.delete(key)}
+ for(const [key,node] of markers)if(!keys.has(key)){node.remove();markers.delete(key);smooth.delete(key);motion.delete(key)}
  const total=$("road").getTotalLength();
  const pitted=current.filter(d=>d.onPitRoad);
  for(const d of current){
@@ -178,7 +197,7 @@ function renderMarkers(){
    const i=pitted.findIndex(o=>o.key===d.key);
    x=shapePitX(i);y=shapePitY(i);
   }else if(d.lapDistPct!==null){
-   const pct=smoothProgress(smooth.get(d.key)??null,d.lapDistPct,motionBlend);
+   const pct=smoothProgress(smooth.get(d.key)??null,predictedProgress(d.key,d.lapDistPct,performance.now()),motionBlend);
    smooth.set(d.key,pct);
    // The SVG contour is drawn clockwise from the backstretch. NASCAR ovals
    // are run counterclockwise, with the start/finish on the front tri-oval.
@@ -224,12 +243,17 @@ function accept(next){
  if(!next||typeof next!=="object"||Array.isArray(next))return;
  source=next;received=Date.now();
  const key=[next.subSessionId,next.sessionId,next.sessionNum,next.track].join("|");
- if(key!==raceKey){raceKey=key;smooth.clear();selected=null}
+ if(key!==raceKey){raceKey=key;smooth.clear();motion.clear();selected=null}
  setShape(next.track);
  const venue=resolveTrack(next.track);
  setText("trackName",venue?venue.name:(next.track||"Unknown track"));
  setText("geometryDisclosure",venue?geometryStatus(venue.id):"Unrecognized venue — generic silhouette; layout requires verification");
  drivers=normalizeDrivers(next);
+ const sampledAt=performance.now();
+ for(const driver of drivers){
+  if(driver.onPitRoad){motion.delete(driver.key);continue}
+  motionSample(driver.key,driver.lapDistPct,sampledAt);
+ }
  if(!selected||!drivers.some(d=>d.key===selected))selected=drivers[0]?.key??null;
  const good=dataHealth();
  setText("lap",good?(String(next.lap??"—")+(next.totalLaps?" / "+next.totalLaps:"")):"—");
