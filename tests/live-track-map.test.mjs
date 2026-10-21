@@ -37,6 +37,8 @@ assert.ok(live.includes('data-tab="track-map"'),"Live tab exists");
 assert.ok(live.includes('id="tab-track-map"'),"Live panel exists");
 assert.ok(live.includes('src="../track-map/"'),"Live tab uses isolated track map");
 assert.ok(page.includes('DEMO=new URLSearchParams(location.search).get("demo")==="1"'));
+assert.ok(page.includes("0.5-pct+1"),"Ovals must run counterclockwise from frontstretch start/finish");
+assert.ok(page.includes("430 434"),"Daytona frontstretch must have pronounced tri-oval apex");
 assert.ok(page.includes('if(DEMO)return;'),"Demo mode never connects to live Cloudflare viewer");
 assert.ok(page.includes("NOT GPS")&&page.includes("NOT IRACING")===false,"Page must disclose schematic positions");
 assert.ok(!page.includes("role=producer"),"Map cannot create producer connection");
