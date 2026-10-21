@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 import vm from "node:vm";
 const html=readFileSync(new URL("../race-strategy/index.html",import.meta.url),"utf8");
-const scripts=[...html.matchAll(/<script(?:\\s[^>]*)?>([\\s\\S]*?)<\\/script>/g)].map(m=>m[1]).filter(Boolean);
+const scripts=[...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].map(m=>m[1]).filter(Boolean);
 const app=scripts.find(s=>s.includes('const API="https://hlrn-live-feed'));
 assert.ok(app,"Strategy Center application script found");
 const elements=new Map();
