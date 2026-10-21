@@ -1,0 +1,21 @@
+name: Inventory Daytona public-domain SVG
+on:
+  pull_request:
+    paths:
+      - "tools/inventory-circuit-svg.mjs"
+      - ".github/workflows/inventory-daytona-svg.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract original Daytona vector paths for manual review
+        run: node tools/inventory-circuit-svg.mjs "https://upload.wikimedia.org/wikipedia/commons/b/b9/Daytona_International_Speedway.svg" daytona-path-inventory.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: daytona-path-inventory
+          path: daytona-path-inventory.json
+          retention-days: 30

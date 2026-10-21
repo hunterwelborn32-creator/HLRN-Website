@@ -37,7 +37,7 @@ assert.ok(live.includes('data-tab="track-map"'),"Live tab exists");
 assert.ok(live.includes('id="tab-track-map"'),"Live panel exists");
 assert.ok(live.includes('src="../track-map/"'),"Live tab uses isolated track map");
 assert.ok(page.includes('DEMO=new URLSearchParams(location.search).get("demo")==="1"'));
-assert.ok(page.includes("0.5-pct+1"),"Ovals must run counterclockwise from frontstretch start/finish");
+assert.ok(page.includes("lapToPathPct(pct,activeGeometry,activeProfile)"),"Map must use direction-calibrated geometry");
 assert.ok(page.includes("430 396"),"Daytona frontstretch must have a broad curved tri-oval, not a pointed apex");
 assert.ok(page.includes("daytonaDecor")&&page.includes("FRONT TRI-OVAL"),"Daytona broadcast artwork must be present");
 assert.ok(page.includes("Will Pittenger"),"Reference attribution must remain visible");
@@ -51,3 +51,8 @@ for(const code of scripts){
  assert.equal(js.status,0,js.stderr||"Track Map script syntax invalid");
 }
 console.log("HLRN Track Map passed: telemetry validation, car animation, layouts, demo isolation, Live tab integration, script syntax.");
+
+assert.ok(!page.includes('id="pitBox"'),"Old pit-road placeholder must be removed");
+assert.ok(page.includes('id="pitRoadPath"'),"Daytona pit-road display curve must exist");
+assert.ok(page.includes('id="startFinish"'),"Daytona provisional start/finish marker must exist");
+assert.ok(page.includes("not actual pit-stall location"),"Pit placement limitation must be explicit");
