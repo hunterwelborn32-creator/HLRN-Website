@@ -25,7 +25,7 @@ const state={online:true,lap:11,totalLaps:12,flag:"GREEN",track:"Simulation Spee
  raceControl:{history:[{number:1,startLap:6,restartLap:8,reason:"Synthetic caution"}],totalCautionLaps:2}};
 const payloads={"/api/state":state,"/api/laps":{lapSnapshots:[{lap:1},{lap:2}]},
  "/api/recap":{raceFrozen:false}};
-const context={console,document:{hidden:false,getElementById:el,createElement:tag=>({...el("__tmp"+Math.random()),tagName:tag})},
+const context={console,location:{search:"",pathname:"/race-strategy/"},URL,URLSearchParams,document:{hidden:false,getElementById:el,createElement:tag=>({...el("__tmp"+Math.random()),tagName:tag})},
  AbortSignal:{timeout:()=>({})},setInterval:()=>0,fetch:async url=>({ok:true,json:async()=>structuredClone(payloads[new URL(url).pathname])})};
 vm.runInNewContext(app,context,{filename:"race-strategy-inline.js"});
 await new Promise(resolve=>setTimeout(resolve,100));
