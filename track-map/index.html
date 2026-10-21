@@ -33,9 +33,9 @@ h2{margin:0;font-size:18px;text-transform:uppercase;letter-spacing:-.02em}
 .section-head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}.hint{font-size:11px;color:var(--muted);line-height:1.5}
 .map-frame{position:relative;background:#102039;border:1px solid #4d6a8f;border-radius:12px;overflow:hidden;margin-top:12px}
 #map{display:block;width:100%;height:auto;touch-action:manipulation}
-.track-bed{fill:none;stroke:#314862;stroke-width:48;stroke-linejoin:round;stroke-linecap:round}
-.track-edge{fill:none;stroke:#82a8cd;stroke-width:50;opacity:.48;stroke-linejoin:round;stroke-linecap:round}
-.track-line{fill:none;stroke:#5d7b9f;stroke-width:2;stroke-dasharray:6 10;opacity:.8}
+.track-bed{fill:none;stroke:#263649;stroke-width:45;stroke-linejoin:round;stroke-linecap:round}
+.track-edge{fill:none;stroke:#8da9c7;stroke-width:51;opacity:.48;stroke-linejoin:round;stroke-linecap:round}
+.track-line{fill:none;stroke:#f2f7ff;stroke-width:2;stroke-dasharray:6 10;opacity:.8}
 .pitroad{fill:#273f59;stroke:#aec9e5;stroke-width:2;stroke-dasharray:7 7}
 .marker{cursor:pointer;outline:none}.marker circle{stroke:#ecf5ff;stroke-width:2}.marker text{font:900 12px ui-sans-serif,system-ui,Arial;fill:#111c2f;text-anchor:middle;dominant-baseline:central;pointer-events:none}.marker.pit circle{fill:#f5c85a}.marker.selected circle{stroke:#ff637a;stroke-width:4}.marker.leader circle{fill:#64d9b0}
 .marker:focus circle{stroke:#ffffff;stroke-width:5}
@@ -70,22 +70,34 @@ h2{margin:0;font-size:18px;text-transform:uppercase;letter-spacing:-.02em}
 <div class="layout">
 <section class="panel"><div class="section-head"><h2 id="trackName">Track status</h2><span class="hint">Approximate silhouette • NOT GPS</span></div>
 <div class="map-frame"><svg id="map" viewBox="0 0 860 470" role="img" aria-label="Schematic race track showing car positions">
-<rect width="860" height="470" fill="#102039"/>
+<defs><linearGradient id="broadcastGround" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#0b1c30"/><stop offset="1" stop-color="#143b38"/></linearGradient><linearGradient id="trackAsphalt" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#374f69"/><stop offset="1" stop-color="#182a40"/></linearGradient></defs>
+<rect width="860" height="470" fill="url(#broadcastGround)"/>
+<g id="daytonaDecor" hidden>
+<text x="430" y="42" fill="#a2bdda" text-anchor="middle" font-size="13" font-weight="900" letter-spacing="3">BACKSTRETCH</text>
+<text x="430" y="171" fill="#486d7b" text-anchor="middle" font-size="42" font-weight="1000" letter-spacing="-2">DAYTONA</text>
+<text x="430" y="193" fill="#779ca9" text-anchor="middle" font-size="12" font-weight="800" letter-spacing="3">INTERNATIONAL SPEEDWAY</text>
+<text x="430" y="446" fill="#94b7c7" text-anchor="middle" font-size="12" font-weight="850" letter-spacing="3">FRONT TRI-OVAL</text>
+<text x="100" y="104" fill="#a5c2d6" font-size="12" font-weight="800">TURNS 1–2</text>
+<text x="688" y="104" fill="#a5c2d6" font-size="12" font-weight="800">TURNS 3–4</text>
+<path d="M 428 365 L 432 426" stroke="#f3f8ff" stroke-width="4" stroke-dasharray="4 4"/>
+<text x="446" y="424" fill="#f5f8ff" font-size="9" font-weight="900">S/F</text>
+</g>
 <path id="edge" class="track-edge"/>
 <path id="road" class="track-bed"/>
 <path id="line" class="track-line"/>
-<rect x="263" y="214" width="332" height="73" rx="12" class="pitroad"/>
+<rect id="pitBox" x="240" y="233" width="380" height="70" rx="12" class="pitroad"/>
 <text x="429" y="245" class="map-label">HLRN</text>
 <text x="429" y="264" class="map-subtitle">PIT LANE • SCHEMATIC</text>
 <g id="carLayer"></g></svg></div>
 <div class="legend"><span><i class="swatch"></i>Leader</span><span><i class="swatch other"></i>On track</span><span><i class="swatch pit"></i>On pit road</span><span>Positions update as the feed reports them</span></div>
-<div class="footer">Schematic paths represent track types, not exact facility geometry. Car locations use lap progress reported by the bridge; they are <strong>not GPS coordinates</strong>. Missing telemetry never gets replaced with invented positions.</div>
+<div class="footer">Daytona’s broadcast outline is proportionally traced from a publicly released circuit reference, not a surveyed GPS centerline. Other tracks still use generic track-type outlines. Car locations use lap progress reported by the bridge; they are <strong>not GPS coordinates</strong>. Missing telemetry never gets replaced with invented positions.</div>
 </section>
 <aside class="panel"><div class="section-head"><h2>Running Order</h2><span id="fieldCount" class="hint">0 cars</span></div>
 <div id="driverList" class="driverlist"><p class="empty">Waiting for valid lap-progress telemetry…</p></div>
 <div id="selected" class="selected-driver" aria-live="polite"><h3>Select a driver</h3><div class="hint">Choose a car number on the map or a driver from the running order.</div></div>
 </aside>
 </div>
+<p class="footer">Daytona geometry reference: <a href="https://commons.wikimedia.org/wiki/File:Daytona_International_Speedway.svg" target="_blank" rel="noopener">Will Pittenger’s public-domain Daytona Speedway map</a>. This display is a stylized interpretation, not an official NASCAR graphic.</p>
 </main>
 <script type="module">
 import {normalizeDrivers,profileFor,smoothProgress,flagType,demoState} from "./core.mjs";
@@ -94,7 +106,7 @@ const NS="http://www.w3.org/2000/svg";
 const API="wss://hlrn-live-feed.hunterwelborn32.workers.dev/ws?role=viewer";
 const DEMO=new URLSearchParams(location.search).get("demo")==="1";
 const shapes={
- daytona:"M 240 95 L 620 95 C 762 95 806 153 806 226 C 806 307 742 337 655 359 L 507 395 Q 450 413 430 434 Q 410 413 353 395 L 205 359 C 118 337 54 307 54 226 C 54 153 98 95 240 95 Z",
+ daytona:"M 211 91 C 330 88 545 88 649 91 C 735 94 796 147 796 209 C 796 274 765 307 676 331 C 603 350 516 396 430 396 C 344 396 257 350 184 331 C 95 307 64 274 64 209 C 64 147 125 94 211 91 Z",
  oval:"M 235 74 H 625 C 775 74 814 147 814 233 C 814 320 775 390 625 390 H 235 C 85 390 46 320 46 233 C 46 147 85 74 235 74 Z",
  trioval:"M 224 92 C 344 64 529 66 637 94 C 763 115 811 166 799 237 Q 780 265 687 302 Q 641 395 516 398 H 344 Q 226 394 178 309 Q 87 280 61 241 C 39 174 93 121 224 92 Z",
  short:"M 305 85 H 555 C 696 85 780 135 780 233 C 780 336 696 383 555 383 H 305 C 166 383 80 336 80 233 C 80 135 166 85 305 85 Z",
@@ -108,6 +120,7 @@ function setShape(track){
  const shape=profileFor(track);if(activeProfile===shape)return;
  activeProfile=shape;
  for(const id of ["edge","road","line"])$(id).setAttribute("d",shapes[shape]);
+ $("daytonaDecor").hidden=shape!=="daytona";
  setText("layoutType",labels[shape]);
 }
 function dataHealth(){
@@ -134,6 +147,8 @@ function createMarker(d){
  $("carLayer").append(g);
  markers.set(d.key,g);return g;
 }
+function shapePitX(i){return 270+(i%10)*33}
+function shapePitY(i){return 280+Math.floor(i/10)*16}
 function renderMarkers(){
  const current=dataHealth()?drivers:[];
  const keys=new Set(current.map(d=>d.key));
@@ -145,7 +160,7 @@ function renderMarkers(){
   let x,y;
   if(d.onPitRoad){
    const i=pitted.findIndex(o=>o.key===d.key);
-   x=298+(i%9)*30;y=283+Math.floor(i/9)*19;
+   x=shapePitX(i);y=shapePitY(i);
   }else if(d.lapDistPct!==null){
    const pct=smoothProgress(smooth.get(d.key)??null,d.lapDistPct,.23);
    smooth.set(d.key,pct);
