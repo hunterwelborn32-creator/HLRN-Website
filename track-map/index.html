@@ -69,7 +69,7 @@ h2{margin:0;font-size:18px;text-transform:uppercase;letter-spacing:-.02em}
 </div>
 <div class="layout">
 <section class="panel"><div class="section-head"><h2 id="trackName">Track status</h2><span class="hint">Approximate silhouette • NOT GPS</span></div>
-<div id="geometryDisclosure" class="hint" style="margin-top:8px">Venue mapping and geometry source pending</div><div class="map-frame"><svg id="map" viewBox="0 0 860 470" role="img" aria-label="Schematic race track showing car positions">
+<div id="geometryDisclosure" class="hint" style="margin-top:8px">Venue mapping and geometry source pending</div><a id="trackReference" class="hint" target="_blank" rel="noopener noreferrer" hidden>View the authentic circuit reference ↗</a><div class="map-frame"><svg id="map" viewBox="0 0 860 470" role="img" aria-label="Schematic race track showing car positions">
 <defs><linearGradient id="broadcastGround" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#0b1c30"/><stop offset="1" stop-color="#143b38"/></linearGradient><linearGradient id="trackAsphalt" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#374f69"/><stop offset="1" stop-color="#182a40"/></linearGradient></defs>
 <rect width="860" height="470" fill="url(#broadcastGround)"/>
 <g id="daytonaDecor" hidden>
@@ -103,6 +103,7 @@ h2{margin:0;font-size:18px;text-transform:uppercase;letter-spacing:-.02em}
 import {normalizeDrivers,profileFor,smoothProgress,flagType,demoState} from "./core.mjs";
 import {resolveTrack,geometryStatus,trackCatalog} from "./catalog.mjs";
 import {geometryFor,lapToPathPct} from "./verified-geometry.mjs";
+import {referenceFor} from "./circuit-sources.mjs";
 const $=id=>document.getElementById(id);
 const NS="http://www.w3.org/2000/svg";
 const API="wss://hlrn-live-feed.hunterwelborn32.workers.dev/ws?role=viewer";
@@ -214,6 +215,8 @@ function accept(next){
  const venue=resolveTrack(next.track);
  setText("trackName",venue?venue.name:(next.track||"Unknown track"));
  setText("geometryDisclosure",activeGeometry?"Track-specific mapped outline • Source: "+activeGeometry.attribution+" ("+activeGeometry.license+")":venue?geometryStatus(venue.id):"Unrecognized venue — generic silhouette; layout requires verification");
+ const reference=venue?referenceFor(venue.id):null;
+ const link=$("trackReference");link.hidden=!reference;if(reference){link.href=reference.url;link.textContent="Verified artwork reference ("+reference.license+") — view original ↗";}
  drivers=normalizeDrivers(next);
  if(!selected||!drivers.some(d=>d.key===selected))selected=drivers[0]?.key??null;
  const good=dataHealth();
