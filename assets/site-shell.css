@@ -986,31 +986,31 @@ footer.hlrn-shared-footer-existing{padding-top:3px!important}
 :root,
 html[data-hlrn-theme="light"]{
   color-scheme:light;
-  --hlrn-theme-bg:#f3f4f6;
-  --hlrn-theme-surface:#ffffff;
-  --hlrn-theme-surface-2:#fafbfc;
-  --hlrn-theme-surface-3:#e9edf1;
-  --hlrn-theme-ink:#10131a;
-  --hlrn-theme-muted:#68707d;
-  --hlrn-theme-line:#d9dde3;
-  --hlrn-theme-line-strong:#c5ccd4;
-  --hlrn-theme-shadow:0 8px 28px rgba(0,0,0,.09);
+  --hlrn-theme-bg:#eaf0f8;
+  --hlrn-theme-surface:#f6f9fe;
+  --hlrn-theme-surface-2:#edf5ff;
+  --hlrn-theme-surface-3:#e1edfa;
+  --hlrn-theme-ink:#14243d;
+  --hlrn-theme-muted:#445f7e;
+  --hlrn-theme-line:#c5d8ec;
+  --hlrn-theme-line-strong:#b0c9e7;
+  --hlrn-theme-shadow:0 10px 28px rgba(40,72,128,.12);
   --hlrn-theme-input:#ffffff;
   --hlrn-theme-nav:#ffffff;
-  --hlrn-theme-nav-hover:#f3f4f6;
+  --hlrn-theme-nav-hover:#e9f2fe;
   --hlrn-theme-footer:#ffffff;
 
   /* Remap older HLRN shared variables onto the light foundation. */
-  --hlrn-black:#f3f4f6;
-  --hlrn-black-2:#ffffff;
-  --hlrn-panel:#ffffff;
-  --hlrn-panel-2:#fafbfc;
-  --hlrn-line:#d9dde3;
-  --hlrn-text:#10131a;
-  --hlrn-muted:#68707d;
+  --hlrn-black:#eaf0f8;
+  --hlrn-black-2:#f6f9fe;
+  --hlrn-panel:#f6f9fe;
+  --hlrn-panel-2:#edf5ff;
+  --hlrn-line:#c5d8ec;
+  --hlrn-text:#14243d;
+  --hlrn-muted:#445f7e;
   --hlrn-paper:#ffffff;
-  --hlrn-paper-soft:#fafbfc;
-  --hlrn-ink:#12171d;
+  --hlrn-paper-soft:#edf5ff;
+  --hlrn-ink:#14243d;
 }
 
 html[data-hlrn-theme="dark"]{
