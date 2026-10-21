@@ -146,7 +146,7 @@ function motionSample(key,pct,now){
 }
 function predictedProgress(key,pct,now){
  const m=motion.get(key);if(!m)return pct;
- const age=Math.min(0.65,Math.max(0,(now-m.at)/1000));
+ const age=Math.min(1.1,Math.max(0,(now-m.at)/1000));
  return ((m.pct+m.rate*age)%1+1)%1;
 }
 function setText(id,s){$(id).textContent=String(s)}
@@ -280,7 +280,7 @@ function loop(){
  const dt=Math.min(80,Math.max(0,now-lastFrameTime));
  lastFrameTime=now;
  // Exponential interpolation is frame-rate independent and wrap-aware.
- motionBlend=1-Math.exp(-dt/240);
+ motionBlend=1-Math.exp(-dt/330);
  if(DEMO&&performance.now()-frameSeen>500){
   frameSeen=performance.now();accept(demoState(frameSeen-demoStart));
  }
