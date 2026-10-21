@@ -111,7 +111,6 @@ h2{margin:0;font-size:18px;text-transform:uppercase;letter-spacing:-.02em}
 <script type="module">
 import {normalizeDrivers,profileFor,smoothProgress,flagType,demoState} from "./core.mjs";
 import {resolveTrack,geometryStatus,trackCatalog} from "./catalog.mjs";
-import {packOffsets} from "./pack-layout.mjs";
 const $=id=>document.getElementById(id);
 const NS="http://www.w3.org/2000/svg";
 const API="wss://hlrn-live-feed.hunterwelborn32.workers.dev/ws?role=viewer";
@@ -191,7 +190,6 @@ function renderMarkers(){
  for(const [key,node] of markers)if(!keys.has(key)){node.remove();markers.delete(key);smooth.delete(key);motion.delete(key)}
  const total=$("road").getTotalLength();
  const pitted=current.filter(d=>d.onPitRoad);
- const offsets=packOffsets(current.map(d=>({key:d.key,position:d.position,onPitRoad:d.onPitRoad,progress:smooth.get(d.key)??d.lapDistPct})));
  for(const d of current){
   const node=markers.get(d.key)||createMarker(d);
   let x,y;
@@ -208,21 +206,12 @@ function renderMarkers(){
    const travelPct=((base+delta)%1+1)%1;
    const pt=$("road").getPointAtLength(travelPct*total);
    x=pt.x;y=pt.y;
-   const offset=offsets.get(d.key);
-   if(offset){
-    const before=$("road").getPointAtLength(((travelPct-0.001+1)%1)*total);
-    const after=$("road").getPointAtLength(((travelPct+0.001)%1)*total);
-    const vx=after.x-before.x,vy=after.y-before.y;
-    const magnitude=Math.hypot(vx,vy)||1;
-    const tx=vx/magnitude,ty=vy/magnitude;
-    x+=-ty*offset.lateral+tx*offset.longitudinal;
-    y+=tx*offset.lateral+ty*offset.longitudinal;
-   }
+
   }else {node.style.display="none";continue}
   if(CALIBRATE&&d.key===selected){
    setText("calReadout","Selected #"+d.number+" • telemetry progress: "+(d.lapDistPct===null?"unavailable":(d.lapDistPct*100).toFixed(2)+"%")+" • displayed path: "+(d.onPitRoad?"PIT ROAD":(((["daytona","trioval","oval","short"].includes(activeProfile)?0.5-(smooth.get(d.key)??0):(smooth.get(d.key)??0))+(calibrationReverse?2*(smooth.get(d.key)??0):0)+calibrationOffset+10)%1*100).toFixed(2)+"%")+" • Track: "+(source?.track||"—"));
   }
-  node.querySelector("circle")?.setAttribute("r",offsets.has(d.key)?"12":"16");
+  node.querySelector("circle")?.setAttribute("r",d.onPitRoad?"13":"11");
   node.style.display="";
   node.setAttribute("transform","translate("+x.toFixed(1)+" "+y.toFixed(1)+")");
   node.setAttribute("class","marker"+(d.position===1?" leader":"")+(d.onPitRoad?" pit":"")+(selected===d.key?" selected":""));
