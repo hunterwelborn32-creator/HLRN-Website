@@ -1,0 +1,22 @@
+name: Verify Live Track Map
+on:
+  pull_request:
+    paths:
+      - "track-map/**"
+      - "live/index.html"
+      - "tests/live-track-map.test.mjs"
+      - ".github/workflows/verify-track-map.yml"
+  push:
+    branches: [main]
+    paths:
+      - "track-map/**"
+      - "live/index.html"
+      - "tests/live-track-map.test.mjs"
+      - ".github/workflows/verify-track-map.yml"
+jobs:
+  track-map:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test map logic, browser code and Live integration
+        run: node tests/live-track-map.test.mjs
