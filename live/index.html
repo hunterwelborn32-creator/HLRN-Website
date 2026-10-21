@@ -5784,13 +5784,12 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
       rawFlag==="WHITE"?"WHITE":
       ["YELLOW","CAUTION","ONE TO GREEN"].includes(rawFlag)?"YELLOW":
       rawFlag==="GREEN"||statusText==="RACING"?"GREEN":"GET IN CAR";
-    const flagGraphic = ["GREEN","YELLOW","WHITE","CHECKERED"].includes(flag)?liveFlagGraphic(flag):"";
     const unifiedClass=flag==="WHITE"?" hlrn-unified-white":flag==="GREEN"?" hlrn-unified-green":flag==="YELLOW"?" hlrn-unified-yellow":"";
-    $("flag").innerHTML = flagGraphic || flag;
+    $("flag").textContent = flag;
     $("flag").setAttribute("aria-label", flag);
     $("flag").title = flag;
     $("flag").className = "status-value " + flagClass(flag)+unifiedClass;
-    $("flagHero").innerHTML = flagGraphic || flag;
+    $("flagHero").textContent = flag;
     $("flagHero").setAttribute("aria-label", flag);
     $("flagHero").title = flag;
     $("flagHero").className = "flag-hero " + flagClass(flag)+unifiedClass;
