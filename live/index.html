@@ -5779,13 +5779,20 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     const statusText=String(state.sessionState||"").toUpperCase().replaceAll("_"," ").trim();
     const livePhase=String(state.phase||"").toLowerCase();
     const rawFlag=available?normalizeFlag(state.flag):"OFFLINE";
+    // iRacing may keep reporting GREEN after the race clock moves to the final lap.
+    // Show WHITE on the scheduled final lap only while racing under green;
+    // explicit yellow/red/checkered flags always take precedence.
+    const finalLapWhite = livePhase==="race" && !raceFinished(state)
+      && rawFlag==="GREEN" && Number.isFinite(Number(state.lap))
+      && Number.isFinite(Number(state.totalLaps)) && Number(state.totalLaps)>0
+      && Number(state.lap)>=Number(state.totalLaps);
     const flag=!available?"OFFLINE":
       (rawFlag==="CHECKERED"||statusText==="COOL DOWN"||statusText==="CHECKERED")?"CHECKERED":
       (statusText==="GET IN CAR")?"GET IN CAR":
       (statusText==="WARMUP"||statusText==="WARM UP")?"WARMUP":
       livePhase==="practice"?"PRACTICE":
       livePhase==="qualifying"?"QUALIFYING":
-      rawFlag==="WHITE"?"WHITE":
+      (rawFlag==="WHITE"||finalLapWhite)?"WHITE":
       ["YELLOW","CAUTION","ONE TO GREEN"].includes(rawFlag)?"YELLOW":
       rawFlag==="GREEN"||statusText==="RACING"?"GREEN":"GET IN CAR";
     const unifiedClass=flag==="WHITE"?" hlrn-unified-white":flag==="GREEN"?" hlrn-unified-green":flag==="YELLOW"?" hlrn-unified-yellow":"";
