@@ -2627,6 +2627,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
       <button class="tab" data-tab="control">Race Control</button>
       <button class="tab" data-tab="stats">Statistics</button>
       <button class="tab" data-tab="strategy">Race Strategy</button>
+      <button class="tab" data-tab="track-map">Track Map</button>
     </nav>
     <div class="hlrn-more-tools"><button id="hlrnMoreToggle" type="button" aria-expanded="false" aria-controls="hlrnExtraTabs">More race views +</button><nav id="hlrnExtraTabs" class="tabs hlrn-extra-tabs" aria-label="Additional race views" hidden><button class="tab" data-tab="fastest">Fastest Laps</button><button class="tab" data-tab="battles">Battles</button><button class="tab" data-tab="flags">Penalties</button><button class="tab" data-tab="radio">Driver Scanner</button></nav></div>
     <nav class="tabs session-tools" aria-label="Session tools">
@@ -2647,6 +2648,14 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
       </div>
       <div id="hlrnLapOrderContent" class="hlrn-lap-order-content"><div class="archive-empty"><strong>Waiting for completed laps</strong>Driver positions will appear when Cloudflare records the first completed leader lap.</div></div>
     </section>
+    </section>
+
+    <section id="tab-track-map" class="section" aria-label="Live Track Map">
+      <div style="margin:0 0 12px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+        <strong>HLRN LIVE TRACK MAP</strong>
+        <span><a href="../track-map/?demo=1" target="_blank" rel="noopener">Watch simulated race ↗</a> &nbsp; <a href="../track-map/" target="_blank" rel="noopener">Open full map ↗</a></span>
+      </div>
+      <iframe title="HLRN Live Track Map" src="../track-map/" loading="lazy" style="display:block;width:100%;height:min(1150px,185vh);min-height:740px;border:1px solid var(--line,#b8cce3);border-radius:12px;background:#eaf0f8" referrerpolicy="strict-origin-when-cross-origin"></iframe>
     </section>
 
     <section id="tab-strategy" class="section" aria-label="Race Strategy Center">

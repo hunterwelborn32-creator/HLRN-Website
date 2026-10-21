@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Live Track Map | HLRN</title>
+<meta name="description" content="HLRN Live Track Map with real iRacing lap-progress telemetry and a separate simulated race preview.">
+<script>try{document.documentElement.dataset.hlrnTheme=localStorage.getItem("hlrn_site_theme_v2")==="dark"?"dark":"light"}catch(e){document.documentElement.dataset.hlrnTheme="light"}</script>
+<style>
+*{box-sizing:border-box}
+:root{font-family:Inter,ui-sans-serif,system-ui,Arial,sans-serif;color-scheme:light;background:#eaf0f8;color:#152840;--bg:#eaf0f8;--panel:#f6f9fe;--panel2:#edf4fd;--ink:#152840;--muted:#526d89;--line:#cadbef;--red:#c52d4d;--blue:#236ab2;--track:#445f7d;--track-edge:#8daaca}
+html[data-hlrn-theme="dark"]{color-scheme:dark;--bg:#0b1221;--panel:#151f31;--panel2:#1b2a40;--ink:#f2f6ff;--muted:#a1b2ca;--line:#34465f;--red:#ff526d;--blue:#85b6fc;--track:#465c7c;--track-edge:#8094ae}
+body{margin:0;background:var(--bg);color:var(--ink)}
+main{max-width:1500px;margin:0 auto;padding:20px clamp(10px,3vw,28px) 55px}
+a{color:var(--blue)}
+h1{margin:5px 0 8px;font-size:clamp(28px,4vw,48px);font-weight:950;text-transform:uppercase;letter-spacing:-.04em;line-height:1}
+h2{margin:0;font-size:18px;text-transform:uppercase;letter-spacing:-.02em}
+.eyebrow{font-size:11px;font-weight:900;letter-spacing:.14em;color:var(--red);text-transform:uppercase}
+.lead{color:var(--muted);font-size:13px;line-height:1.55;max-width:720px;margin:0}
+.heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.action{display:inline-block;padding:10px 13px;background:var(--panel);border:1px solid var(--line);border-radius:9px;text-decoration:none;font-weight:850;font-size:12px}
+.action.main{background:#1e5595;color:white;border-color:#1e5595}
+.demoBanner{background:#ffe4a4;color:#503900;border:2px solid #e0a62e;padding:12px 15px;border-radius:10px;font-size:12px;font-weight:950;margin-top:17px;letter-spacing:.03em}
+.demoBanner[hidden]{display:none}
+.telemetry{margin-top:17px;display:flex;gap:9px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--red);border-radius:10px;padding:13px 16px;font-weight:800;font-size:12px}
+.telemetry small{display:block;font-weight:600;color:var(--muted);margin-top:4px}
+.flag{font-size:12px;font-weight:950;padding:7px 12px;border-radius:5px;background:#2c8a63;color:white;letter-spacing:.04em}
+.flag.yellow{background:#e3b82b;color:#172033}.flag.red{background:#df3850}.flag.white{background:#e6edf7;color:#14213a}.flag.checkered{background:repeating-linear-gradient(45deg,#0d1724 0 9px,#edf3fc 9px 18px);color:#f03655;text-shadow:0 1px #000}
+.summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin:14px 0}
+.kpi,.panel{background:var(--panel);border:1px solid var(--line);border-radius:11px;box-shadow:0 7px 25px rgba(16,45,85,.05)}
+.kpi{padding:14px}.kpi small{display:block;color:var(--muted);font-size:10px;letter-spacing:.09em;text-transform:uppercase;font-weight:850}.kpi strong{display:block;margin-top:7px;font-size:clamp(18px,3vw,29px);font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.layout{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(280px,.8fr);gap:13px}.panel{min-width:0;padding:18px}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}.hint{font-size:11px;color:var(--muted);line-height:1.5}
+.map-frame{position:relative;background:#102039;border:1px solid #4d6a8f;border-radius:12px;overflow:hidden;margin-top:12px}
+#map{display:block;width:100%;height:auto;touch-action:manipulation}
+.track-bed{fill:none;stroke:#314862;stroke-width:48;stroke-linejoin:round;stroke-linecap:round}
+.track-edge{fill:none;stroke:#82a8cd;stroke-width:50;opacity:.48;stroke-linejoin:round;stroke-linecap:round}
+.track-line{fill:none;stroke:#5d7b9f;stroke-width:2;stroke-dasharray:6 10;opacity:.8}
+.pitroad{fill:#273f59;stroke:#aec9e5;stroke-width:2;stroke-dasharray:7 7}
+.marker{cursor:pointer;outline:none}.marker circle{stroke:#ecf5ff;stroke-width:2}.marker text{font:900 12px ui-sans-serif,system-ui,Arial;fill:#111c2f;text-anchor:middle;dominant-baseline:central;pointer-events:none}.marker.pit circle{fill:#f5c85a}.marker.selected circle{stroke:#ff637a;stroke-width:4}.marker.leader circle{fill:#64d9b0}
+.marker:focus circle{stroke:#ffffff;stroke-width:5}
+.map-label{fill:#b2cbe6;font-weight:900;text-anchor:middle;letter-spacing:.15em;font-size:15px}
+.map-subtitle{fill:#88a5c8;text-anchor:middle;font-weight:750;font-size:12px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;color:var(--muted);font-size:11px}.swatch{display:inline-block;width:11px;height:11px;border-radius:50%;background:#64d9b0;vertical-align:middle;margin-right:5px}.swatch.pit{background:#f5c85a}.swatch.other{background:#80b2f3}
+.driverlist{display:flex;flex-direction:column;gap:7px;margin-top:12px;max-height:450px;overflow:auto}
+.driver{display:flex;align-items:center;width:100%;gap:10px;border:1px solid var(--line);border-radius:9px;background:var(--panel2);color:var(--ink);padding:9px;text-align:left;cursor:pointer;font:inherit}
+.driver.active{outline:2px solid #417fe3}.number{display:grid;place-items:center;width:40px;height:32px;flex:none;border-radius:6px;background:#244c7b;color:white;font-weight:900}.driver:first-child .number{background:#187f63}.driver-info{flex:1;min-width:0;font-size:12px;font-weight:800}.driver-info small{font-size:10px;display:block;color:var(--muted);font-weight:600;margin-top:3px}.position{font-size:12px;font-weight:900}.pitlabel{color:#a36d00;font-size:10px;font-weight:900}
+.selected-driver{background:var(--panel2);border-radius:8px;padding:13px;margin-top:14px;min-height:110px}
+.selected-driver h3{margin:0 0 9px;font-size:17px}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;font-size:11px;color:var(--muted)}.stats strong{display:block;color:var(--ink);font-size:16px}
+.empty{color:var(--muted);font-size:13px;padding:20px 8px;text-align:center}
+.footer{margin-top:15px;padding:12px 0;font-size:11px;color:var(--muted);line-height:1.6}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.driverlist{max-height:280px}}
+@media(max-width:560px){.summary{grid-template-columns:repeat(2,minmax(0,1fr))}.panel{padding:11px}.marker text{font-size:12px}main{padding:12px 10px 45px}}
+</style>
+</head>
+<body>
+<main>
+<header class="heading">
+<div><div class="eyebrow">HLRN / LIVE RACE CENTER</div><h1>Live Track Map</h1><p class="lead">Follow car numbers around a schematic circuit using iRacing lap-progress telemetry. Select any car to inspect its driver and current timing.</p></div>
+<div class="actions"><a class="action main" id="demoAction" href="?demo=1">▶ Try animated demo</a><a class="action" href="../live/">← Live Race Center</a></div>
+</header>
+<div id="demoBanner" class="demoBanner" hidden>DEMO MODE — ALL CARS, POSITIONS AND TIMING ARE SIMULATED. NOTHING IS SENT TO CLOUDFLARE.</div>
+<div class="telemetry"><div><span id="connection">Connecting to Cloudflare viewer…</span><small id="connectionDetail">Waiting for current race state</small></div><span class="flag" id="flagPill">STANDBY</span></div>
+<div class="summary">
+<div class="kpi"><small>Race lap</small><strong id="lap">—</strong></div>
+<div class="kpi"><small>On track</small><strong id="cars">—</strong></div>
+<div class="kpi"><small>Pit road</small><strong id="pits">—</strong></div>
+<div class="kpi"><small>Track layout</small><strong id="layoutType">—</strong></div>
+</div>
+<div class="layout">
+<section class="panel"><div class="section-head"><h2 id="trackName">Track status</h2><span class="hint">Approximate silhouette • NOT GPS</span></div>
+<div class="map-frame"><svg id="map" viewBox="0 0 860 470" role="img" aria-label="Schematic race track showing car positions">
+<rect width="860" height="470" fill="#102039"/>
+<path id="edge" class="track-edge"/>
+<path id="road" class="track-bed"/>
+<path id="line" class="track-line"/>
+<rect x="263" y="214" width="332" height="73" rx="12" class="pitroad"/>
+<text x="429" y="245" class="map-label">HLRN</text>
+<text x="429" y="264" class="map-subtitle">PIT LANE • SCHEMATIC</text>
+<g id="carLayer"></g></svg></div>
+<div class="legend"><span><i class="swatch"></i>Leader</span><span><i class="swatch other"></i>On track</span><span><i class="swatch pit"></i>On pit road</span><span>Positions update as the feed reports them</span></div>
+<div class="footer">Schematic paths represent track types, not exact facility geometry. Car locations use lap progress reported by the bridge; they are <strong>not GPS coordinates</strong>. Missing telemetry never gets replaced with invented positions.</div>
+</section>
+<aside class="panel"><div class="section-head"><h2>Running Order</h2><span id="fieldCount" class="hint">0 cars</span></div>
+<div id="driverList" class="driverlist"><p class="empty">Waiting for valid lap-progress telemetry…</p></div>
+<div id="selected" class="selected-driver" aria-live="polite"><h3>Select a driver</h3><div class="hint">Choose a car number on the map or a driver from the running order.</div></div>
+</aside>
+</div>
+</main>
+<script type="module">
+import {normalizeDrivers,profileFor,smoothProgress,flagType,demoState} from "./core.mjs";
+const $=id=>document.getElementById(id);
+const NS="http://www.w3.org/2000/svg";
+const API="wss://hlrn-live-feed.hunterwelborn32.workers.dev/ws?role=viewer";
+const DEMO=new URLSearchParams(location.search).get("demo")==="1";
+const shapes={
+ oval:"M 235 74 H 625 C 775 74 814 147 814 233 C 814 320 775 390 625 390 H 235 C 85 390 46 320 46 233 C 46 147 85 74 235 74 Z",
+ trioval:"M 224 92 C 344 64 529 66 637 94 C 763 115 811 166 799 237 Q 780 265 687 302 Q 641 395 516 398 H 344 Q 226 394 178 309 Q 87 280 61 241 C 39 174 93 121 224 92 Z",
+ short:"M 305 85 H 555 C 696 85 780 135 780 233 C 780 336 696 383 555 383 H 305 C 166 383 80 336 80 233 C 80 135 166 85 305 85 Z",
+ road:"M 193 104 C 320 68 354 119 450 96 C 571 64 650 107 684 152 L 744 163 C 807 164 797 242 738 257 L 661 255 C 629 254 600 323 542 344 L 483 324 C 434 310 394 409 324 391 C 263 379 272 327 211 318 C 159 313 117 359 92 310 C 63 254 150 240 134 192 C 122 152 153 121 193 104 Z"
+};
+const labels={oval:"OVAL",trioval:"TRI-OVAL",short:"SHORT TRACK",road:"ROAD COURSE"};
+let source=null,drivers=[],selected=null,socket=null,retry=null,connected=false,received=0,frameSeen=0,demoStart=performance.now(),raceKey="",activeProfile="";
+const markers=new Map(),smooth=new Map();
+function setText(id,s){$(id).textContent=String(s)}
+function setShape(track){
+ const shape=profileFor(track);if(activeProfile===shape)return;
+ activeProfile=shape;
+ for(const id of ["edge","road","line"])$(id).setAttribute("d",shapes[shape]);
+ setText("layoutType",labels[shape]);
+}
+function dataHealth(){
+ if(DEMO)return true;
+ return !!(source?.online&&connected&&Date.now()-received<8000);
+}
+function setStatus(){
+ const good=dataHealth(),demo=DEMO;
+ const label=demo?"SIMULATED RACE — DEMO ONLY":good?"● LIVE — iRacing telemetry":connected?"○ FEED OFFLINE / STALE":"○ CONNECTING / OFFLINE";
+ setText("connection",label);
+ setText("connectionDetail",demo?"Synthetic values generated in this browser":good?"Read-only Cloudflare viewer • position samples from SDK":connected?"No current iRacing feed. Map will resume automatically.":"Waiting for viewer WebSocket");
+ const flag=good?source.flag:"STANDBY";
+ setText("flagPill",flag||"UNKNOWN");$("flagPill").className="flag "+(good?flagType(flag):"");
+}
+function createMarker(d){
+ const g=document.createElementNS(NS,"g");g.setAttribute("class","marker");g.setAttribute("role","button");g.setAttribute("tabindex","0");g.setAttribute("aria-label","Select driver "+d.name);
+ const c=document.createElementNS(NS,"circle");c.setAttribute("r","16");c.setAttribute("fill","#80b2f3");
+ const text=document.createElementNS(NS,"text");text.setAttribute("y","1");text.textContent=d.number.slice(0,4);
+ const title=document.createElementNS(NS,"title");title.textContent=d.name;
+ g.append(c,text,title);
+ const select=()=>{selected=d.key;updateSelection()};
+ g.addEventListener("click",select);
+ g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();select()}});
+ $("carLayer").append(g);
+ markers.set(d.key,g);return g;
+}
+function renderMarkers(){
+ const current=dataHealth()?drivers:[];
+ const keys=new Set(current.map(d=>d.key));
+ for(const [key,node] of markers)if(!keys.has(key)){node.remove();markers.delete(key);smooth.delete(key)}
+ const total=$("road").getTotalLength();
+ const pitted=current.filter(d=>d.onPitRoad);
+ for(const d of current){
+  const node=markers.get(d.key)||createMarker(d);
+  let x,y;
+  if(d.onPitRoad){
+   const i=pitted.findIndex(o=>o.key===d.key);
+   x=298+(i%9)*30;y=283+Math.floor(i/9)*19;
+  }else if(d.lapDistPct!==null){
+   const pct=smoothProgress(smooth.get(d.key)??null,d.lapDistPct,.23);
+   smooth.set(d.key,pct);
+   const pt=$("road").getPointAtLength(pct*total);
+   x=pt.x;y=pt.y;
+  }else {node.style.display="none";continue}
+  node.style.display="";
+  node.setAttribute("transform","translate("+x.toFixed(1)+" "+y.toFixed(1)+")");
+  node.setAttribute("class","marker"+(d.position===1?" leader":"")+(d.onPitRoad?" pit":"")+(selected===d.key?" selected":""));
+ }
+}
+function details(d){
+ const root=$("selected");root.replaceChildren();
+ const h=document.createElement("h3");h.textContent=d?"#"+d.number+" "+d.name:"Select a driver";root.append(h);
+ if(!d){const hint=document.createElement("p");hint.className="hint";hint.textContent="Choose a car on the map or from the running order.";root.append(hint);return}
+ const stats=document.createElement("div");stats.className="stats";
+ const values=[["Position",d.position?"P"+d.position:"—"],["Lap progress",d.lapDistPct!==null?(d.lapDistPct*100).toFixed(1)+"%":"Unavailable"],["Last lap",d.lastLapTime!==null?d.lastLapTime.toFixed(3)+"s":"—"],["Speed",d.speedMph!==null?d.speedMph.toFixed(0)+" mph":"—"],["Pit road",d.onPitRoad?"YES":"NO"],["Completed laps",d.lapsCompleted??"—"]];
+ for(const [label,value]of values){const box=document.createElement("div"),a=document.createElement("span"),b=document.createElement("strong");a.textContent=label;b.textContent=String(value);box.append(a,b);stats.append(box)}root.append(stats);
+}
+function updateSelection(){
+ const d=drivers.find(x=>x.key===selected);details(d);for(const b of $("driverList").querySelectorAll("[data-car]"))b.classList.toggle("active",b.dataset.car===selected);
+}
+function renderList(){
+ const list=$("driverList");list.replaceChildren();
+ if(!dataHealth()||!drivers.length){const p=document.createElement("p");p.className="empty";p.textContent="Waiting for valid live driver positions. Try Demo Mode to preview cars moving.";list.append(p);details(null);return}
+ for(const d of drivers){
+  const b=document.createElement("button");b.type="button";b.className="driver"+(d.key===selected?" active":"");b.dataset.car=d.key;
+  const n=document.createElement("span");n.className="number";n.textContent="#"+d.number;
+  const main=document.createElement("span");main.className="driver-info";main.textContent=d.name;
+  const sm=document.createElement("small");sm.textContent=d.onPitRoad?"ON PIT ROAD":d.lapDistPct!==null?(d.lapDistPct*100).toFixed(1)+"% around lap":"Position unavailable";main.append(sm);
+  const p=document.createElement("span");p.className="position";p.textContent=d.position?"P"+d.position:"—";
+  b.append(n,main,p);b.addEventListener("click",()=>{selected=d.key;updateSelection()});list.append(b);
+ }
+ details(drivers.find(d=>d.key===selected));
+}
+function accept(next){
+ if(!next||typeof next!=="object"||Array.isArray(next))return;
+ source=next;received=Date.now();
+ const key=[next.subSessionId,next.sessionId,next.sessionNum,next.track].join("|");
+ if(key!==raceKey){raceKey=key;smooth.clear();selected=null}
+ setShape(next.track);
+ setText("trackName",next.track||"Unknown track");
+ drivers=normalizeDrivers(next);
+ if(!selected||!drivers.some(d=>d.key===selected))selected=drivers[0]?.key??null;
+ const good=dataHealth();
+ setText("lap",good?(String(next.lap??"—")+(next.totalLaps?" / "+next.totalLaps:"")):"—");
+ setText("cars",good?drivers.filter(d=>!d.onPitRoad).length:"—");
+ setText("pits",good?drivers.filter(d=>d.onPitRoad).length:"—");
+ setText("fieldCount",good?drivers.length+" drivers":"No live field");
+ setStatus();renderList();
+}
+function connect(){
+ if(DEMO)return;
+ setStatus();socket=new WebSocket(API);
+ socket.addEventListener("open",()=>{
+  connected=true;
+  socket.send(JSON.stringify({type:"visibility",visible:!document.hidden}));
+  setStatus();
+ });
+ socket.addEventListener("message",event=>{try{const data=JSON.parse(event.data);if(data.type==="state")accept(data.data)}catch(e){console.warn("HLRN Track Map: invalid state",e)}});
+ socket.addEventListener("close",()=>{connected=false;source=null;setStatus();renderList();retry=setTimeout(connect,3500)});
+ socket.addEventListener("error",()=>{setStatus()});
+}
+document.addEventListener("visibilitychange",()=>{if(socket?.readyState===WebSocket.OPEN)socket.send(JSON.stringify({type:"visibility",visible:!document.hidden}))});
+function loop(){
+ if(DEMO&&performance.now()-frameSeen>500){
+  frameSeen=performance.now();accept(demoState(frameSeen-demoStart));
+ }
+ if(!DEMO&&source&&Date.now()-received>=8000){
+  source=null;setStatus();renderList();setText("lap","—");setText("cars","—");setText("pits","—");setText("fieldCount","No live field");
+ }
+ renderMarkers();requestAnimationFrame(loop);
+}
+if(DEMO){$("demoBanner").hidden=false;$("demoAction").href=location.pathname;$("demoAction").textContent="Exit demo — show real race";connected=true}
+setShape("speedway");connect();requestAnimationFrame(loop);
+</script>
+</body></html>
