@@ -102,6 +102,7 @@ h2{margin:0;font-size:18px;text-transform:uppercase;letter-spacing:-.02em}
 <script type="module">
 import {normalizeDrivers,profileFor,smoothProgress,flagType,demoState} from "./core.mjs";
 import {resolveTrack,geometryStatus,trackCatalog} from "./catalog.mjs";
+import {geometryFor,lapToPathPct} from "./verified-geometry.mjs";
 const $=id=>document.getElementById(id);
 const NS="http://www.w3.org/2000/svg";
 const API="wss://hlrn-live-feed.hunterwelborn32.workers.dev/ws?role=viewer";
@@ -114,14 +115,17 @@ const shapes={
  road:"M 193 104 C 320 68 354 119 450 96 C 571 64 650 107 684 152 L 744 163 C 807 164 797 242 738 257 L 661 255 C 629 254 600 323 542 344 L 483 324 C 434 310 394 409 324 391 C 263 379 272 327 211 318 C 159 313 117 359 92 310 C 63 254 150 240 134 192 C 122 152 153 121 193 104 Z"
 };
 const labels={daytona:"DAYTONA TRI-OVAL",oval:"OVAL",trioval:"TRI-OVAL",short:"SHORT TRACK",road:"ROAD COURSE"};
-let source=null,drivers=[],selected=null,socket=null,retry=null,connected=false,received=0,frameSeen=0,demoStart=performance.now(),raceKey="",activeProfile="";
+let source=null,drivers=[],selected=null,socket=null,retry=null,connected=false,received=0,frameSeen=0,demoStart=performance.now(),raceKey="",activeProfile="",activeGeometry=null;
 const markers=new Map(),smooth=new Map();
 function setText(id,s){$(id).textContent=String(s)}
 function setShape(track){
  const venue=resolveTrack(track);
- const shape=venue?.profile||profileFor(track);if(activeProfile===shape)return;
+ const shape=venue?.profile||profileFor(track);
+ const geometry=venue?geometryFor(venue.id):null;
+ if(activeProfile===shape&&activeGeometry===geometry)return;
+ activeGeometry=geometry;
  activeProfile=shape;
- for(const id of ["edge","road","line"])$(id).setAttribute("d",shapes[shape]);
+ for(const id of ["edge","road","line"])$(id).setAttribute("d",geometry?.path||shapes[shape]);
  $("daytonaDecor").hidden=shape!=="daytona";
  setText("layoutType",labels[shape]);
 }
@@ -168,8 +172,7 @@ function renderMarkers(){
    smooth.set(d.key,pct);
    // The SVG contour is drawn clockwise from the backstretch. NASCAR ovals
    // are run counterclockwise, with the start/finish on the front tri-oval.
-   const travelPct=["daytona","trioval","oval","short"].includes(activeProfile)
-    ?((0.5-pct+1)%1):pct;
+   const travelPct=lapToPathPct(pct,activeGeometry,activeProfile);
    const pt=$("road").getPointAtLength(travelPct*total);
    x=pt.x;y=pt.y;
   }else {node.style.display="none";continue}
@@ -210,7 +213,7 @@ function accept(next){
  setShape(next.track);
  const venue=resolveTrack(next.track);
  setText("trackName",venue?venue.name:(next.track||"Unknown track"));
- setText("geometryDisclosure",venue?geometryStatus(venue.id):"Unrecognized venue — generic silhouette; layout requires verification");
+ setText("geometryDisclosure",activeGeometry?"Track-specific mapped outline • Source: "+activeGeometry.attribution+" ("+activeGeometry.license+")":venue?geometryStatus(venue.id):"Unrecognized venue — generic silhouette; layout requires verification");
  drivers=normalizeDrivers(next);
  if(!selected||!drivers.some(d=>d.key===selected))selected=drivers[0]?.key??null;
  const good=dataHealth();
