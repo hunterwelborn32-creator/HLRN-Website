@@ -51,3 +51,8 @@ for(const code of scripts){
  assert.equal(js.status,0,js.stderr||"Track Map script syntax invalid");
 }
 console.log("HLRN Track Map passed: telemetry validation, car animation, layouts, demo isolation, Live tab integration, script syntax.");
+
+assert.ok(!page.includes('id="pitBox"'),"Old pit-road placeholder must be removed");
+assert.ok(page.includes('id="pitRoadPath"'),"Daytona pit-road display curve must exist");
+assert.ok(page.includes('id="startFinish"'),"Daytona provisional start/finish marker must exist");
+assert.ok(page.includes("not actual pit-stall location"),"Pit placement limitation must be explicit");
