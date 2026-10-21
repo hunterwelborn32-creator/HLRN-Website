@@ -94,7 +94,7 @@ const NS="http://www.w3.org/2000/svg";
 const API="wss://hlrn-live-feed.hunterwelborn32.workers.dev/ws?role=viewer";
 const DEMO=new URLSearchParams(location.search).get("demo")==="1";
 const shapes={
- daytona:"M 252 82 L 608 82 C 736 82 807 133 807 220 C 807 285 757 327 676 351 L 512 398 Q 430 423 348 398 L 184 351 C 103 327 53 285 53 220 C 53 133 124 82 252 82 Z",
+ daytona:"M 240 95 L 620 95 C 762 95 806 153 806 226 C 806 307 742 337 655 359 L 507 395 Q 450 413 430 434 Q 410 413 353 395 L 205 359 C 118 337 54 307 54 226 C 54 153 98 95 240 95 Z",
  oval:"M 235 74 H 625 C 775 74 814 147 814 233 C 814 320 775 390 625 390 H 235 C 85 390 46 320 46 233 C 46 147 85 74 235 74 Z",
  trioval:"M 224 92 C 344 64 529 66 637 94 C 763 115 811 166 799 237 Q 780 265 687 302 Q 641 395 516 398 H 344 Q 226 394 178 309 Q 87 280 61 241 C 39 174 93 121 224 92 Z",
  short:"M 305 85 H 555 C 696 85 780 135 780 233 C 780 336 696 383 555 383 H 305 C 166 383 80 336 80 233 C 80 135 166 85 305 85 Z",
@@ -149,7 +149,11 @@ function renderMarkers(){
   }else if(d.lapDistPct!==null){
    const pct=smoothProgress(smooth.get(d.key)??null,d.lapDistPct,.23);
    smooth.set(d.key,pct);
-   const pt=$("road").getPointAtLength(pct*total);
+   // The SVG contour is drawn clockwise from the backstretch. NASCAR ovals
+   // are run counterclockwise, with the start/finish on the front tri-oval.
+   const travelPct=["daytona","trioval","oval","short"].includes(activeProfile)
+    ?((0.5-pct+1)%1):pct;
+   const pt=$("road").getPointAtLength(travelPct*total);
    x=pt.x;y=pt.y;
   }else {node.style.display="none";continue}
   node.style.display="";
