@@ -101,7 +101,7 @@ h2{margin:0;font-size:18px;text-transform:uppercase;letter-spacing:-.02em}
 <div class="legend"><span><i class="swatch"></i>Leader</span><span><i class="swatch other"></i>On track</span><span><i class="swatch pit"></i>On pit road</span><span>Positions update as the feed reports them</span></div>
 <div class="footer">Daytona’s broadcast outline is proportionally traced from a publicly released circuit reference, not a surveyed GPS centerline. Other tracks still use generic track-type outlines. Car locations use lap progress reported by the bridge; they are <strong>not GPS coordinates</strong>. Missing telemetry never gets replaced with invented positions.</div>
 </section>
-<aside class="panel"><div class="section-head"><h2>Running Order</h2><span id="fieldCount" class="hint">0 cars</span></div>
+<aside class="panel"><div class="section-head"><h2>Live On-Track Order</h2><span id="fieldCount" class="hint">0 cars</span></div>
 <div id="driverList" class="driverlist"><p class="empty">Waiting for valid lap-progress telemetry…</p></div>
 <div id="selected" class="selected-driver" aria-live="polite"><h3>Select a driver</h3><div class="hint">Choose a car number on the map or a driver from the running order.</div></div>
 </aside>
@@ -109,7 +109,7 @@ h2{margin:0;font-size:18px;text-transform:uppercase;letter-spacing:-.02em}
 <p class="footer">Daytona geometry reference: <a href="https://commons.wikimedia.org/wiki/File:Daytona_International_Speedway.svg" target="_blank" rel="noopener">Will Pittenger’s public-domain Daytona Speedway map</a>. This display is a stylized interpretation, not an official NASCAR graphic.</p>
 </main>
 <script type="module">
-import {normalizeDrivers,profileFor,smoothProgress,flagType,demoState} from "./core.mjs";
+import {normalizeDrivers,profileFor,smoothProgress,flagType,demoState,liveOrder} from "./core.mjs";
 import {resolveTrack,geometryStatus,trackCatalog} from "./catalog.mjs";
 const $=id=>document.getElementById(id);
 const NS="http://www.w3.org/2000/svg";
@@ -251,7 +251,7 @@ function accept(next){
  const venue=resolveTrack(next.track);
  setText("trackName",venue?venue.name:(next.track||"Unknown track"));
  setText("geometryDisclosure",venue?geometryStatus(venue.id):"Unrecognized venue — generic silhouette; layout requires verification");
- drivers=normalizeDrivers(next);
+ drivers=liveOrder(normalizeDrivers(next),String(next.phase||"").toLowerCase()==="race"&&!next.raceFrozen).map((d,i)=>({...d,officialPosition:d.position,position:i+1}));
  const sampledAt=performance.now();
  for(const driver of drivers){
   if(driver.onPitRoad){motion.delete(driver.key);continue}

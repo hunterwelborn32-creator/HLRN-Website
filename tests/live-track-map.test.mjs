@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 import {spawnSync} from "node:child_process";
-import {validProgress,profileFor,normalizeDrivers,smoothProgress,flagType,demoState} from "../track-map/core.mjs";
+import {validProgress,profileFor,normalizeDrivers,smoothProgress,flagType,demoState,liveOrder} from "../track-map/core.mjs";
 assert.equal(validProgress(null),null);
 assert.equal(validProgress(-1),null);
 assert.equal(validProgress(""),null);
@@ -67,3 +67,17 @@ assert.ok(page.includes("Math.exp(-dt/330)"),"Stutter-reduction smoothing remain
 
 assert.ok(!page.includes("packOffsets("),"Never invent 3-wide lanes from lap progress");
 assert.ok(page.includes('d.onPitRoad?"13":"11"'),"Use compact markers to reduce visual overlap");
+
+const inLap=liveOrder([
+ {key:"a",position:1,lapsCompleted:15,lapDistPct:.40,onPitRoad:false},
+ {key:"b",position:2,lapsCompleted:15,lapDistPct:.45,onPitRoad:false}
+]);
+assert.deepEqual(inLap.map(d=>d.key),["b","a"],"Mid-lap pass should reorder immediately");
+assert.deepEqual(liveOrder(inLap,false).map(d=>d.key),["b","a"],"Finished state stays as supplied");
+assert.deepEqual(liveOrder([
+ {key:"a",position:1,lapsCompleted:15,lapDistPct:.40,onPitRoad:false},
+ {key:"b",position:2,lapsCompleted:14,lapDistPct:.98,onPitRoad:false}
+]).map(d=>d.key),["a","b"],"Cars a lap down must not lead");
+const livePage=readFileSync(new URL("../live/index.html",import.meta.url),"utf8");
+assert.ok(livePage.includes("function liveLeaderboardOrder("),"Live leaderboard should support midlap passes");
+assert.ok(livePage.includes("EST. BEHIND"),"Estimated gap must be clearly distinguished");

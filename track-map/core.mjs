@@ -66,3 +66,19 @@ export function demoState(nowMs){
  });
  return {online:true,source:"BROWSER DEMO — NOT IRACING",track:"Demo Daytona International Speedway",lap,totalLaps:50,flag,sessionName:"Simulated Race",phase:"race",drivers,driverCount:drivers.length,ageMs:0};
 }
+
+// Provisional on-track classification. Unlike official scoring position, this
+// advances between timing lines. Only compare entries with valid lap counts
+// and lap progress; preserve official order otherwise.
+export function liveOrder(drivers,enabled=true){
+ const list=[...drivers];
+ if(!enabled||list.length<2)return list;
+ const valid=d=>Number.isInteger(Number(d.lapsCompleted))&&d.lapsCompleted!==null&&d.lapsCompleted!==""&&Number(d.lapsCompleted)>=0&&validProgress(d.lapDistPct)!==null&&!d.onPitRoad;
+ const comparable=list.filter(valid);
+ if(comparable.length<2)return list;
+ const rank=d=>Number(d.lapsCompleted)+Number(d.lapDistPct);
+ const ordered=[...comparable].sort((a,b)=>rank(b)-rank(a)||Number(a.position??9999)-Number(b.position??9999));
+ const slots=list.map((d,i)=>valid(d)?i:null).filter(i=>i!==null);
+ slots.forEach((index,i)=>{list[index]=ordered[i]});
+ return list;
+}
