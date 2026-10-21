@@ -28,7 +28,7 @@ ROOT = Path(__file__).resolve().parents[1]
 INDEX_PATH = ROOT / "data" / "race-recaps" / "index.json"
 DATA_DIR = ROOT / "data" / "race-recaps"
 ARTICLE_DIR = ROOT / "news" / "race-recaps"
-DEFAULT_RECAP_URL = "https://hlrn-live-feed.onrender.com/api/recaps"
+DEFAULT_RECAP_URL = "https://hlrn-live-feed.hunterwelborn32.workers.dev/api/recaps"
 SITE_ORIGIN = "https://highlineracingnetwork.com"
 ET = ZoneInfo("America/New_York")
 
