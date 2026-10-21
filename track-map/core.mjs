@@ -9,7 +9,8 @@ export function validProgress(value){
 export function profileFor(track){
  const name=String(track||"").toLowerCase();
  if(/watkins glen|sonoma|road america|charlotte.*roval|cota|circuit of the americas|virginia international|mid.ohio|laguna seca|road atlanta/.test(name))return "road";
- if(/daytona|talladega|atlanta|pocono/.test(name))return "trioval";
+ if(/daytona/.test(name)&&!/road course/.test(name))return "daytona";
+ if(/talladega|atlanta|pocono/.test(name))return "trioval";
  if(/bristol|martinsville|richmond|iowa|north wilkesboro|bowman gray/.test(name))return "short";
  return "oval";
 }
