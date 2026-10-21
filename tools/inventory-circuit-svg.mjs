@@ -16,3 +16,4 @@ const paths=[...svg.matchAll(/<path\b([^>]*?)\/?\s*>/gs)].map((m,i)=>{
 const report={source:url,retrievedAt:new Date().toISOString(),sha256:null,svgLength:svg.length,pathCount:paths.length,viewBox:svg.match(/viewBox="([^"]+)"/)?.[1]??null,paths};
 await fs.writeFile(out,JSON.stringify(report,null,2));
 console.log("Saved "+paths.length+" SVG paths to "+out+" — manual selection and calibration still required.");
+for(const p of paths)console.log("VECTOR",p.index,"id",p.id,"commands",p.commands,"chars",p.characters,"style",String(p.style).slice(0,90),"preview",String(p.d).slice(0,140));
