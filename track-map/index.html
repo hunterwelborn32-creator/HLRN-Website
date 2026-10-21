@@ -36,7 +36,10 @@ h2{margin:0;font-size:18px;text-transform:uppercase;letter-spacing:-.02em}
 .track-bed{fill:none;stroke:#263649;stroke-width:45;stroke-linejoin:round;stroke-linecap:round}
 .track-edge{fill:none;stroke:#8da9c7;stroke-width:51;opacity:.48;stroke-linejoin:round;stroke-linecap:round}
 .track-line{fill:none;stroke:#f2f7ff;stroke-width:2;stroke-dasharray:6 10;opacity:.8}
-.pitroad{fill:#273f59;stroke:#aec9e5;stroke-width:2;stroke-dasharray:7 7}
+.pit-lane{fill:none;stroke:#647c94;stroke-width:19;stroke-linecap:round}
+.pit-lane-center{fill:none;stroke:#e2eefa;stroke-width:2;stroke-dasharray:6 8;opacity:.8}
+.pit-label{fill:#bdd5ec;font-size:11px;letter-spacing:2px;font-weight:900;text-anchor:middle}
+#pitGeometry[hidden],#startFinish[hidden]{display:none}
 .marker{cursor:pointer;outline:none}.marker circle{stroke:#ecf5ff;stroke-width:2}.marker text{font:900 12px ui-sans-serif,system-ui,Arial;fill:#111c2f;text-anchor:middle;dominant-baseline:central;pointer-events:none}.marker.pit circle{fill:#f5c85a}.marker.selected circle{stroke:#ff637a;stroke-width:4}.marker.leader circle{fill:#64d9b0}
 .marker:focus circle{stroke:#ffffff;stroke-width:5}
 .map-label{fill:#b2cbe6;font-weight:900;text-anchor:middle;letter-spacing:.15em;font-size:15px}
@@ -85,12 +88,18 @@ h2{margin:0;font-size:18px;text-transform:uppercase;letter-spacing:-.02em}
 <path id="edge" class="track-edge"/>
 <path id="road" class="track-bed"/>
 <path id="line" class="track-line"/>
-<rect id="pitBox" x="240" y="233" width="380" height="70" rx="12" class="pitroad"/>
-<text x="429" y="245" class="map-label">HLRN</text>
-<text x="429" y="264" class="map-subtitle">PIT LANE • SCHEMATIC</text>
+<g id="pitGeometry" hidden>
+  <path id="pitRoadPath" d="M 235 326 Q 430 405 625 326" class="pit-lane"/>
+  <path d="M 235 326 Q 430 405 625 326" class="pit-lane-center"/>
+  <text x="430" y="346" class="pit-label">PIT ROAD • APPROXIMATE</text>
+</g>
+<g id="startFinish" hidden>
+  <path d="M 430 363 L 430 414" stroke="#f8fafc" stroke-width="4" stroke-dasharray="5 5"/>
+  <text x="442" y="415" fill="#ffffff" font-size="10" font-weight="900">S/F • PROVISIONAL</text>
+</g>
 <g id="carLayer"></g></svg></div>
 <div class="legend"><span><i class="swatch"></i>Leader</span><span><i class="swatch other"></i>On track</span><span><i class="swatch pit"></i>On pit road</span><span>Positions update as the feed reports them</span></div>
-<div class="footer">Daytona’s broadcast outline is proportionally traced from a publicly released circuit reference, not a surveyed GPS centerline. Other tracks still use generic track-type outlines. Car locations use lap progress reported by the bridge; they are <strong>not GPS coordinates</strong>. Missing telemetry never gets replaced with invented positions.</div>
+<div class="footer">Daytona uses a public-domain map-derived centerline. Its start/finish calibration and pit-lane position are provisional; pit-road car markers indicate status, not actual pit-stall location. Other circuits may still use generic silhouettes. Car locations use lap progress reported by the bridge; they are <strong>not GPS coordinates</strong>. Missing telemetry never gets replaced with invented positions.</div>
 </section>
 <aside class="panel"><div class="section-head"><h2>Running Order</h2><span id="fieldCount" class="hint">0 cars</span></div>
 <div id="driverList" class="driverlist"><p class="empty">Waiting for valid lap-progress telemetry…</p></div>
@@ -128,6 +137,8 @@ function setShape(track){
  activeProfile=shape;
  for(const id of ["edge","road","line"])$(id).setAttribute("d",geometry?.path||shapes[shape]);
  $("daytonaDecor").hidden=shape!=="daytona";
+ $("pitGeometry").hidden=shape!=="daytona";
+ $("startFinish").hidden=shape!=="daytona";
  setText("layoutType",labels[shape]);
 }
 function dataHealth(){
@@ -154,8 +165,6 @@ function createMarker(d){
  $("carLayer").append(g);
  markers.set(d.key,g);return g;
 }
-function shapePitX(i){return 270+(i%10)*33}
-function shapePitY(i){return 280+Math.floor(i/10)*16}
 function renderMarkers(){
  const current=dataHealth()?drivers:[];
  const keys=new Set(current.map(d=>d.key));
@@ -167,7 +176,15 @@ function renderMarkers(){
   let x,y;
   if(d.onPitRoad){
    const i=pitted.findIndex(o=>o.key===d.key);
-   x=shapePitX(i);y=shapePitY(i);
+   if(activeProfile==="daytona"){
+    const path=$("pitRoadPath"), length=path.getTotalLength();
+    // No per-car pit-lane progress exists in today's feed. Distribute
+    // displayed indicators without asserting a specific pit stall.
+    const point=path.getPointAtLength(length*(i+.5)/Math.max(1,pitted.length));
+    x=point.x;y=point.y;
+   }else{
+    x=270+(i%10)*33;y=280+Math.floor(i/10)*16;
+   }
   }else if(d.lapDistPct!==null){
    const pct=smoothProgress(smooth.get(d.key)??null,d.lapDistPct,.23);
    smooth.set(d.key,pct);
