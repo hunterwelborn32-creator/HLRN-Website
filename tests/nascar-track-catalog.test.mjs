@@ -1,0 +1,15 @@
+import assert from "node:assert/strict";
+import {resolveTrack,trackCatalog,geometryStatus} from "../track-map/catalog.mjs";
+assert.ok(trackCatalog.length>=40);
+assert.equal(resolveTrack("Daytona International Speedway")?.id,"daytona-oval");
+assert.equal(resolveTrack("Daytona International Speedway Road Course")?.id,"daytona-road");
+assert.equal(resolveTrack("Charlotte Motor Speedway Roval")?.id,"charlotte-roval");
+assert.equal(resolveTrack("Charlotte Motor Speedway")?.id,"charlotte-oval");
+assert.equal(resolveTrack("Indianapolis Motor Speedway Road Course")?.id,"indianapolis-road");
+assert.equal(resolveTrack("Indianapolis Motor Speedway")?.id,"indianapolis-oval");
+assert.equal(resolveTrack("Watkins Glen International")?.profile,"road");
+assert.equal(resolveTrack("Martinsville Speedway")?.profile,"short");
+assert.equal(resolveTrack("Mystery Circuit"),null);
+assert.match(geometryStatus("watkins-glen"),/pending/);
+assert.match(geometryStatus("daytona-oval"),/reference/);
+console.log("NASCAR track catalog recognition passed:",trackCatalog.length,"venue layouts");
