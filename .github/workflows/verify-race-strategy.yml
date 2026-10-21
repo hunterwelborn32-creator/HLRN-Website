@@ -1,0 +1,20 @@
+name: Verify Race Strategy Center
+on:
+  pull_request:
+    paths:
+      - "race-strategy/**"
+      - "tests/race-strategy-display.test.mjs"
+      - ".github/workflows/verify-race-strategy.yml"
+  push:
+    branches: [main]
+    paths:
+      - "race-strategy/**"
+      - "tests/race-strategy-display.test.mjs"
+      - ".github/workflows/verify-race-strategy.yml"
+jobs:
+  strategy-display:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test simulated race presentation
+        run: node tests/race-strategy-display.test.mjs
