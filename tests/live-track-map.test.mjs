@@ -57,3 +57,7 @@ console.log("HLRN Track Map passed: telemetry validation, car animation, layouts
 assert.ok(page.includes("calibrationOffset=0.145"),"Daytona live-tested offset must persist");
 assert.ok(page.includes("Math.exp(-dt/240)"),"Animation smoothing must be frame-rate-independent");
 assert.ok(page.includes('activeProfile==="daytona"?(calibrationReverse?2*pct:0)+calibrationOffset:0'),"Offset applies to the normal live map as well as calibration mode");
+
+assert.ok(page.includes("function predictedProgress("),"Render must predict between telemetry packets");
+assert.ok(page.includes("Math.min(0.65"),"Prediction horizon must be capped");
+assert.ok(page.includes("motion.clear()"),"Reset velocity across new races");
