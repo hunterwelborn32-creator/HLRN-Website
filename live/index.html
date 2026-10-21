@@ -3320,6 +3320,8 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
 
   function gapText(driver){
     if(driver.position === 1) return "LEADER";
+    // Do not show pre-scoring or grid-order placeholder gaps on the opening lap.
+    if(state?.phase === "race" && (Number(state?.lap) <= 1 || !(Number(driver.lapsCompleted) >= 1))) return "—";
     if(driver.gap == null || driver.gap === "") return "—";
     const gap = Number(driver.gap);
     if(!Number.isFinite(gap) || gap < 0) return "—";
@@ -3897,6 +3899,8 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
   function getBattles(drivers){
     if(!Array.isArray(drivers) || drivers.length < 2) return [];
     if(state?.phase!=="race" || raceFinished(state)) return [];
+    // Opening-lap grid gaps are not measured racing intervals.
+    if(Number(state?.lap) <= 1 || !drivers.some(d => Number(d.position) === 1 && Number(d.lapsCompleted) >= 1)) return [];
     const raceFlag=normalizeFlag(state?.flag);
     if(raceFlag!=="GREEN") return [];
 
