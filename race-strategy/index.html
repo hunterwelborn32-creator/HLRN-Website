@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" data-hlrn-theme="light">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Race Strategy Center | HLRN</title>
+<meta name="description" content="Read-only HLRN race strategy dashboard powered by the Cloudflare live race feed.">
+<script>(function(){try{const t=localStorage.getItem("hlrn_site_theme_v2")==="dark"?"dark":"light";document.documentElement.dataset.hlrnTheme=t;document.documentElement.style.colorScheme=t}catch(e){}})()</script>
+<link rel="stylesheet" href="../assets/site-shell.css?v=20261021blue">
+<style>
+:root{font-family:Inter,Arial,sans-serif}*{box-sizing:border-box}
+body{margin:0;background:#eaf0f8;color:#14243d}a{color:inherit}
+.strategy{max-width:1400px;margin:0 auto;padding:28px 20px 80px}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.15em;font-weight:900;color:#c71d3b}
+.strategy h1{font-size:clamp(34px,6vw,65px);line-height:1;margin:8px 0 12px;letter-spacing:-.045em;text-transform:uppercase}
+.intro{max-width:800px;line-height:1.6;color:var(--hlrn-theme-muted,#445f7e)}
+.top{display:flex;justify-content:space-between;align-items:start;gap:20px;flex-wrap:wrap}
+.top a{padding:12px 16px;border:1px solid var(--hlrn-theme-line,#c5d8ec);background:var(--hlrn-theme-surface,#f6f9fe);border-radius:9px;text-decoration:none;font-weight:800}
+.status{margin:20px 0;padding:12px 16px;border:1px solid var(--hlrn-theme-line,#c5d8ec);border-left:4px solid #d52b46;border-radius:8px;background:var(--hlrn-theme-surface,#f6f9fe);font-size:13px;font-weight:750}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:18px}
+.metric,.panel{background:var(--hlrn-theme-surface,#f6f9fe);border:1px solid var(--hlrn-theme-line,#c5d8ec);border-radius:12px;box-shadow:0 8px 24px rgba(30,62,110,.06)}
+.metric{padding:20px}.metric span{display:block;color:var(--hlrn-theme-muted,#445f7e);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.09em}.metric strong{display:block;margin-top:12px;font-size:clamp(23px,3vw,36px);font-variant-numeric:tabular-nums}
+.layout{display:grid;grid-template-columns:1.05fr .95fr;gap:18px}.panel{padding:24px;min-width:0}
+h2{font-size:22px;margin:0 0 9px;text-transform:uppercase;letter-spacing:-.025em}
+.detail{font-size:13px;color:var(--hlrn-theme-muted,#445f7e);line-height:1.5;margin:0 0 17px}
+.timeline{display:flex;gap:2px;min-height:36px;background:#dce9f8;padding:3px;border-radius:6px;margin-top:24px}
+.segment{min-width:2px;background:#a6c1df;flex-shrink:1}.segment.yellow{background:#efb824}
+.legend{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--hlrn-theme-muted,#445f7e);margin-top:10px}
+.dot{display:inline-block;width:10px;height:10px;background:#efb824;border-radius:2px;margin-right:6px}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:12px 9px;border-bottom:1px solid var(--hlrn-theme-line,#c5d8ec)}th{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--hlrn-theme-muted,#445f7e)}
+.table-scroll{overflow:auto} .empty{padding:24px 8px;color:var(--hlrn-theme-muted,#445f7e);font-size:13px}
+.tag{font-weight:800;font-size:11px;color:#146b42}.smallnote{font-size:12px;line-height:1.6;color:var(--hlrn-theme-muted,#445f7e)}
+.footer-note{margin-top:20px;padding:16px;border:1px dashed var(--hlrn-theme-line,#c5d8ec);border-radius:9px;font-size:12px;line-height:1.6;color:var(--hlrn-theme-muted,#445f7e)}
+html[data-hlrn-theme="dark"] body{background:#07090d;color:#f7f8fa}
+html[data-hlrn-theme="dark"] .timeline{background:#172438}
+html[data-hlrn-theme="dark"] .segment{background:#35567b}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:430px){.strategy{padding:20px 12px 60px}.metrics{gap:8px}.metric,.panel{padding:15px}}
+</style>
+</head>
+<body>
+<main class="strategy">
+<header class="top"><div><div class="eyebrow">High Line Racing Network / Cloudflare Race Data</div><h1>Race Strategy Center</h1><p class="intro">Caution analysis, lap history, and live pit-road status from HLRN's existing read-only Cloudflare feed. No telemetry is sent or modified by this page.</p></div><a href="../live/">← Back to Live Race Center</a></header>
+<div id="feedStatus" class="status" role="status" aria-live="polite">Connecting to Cloudflare…</div>
+<section class="metrics" aria-label="Race summary">
+<div class="metric"><span>Current lap</span><strong id="lap">—</strong></div>
+<div class="metric"><span>Flag</span><strong id="flag">—</strong></div>
+<div class="metric"><span>Cautions</span><strong id="cautions">—</strong></div>
+<div class="metric"><span>Caution laps</span><strong id="cautionLaps">—</strong></div>
+</section>
+<div class="layout">
+<section class="panel"><h2>Caution Timeline</h2><p class="detail">Yellow segments indicate recorded caution periods; gray-blue indicates all other laps. The timeline uses observed flag events, not estimated causes.</p><div id="timeline" class="timeline" role="img" aria-label="Caution timeline unavailable"></div><div class="legend"><span>Lap 1</span><span><i class="dot"></i> Recorded caution</span><span id="endLap">Finish —</span></div><div class="table-scroll"><table><thead><tr><th>Caution</th><th>Start</th><th>Restart</th><th>Reason</th></tr></thead><tbody id="cautionRows"><tr><td colspan="4">Waiting for race history…</td></tr></tbody></table></div></section>
+<section class="panel"><h2>Live Pit Road</h2><p class="detail">Drivers currently reported on pit road by iRacing. Stop counts and tire/fuel quantities are <strong>not</strong> inferred from this snapshot.</p><div class="table-scroll"><table><thead><tr><th>Position</th><th>Car</th><th>Driver</th><th>Status</th></tr></thead><tbody id="pitRows"><tr><td colspan="4">Waiting for race state…</td></tr></tbody></table></div><p class="smallnote">Pit-road presence is instantaneous. A reliable pit-stop history will require a separate, tested event recorder.</p></section>
+<section class="panel"><h2>Lap Recording</h2><p class="detail">Completed leader laps preserved by the Cloudflare recorder for the current session.</p><div class="metric"><span>Recorded completed laps</span><strong id="recorded">—</strong></div><p class="smallnote" id="captureNote">Awaiting Cloudflare recorder data.</p></section>
+<section class="panel"><h2>Strategy Readiness</h2><p class="detail">Available today, without changing the working iRacing bridge.</p><table><tbody><tr><td>Live flag and race lap</td><td class="tag">Available</td></tr><tr><td>Observed caution/restart history</td><td class="tag">Available</td></tr><tr><td>Current pit-road status</td><td class="tag">Available</td></tr><tr><td>Confirmed pit-stop counts</td><td>Not yet collected</td></tr><tr><td>Fuel and tire predictions</td><td>Telemetry validation required</td></tr></tbody></table></section>
+</div>
+<div class="footer-note">Data source: HLRN Cloudflare read-only APIs. This dashboard does not write to Cloudflare, alter the leaderboard, or change the race recorder. When no race is online, live pit status is unavailable; historical cautions may still be visible from the last frozen recap. Strategy estimates will only appear after verifying underlying telemetry.</div>
+</main>
+<script>
+(()=>{
+"use strict";
+const API="https://hlrn-live-feed.hunterwelborn32.workers.dev";
+const el=id=>document.getElementById(id);
+const num=v=>v===null||v===undefined||v===""?null:Number.isFinite(Number(v))?Number(v):null;
+const safe=v=>String(v??"");
+const cells=(tr,values)=>values.forEach(v=>{const td=document.createElement("td");td.textContent=safe(v);tr.append(td)});
+let busy=false;
+function timeline(items,total){
+ const target=el("timeline");target.replaceChildren();
+ const finish=Math.max(1,num(total)||0,...items.map(c=>num(c.restartLap)||num(c.startLap)||0));
+ const limit=Math.min(600,finish);
+ const cautions=items.map(c=>({a:Math.max(1,num(c.startLap)||1),b:num(c.restartLap)||finish+1}));
+ for(let i=1;i<=limit;i++){const a=Math.floor((i-1)*finish/limit)+1;const yellow=cautions.some(c=>a>=c.a&&a<c.b);const part=document.createElement("span");part.className="segment"+(yellow?" yellow":"");part.style.flex="1 1 0";target.append(part)}
+ target.setAttribute("aria-label",items.length+" recorded cautions over "+finish+" laps");
+ el("endLap").textContent="Lap "+finish;
+}
+function rows(target,items,make,empty){target.replaceChildren();if(!items.length){const tr=document.createElement("tr");const td=document.createElement("td");td.colSpan=4;td.className="empty";td.textContent=empty;tr.append(td);target.append(tr);return}items.forEach(item=>{const tr=document.createElement("tr");cells(tr,make(item));target.append(tr)})}
+async function json(path){const r=await fetch(API+path,{cache:"no-store",signal:AbortSignal.timeout(7000)});if(!r.ok)throw Error("HTTP "+r.status);return r.json()}
+async function refresh(){
+ if(busy||document.hidden)return;busy=true;
+ try{
+ const [state,lapData,recap]=await Promise.all([json("/api/state"),json("/api/laps"),json("/api/recap").catch(()=>null)]);
+ const live=state.online===true;const history=live?state:recap?.raceFrozen?recap:null;
+ const raw=history?.raceControl?.history||history?.cautionHistory||history?.raceControl?.cautions||history?.cautions||[];
+ const cautions=Array.isArray(raw)?raw:[];
+ const snapshots=Array.isArray(lapData.lapSnapshots)?lapData.lapSnapshots:[];
+ const total=num(state.totalLaps)||num(history?.race?.totalLaps)||num(recap?.race?.totalLaps);
+ el("lap").textContent=live?((num(state.lap)??"—")+(total?" / "+total:"")):"—";
+ el("flag").textContent=live?(state.flag||state.raceControl?.flag||"—"):"OFFLINE";
+ el("cautions").textContent=cautions.length||num(history?.raceControl?.cautionCount)||0;
+ el("cautionLaps").textContent=num(history?.raceControl?.totalCautionLaps)??num(history?.raceStats?.cautionLaps)??"—";
+ timeline(cautions,total||num(history?.race?.lap)||num(state.lap)||1);
+ rows(el("cautionRows"),cautions,c=>["#"+(c.number||"—"),c.startLap??"—",c.restartLap??"Not recorded",c.reason||"Not supplied"],"No caution events recorded for this race.");
+ const pits=live&&Array.isArray(state.drivers)?state.drivers.filter(d=>d.onPitRoad===true):[];
+ rows(el("pitRows"),pits,d=>[d.position??"—","#"+(d.number??d.carNumber??"—"),d.name||"Unknown driver","ON PIT ROAD"],live?"No drivers currently reported on pit road.":"Pit status unavailable while the feed is offline.");
+ el("recorded").textContent=live?snapshots.length:(Array.isArray(recap?.lapSnapshots)?recap.lapSnapshots.length:"—");
+ el("captureNote").textContent=live?"Current session completed-lap snapshots from Cloudflare.":recap?.raceFrozen?"Showing last frozen race snapshot count.":"No archived race snapshot available.";
+ el("feedStatus").textContent=live?"● LIVE / "+(state.track||state.sessionName||"Race session")+" — Cloudflare connected":recap?.raceFrozen?"○ FEED OFFLINE — viewing last frozen caution history":"○ FEED OFFLINE — waiting for the next race";
+ }catch(e){el("feedStatus").textContent="Unable to reach Cloudflare ("+e.message+"). Existing live feed is unaffected."}finally{busy=false}
+}
+refresh();setInterval(refresh,10000);
+})();
+</script>
+<script defer src="../assets/site-shell.js?v=20261008racingv6"></script>
+</body></html>
