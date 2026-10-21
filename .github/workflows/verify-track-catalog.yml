@@ -1,0 +1,17 @@
+name: Verify NASCAR Track Catalog
+on:
+  pull_request:
+    paths:
+      - "track-map/**"
+      - "tests/nascar-track-catalog.test.mjs"
+  push:
+    branches: [main]
+    paths:
+      - "track-map/**"
+      - "tests/nascar-track-catalog.test.mjs"
+jobs:
+  catalog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: node tests/nascar-track-catalog.test.mjs
