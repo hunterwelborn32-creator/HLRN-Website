@@ -19,14 +19,14 @@
 }
 
 html[data-hlrn-theme="light"]{
-  --h10-bg:#f3f4f6;
-  --h10-panel:#fff;
-  --h10-panel2:#fafbfc;
-  --h10-line:#d9dde3;
-  --h10-text:#10131a;
-  --h10-muted:#68707d;
-  --h10-soft:#e9edf1;
-  --h10-shadow:0 8px 28px rgba(0,0,0,.09);
+  --h10-bg:#eaf0f8;
+  --h10-panel:#f6f9fe;
+  --h10-panel2:#edf5ff;
+  --h10-line:#c5d8ec;
+  --h10-text:#14243d;
+  --h10-muted:#445f7e;
+  --h10-soft:#e1edfa;
+  --h10-shadow:0 10px 28px rgba(40,72,128,.12);
 }
 
 body.home-v10-page{
