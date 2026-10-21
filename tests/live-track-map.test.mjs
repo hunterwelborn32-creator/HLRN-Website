@@ -39,7 +39,7 @@ assert.ok(live.includes('src="../track-map/"'),"Live tab uses isolated track map
 assert.ok(page.includes('const DEMO=params.get("demo")==="1"'))
 assert.ok(page.includes('const CALIBRATE=params.get("calibrate")==="1"'))
 assert.ok(page.includes('id="calibrationPanel"'));
-assert.ok(page.includes("0.5-pct+1"),"Ovals must run counterclockwise from frontstretch start/finish");
+assert.ok(page.includes("0.5-pct:pct"),"Ovals must run counterclockwise from frontstretch start/finish");
 assert.ok(page.includes("430 396"),"Daytona frontstretch must have a broad curved tri-oval, not a pointed apex");
 assert.ok(page.includes("daytonaDecor")&&page.includes("FRONT TRI-OVAL"),"Daytona broadcast artwork must be present");
 assert.ok(page.includes("Will Pittenger"),"Reference attribution must remain visible");
