@@ -9,7 +9,7 @@ assert.equal(validProgress("not a number"),null);
 assert.equal(validProgress(1.1),null);
 assert.equal(validProgress(0),0);
 assert.equal(validProgress("0.75"),0.75);
-assert.equal(profileFor("Daytona International Speedway"),"trioval");
+assert.equal(profileFor("Daytona International Speedway"),"daytona");
 assert.equal(profileFor("Michigan International Speedway"),"oval");
 assert.equal(profileFor("Bristol Motor Speedway"),"short");
 assert.equal(profileFor("Watkins Glen International"),"road");
