@@ -35,11 +35,14 @@ html[data-hlrn-theme="dark"] .timeline{background:#172438}
 html[data-hlrn-theme="dark"] .segment{background:#35567b}
 @media(max-width:850px){.layout{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:430px){.strategy{padding:20px 12px 60px}.metrics{gap:8px}.metric,.panel{padding:15px}}
+.pitflag{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.05em}.pitflag.yellow{color:#9d6d00}.pitflag.green{color:#16734b}.pit-marks{display:flex;align-items:flex-end;gap:2px;min-height:80px;padding:12px;background:var(--hlrn-theme-surface-2,#edf5ff);border-radius:8px;overflow:auto}.pit-mark{flex:1 0 5px;max-width:30px;height:8px;border-radius:3px 3px 0 0;background:#b6cde6}.pit-mark.stop{height:50px;background:#2479b9}.pit-mark.stop.yellow{background:#e9b321}.pit-mark.stop.green{background:#2d9b66}
+.demo-banner{background:#ffe5a6;color:#443000;border:2px solid #dba62a;border-radius:10px;padding:14px 16px;margin:14px 0;font-weight:900}.demo-banner[hidden]{display:none}.demo-link{display:inline-flex;align-items:center;margin-top:12px;background:#163f73;color:white!important;padding:12px 16px;border-radius:8px;text-decoration:none;font-weight:800}.demo-flag{font-size:12px;letter-spacing:.1em}
 </style>
 </head>
 <body>
 <main class="strategy">
 <header class="top"><div><div class="eyebrow">High Line Racing Network / Cloudflare Race Data</div><h1>Race Strategy Center</h1><p class="intro">Caution analysis, lap history, and live pit-road status from HLRN's existing read-only Cloudflare feed. No telemetry is sent or modified by this page.</p></div><a href="../live/">← Back to Live Race Center</a></header>
+<div id="demoBanner" class="demo-banner" hidden>DEMO MODE — SIMULATED RACE DATA ONLY. No actual cars, pit stops, or Cloudflare telemetry are being shown.</div><a id="demoSwitch" class="demo-link" href="?demo=1">▶ Watch a simulated race preview</a>
 <div id="feedStatus" class="status" role="status" aria-live="polite">Connecting to Cloudflare…</div>
 <section class="metrics" aria-label="Race summary">
 <div class="metric"><span>Current lap</span><strong id="lap">—</strong></div>
@@ -50,6 +53,8 @@ html[data-hlrn-theme="dark"] .segment{background:#35567b}
 <div class="layout">
 <section class="panel"><h2>Caution Timeline</h2><p class="detail">Yellow segments indicate recorded caution periods; gray-blue indicates all other laps. The timeline uses observed flag events, not estimated causes.</p><div id="timeline" class="timeline" role="img" aria-label="Caution timeline unavailable"></div><div class="legend"><span>Lap 1</span><span><i class="dot"></i> Recorded caution</span><span id="endLap">Finish —</span></div><div class="table-scroll"><table><thead><tr><th>Caution</th><th>Start</th><th>Restart</th><th>Reason</th></tr></thead><tbody id="cautionRows"><tr><td colspan="4">Waiting for race history…</td></tr></tbody></table></div></section>
 <section class="panel"><h2>Live Pit Road</h2><p class="detail">Drivers currently reported on pit road by iRacing. Stop counts and tire/fuel quantities are <strong>not</strong> inferred from this snapshot.</p><div class="table-scroll"><table><thead><tr><th>Position</th><th>Car</th><th>Driver</th><th>Status</th></tr></thead><tbody id="pitRows"><tr><td colspan="4">Waiting for race state…</td></tr></tbody></table></div><p class="smallnote">Pit-road presence is instantaneous. A reliable pit-stop history will require a separate, tested event recorder.</p></section>
+<section class="panel"><h2>Recorded Pit Visits</h2><p class="detail">Verified pit-road entry→exit pairs reported by Cloudflare. A visit is not proof of tire changes, fuel service, or a stationary stop.</p><div class="table-scroll"><table><thead><tr><th>Driver</th><th>Entry</th><th>Exit</th><th>Flag on entry</th></tr></thead><tbody id="pitHistory"><tr><td colspan="4">Pit history not yet available.</td></tr></tbody></table></div></section>
+<section class="panel"><h2>Driver Pit Strategy</h2><p class="detail">Observed visits and laps since most recent entry, based only on the available race feed.</p><div class="table-scroll"><table><thead><tr><th>Driver</th><th>Visits</th><th>Last entry</th><th>Laps since</th></tr></thead><tbody id="strategyRows"><tr><td colspan="4">Waiting for recorded visits.</td></tr></tbody></table></div><h2 style="margin-top:24px">Pit Entry Timeline</h2><p class="detail">One bar per race lap. Green marks green-flag entries; yellow marks caution entries.</p><div class="pit-marks" id="pitTimeline" role="img" aria-label="Pit entry timeline unavailable"></div><div class="legend"><span>Lap 1</span><span id="pitTimelineEnd">Finish —</span></div></section>
 <section class="panel"><h2>Lap Recording</h2><p class="detail">Completed leader laps preserved by the Cloudflare recorder for the current session.</p><div class="metric"><span>Recorded completed laps</span><strong id="recorded">—</strong></div><p class="smallnote" id="captureNote">Awaiting Cloudflare recorder data.</p></section>
 <section class="panel"><h2>Strategy Readiness</h2><p class="detail">Available today, without changing the working iRacing bridge.</p><table><tbody><tr><td>Live flag and race lap</td><td class="tag">Available</td></tr><tr><td>Observed caution/restart history</td><td class="tag">Available</td></tr><tr><td>Current pit-road status</td><td class="tag">Available</td></tr><tr><td>Confirmed pit-stop counts</td><td>Not yet collected</td></tr><tr><td>Fuel and tire predictions</td><td>Telemetry validation required</td></tr></tbody></table></section>
 </div>
@@ -63,6 +68,27 @@ const el=id=>document.getElementById(id);
 const num=v=>v===null||v===undefined||v===""?null:Number.isFinite(Number(v))?Number(v):null;
 const safe=v=>String(v??"");
 const cells=(tr,values)=>values.forEach(v=>{const td=document.createElement("td");td.textContent=safe(v);tr.append(td)});
+const demo=new URLSearchParams(location.search).get("demo")==="1";
+let demoTick=0;
+if(demo){el("demoBanner").hidden=false;el("demoSwitch").textContent="Exit demo — return to real feed";el("demoSwitch").href=location.pathname;}
+const demoDrivers=[{carIdx:0,number:"11",name:"Demo Driver Alpha"},{carIdx:1,number:"22",name:"Demo Driver Bravo"},{carIdx:2,number:"33",name:"Demo Driver Charlie"},{carIdx:3,number:"44",name:"Demo Driver Delta"},{carIdx:4,number:"55",name:"Demo Driver Echo"}];
+const demoVisits=[
+{carIdx:0,number:"11",name:"Demo Driver Alpha",lap:4,exitLap:5,flag:"GREEN"},
+{carIdx:2,number:"33",name:"Demo Driver Charlie",lap:7,exitLap:8,flag:"GREEN"},
+{carIdx:1,number:"22",name:"Demo Driver Bravo",lap:11,exitLap:13,flag:"CAUTION"},
+{carIdx:3,number:"44",name:"Demo Driver Delta",lap:12,exitLap:14,flag:"CAUTION"},
+{carIdx:0,number:"11",name:"Demo Driver Alpha",lap:19,exitLap:20,flag:"GREEN"},
+{carIdx:4,number:"55",name:"Demo Driver Echo",lap:22,exitLap:23,flag:"GREEN"},
+{carIdx:2,number:"33",name:"Demo Driver Charlie",lap:26,exitLap:27,flag:"GREEN"}
+];
+function demoSnapshot(){
+ demoTick=(demoTick+1)%31;const lap=demoTick+1;
+ const yellow=lap>=10&&lap<=14;const flag=yellow?"YELLOW":lap===30?"WHITE":"GREEN";
+ const visits=demoVisits.filter(v=>v.exitLap<=lap);
+ const ds=demoDrivers.map((d,i)=>({...d,position:((i+Math.floor(lap/6))%5)+1,onPitRoad:demoVisits.some(v=>v.carIdx===d.carIdx&&v.lap<=lap&&lap<v.exitLap)}));
+ const caution=lap>=10?[{number:1,startLap:10,restartLap:lap>=15?15:null,reason:"Simulated caution — demo only"}]:[];
+ return {state:{online:true,lap,totalLaps:30,flag,track:"DEMO Speedway — simulated race",drivers:ds,pitHistory:visits,raceControl:{history:caution,totalCautionLaps:Math.max(0,Math.min(lap,14)-9)}},lapData:{lapSnapshots:Array.from({length:lap-1},(_,i)=>({lap:i+1}))},recap:{raceFrozen:false}};
+}
 let busy=false;
 function timeline(items,total){
  const target=el("timeline");target.replaceChildren();
@@ -78,7 +104,7 @@ async function json(path){const r=await fetch(API+path,{cache:"no-store",signal:
 async function refresh(){
  if(busy||document.hidden)return;busy=true;
  try{
- const [state,lapData,recap]=await Promise.all([json("/api/state"),json("/api/laps"),json("/api/recap").catch(()=>null)]);
+ const {state,lapData,recap}=demo?demoSnapshot():await (async()=>{const [state,lapData,recap]=await Promise.all([json("/api/state"),json("/api/laps"),json("/api/recap").catch(()=>null)]);return {state,lapData,recap}})();
  const live=state.online===true;const history=live?state:recap?.raceFrozen?recap:null;
  const raw=history?.raceControl?.history||history?.cautionHistory||history?.raceControl?.cautions||history?.cautions||[];
  const cautions=Array.isArray(raw)?raw:[];
@@ -90,14 +116,19 @@ async function refresh(){
  el("cautionLaps").textContent=num(history?.raceControl?.totalCautionLaps)??num(history?.raceStats?.cautionLaps)??"—";
  timeline(cautions,total||num(history?.race?.lap)||num(state.lap)||1);
  rows(el("cautionRows"),cautions,c=>["#"+(c.number||"—"),c.startLap??"—",c.restartLap??"Not recorded",c.reason||"Not supplied"],"No caution events recorded for this race.");
+ const visits=Array.isArray(history?.pitHistory)?history.pitHistory:[];
+ rows(el("pitHistory"),visits.slice().reverse(),v=>["#"+(v.number||"—")+" "+(v.name||"Unknown"),v.lap??"—",v.exitLap??"—",v.flag||"—"],"No completed pit-road visits recorded. Tracking requires the Phase 2 Cloudflare recorder.");
+ const grouped=new Map();for(const v of visits){const key=String(v.carIdx??v.number??v.name);let z=grouped.get(key)||{name:v.name||"Unknown",number:v.number||"—",count:0,last:null};z.count++;if(z.last===null||Number(v.lap)>Number(z.last))z.last=v.lap;grouped.set(key,z)}
+ const currentLap=num(state.lap);rows(el("strategyRows"),Array.from(grouped.values()).sort((a,b)=>b.count-a.count),v=>["#"+v.number+" "+v.name,v.count,v.last??"—",live&&currentLap!==null&&num(v.last)!==null?Math.max(0,currentLap-v.last):"—"],"No recorded pit visits yet.");
+ const pitBar=el("pitTimeline");pitBar.replaceChildren();const length=Math.min(300,Math.max(1,num(total)||num(state.lap)||num(history?.race?.lap)||1));const marks=new Map();for(const v of visits){const lap=num(v.lap);if(lap!==null)marks.set(lap,v.flag==="CAUTION"?"yellow":"green")}for(let i=1;i<=length;i++){const span=document.createElement("span");const sampled=Math.floor((i-1)*(num(total)||length)/length)+1;const c=marks.get(sampled);span.className="pit-mark"+(c?" stop "+c:"");span.title="Lap "+sampled+(c?" — "+c+" flag pit entry":"");pitBar.append(span)}pitBar.setAttribute("aria-label",visits.length+" recorded pit visits");el("pitTimelineEnd").textContent="Lap "+(num(total)||length);
  const pits=live&&Array.isArray(state.drivers)?state.drivers.filter(d=>d.onPitRoad===true):[];
  rows(el("pitRows"),pits,d=>[d.position??"—","#"+(d.number??d.carNumber??"—"),d.name||"Unknown driver","ON PIT ROAD"],live?"No drivers currently reported on pit road.":"Pit status unavailable while the feed is offline.");
  el("recorded").textContent=live?snapshots.length:(Array.isArray(recap?.lapSnapshots)?recap.lapSnapshots.length:"—");
  el("captureNote").textContent=live?"Current session completed-lap snapshots from Cloudflare.":recap?.raceFrozen?"Showing last frozen race snapshot count.":"No archived race snapshot available.";
- el("feedStatus").textContent=live?"● LIVE / "+(state.track||state.sessionName||"Race session")+" — Cloudflare connected":recap?.raceFrozen?"○ FEED OFFLINE — viewing last frozen caution history":"○ FEED OFFLINE — waiting for the next race";
+ el("feedStatus").textContent=demo?"◆ DEMO / "+state.track+" — simulated lap "+state.lap:live?"● LIVE / "+(state.track||state.sessionName||"Race session")+" — Cloudflare connected":recap?.raceFrozen?"○ FEED OFFLINE — viewing last frozen caution history":"○ FEED OFFLINE — waiting for the next race";
  }catch(e){el("feedStatus").textContent="Unable to reach Cloudflare ("+e.message+"). Existing live feed is unaffected."}finally{busy=false}
 }
-refresh();setInterval(refresh,10000);
+refresh();setInterval(refresh,demo?2500:10000);
 })();
 </script>
 <script defer src="../assets/site-shell.js?v=20261008racingv6"></script>

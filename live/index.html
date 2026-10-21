@@ -2626,6 +2626,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
       <button class="tab" data-tab="lap-positions">Lap History</button>
       <button class="tab" data-tab="control">Race Control</button>
       <button class="tab" data-tab="stats">Statistics</button>
+      <button class="tab" data-tab="strategy">Race Strategy</button>
     </nav>
     <div class="hlrn-more-tools"><button id="hlrnMoreToggle" type="button" aria-expanded="false" aria-controls="hlrnExtraTabs">More race views +</button><nav id="hlrnExtraTabs" class="tabs hlrn-extra-tabs" aria-label="Additional race views" hidden><button class="tab" data-tab="fastest">Fastest Laps</button><button class="tab" data-tab="battles">Battles</button><button class="tab" data-tab="flags">Penalties</button><button class="tab" data-tab="radio">Driver Scanner</button></nav></div>
     <nav class="tabs session-tools" aria-label="Session tools">
@@ -2646,6 +2647,14 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
       </div>
       <div id="hlrnLapOrderContent" class="hlrn-lap-order-content"><div class="archive-empty"><strong>Waiting for completed laps</strong>Driver positions will appear when Cloudflare records the first completed leader lap.</div></div>
     </section>
+    </section>
+
+    <section id="tab-strategy" class="section" aria-label="Race Strategy Center">
+      <div style="margin:0 0 12px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap">
+        <strong>HLRN RACE STRATEGY CENTER</strong>
+        <a href="../race-strategy/" target="_blank" rel="noopener">Open full Strategy Center ↗</a>
+      </div>
+      <iframe title="HLRN Race Strategy Center" src="../race-strategy/" loading="lazy" style="display:block;width:100%;height:min(1400px,190vh);min-height:760px;border:1px solid var(--line,#b8cce3);border-radius:12px;background:#eaf0f8" referrerpolicy="strict-origin-when-cross-origin"></iframe>
     </section>
 
     <section id="tab-race" class="section active">
