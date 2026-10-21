@@ -53,3 +53,7 @@ for(const code of scripts){
  assert.equal(js.status,0,js.stderr||"Track Map script syntax invalid");
 }
 console.log("HLRN Track Map passed: telemetry validation, car animation, layouts, demo isolation, Live tab integration, script syntax.");
+
+assert.ok(page.includes("calibrationOffset=0.145"),"Daytona live-tested offset must persist");
+assert.ok(page.includes("Math.exp(-dt/240)"),"Animation smoothing must be frame-rate-independent");
+assert.ok(page.includes('activeProfile==="daytona"?(calibrationReverse?2*pct:0)+calibrationOffset:0'),"Offset applies to the normal live map as well as calibration mode");
