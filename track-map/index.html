@@ -214,7 +214,7 @@ function accept(next){
  setShape(next.track);
  const venue=resolveTrack(next.track);
  setText("trackName",venue?venue.name:(next.track||"Unknown track"));
- setText("geometryDisclosure",activeGeometry?"Track-specific mapped outline • Source: "+activeGeometry.attribution+" ("+activeGeometry.license+")":venue?geometryStatus(venue.id):"Unrecognized venue — generic silhouette; layout requires verification");
+ setText("geometryDisclosure",activeGeometry?"SOURCE-EXTRACTED OUTLINE • "+(activeGeometry.calibration||"Calibration unverified")+" • "+activeGeometry.attribution+" ("+activeGeometry.license+")":venue?geometryStatus(venue.id):"Unrecognized venue — generic silhouette; layout requires verification");
  const reference=venue?referenceFor(venue.id):null;
  const link=$("trackReference");link.hidden=!reference;if(reference){link.href=reference.url;link.textContent="Verified artwork reference ("+reference.license+") — view original ↗";}
  drivers=normalizeDrivers(next);
