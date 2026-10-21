@@ -72,8 +72,8 @@ h2{margin:0;font-size:18px;text-transform:uppercase;letter-spacing:-.02em}
 <div id="geometryDisclosure" class="hint" style="margin-top:8px">Venue mapping and geometry source pending</div><div id="calibrationPanel" hidden style="margin:12px 0;padding:12px;background:var(--panel2);border:1px solid var(--line);border-radius:10px">
 <strong>DAYTONA LIVE CALIBRATION • DIAGNOSTIC ONLY</strong>
 <p class="hint">Adjust alignment while comparing one known car to iRacing. Does not affect the bridge or other viewers. Current public map is approximate.</p>
-<label for="calOffset">Position offset: <output id="calOffsetValue">0%</output></label>
-<input id="calOffset" type="range" min="0" max="100" step="0.5" value="0" style="width:100%">
+<label for="calOffset">Position offset: <output id="calOffsetValue">14.5%</output></label>
+<input id="calOffset" type="range" min="0" max="100" step="0.5" value="14.5" style="width:100%">
 <label style="display:block;margin-top:8px"><input id="calReverse" type="checkbox"> Reverse movement direction</label>
 <p id="calReadout" class="hint">Select a car to see its reported progress.</p>
 <button id="calCopy" type="button" class="action" style="cursor:pointer">Copy calibration details</button>
@@ -117,7 +117,9 @@ const API="wss://hlrn-live-feed.hunterwelborn32.workers.dev/ws?role=viewer";
 const params=new URLSearchParams(location.search);
 const DEMO=params.get("demo")==="1";
 const CALIBRATE=params.get("calibrate")==="1";
-let calibrationOffset=0,calibrationReverse=false;
+// Daytona offset measured during a live AI session; other venues unchanged.
+let calibrationOffset=0.145,calibrationReverse=false;
+let lastFrameTime=performance.now(),motionBlend=0.12;
 const shapes={
  daytona:"M 211 91 C 330 88 545 88 649 91 C 735 94 796 147 796 209 C 796 274 765 307 676 331 C 603 350 516 396 430 396 C 344 396 257 350 184 331 C 95 307 64 274 64 209 C 64 147 125 94 211 91 Z",
  oval:"M 235 74 H 625 C 775 74 814 147 814 233 C 814 320 775 390 625 390 H 235 C 85 390 46 320 46 233 C 46 147 85 74 235 74 Z",
@@ -176,12 +178,12 @@ function renderMarkers(){
    const i=pitted.findIndex(o=>o.key===d.key);
    x=shapePitX(i);y=shapePitY(i);
   }else if(d.lapDistPct!==null){
-   const pct=smoothProgress(smooth.get(d.key)??null,d.lapDistPct,.23);
+   const pct=smoothProgress(smooth.get(d.key)??null,d.lapDistPct,motionBlend);
    smooth.set(d.key,pct);
    // The SVG contour is drawn clockwise from the backstretch. NASCAR ovals
    // are run counterclockwise, with the start/finish on the front tri-oval.
    const base=["daytona","trioval","oval","short"].includes(activeProfile)?0.5-pct:pct;
-   const delta=CALIBRATE&&activeProfile==="daytona"?(calibrationReverse?2*pct:0)+calibrationOffset:0;
+   const delta=activeProfile==="daytona"?(calibrationReverse?2*pct:0)+calibrationOffset:0;
    const travelPct=((base+delta)%1+1)%1;
    const pt=$("road").getPointAtLength(travelPct*total);
    x=pt.x;y=pt.y;
@@ -250,6 +252,11 @@ function connect(){
 }
 document.addEventListener("visibilitychange",()=>{if(socket?.readyState===WebSocket.OPEN)socket.send(JSON.stringify({type:"visibility",visible:!document.hidden}))});
 function loop(){
+ const now=performance.now();
+ const dt=Math.min(80,Math.max(0,now-lastFrameTime));
+ lastFrameTime=now;
+ // Exponential interpolation is frame-rate independent and wrap-aware.
+ motionBlend=1-Math.exp(-dt/240);
  if(DEMO&&performance.now()-frameSeen>500){
   frameSeen=performance.now();accept(demoState(frameSeen-demoStart));
  }
