@@ -3337,6 +3337,10 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
   }
 
   function gapText(driver){
+    if(driver.liveOrderEstimated){
+      if(driver.position===1)return "LEADER";
+      return driver.liveGapEstimate===null?"—":"~+"+driver.liveGapEstimate.toFixed(3)+" EST";
+    }
     if(driver.position === 1) return "LEADER";
     // Do not show pre-scoring or grid-order placeholder gaps on the opening lap.
     if(state?.phase === "race" && (Number(state?.lap) <= 1 || !(Number(driver.lapsCompleted) >= 1))) return "—";
@@ -4139,7 +4143,25 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     }).join("");
   }
 
+  // Display-only live order. The bridge's official position stays unchanged
+  // for results, stewarding, session history, flags and post-race classification.
+  function liveLeaderboardOrder(drivers){
+    if(!state?.online||state.phase!=="race"||state.raceFrozen||raceFinished(state))return drivers;
+    const eligible=d=>d&&!d.onPitRoad&&d.lapsCompleted!==null&&d.lapsCompleted!==undefined&&d.lapsCompleted!==""&&Number.isInteger(Number(d.lapsCompleted))&&Number(d.lapsCompleted)>=0&&d.lapDistPct!==null&&d.lapDistPct!==undefined&&d.lapDistPct!==""&&Number.isFinite(Number(d.lapDistPct))&&Number(d.lapDistPct)>=0&&Number(d.lapDistPct)<=1;
+    // Do not invent a field order if timing has incomplete lap data.
+    if(!drivers.length||!drivers.every(eligible))return drivers;
+    const rank=d=>Number(d.lapsCompleted)+Number(d.lapDistPct);
+    const ordered=[...drivers].sort((a,b)=>rank(b)-rank(a)||Number(a.position??9999)-Number(b.position??9999));
+    const lead=ordered[0],lapTime=Number(lead?.lastLapTime)>0?Number(lead.lastLapTime):null;
+    return ordered.map((d,i)=>({
+      ...d,iracingReportedPosition:d.position,position:i+1,
+      liveOrderEstimated:true,
+      liveGapEstimate:lapTime===null?null:Math.max(0,(rank(lead)-rank(d))*lapTime)
+    }));
+  }
+
   function renderLeaderboard(drivers, online){
+    drivers=liveLeaderboardOrder(drivers);
     const el = $("leaderboard");
 
     const oldTableShell = el.querySelector(".table-shell");
@@ -4156,7 +4178,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     }
 
     const shown = showFullField ? drivers : drivers.slice(0,10);
-    const gapHeading = state && state.phase === "race" ? "BEHIND" : "GAP";
+    const gapHeading = drivers.some(d=>d.liveOrderEstimated) ? "EST. BEHIND" : state && state.phase === "race" ? "BEHIND" : "GAP";
     const hotBattleKeys = new Set();
     if(state && state.phase === "race"){
       getBattles(drivers).filter(b => b.interval <= .75).forEach(b => {
@@ -4166,7 +4188,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     }
 
     const mobileCards = shown.map(driver => {
-      const delta = positionDelta(driver);
+      const delta = driver.liveOrderEstimated?{text:"—",cls:"same"}:positionDelta(driver);
       const photo=hLrnDriverPhotoUrl(driver);
       const status=driverStatus(driver, drivers);
       const penaltyText=driver.blackFlag
@@ -4212,7 +4234,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
         </thead>
         <tbody>
           ${shown.map(driver => {
-            const delta = positionDelta(driver);
+            const delta = driver.liveOrderEstimated?{text:"—",cls:"same"}:positionDelta(driver);
             return `
               <tr class="${driver.position === 1 ? "leader" : ""} ${hotBattleKeys.has(driverKey(driver)) ? "battle-hot" : ""}">
                 <td class="pos-cell">${esc(driver.position ?? "—")}</td>
