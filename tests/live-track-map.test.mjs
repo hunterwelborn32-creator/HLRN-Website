@@ -64,3 +64,6 @@ assert.ok(page.includes("motion.clear()"),"Reset velocity across new races");
 
 assert.ok(page.includes("Math.min(1.1"),"Predictive motion has a bounded extended horizon");
 assert.ok(page.includes("Math.exp(-dt/330)"),"Stutter-reduction smoothing remains frame-rate-independent");
+
+assert.ok(!page.includes("packOffsets("),"Never invent 3-wide lanes from lap progress");
+assert.ok(page.includes('d.onPitRoad?"13":"11"'),"Use compact markers to reduce visual overlap");
