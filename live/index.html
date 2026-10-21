@@ -5806,7 +5806,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
     $("carCount").textContent = state.driverCount ?? drivers.length;
     $("sessionState").textContent = available ? flag : "—";
 
-    updateVerifiedLeader(drivers, online);
+    try { updateVerifiedLeader(drivers, online); } catch(err) { console.error("[HLRN Live] leader verification failed",err); }
 
     const leader = displayLeader(drivers);
     const fast = fastestDriver(drivers);
@@ -5833,27 +5833,27 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
       $("feedAge").textContent = "—";
     }
 
-    renderLeaderboard(drivers, available);
-    renderLiveLapOrder(state);
+    try { renderLeaderboard(drivers, available); } catch(err) { console.error("[HLRN Live] renderLeaderboard failed",err); }
+    try { renderLiveLapOrder(state); } catch(err) { console.error("[HLRN Live] renderLiveLapOrder failed",err); }
     scheduleLiveFloatingHeader();
-    renderScanner(drivers);
-    renderLiveTicker(available, drivers);
-    renderBattleTracker(drivers, available);
-    renderCrownHero(drivers, available);
-    renderFastestPage(drivers, available);
-    renderBattlesPage(drivers, available);
-    renderRaceControl(drivers, available);
-    renderLiveStats(available);
-    renderFlagsPage(drivers, available);
-    renderRadioFeed();
+    try { renderScanner(drivers); } catch(err) { console.error("[HLRN Live] renderScanner failed",err); }
+    try { renderLiveTicker(available, drivers); } catch(err) { console.error("[HLRN Live] renderLiveTicker failed",err); }
+    try { renderBattleTracker(drivers, available); } catch(err) { console.error("[HLRN Live] renderBattleTracker failed",err); }
+    try { renderCrownHero(drivers, available); } catch(err) { console.error("[HLRN Live] renderCrownHero failed",err); }
+    try { renderFastestPage(drivers, available); } catch(err) { console.error("[HLRN Live] renderFastestPage failed",err); }
+    try { renderBattlesPage(drivers, available); } catch(err) { console.error("[HLRN Live] renderBattlesPage failed",err); }
+    try { renderRaceControl(drivers, available); } catch(err) { console.error("[HLRN Live] renderRaceControl failed",err); }
+    try { renderLiveStats(available); } catch(err) { console.error("[HLRN Live] renderLiveStats failed",err); }
+    try { renderFlagsPage(drivers, available); } catch(err) { console.error("[HLRN Live] renderFlagsPage failed",err); }
+    try { renderRadioFeed(); } catch(err) { console.error("[HLRN Live] renderRadioFeed failed",err); }
 
-    renderSessionResults("practiceResults", getPhaseState("practice"), "practice");
-    renderSessionResults("qualifyingResults", getPhaseState("qualifying"), "qualifying");
+    try { renderSessionResults("practiceResults", getPhaseState("practice"), "practice"); } catch(err) { console.error("[HLRN Live] renderSessionResults failed",err); }
+    try { renderSessionResults("qualifyingResults", getPhaseState("qualifying"), "qualifying"); } catch(err) { console.error("[HLRN Live] renderSessionResults failed",err); }
 
     const raceState = getPhaseState("race");
-    renderTimeline(accurateRaceEvents(raceState));
-    renderRacePulse(raceState);
-    renderRaceStorylines(drivers, available);
+    try { renderTimeline(accurateRaceEvents(raceState)); } catch(err) { console.error("[HLRN Live] renderTimeline failed",err); }
+    try { renderRacePulse(raceState); } catch(err) { console.error("[HLRN Live] renderRacePulse failed",err); }
+    try { renderRaceStorylines(drivers, available); } catch(err) { console.error("[HLRN Live] renderRaceStorylines failed",err); }
 
     // Post-race report and recap intentionally disabled for live-only page.
     $("rawFeed").textContent = JSON.stringify(state, null, 2);
