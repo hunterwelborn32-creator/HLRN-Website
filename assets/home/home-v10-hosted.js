@@ -148,19 +148,38 @@
     winnerPhoto(winner,winnerRow.iRating??winnerRow.irating);
   }
 
+  // Fetch the published snapshot directly so updates never wait for driver
+  // photos or another page component's shared HLRNData request.
+  let loading=null;
+  let lastRaceKey="";
   async function load(){
-    try{
-      if(window.HLRNDrivers?.load)await window.HLRNDrivers.load();
-      const snapshot=window.HLRNData
-        ? await window.HLRNData.load()
-        : await fetch("data/hlrn.json?v="+Date.now(),{cache:"no-store"}).then(r=>{
-            if(!r.ok)throw new Error("HLRN data HTTP "+r.status);
-            return r.json();
-          });
-      render(snapshot);
-    }catch(err){
-      console.warn("HLRN Hosted hero card unavailable",err);
-    }
+    if(loading)return loading;
+    loading=(async()=>{
+      try{
+        const url=new URL("data/hlrn.json",document.baseURI);
+        url.searchParams.set("t",String(Date.now()));
+        const response=await fetch(url.href,{cache:"no-store"});
+        if(!response.ok)throw new Error("HLRN data HTTP "+response.status);
+        const snapshot=await response.json();
+        if(!snapshot || !snapshot.hosted || !snapshot.hosted.latest)
+          throw new Error("Published Hosted results missing");
+        const latest=snapshot.hosted.latest;
+        const key=JSON.stringify([latest.date,latest.track,latest.winner,latest.totalLaps,latest.cautions,latest.totalIncidents,latest.results?.length,snapshot.generatedAt]);
+        if(key===lastRaceKey)return;
+        lastRaceKey=key;
+        render(snapshot);
+        // Load the optional driver portrait separately; never delay the results.
+        if(window.HLRNDrivers?.load){
+          window.HLRNDrivers.load().then(()=>winnerPhoto(
+            pretty(latest.winner||latest.results?.[0]?.driver),
+            latest.results?.[0]?.iRating??latest.results?.[0]?.irating
+          )).catch(()=>{});
+        }
+      }catch(err){
+        console.warn("HLRN Hosted hero card unavailable",err);
+      }
+    })().finally(()=>{loading=null});
+    return loading;
   }
 
   if(document.readyState==="loading"){
