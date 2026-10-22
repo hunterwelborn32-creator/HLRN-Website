@@ -16,3 +16,11 @@ assert.ok(sync.includes("tommy.wins = String(sourceWins + 1)"),"Apply one-win of
 assert.ok(!sync.includes("if (tommy) tommy.wins = '5'"),"Never force a fixed Hosted win total");
 assert.ok(sync.indexOf("tommy.wins = String(sourceWins + 1)") < sync.indexOf("hosted = {"),"Offset must be applied before published snapshot");
 console.log("Hosted-only Tommy Rogers wins correction verified.");
+
+const hostedHtml=readFileSync(new URL("standings/hosted.html",root),"utf8");
+const homeJs=readFileSync(new URL("assets/home/home-data.js",root),"utf8");
+const page=readFileSync(new URL("drivers/tommy-rogers/index.html",root),"utf8");
+assert.ok(hostedHtml.includes("function correctTommyHostedFrame("),"Hosted embedded tables must use published totals");
+assert.ok(hostedHtml.includes('if(key==="drivers"||key==="racing"||key==="records")correctTommyHostedFrame(key)'),"All Hosted iframe sections receive correction");
+assert.ok(homeJs.includes('displayed.wins = String(corrected.wins)'),"Home Hosted spotlight must use published total");
+assert.ok(page.includes('<small>Wins</small><strong>5</strong>'),"Driver profile must match five Hosted wins now");

@@ -2824,6 +2824,47 @@ async function renderHostedH2HPhotos(frame){
 }
 
 
+// Align the embedded Hosted source tables with HLRN's published corrected
+// Hosted wins. Other drivers, Sunday and Monday are never modified.
+let tommyHostedWinsPromise=null;
+function getTommyHostedWins(){
+ if(!tommyHostedWinsPromise)tommyHostedWinsPromise=fetch("../data/hlrn.json",{cache:"no-store"})
+  .then(r=>{if(!r.ok)throw Error("Hosted snapshot unavailable");return r.json()})
+  .then(d=>{
+   const row=d?.hosted?.rankings?.find(x=>String(x.driver||"").trim()==="Tommy Rogers");
+   return row&&Number.isInteger(Number(row.wins))?String(row.wins):null;
+  }).catch(()=>null);
+ return tommyHostedWinsPromise;
+}
+function correctTommyHostedFrame(key){
+ const frame=hostedFrame(key);
+ getTommyHostedWins().then(wins=>{
+  if(wins===null||!frame)return;
+  let doc;try{doc=frame.contentDocument}catch(e){return}
+  if(!doc?.body)return;
+  const apply=()=>{
+   for(const row of doc.querySelectorAll("tr")){
+    if(!/\\bTommy\\s+Rogers\\b/i.test(row.textContent||""))continue;
+    const cells=[...row.querySelectorAll(":scope > td")];
+    if(!cells.length)continue;
+    const table=row.closest("table");
+    const headings=[...(table?.querySelectorAll("thead tr:last-child th")||[])].map(x=>x.textContent.trim().toLowerCase());
+    let index=headings.findIndex(x=>/^wins?$/.test(x));
+    if(index<0){
+     const first=[...table?.querySelectorAll("tr")||[]].find(x=>/\\bwins?\\b/i.test(x.textContent||""));
+     if(first)index=[...first.querySelectorAll("th,td")].findIndex(x=>/^wins?$/i.test(x.textContent.trim()));
+    }
+    if(index>=0&&index<cells.length&&/^\\d+$/.test(cells[index].textContent.trim())&&cells[index].textContent.trim()!==wins)
+      cells[index].textContent=wins;
+   }
+  };
+  apply();
+  if(!frame.__hlrnWinObserver){
+   frame.__hlrnWinObserver=new MutationObserver(()=>{if(frame.__hlrnWinPending)return;frame.__hlrnWinPending=true;requestAnimationFrame(()=>{frame.__hlrnWinPending=false;apply()})});
+   frame.__hlrnWinObserver.observe(doc.body,{childList:true,subtree:true});
+  }
+ });
+}
 function loadHostedTab(key){
   const frame=hostedFrame(key);
   const loading=document.getElementById("hostedLoading");
@@ -2838,6 +2879,7 @@ function loadHostedTab(key){
     if(loading) loading.style.display="none";
     installHostedResize(key);
     if(key!=="h2h") queueHostedDriverLinks(key);
+    if(key==="drivers"||key==="racing"||key==="records")correctTommyHostedFrame(key);
     else renderHostedH2HPhotos(frame).catch(()=>{});
     setTimeout(()=>{resizeHostedFrame(key);if(key!=="h2h")queueHostedDriverLinks(key);else renderHostedH2HPhotos(frame).catch(()=>{})},80);
     setTimeout(()=>{resizeHostedFrame(key);if(key!=="h2h")queueHostedDriverLinks(key);else renderHostedH2HPhotos(frame).catch(()=>{})},350);
