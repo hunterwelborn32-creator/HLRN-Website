@@ -12,5 +12,7 @@ assert.equal(Number(card[0].wins),5);
 const other=profiles.drivers.filter(x=>x.name==="Tommy Rogers"&&x.series!=="hosted");
 assert.ok(other.every(x=>x.wins===0),"No Sunday/Monday win changes");
 const sync=readFileSync(new URL("tools/sync-data.mjs",root),"utf8");
-assert.ok(sync.includes("if (tommy) tommy.wins = '5'"),"Correction must survive Hosted source sync");
+assert.ok(sync.includes("tommy.wins = String(sourceWins + 1)"),"Apply one-win offset to fresh Hosted source");
+assert.ok(!sync.includes("if (tommy) tommy.wins = '5'"),"Never force a fixed Hosted win total");
+assert.ok(sync.indexOf("tommy.wins = String(sourceWins + 1)") < sync.indexOf("hosted = {"),"Offset must be applied before published snapshot");
 console.log("Hosted-only Tommy Rogers wins correction verified.");
