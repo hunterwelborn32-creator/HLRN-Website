@@ -170,10 +170,10 @@
   }
 
   // Keep the card fresh even when visitors leave the homepage open.
-  // Hosted data is published by GitHub Actions every five minutes.
+  // Poll the latest published snapshot while the homepage is visible.
   setInterval(()=>{
     if(document.visibilityState==="visible")load();
-  },60000);
+  },30000);
 
   document.addEventListener("visibilitychange",()=>{
     if(document.visibilityState==="visible")load();
