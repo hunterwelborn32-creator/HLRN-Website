@@ -120,5 +120,5 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', notify, { once: true });
   else notify();
   // Refresh only while a page is visible. Existing page code remains untouched until migrated.
-  setInterval(() => { if (!document.hidden) load().catch(() => {}); }, 5 * 60 * 1000);
+  setInterval(() => { if (!document.hidden) load().catch(() => {}); }, 30 * 1000);
 })(window);
