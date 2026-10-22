@@ -885,6 +885,19 @@ export async function sync({
       const url = new URL(hostedEndpoint);
       url.searchParams.set('action', 'data');
       const refreshedHosted = validateHosted(await request(url, 'hosted/data', {}, 90000));
+      // One historical Hosted win was absent from the upstream total.
+      // Apply the +1 only to freshly fetched source data. If refresh fails,
+      // the already-corrected published snapshot is retained unchanged.
+      const tommy = refreshedHosted.rankings.find(row => String(row?.driver || '').trim() === 'Tommy Rogers');
+      if (tommy) {
+        const sourceWins = Number(tommy.wins);
+        if (Number.isInteger(sourceWins) && sourceWins >= 0) {
+          tommy.wins = String(sourceWins + 1);
+        } else {
+          console.warn('Tommy Rogers Hosted win count was invalid; leaving upstream value unchanged.');
+        }
+      }
+
       const priorHostedCount = Array.isArray(old?.hosted?.sessions) ? old.hosted.sessions.length : 0;
       if (priorHostedCount && refreshedHosted.sessions.length < priorHostedCount) {
         throw new Error(`Hosted source regressed from ${priorHostedCount} to ${refreshedHosted.sessions.length} session rows`);
@@ -905,13 +918,6 @@ export async function sync({
     }
   } else {
     console.log('HLRN_HOSTED_WEBAPP_URL not configured; existing Hosted snapshot retained.');
-  }
-
-  // Hosted-only administrator correction: Tommy Rogers has five career wins.
-  // The Hosted endpoint may still report four; preserve this adjustment on sync.
-  if (Array.isArray(hosted?.rankings)) {
-    const tommy = hosted.rankings.find(row => String(row?.driver || '').trim() === 'Tommy Rogers');
-    if (tommy) tommy.wins = '5';
   }
 
   const next = buildSnapshot(payloads, old, hosted, seasonRaw, teamRosters, stageTotals);
