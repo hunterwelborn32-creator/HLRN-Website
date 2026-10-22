@@ -852,7 +852,6 @@ function start(){
     ["intelligence","Intelligence","race-intelligence/"],
   ];
   const more=[
-    ["teams","Team Championship","teams/"],
     ["broadcast","Watch HLRN","broadcasters/"],
     ["rules","Rules","rules/"],
     ["adventures","Adventures","adventures/"],
