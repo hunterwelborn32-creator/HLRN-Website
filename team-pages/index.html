@@ -44,70 +44,33 @@ main.wrap:after{content:"";position:absolute;z-index:-1;top:32px;left:50%;transf
 @media(max-width:1050px){.team-body{padding-left:112px!important}.team-mark{left:13px;font-size:32px}}
 @media(max-width:700px){.intro h1{letter-spacing:-1px}.section-head{padding-left:43px}.section-head h2{font-size:18px}.section-head small{font-size:9px;padding:7px}.team-body{padding-left:100px!important}.team-mark{font-size:31px}}
 @media(prefers-reduced-motion:reduce){.team,.team-image img{transition:none!important}}
-</style><style id="hlrn-team-logo-size-20261022">.team-body{padding-left:185px!important}.team-mark{left:24px!important;font-size:72px!important;line-height:1!important;letter-spacing:-4px!important;transform:translateY(-50%) skew(-10deg)!important}@media(max-width:1050px){.team-body{padding-left:145px!important}.team-mark{left:18px!important;font-size:56px!important}}@media(max-width:700px){.team-body{padding-left:110px!important}.team-mark{left:14px!important;font-size:42px!important}}</style><style id="hlrn-team-daymode-contrast-fix">
-/* Keep Team Headquarters visually dark even when the global shell uses day mode. */
-html,html[data-theme="light"],html.light,body,body[data-theme="light"],body.light{
-  color-scheme:dark!important;
-}
-body,body[data-theme="light"],body.light{
-  color:#f6f7fc!important;
-  background:#04060b!important;
-  background-image:radial-gradient(ellipse at 50% 0%,#171b27 0%,#05070b 56%,#020307 100%)!important;
-}
-.header{background:#05080cf7!important;color:#f6f7fc!important}
-.brand,.section-head h2,.team h3{color:#fff!important}
-.eyebrow,.preview,.section-head small,.sub{color:#b8c2cf!important}
-.intro p{color:#d0d6e0!important}
-.intro h1{color:#f6f7fc!important}
-.intro h1 em{color:#f12646!important}
-.tabs{background:linear-gradient(#181e28,#070a10)!important;border-color:#59616e!important}
-.tab{background:transparent!important;color:#c9d2de!important}
-.tab[aria-selected="true"]{background:linear-gradient(110deg,#ee1640,#fa3f55)!important;color:#fff!important}
-.section-head{border-bottom-color:#d01a39!important}
-.team{color:#fff!important;background:radial-gradient(ellipse at 90% 15%,color-mix(in srgb,var(--team-accent) 35%,transparent),transparent 56%),linear-gradient(115deg,#070910 15%,#101722 55%,#080b12 100%)!important;border-color:#424956!important}
-.team .sub{color:#c0c8d3!important}
-.team .open{background:#02050bc9!important;color:#ff6178!important;border-top-color:#38404b!important}
-.footer{color:#9da8b8!important;background:transparent!important;border-top-color:#273548!important}
-</style><style id="hlrn-team-daymode-v2">
-/* Scoped route fix: global Day Race rules target [data-hlrn-theme] and [data-hlrn-route]. */
-html[data-hlrn-theme="light"][data-hlrn-route] body,
-html[data-hlrn-theme="dark"][data-hlrn-route] body,
-html body{background:#05070c!important;color:#f8f9fc!important}
-html[data-hlrn-theme="light"][data-hlrn-route] body > .header,
-html[data-hlrn-theme="light"][data-hlrn-route] body .header,
-html body .header{background:#070a11!important;border-color:#2b3544!important;color:#fff!important}
-html[data-hlrn-theme="light"][data-hlrn-route] body .header .brand,
-html[data-hlrn-theme="light"][data-hlrn-route] body .header .preview,
-html body .header .brand{color:#fff!important;text-shadow:none!important}
-html[data-hlrn-theme="light"][data-hlrn-route] body main.wrap,
-html[data-hlrn-theme="dark"][data-hlrn-route] body main.wrap,
-html body main.wrap{
- background:linear-gradient(180deg,#0e121e 0%,#070911 55%,#05070c 100%)!important;
- color:#fff!important;
- box-shadow:0 0 0 100vmax #05070c;
- clip-path:inset(0 -100vmax);
-}
-html[data-hlrn-theme="light"][data-hlrn-route] body main.wrap::before,
-html body main.wrap::before{background:linear-gradient(180deg,transparent 0%,#05070c 96%),radial-gradient(ellipse at 50% 38%,#b900281a 0%,transparent 65%),repeating-linear-gradient(116deg,transparent 0 140px,#bd082218 143px 172px,transparent 178px 228px)!important}
-html[data-hlrn-theme="light"][data-hlrn-route] body main.wrap .intro,
-html body main.wrap .intro{background:transparent!important}
-html[data-hlrn-theme="light"][data-hlrn-route] body main.wrap .intro h1,
-html[data-hlrn-theme="light"][data-hlrn-route] body main.wrap .section-head h2,
-html[data-hlrn-theme="light"][data-hlrn-route] body main.wrap .team h3,
-html body main.wrap .intro h1,
-html body main.wrap .section-head h2,
-html body main.wrap .team h3{color:#f7f9ff!important;-webkit-text-fill-color:#f7f9ff!important;text-shadow:1px 2px 5px #000!important}
-html[data-hlrn-theme="light"][data-hlrn-route] body main.wrap .intro h1 em,
-html body main.wrap .intro h1 em{color:#f12646!important;-webkit-text-fill-color:#f12646!important}
-html[data-hlrn-theme="light"][data-hlrn-route] body main.wrap .intro p,
-html body main.wrap .intro p{color:#d0d6e0!important;-webkit-text-fill-color:#d0d6e0!important}
-html[data-hlrn-theme="light"][data-hlrn-route] body main.wrap .eyebrow,
-html[data-hlrn-theme="light"][data-hlrn-route] body main.wrap .section-head small{color:#acb8cb!important;-webkit-text-fill-color:#acb8cb!important}
-html[data-hlrn-theme="light"][data-hlrn-route] body main.wrap .team,
-html body main.wrap .team{color:#fff!important;background:radial-gradient(ellipse at 90% 15%,color-mix(in srgb,var(--team-accent) 35%,transparent),transparent 56%),linear-gradient(115deg,#070910 15%,#101722 55%,#080b12 100%)!important}
-html[data-hlrn-theme="light"][data-hlrn-route] body main.wrap .team .sub{color:#c0c8d3!important}
-html[data-hlrn-theme="light"][data-hlrn-route] body main.wrap .tab[aria-selected="true"]{color:#fff!important;background:linear-gradient(110deg,#ee1640,#fa3f55)!important}
-html[data-hlrn-theme="light"][data-hlrn-route] body main.wrap .tab[aria-selected="false"]{color:#dae2ee!important;background:#0b111b!important}
+</style><style id="hlrn-team-logo-size-20261022">.team-body{padding-left:185px!important}.team-mark{left:24px!important;font-size:72px!important;line-height:1!important;letter-spacing:-4px!important;transform:translateY(-50%) skew(-10deg)!important}@media(max-width:1050px){.team-body{padding-left:145px!important}.team-mark{left:18px!important;font-size:56px!important}}@media(max-width:700px){.team-body{padding-left:110px!important}.team-mark{left:14px!important;font-size:42px!important}}</style><style id="hlrn-team-true-day-palette">
+/* Team Headquarters: genuine Day Race palette, scoped to page only. */
+html[data-hlrn-theme="light"] body{background:#f7f9fc!important;color:#121926!important;color-scheme:light!important}
+html[data-hlrn-theme="light"] body .header{background:#fff!important;color:#111827!important;border-bottom:1px solid #d4dce8!important}
+html[data-hlrn-theme="light"] body .header .brand{color:#111827!important;text-shadow:none!important}
+html[data-hlrn-theme="light"] body .header .brand b{color:#e62e4b!important}
+html[data-hlrn-theme="light"] body .header .preview{color:#405674!important;border-color:#aebdd1!important;background:#fff!important}
+html[data-hlrn-theme="light"] body main.wrap{color:#101827!important;background:#f7f9fc!important;box-shadow:0 0 0 100vmax #f7f9fc!important;clip-path:inset(0 -100vmax)}
+html[data-hlrn-theme="light"] body main.wrap::before{background:linear-gradient(180deg,#f4f7fb 0%,#fff 100%),repeating-linear-gradient(116deg,transparent 0 140px,#db395012 143px 172px,transparent 178px 228px)!important;border-color:#ebd6dc!important}
+html[data-hlrn-theme="light"] body main.wrap::after{opacity:.085!important}
+html[data-hlrn-theme="light"] body main.wrap .intro h1{color:#111827!important;-webkit-text-fill-color:#111827!important;text-shadow:none!important}
+html[data-hlrn-theme="light"] body main.wrap .intro h1 em{color:#e52f4a!important;-webkit-text-fill-color:#e52f4a!important;text-shadow:none!important}
+html[data-hlrn-theme="light"] body main.wrap .eyebrow{color:#435674!important;-webkit-text-fill-color:#435674!important}
+html[data-hlrn-theme="light"] body main.wrap .intro p{color:#46566f!important;-webkit-text-fill-color:#46566f!important}
+html[data-hlrn-theme="light"] body main.wrap .section-head h2{color:#111827!important;-webkit-text-fill-color:#111827!important;text-shadow:none!important}
+html[data-hlrn-theme="light"] body main.wrap .section-head small{color:#354762!important;-webkit-text-fill-color:#354762!important;border-color:#a7b5c6!important}
+html[data-hlrn-theme="light"] body main.wrap .tabs{background:#e9eef5!important;border-color:#b5c3d3!important}
+html[data-hlrn-theme="light"] body main.wrap .tab[aria-selected="false"]{background:#fff!important;color:#17243a!important}
+html[data-hlrn-theme="light"] body main.wrap .tab[aria-selected="true"]{background:linear-gradient(110deg,#e91c40,#f64b62)!important;color:#fff!important}
+/* White cards with black text, colored monogram/logo retained. */
+html[data-hlrn-theme="light"] body main.wrap .team{background:linear-gradient(130deg,#fff 0%,#f3f6fa 100%)!important;border:1px solid #cbd4e2!important;color:#111827!important;box-shadow:0 4px 12px #1c2d4317!important}
+html[data-hlrn-theme="light"] body main.wrap .team:before{opacity:.12!important}
+html[data-hlrn-theme="light"] body main.wrap .team h3{color:#111827!important;-webkit-text-fill-color:#111827!important;text-shadow:none!important}
+html[data-hlrn-theme="light"] body main.wrap .team .sub{color:#44546b!important;-webkit-text-fill-color:#44546b!important}
+html[data-hlrn-theme="light"] body main.wrap .team .team-mark{color:var(--team-accent)!important;-webkit-text-fill-color:var(--team-accent)!important;text-shadow:none!important}
+html[data-hlrn-theme="light"] body main.wrap .team .open{background:#edf2f8!important;color:#c62242!important;border-top:1px solid #cbd4e2!important}
+html[data-hlrn-theme="light"] body .footer{background:#fff!important;color:#405674!important;border-color:#d4dce8!important}
 </style></head><body><header class="header"><div class="wrap nav"><div class="brand">HL<b>RN</b> / TEAMS</div><span class="preview">UNPUBLISHED PREVIEW</span></div></header><main class="wrap"><section class="intro"><div class="eyebrow">HIGH LINE RACING NETWORK · LEAGUE TEAM DIRECTORY</div><h1>TEAM <em>HEADQUARTERS</em></h1><p>Select Sunday or Monday to browse the teams. Click any team to open its individual page in a new browser tab.</p></section><div aria-label="League" class="tabs" role="tablist"><button aria-controls="panel-sunday" aria-selected="true" class="tab" id="tab-sunday" role="tab" type="button">SUNDAY</button><button aria-controls="panel-monday" aria-selected="false" class="tab" id="tab-monday" role="tab" type="button">MONDAY</button></div><div class="panels"><section aria-labelledby="tab-sunday" id="panel-sunday" role="tabpanel"><div class="section-head"><h2>SUNDAY NIGHT LEAGUE</h2><small>7 TEAMS</small></div><div class="cards"><a aria-label="Open High Line Racing team page in a new tab" class="team" href="sunday/high-line-racing.html" rel="noopener" target="_blank" style="--team-accent:#238bff"><div class="team-body"><span class="team-mark" aria-hidden="true">HLR</span><h3>High Line Racing</h3><span class="sub">5 DRIVERS <span class="dot">•</span> BLACK · BLUE · SILVER</span><span class="open">VIEW TEAM PAGE <span>↗</span></span></div></a>
 <a aria-label="Open SMT Racing Inc. team page in a new tab" class="team" href="sunday/smt-racing.html" rel="noopener" target="_blank" style="--team-accent:#ed304c"><div class="team-body"><span class="team-mark" aria-hidden="true">SMT</span><h3>SMT Racing Inc.</h3><span class="sub">5 DRIVERS <span class="dot">•</span> BLACK · RED</span><span class="open">VIEW TEAM PAGE <span>↗</span></span></div></a>
 <a aria-label="Open Dark Horse Racing team page in a new tab" class="team" href="sunday/dark-horse-racing.html" rel="noopener" target="_blank" style="--team-accent:#ed324b"><div class="team-body"><span class="team-mark" aria-hidden="true">DHR</span><h3>Dark Horse Racing</h3><span class="sub">5 DRIVERS <span class="dot">•</span> BLACK · RED · SILVER</span><span class="open">VIEW TEAM PAGE <span>↗</span></span></div></a>
