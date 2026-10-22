@@ -907,6 +907,13 @@ export async function sync({
     console.log('HLRN_HOSTED_WEBAPP_URL not configured; existing Hosted snapshot retained.');
   }
 
+  // Hosted-only administrator correction: Tommy Rogers has five career wins.
+  // The Hosted endpoint may still report four; preserve this adjustment on sync.
+  if (Array.isArray(hosted?.rankings)) {
+    const tommy = hosted.rankings.find(row => String(row?.driver || '').trim() === 'Tommy Rogers');
+    if (tommy) tommy.wins = '5';
+  }
+
   const next = buildSnapshot(payloads, old, hosted, seasonRaw, teamRosters, stageTotals);
   const dataChanged = !sameData(old, next);
 

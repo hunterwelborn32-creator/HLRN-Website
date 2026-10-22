@@ -1,0 +1,16 @@
+import assert from "node:assert/strict";
+import {readFileSync} from "node:fs";
+const root=new URL("../",import.meta.url);
+const data=JSON.parse(readFileSync(new URL("data/hlrn.json",root),"utf8"));
+const profiles=JSON.parse(readFileSync(new URL("data/derived/profiles.json",root),"utf8"));
+const hosted=data.hosted.rankings.filter(x=>x.driver==="Tommy Rogers");
+const card=profiles.drivers.filter(x=>x.series==="hosted"&&x.name==="Tommy Rogers");
+assert.equal(hosted.length,1);
+assert.equal(card.length,1);
+assert.equal(String(hosted[0].wins),"5");
+assert.equal(Number(card[0].wins),5);
+const other=profiles.drivers.filter(x=>x.name==="Tommy Rogers"&&x.series!=="hosted");
+assert.ok(other.every(x=>x.wins===0),"No Sunday/Monday win changes");
+const sync=readFileSync(new URL("tools/sync-data.mjs",root),"utf8");
+assert.ok(sync.includes("if (tommy) tommy.wins = '5'"),"Correction must survive Hosted source sync");
+console.log("Hosted-only Tommy Rogers wins correction verified.");
