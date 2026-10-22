@@ -5,6 +5,9 @@ on:
       - "data/hlrn.json"
       - "data/derived/profiles.json"
       - "tools/sync-data.mjs"
+      - "standings/hosted.html"
+      - "assets/home/home-data.js"
+      - "drivers/tommy-rogers/index.html"
       - "tests/hosted-tommy-wins.test.mjs"
       - ".github/workflows/verify-hosted-stats.yml"
   workflow_dispatch:
