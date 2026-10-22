@@ -902,6 +902,45 @@ function start(){
 
   document.body.insertBefore(nav,document.body.firstChild);
 
+  /* Separate visual preview row: does not alter mini-track or header markup. */
+  (function(){
+    if(document.getElementById("hlrn-nav-gallery"))return;
+    const previews=[
+      ["Home","","Race night hub","adventures/episode-03-cover.webp"],
+      ["Live","live/","Live race center","adventures/episode-01/images/01-01.webp"],
+      ["Standings","standings/","Points battle","adventures/episode-01/images/02-01.webp"],
+      ["Results","results/","Finishes & recaps","adventures/episode-01/images/03-01.webp"],
+      ["Drivers","drivers/","Driver profiles","assets/driver-photos/full/bryce-hinton.webp"],
+      ["Teams","team-pages/","Team headquarters","adventures/episode-01/images/04-01.webp"],
+      ["Intelligence","race-intelligence/","Racing analytics","adventures/episode-01/images/05-01.webp"]
+    ];
+    const rail=document.createElement("section");
+    rail.id="hlrn-nav-gallery";
+    rail.setAttribute("aria-label","Explore HLRN sections");
+    rail.innerHTML='<div class="hng-scroll">'+previews.map(([name,href,info,img])=>'<a class="hng-card" href="'+url(href)+'" aria-label="'+name+': '+info+'"><span class="hng-image" style="background-image:linear-gradient(180deg,transparent,rgba(2,5,12,.92)),url(&quot;'+url(img)+'&quot;)"></span><span class="hng-text"><strong>'+name+'</strong><small>'+info+'</small></span></a>').join('')+'</div>';
+    nav.insertAdjacentElement("afterend",rail);
+    const style=document.createElement("style");
+    style.id="hlrn-nav-gallery-style";
+    style.textContent=[
+      '#hlrn-nav-gallery{position:relative;z-index:10;width:100%;background:linear-gradient(180deg,#0e1420,#080b12);border-bottom:2px solid #d92140;box-shadow:0 5px 13px #0002;font-family:Arial,Helvetica,sans-serif}',
+      '#hlrn-nav-gallery .hng-scroll{width:min(1600px,100%);margin:auto;padding:10px 18px;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:9px}',
+      '#hlrn-nav-gallery .hng-card{height:90px;min-width:0;position:relative;display:block;overflow:hidden;border:1px solid #455063;border-radius:7px;background:#17202c;color:#fff!important;text-decoration:none!important;isolation:isolate;transition:transform .2s,border-color .2s,box-shadow .2s}',
+      '#hlrn-nav-gallery .hng-image{position:absolute;inset:0;background-size:cover;background-position:center;filter:saturate(.85);transition:transform .25s;z-index:-1}',
+      '#hlrn-nav-gallery .hng-card:hover,#hlrn-nav-gallery .hng-card:focus-visible{transform:translateY(-3px);border-color:#ff3555;box-shadow:0 4px 17px #f62f4e55;outline:none}',
+      '#hlrn-nav-gallery .hng-card:hover .hng-image{transform:scale(1.08)}',
+      '#hlrn-nav-gallery .hng-text{position:absolute;left:10px;right:7px;bottom:8px;color:#fff!important;text-shadow:0 2px 5px #000}',
+      '#hlrn-nav-gallery .hng-text strong{display:block;color:#fff!important;font-size:13px;line-height:1.1;font-style:italic;text-transform:uppercase;font-weight:1000;letter-spacing:.7px}',
+      '#hlrn-nav-gallery .hng-text small{display:block;margin-top:4px;color:#e3e8f1!important;font-size:10px;line-height:1.2}',
+      'html[data-hlrn-theme="light"] #hlrn-nav-gallery{background:#edf2f8;border-bottom-color:#d52442}',
+      'html[data-hlrn-theme="light"] #hlrn-nav-gallery .hng-card{border-color:#b8c5d6}',
+      '@media(max-width:1000px){#hlrn-nav-gallery .hng-scroll{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;padding:9px 14px}#hlrn-nav-gallery .hng-card{flex:0 0 172px;scroll-snap-align:start}}',
+      '@media(max-width:650px){#hlrn-nav-gallery .hng-card{height:75px;flex-basis:145px}#hlrn-nav-gallery .hng-text strong{font-size:12px}#hlrn-nav-gallery .hng-text small{font-size:9px}}',
+      '@media(prefers-reduced-motion:reduce){#hlrn-nav-gallery .hng-card,#hlrn-nav-gallery .hng-image{transition:none}}'
+    ].join('\n');
+    document.head.appendChild(style);
+  })();
+
+
 // HLRN Broadcast Racing Header V6: responsive full-brand superspeedway animation.
 (function(){
  const canvas=nav.querySelector(".hgn-mini-canvas");if(!canvas)return;
