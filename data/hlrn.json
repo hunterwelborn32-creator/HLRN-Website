@@ -31067,6 +31067,17 @@
         "averageLap": "0:37.346"
       },
       {
+        "date": "11/26/2025",
+        "track": "Talladega Superspeedway",
+        "carNumber": "34",
+        "driver": "Tommy Rogers",
+        "start": "3",
+        "lapsLed": "9",
+        "incidents": "12",
+        "averageLap": "1:00.528",
+        "subsessionId": 81541218
+      },
+      {
         "date": "11/23/2025",
         "track": "Homestead Miami Speedway",
         "carNumber": "99",
@@ -31253,11 +31264,11 @@
       {
         "rank": "9",
         "driver": "Tommy Rogers",
-        "races": "140",
-        "wins": "4",
-        "top5": "25",
-        "top10": "53",
-        "averageFinish": "14.69"
+        "races": "141",
+        "wins": "5",
+        "top5": "26",
+        "top10": "54",
+        "averageFinish": "14.59"
       },
       {
         "rank": "10",
