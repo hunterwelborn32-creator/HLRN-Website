@@ -263,15 +263,6 @@ async function loadHLRNData() {
         }
 
 
-        // Use the same corrected Hosted ranking totals as the other HLRN pages.
-        // Only overrides Tommy Rogers; the other Google Sheets statistics remain unchanged.
-        try {
-            const published = await fetch("/data/hlrn.json", {cache:"no-store"}).then(r => r.ok ? r.json() : null);
-            const corrected = published?.hosted?.rankings?.find(row => String(row.driver || "").trim() === "Tommy Rogers");
-            const displayed = ranking.find(row => String(row.driver || "").trim() === "Tommy Rogers");
-            if (displayed && corrected && Number.isInteger(Number(corrected.wins))) displayed.wins = String(corrected.wins);
-        } catch (e) { console.warn("Hosted wins correction unavailable on home spotlight",e); }
-
         /* =================================================
            LAST RACE CARD
            ================================================= */
