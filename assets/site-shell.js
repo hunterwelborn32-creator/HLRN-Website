@@ -850,7 +850,6 @@ function start(){
     ["drivers","Drivers","drivers/"],
     ["team-pages","Teams","team-pages/"],
     ["intelligence","Intelligence","race-intelligence/"],
-    ["news","News","news/"]
   ];
   const more=[
     ["teams","Team Championship","teams/"],
@@ -1175,7 +1174,6 @@ function start(){
       else if(lp.includes("race-intelligence")||lp.includes("intelligence"))dest="race-intelligence/";
       else if(lp.includes("standings"))dest="standings/";
       else if(lp.includes("schedule")||lp.includes("results"))dest="results/";
-      else if(lp.includes("news"))dest="news/";
       else if(lp.includes("rules"))dest="rules/";
       else if(lp.includes("broadcast"))dest="broadcasters/";
       else if(lp.includes("store"))dest="store/";
@@ -1235,7 +1233,7 @@ function start(){
       <div class="hgf-inner">
         <div class="hgf-brand"><span class="hgf-mark">HL</span><span><strong>High Line Racing Network</strong><small>Where the racing never stops</small></span></div>
         <nav class="hgf-links" aria-label="HLRN footer navigation">
-          <a href="${url("live/")}">Live</a><a href="${url("standings/")}">Standings</a><a href="${url("drivers/")}">Drivers</a><a href="${url("news/")}">News</a><a href="${url("adventures/")}">Adventures</a><a href="${url("broadcasters/")}">Broadcasts</a>
+          <a href="${url("live/")}">Live</a><a href="${url("standings/")}">Standings</a><a href="${url("drivers/")}">Drivers</a><a href="${url("adventures/")}">Adventures</a><a href="${url("broadcasters/")}">Broadcasts</a>
         </nav>
         <div class="hgf-copy">© ${year} HLRN<br>High Line Racing Network</div>
       </div>`;
