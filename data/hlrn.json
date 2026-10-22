@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T01:55:03.632Z",
+  "generatedAt": "2026-10-22T07:01:32.830Z",
   "leagues": {
     "sunday": {
       "drivers": [
@@ -28319,668 +28319,613 @@
   },
   "hosted": {
     "latest": {
-      "track": "Talladega Superspeedway",
-      "date": "10/17/2026",
-      "totalLaps": "100",
-      "cautions": "8",
-      "totalIncidents": 886,
-      "winner": "Brian Hennings",
-      "winnerCarNumber": "74",
-      "winnerCar": "ARCA Chevrolet SS",
+      "track": "Daytona International Speedway",
+      "date": "10/21/2026",
+      "totalLaps": "75",
+      "cautions": "4",
+      "totalIncidents": 440,
+      "winner": "Tommy Rogers",
+      "winnerCarNumber": "34",
+      "winnerCar": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
       "results": [
         {
           "position": "1",
-          "driver": "Brian Hennings",
-          "carNumber": "74",
-          "car": "ARCA Chevrolet SS",
-          "start": "2",
-          "laps": "100",
-          "lapsLed": "35",
-          "incidents": "12",
-          "bestLap": "0:50.760",
-          "averageLap": "1:11.557",
-          "iRating": "4005"
-        },
-        {
-          "position": "2",
-          "driver": "Craig Rowe",
-          "carNumber": "24",
-          "car": "ARCA Chevrolet SS",
-          "start": "11",
-          "laps": "100",
-          "lapsLed": "10",
-          "incidents": "34",
-          "bestLap": "0:50.417",
-          "averageLap": "1:11.558",
-          "iRating": "2778"
-        },
-        {
-          "position": "3",
-          "driver": "Joshua McKinney2",
-          "carNumber": "3",
-          "car": "ARCA Chevrolet SS",
-          "start": "39",
-          "laps": "100",
-          "lapsLed": "2",
-          "incidents": "40",
-          "bestLap": "0:50.223",
-          "averageLap": "1:11.559",
-          "iRating": "2686"
-        },
-        {
-          "position": "4",
           "driver": "Tommy Rogers",
           "carNumber": "34",
-          "car": "ARCA Chevrolet SS",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
           "start": "6",
-          "laps": "100",
-          "lapsLed": "3",
-          "incidents": "38",
-          "bestLap": "0:50.392",
-          "averageLap": "1:11.560",
+          "laps": "75",
+          "lapsLed": "2",
+          "incidents": "8",
+          "bestLap": "0:45.374",
+          "averageLap": "0:59.376",
           "iRating": "1760"
         },
         {
-          "position": "5",
+          "position": "2",
+          "driver": "Kevin Dixon2",
+          "carNumber": "9",
+          "car": "NASCAR Cup Series Next Gen Toyota Camry",
+          "start": "37",
+          "laps": "75",
+          "lapsLed": "5",
+          "incidents": "12",
+          "bestLap": "0:45.382",
+          "averageLap": "0:59.377",
+          "iRating": "2528"
+        },
+        {
+          "position": "3",
+          "driver": "Joey Bremer2",
+          "carNumber": "30",
+          "car": "NASCAR Cup Series Next Gen Ford Mustang",
+          "start": "13",
+          "laps": "75",
+          "lapsLed": "10",
+          "incidents": "4",
+          "bestLap": "0:45.328",
+          "averageLap": "0:59.377",
+          "iRating": "3725"
+        },
+        {
+          "position": "4",
           "driver": "Gerry Bergeron",
-          "carNumber": "2",
-          "car": "ARCA Chevrolet SS",
-          "start": "40",
-          "laps": "100",
-          "lapsLed": "2",
-          "incidents": "10",
-          "bestLap": "0:50.306",
-          "averageLap": "1:11.561",
+          "carNumber": "1",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "26",
+          "laps": "75",
+          "lapsLed": "0",
+          "incidents": "8",
+          "bestLap": "0:45.332",
+          "averageLap": "0:59.378",
           "iRating": "2578"
         },
         {
-          "position": "6",
-          "driver": "Rick Paradis",
-          "carNumber": "7",
-          "car": "ARCA Ford Mustang",
-          "start": "28",
-          "laps": "100",
-          "lapsLed": "0",
-          "incidents": "37",
-          "bestLap": "0:50.836",
-          "averageLap": "1:11.563",
-          "iRating": "1680"
-        },
-        {
-          "position": "7",
-          "driver": "Josh Cruz",
-          "carNumber": "44",
-          "car": "ARCA Chevrolet SS",
-          "start": "37",
-          "laps": "100",
-          "lapsLed": "0",
-          "incidents": "43",
-          "bestLap": "0:50.016",
-          "averageLap": "1:11.568",
-          "iRating": "5362"
-        },
-        {
-          "position": "8",
-          "driver": "James Jepson",
-          "carNumber": "13",
-          "car": "ARCA Chevrolet SS",
+          "position": "5",
+          "driver": "Jerry Fassett",
+          "carNumber": "16",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
           "start": "7",
-          "laps": "100",
-          "lapsLed": "0",
-          "incidents": "28",
-          "bestLap": "0:50.650",
-          "averageLap": "1:11.571",
-          "iRating": "1005"
+          "laps": "75",
+          "lapsLed": "4",
+          "incidents": "0",
+          "bestLap": "0:45.434",
+          "averageLap": "0:59.378",
+          "iRating": "1345"
         },
         {
-          "position": "9",
-          "driver": "Kelly Walton",
-          "carNumber": "818",
-          "car": "ARCA Chevrolet SS",
-          "start": "47",
-          "laps": "100",
-          "lapsLed": "0",
-          "incidents": "24",
-          "bestLap": "0:50.547",
-          "averageLap": "1:11.618",
-          "iRating": "1148"
-        },
-        {
-          "position": "10",
-          "driver": "Raj Mangipudi",
-          "carNumber": "25",
-          "car": "ARCA Ford Mustang",
-          "start": "45",
-          "laps": "100",
-          "lapsLed": "0",
-          "incidents": "29",
-          "bestLap": "0:50.812",
-          "averageLap": "1:11.639",
-          "iRating": "1706"
-        },
-        {
-          "position": "11",
-          "driver": "Ryan Wilson21",
-          "carNumber": "23",
-          "car": "ARCA Chevrolet SS",
-          "start": "9",
-          "laps": "100",
-          "lapsLed": "6",
-          "incidents": "14",
-          "bestLap": "0:50.260",
-          "averageLap": "1:11.640",
-          "iRating": "1475"
-        },
-        {
-          "position": "12",
-          "driver": "John Miles4",
-          "carNumber": "69",
-          "car": "ARCA Ford Mustang",
-          "start": "4",
-          "laps": "100",
-          "lapsLed": "7",
-          "incidents": "37",
-          "bestLap": "0:50.840",
-          "averageLap": "1:11.641",
-          "iRating": "2104"
-        },
-        {
-          "position": "13",
-          "driver": "Kenneth Brown4",
-          "carNumber": "40",
-          "car": "ARCA Ford Mustang",
-          "start": "44",
-          "laps": "100",
-          "lapsLed": "0",
-          "incidents": "28",
-          "bestLap": "0:50.897",
-          "averageLap": "1:11.641",
-          "iRating": "1707"
-        },
-        {
-          "position": "14",
-          "driver": "Maurice Gomillion",
-          "carNumber": "39",
-          "car": "ARCA Chevrolet SS",
-          "start": "22",
-          "laps": "100",
-          "lapsLed": "0",
-          "incidents": "32",
-          "bestLap": "0:50.348",
-          "averageLap": "1:11.707",
-          "iRating": "2246"
-        },
-        {
-          "position": "15",
-          "driver": "Edward Fiedler",
-          "carNumber": "66",
-          "car": "ARCA Toyota Camry",
-          "start": "35",
-          "laps": "100",
-          "lapsLed": "0",
-          "incidents": "18",
-          "bestLap": "0:50.804",
-          "averageLap": "1:11.713",
-          "iRating": "2495"
-        },
-        {
-          "position": "16",
-          "driver": "Taylor Butcher-Benjamin",
-          "carNumber": "17",
-          "car": "ARCA Chevrolet SS",
-          "start": "38",
-          "laps": "100",
-          "lapsLed": "9",
-          "incidents": "24",
-          "bestLap": "0:50.393",
-          "averageLap": "1:11.793",
-          "iRating": "5030"
-        },
-        {
-          "position": "17",
-          "driver": "Brian Duncan3",
-          "carNumber": "1",
-          "car": "ARCA Chevrolet SS",
-          "start": "25",
-          "laps": "100",
-          "lapsLed": "0",
-          "incidents": "37",
-          "bestLap": "0:50.459",
-          "averageLap": "1:11.795",
-          "iRating": "923"
-        },
-        {
-          "position": "18",
-          "driver": "David Collins8",
-          "carNumber": "707",
-          "car": "ARCA Ford Mustang",
-          "start": "10",
-          "laps": "100",
-          "lapsLed": "5",
-          "incidents": "32",
-          "bestLap": "0:50.889",
-          "averageLap": "1:11.840",
-          "iRating": "1048"
-        },
-        {
-          "position": "19",
+          "position": "6",
           "driver": "Jim Segredo",
           "carNumber": "21",
-          "car": "ARCA Chevrolet SS",
-          "start": "5",
-          "laps": "100",
-          "lapsLed": "11",
-          "incidents": "17",
-          "bestLap": "0:50.445",
-          "averageLap": "1:11.842",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "21",
+          "laps": "75",
+          "lapsLed": "0",
+          "incidents": "8",
+          "bestLap": "0:45.339",
+          "averageLap": "0:59.379",
           "iRating": "1272"
         },
         {
-          "position": "20",
-          "driver": "Chase Shipley",
-          "carNumber": "0",
-          "car": "ARCA Ford Mustang",
-          "start": "8",
-          "laps": "100",
-          "lapsLed": "1",
-          "incidents": "25",
-          "bestLap": "0:50.921",
-          "averageLap": "1:11.869",
-          "iRating": "1759"
-        },
-        {
-          "position": "21",
-          "driver": "Johnnie Jones Jr",
-          "carNumber": "73",
-          "car": "ARCA Ford Mustang",
-          "start": "24",
-          "laps": "100",
-          "lapsLed": "0",
-          "incidents": "16",
-          "bestLap": "0:50.692",
-          "averageLap": "1:11.968",
-          "iRating": "1197"
-        },
-        {
-          "position": "22",
-          "driver": "Kevin Dixon2",
-          "carNumber": "9",
-          "car": "ARCA Ford Mustang",
-          "start": "41",
-          "laps": "99",
-          "lapsLed": "3",
-          "incidents": "24",
-          "bestLap": "0:50.558",
-          "averageLap": "1:11.766",
-          "iRating": "2528"
-        },
-        {
-          "position": "23",
-          "driver": "Scott Prim",
-          "carNumber": "42",
-          "car": "ARCA Ford Mustang",
-          "start": "30",
-          "laps": "96",
-          "lapsLed": "0",
-          "incidents": "34",
-          "bestLap": "0:50.870",
-          "averageLap": "1:12.377",
-          "iRating": "868"
-        },
-        {
-          "position": "24",
-          "driver": "Mike Chivers",
-          "carNumber": "35",
-          "car": "ARCA Ford Mustang",
-          "start": "12",
-          "laps": "92",
-          "lapsLed": "0",
-          "incidents": "25",
-          "bestLap": "0:50.872",
-          "averageLap": "1:10.685",
-          "iRating": "1029"
-        },
-        {
-          "position": "25",
-          "driver": "Stephen Boyd3",
-          "carNumber": "31",
-          "car": "ARCA Ford Mustang",
-          "start": "23",
-          "laps": "69",
-          "lapsLed": "0",
-          "incidents": "16",
-          "bestLap": "0:50.881",
-          "averageLap": "1:17.762",
-          "iRating": "1255"
-        },
-        {
-          "position": "26",
-          "driver": "Matt Hudgins",
-          "carNumber": "47",
-          "car": "ARCA Chevrolet SS",
-          "start": "18",
-          "laps": "64",
-          "lapsLed": "1",
-          "incidents": "20",
-          "bestLap": "0:50.614",
-          "averageLap": "1:11.067",
-          "iRating": "2296"
-        },
-        {
-          "position": "27",
-          "driver": "Austin DeMarr",
-          "carNumber": "22",
-          "car": "ARCA Ford Mustang",
-          "start": "14",
-          "laps": "62",
-          "lapsLed": "0",
-          "incidents": "26",
-          "bestLap": "0:50.791",
-          "averageLap": "1:11.697",
-          "iRating": "1505"
-        },
-        {
-          "position": "28",
-          "driver": "Ricky Miles",
-          "carNumber": "5",
-          "car": "ARCA Chevrolet SS",
-          "start": "13",
-          "laps": "62",
-          "lapsLed": "0",
-          "incidents": "4",
-          "bestLap": "0:51.439",
-          "averageLap": "1:19.013",
-          "iRating": "1339"
-        },
-        {
-          "position": "29",
-          "driver": "Mike Ware",
-          "carNumber": "75",
-          "car": "ARCA Ford Mustang",
+          "position": "7",
+          "driver": "Hunter Welborn",
+          "carNumber": "27",
+          "car": "NASCAR Cup Series Next Gen Ford Mustang",
           "start": "3",
-          "laps": "57",
-          "lapsLed": "2",
-          "incidents": "24",
-          "bestLap": "0:50.996",
-          "averageLap": "1:13.440",
-          "iRating": "2193"
-        },
-        {
-          "position": "30",
-          "driver": "Jason Marstein",
-          "carNumber": "28",
-          "car": "ARCA Toyota Camry",
-          "start": "32",
-          "laps": "57",
-          "lapsLed": "0",
-          "incidents": "21",
-          "bestLap": "0:51.592",
-          "averageLap": "1:13.867",
-          "iRating": "1231"
-        },
-        {
-          "position": "31",
-          "driver": "Robert Wivell",
-          "carNumber": "53",
-          "car": "ARCA Chevrolet SS",
-          "start": "33",
-          "laps": "53",
-          "lapsLed": "0",
-          "incidents": "12",
-          "bestLap": "0:50.824",
-          "averageLap": "1:10.878",
-          "iRating": "1213"
-        },
-        {
-          "position": "32",
-          "driver": "Austin Hull",
-          "carNumber": "20",
-          "car": "ARCA Chevrolet SS",
-          "start": "20",
-          "laps": "49",
-          "lapsLed": "2",
+          "laps": "75",
+          "lapsLed": "5",
           "incidents": "4",
-          "bestLap": "0:50.257",
-          "averageLap": "1:07.499",
-          "iRating": "2149"
+          "bestLap": "0:45.424",
+          "averageLap": "0:59.379",
+          "iRating": "1453"
         },
         {
-          "position": "33",
-          "driver": "Nicholas Moody",
-          "carNumber": "60",
-          "car": "ARCA Chevrolet SS",
-          "start": "19",
-          "laps": "49",
+          "position": "8",
+          "driver": "William Daniel4",
+          "carNumber": "4",
+          "car": "NASCAR Cup Series Next Gen Toyota Camry",
+          "start": "24",
+          "laps": "75",
           "lapsLed": "0",
-          "incidents": "8",
-          "bestLap": "0:51.075",
-          "averageLap": "1:08.161",
-          "iRating": "1231"
+          "incidents": "14",
+          "bestLap": "0:45.421",
+          "averageLap": "0:59.381",
+          "iRating": "4885"
         },
         {
-          "position": "34",
-          "driver": "Nicholas Taskey",
-          "carNumber": "45",
-          "car": "ARCA Chevrolet SS",
-          "start": "16",
-          "laps": "45",
-          "lapsLed": "0",
-          "incidents": "11",
-          "bestLap": "0:50.681",
-          "averageLap": "1:09.353",
-          "iRating": "1605"
-        },
-        {
-          "position": "35",
-          "driver": "Ethan V Campbell",
-          "carNumber": "15",
-          "car": "ARCA Chevrolet SS",
-          "start": "17",
-          "laps": "43",
-          "lapsLed": "0",
-          "incidents": "19",
-          "bestLap": "0:50.898",
-          "averageLap": "1:11.070",
-          "iRating": "2037"
-        },
-        {
-          "position": "36",
-          "driver": "Caleb Schuiling",
-          "carNumber": "10",
-          "car": "ARCA Chevrolet SS",
-          "start": "36",
-          "laps": "35",
-          "lapsLed": "0",
-          "incidents": "16",
-          "bestLap": "0:51.652",
-          "averageLap": "1:13.166",
-          "iRating": "1523"
-        },
-        {
-          "position": "37",
-          "driver": "Justin Bennett",
-          "carNumber": "48",
-          "car": "ARCA Chevrolet SS",
-          "start": "15",
-          "laps": "35",
-          "lapsLed": "0",
-          "incidents": "8",
-          "bestLap": "0:50.935",
-          "averageLap": "1:13.169",
-          "iRating": "1297"
-        },
-        {
-          "position": "38",
-          "driver": "Mac Cook",
-          "carNumber": "8",
-          "car": "ARCA Chevrolet SS",
-          "start": "34",
-          "laps": "22",
-          "lapsLed": "0",
-          "incidents": "4",
-          "bestLap": "0:50.841",
-          "averageLap": "1:05.876",
-          "iRating": "475"
-        },
-        {
-          "position": "39",
-          "driver": "Matt Schinker2",
-          "carNumber": "14",
-          "car": "ARCA Chevrolet SS",
-          "start": "27",
-          "laps": "13",
-          "lapsLed": "0",
-          "incidents": "4",
-          "bestLap": "0:51.543",
-          "averageLap": "1:17.691",
-          "iRating": "1563"
-        },
-        {
-          "position": "40",
-          "driver": "Tripp Enyeart",
-          "carNumber": "9",
-          "car": "ARCA Chevrolet SS",
-          "start": "43",
-          "laps": "11",
-          "lapsLed": "0",
-          "incidents": "4",
-          "bestLap": "0:51.334",
-          "averageLap": "1:18.942",
-          "iRating": "1946"
-        },
-        {
-          "position": "41",
-          "driver": "Wade Palmer IV",
-          "carNumber": "43",
-          "car": "ARCA Chevrolet SS",
-          "start": "26",
-          "laps": "9",
-          "lapsLed": "0",
-          "incidents": "12",
-          "bestLap": "0:51.833",
-          "averageLap": "1:27.340",
-          "iRating": "1149"
-        },
-        {
-          "position": "42",
-          "driver": "Donny Battiest",
-          "carNumber": "67",
-          "car": "ARCA Toyota Camry",
-          "start": "46",
-          "laps": "9",
-          "lapsLed": "0",
-          "incidents": "6",
-          "bestLap": "0:51.158",
-          "averageLap": "1:31.485",
-          "iRating": "1699"
-        },
-        {
-          "position": "43",
-          "driver": "Billy Rickett",
-          "carNumber": "11",
-          "car": "ARCA Chevrolet SS",
-          "start": "1",
-          "laps": "6",
-          "lapsLed": "1",
-          "incidents": "5",
-          "bestLap": "0:51.190",
-          "averageLap": "1:33.953",
-          "iRating": "1822"
-        },
-        {
-          "position": "44",
-          "driver": "Michael Simmons",
-          "carNumber": "49",
-          "car": "ARCA Toyota Camry",
-          "start": "31",
-          "laps": "1",
-          "lapsLed": "0",
-          "incidents": "4",
-          "bestLap": "",
-          "averageLap": "1:38.139",
-          "iRating": "1803"
-        },
-        {
-          "position": "45",
+          "position": "9",
           "driver": "Donny Beach",
-          "carNumber": "85",
-          "car": "ARCA Chevrolet SS",
-          "start": "42",
-          "laps": "30",
-          "lapsLed": "0",
-          "incidents": "0",
-          "bestLap": "0:51.655",
-          "averageLap": "1:16.120",
+          "carNumber": "11",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "23",
+          "laps": "75",
+          "lapsLed": "15",
+          "incidents": "4",
+          "bestLap": "0:45.356",
+          "averageLap": "0:59.381",
           "iRating": "2230"
         },
         {
-          "position": "46",
-          "driver": "Derek Jacobs",
+          "position": "10",
+          "driver": "Jeremy Grossnickle",
+          "carNumber": "17",
+          "car": "NASCAR Cup Series Next Gen Toyota Camry",
+          "start": "20",
+          "laps": "75",
+          "lapsLed": "1",
+          "incidents": "10",
+          "bestLap": "0:45.514",
+          "averageLap": "0:59.383",
+          "iRating": "2695"
+        },
+        {
+          "position": "11",
+          "driver": "Donny Battiest",
+          "carNumber": "64",
+          "car": "NASCAR Cup Series Next Gen Toyota Camry",
+          "start": "17",
+          "laps": "75",
+          "lapsLed": "0",
+          "incidents": "8",
+          "bestLap": "0:45.332",
+          "averageLap": "0:59.383",
+          "iRating": "1699"
+        },
+        {
+          "position": "12",
+          "driver": "James Smith47",
           "carNumber": "36",
-          "car": "ARCA Chevrolet SS",
-          "start": "21",
-          "laps": "0",
-          "lapsLed": "0",
-          "incidents": "0",
-          "bestLap": "",
-          "averageLap": "0:00.000",
-          "iRating": "2365"
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "9",
+          "laps": "75",
+          "lapsLed": "17",
+          "incidents": "17",
+          "bestLap": "0:45.264",
+          "averageLap": "0:59.384",
+          "iRating": "1648"
         },
         {
-          "position": "47",
-          "driver": "Adam Crouse",
-          "carNumber": "46",
-          "car": "ARCA Chevrolet SS",
+          "position": "13",
+          "driver": "Chris James",
+          "carNumber": "82",
+          "car": "NASCAR Cup Series Next Gen Ford Mustang",
+          "start": "2",
+          "laps": "75",
+          "lapsLed": "0",
+          "incidents": "14",
+          "bestLap": "0:45.541",
+          "averageLap": "0:59.385",
+          "iRating": "5124"
+        },
+        {
+          "position": "14",
+          "driver": "Bryan Ranzetta",
+          "carNumber": "32",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "19",
+          "laps": "75",
+          "lapsLed": "0",
+          "incidents": "19",
+          "bestLap": "0:45.211",
+          "averageLap": "0:59.385",
+          "iRating": "1042"
+        },
+        {
+          "position": "15",
+          "driver": "Eric Hayden",
+          "carNumber": "100",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "16",
+          "laps": "75",
+          "lapsLed": "0",
+          "incidents": "25",
+          "bestLap": "0:45.670",
+          "averageLap": "0:59.386",
+          "iRating": "2050"
+        },
+        {
+          "position": "16",
+          "driver": "Shane Hatfield",
+          "carNumber": "15",
+          "car": "NASCAR Cup Series Next Gen Toyota Camry",
+          "start": "35",
+          "laps": "75",
+          "lapsLed": "0",
+          "incidents": "13",
+          "bestLap": "0:45.316",
+          "averageLap": "0:59.387",
+          "iRating": "900"
+        },
+        {
+          "position": "17",
+          "driver": "John Miles4",
+          "carNumber": "69",
+          "car": "NASCAR Cup Series Next Gen Ford Mustang",
+          "start": "11",
+          "laps": "75",
+          "lapsLed": "7",
+          "incidents": "18",
+          "bestLap": "0:45.785",
+          "averageLap": "0:59.388",
+          "iRating": "2138"
+        },
+        {
+          "position": "18",
+          "driver": "Aaron Mooney",
+          "carNumber": "45",
+          "car": "NASCAR Cup Series Next Gen Toyota Camry",
+          "start": "22",
+          "laps": "75",
+          "lapsLed": "0",
+          "incidents": "15",
+          "bestLap": "0:45.234",
+          "averageLap": "0:59.388",
+          "iRating": "2321"
+        },
+        {
+          "position": "19",
+          "driver": "Jeff Favorite",
+          "carNumber": "60",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "32",
+          "laps": "75",
+          "lapsLed": "0",
+          "incidents": "16",
+          "bestLap": "0:45.530",
+          "averageLap": "0:59.389",
+          "iRating": "1297"
+        },
+        {
+          "position": "20",
+          "driver": "Carlos Andrade",
+          "carNumber": "23",
+          "car": "NASCAR Cup Series Next Gen Toyota Camry",
+          "start": "45",
+          "laps": "75",
+          "lapsLed": "0",
+          "incidents": "16",
+          "bestLap": "0:45.643",
+          "averageLap": "0:59.390",
+          "iRating": "1353"
+        },
+        {
+          "position": "21",
+          "driver": "Ricky Miles",
+          "carNumber": "5",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "10",
+          "laps": "75",
+          "lapsLed": "0",
+          "incidents": "21",
+          "bestLap": "0:45.688",
+          "averageLap": "0:59.395",
+          "iRating": "1339"
+        },
+        {
+          "position": "22",
+          "driver": "Daniel Demir",
+          "carNumber": "14",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "42",
+          "laps": "75",
+          "lapsLed": "0",
+          "incidents": "9",
+          "bestLap": "0:45.684",
+          "averageLap": "0:59.395",
+          "iRating": "622"
+        },
+        {
+          "position": "23",
+          "driver": "Brian Hebbard2",
+          "carNumber": "87",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "1",
+          "laps": "75",
+          "lapsLed": "8",
+          "incidents": "21",
+          "bestLap": "0:45.474",
+          "averageLap": "0:59.401",
+          "iRating": "1652"
+        },
+        {
+          "position": "24",
+          "driver": "Jake Dilger",
+          "carNumber": "44",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "34",
+          "laps": "75",
+          "lapsLed": "0",
+          "incidents": "6",
+          "bestLap": "0:45.492",
+          "averageLap": "0:59.701",
+          "iRating": "1440"
+        },
+        {
+          "position": "25",
+          "driver": "Brian Duncan3",
+          "carNumber": "13",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "4",
+          "laps": "74",
+          "lapsLed": "0",
+          "incidents": "14",
+          "bestLap": "0:45.136",
+          "averageLap": "1:00.209",
+          "iRating": "923"
+        },
+        {
+          "position": "26",
+          "driver": "James Jepson",
+          "carNumber": "20",
+          "car": "NASCAR Cup Series Next Gen Ford Mustang",
+          "start": "15",
+          "laps": "72",
+          "lapsLed": "0",
+          "incidents": "11",
+          "bestLap": "0:45.527",
+          "averageLap": "1:02.018",
+          "iRating": "1005"
+        },
+        {
+          "position": "27",
+          "driver": "Joe Bremer",
+          "carNumber": "29",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "18",
+          "laps": "69",
+          "lapsLed": "0",
+          "incidents": "16",
+          "bestLap": "0:45.521",
+          "averageLap": "0:57.359",
+          "iRating": "2781"
+        },
+        {
+          "position": "28",
+          "driver": "Rex Becker",
+          "carNumber": "5",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "30",
+          "laps": "58",
+          "lapsLed": "0",
+          "incidents": "8",
+          "bestLap": "0:45.724",
+          "averageLap": "0:56.645",
+          "iRating": "627"
+        },
+        {
+          "position": "29",
+          "driver": "Corey Fletcher",
+          "carNumber": "41",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
           "start": "29",
-          "laps": "0",
+          "laps": "56",
           "lapsLed": "0",
-          "incidents": "0",
-          "bestLap": "",
-          "averageLap": "0:00.000",
-          "iRating": "1688"
+          "incidents": "8",
+          "bestLap": "0:45.756",
+          "averageLap": "0:57.012",
+          "iRating": "1360"
         },
         {
-          "position": "48",
-          "driver": "Parker Lindemann",
+          "position": "30",
+          "driver": "Lukas Mchugh",
+          "carNumber": "25",
+          "car": "NASCAR Cup Series Next Gen Toyota Camry",
+          "start": "14",
+          "laps": "48",
+          "lapsLed": "0",
+          "incidents": "12",
+          "bestLap": "0:45.791",
+          "averageLap": "0:53.877",
+          "iRating": "1311"
+        },
+        {
+          "position": "31",
+          "driver": "Erik List",
           "carNumber": "26",
-          "car": "ARCA Chevrolet SS",
-          "start": "48",
-          "laps": "0",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "33",
+          "laps": "32",
           "lapsLed": "0",
-          "incidents": "0",
-          "bestLap": "",
-          "averageLap": "0:00.000",
-          "iRating": "4690"
+          "incidents": "7",
+          "bestLap": "0:45.963",
+          "averageLap": "0:54.978",
+          "iRating": "951"
         },
         {
-          "position": "49",
-          "driver": "Brett Walker5",
-          "carNumber": "56",
-          "car": "ARCA Chevrolet SS",
-          "start": "49",
-          "laps": "0",
-          "lapsLed": "0",
-          "incidents": "0",
-          "bestLap": "",
-          "averageLap": "0:00.000",
-          "iRating": "2528"
+          "position": "32",
+          "driver": "Craig Rowe",
+          "carNumber": "24",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "8",
+          "laps": "32",
+          "lapsLed": "1",
+          "incidents": "4",
+          "bestLap": "0:45.947",
+          "averageLap": "0:55.528",
+          "iRating": "2778"
         },
         {
-          "position": "50",
-          "driver": "Chris Schmitz2",
-          "carNumber": "27",
-          "car": "ARCA Chevrolet SS",
-          "start": "50",
+          "position": "33",
+          "driver": "Charles Wilson5",
+          "carNumber": "57",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "39",
+          "laps": "20",
+          "lapsLed": "0",
+          "incidents": "6",
+          "bestLap": "0:45.962",
+          "averageLap": "0:52.849",
+          "iRating": "2141"
+        },
+        {
+          "position": "34",
+          "driver": "Aaron Sellers",
+          "carNumber": "28",
+          "car": "NASCAR Cup Series Next Gen Ford Mustang",
+          "start": "40",
+          "laps": "15",
+          "lapsLed": "0",
+          "incidents": "4",
+          "bestLap": "0:45.962",
+          "averageLap": "0:48.569",
+          "iRating": "1864"
+        },
+        {
+          "position": "35",
+          "driver": "Hayden Bushey",
+          "carNumber": "43",
+          "car": "NASCAR Cup Series Next Gen Ford Mustang",
+          "start": "27",
+          "laps": "10",
+          "lapsLed": "0",
+          "incidents": "20",
+          "bestLap": "0:45.878",
+          "averageLap": "0:50.876",
+          "iRating": "3324"
+        },
+        {
+          "position": "36",
+          "driver": "Kerry Wright",
+          "carNumber": "35",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "12",
+          "laps": "10",
+          "lapsLed": "0",
+          "incidents": "12",
+          "bestLap": "0:46.029",
+          "averageLap": "0:58.696",
+          "iRating": "1851"
+        },
+        {
+          "position": "37",
+          "driver": "Brogan Roberts",
+          "carNumber": "19",
+          "car": "NASCAR Cup Series Next Gen Ford Mustang",
+          "start": "25",
+          "laps": "8",
+          "lapsLed": "0",
+          "incidents": "6",
+          "bestLap": "0:45.800",
+          "averageLap": "0:47.746",
+          "iRating": "3431"
+        },
+        {
+          "position": "38",
+          "driver": "Erich Johnson",
+          "carNumber": "18",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "38",
+          "laps": "7",
+          "lapsLed": "0",
+          "incidents": "4",
+          "bestLap": "0:45.989",
+          "averageLap": "0:49.743",
+          "iRating": "2452"
+        },
+        {
+          "position": "39",
+          "driver": "Marek Long",
+          "carNumber": "77",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "31",
+          "laps": "7",
+          "lapsLed": "0",
+          "incidents": "10",
+          "bestLap": "0:45.651",
+          "averageLap": "0:57.603",
+          "iRating": "1193"
+        },
+        {
+          "position": "40",
+          "driver": "Joshua P Newman",
+          "carNumber": "42",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "41",
+          "laps": "7",
+          "lapsLed": "0",
+          "incidents": "4",
+          "bestLap": "0:45.874",
+          "averageLap": "1:02.706",
+          "iRating": "1708"
+        },
+        {
+          "position": "41",
+          "driver": "Collin Carroll",
+          "carNumber": "12",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "36",
+          "laps": "6",
+          "lapsLed": "0",
+          "incidents": "4",
+          "bestLap": "0:46.000",
+          "averageLap": "0:53.882",
+          "iRating": "4051"
+        },
+        {
+          "position": "42",
+          "driver": "Chris Clayton",
+          "carNumber": "9",
+          "car": "NASCAR Cup Series Next Gen Ford Mustang",
+          "start": "28",
+          "laps": "5",
+          "lapsLed": "0",
+          "incidents": "0",
+          "bestLap": "0:45.746",
+          "averageLap": "0:48.625",
+          "iRating": "1124"
+        },
+        {
+          "position": "43",
+          "driver": "Wilkes Layton",
+          "carNumber": "7",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "5",
           "laps": "0",
           "lapsLed": "0",
           "incidents": "0",
           "bestLap": "",
           "averageLap": "0:00.000",
-          "iRating": "1621"
+          "iRating": "1867"
+        },
+        {
+          "position": "44",
+          "driver": "Bryce Burdette2",
+          "carNumber": "71",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "43",
+          "laps": "0",
+          "lapsLed": "0",
+          "incidents": "0",
+          "bestLap": "",
+          "averageLap": "0:00.000",
+          "iRating": "2799"
+        },
+        {
+          "position": "45",
+          "driver": "Chad Waller2",
+          "carNumber": "66",
+          "car": "NASCAR Cup Series Next Gen Ford Mustang",
+          "start": "44",
+          "laps": "0",
+          "lapsLed": "0",
+          "incidents": "0",
+          "bestLap": "",
+          "averageLap": "0:00.000",
+          "iRating": "1957"
         }
       ]
     },
     "sessions": [
+      {
+        "date": "10/21/2026",
+        "track": "Daytona International Speedway",
+        "carNumber": "34",
+        "driver": "Tommy Rogers",
+        "start": "6",
+        "lapsLed": "2",
+        "incidents": "8",
+        "averageLap": "0:59.376"
+      },
       {
         "date": "10/17/2026",
         "track": "Talladega Superspeedway",
@@ -31272,11 +31217,11 @@
       {
         "rank": "5",
         "driver": "Jim Segredo",
-        "races": "173",
+        "races": "174",
         "wins": "5",
         "top5": "25",
-        "top10": "64",
-        "averageFinish": "16.29"
+        "top10": "65",
+        "averageFinish": "16.23"
       },
       {
         "rank": "6",
@@ -31307,6 +31252,15 @@
       },
       {
         "rank": "9",
+        "driver": "Tommy Rogers",
+        "races": "140",
+        "wins": "4",
+        "top5": "25",
+        "top10": "53",
+        "averageFinish": "14.69"
+      },
+      {
+        "rank": "10",
         "driver": "Joshua McKinney2",
         "races": "111",
         "wins": "4",
@@ -31315,34 +31269,34 @@
         "averageFinish": "14.14"
       },
       {
-        "rank": "10",
-        "driver": "Jerry Fassett",
-        "races": "179",
-        "wins": "4",
-        "top5": "21",
-        "top10": "60",
-        "averageFinish": "14.98"
-      },
-      {
         "rank": "11",
-        "driver": "Chris James",
-        "races": "82",
+        "driver": "Jerry Fassett",
+        "races": "180",
         "wins": "4",
-        "top5": "20",
-        "top10": "40",
-        "averageFinish": "11.89"
+        "top5": "22",
+        "top10": "61",
+        "averageFinish": "14.93"
       },
       {
         "rank": "12",
-        "driver": "Hunter Welborn",
-        "races": "77",
+        "driver": "Chris James",
+        "races": "83",
         "wins": "4",
-        "top5": "19",
-        "top10": "37",
-        "averageFinish": "14.26"
+        "top5": "20",
+        "top10": "40",
+        "averageFinish": "11.9"
       },
       {
         "rank": "13",
+        "driver": "Hunter Welborn",
+        "races": "78",
+        "wins": "4",
+        "top5": "19",
+        "top10": "38",
+        "averageFinish": "14.17"
+      },
+      {
+        "rank": "14",
         "driver": "Juan Escamilla",
         "races": "45",
         "wins": "4",
@@ -31351,7 +31305,7 @@
         "averageFinish": "14.91"
       },
       {
-        "rank": "14",
+        "rank": "15",
         "driver": "Bill Daniels",
         "races": "54",
         "wins": "4",
@@ -31360,16 +31314,16 @@
         "averageFinish": "16.46"
       },
       {
-        "rank": "15",
+        "rank": "16",
         "driver": "Craig Rowe",
-        "races": "71",
+        "races": "72",
         "wins": "4",
         "top5": "14",
         "top10": "23",
-        "averageFinish": "20.32"
+        "averageFinish": "20.49"
       },
       {
-        "rank": "16",
+        "rank": "17",
         "driver": "Shawn Stamper",
         "races": "121",
         "wins": "4",
@@ -31378,16 +31332,16 @@
         "averageFinish": "21.07"
       },
       {
-        "rank": "17",
+        "rank": "18",
         "driver": "John Miles4",
-        "races": "98",
+        "races": "99",
         "wins": "4",
         "top5": "10",
         "top10": "23",
-        "averageFinish": "17.45"
+        "averageFinish": "17.44"
       },
       {
-        "rank": "18",
+        "rank": "19",
         "driver": "Michael Tokarz",
         "races": "30",
         "wins": "4",
@@ -31396,29 +31350,20 @@
         "averageFinish": "17.43"
       },
       {
-        "rank": "19",
-        "driver": "Eric Hayden",
-        "races": "179",
-        "wins": "3",
-        "top5": "33",
-        "top10": "75",
-        "averageFinish": "13.93"
-      },
-      {
         "rank": "20",
         "driver": "Gerry Bergeron",
-        "races": "116",
+        "races": "117",
         "wins": "3",
-        "top5": "33",
-        "top10": "67",
-        "averageFinish": "11.01"
+        "top5": "34",
+        "top10": "68",
+        "averageFinish": "10.95"
       }
     ],
     "driverRatings": {
       "johnmiles": {
         "driver": "John Miles4",
-        "iRating": 2104,
-        "date": "10/17/2026"
+        "iRating": 2138,
+        "date": "10/21/2026"
       },
       "danielldill": {
         "driver": "Daniel L Dill",
@@ -31433,22 +31378,22 @@
       "gerrybergeron": {
         "driver": "Gerry Bergeron",
         "iRating": 2578,
-        "date": "10/17/2026"
+        "date": "10/21/2026"
       },
       "ryanwilson": {
         "driver": "Ryan Wilson21",
         "iRating": 1475,
-        "date": "10/17/2026"
+        "date": "2026-10-22T07:01:20.073Z"
       },
       "shawnstamper": {
         "driver": "Shawn Stamper",
         "iRating": 3044,
-        "date": "2026-10-22T01:55:03.346Z"
+        "date": "2026-10-22T07:01:31.908Z"
       },
       "brianduncan": {
         "driver": "Brian Duncan3",
         "iRating": 923,
-        "date": "10/17/2026"
+        "date": "10/21/2026"
       },
       "nicholasmoody": {
         "driver": "Nicholas Moody",
@@ -31463,7 +31408,7 @@
       "rickymiles": {
         "driver": "Ricky Miles",
         "iRating": 1339,
-        "date": "10/17/2026"
+        "date": "10/21/2026"
       },
       "coltontutt": {
         "driver": "Colton Tutt",
@@ -31473,7 +31418,7 @@
       "billdaniels": {
         "driver": "Bill Daniels",
         "iRating": 3875,
-        "date": "2026-10-22T01:55:00.100Z"
+        "date": "2026-10-22T07:01:28.955Z"
       },
       "edwardfiedler": {
         "driver": "Edward Fiedler",
@@ -31488,12 +31433,12 @@
       "jimsegredo": {
         "driver": "Jim Segredo",
         "iRating": 1272,
-        "date": "10/17/2026"
+        "date": "10/21/2026"
       },
       "jerryfassett": {
         "driver": "Jerry Fassett",
         "iRating": 1345,
-        "date": "2026-10-22T01:54:57.162Z"
+        "date": "10/21/2026"
       },
       "kenrobnett": {
         "driver": "Ken Robnett",
@@ -31598,7 +31543,7 @@
       "donnybattiest": {
         "driver": "Donny Battiest",
         "iRating": 1699,
-        "date": "10/17/2026"
+        "date": "10/21/2026"
       },
       "justinnsmith": {
         "driver": "Justin N Smith",
@@ -31668,72 +31613,72 @@
       "trevorhaley": {
         "driver": "Trevor Haley",
         "iRating": 4309,
-        "date": "2026-10-22T01:54:54.461Z"
+        "date": "2026-10-22T07:01:19.943Z"
       },
       "ethanfonsecamoreno": {
         "driver": "Ethan Fonseca Moreno",
         "iRating": 4154,
-        "date": "2026-10-22T01:54:53.189Z"
+        "date": "2026-10-22T07:01:20.775Z"
       },
       "nicholasbaumann": {
         "driver": "Nicholas Baumann",
         "iRating": 4952,
-        "date": "2026-10-22T01:54:53.288Z"
+        "date": "2026-10-22T07:01:22.391Z"
       },
       "joshuamckinney": {
         "driver": "Joshua McKinney2",
         "iRating": 2686,
-        "date": "10/17/2026"
+        "date": "2026-10-22T07:01:24.884Z"
       },
       "zacharycato": {
         "driver": "Zachary Cato",
         "iRating": 1828,
-        "date": "2026-10-22T01:54:57.264Z"
+        "date": "2026-10-22T07:01:24.788Z"
       },
       "rustychancey": {
         "driver": "Rusty Chancey",
         "iRating": 5299,
-        "date": "2026-10-22T01:54:57.691Z"
+        "date": "2026-10-22T07:01:25.436Z"
       },
       "justinleepearson": {
         "driver": "Justin Lee Pearson",
         "iRating": 3348,
-        "date": "2026-10-22T01:54:57.504Z"
+        "date": "2026-10-22T07:01:26.289Z"
       },
       "chrisjames": {
         "driver": "Chris James",
         "iRating": 5124,
-        "date": "2026-10-22T01:55:00.704Z"
+        "date": "10/21/2026"
       },
       "michaeltokarz": {
         "driver": "Michael Tokarz",
         "iRating": 1221,
-        "date": "2026-10-22T01:55:03.147Z"
+        "date": "2026-10-22T07:01:31.914Z"
       },
       "juanescamilla": {
         "driver": "Juan Escamilla",
         "iRating": 3136,
-        "date": "2026-10-22T01:54:59.740Z"
+        "date": "2026-10-22T07:01:29.260Z"
       },
       "hunterwelborn": {
         "driver": "Hunter Welborn",
         "iRating": 1453,
-        "date": "2026-10-22T01:55:00.467Z"
+        "date": "10/21/2026"
       },
       "craigrowe": {
         "driver": "Craig Rowe",
         "iRating": 2778,
-        "date": "10/17/2026"
+        "date": "10/21/2026"
       },
       "tommyrogers": {
         "driver": "Tommy Rogers",
         "iRating": 1760,
-        "date": "10/17/2026"
+        "date": "10/21/2026"
       },
       "erichayden": {
         "driver": "Eric Hayden",
         "iRating": 2050,
-        "date": "2026-10-22T01:55:03.469Z"
+        "date": "10/21/2026"
       },
       "larkinboyer": {
         "driver": "Larkin Boyer",
@@ -31793,7 +31738,7 @@
       "donnybeach": {
         "driver": "Donny Beach",
         "iRating": 2230,
-        "date": "10/17/2026"
+        "date": "10/21/2026"
       },
       "sebastianmicheals": {
         "driver": "Sebastian Micheals",
@@ -31863,7 +31808,7 @@
       "brianhebbard": {
         "driver": "Brian Hebbard2",
         "iRating": 1652,
-        "date": "10/7/2026"
+        "date": "10/21/2026"
       },
       "keithmccracken": {
         "driver": "Keith McCracken",
@@ -31877,8 +31822,8 @@
       },
       "williamdaniel": {
         "driver": "William Daniel4",
-        "iRating": 4556,
-        "date": "10/7/2026"
+        "iRating": 4885,
+        "date": "10/21/2026"
       },
       "griffenhinkle": {
         "driver": "Griffen Hinkle",
@@ -31893,7 +31838,7 @@
       "jamesjepson": {
         "driver": "James Jepson",
         "iRating": 1005,
-        "date": "10/17/2026"
+        "date": "10/21/2026"
       },
       "javonethompson": {
         "driver": "Javone Thompson",
@@ -31938,7 +31883,7 @@
       "carlosandrade": {
         "driver": "Carlos Andrade",
         "iRating": 1353,
-        "date": "10/10/2026"
+        "date": "10/21/2026"
       },
       "weslang": {
         "driver": "Wes Lang",
@@ -31948,7 +31893,7 @@
       "shanehatfield": {
         "driver": "Shane Hatfield",
         "iRating": 900,
-        "date": "10/10/2026"
+        "date": "10/21/2026"
       },
       "davidbeyersdorf": {
         "driver": "David Beyersdorf2",
@@ -32098,7 +32043,7 @@
       "kevindixon": {
         "driver": "Kevin Dixon2",
         "iRating": 2528,
-        "date": "10/17/2026"
+        "date": "10/21/2026"
       },
       "scottprim": {
         "driver": "Scott Prim",
@@ -32204,6 +32149,136 @@
         "driver": "Chris Schmitz2",
         "iRating": 1621,
         "date": "10/17/2026"
+      },
+      "joeybremer": {
+        "driver": "Joey Bremer2",
+        "iRating": 3725,
+        "date": "10/21/2026"
+      },
+      "jeremygrossnickle": {
+        "driver": "Jeremy Grossnickle",
+        "iRating": 2695,
+        "date": "10/21/2026"
+      },
+      "jamessmith": {
+        "driver": "James Smith47",
+        "iRating": 1648,
+        "date": "10/21/2026"
+      },
+      "bryanranzetta": {
+        "driver": "Bryan Ranzetta",
+        "iRating": 1042,
+        "date": "10/21/2026"
+      },
+      "aaronmooney": {
+        "driver": "Aaron Mooney",
+        "iRating": 2321,
+        "date": "10/21/2026"
+      },
+      "jefffavorite": {
+        "driver": "Jeff Favorite",
+        "iRating": 1297,
+        "date": "10/21/2026"
+      },
+      "danieldemir": {
+        "driver": "Daniel Demir",
+        "iRating": 622,
+        "date": "10/21/2026"
+      },
+      "jakedilger": {
+        "driver": "Jake Dilger",
+        "iRating": 1440,
+        "date": "10/21/2026"
+      },
+      "joebremer": {
+        "driver": "Joe Bremer",
+        "iRating": 2781,
+        "date": "10/21/2026"
+      },
+      "rexbecker": {
+        "driver": "Rex Becker",
+        "iRating": 627,
+        "date": "10/21/2026"
+      },
+      "coreyfletcher": {
+        "driver": "Corey Fletcher",
+        "iRating": 1360,
+        "date": "10/21/2026"
+      },
+      "lukasmchugh": {
+        "driver": "Lukas Mchugh",
+        "iRating": 1311,
+        "date": "10/21/2026"
+      },
+      "eriklist": {
+        "driver": "Erik List",
+        "iRating": 951,
+        "date": "10/21/2026"
+      },
+      "charleswilson": {
+        "driver": "Charles Wilson5",
+        "iRating": 2141,
+        "date": "10/21/2026"
+      },
+      "aaronsellers": {
+        "driver": "Aaron Sellers",
+        "iRating": 1864,
+        "date": "10/21/2026"
+      },
+      "haydenbushey": {
+        "driver": "Hayden Bushey",
+        "iRating": 3324,
+        "date": "10/21/2026"
+      },
+      "kerrywright": {
+        "driver": "Kerry Wright",
+        "iRating": 1851,
+        "date": "10/21/2026"
+      },
+      "broganroberts": {
+        "driver": "Brogan Roberts",
+        "iRating": 3431,
+        "date": "10/21/2026"
+      },
+      "erichjohnson": {
+        "driver": "Erich Johnson",
+        "iRating": 2452,
+        "date": "10/21/2026"
+      },
+      "mareklong": {
+        "driver": "Marek Long",
+        "iRating": 1193,
+        "date": "10/21/2026"
+      },
+      "joshuapnewman": {
+        "driver": "Joshua P Newman",
+        "iRating": 1708,
+        "date": "10/21/2026"
+      },
+      "collincarroll": {
+        "driver": "Collin Carroll",
+        "iRating": 4051,
+        "date": "10/21/2026"
+      },
+      "chrisclayton": {
+        "driver": "Chris Clayton",
+        "iRating": 1124,
+        "date": "10/21/2026"
+      },
+      "wilkeslayton": {
+        "driver": "Wilkes Layton",
+        "iRating": 1867,
+        "date": "10/21/2026"
+      },
+      "bryceburdette": {
+        "driver": "Bryce Burdette2",
+        "iRating": 2799,
+        "date": "10/21/2026"
+      },
+      "chadwaller": {
+        "driver": "Chad Waller2",
+        "iRating": 1957,
+        "date": "10/21/2026"
       }
     }
   }
