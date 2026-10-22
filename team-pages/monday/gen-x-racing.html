@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Gen X Racing | HLRN Monday Night League</title>
 <meta name="description" content="Gen X Racing's Monday Night League team lineup: Javone Thompson, Chris James, Bill Daniels and Kenwood Ramsey.">
-<link rel="stylesheet" href="../../assets/site-shell.css?v=20261020nightmatch5">
+
 <style>
 :root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#07080b;color:#f4f5f6;font:16px Arial,Helvetica,sans-serif}
 main{max-width:1440px;margin:auto}.hero{text-align:center;padding:60px 20px 36px;background:radial-gradient(ellipse at 50% 5%,#501018 0%,#160a0e 43%,#07080b 78%);border-bottom:2px solid #d61b30}
@@ -26,7 +26,7 @@ main{max-width:1440px;margin:auto}.hero{text-align:center;padding:60px 20px 36px
 .stat{border:1px solid #4d2931;text-align:center;padding:17px 6px}.stat b{display:block;font-size:24px}
 .stat small{display:block;font-size:10px;color:#ed8191;margin-top:6px}
 @media(max-width:800px){.lower{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
-</style></head><body><main><header class="hero"><div class="kicker">HLRN · MONDAY NIGHT LEAGUE</div><h1 class="brand">GEN<span>X</span></h1><div class="script">Racing</div><p>2026 MONDAY NIGHT TEAM · FOUR-DRIVER ROSTER</p></header>
+.genx-logo{display:block;width:min(490px,92vw);height:auto;max-height:240px;object-fit:contain;margin:20px auto 8px} </style></head><body><main><header class="hero"><div class="kicker">HLRN · MONDAY NIGHT LEAGUE</div><img class="genx-logo" src="../../assets/teams/gen-x-logo.svg" alt="Gen X Racing logo"><h1 class="brand" style="font-size:clamp(30px,5vw,56px);letter-spacing:-.04em">GEN <span>X</span> RACING</h1><p>2026 MONDAY NIGHT TEAM · FOUR-DRIVER ROSTER</p></header>
 <section class="roster" aria-label="Gen X Racing Monday drivers"><button class="driver" type="button" data-index="0" aria-label="View Monday season statistics for Javone Thompson"><div class="photo"><img src="../../assets/driver-photos/cutout/javone-thompson.webp" alt="Javone Thompson" loading="lazy"></div><div class="identity"><b class="num">93</b><div><div class="name">Javone Thompson</div><small class="hint">VIEW MONDAY STATS ↗</small></div></div></button>
 <button class="driver" type="button" data-index="1" aria-label="View Monday season statistics for Chris James"><div class="photo"><img src="../../assets/driver-photos/cutout/chris-james.webp" alt="Chris James" loading="lazy"></div><div class="identity"><b class="num">82</b><div><div class="name">Chris James</div><small class="hint">VIEW MONDAY STATS ↗</small></div></div></button>
 <button class="driver" type="button" data-index="2" aria-label="View Monday season statistics for Bill Daniels"><div class="photo"><img src="../../assets/driver-photos/cutout/bill-daniels.webp" alt="Bill Daniels" loading="lazy"></div><div class="identity"><b class="num">91</b><div><div class="name">Bill Daniels</div><small class="hint">VIEW MONDAY STATS ↗</small></div></div></button>
@@ -53,4 +53,4 @@ document.querySelectorAll(".roster .driver").forEach(button=>button.addEventList
 close.addEventListener("click",closeStats);overlay.addEventListener("click",e=>{if(e.target===overlay)closeStats()});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!overlay.hidden)closeStats()});
 })();
-</script><script src="../../assets/site-shell.js?v=20261022genx"></script></body></html>
+</script></body></html>
