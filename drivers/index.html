@@ -1536,7 +1536,7 @@ function hLrnPhotoKey(name){
 
   return k;
 }
-function photoUrl(name){const k=hLrnPhotoKey(name);if(HLRN_EMBEDDED_DRIVER_PHOTOS[k])return HLRN_EMBEDDED_DRIVER_PHOTOS[k];const f=HLRN_DRIVER_CUTOUT_PHOTOS[k];return f?HLRN_DRIVER_PHOTO_BASE+f:""}
+function photoUrl(name){const normalized=String(name||"").toLowerCase().replace(/[^a-z]/g,"");if(normalized==="jeremyjeffries"||normalized==="jeremysjeffries")return HLRN_DRIVER_PHOTO_BASE+"jeremy-jeffries.webp?v=20261022";const k=hLrnPhotoKey(name);if(HLRN_EMBEDDED_DRIVER_PHOTOS[k])return HLRN_EMBEDDED_DRIVER_PHOTOS[k];const f=HLRN_DRIVER_CUTOUT_PHOTOS[k];return f?HLRN_DRIVER_PHOTO_BASE+f:""}
 const HLRN_DRIVER_FALLBACK_BASE="../assets/driver-photos/fallback/";
 function iRatingFallbackPhoto(iRating){
   const parsed=Number(iRating),rating=Number.isFinite(parsed)&&parsed>0?Math.round(parsed):0;
@@ -1604,6 +1604,7 @@ function prettyName(name){
     "Larry Fairman2":"Larry Fairman",
     "Grant Wessley2":"Grant Wessley",
     "Dylan C Jones":"Dylan Jones",
+    "Jeremy S Jeffries":"Jeremy Jeffries",
     "Aaron Treubig":"Aaron Treubig"};
   return fixes[s]||s;
 }
