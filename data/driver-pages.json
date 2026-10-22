@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T21:20:06Z",
+  "generatedAt": "2026-10-22T12:44:40Z",
   "count": 87,
   "drivers": [
     {
@@ -458,7 +458,7 @@
       "name": "Edward Fiedler",
       "slug": "edward-fiedler",
       "url": "/drivers/edward-fiedler/",
-      "number": "66",
+      "number": "—",
       "photoSlug": "",
       "hasPhoto": false,
       "iRating": 2495,
@@ -482,19 +482,16 @@
       "hasPhoto": true,
       "iRating": 2050,
       "series": [
-        "hosted",
         "monday",
         "sunday"
       ],
       "ids": {
         "sunday": "93056",
-        "monday": "93056",
-        "hosted": ""
+        "monday": "93056"
       },
       "teams": {
         "sunday": "HLR",
-        "monday": "HLR",
-        "hosted": null
+        "monday": "HLR"
       },
       "aliases": []
     },
@@ -882,7 +879,7 @@
       "number": "69",
       "photoSlug": "john-miles",
       "hasPhoto": true,
-      "iRating": 2104,
+      "iRating": 2138,
       "series": [
         "hosted",
         "monday"
@@ -1622,13 +1619,16 @@
       "hasPhoto": true,
       "iRating": 1760,
       "series": [
+        "hosted",
         "monday"
       ],
       "ids": {
-        "monday": "109389"
+        "monday": "109389",
+        "hosted": ""
       },
       "teams": {
-        "monday": "HLR"
+        "monday": "HLR",
+        "hosted": null
       },
       "aliases": []
     },
