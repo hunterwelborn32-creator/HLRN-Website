@@ -833,6 +833,7 @@ function start(){
   else if(path.includes("/results/")||path.includes("/schedule/")) active="results";
   else if(path.includes("/my-hlrn/")) active="my-hlrn";
   else if(path.includes("/drivers/")) active="drivers";
+  else if(path.includes("/team-pages/")) active="team-pages";
   else if(path.includes("/teams/")) active="teams";
   else if(path.includes("/news/")) active="news";
   else if(path.includes("/adventures/")) active="adventures";
@@ -847,11 +848,12 @@ function start(){
     ["standings","Standings","standings/"],
     ["results","Results","results/"],
     ["drivers","Drivers","drivers/"],
+    ["team-pages","Teams","team-pages/"],
     ["intelligence","Intelligence","race-intelligence/"],
     ["news","News","news/"]
   ];
   const more=[
-    ["teams","Teams","teams/"],
+    ["teams","Team Championship","teams/"],
     ["broadcast","Watch HLRN","broadcasters/"],
     ["rules","Rules","rules/"],
     ["adventures","Adventures","adventures/"],
