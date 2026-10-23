@@ -1014,6 +1014,20 @@ async function linkHostedDriverNames(key){
     add(rec.displayName,rec);
     (rec.aliases||[]).forEach(a=>add(a,rec));
   });
+  // Make existing Hosted leaderboard driver links open their permanent HLRN profile.
+  // The text-node linker below handles names that are not already wrapped in links.
+  doc.querySelectorAll("a.driver-link, a[data-driver-name], #rankingsResults a").forEach(a=>{
+    const label=String(a.dataset.driverName||a.textContent||"").trim();
+    const key=label.toLowerCase().replace(/[^a-z0-9]/g,"");
+    const rec=lookup.get(key);
+    if(!rec)return;
+    const destination=system.profileUrl?system.profileUrl(rec):"";
+    if(!destination)return;
+    a.href=destination;
+    a.target="_top";
+    a.dataset.hlrnDriverLinked="1";
+    a.title="View "+(rec.displayName||rec.name||label)+"'s HLRN driver profile";
+  });
   names.sort((a,b)=>b.length-a.length);
   if(!names.length)return;
   const escRe=v=>String(v).replace(/[|\\{}()[\]^$+*?.-]/g,"\\$&");
