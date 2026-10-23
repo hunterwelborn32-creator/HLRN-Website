@@ -784,7 +784,7 @@ function start(){
 
   // Always use the current shared shell stylesheet. This gives every page
   // the same global mobile layer without requiring page-by-page CSS edits.
-  const SHELL_CSS_VERSION="20261007visual1";
+  const SHELL_CSS_VERSION="20261023onenav1";
   let shellCss=[...document.querySelectorAll('link[rel="stylesheet"]')].find(link=>/\/site-shell\.css(?:\?|$)/i.test(link.getAttribute("href")||""));
   if(!shellCss){
     shellCss=document.createElement("link");
@@ -1261,7 +1261,7 @@ function start(){
   if(!document.querySelector('link[data-hlrn-network-upgrades]')){
     const networkCss=document.createElement("link");
     networkCss.rel="stylesheet";
-    networkCss.href=url("assets/network-upgrades.css?v=20261001control1");
+    networkCss.href=url("assets/network-upgrades.css?v=20261023onenav1");
     networkCss.setAttribute("data-hlrn-network-upgrades","");
     document.head.appendChild(networkCss);
   }
