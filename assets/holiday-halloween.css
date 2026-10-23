@@ -106,3 +106,18 @@ html.hlrn-halloween #hlrn-global-nav .hgn-brand>.hgn-mini-track{
 @media(max-width:390px){
  html.hlrn-halloween #hlrn-global-nav .hgn-brand{width:240px!important;flex-basis:240px!important;}
 }
+
+/* HALLOWEEN BRAND FINAL — remove every old track layer, including legacy pseudo elements. */
+html.hlrn-halloween #hlrn-global-nav a.hgn-brand{
+ display:block!important;position:relative!important;
+ background-image:url("./hlrn-halloween-no-track.svg?v=20261023notrack1")!important;
+ background-size:100% 100%!important;background-position:center!important;background-repeat:no-repeat!important;
+ overflow:hidden!important;isolation:isolate!important;
+}
+html.hlrn-halloween #hlrn-global-nav a.hgn-brand::before,
+html.hlrn-halloween #hlrn-global-nav a.hgn-brand::after,
+html.hlrn-halloween #hlrn-global-nav a.hgn-brand .hgn-mini-track,
+html.hlrn-halloween #hlrn-global-nav a.hgn-brand .hgn-mini-track::before,
+html.hlrn-halloween #hlrn-global-nav a.hgn-brand .hgn-mini-track::after{
+ display:none!important;content:none!important;visibility:hidden!important;opacity:0!important;
+}
