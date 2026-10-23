@@ -1028,6 +1028,24 @@ async function linkHostedDriverNames(key){
     a.dataset.hlrnDriverLinked="1";
     a.title="View "+(rec.displayName||rec.name||label)+"'s HLRN driver profile";
   });
+  // Capture Hosted driver clicks before the embedded rankings script opens its old modal.
+  // The embedded popup handler runs later in bubbling; stopping here avoids it entirely.
+  if(!doc.__hlrnHostedProfileNavigation){
+    doc.__hlrnHostedProfileNavigation=true;
+    doc.addEventListener("click",event=>{
+      const target=event.target instanceof Element?event.target:event.target?.parentElement;
+      const link=target?.closest("a.driver-link,a.hlrn-hosted-driver-photo-link,a[data-driver-name],#rankingsResults a");
+      if(!link)return;
+      const name=String(link.dataset.driverName||link.textContent||"").trim();
+      const rec=lookup.get(name.toLowerCase().replace(/[^a-z0-9]/g,""));
+      if(!rec)return;
+      const destination=system.profileUrl?.(rec);
+      if(!destination)return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      window.location.assign(destination);
+    },true);
+  }
   names.sort((a,b)=>b.length-a.length);
   if(!names.length)return;
   const escRe=v=>String(v).replace(/[|\\{}()[\]^$+*?.-]/g,"\\$&");
