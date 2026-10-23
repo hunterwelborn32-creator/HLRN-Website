@@ -1,16 +1,43 @@
-/* HLRN Halloween 2026: decorative layer only; respects existing day/night and league colors. */
-html.hlrn-halloween { --halloween-orange:#ff871f; --halloween-purple:#a46bff; }
-html.hlrn-halloween body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; background:radial-gradient(ellipse at 85% 5%,rgba(255,111,0,.075),transparent 40%),radial-gradient(ellipse at 8% 80%,rgba(155,83,240,.07),transparent 40%); }
-html.hlrn-halloween body { isolation:isolate; }
-html.hlrn-halloween header,html.hlrn-halloween .site-header,html.hlrn-halloween .hlrn-site-header { border-bottom-color:rgba(255,135,31,.46)!important; }
-html.hlrn-halloween .hlrn-halloween-corners { pointer-events:none; position:fixed; inset:0; z-index:1000; overflow:hidden; }
-html.hlrn-halloween .hlrn-halloween-web { position:absolute; top:0; width:100px; height:100px; opacity:.5; background:repeating-radial-gradient(circle at 0 0,transparent 0 17px,rgba(180,143,224,.46) 18px 19px,transparent 20px 25px),conic-gradient(from 0deg at 0 0,transparent 0deg,rgba(180,143,224,.32) 1deg 2deg,transparent 3deg 29deg,rgba(180,143,224,.32) 30deg 31deg,transparent 32deg 59deg,rgba(180,143,224,.32) 60deg 61deg,transparent 62deg 89deg,rgba(180,143,224,.32) 90deg 91deg,transparent 92deg); }
-html.hlrn-halloween .hlrn-halloween-web.left { left:0; }
-html.hlrn-halloween .hlrn-halloween-web.right { right:0; transform:scaleX(-1); }
-html.hlrn-halloween .hlrn-halloween-pumpkin { position:absolute; bottom:14px; right:18px; font-size:31px; line-height:1; filter:drop-shadow(0 0 12px rgba(255,120,0,.55)); animation:hlrn-pumpkin-glow 4s ease-in-out infinite; }
-html.hlrn-halloween .hlrn-halloween-bat { position:absolute; top:108px; right:4%; font-size:24px; opacity:.65; animation:hlrn-bat-float 7s ease-in-out infinite; }
-html.hlrn-halloween .hlrn-halloween-bat.second { top:160px; right:11%; font-size:17px; animation-delay:-3s; }
-@keyframes hlrn-pumpkin-glow { 50% { filter:drop-shadow(0 0 20px rgba(255,120,0,.8)); } }
-@keyframes hlrn-bat-float { 50% { transform:translate(-20px,12px) rotate(-8deg); } }
-@media (prefers-reduced-motion:reduce) { html.hlrn-halloween .hlrn-halloween-bat,html.hlrn-halloween .hlrn-halloween-pumpkin { animation:none; } }
-@media(max-width:700px) { html.hlrn-halloween .hlrn-halloween-web { width:60px;height:60px;opacity:.3; } html.hlrn-halloween .hlrn-halloween-bat { display:none; } html.hlrn-halloween .hlrn-halloween-pumpkin { font-size:24px;right:9px;bottom:8px; } }
+/* HLRN HAUNTED SPEEDWAY 2026 — site-wide seasonal presentation. */
+/* Visual-only layer: no data tables, standings logic, logo assets or live timing modified. */
+html.hlrn-halloween{--hween-orange:#ff841f;--hween-ember:#ffbb66;--hween-purple:#9654e9;}
+html.hlrn-halloween body{position:relative;}
+html.hlrn-halloween body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 65% 38% at 50% 0%,rgba(255,112,20,.105),transparent 78%),radial-gradient(ellipse 45% 55% at 99% 70%,rgba(113,54,184,.085),transparent 85%);}
+html.hlrn-halloween[data-hlrn-theme="light"] body::before{background:radial-gradient(ellipse 65% 38% at 50% 0%,rgba(255,112,20,.06),transparent 78%),radial-gradient(ellipse 45% 55% at 99% 70%,rgba(113,54,184,.05),transparent 85%);}
+/* High-contrast race control header with glowing orange race line. */
+html.hlrn-halloween #hlrn-global-nav{background:linear-gradient(115deg,rgba(80,30,97,.43),transparent 34%,rgba(255,116,14,.16) 72%,rgba(77,22,98,.42)),linear-gradient(180deg,#17101f,#0b0b12)!important;border-top:3px solid #ff7b1b!important;border-bottom:1px solid rgba(255,149,55,.5)!important;box-shadow:0 8px 36px rgba(66,22,90,.27),0 8px 22px rgba(255,114,16,.12)!important;}
+html.hlrn-halloween #hlrn-global-nav:after{background:linear-gradient(90deg,#ff7317 0%,#ffcc5a 24%,#7d45d0 51%,#ff7317 77%,#ffcc5a 100%)!important;height:3px!important;opacity:1!important;box-shadow:0 0 14px rgba(255,105,10,.55)!important;}
+html.hlrn-halloween #hlrn-global-nav .hgn-inner{position:relative!important;z-index:2!important;}
+html.hlrn-halloween #hlrn-global-nav .hgn-brand{filter:drop-shadow(0 1px 6px rgba(255,139,35,.22));}
+/* All nav links retain existing click behavior and active indication. */
+html.hlrn-halloween #hlrn-global-nav a:not(.hgn-brand):hover{color:#ffd3a0!important;text-shadow:0 0 10px rgba(255,138,43,.45)!important;}
+/* Below-nav themed race banner (not fixed; scrolls normally). */
+html.hlrn-halloween .hlrn-haunt-banner{position:relative;isolation:isolate;z-index:12;display:flex;align-items:center;justify-content:center;gap:14px;min-height:42px;padding:8px 24px;color:#ffedd8;background:linear-gradient(90deg,#140d1c,#321829 48%,#140d1c);border-bottom:1px solid rgba(255,130,40,.45);box-shadow:0 4px 15px rgba(0,0,0,.14);font-family:Inter,"Segoe UI",sans-serif;text-align:center;overflow:hidden;}
+html.hlrn-halloween .hlrn-haunt-banner::before{content:"";position:absolute;inset:0;z-index:-1;background:repeating-linear-gradient(110deg,transparent 0 29px,rgba(255,255,255,.018) 30px 32px,transparent 33px 62px);}
+html.hlrn-halloween .hlrn-haunt-banner .haunt-mark{font-size:19px;filter:drop-shadow(0 0 9px rgba(255,116,14,.5));}
+html.hlrn-halloween .hlrn-haunt-banner .haunt-title{font-size:12px;font-weight:900;letter-spacing:.16em;color:#ffbc75;text-transform:uppercase;}
+html.hlrn-halloween .hlrn-haunt-banner .haunt-detail{font-size:11px;font-weight:650;letter-spacing:.11em;color:#e3d2e8;text-transform:uppercase;}
+html.hlrn-halloween .hlrn-haunt-banner .haunt-light{height:7px;width:7px;border-radius:50%;flex:0 0 auto;background:#ff8a2a;box-shadow:0 0 0 4px rgba(255,124,18,.13),0 0 12px #ff8a2a;animation:haunt-led 2.6s ease-in-out infinite;}
+/* Atmospheric, non-interactive layers live outside the normal document flow. */
+html.hlrn-halloween .hlrn-haunt-stage{position:fixed;inset:0;z-index:80;pointer-events:none;overflow:hidden;contain:layout style;}
+html.hlrn-halloween .hlrn-haunt-mist{position:absolute;left:-30vw;bottom:-17vh;width:160vw;height:43vh;background:radial-gradient(ellipse 49% 48% at 35% 56%,rgba(123,63,146,.105),transparent 76%),radial-gradient(ellipse 42% 48% at 77% 68%,rgba(243,104,39,.07),transparent 75%);filter:blur(20px);animation:haunt-drift 21s ease-in-out infinite alternate;}
+html.hlrn-halloween .hlrn-haunt-moon{position:absolute;top:110px;right:3vw;width:75px;height:75px;border-radius:50%;background:radial-gradient(circle at 35% 31%,#ffe6ab,#f6a857 62%,#bb5c47 100%);box-shadow:0 0 29px rgba(255,149,61,.23),0 0 80px rgba(253,138,44,.09);opacity:.48;}
+html.hlrn-halloween .hlrn-haunt-moon::after{content:"";position:absolute;inset:12px 9px;border-radius:50%;background:radial-gradient(circle at 65% 34%,rgba(165,81,50,.23) 0 14%,transparent 15%),radial-gradient(circle at 38% 69%,rgba(165,81,50,.21) 0 10%,transparent 11%);}
+html.hlrn-halloween .hlrn-haunt-bat{position:absolute;top:144px;right:10vw;width:42px;height:20px;fill:#321c39;opacity:.61;filter:drop-shadow(0 1px 1px rgba(255,192,114,.3));animation:haunt-flight 9s ease-in-out infinite alternate;}
+html.hlrn-halloween .hlrn-haunt-bat.bat-2{top:211px;right:17vw;width:24px;height:15px;opacity:.37;animation-duration:12s;animation-delay:-5s;}
+html.hlrn-halloween .hlrn-haunt-corner{position:absolute;top:0;width:116px;height:116px;opacity:.42;background:repeating-radial-gradient(circle at 0 0,transparent 0 18px,rgba(190,165,205,.45) 19px 20px,transparent 21px 29px),repeating-conic-gradient(from 0deg at 0 0,rgba(190,165,205,.32) 0deg 1deg,transparent 2deg 20deg);clip-path:polygon(0 0,100% 0,0 100%);}
+html.hlrn-halloween .hlrn-haunt-corner.right{right:0;transform:scaleX(-1);}
+html.hlrn-halloween .hlrn-haunt-corner.left{left:0;}
+html.hlrn-halloween .hlrn-haunt-corner{top:0;}
+/* Ambient pumpkin is a small branded ornament rather than a floating emoji. */
+html.hlrn-halloween .hlrn-haunt-seal{position:fixed;bottom:16px;right:16px;z-index:81;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;color:#ffd2a5;background:radial-gradient(circle at 30% 25%,#57304f,#1b1125 80%);border:1px solid rgba(255,155,54,.75);box-shadow:inset 0 0 0 3px rgba(11,7,19,.8),0 3px 18px rgba(37,14,45,.3),0 0 13px rgba(255,121,28,.2);font-size:25px;pointer-events:none;}
+html.hlrn-halloween .hlrn-haunt-seal::after{content:"";position:absolute;inset:-5px;border:1px dashed rgba(255,139,40,.35);border-radius:50%;}
+/* Subtle section accents, leaving league-specific reds and greens untouched. */
+html.hlrn-halloween main h1,html.hlrn-halloween main h2{filter:drop-shadow(0 0 13px rgba(255,123,26,.12));}
+html.hlrn-halloween .hlrn-haunt-ember{position:absolute;bottom:-20px;width:3px;height:3px;border-radius:50%;background:#ffa44d;box-shadow:0 0 7px 2px rgba(255,126,32,.43);opacity:0;animation:haunt-ember var(--ember-speed,12s) linear infinite;left:var(--ember-left,50%);animation-delay:var(--ember-delay,0s);}
+@keyframes haunt-led{50%{opacity:.5;box-shadow:0 0 0 3px rgba(255,124,18,.08),0 0 4px #ff8a2a;}}
+@keyframes haunt-drift{from{transform:translateX(-5%)}to{transform:translateX(6%)}}
+@keyframes haunt-flight{from{transform:translate(-8px,6px) rotate(-6deg)}to{transform:translate(34px,-20px) rotate(9deg)}}
+@keyframes haunt-ember{0%{transform:translateY(0);opacity:0}12%{opacity:.6}80%{opacity:.36}100%{transform:translateY(-85vh);opacity:0}}
+@media(max-width:700px){html.hlrn-halloween .hlrn-haunt-banner{gap:8px;padding:8px 12px;min-height:38px;}html.hlrn-halloween .hlrn-haunt-banner .haunt-title{font-size:10px;letter-spacing:.09em;}html.hlrn-halloween .hlrn-haunt-banner .haunt-detail{display:none;}html.hlrn-halloween .hlrn-haunt-moon{width:48px;height:48px;top:115px;}html.hlrn-halloween .hlrn-haunt-corner{width:65px;height:65px;opacity:.3;}html.hlrn-halloween .hlrn-haunt-seal{width:35px;height:35px;bottom:8px;right:8px;font-size:19px;}html.hlrn-halloween .hlrn-haunt-bat{opacity:.35;}}
+@media(prefers-reduced-motion:reduce){html.hlrn-halloween .hlrn-haunt-mist,html.hlrn-halloween .hlrn-haunt-bat,html.hlrn-halloween .hlrn-haunt-ember,html.hlrn-halloween .hlrn-haunt-banner .haunt-light{animation:none!important;}html.hlrn-halloween .hlrn-haunt-ember{display:none;}}
