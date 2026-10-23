@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T12:43:34.332Z",
+  "generatedAt": "2026-10-23T13:21:16.814Z",
   "drivers": [
     {
       "series": "sunday",
@@ -11950,11 +11950,11 @@
       "photoSlug": "trevor-haley",
       "rank": 1,
       "points": null,
-      "races": 90,
+      "races": 91,
       "wins": 23,
       "top5": 54,
       "top10": 67,
-      "avgFinish": 7.88,
+      "avgFinish": 8.21,
       "results": []
     },
     {
@@ -12004,32 +12004,32 @@
     },
     {
       "series": "hosted",
-      "id": "tommy-rogers",
-      "name": "Tommy Rogers",
-      "sourceName": "Tommy Rogers",
-      "photoSlug": "tommy-rogers",
-      "rank": 5,
-      "points": null,
-      "races": 141,
-      "wins": 5,
-      "top5": 26,
-      "top10": 54,
-      "avgFinish": 14.59,
-      "results": []
-    },
-    {
-      "series": "hosted",
       "id": "jim-segredo",
       "name": "Jim Segredo",
       "sourceName": "Jim Segredo",
       "photoSlug": "jim-segredo",
+      "rank": 5,
+      "points": null,
+      "races": 176,
+      "wins": 5,
+      "top5": 26,
+      "top10": 66,
+      "avgFinish": 16.13,
+      "results": []
+    },
+    {
+      "series": "hosted",
+      "id": "tommy-rogers",
+      "name": "Tommy Rogers",
+      "sourceName": "Tommy Rogers",
+      "photoSlug": "tommy-rogers",
       "rank": 6,
       "points": null,
-      "races": 175,
+      "races": 142,
       "wins": 5,
-      "top5": 25,
-      "top10": 65,
-      "avgFinish": 16.21,
+      "top5": 26,
+      "top10": 54,
+      "avgFinish": 14.61,
       "results": []
     },
     {
@@ -12085,11 +12085,11 @@
       "photoSlug": "josh-mckinney",
       "rank": 10,
       "points": null,
-      "races": 111,
+      "races": 112,
       "wins": 4,
       "top5": 24,
-      "top10": 46,
-      "avgFinish": 14.14,
+      "top10": 47,
+      "avgFinish": 14.09,
       "results": []
     },
     {
@@ -12100,11 +12100,11 @@
       "photoSlug": "jerry-fassett",
       "rank": 11,
       "points": null,
-      "races": 181,
+      "races": 182,
       "wins": 4,
       "top5": 23,
       "top10": 62,
-      "avgFinish": 14.86,
+      "avgFinish": 14.91,
       "results": []
     },
     {
@@ -12145,11 +12145,11 @@
       "photoSlug": "juan-escamilla",
       "rank": 14,
       "points": null,
-      "races": 45,
+      "races": 46,
       "wins": 4,
       "top5": 19,
       "top10": 23,
-      "avgFinish": 14.91,
+      "avgFinish": 15.43,
       "results": []
     },
     {
@@ -12205,11 +12205,11 @@
       "photoSlug": "john-miles",
       "rank": 18,
       "points": null,
-      "races": 99,
+      "races": 100,
       "wins": 4,
       "top5": 10,
       "top10": 23,
-      "avgFinish": 17.44,
+      "avgFinish": 17.56,
       "results": []
     },
     {
@@ -12229,17 +12229,17 @@
     },
     {
       "series": "hosted",
-      "id": "gerry-bergeron",
-      "name": "Gerry Bergeron",
-      "sourceName": "Gerry Bergeron",
-      "photoSlug": "gerry-bergeron",
+      "id": "eric-hayden",
+      "name": "Eric Hayden",
+      "sourceName": "Eric Hayden",
+      "photoSlug": "eric-hayden",
       "rank": 20,
       "points": null,
-      "races": 117,
+      "races": 181,
       "wins": 3,
       "top5": 34,
-      "top10": 68,
-      "avgFinish": 10.95,
+      "top10": 76,
+      "avgFinish": 13.87,
       "results": []
     }
   ]
