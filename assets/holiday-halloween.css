@@ -133,3 +133,16 @@ html.hlrn-halloween #hlrn-global-nav a.hgn-brand>.hgn-mini-track,
 html.hlrn-halloween #hlrn-global-nav a.hgn-brand canvas,
 html.hlrn-halloween #hlrn-global-nav a.hgn-brand .hgn-name,
 html.hlrn-halloween #hlrn-global-nav a.hgn-brand .hgn-mark{display:none!important;}
+
+/* Halloween logo fit V10: crop the black letterbox bars in the uploaded banner.
+   Image is 2048×682 with artwork centered between black top and bottom margins. */
+html.hlrn-halloween #hlrn-global-nav a.hgn-brand{
+ background-color:transparent!important;
+ background-image:url("./e20ef3bb-8dec-47f4-babb-ba0259f9a357.png?v=20261023crop10")!important;
+ background-size:100% 162%!important;
+ background-position:center center!important;
+ background-repeat:no-repeat!important;
+ border-radius:4px!important;
+ box-shadow:0 0 13px rgba(255,129,30,.28)!important;
+}
+html.hlrn-halloween #hlrn-global-nav a.hgn-brand > .hgn-mini-track{display:none!important;}
