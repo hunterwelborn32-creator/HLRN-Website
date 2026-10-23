@@ -1038,12 +1038,14 @@ async function linkHostedDriverNames(key){
       if(!link)return;
       const name=String(link.dataset.driverName||link.textContent||"").trim();
       const rec=lookup.get(name.toLowerCase().replace(/[^a-z0-9]/g,""));
-      if(!rec)return;
-      const destination=system.profileUrl?.(rec);
-      if(!destination)return;
+      if(!name)return;
+      // Known drivers use their existing permanent profile.
+      // Other Hosted names use the same main driver-page profile renderer.
+      const destination=rec&&system.profileUrl?.(rec)
+        ||"/drivers/?driver="+encodeURIComponent(name)+"&league=hosted";
       event.preventDefault();
       event.stopImmediatePropagation();
-      window.location.assign(destination);
+      window.top.location.assign(destination);
     },true);
   }
   names.sort((a,b)=>b.length-a.length);
