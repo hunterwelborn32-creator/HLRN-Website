@@ -73,3 +73,15 @@ html.hlrn-halloween #hlrn-global-nav .hgn-halloween-trim::after{right:4px;top:1p
 @media(max-width:1300px){html.hlrn-halloween #hlrn-global-nav .hgn-links>.hgn-link,html.hlrn-halloween #hlrn-global-nav .hgn-more-btn{padding-inline:7px!important;letter-spacing:0!important;}}
 @media(max-width:850px){html.hlrn-halloween #hlrn-global-nav .hgn-links>.hgn-link,html.hlrn-halloween #hlrn-global-nav .hgn-more-btn{min-height:42px!important;height:auto!important;transform:none!important;}html.hlrn-halloween #hlrn-global-nav .hgn-mobile{background:linear-gradient(180deg,#25132e,#0e0a17)!important;border-top:1px solid rgba(255,137,38,.5)!important;}html.hlrn-halloween #hlrn-global-nav .hgn-mobile a{color:#ffe4c8!important;border-bottom-color:rgba(255,148,46,.15)!important;}html.hlrn-halloween #hlrn-global-nav .hgn-mobile a:hover{background:rgba(255,133,28,.2)!important;}}
 @media(prefers-reduced-motion:reduce){html.hlrn-halloween #hlrn-global-nav .hgn-links>.hgn-link:hover{transform:none!important;}}
+
+/* Halloween brand replacement: original animated logo remains untouched in markup. */
+html.hlrn-halloween #hlrn-global-nav .hgn-mini-track{
+ background:#160c21 url("./hlrn-halloween-brand.svg?v=20261023spooky1") center center / 100% 100% no-repeat!important;
+ border-radius:11px!important;box-shadow:0 0 15px rgba(255,121,22,.32)!important;
+}
+html.hlrn-halloween #hlrn-global-nav .hgn-mini-track .hgn-mini-canvas,
+html.hlrn-halloween #hlrn-global-nav .hgn-mini-track .hgn-mark,
+html.hlrn-halloween #hlrn-global-nav .hgn-mini-track .hgn-name,
+html.hlrn-halloween #hlrn-global-nav .hgn-mini-track .hgn-mini-mark{visibility:hidden!important;}
+html.hlrn-halloween #hlrn-global-nav .hgn-brand{filter:none!important;}
+@media(max-width:700px){html.hlrn-halloween #hlrn-global-nav .hgn-mini-track{background-size:100% 100%!important;}}
