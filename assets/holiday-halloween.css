@@ -1,0 +1,16 @@
+/* HLRN Halloween 2026: decorative layer only; respects existing day/night and league colors. */
+html.hlrn-halloween { --halloween-orange:#ff871f; --halloween-purple:#a46bff; }
+html.hlrn-halloween body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; background:radial-gradient(ellipse at 85% 5%,rgba(255,111,0,.075),transparent 40%),radial-gradient(ellipse at 8% 80%,rgba(155,83,240,.07),transparent 40%); }
+html.hlrn-halloween body { isolation:isolate; }
+html.hlrn-halloween header,html.hlrn-halloween .site-header,html.hlrn-halloween .hlrn-site-header { border-bottom-color:rgba(255,135,31,.46)!important; }
+html.hlrn-halloween .hlrn-halloween-corners { pointer-events:none; position:fixed; inset:0; z-index:1000; overflow:hidden; }
+html.hlrn-halloween .hlrn-halloween-web { position:absolute; top:0; width:100px; height:100px; opacity:.5; background:repeating-radial-gradient(circle at 0 0,transparent 0 17px,rgba(180,143,224,.46) 18px 19px,transparent 20px 25px),conic-gradient(from 0deg at 0 0,transparent 0deg,rgba(180,143,224,.32) 1deg 2deg,transparent 3deg 29deg,rgba(180,143,224,.32) 30deg 31deg,transparent 32deg 59deg,rgba(180,143,224,.32) 60deg 61deg,transparent 62deg 89deg,rgba(180,143,224,.32) 90deg 91deg,transparent 92deg); }
+html.hlrn-halloween .hlrn-halloween-web.left { left:0; }
+html.hlrn-halloween .hlrn-halloween-web.right { right:0; transform:scaleX(-1); }
+html.hlrn-halloween .hlrn-halloween-pumpkin { position:absolute; bottom:14px; right:18px; font-size:31px; line-height:1; filter:drop-shadow(0 0 12px rgba(255,120,0,.55)); animation:hlrn-pumpkin-glow 4s ease-in-out infinite; }
+html.hlrn-halloween .hlrn-halloween-bat { position:absolute; top:108px; right:4%; font-size:24px; opacity:.65; animation:hlrn-bat-float 7s ease-in-out infinite; }
+html.hlrn-halloween .hlrn-halloween-bat.second { top:160px; right:11%; font-size:17px; animation-delay:-3s; }
+@keyframes hlrn-pumpkin-glow { 50% { filter:drop-shadow(0 0 20px rgba(255,120,0,.8)); } }
+@keyframes hlrn-bat-float { 50% { transform:translate(-20px,12px) rotate(-8deg); } }
+@media (prefers-reduced-motion:reduce) { html.hlrn-halloween .hlrn-halloween-bat,html.hlrn-halloween .hlrn-halloween-pumpkin { animation:none; } }
+@media(max-width:700px) { html.hlrn-halloween .hlrn-halloween-web { width:60px;height:60px;opacity:.3; } html.hlrn-halloween .hlrn-halloween-bat { display:none; } html.hlrn-halloween .hlrn-halloween-pumpkin { font-size:24px;right:9px;bottom:8px; } }
