@@ -1273,6 +1273,9 @@ function start(){
     document.head.appendChild(networkScript);
   }
 
+  // Sitewide seasonal Halloween overlay; does not touch racing data.
+  if(!document.querySelector('link[data-hlrn-halloween]')){const x=document.createElement("link");x.rel="stylesheet";x.href=url("assets/holiday-halloween.css?v=20261023a");x.setAttribute("data-hlrn-halloween","");document.head.appendChild(x);}
+  if(!document.querySelector('script[data-hlrn-halloween]')){const x=document.createElement("script");x.src=url("assets/holiday-halloween.js?v=20261023a");x.defer=true;x.setAttribute("data-hlrn-halloween","");document.head.appendChild(x);}
   document.documentElement.classList.add("hlrn-shell-ready");
 }
 
