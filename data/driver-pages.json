@@ -1022,8 +1022,8 @@
       "slug": "justin-lee-pearson",
       "url": "/drivers/justin-lee-pearson/",
       "number": "58",
-      "photoSlug": "",
-      "hasPhoto": false,
+      "photoSlug": "justin-lee-pearson",
+      "hasPhoto": true,
       "iRating": 3348,
       "series": [
         "hosted"
