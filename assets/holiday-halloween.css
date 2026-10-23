@@ -52,3 +52,24 @@ html.hlrn-halloween #hlrn-global-nav .hgn-halloween-trim::after{
 }
 @media(max-width:900px){html.hlrn-halloween #hlrn-global-nav .hgn-halloween-trim::after{font-size:13px;right:3px;top:3px;opacity:.65;}}
 @media(prefers-reduced-motion:reduce){html.hlrn-halloween #hlrn-global-nav *{animation:none!important;}}
+
+/* HLRN HALLOWEEN NAV V5 — premium pit-wall control deck */
+html.hlrn-halloween #hlrn-global-nav{background:radial-gradient(ellipse 55% 130% at 48% -40%,rgba(194,73,220,.34),transparent 76%),linear-gradient(105deg,#1c112a 0%,#0c0a14 43%,#24112d 100%)!important;border-top:4px solid #ff912f!important;border-bottom:1px solid #ac5bcd!important;box-shadow:0 12px 34px rgba(12,5,23,.54),0 0 24px rgba(255,104,16,.13)!important;}
+html.hlrn-halloween #hlrn-global-nav .hgn-inner{gap:clamp(8px,1vw,18px)!important;padding-inline:clamp(10px,1.4vw,22px)!important;}
+html.hlrn-halloween #hlrn-global-nav .hgn-links{gap:3px!important;}
+html.hlrn-halloween #hlrn-global-nav .hgn-links>.hgn-link,
+html.hlrn-halloween #hlrn-global-nav .hgn-more-btn{font-size:clamp(9px,.68vw,11px)!important;font-weight:950!important;letter-spacing:.07em!important;border:1px solid transparent!important;border-radius:9px!important;min-height:44px!important;height:44px!important;margin:auto 0!important;padding:0 clamp(9px,.85vw,15px)!important;color:#f9e9ff!important;background:linear-gradient(180deg,rgba(126,67,158,.12),rgba(35,18,50,.35))!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.07)!important;}
+html.hlrn-halloween #hlrn-global-nav .hgn-links>.hgn-link:hover,
+html.hlrn-halloween #hlrn-global-nav .hgn-more-btn:hover{border-color:rgba(255,170,81,.65)!important;background:linear-gradient(135deg,rgba(255,141,32,.3),rgba(130,57,171,.42))!important;box-shadow:0 0 16px rgba(255,120,35,.19),inset 0 1px 0 rgba(255,232,193,.12)!important;transform:translateY(-1px)!important;}
+html.hlrn-halloween #hlrn-global-nav .hgn-links>.hgn-link.active,
+html.hlrn-halloween #hlrn-global-nav .hgn-more-wrap.active>.hgn-more-btn{border-color:rgba(255,148,43,.6)!important;background:linear-gradient(135deg,rgba(255,135,36,.25),rgba(107,38,160,.44))!important;box-shadow:inset 0 0 22px rgba(255,144,31,.13),0 0 15px rgba(240,110,38,.14)!important;}
+html.hlrn-halloween #hlrn-global-nav .hgn-link.active:after,
+html.hlrn-halloween #hlrn-global-nav .hgn-more-wrap.active>.hgn-more-btn:after{left:13px!important;right:13px!important;bottom:3px!important;height:2px!important;border-radius:9px!important;}
+html.hlrn-halloween #hlrn-global-nav .hgn-more-menu{border-radius:14px!important;padding:9px!important;backdrop-filter:blur(15px)!important;}
+html.hlrn-halloween #hlrn-global-nav :is(.hgn-search,.hgn-account,.hgn-theme-toggle,.hgn-menu){border-radius:9px!important;}
+html.hlrn-halloween #hlrn-global-nav :is(.hgn-search,.hgn-account):hover{box-shadow:0 0 14px rgba(255,132,39,.25)!important;border-color:#f2a253!important;}
+html.hlrn-halloween #hlrn-global-nav .hgn-theme-toggle{box-shadow:0 0 14px rgba(159,90,201,.16)!important;}
+html.hlrn-halloween #hlrn-global-nav .hgn-halloween-trim::after{right:4px;top:1px;font-size:12px;opacity:.78;}
+@media(max-width:1300px){html.hlrn-halloween #hlrn-global-nav .hgn-links>.hgn-link,html.hlrn-halloween #hlrn-global-nav .hgn-more-btn{padding-inline:7px!important;letter-spacing:0!important;}}
+@media(max-width:850px){html.hlrn-halloween #hlrn-global-nav .hgn-links>.hgn-link,html.hlrn-halloween #hlrn-global-nav .hgn-more-btn{min-height:42px!important;height:auto!important;transform:none!important;}html.hlrn-halloween #hlrn-global-nav .hgn-mobile{background:linear-gradient(180deg,#25132e,#0e0a17)!important;border-top:1px solid rgba(255,137,38,.5)!important;}html.hlrn-halloween #hlrn-global-nav .hgn-mobile a{color:#ffe4c8!important;border-bottom-color:rgba(255,148,46,.15)!important;}html.hlrn-halloween #hlrn-global-nav .hgn-mobile a:hover{background:rgba(255,133,28,.2)!important;}}
+@media(prefers-reduced-motion:reduce){html.hlrn-halloween #hlrn-global-nav .hgn-links>.hgn-link:hover{transform:none!important;}}
