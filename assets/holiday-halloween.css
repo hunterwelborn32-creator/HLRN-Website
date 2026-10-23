@@ -121,3 +121,15 @@ html.hlrn-halloween #hlrn-global-nav a.hgn-brand .hgn-mini-track::before,
 html.hlrn-halloween #hlrn-global-nav a.hgn-brand .hgn-mini-track::after{
  display:none!important;content:none!important;visibility:hidden!important;opacity:0!important;
 }
+
+/* Exact user-uploaded 2026 Halloween banner: one image, no synthetic track layers. */
+html.hlrn-halloween #hlrn-global-nav a.hgn-brand{
+ background-image:url("./e20ef3bb-8dec-47f4-babb-ba0259f9a357.png?v=exact20261023")!important;
+ background-repeat:no-repeat!important;
+ background-position:center!important;
+ background-size:100% 100%!important;
+}
+html.hlrn-halloween #hlrn-global-nav a.hgn-brand>.hgn-mini-track,
+html.hlrn-halloween #hlrn-global-nav a.hgn-brand canvas,
+html.hlrn-halloween #hlrn-global-nav a.hgn-brand .hgn-name,
+html.hlrn-halloween #hlrn-global-nav a.hgn-brand .hgn-mark{display:none!important;}
