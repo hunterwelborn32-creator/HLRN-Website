@@ -1773,8 +1773,8 @@
       "slug": "zachary-cato",
       "url": "/drivers/zachary-cato/",
       "number": "6",
-      "photoSlug": "",
-      "hasPhoto": false,
+      "photoSlug": "zachary-cato",
+      "hasPhoto": true,
       "iRating": 1828,
       "series": [
         "hosted"
