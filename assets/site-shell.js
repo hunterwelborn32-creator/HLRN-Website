@@ -1279,5 +1279,27 @@ function start(){
   document.documentElement.classList.add("hlrn-shell-ready");
 }
 
+
+/* Keep Hosted driver profile cards focused on verified, useful metrics.
+   Runs on every permanent profile using the shared site shell. */
+function simplifyHostedProfileStats(){
+  document.querySelectorAll(".series-card.hosted").forEach(card=>{
+    const grid=card.querySelector(".stats-grid");
+    if(!grid)return;
+    const preferred=["Wins","Top 5","Top 10","Starts","Avg Finish","Laps Led","Poles","Points","Incidents","Laps","Rank"];
+    const stats=[...grid.querySelectorAll(":scope > .stat")];
+    const valid=stats.filter(el=>{
+      const value=el.querySelector("strong")?.textContent?.trim()||"";
+      return value&&!["—","–","-","N/A","null","undefined"].includes(value);
+    });
+    valid.sort((a,b)=>preferred.indexOf(a.querySelector("small")?.textContent?.trim())-preferred.indexOf(b.querySelector("small")?.textContent?.trim()));
+    grid.replaceChildren(...valid);
+    const team=card.querySelector(".team-badge");
+    if(team&&/not listed|unknown|^—$/i.test(team.querySelector("strong")?.textContent?.trim()||""))team.remove();
+  });
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",simplifyHostedProfileStats,{once:true});
+else simplifyHostedProfileStats();
+
 start();
 })();
