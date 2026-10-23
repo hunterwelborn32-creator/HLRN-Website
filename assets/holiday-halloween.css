@@ -85,3 +85,24 @@ html.hlrn-halloween #hlrn-global-nav .hgn-mini-track .hgn-name,
 html.hlrn-halloween #hlrn-global-nav .hgn-mini-track .hgn-mini-mark{visibility:hidden!important;}
 html.hlrn-halloween #hlrn-global-nav .hgn-brand{filter:none!important;}
 @media(max-width:700px){html.hlrn-halloween #hlrn-global-nav .hgn-mini-track{background-size:100% 100%!important;}}
+
+/* FIX V7: render complete seasonal artwork ON BRAND anchor, never underneath the oval */
+html.hlrn-halloween #hlrn-global-nav .hgn-brand{
+  position:relative!important;display:block!important;flex:0 0 420px!important;
+  width:420px!important;height:68px!important;min-width:0!important;
+  background:#150b24 url("./hlrn-halloween-brand.svg?v=20261023brand7") center / 100% 100% no-repeat!important;
+  border:0!important;border-radius:8px!important;overflow:hidden!important;
+  box-shadow:0 0 13px rgba(255,132,29,.28)!important;
+}
+html.hlrn-halloween #hlrn-global-nav .hgn-brand>.hgn-mini-track{
+  opacity:0!important;visibility:hidden!important;pointer-events:none!important;
+}
+@media(max-width:1350px){
+ html.hlrn-halloween #hlrn-global-nav .hgn-brand{width:335px!important;flex-basis:335px!important;height:68px!important;}
+}
+@media(max-width:700px){
+ html.hlrn-halloween #hlrn-global-nav .hgn-brand{width:275px!important;flex-basis:275px!important;height:62px!important;}
+}
+@media(max-width:390px){
+ html.hlrn-halloween #hlrn-global-nav .hgn-brand{width:240px!important;flex-basis:240px!important;}
+}
