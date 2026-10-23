@@ -2450,3 +2450,8 @@ html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-more-wrap.active>.hgn-more-bt
 @media(prefers-reduced-motion:reduce){#hlrn-global-nav .hgn-links>.hgn-link,#hlrn-global-nav .hgn-more-btn,#hlrn-global-nav .hgn-more-item{transition:none!important;transform:none!important}}
 
 /* END HLRN NAVIGATION REFINEMENT */
+
+/* ONE GLOBAL TOP NAV: legacy Race Week strip is not a second header. */
+#hlrn-race-weekend-strip{display:none!important;}
+/* Keep standings-series selection usable as content tabs, not another site-wide header. */
+.hlrn-series-switcher{max-width:960px!important;margin:12px auto 16px!important;border-radius:12px!important;overflow:hidden!important;}
