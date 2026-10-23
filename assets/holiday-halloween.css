@@ -1,72 +1,54 @@
-/* HLRN HAUNTED SPEEDWAY 2026 — site-wide seasonal presentation. */
-/* Visual-only layer: no data tables, standings logic, logo assets or live timing modified. */
-html.hlrn-halloween{--hween-orange:#ff841f;--hween-ember:#ffbb66;--hween-purple:#9654e9;}
-html.hlrn-halloween body{position:relative;}
-html.hlrn-halloween body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 65% 38% at 50% 0%,rgba(255,112,20,.105),transparent 78%),radial-gradient(ellipse 45% 55% at 99% 70%,rgba(113,54,184,.085),transparent 85%);}
-html.hlrn-halloween[data-hlrn-theme="light"] body::before{background:radial-gradient(ellipse 65% 38% at 50% 0%,rgba(255,112,20,.06),transparent 78%),radial-gradient(ellipse 45% 55% at 99% 70%,rgba(113,54,184,.05),transparent 85%);}
-/* High-contrast race control header with glowing orange race line. */
-html.hlrn-halloween #hlrn-global-nav{background:linear-gradient(115deg,rgba(80,30,97,.43),transparent 34%,rgba(255,116,14,.16) 72%,rgba(77,22,98,.42)),linear-gradient(180deg,#17101f,#0b0b12)!important;border-top:3px solid #ff7b1b!important;border-bottom:1px solid rgba(255,149,55,.5)!important;box-shadow:0 8px 36px rgba(66,22,90,.27),0 8px 22px rgba(255,114,16,.12)!important;}
-html.hlrn-halloween #hlrn-global-nav:after{background:linear-gradient(90deg,#ff7317 0%,#ffcc5a 24%,#7d45d0 51%,#ff7317 77%,#ffcc5a 100%)!important;height:3px!important;opacity:1!important;box-shadow:0 0 14px rgba(255,105,10,.55)!important;}
-html.hlrn-halloween #hlrn-global-nav .hgn-inner{position:relative!important;z-index:2!important;}
-html.hlrn-halloween #hlrn-global-nav .hgn-brand{filter:drop-shadow(0 1px 6px rgba(255,139,35,.22));}
-/* All nav links retain existing click behavior and active indication. */
-html.hlrn-halloween #hlrn-global-nav a:not(.hgn-brand):hover{color:#ffd3a0!important;text-shadow:0 0 10px rgba(255,138,43,.45)!important;}
-/* Below-nav themed race banner (not fixed; scrolls normally). */
-html.hlrn-halloween .hlrn-haunt-banner{position:relative;isolation:isolate;z-index:12;display:flex;align-items:center;justify-content:center;gap:14px;min-height:42px;padding:8px 24px;color:#ffedd8;background:linear-gradient(90deg,#140d1c,#321829 48%,#140d1c);border-bottom:1px solid rgba(255,130,40,.45);box-shadow:0 4px 15px rgba(0,0,0,.14);font-family:Inter,"Segoe UI",sans-serif;text-align:center;overflow:hidden;}
-html.hlrn-halloween .hlrn-haunt-banner::before{content:"";position:absolute;inset:0;z-index:-1;background:repeating-linear-gradient(110deg,transparent 0 29px,rgba(255,255,255,.018) 30px 32px,transparent 33px 62px);}
-html.hlrn-halloween .hlrn-haunt-banner .haunt-mark{font-size:19px;filter:drop-shadow(0 0 9px rgba(255,116,14,.5));}
-html.hlrn-halloween .hlrn-haunt-banner .haunt-title{font-size:12px;font-weight:900;letter-spacing:.16em;color:#ffbc75;text-transform:uppercase;}
-html.hlrn-halloween .hlrn-haunt-banner .haunt-detail{font-size:11px;font-weight:650;letter-spacing:.11em;color:#e3d2e8;text-transform:uppercase;}
-html.hlrn-halloween .hlrn-haunt-banner .haunt-light{height:7px;width:7px;border-radius:50%;flex:0 0 auto;background:#ff8a2a;box-shadow:0 0 0 4px rgba(255,124,18,.13),0 0 12px #ff8a2a;animation:haunt-led 2.6s ease-in-out infinite;}
-/* Atmospheric, non-interactive layers live outside the normal document flow. */
-html.hlrn-halloween .hlrn-haunt-stage{position:fixed;inset:0;z-index:80;pointer-events:none;overflow:hidden;contain:layout style;}
-html.hlrn-halloween .hlrn-haunt-mist{position:absolute;left:-30vw;bottom:-17vh;width:160vw;height:43vh;background:radial-gradient(ellipse 49% 48% at 35% 56%,rgba(123,63,146,.105),transparent 76%),radial-gradient(ellipse 42% 48% at 77% 68%,rgba(243,104,39,.07),transparent 75%);filter:blur(20px);animation:haunt-drift 21s ease-in-out infinite alternate;}
-html.hlrn-halloween .hlrn-haunt-moon{position:absolute;top:110px;right:3vw;width:75px;height:75px;border-radius:50%;background:radial-gradient(circle at 35% 31%,#ffe6ab,#f6a857 62%,#bb5c47 100%);box-shadow:0 0 29px rgba(255,149,61,.23),0 0 80px rgba(253,138,44,.09);opacity:.48;}
-html.hlrn-halloween .hlrn-haunt-moon::after{content:"";position:absolute;inset:12px 9px;border-radius:50%;background:radial-gradient(circle at 65% 34%,rgba(165,81,50,.23) 0 14%,transparent 15%),radial-gradient(circle at 38% 69%,rgba(165,81,50,.21) 0 10%,transparent 11%);}
-html.hlrn-halloween .hlrn-haunt-bat{position:absolute;top:144px;right:10vw;width:42px;height:20px;fill:#321c39;opacity:.61;filter:drop-shadow(0 1px 1px rgba(255,192,114,.3));animation:haunt-flight 9s ease-in-out infinite alternate;}
-html.hlrn-halloween .hlrn-haunt-bat.bat-2{top:211px;right:17vw;width:24px;height:15px;opacity:.37;animation-duration:12s;animation-delay:-5s;}
-html.hlrn-halloween .hlrn-haunt-corner{position:absolute;top:0;width:116px;height:116px;opacity:.42;background:repeating-radial-gradient(circle at 0 0,transparent 0 18px,rgba(190,165,205,.45) 19px 20px,transparent 21px 29px),repeating-conic-gradient(from 0deg at 0 0,rgba(190,165,205,.32) 0deg 1deg,transparent 2deg 20deg);clip-path:polygon(0 0,100% 0,0 100%);}
-html.hlrn-halloween .hlrn-haunt-corner.right{right:0;transform:scaleX(-1);}
-html.hlrn-halloween .hlrn-haunt-corner.left{left:0;}
-html.hlrn-halloween .hlrn-haunt-corner{top:0;}
-/* Ambient pumpkin is a small branded ornament rather than a floating emoji. */
-html.hlrn-halloween .hlrn-haunt-seal{position:fixed;bottom:16px;right:16px;z-index:81;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;color:#ffd2a5;background:radial-gradient(circle at 30% 25%,#57304f,#1b1125 80%);border:1px solid rgba(255,155,54,.75);box-shadow:inset 0 0 0 3px rgba(11,7,19,.8),0 3px 18px rgba(37,14,45,.3),0 0 13px rgba(255,121,28,.2);font-size:25px;pointer-events:none;}
-html.hlrn-halloween .hlrn-haunt-seal::after{content:"";position:absolute;inset:-5px;border:1px dashed rgba(255,139,40,.35);border-radius:50%;}
-/* Subtle section accents, leaving league-specific reds and greens untouched. */
-html.hlrn-halloween main h1,html.hlrn-halloween main h2{filter:drop-shadow(0 0 13px rgba(255,123,26,.12));}
-html.hlrn-halloween .hlrn-haunt-ember{position:absolute;bottom:-20px;width:3px;height:3px;border-radius:50%;background:#ffa44d;box-shadow:0 0 7px 2px rgba(255,126,32,.43);opacity:0;animation:haunt-ember var(--ember-speed,12s) linear infinite;left:var(--ember-left,50%);animation-delay:var(--ember-delay,0s);}
-@keyframes haunt-led{50%{opacity:.5;box-shadow:0 0 0 3px rgba(255,124,18,.08),0 0 4px #ff8a2a;}}
-@keyframes haunt-drift{from{transform:translateX(-5%)}to{transform:translateX(6%)}}
-@keyframes haunt-flight{from{transform:translate(-8px,6px) rotate(-6deg)}to{transform:translate(34px,-20px) rotate(9deg)}}
-@keyframes haunt-ember{0%{transform:translateY(0);opacity:0}12%{opacity:.6}80%{opacity:.36}100%{transform:translateY(-85vh);opacity:0}}
-@media(max-width:700px){html.hlrn-halloween .hlrn-haunt-banner{gap:8px;padding:8px 12px;min-height:38px;}html.hlrn-halloween .hlrn-haunt-banner .haunt-title{font-size:10px;letter-spacing:.09em;}html.hlrn-halloween .hlrn-haunt-banner .haunt-detail{display:none;}html.hlrn-halloween .hlrn-haunt-moon{width:48px;height:48px;top:115px;}html.hlrn-halloween .hlrn-haunt-corner{width:65px;height:65px;opacity:.3;}html.hlrn-halloween .hlrn-haunt-seal{width:35px;height:35px;bottom:8px;right:8px;font-size:19px;}html.hlrn-halloween .hlrn-haunt-bat{opacity:.35;}}
-@media(prefers-reduced-motion:reduce){html.hlrn-halloween .hlrn-haunt-mist,html.hlrn-halloween .hlrn-haunt-bat,html.hlrn-halloween .hlrn-haunt-ember,html.hlrn-halloween .hlrn-haunt-banner .haunt-light{animation:none!important;}html.hlrn-halloween .hlrn-haunt-ember{display:none;}}
-
-/* HALLOWEEN TAKEOVER V3 — navigation, dropdowns and shared page surfaces */
-html.hlrn-halloween #hlrn-global-nav{border-top:4px solid #ff7816!important;background:radial-gradient(ellipse at 52% -50%,rgba(155,58,225,.42),transparent 65%),repeating-linear-gradient(125deg,transparent 0 90px,rgba(255,116,23,.035) 91px 93px,transparent 94px 140px),linear-gradient(180deg,#29142e 0%,#140b1e 55%,#0c0911 100%)!important;box-shadow:0 8px 32px rgba(91,31,110,.35),inset 0 -1px 0 #f79337!important;}
-html.hlrn-halloween #hlrn-global-nav .hgn-inner{background:radial-gradient(ellipse at center bottom,rgba(255,106,8,.09),transparent 60%)!important;}
+/* Halloween affects GLOBAL NAVIGATION ONLY. No page backgrounds or overlays. */
+html.hlrn-halloween #hlrn-global-nav {
+ background:radial-gradient(ellipse at 50% 0%,rgba(133,49,162,.42),transparent 70%),linear-gradient(180deg,#2c1437,#100b19)!important;
+ border-top:4px solid #ff7d18!important;border-bottom:2px solid #ff9c37!important;
+ box-shadow:0 8px 22px rgba(84,34,107,.28),0 2px 17px rgba(255,111,18,.24)!important;
+}
+html.hlrn-halloween #hlrn-global-nav::after {
+ background:linear-gradient(90deg,#ff790f,#faca65,#8942bd,#ff790f)!important;
+ height:3px!important;opacity:1!important;box-shadow:0 0 12px #ff8b2d!important;
+}
+html.hlrn-halloween #hlrn-global-nav .hgn-inner{background:radial-gradient(ellipse at center bottom,rgba(255,121,28,.10),transparent 70%)!important;}
+html.hlrn-halloween #hlrn-global-nav .hgn-brand{filter:drop-shadow(0 0 6px rgba(255,137,42,.22));}
 html.hlrn-halloween #hlrn-global-nav .hgn-links>.hgn-link,
-html.hlrn-halloween #hlrn-global-nav .hgn-more-btn{color:#ffe5c7!important;text-shadow:0 1px 5px rgba(255,123,33,.22)!important;background:linear-gradient(180deg,rgba(120,61,144,.1),rgba(255,114,18,.055))!important;border-left:1px solid rgba(253,153,76,.10)!important;transition:background .2s ease,color .2s ease,box-shadow .2s ease!important;}
+html.hlrn-halloween #hlrn-global-nav .hgn-more-btn{
+ color:#ffe4c6!important;
+ background:linear-gradient(180deg,rgba(140,61,165,.12),rgba(255,127,24,.09))!important;
+ border-left:1px solid rgba(255,149,64,.15)!important;
+ text-shadow:0 0 7px rgba(255,137,42,.25)!important;
+}
 html.hlrn-halloween #hlrn-global-nav .hgn-links>.hgn-link:hover,
 html.hlrn-halloween #hlrn-global-nav .hgn-more-btn:hover,
 html.hlrn-halloween #hlrn-global-nav .hgn-links>.hgn-link:focus-visible,
-html.hlrn-halloween #hlrn-global-nav .hgn-more-btn:focus-visible{color:#fff!important;background:linear-gradient(180deg,rgba(255,122,22,.35),rgba(113,39,150,.35))!important;box-shadow:inset 0 0 18px rgba(255,136,28,.14),0 0 12px rgba(255,114,20,.2)!important;text-shadow:0 0 10px rgba(255,177,90,.75)!important;}
+html.hlrn-halloween #hlrn-global-nav .hgn-more-btn:focus-visible{
+ color:#fff!important;background:linear-gradient(180deg,rgba(255,132,28,.36),rgba(119,49,159,.42))!important;
+ box-shadow:inset 0 0 15px rgba(255,124,22,.17)!important;text-shadow:0 0 11px rgba(255,169,72,.8)!important;
+}
 html.hlrn-halloween #hlrn-global-nav .hgn-link.active,
-html.hlrn-halloween #hlrn-global-nav .hgn-more-wrap.active>.hgn-more-btn{color:#fff3d9!important;background:linear-gradient(180deg,rgba(255,134,36,.3),rgba(127,48,153,.26))!important;box-shadow:inset 0 0 18px rgba(255,119,19,.12)!important;}
-html.hlrn-halloween #hlrn-global-nav .hgn-link.active:after,
-html.hlrn-halloween #hlrn-global-nav .hgn-more-wrap.active>.hgn-more-btn:after{background:linear-gradient(90deg,#f67e22,#ffca64,#9e65e4)!important;height:4px!important;box-shadow:0 0 12px rgba(255,132,35,.8)!important;}
-html.hlrn-halloween #hlrn-global-nav .hgn-more-menu{background:linear-gradient(160deg,#28162f,#120d1b)!important;border:1px solid rgba(255,152,68,.53)!important;border-top:3px solid #fa8a26!important;box-shadow:0 22px 55px rgba(0,0,0,.58),0 0 20px rgba(159,73,176,.21)!important;}
-html.hlrn-halloween #hlrn-global-nav .hgn-more-item{color:#ffe5ca!important;border-radius:7px!important;}
+html.hlrn-halloween #hlrn-global-nav .hgn-more-wrap.active>.hgn-more-btn{
+ color:#fff!important;background:linear-gradient(180deg,rgba(255,121,24,.28),rgba(111,43,158,.36))!important;
+}
+html.hlrn-halloween #hlrn-global-nav .hgn-link.active::after,
+html.hlrn-halloween #hlrn-global-nav .hgn-more-wrap.active>.hgn-more-btn::after{
+ background:linear-gradient(90deg,#ff7b14,#ffd06b,#a65bf2)!important;height:4px!important;
+ box-shadow:0 0 12px rgba(255,128,24,.65)!important;
+}
+html.hlrn-halloween #hlrn-global-nav .hgn-more-menu{
+ background:linear-gradient(150deg,#301a3e,#130d1d)!important;
+ border:1px solid rgba(255,148,61,.6)!important;border-top:3px solid #ff8d2b!important;
+ box-shadow:0 22px 45px rgba(0,0,0,.58),0 0 16px rgba(165,75,196,.23)!important;
+}
+html.hlrn-halloween #hlrn-global-nav .hgn-more-item{color:#ffe2c2!important;}
 html.hlrn-halloween #hlrn-global-nav .hgn-more-item:hover,
-html.hlrn-halloween #hlrn-global-nav .hgn-more-item:focus-visible{background:rgba(250,116,30,.24)!important;color:#fff!important;}
-html.hlrn-halloween #hlrn-global-nav button:not(.hgn-more-btn){border-color:rgba(255,144,53,.38)!important;}
-html.hlrn-halloween .hlrn-haunt-banner{background:repeating-linear-gradient(115deg,transparent 0 30px,rgba(255,148,56,.035) 31px 33px,transparent 34px 65px),linear-gradient(90deg,#190c26,#442037 50%,#190c26)!important;border-bottom:2px solid #b9632c!important;box-shadow:0 5px 25px rgba(150,53,103,.19)!important;}
-/* Sitewide chrome across major pages without replacing readable tables or league status colors. */
-html.hlrn-halloween main{background-image:radial-gradient(ellipse at 50% 0%,rgba(255,139,37,.045),transparent 57%)!important;}
-html.hlrn-halloween main h1,
-html.hlrn-halloween main h2{letter-spacing:.015em;text-shadow:0 0 21px rgba(255,123,38,.13)!important;}
-html.hlrn-halloween main :is(.card,.panel,.tile,.stat-card,.driver-card,.team-card,.result-card,.race-card,.news-card,.feature-card){border-color:rgba(255,139,47,.24)!important;box-shadow:0 6px 24px rgba(85,38,91,.07),inset 0 1px 0 rgba(255,153,66,.08)!important;}
-html.hlrn-halloween main :is(.card,.panel,.tile,.stat-card,.driver-card,.team-card,.result-card,.race-card,.news-card,.feature-card):hover{border-color:rgba(255,143,44,.45)!important;}
-html.hlrn-halloween main :is(input,select,textarea):focus-visible{outline:2px solid #f49033!important;outline-offset:1px!important;}
-html.hlrn-halloween :is(footer,.site-footer,#hlrn-global-footer){border-top-color:rgba(251,134,42,.46)!important;}
-@media(max-width:850px){html.hlrn-halloween #hlrn-global-nav .hgn-links>.hgn-link,html.hlrn-halloween #hlrn-global-nav .hgn-more-btn{background:transparent!important;}}
+html.hlrn-halloween #hlrn-global-nav .hgn-more-item:focus-visible{
+ background:rgba(255,128,24,.24)!important;color:#fff!important;
+}
+html.hlrn-halloween #hlrn-global-nav .hgn-halloween-trim{
+ position:absolute;top:0;left:0;right:0;height:0;pointer-events:none;z-index:3;
+}
+html.hlrn-halloween #hlrn-global-nav .hgn-halloween-trim::after{
+ content:"🎃";position:absolute;top:5px;right:8px;font-size:17px;opacity:.88;
+ filter:drop-shadow(0 0 6px rgba(255,142,32,.65));
+}
+@media(max-width:900px){html.hlrn-halloween #hlrn-global-nav .hgn-halloween-trim::after{font-size:13px;right:3px;top:3px;opacity:.65;}}
+@media(prefers-reduced-motion:reduce){html.hlrn-halloween #hlrn-global-nav *{animation:none!important;}}
