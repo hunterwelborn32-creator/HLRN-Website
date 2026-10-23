@@ -1036,3 +1036,6 @@ html[data-hlrn-route="live"][data-hlrn-race-mode="final"] #hlrn-live-network-dec
   }
 }
 
+
+/* Unified HLRN navigation: do not display a second site-wide Race Week bar. */
+#hlrn-race-weekend-strip{display:none!important;}
