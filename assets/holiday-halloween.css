@@ -146,3 +146,29 @@ html.hlrn-halloween #hlrn-global-nav a.hgn-brand{
  box-shadow:0 0 13px rgba(255,129,30,.28)!important;
 }
 html.hlrn-halloween #hlrn-global-nav a.hgn-brand > .hgn-mini-track{display:none!important;}
+
+/* V11: seamless logo treatment, feathering image into navigation instead of a rectangle. */
+html.hlrn-halloween #hlrn-global-nav a.hgn-brand{
+ background-image:none!important;
+ background-color:transparent!important;
+ box-shadow:none!important;
+ border:0!important;
+ overflow:visible!important;
+ isolation:isolate!important;
+}
+html.hlrn-halloween #hlrn-global-nav a.hgn-brand::before{
+ content:""!important;
+ display:block!important;
+ visibility:visible!important;
+ opacity:1!important;
+ position:absolute!important;
+ inset:-1px -12px!important;
+ pointer-events:none!important;
+ background:url("./e20ef3bb-8dec-47f4-babb-ba0259f9a357.png?v=20261023blend11") center / 100% 162% no-repeat!important;
+ -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 10%,#000 88%,transparent 100%)!important;
+ mask-image:linear-gradient(to right,transparent 0%,#000 10%,#000 88%,transparent 100%)!important;
+ z-index:0!important;
+ border:0!important;
+ border-radius:0!important;
+}
+html.hlrn-halloween #hlrn-global-nav a.hgn-brand::after{content:none!important;display:none!important;}
