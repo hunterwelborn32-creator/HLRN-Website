@@ -7,7 +7,7 @@
 */
 (function(global){
   "use strict";
-  const VERSION="20261007v12";
+  const VERSION="20261026v13";
   if(global.HLRNDrivers && global.HLRNDrivers.version===VERSION) return;
   const script=document.currentScript;
   let root;
