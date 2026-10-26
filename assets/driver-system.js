@@ -190,7 +190,11 @@
     const rec=resolve(value);
     const slug=String(rec?.photoSlug||"").trim();
     if(!slug||rec?.hasPhoto===false)return "";
-    const folder=String(type||"cutout").toLowerCase()==="full"?"full":"cutout";
+    let folder=String(type||"cutout").toLowerCase()==="full"?"full":"cutout";
+    // These drivers have uploaded transparent cutouts, but not separate full photos.
+    // Always use their real cutouts rather than attempting a missing full image
+    // and cycling between a failed URL and the rating-based fallback.
+    if(folder==="full" && (slug==="justin-lee-pearson" || slug==="zachary-cato")) folder="cutout";
     return PHOTO_BASE+folder+"/"+encodeURIComponent(slug)+".webp";
   }
 
@@ -396,6 +400,7 @@
   function imagePhotoType(img){
     const src=String(img?.currentSrc||img?.getAttribute?.("src")||"");
     if(/\/driver-photos\/full\//i.test(src))return "full";
+    if(/\/driver-photos\/cutout\//i.test(src))return "cutout";
     const marker=String((img?.id||"")+" "+(img?.className||""));
     return /(?:hero|profile|full)/i.test(marker)?"full":"cutout";
   }
