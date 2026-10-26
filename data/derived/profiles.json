@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-26T13:38:37.042Z",
+  "generatedAt": "2026-10-26T16:54:02.970Z",
   "drivers": [
     {
       "series": "sunday",
@@ -12352,7 +12352,7 @@
       "photoSlug": "ryan-wilson",
       "rank": 3,
       "points": null,
-      "races": 120,
+      "races": 121,
       "wins": 6,
       "top5": 27,
       "top10": 46,
@@ -12382,11 +12382,11 @@
       "photoSlug": "jim-segredo",
       "rank": 5,
       "points": null,
-      "races": 176,
+      "races": 177,
       "wins": 5,
       "top5": 26,
       "top10": 66,
-      "avgFinish": 16.13,
+      "avgFinish": 16.18,
       "results": []
     },
     {
@@ -12397,11 +12397,11 @@
       "photoSlug": "tommy-rogers",
       "rank": 6,
       "points": null,
-      "races": 142,
+      "races": 144,
       "wins": 5,
       "top5": 26,
       "top10": 54,
-      "avgFinish": 14.61,
+      "avgFinish": 14.77,
       "results": []
     },
     {
@@ -12472,11 +12472,11 @@
       "photoSlug": "jerry-fassett",
       "rank": 11,
       "points": null,
-      "races": 182,
+      "races": 184,
       "wins": 4,
       "top5": 23,
       "top10": 62,
-      "avgFinish": 14.91,
+      "avgFinish": 14.99,
       "results": []
     },
     {
@@ -12547,11 +12547,11 @@
       "photoSlug": "craig-rowe",
       "rank": 16,
       "points": null,
-      "races": 73,
+      "races": 75,
       "wins": 4,
       "top5": 14,
       "top10": 23,
-      "avgFinish": 20.55,
+      "avgFinish": 20.67,
       "results": []
     },
     {
@@ -12562,11 +12562,11 @@
       "photoSlug": "shawn-stamper",
       "rank": 17,
       "points": null,
-      "races": 121,
+      "races": 122,
       "wins": 4,
       "top5": 12,
       "top10": 31,
-      "avgFinish": 21.07,
+      "avgFinish": 21.08,
       "results": []
     },
     {
@@ -12577,10 +12577,10 @@
       "photoSlug": "john-miles",
       "rank": 18,
       "points": null,
-      "races": 100,
+      "races": 102,
       "wins": 4,
-      "top5": 10,
-      "top10": 23,
+      "top5": 11,
+      "top10": 24,
       "avgFinish": 17.56,
       "results": []
     },
@@ -12607,11 +12607,11 @@
       "photoSlug": "eric-hayden",
       "rank": 20,
       "points": null,
-      "races": 181,
+      "races": 183,
       "wins": 3,
-      "top5": 34,
-      "top10": 76,
-      "avgFinish": 13.87,
+      "top5": 35,
+      "top10": 77,
+      "avgFinish": 13.83,
       "results": []
     }
   ]
