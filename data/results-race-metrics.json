@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-20T06:39:15.259Z",
+  "generatedAt": "2026-10-26T06:46:30.664Z",
   "source": "SimRacerHub race pages",
   "races": [
     {
@@ -576,6 +576,31 @@
         "driverId": "56823",
         "carNumber": "09",
         "lap": 60
+      }
+    },
+    {
+      "key": "sunday|15|387600",
+      "league": "sunday",
+      "raceNumber": 15,
+      "raceId": "387600",
+      "track": "Daytona International Speedway",
+      "date": "Sun Oct 25 2026 00:00:00 GMT-0400 (Eastern Daylight Time)",
+      "source": "SimRacerHub",
+      "sourceRaceId": "387600",
+      "duration": "1h 45m",
+      "raceLaps": 100,
+      "leaders": 10,
+      "leadChanges": 20,
+      "cautions": 8,
+      "cautionLaps": 24,
+      "penalties": 0,
+      "fastestLap": {
+        "time": 46.919,
+        "formatted": "46.919",
+        "driver": "Brian Hebbard2",
+        "driverId": "112020",
+        "carNumber": "87",
+        "lap": 18
       }
     }
   ]
