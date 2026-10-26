@@ -1,6 +1,10 @@
 name: HLRN Adventures Discord Publisher
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/episode-rules.json'
   schedule:
     - cron: '*/15 * * * *'
 permissions:
