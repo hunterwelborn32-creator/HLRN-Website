@@ -1741,6 +1741,14 @@ iframe{background:#fff!important;color-scheme:light!important}
 @media(max-width:780px){#hlrnSundayS2Takeover .s2-inner{grid-template-columns:1fr}#hlrnSundayS2Takeover .s2-visual{min-height:190px;max-height:280px;order:-1}#hlrnSundayS2Takeover .s2-visual img{max-height:260px}}
 @media(prefers-reduced-motion:no-preference){#hlrnSundayS2Takeover .s2-crown{animation:s2Glow 4s ease-in-out infinite alternate}@keyframes s2Glow{from{filter:drop-shadow(0 0 5px #f7cf65)}to{filter:drop-shadow(0 0 25px #ffd166)}}}
 </style>
+<style id="hlrn-s2-final-banner-fix">
+#hlrnSundayS2Takeover{padding:0!important;overflow:hidden!important;max-width:1500px!important}
+#hlrnSundayS2Takeover .s2-final-artwork{display:block;width:100%;height:auto;aspect-ratio:1672 / 941;object-fit:contain}
+#hlrnSundayS2Takeover .s2-final-artwork[hidden]{display:none}
+#hlrnSundayS2Takeover.s2-artwork-ready .s2-fallback{display:none}
+#hlrnSundayS2Takeover .s2-fallback{padding:clamp(18px,3vw,38px)}
+#hlrnSundayS2Takeover:before{display:none}
+</style>
 </head>') : tag+markup;
 }
 </script>
@@ -4000,12 +4008,9 @@ html[data-hlrn-theme="light"] #drivers #s2DriverSearch{background:#fff;color:#16
 </nav>
 <div class="page-wrap">
 <section id="hlrnSundayS2Takeover" aria-label="Trevor Haley Season 2 championship celebration">
- <div class="s2-inner"><div class="s2-copy"><div class="s2-kicker">★ HLRN Sunday Night League • Season 2 Champion</div>
- <h2>Trevor<br>Haley</h2><div class="s2-headline">Back-to-Back Champion</div>
- <div class="s2-titles"><span>🏆 Season 1 Champion</span><span>🏆 Season 2 Champion</span></div>
- <p>Two seasons. Two championships. Trevor Haley and the #12 Dark Horse Racing team celebrate a second consecutive HLRN Sunday Night League title.</p>
- <a href="/drivers/trevor-haley/">View Champion Profile →</a></div>
- <div class="s2-visual"><div class="s2-crown" aria-hidden="true">♛</div><img src="/assets/driver-photos/cutout/trevor-haley.webp" alt="Trevor Haley, #12 Sunday Night League champion" loading="eager" onerror="this.style.display='none'"><span class="s2-number" aria-hidden="true">12</span></div></div></section>
+<img class="s2-final-artwork" src="/assets/champions/trevor-haley-sunday-s2-banner.jpg" alt="HLRN Sunday Night League: Trevor Haley, back-to-back Season 1 and Season 2 champion" loading="eager" decoding="async" onload="this.parentElement.classList.add('s2-artwork-ready')" onerror="this.hidden=true">
+<div class="s2-fallback"><div class="s2-inner"><div class="s2-copy"><div class="s2-kicker">★ HLRN Sunday Night League • Season 2 Champion</div><h2>Trevor<br>Haley</h2><div class="s2-headline">Back-to-Back Champion</div><div class="s2-titles"><span>🏆 Season 1 Champion</span><span>🏆 Season 2 Champion</span></div><p>Two seasons. Two championships. Trevor Haley and the #12 Dark Horse Racing team celebrate a second consecutive HLRN Sunday Night League title.</p></div><div class="s2-visual"><div class="s2-crown" aria-hidden="true">♛</div><img src="/assets/driver-photos/cutout/trevor-haley.webp" alt="Trevor Haley" loading="eager"><span class="s2-number" aria-hidden="true">12</span></div></div></div>
+</section>
 <div class="cc-topline">
   <div class="cc-brand">HLRN <b>Sunday Championship</b></div>
   <div class="cc-status">DATA FEED <span id="ccDataStatus">CONNECTING</span> • SEASON 2</div>
