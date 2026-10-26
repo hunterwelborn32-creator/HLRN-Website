@@ -83,6 +83,13 @@
       "kind": "main",
       "number": 11,
       "opening_message_id": "1561345930618474516"
+    },
+    {
+      "slug": "episode-12",
+      "title": "The Homecoming",
+      "kind": "main",
+      "number": 12,
+      "opening_message_id": "1563915098106372206"
     }
   ]
 }
