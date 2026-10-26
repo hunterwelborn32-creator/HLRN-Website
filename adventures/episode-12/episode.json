@@ -1,0 +1,162 @@
+{
+  "id": "episode-12",
+  "title": "The Homecoming",
+  "kind": "main",
+  "number": 12,
+  "discord_open_id": "1563915098106372206",
+  "discord_close_id": "1564318612196425871",
+  "date": "2026-10-25T14:00:15.526000+00:00",
+  "cover": "episode-12/images/001.png",
+  "blocks": [
+    {
+      "type": "text",
+      "text": "@#55 Kyle Kammeron @Hunter Welborn @Ryan Wilson21",
+      "message_id": "1563915098106372206"
+    },
+    {
+      "type": "image",
+      "src": "images/001.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "@#55 Kyle Kammeron @Tommy Rogers @#100 Eric Hayden",
+      "message_id": "1563931943039668264"
+    },
+    {
+      "type": "image",
+      "src": "images/002.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "@Shame Hatfield @#97 Nicholas Baumann @Matthew brown49 @#55 Kyle Kammeron",
+      "message_id": "1563943360664969319"
+    },
+    {
+      "type": "image",
+      "src": "images/003.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "@#55 Kyle Kammeron @Hunter Welborn @Tommy Rogers @#100 Eric Hayden @BrianHayes4 @#71 Jerry Fassett",
+      "message_id": "1563966861639417969"
+    },
+    {
+      "type": "image",
+      "src": "images/004.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "@#55 Kyle Kammeron @Brian Hebbard @#71 Jerry Fassett",
+      "message_id": "1563974271896653846"
+    },
+    {
+      "type": "image",
+      "src": "images/005.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "@#55 Kyle Kammeron @#100 Eric Hayden @Tommy Rogers @Lark",
+      "message_id": "1563989253715923056"
+    },
+    {
+      "type": "image",
+      "src": "images/006.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "@Ryan Wilson21 @#55 Kyle Kammeron @Tommy Rogers",
+      "message_id": "1564004014209630229"
+    },
+    {
+      "type": "image",
+      "src": "images/007.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "@Ryan Wilson21 @#55 Kyle Kammeron @Tommy Rogers",
+      "message_id": "1564018151199482058"
+    },
+    {
+      "type": "image",
+      "src": "images/008.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "@#55 Kyle Kammeron @Ryan Wilson21 @craig8392",
+      "message_id": "1564034296866541688"
+    },
+    {
+      "type": "image",
+      "src": "images/009.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "@BrianHayes4 @Tommy Rogers @#55 Kyle Kammeron @BrianHayes4",
+      "message_id": "1564051776779329617"
+    },
+    {
+      "type": "image",
+      "src": "images/010.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "@#100 Eric Hayden @Tommy Rogers @BrianHayes4 @Trevor Haley 🏆🏆 @#55 Kyle Kammeron",
+      "message_id": "1564054310818418768"
+    },
+    {
+      "type": "image",
+      "src": "images/011.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "@Ryan Wilson21 @BrianHayes4 @#100 Eric Hayden @#55 Kyle Kammeron",
+      "message_id": "1564060809481429093"
+    },
+    {
+      "type": "image",
+      "src": "images/012.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "@Trevor Haley 🏆🏆",
+      "message_id": "1564318415357743124"
+    },
+    {
+      "type": "image",
+      "src": "images/013.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "@#55 Kyle Kammeron @Alex Leebaw",
+      "message_id": "1564318509847150692"
+    },
+    {
+      "type": "image",
+      "src": "images/014.png",
+      "alt": "Adventure illustration"
+    },
+    {
+      "type": "text",
+      "text": "@Tommy Rogers @Ryan Wilson21 @#100 Eric Hayden @Ethan Eckert",
+      "message_id": "1564318612196425871"
+    },
+    {
+      "type": "image",
+      "src": "images/015.png",
+      "alt": "Adventure illustration"
+    }
+  ]
+}
