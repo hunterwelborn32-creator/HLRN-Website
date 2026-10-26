@@ -1722,6 +1722,25 @@ iframe{background:#fff!important;color-scheme:light!important}
 `;
   const tag='<style id="HLRN_STATIC_LIGHT_INNER">'+css+'</style>';
   return /<\/head>/i.test(markup) ? markup.replace(/<\/head>/i,tag+'<link rel="stylesheet" href="../assets/phase2-standings-results.css?v=20261008p2a">
+<style id="hlrn-sunday-s2-takeover-style">
+#hlrnSundayS2Takeover{max-width:1500px;margin:18px auto 28px;padding:clamp(18px,3vw,38px);position:relative;isolation:isolate;overflow:hidden;color:#fff;background:radial-gradient(ellipse at 72% 40%,#79101e 0%,transparent 45%),linear-gradient(130deg,#0b0b10,#20090e 58%,#090b10);border:1px solid #9c2932;border-top:4px solid #db152c;border-radius:14px;box-shadow:0 14px 42px #0005}
+#hlrnSundayS2Takeover:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(130deg,transparent 0 24px,#ffffff05 25px 26px);pointer-events:none}
+#hlrnSundayS2Takeover .s2-inner{position:relative;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(220px,.7fr);gap:24px;align-items:center}
+#hlrnSundayS2Takeover .s2-kicker{font-size:12px;letter-spacing:.17em;font-weight:900;color:#f5cb6b;text-transform:uppercase}
+#hlrnSundayS2Takeover h2{font-size:clamp(38px,6vw,86px);line-height:.92;letter-spacing:-.055em;font-weight:1000;text-transform:uppercase;color:#fff;margin:14px 0 8px;text-shadow:0 4px 25px #000}
+#hlrnSundayS2Takeover .s2-headline{font-size:clamp(17px,2.5vw,30px);font-weight:1000;text-transform:uppercase;color:#f2c35a}
+#hlrnSundayS2Takeover p{color:#efdee1;max-width:650px;line-height:1.6;font-size:15px;margin:16px 0 22px}
+#hlrnSundayS2Takeover .s2-titles{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+#hlrnSundayS2Takeover .s2-titles span{padding:9px 14px;border:1px solid #a98b48;background:#f3c76012;border-radius:5px;color:#ffe4a5;font-weight:900;font-size:12px}
+#hlrnSundayS2Takeover a{display:inline-block;background:#c40b24;border:1px solid #fa5364;border-radius:5px;padding:14px 19px;color:white!important;font-size:13px;font-weight:900;text-decoration:none;text-transform:uppercase}
+#hlrnSundayS2Takeover a:hover{background:#eb1937}
+#hlrnSundayS2Takeover .s2-visual{align-self:stretch;min-height:310px;position:relative;display:flex;align-items:end;justify-content:center;background:radial-gradient(circle at 50% 42%,#e79c2e48,transparent 60%)}
+#hlrnSundayS2Takeover .s2-visual img{max-width:100%;max-height:410px;object-fit:contain;filter:drop-shadow(0 12px 20px #000b)}
+#hlrnSundayS2Takeover .s2-visual .s2-crown{position:absolute;top:0;font-size:54px;filter:drop-shadow(0 0 16px #d6a23e)}
+#hlrnSundayS2Takeover .s2-visual .s2-number{position:absolute;bottom:0;right:6px;font-size:clamp(85px,12vw,170px);font-weight:1000;font-style:italic;color:#ffffff13;line-height:1;z-index:-1}
+@media(max-width:780px){#hlrnSundayS2Takeover .s2-inner{grid-template-columns:1fr}#hlrnSundayS2Takeover .s2-visual{min-height:190px;max-height:280px;order:-1}#hlrnSundayS2Takeover .s2-visual img{max-height:260px}}
+@media(prefers-reduced-motion:no-preference){#hlrnSundayS2Takeover .s2-crown{animation:s2Glow 4s ease-in-out infinite alternate}@keyframes s2Glow{from{filter:drop-shadow(0 0 5px #f7cf65)}to{filter:drop-shadow(0 0 25px #ffd166)}}}
+</style>
 </head>') : tag+markup;
 }
 </script>
@@ -3980,6 +3999,13 @@ html[data-hlrn-theme="light"] #drivers #s2DriverSearch{background:#fff;color:#16
   <a href="./monday.html" data-series="monday">Monday</a>
 </nav>
 <div class="page-wrap">
+<section id="hlrnSundayS2Takeover" aria-label="Trevor Haley Season 2 championship celebration">
+ <div class="s2-inner"><div class="s2-copy"><div class="s2-kicker">★ HLRN Sunday Night League • Season 2 Champion</div>
+ <h2>Trevor<br>Haley</h2><div class="s2-headline">Back-to-Back Champion</div>
+ <div class="s2-titles"><span>🏆 Season 1 Champion</span><span>🏆 Season 2 Champion</span></div>
+ <p>Two seasons. Two championships. Trevor Haley and the #12 Dark Horse Racing team celebrate a second consecutive HLRN Sunday Night League title.</p>
+ <a href="/drivers/trevor-haley/">View Champion Profile →</a></div>
+ <div class="s2-visual"><div class="s2-crown" aria-hidden="true">♛</div><img src="/assets/driver-photos/cutout/trevor-haley.webp" alt="Trevor Haley, #12 Sunday Night League champion" loading="eager" onerror="this.style.display='none'"><span class="s2-number" aria-hidden="true">12</span></div></div></section>
 <div class="cc-topline">
   <div class="cc-brand">HLRN <b>Sunday Championship</b></div>
   <div class="cc-status">DATA FEED <span id="ccDataStatus">CONNECTING</span> • SEASON 2</div>
