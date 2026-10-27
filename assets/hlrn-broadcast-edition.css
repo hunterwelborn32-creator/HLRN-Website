@@ -641,3 +641,37 @@ html[data-hlrn-theme="light"] body.home-v10-page .home10 .h10-hosted-card{
   .home10 .h10-week-card,.home10 .h10-section-head>a,
   .home10 .h10-link-card:after{transition:none!important;animation:none!important}
 }
+
+/* Finish the visual system across shared page footers without modifying
+   each page's independent layouts or race data. */
+#hlrn-global-footer{
+  background:var(--h27-nav-bg,#fff)!important;
+  color:var(--h27-nav-ink,#111318)!important;
+  border-top:5px solid #d71936!important;
+  border-bottom:0!important;
+}
+#hlrn-global-footer .hgf-inner{
+  border-top:0!important;
+}
+#hlrn-global-footer :is(.hgf-brand strong,.hgf-links a){
+  color:var(--h27-nav-ink,#111318)!important;
+}
+#hlrn-global-footer .hgf-links a{
+  font-size:10px!important;
+  font-weight:950!important;
+  letter-spacing:.075em!important;
+}
+#hlrn-global-footer .hgf-links a:hover{color:#d71936!important}
+/* Day Race keeps the small network-rail bright as well as the main site. */
+html[data-hlrn-theme="light"] body.home-v10-page .home10 .h27-network-rail{
+  background:#fff!important;
+  border-bottom:1px solid #dde1e5!important;
+  color:#101318!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page .home10 .h27-network-rail b,
+html[data-hlrn-theme="light"] body.home-v10-page .home10 .h27-network-rail a{
+  color:#101318!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page .home10 .h27-network-rail a:hover{
+  color:#ce1431!important;
+}
