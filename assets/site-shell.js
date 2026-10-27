@@ -1294,6 +1294,29 @@ function start(){
   if(broadcastCss.href!==designUrl)broadcastCss.href=designUrl;
   document.head.appendChild(broadcastCss);
 
+  // Premiere edition for interior pages only. Homepage and Live are excluded.
+  if(route!=="home" && route!=="live"){
+    const premiereVersion="20261027interior1";
+    const premiereUrl=url("assets/hlrn-network-premiere.css?v="+premiereVersion);
+    let premiereCss=[...document.querySelectorAll('link[rel="stylesheet"]')].find(
+      el=>(el.getAttribute("href")||"").includes("hlrn-network-premiere.css")
+    );
+    if(!premiereCss){
+      premiereCss=document.createElement("link");
+      premiereCss.rel="stylesheet";
+      premiereCss.setAttribute("data-hlrn-network-premiere","");
+    }
+    if(premiereCss.href!==premiereUrl)premiereCss.href=premiereUrl;
+    document.head.appendChild(premiereCss);
+    if(!document.querySelector('link[data-hlrn-premiere-type]')){
+      const displayFont=document.createElement("link");
+      displayFont.rel="stylesheet";
+      displayFont.href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&display=swap";
+      displayFont.setAttribute("data-hlrn-premiere-type","");
+      document.head.appendChild(displayFont);
+    }
+  }
+
   document.documentElement.classList.add("hlrn-shell-ready");
 }
 

@@ -1,0 +1,604 @@
+/*
+  HLRN // NETWORK PREMIERE
+  Shared interior-page visual treatment.
+  Explicitly NOT loaded on /live/ or / (homepage).
+  Visual-only rules: never replace data, links, photos, tables or logic.
+*/
+html[data-hlrn-theme="light"]{
+  --hn-bg:#fff;--hn-surface:#fff;--hn-panel:#f5f6f8;--hn-card:#fff;
+  --hn-ink:#11151b;--hn-muted:#56616e;--hn-line:#dce0e5;
+  --hn-red:#d71a39;--hn-gold:#d09b18;--hn-shadow:0 12px 35px rgba(13,21,31,.08);
+}
+html[data-hlrn-theme="dark"]{
+  --hn-bg:#07090c;--hn-surface:#0d1117;--hn-panel:#151a22;--hn-card:#10151b;
+  --hn-ink:#f6f8fa;--hn-muted:#adb7c4;--hn-line:#2c343f;
+  --hn-red:#ff3453;--hn-gold:#f4c835;--hn-shadow:0 16px 48px rgba(0,0,0,.29);
+}
+html[data-hlrn-route]:not([data-hlrn-route="home"]):not([data-hlrn-route="live"]){
+  --hn-display:"Barlow Condensed","Arial Narrow","Roboto Condensed","Arial Black",Arial,sans-serif;
+  --hn-body:Inter,"Segoe UI",Arial,sans-serif;
+}
+/* Refined section identifiers from the homepage: yellow/red editorial rule */
+html[data-hlrn-route]:not([data-hlrn-route="home"]):not([data-hlrn-route="live"]) :is(
+  .bc-section-head,.pv-section-head,.myh-section-head,.hgf-inner,
+  .section-head,.section-heading,.section-header,.profile-section-heading
+){
+  scroll-margin-top:35px;
+}
+html[data-hlrn-route]:not([data-hlrn-route="home"]):not([data-hlrn-route="live"]) :is(
+  .driver-heading h1,.team-hero h1,.bc-mast h1,.pv-mast h1,
+  .race-header h1,.myh-hero h1,.myh-gate h1,.cc-top h1,
+  .cc-gate h1,.admin-page .team-hero h1,.header .hero h1,
+  .page>.hero h1,.strategy .top h1,.heading h1
+){
+  font-family:var(--hn-display)!important;
+  font-weight:900!important;
+  font-style:normal!important;
+  font-size:clamp(52px,6.3vw,104px)!important;
+  line-height:.91!important;
+  letter-spacing:-.025em!important;
+  text-wrap:balance;
+}
+html[data-hlrn-route]:not([data-hlrn-route="home"]):not([data-hlrn-route="live"]) :is(
+  .driver-heading .eyebrow,.bc-kicker,.pv-kicker,.myh-eyebrow,
+  .cc-command-kicker,.pv-section-kicker,.bc-section-kicker,
+  .section-kicker,.section-label,.team-hero .eyebrow
+){
+  font-family:var(--hn-body)!important;
+  font-size:11px!important;
+  font-weight:900!important;
+  letter-spacing:.16em!important;
+  text-transform:uppercase;
+}
+html[data-hlrn-route]:not([data-hlrn-route="home"]):not([data-hlrn-route="live"]) :is(
+  .bc-section-head h2,.pv-section-head h2,.myh-section-head h2,
+  .section-head h2,.section-header h2,.section-title h2,
+  .profile-section-heading h2,.team-tools h2
+){
+  font-family:var(--hn-display)!important;
+  font-style:normal!important;
+  font-size:clamp(28px,3.5vw,49px)!important;
+  font-weight:900!important;
+  letter-spacing:-.014em!important;
+  line-height:1!important;
+}
+html[data-hlrn-route]:not([data-hlrn-route="home"]):not([data-hlrn-route="live"]) a:focus-visible,
+html[data-hlrn-route]:not([data-hlrn-route="home"]):not([data-hlrn-route="live"]) button:focus-visible{
+  outline:3px solid var(--hn-red)!important;
+  outline-offset:3px!important;
+}
+@media(prefers-reduced-motion:reduce){
+  html[data-hlrn-route]:not([data-hlrn-route="home"]):not([data-hlrn-route="live"]) *{
+    scroll-behavior:auto!important;
+    transition-duration:0s!important;
+    animation-duration:0s!important;
+  }
+}
+
+/* ======================= DRIVERS / PROFILES ======================= */
+html[data-hlrn-route="drivers"] .driver-heading{
+  position:relative;overflow:hidden;
+  border-bottom:5px solid #d71936!important;
+  box-shadow:0 18px 45px rgba(0,0,0,.10)!important;
+}
+html[data-hlrn-route="drivers"] .driver-heading:before{
+  content:"";position:absolute;inset:auto -20% -50% 45%;height:200%;
+  transform:skewX(-20deg);
+  background:linear-gradient(90deg,transparent,rgba(222,25,55,.07),transparent);
+  pointer-events:none;
+}
+html[data-hlrn-route="drivers"] .driver-heading h1{font-size:clamp(65px,7.7vw,120px)!important;}
+html[data-hlrn-route="drivers"] :is(.driver-command,.roster-tools){
+  border:1px solid var(--hn-line)!important;
+  border-left:4px solid #dc1a3c!important;
+  border-radius:5px!important;
+  box-shadow:var(--hn-shadow)!important;
+}
+html[data-hlrn-route="drivers"] .driver-grid .driver-card{
+  overflow:hidden!important;
+  border-radius:6px!important;
+  border:1px solid var(--hn-line)!important;
+  border-top:4px solid #dc1a3c!important;
+  box-shadow:var(--hn-shadow)!important;
+  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease!important;
+}
+html[data-hlrn-route="drivers"] .driver-grid .driver-card:hover{
+  transform:translateY(-5px)!important;
+  border-color:var(--hn-red)!important;
+  box-shadow:0 22px 48px rgba(0,0,0,.17)!important;
+}
+html[data-hlrn-route="drivers"] :is(.driver-card .driver-name,.roster-title,.profile-shell h2){
+  font-family:var(--hn-display)!important;
+  font-style:normal!important;
+  font-weight:900!important;
+  letter-spacing:-.015em!important;
+}
+html[data-hlrn-route="drivers"] .driver-card .driver-name{font-size:clamp(27px,2.2vw,38px)!important}
+html[data-hlrn-route="drivers"] .driver-media img{
+  transition:transform .25s ease!important;
+}
+html[data-hlrn-route="drivers"] .driver-card:hover .driver-media img{transform:scale(1.035)}
+html[data-hlrn-route="drivers"] :is(.profile-shell,.profile-insight,.profile-stat){
+  border-radius:5px!important;
+}
+/* The builder produces permanent /drivers/name pages with .hero and .hero-copy. */
+html[data-hlrn-route="drivers"] body .hero{
+  border-bottom:5px solid #d71936!important;
+}
+html[data-hlrn-route="drivers"] body .hero-copy>h1{
+  font-family:var(--hn-display)!important;
+  font-style:normal!important;
+  font-size:clamp(66px,7.5vw,118px)!important;
+  letter-spacing:-.03em!important;
+  line-height:.88!important;
+}
+html[data-hlrn-route="drivers"] .series-card{
+  border-top:4px solid #d71936!important;
+  border-radius:5px!important;
+}
+html[data-hlrn-route="drivers"] .series-card h2{
+  font-family:var(--hn-display)!important;
+  font-size:clamp(35px,4vw,55px)!important;
+  font-weight:900!important;
+}
+
+/* ======================= STANDINGS ======================= */
+html[data-hlrn-route="standings"] body>.page-wrap>.hero,
+html[data-hlrn-route="standings"] body>.hero{
+  border-radius:5px!important;
+  border-width:1px!important;
+  border-bottom:5px solid #d71936!important;
+  overflow:hidden!important;
+  box-shadow:var(--hn-shadow)!important;
+}
+html[data-hlrn-route="standings"] :is(.page-wrap>.hero h1,.page-wrap>.hero h2){
+  font-family:var(--hn-display)!important;
+  font-style:normal!important;
+  font-size:clamp(47px,5.6vw,82px)!important;
+  font-weight:900!important;
+  letter-spacing:-.02em!important;
+}
+html[data-hlrn-route="standings"] :is(.hlrn-series-switcher,.tabs,.tab-bar){
+  border-bottom:2px solid var(--hn-line)!important;
+}
+html[data-hlrn-route="standings"] :is(.summary-card,.cc-card,.podium-card,.cc-spotlight-card,.cc-momentum-card){
+  border-radius:5px!important;
+  border-color:var(--hn-line)!important;
+  box-shadow:var(--hn-shadow)!important;
+}
+html[data-hlrn-route="standings"] :is(.summary-card,.cc-card,.podium-card,.cc-spotlight-card):hover{
+  border-color:var(--hn-red)!important;
+}
+html[data-hlrn-route="standings"] :is(.cc-card-value,.summary-card strong,.podium-card strong){
+  font-family:var(--hn-display)!important;
+  font-weight:900!important;
+  letter-spacing:-.01em!important;
+}
+html[data-hlrn-route="standings"] :is(.section-header h2,.section-heading,.section-title){
+  font-family:var(--hn-display)!important;
+  font-size:clamp(26px,3vw,45px)!important;
+  font-style:normal!important;
+  font-weight:900!important;
+}
+html[data-hlrn-route="standings"] .nascar-hosted-page .hosted-hub-tabs{
+  border-bottom:4px solid #db203c!important;
+}
+html[data-hlrn-route="standings"] .nascar-hosted-page .hosted-hub-tab{
+  font-family:var(--hn-body)!important;
+  font-weight:900!important;
+  letter-spacing:.05em!important;
+}
+html[data-hlrn-route="standings"] .nascar-hosted-page :is(.hosted-hub-stage,.hosted-hub-frame){
+  border-radius:5px!important;
+}
+
+/* ======================= RESULTS / SCHEDULE ======================= */
+html[data-hlrn-route="results"] .race-header{
+  border-bottom:5px solid #d71936!important;
+  box-shadow:var(--hn-shadow)!important;
+  overflow:hidden;
+}
+html[data-hlrn-route="results"] .race-header h1{
+  font-size:clamp(60px,7.6vw,116px)!important;
+}
+html[data-hlrn-route="results"] :is(.ultra-raceboard,.race-preview-launch,
+  .league-column,.race-card,.next-events-section,.race-report-view,.track-information){
+  border-radius:5px!important;
+}
+html[data-hlrn-route="results"] :is(.league-column,.race-card,.race-preview-launch){
+  border:1px solid var(--hn-line)!important;
+  border-top:4px solid #da1c38!important;
+  box-shadow:var(--hn-shadow)!important;
+}
+html[data-hlrn-route="results"] :is(.league-title,.track-name,.section-title,
+  .ultra-board-value,.countdown-title,.race-week-value){
+  font-family:var(--hn-display)!important;
+  font-style:normal!important;
+  font-weight:900!important;
+  letter-spacing:-.018em!important;
+}
+html[data-hlrn-route="results"] .track-name{
+  font-size:clamp(35px,4vw,57px)!important;
+  line-height:1.03!important;
+}
+html[data-hlrn-route="results"] .ultra-raceboard{
+  border-bottom:4px solid #efc02d!important;
+}
+
+/* ======================= RACE INTELLIGENCE ======================= */
+html[data-hlrn-route="race-intelligence"] .hero{
+  border-bottom:5px solid #d71936!important;
+  border-radius:5px!important;
+  overflow:hidden;
+  box-shadow:var(--hn-shadow)!important;
+}
+html[data-hlrn-route="race-intelligence"] .hero h1{
+  font-family:var(--hn-display)!important;
+  font-weight:900!important;
+  font-size:clamp(55px,6.5vw,99px)!important;
+  line-height:.91!important;
+  font-style:normal!important;
+}
+html[data-hlrn-route="race-intelligence"] :is(.cc-command-deck,.cc-meter-card,.intel-card,
+  .story-card,.category-deep,.detail-wrap){
+  border-radius:5px!important;
+  border-color:var(--hn-line)!important;
+  box-shadow:var(--hn-shadow)!important;
+}
+html[data-hlrn-route="race-intelligence"] .intel-card{
+  border-top:4px solid #df1d3c!important;
+  transition:transform .2s ease,border-color .2s ease!important;
+}
+html[data-hlrn-route="race-intelligence"] .intel-card:hover{
+  transform:translateY(-4px)!important;
+  border-color:var(--hn-red)!important;
+}
+html[data-hlrn-route="race-intelligence"] :is(.cc-command-title,.category-deep h2,
+  .detail-wrap h2,.cc-command-stat strong){
+  font-family:var(--hn-display)!important;
+  font-style:normal!important;
+  font-weight:900!important;
+  letter-spacing:-.02em!important;
+}
+
+/* ======================= PREVIEW / STRATEGY / REPORTS ======================= */
+html[data-hlrn-route="race-preview"] .pv-mast,
+html[data-hlrn-route="race-strategy"] .strategy .top,
+html[data-hlrn-route="race-reports"] .page>.hero{
+  border-bottom:5px solid #d71936!important;
+  border-radius:5px!important;
+  overflow:hidden;
+}
+html[data-hlrn-route="race-preview"] .pv-mast h1{font-size:clamp(62px,7vw,110px)!important}
+html[data-hlrn-route="race-preview"] :is(.pv-race-hero,.pv-section,.pv-panel,.pv-card),
+html[data-hlrn-route="race-strategy"] :is(.metrics,.panel),
+html[data-hlrn-route="race-reports"] :is(.panel,.report-card){
+  border-radius:5px!important;
+  border-color:var(--hn-line)!important;
+  box-shadow:var(--hn-shadow)!important;
+}
+html[data-hlrn-route="race-preview"] .pv-section{
+  border-top:3px solid #d71936!important;
+}
+html[data-hlrn-route="race-preview"] :is(.pv-section h2,.pv-race-hero h2),
+html[data-hlrn-route="race-strategy"] :is(.strategy h1,.strategy h2),
+html[data-hlrn-route="race-reports"] :is(.page h1,.page h2){
+  font-family:var(--hn-display)!important;
+  font-style:normal!important;
+  font-weight:900!important;
+  letter-spacing:-.015em!important;
+}
+html[data-hlrn-route="race-strategy"] .strategy h1{
+  font-size:clamp(53px,6vw,93px)!important;
+}
+
+/* ======================= BROADCAST CENTER ======================= */
+html[data-hlrn-route="broadcasters"] .bc-mast{
+  border-bottom:5px solid #d71936!important;
+  border-radius:5px!important;
+  overflow:hidden;
+  box-shadow:var(--hn-shadow)!important;
+}
+html[data-hlrn-route="broadcasters"] .bc-mast h1{
+  font-size:clamp(65px,8vw,120px)!important;
+}
+html[data-hlrn-route="broadcasters"] :is(.bc-network-card,.bc-player-card,.bc-sidecard,
+  .bc-replay-card,.bc-person,.bc-flow-card){
+  border-radius:5px!important;
+  border-color:var(--hn-line)!important;
+  box-shadow:var(--hn-shadow)!important;
+}
+html[data-hlrn-route="broadcasters"] .bc-player-card{
+  border-top:5px solid #d71936!important;
+}
+html[data-hlrn-route="broadcasters"] :is(.bc-player-meta h2,.bc-section-head h2,
+  .bc-person-name-link,.bc-network-main strong){
+  font-family:var(--hn-display)!important;
+  font-weight:900!important;
+  font-style:normal!important;
+  letter-spacing:-.015em!important;
+}
+html[data-hlrn-route="broadcasters"] .bc-replay-card:hover,
+html[data-hlrn-route="broadcasters"] .bc-person:hover{
+  border-color:var(--hn-red)!important;
+}
+
+/* ======================= NEWS / ADVENTURES ======================= */
+html[data-hlrn-route="news"] .page>.hero{
+  border-bottom:5px solid #d71936!important;
+  border-radius:5px!important;
+}
+html[data-hlrn-route="news"] :is(.page>.hero h1,.hlrn-recap-section-head h2){
+  font-family:var(--hn-display)!important;
+  font-size:clamp(45px,6vw,88px)!important;
+  font-weight:900!important;
+  font-style:normal!important;
+  letter-spacing:-.02em!important;
+}
+html[data-hlrn-route="news"] .hlrn-recap-card{
+  border-radius:5px!important;
+  border-color:var(--hn-line)!important;
+  border-top:4px solid #d71936!important;
+  box-shadow:var(--hn-shadow)!important;
+}
+html[data-hlrn-route="adventures"] .series-intro h1{
+  font-family:var(--hn-display)!important;
+  font-size:clamp(55px,7vw,108px)!important;
+  font-style:normal!important;
+  font-weight:900!important;
+  letter-spacing:-.03em!important;
+}
+html[data-hlrn-route="adventures"] :is(.series-intro,.episode-tile,.about-show){
+  border-radius:5px!important;
+}
+html[data-hlrn-route="adventures"] .episode-tile{
+  border:1px solid var(--hn-line)!important;
+  border-bottom:4px solid #d71936!important;
+  box-shadow:var(--hn-shadow)!important;
+  transition:transform .2s ease,border-color .2s ease!important;
+}
+html[data-hlrn-route="adventures"] .episode-tile:hover{
+  transform:translateY(-5px)!important;
+  border-color:var(--hn-red)!important;
+}
+html[data-hlrn-route="adventures"] :is(.section-top h2,.episode-details h3){
+  font-family:var(--hn-display)!important;
+  font-style:normal!important;
+  font-weight:900!important;
+}
+
+/* ======================= RULES / STORE ======================= */
+html[data-hlrn-route="rules"] .page>.hero,
+html[data-hlrn-route="store"] .page>.hero{
+  border-bottom:5px solid #d71936!important;
+  border-radius:5px!important;
+  overflow:hidden;
+}
+html[data-hlrn-route="rules"] .hero h1,
+html[data-hlrn-route="store"] :is(.hero h1,.hlrn-shop-hero h1){
+  font-family:var(--hn-display)!important;
+  font-style:normal!important;
+  font-weight:900!important;
+  font-size:clamp(55px,7vw,105px)!important;
+  line-height:.9!important;
+  letter-spacing:-.02em!important;
+}
+html[data-hlrn-route="rules"] :is(.quick-card,.rc-rule-tools,.rules-jump-nav,
+  .section-body,.rule,.notice){
+  border-radius:5px!important;
+  border-color:var(--hn-line)!important;
+}
+html[data-hlrn-route="rules"] .quick-card{
+  border-top:4px solid #d71936!important;
+  box-shadow:var(--hn-shadow)!important;
+}
+html[data-hlrn-route="rules"] .section-header{
+  border-left:5px solid #d71936!important;
+}
+html[data-hlrn-route="rules"] .section-header h2{
+  font-family:var(--hn-display)!important;
+  font-size:clamp(31px,3.5vw,49px)!important;
+  font-style:normal!important;
+  font-weight:900!important;
+}
+html[data-hlrn-route="store"] :is(.hlrn-shop-hero,.mh-featured,.product,.mh-dash-card,.hlrn-shop-cat){
+  border-radius:5px!important;
+  border-color:var(--hn-line)!important;
+  box-shadow:var(--hn-shadow)!important;
+}
+html[data-hlrn-route="store"] .product{
+  border-top:4px solid #d71936!important;
+  transition:transform .2s ease!important;
+}
+html[data-hlrn-route="store"] .product:hover{transform:translateY(-4px)!important}
+html[data-hlrn-route="store"] :is(.product-name,.mh-featured h2,.mh-dashboard h2){
+  font-family:var(--hn-display)!important;
+  font-style:normal!important;
+  font-weight:900!important;
+  letter-spacing:-.015em!important;
+}
+
+/* ======================= FANTASY / MY HLRN ======================= */
+html[data-hlrn-route="fantasy"] :is(.brandbar,.weekstrip){
+  border-bottom:4px solid #d71936!important;
+}
+html[data-hlrn-route="fantasy"] :is(.section,.statbox,.driver-card,.panel,.matchdriver){
+  border-radius:5px!important;
+  border-color:var(--hn-line)!important;
+}
+html[data-hlrn-route="fantasy"] .driver-card{
+  border-top:4px solid #d71936!important;
+  box-shadow:var(--hn-shadow)!important;
+}
+html[data-hlrn-route="fantasy"] :is(.sectiontitle h2,.driver-name,.brandbar h1){
+  font-family:var(--hn-display)!important;
+  font-style:normal!important;
+  font-weight:900!important;
+  letter-spacing:-.012em!important;
+}
+html[data-hlrn-route="fantasy"] .sectiontitle h2{
+  font-size:clamp(27px,3vw,39px)!important;
+}
+html[data-hlrn-route="my-hlrn"] .myh-hero{
+  border-bottom:5px solid #d71936!important;
+  border-radius:5px!important;
+  overflow:hidden;
+  box-shadow:var(--hn-shadow)!important;
+}
+html[data-hlrn-route="my-hlrn"] .myh-hero h1{
+  font-size:clamp(58px,7vw,107px)!important;
+}
+html[data-hlrn-route="my-hlrn"] :is(.myh-section,.myh-champ,.myh-overview,.myh-track){
+  border-radius:5px!important;
+  border-color:var(--hn-line)!important;
+  box-shadow:var(--hn-shadow)!important;
+}
+html[data-hlrn-route="my-hlrn"] .myh-champ{
+  border-top:4px solid #d71936!important;
+}
+html[data-hlrn-route="my-hlrn"] .myh-champ.monday{border-top-color:#2aa464!important}
+html[data-hlrn-route="my-hlrn"] :is(.myh-section-head h2,.myh-champ-rank strong,
+  .myh-overview strong){
+  font-family:var(--hn-display)!important;
+  font-style:normal!important;
+  font-weight:900!important;
+}
+html[data-hlrn-route="my-hlrn"] .myh-section-head h2{
+  font-size:clamp(30px,3.4vw,48px)!important;
+}
+
+/* ======================= TEAMS / ADMINS ======================= */
+html[data-hlrn-route="team-pages"] .intro h1{
+  font-family:var(--hn-display)!important;
+  font-size:clamp(64px,8vw,116px)!important;
+  font-style:normal!important;
+  font-weight:900!important;
+  line-height:.89!important;
+  letter-spacing:-.025em!important;
+}
+html[data-hlrn-route="team-pages"] .cards .team{
+  border-radius:5px!important;
+  border:1px solid var(--hn-line)!important;
+  border-top:4px solid #d71936!important;
+  box-shadow:var(--hn-shadow)!important;
+  overflow:hidden;
+}
+html[data-hlrn-route="team-pages"] .cards .team:hover{
+  transform:translateY(-5px)!important;
+  border-color:var(--hn-red)!important;
+}
+html[data-hlrn-route="team-pages"] :is(.team h3,.section-head h2){
+  font-family:var(--hn-display)!important;
+  font-weight:900!important;
+  font-style:normal!important;
+  font-size:clamp(27px,2.6vw,39px)!important;
+}
+html[data-hlrn-route="team-pages"] body>.page .hero{
+  border-bottom:5px solid #d71936!important;
+  overflow:hidden;
+}
+html[data-hlrn-route="team-pages"] .page :is(.headline h1,.headline h2,.drivers h2){
+  font-family:var(--hn-display)!important;
+  font-style:normal!important;
+  font-weight:900!important;
+}
+html[data-hlrn-route="team-pages"] .page .driver{
+  border-radius:5px!important;
+  border:1px solid rgba(255,255,255,.18)!important;
+  box-shadow:0 15px 45px rgba(0,0,0,.21)!important;
+}
+html[data-hlrn-route="team-pages"] .page .portrait img{
+  transition:transform .25s ease;
+}
+html[data-hlrn-route="team-pages"] .page .driver:hover .portrait img{
+  transform:scale(1.035);
+}
+html[data-hlrn-route="meet-the-admins"] .team-hero{
+  border-bottom:5px solid #d71936!important;
+  border-radius:5px!important;
+  overflow:hidden;
+}
+html[data-hlrn-route="meet-the-admins"] .team-hero h1{
+  font-size:clamp(60px,7.5vw,110px)!important;
+}
+html[data-hlrn-route="meet-the-admins"] :is(.team-grid>*,.team-tools,.team-summary){
+  border-radius:5px!important;
+  border-color:var(--hn-line)!important;
+  box-shadow:var(--hn-shadow)!important;
+}
+html[data-hlrn-route="meet-the-admins"] .team-grid>*{
+  border-top:4px solid #d71936!important;
+  transition:transform .2s ease!important;
+}
+html[data-hlrn-route="meet-the-admins"] .team-grid>*:hover{
+  transform:translateY(-3px)!important;
+}
+
+/* ======================= RACE CONTROL / TRACK MAP ======================= */
+html[data-hlrn-route="control-center"] :is(.cc-top,.cc-panel,.cc-gate-card){
+  border-radius:5px!important;
+  border-color:var(--hn-line)!important;
+  box-shadow:var(--hn-shadow)!important;
+}
+html[data-hlrn-route="control-center"] .cc-top{
+  border-bottom:5px solid #d71936!important;
+}
+html[data-hlrn-route="control-center"] :is(.cc-top h1,.cc-panel-head strong,.cc-gate h1){
+  font-family:var(--hn-display)!important;
+  font-style:normal!important;
+  font-weight:900!important;
+}
+html[data-hlrn-route="track-map"] :is(.heading,.panel){
+  border-radius:5px!important;
+  border-color:var(--hn-line)!important;
+}
+html[data-hlrn-route="track-map"] .heading{
+  border-bottom:5px solid #d71936!important;
+}
+html[data-hlrn-route="track-map"] .heading h1{
+  font-family:var(--hn-display)!important;
+  font-style:normal!important;
+  font-weight:900!important;
+  letter-spacing:-.02em!important;
+}
+html[data-hlrn-route="racing"] body>header{
+  border-bottom:4px solid #d71936!important;
+}
+html[data-hlrn-route="racing"] body>header b{
+  font-family:var(--hn-display)!important;
+  font-weight:900!important;
+  font-style:normal!important;
+  font-size:clamp(22px,2.5vw,36px)!important;
+}
+
+/* ======================= SMALL SCREEN SAFETY ======================= */
+@media(max-width:800px){
+  html[data-hlrn-route="drivers"] .driver-heading h1,
+  html[data-hlrn-route="results"] .race-header h1,
+  html[data-hlrn-route="broadcasters"] .bc-mast h1,
+  html[data-hlrn-route="race-preview"] .pv-mast h1{
+    font-size:clamp(45px,10vw,74px)!important;
+  }
+  html[data-hlrn-route="standings"] .page-wrap>.hero h1{
+    font-size:clamp(38px,8vw,64px)!important;
+  }
+  html[data-hlrn-route="team-pages"] .intro h1{
+    font-size:clamp(51px,11vw,80px)!important;
+  }
+  html[data-hlrn-route="standings"] :is(.summary-card,.cc-card,.podium-card){
+    min-width:0;
+  }
+  html[data-hlrn-route="results"] .track-name{
+    font-size:clamp(28px,7vw,43px)!important;
+  }
+}
+@media(max-width:480px){
+  html[data-hlrn-route="drivers"] .driver-grid .driver-card{
+    transform:none;
+  }
+  html[data-hlrn-route="rules"] .hero h1,
+  html[data-hlrn-route="store"] .hero h1,
+  html[data-hlrn-route="race-intelligence"] .hero h1{
+    font-size:clamp(42px,11vw,64px)!important;
+  }
+}
