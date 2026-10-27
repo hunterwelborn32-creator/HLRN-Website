@@ -1317,6 +1317,29 @@ function start(){
     }
   }
 
+
+  // CINEMATIC EDITION (presentation only). Never load on the Live page.
+  // Existing theme, animated track, stats and sync code are not modified.
+  if(route!=="live"){
+    const cinematicVersion="20261027cine1";
+    const cinematicCssUrl=url("assets/hlrn-cinematic-edition.css?v="+cinematicVersion);
+    let cinematicCss=document.querySelector('link[data-hlrn-cinematic-css]');
+    if(!cinematicCss){
+      cinematicCss=document.createElement("link");
+      cinematicCss.rel="stylesheet";
+      cinematicCss.setAttribute("data-hlrn-cinematic-css","");
+      document.head.appendChild(cinematicCss);
+    }
+    if(cinematicCss.href!==cinematicCssUrl)cinematicCss.href=cinematicCssUrl;
+    if(!document.querySelector('script[data-hlrn-cinematic-js]')){
+      const cinematicScript=document.createElement("script");
+      cinematicScript.src=url("assets/hlrn-cinematic-edition.js?v="+cinematicVersion);
+      cinematicScript.defer=true;
+      cinematicScript.setAttribute("data-hlrn-cinematic-js","");
+      document.body.appendChild(cinematicScript);
+    }
+  }
+
   document.documentElement.classList.add("hlrn-shell-ready");
 }
 
