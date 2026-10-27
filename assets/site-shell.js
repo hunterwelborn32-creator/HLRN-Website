@@ -1281,7 +1281,7 @@ function start(){
   // includes this file for first paint; on other pages, the shared nav adds it.
   // Pure presentation, so the animated track, driver login, race results,
   // and Day/Night theme controller remain completely unchanged.
-  const designVersion="20261027broadcast3";
+  const designVersion="20261027premiere1";
   const designUrl=url("assets/hlrn-broadcast-edition.css?v="+designVersion);
   let broadcastCss=[...document.querySelectorAll('link[rel="stylesheet"]')].find(
     el=>/\/hlrn-broadcast-edition\.css(?:\?|$)/i.test(el.getAttribute("href")||"")
