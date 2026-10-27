@@ -1276,6 +1276,24 @@ function start(){
   // Sitewide seasonal Halloween overlay; does not touch racing data.
   if(!document.querySelector('link[data-hlrn-halloween]')){const x=document.createElement("link");x.rel="stylesheet";x.href=url("assets/holiday-halloween.css?v=20261023hauntednav12");x.setAttribute("data-hlrn-halloween","");document.head.appendChild(x);}
   if(!document.querySelector('script[data-hlrn-halloween]')){const x=document.createElement("script");x.src=url("assets/holiday-halloween.js?v=20261023navonly4");x.defer=true;x.setAttribute("data-hlrn-halloween","");document.head.appendChild(x);}
+
+  // Broadcast Edition: load once, last in the cascade. The homepage already
+  // includes this file for first paint; on other pages, the shared nav adds it.
+  // Pure presentation, so the animated track, driver login, race results,
+  // and Day/Night theme controller remain completely unchanged.
+  const designVersion="20261027broadcast1";
+  const designUrl=url("assets/hlrn-broadcast-edition.css?v="+designVersion);
+  let broadcastCss=[...document.querySelectorAll('link[rel="stylesheet"]')].find(
+    el=>/\/hlrn-broadcast-edition\.css(?:\?|$)/i.test(el.getAttribute("href")||"")
+  );
+  if(!broadcastCss){
+    broadcastCss=document.createElement("link");
+    broadcastCss.rel="stylesheet";
+    broadcastCss.setAttribute("data-hlrn-broadcast-edition","");
+  }
+  if(broadcastCss.href!==designUrl)broadcastCss.href=designUrl;
+  document.head.appendChild(broadcastCss);
+
   document.documentElement.classList.add("hlrn-shell-ready");
 }
 
