@@ -29,7 +29,13 @@ jobs:
           rm -rf /tmp/hlrn-app
           git clone --depth 1 https://github.com/hunterwelborn32-creator/HLRN-App.git /tmp/hlrn-app
           mkdir -p assets/driver-photos/cutout assets/driver-photos/full
-          rsync -a --delete /tmp/hlrn-app/driver-photos/cutout/ assets/driver-photos/cutout/
+          # Preserve the two previously uploaded Hosted driver cutouts when
+          # HLRN-App has no copy. Receiver-side protection still allows future
+          # updates from HLRN-App to replace these files normally.
+          rsync -a --delete \
+            --filter='P justin-lee-pearson.webp' \
+            --filter='P zachary-cato.webp' \
+            /tmp/hlrn-app/driver-photos/cutout/ assets/driver-photos/cutout/
           rsync -a --delete /tmp/hlrn-app/driver-photos/full/ assets/driver-photos/full/
 
       - name: Publish photo library
