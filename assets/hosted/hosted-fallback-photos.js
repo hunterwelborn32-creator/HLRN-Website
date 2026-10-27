@@ -231,9 +231,13 @@
   }
 
   function realPhotoFor(rec){
-    return rec?.hasPhoto&&String(rec?.photoSlug||"").trim()
-      ?CUTOUT_BASE+encodeURIComponent(rec.photoSlug)+".webp"
-      :"";
+    const slug=String(rec?.photoSlug||"").trim();
+    if(!rec?.hasPhoto||!slug)return "";
+    const photoPath=CUTOUT_BASE+encodeURIComponent(slug)+".webp";
+    // Avoid a browser's cached 404 from before these cutouts were restored.
+    return slug==="justin-lee-pearson"||slug==="zachary-cato"
+      ?photoPath+"?v=20261027restored2"
+      :photoPath;
   }
 
   function existingImageState(cell){
@@ -281,6 +285,16 @@
     if(rating){
       img.dataset.hlrnTier=rating>=2000?"red":rating>=1500?"blue":rating>=1000?"green":"yellow";
     }
+    img.addEventListener("error",()=>{
+      const safeFallback=fallbackUrl(rating);
+      if(safeFallback&&img.src!==safeFallback){
+        img.src=safeFallback;
+        return;
+      }
+      // Never leave a broken-image icon if an unavailable photo fails.
+      img.remove();
+      cell.dataset.hlrnHostedPhotoV4="unavailable";
+    });
     img.src=src;
 
     if(link){
@@ -300,7 +314,7 @@
   }
 
   async function decorateCell(cell){
-    if(!cell||cell.dataset.hlrnHostedPhotoV4==="1"||cell.dataset.hlrnHostedPhotoV4==="pending")return;
+    if(!cell||cell.dataset.hlrnHostedPhotoV4==="1"||cell.dataset.hlrnHostedPhotoV4==="pending"||cell.dataset.hlrnHostedPhotoV4==="unavailable")return;
 
     const imageState=existingImageState(cell);
     if(imageState==="loaded"){

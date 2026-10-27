@@ -195,7 +195,11 @@
     // Always use their real cutouts rather than attempting a missing full image
     // and cycling between a failed URL and the rating-based fallback.
     if(folder==="full" && (slug==="justin-lee-pearson" || slug==="zachary-cato")) folder="cutout";
-    return PHOTO_BASE+folder+"/"+encodeURIComponent(slug)+".webp";
+    const photoPath=PHOTO_BASE+folder+"/"+encodeURIComponent(slug)+".webp";
+    // Cache-bust the two newly restored Hosted driver cutouts after earlier 404s.
+    return slug==="justin-lee-pearson"||slug==="zachary-cato"
+      ?photoPath+"?v=20261027restored2"
+      :photoPath;
   }
 
   function photoUrl(value,type="cutout"){
