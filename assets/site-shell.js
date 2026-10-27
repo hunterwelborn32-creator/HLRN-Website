@@ -1296,7 +1296,7 @@ function start(){
 
   // Premiere edition for interior pages only. Homepage and Live are excluded.
   if(route!=="home" && route!=="live"){
-    const premiereVersion="20261027interior1";
+    const premiereVersion="20261027interior2";
     const premiereUrl=url("assets/hlrn-network-premiere.css?v="+premiereVersion);
     let premiereCss=[...document.querySelectorAll('link[rel="stylesheet"]')].find(
       el=>(el.getAttribute("href")||"").includes("hlrn-network-premiere.css")

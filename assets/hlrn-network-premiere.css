@@ -602,3 +602,52 @@ html[data-hlrn-route="racing"] body>header b{
     font-size:clamp(42px,11vw,64px)!important;
   }
 }
+
+
+/* Standalone HLRN pages without site-shell.js keep their native dark
+   presentation while sharing the same premium race-network typography. */
+html[data-hlrn-route]:not([data-hlrn-theme]){
+  --hn-bg:#07090c;
+  --hn-surface:#0d1117;
+  --hn-panel:#141b24;
+  --hn-card:#10151b;
+  --hn-ink:#f6f8fa;
+  --hn-muted:#adb7c4;
+  --hn-line:#2d3643;
+  --hn-red:#ff3453;
+  --hn-gold:#f4c835;
+  --hn-shadow:0 17px 47px rgba(0,0,0,.28);
+}
+html[data-hlrn-route="team-pages"]:not([data-hlrn-theme]) .page .hero{
+  border-bottom:6px solid #e92040!important;
+  box-shadow:0 30px 75px rgba(0,0,0,.42)!important;
+}
+html[data-hlrn-route="team-pages"]:not([data-hlrn-theme]) .page .headline,
+html[data-hlrn-route="team-pages"]:not([data-hlrn-theme]) .page .drivers{
+  position:relative;
+}
+html[data-hlrn-route="team-pages"]:not([data-hlrn-theme]) .page .eyebrow{
+  font-family:Inter,"Segoe UI",Arial,sans-serif!important;
+  font-size:11px!important;
+  font-weight:900!important;
+  letter-spacing:.16em!important;
+}
+html[data-hlrn-route="team-pages"]:not([data-hlrn-theme]) .page .headline :is(h1,h2){
+  font-size:clamp(43px,5.8vw,86px)!important;
+  font-weight:900!important;
+  letter-spacing:-.03em!important;
+  line-height:1.0!important;
+}
+html[data-hlrn-route="team-pages"]:not([data-hlrn-theme]) .page .driver-name{
+  font-family:var(--hn-display)!important;
+  font-size:clamp(25px,2.5vw,34px)!important;
+  font-weight:900!important;
+}
+html[data-hlrn-route="control-center"]:not([data-hlrn-theme]) body h1{
+  font-family:var(--hn-display)!important;
+  letter-spacing:-.02em!important;
+  font-weight:900!important;
+}
+html[data-hlrn-route="track-map"]:not([data-hlrn-theme]) .heading h1{
+  font-size:clamp(45px,5.5vw,75px)!important;
+}
