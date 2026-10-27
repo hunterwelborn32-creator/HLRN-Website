@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T07:54:02.808Z",
+  "generatedAt": "2026-10-27T13:54:01.489Z",
   "leagues": {
     "sunday": {
       "drivers": [
@@ -30759,6 +30759,26 @@
         "averageLap": "0:55.741"
       },
       {
+        "date": "10/5/2026",
+        "track": "Auto Club Speedway",
+        "carNumber": "91",
+        "driver": "Bill Daniels",
+        "start": "20",
+        "lapsLed": "3",
+        "incidents": "2",
+        "averageLap": "0:42.886"
+      },
+      {
+        "date": "10/4/2026",
+        "track": "iRacing Superspeedway",
+        "carNumber": "12",
+        "driver": "Trevor Haley",
+        "start": "2",
+        "lapsLed": "24",
+        "incidents": "16",
+        "averageLap": "1:13.419"
+      },
+      {
         "date": "10/3/2026",
         "track": "Daytona International Speedway",
         "carNumber": "69",
@@ -32943,11 +32963,11 @@
       {
         "rank": "1",
         "driver": "Trevor Haley",
-        "races": "91",
-        "wins": "23",
-        "top5": "54",
-        "top10": "67",
-        "averageFinish": "8.21"
+        "races": "92",
+        "wins": "24",
+        "top5": "55",
+        "top10": "68",
+        "averageFinish": "8.13"
       },
       {
         "rank": "2",
@@ -32961,41 +32981,50 @@
       {
         "rank": "3",
         "driver": "Ryan Wilson21",
-        "races": "121",
+        "races": "123",
         "wins": "6",
         "top5": "27",
-        "top10": "46",
-        "averageFinish": "14.53"
+        "top10": "47",
+        "averageFinish": "14.51"
       },
       {
         "rank": "4",
         "driver": "Ethan Fonseca Moreno",
-        "races": "18",
+        "races": "19",
         "wins": "6",
         "top5": "12",
         "top10": "13",
-        "averageFinish": "10.5"
+        "averageFinish": "11.63"
       },
       {
         "rank": "5",
         "driver": "Jim Segredo",
-        "races": "177",
+        "races": "178",
         "wins": "5",
         "top5": "26",
         "top10": "66",
-        "averageFinish": "16.18"
+        "averageFinish": "16.2"
       },
       {
         "rank": "6",
         "driver": "Tommy Rogers",
-        "races": "144",
+        "races": "145",
         "wins": "5",
         "top5": "26",
         "top10": "54",
-        "averageFinish": "14.77"
+        "averageFinish": "14.83"
       },
       {
         "rank": "7",
+        "driver": "Bill Daniels",
+        "races": "55",
+        "wins": "5",
+        "top5": "19",
+        "top10": "26",
+        "averageFinish": "16.18"
+      },
+      {
+        "rank": "8",
         "driver": "Zachary Cato",
         "races": "49",
         "wins": "5",
@@ -33004,7 +33033,7 @@
         "averageFinish": "12.14"
       },
       {
-        "rank": "8",
+        "rank": "9",
         "driver": "Justin Lee Pearson",
         "races": "52",
         "wins": "5",
@@ -33013,7 +33042,7 @@
         "averageFinish": "19.21"
       },
       {
-        "rank": "9",
+        "rank": "10",
         "driver": "Rusty Chancey",
         "races": "13",
         "wins": "5",
@@ -33022,25 +33051,25 @@
         "averageFinish": "14.31"
       },
       {
-        "rank": "10",
+        "rank": "11",
         "driver": "Joshua McKinney2",
-        "races": "112",
+        "races": "114",
         "wins": "4",
         "top5": "24",
         "top10": "47",
-        "averageFinish": "14.09"
-      },
-      {
-        "rank": "11",
-        "driver": "Jerry Fassett",
-        "races": "184",
-        "wins": "4",
-        "top5": "23",
-        "top10": "62",
-        "averageFinish": "14.99"
+        "averageFinish": "14.17"
       },
       {
         "rank": "12",
+        "driver": "Jerry Fassett",
+        "races": "186",
+        "wins": "4",
+        "top5": "23",
+        "top10": "63",
+        "averageFinish": "15.04"
+      },
+      {
+        "rank": "13",
         "driver": "Chris James",
         "races": "83",
         "wins": "4",
@@ -33049,31 +33078,22 @@
         "averageFinish": "11.9"
       },
       {
-        "rank": "13",
+        "rank": "14",
         "driver": "Hunter Welborn",
-        "races": "78",
+        "races": "80",
         "wins": "4",
-        "top5": "19",
-        "top10": "38",
-        "averageFinish": "14.17"
+        "top5": "20",
+        "top10": "39",
+        "averageFinish": "14.28"
       },
       {
-        "rank": "14",
+        "rank": "15",
         "driver": "Juan Escamilla",
         "races": "46",
         "wins": "4",
         "top5": "19",
         "top10": "23",
         "averageFinish": "15.43"
-      },
-      {
-        "rank": "15",
-        "driver": "Bill Daniels",
-        "races": "54",
-        "wins": "4",
-        "top5": "18",
-        "top10": "25",
-        "averageFinish": "16.46"
       },
       {
         "rank": "16",
@@ -33087,20 +33107,20 @@
       {
         "rank": "17",
         "driver": "Shawn Stamper",
-        "races": "122",
+        "races": "124",
         "wins": "4",
         "top5": "12",
-        "top10": "31",
-        "averageFinish": "21.08"
+        "top10": "32",
+        "averageFinish": "21.03"
       },
       {
         "rank": "18",
         "driver": "John Miles4",
-        "races": "102",
+        "races": "103",
         "wins": "4",
         "top5": "11",
         "top10": "24",
-        "averageFinish": "17.56"
+        "averageFinish": "17.59"
       },
       {
         "rank": "19",
@@ -33114,11 +33134,11 @@
       {
         "rank": "20",
         "driver": "Eric Hayden",
-        "races": "183",
+        "races": "185",
         "wins": "3",
         "top5": "35",
         "top10": "77",
-        "averageFinish": "13.83"
+        "averageFinish": "13.88"
       }
     ],
     "driverRatings": {
@@ -33145,7 +33165,7 @@
       "ryanwilson": {
         "driver": "Ryan Wilson21",
         "iRating": 1475,
-        "date": "2026-10-27T07:53:54.008Z"
+        "date": "2026-10-27T13:53:48.057Z"
       },
       "shawnstamper": {
         "driver": "Shawn Stamper",
@@ -33180,7 +33200,7 @@
       "billdaniels": {
         "driver": "Bill Daniels",
         "iRating": 3875,
-        "date": "2026-10-27T07:53:59.899Z"
+        "date": "2026-10-27T13:53:51.364Z"
       },
       "edwardfiedler": {
         "driver": "Edward Fiedler",
@@ -33195,7 +33215,7 @@
       "jimsegredo": {
         "driver": "Jim Segredo",
         "iRating": 1272,
-        "date": "2026-10-27T07:53:53.681Z"
+        "date": "2026-10-27T13:53:46.718Z"
       },
       "jerryfassett": {
         "driver": "Jerry Fassett",
@@ -33375,57 +33395,57 @@
       "trevorhaley": {
         "driver": "Trevor Haley",
         "iRating": 4382,
-        "date": "2026-10-27T07:53:54.054Z"
+        "date": "2026-10-27T13:53:47.611Z"
       },
       "ethanfonsecamoreno": {
         "driver": "Ethan Fonseca Moreno",
-        "iRating": 4154,
-        "date": "2026-10-27T07:53:53.785Z"
+        "iRating": 4119,
+        "date": "2026-10-27T13:53:46.876Z"
       },
       "nicholasbaumann": {
         "driver": "Nicholas Baumann",
         "iRating": 4952,
-        "date": "2026-10-27T07:53:53.481Z"
+        "date": "2026-10-27T13:53:47.208Z"
       },
       "joshuamckinney": {
         "driver": "Joshua McKinney2",
         "iRating": 2686,
-        "date": "2026-10-27T07:53:55.928Z"
+        "date": "2026-10-27T13:53:56.097Z"
       },
       "zacharycato": {
         "driver": "Zachary Cato",
         "iRating": 1828,
-        "date": "2026-10-27T07:53:56.110Z"
+        "date": "2026-10-27T13:53:50.827Z"
       },
       "rustychancey": {
         "driver": "Rusty Chancey",
         "iRating": 5299,
-        "date": "2026-10-27T07:53:56.293Z"
+        "date": "2026-10-27T13:53:52.138Z"
       },
       "justinleepearson": {
         "driver": "Justin Lee Pearson",
         "iRating": 3348,
-        "date": "2026-10-27T07:53:56.835Z"
+        "date": "2026-10-27T13:53:52.324Z"
       },
       "chrisjames": {
         "driver": "Chris James",
         "iRating": 5124,
-        "date": "2026-10-27T07:53:59.185Z"
+        "date": "2026-10-27T13:53:55.523Z"
       },
       "michaeltokarz": {
         "driver": "Michael Tokarz",
         "iRating": 1221,
-        "date": "2026-10-27T07:54:01.619Z"
+        "date": "2026-10-27T13:53:59.733Z"
       },
       "juanescamilla": {
         "driver": "Juan Escamilla",
         "iRating": 3151,
-        "date": "2026-10-27T07:53:59.883Z"
+        "date": "2026-10-27T13:53:56.701Z"
       },
       "hunterwelborn": {
         "driver": "Hunter Welborn",
         "iRating": 1453,
-        "date": "2026-10-27T07:53:59.573Z"
+        "date": "2026-10-27T13:53:55.741Z"
       },
       "craigrowe": {
         "driver": "Craig Rowe",
