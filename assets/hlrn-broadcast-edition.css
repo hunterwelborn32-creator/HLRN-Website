@@ -675,3 +675,37 @@ html[data-hlrn-theme="light"] body.home-v10-page .home10 .h27-network-rail a{
 html[data-hlrn-theme="light"] body.home-v10-page .home10 .h27-network-rail a:hover{
   color:#ce1431!important;
 }
+
+
+/* =========================================================
+   HLRN TYPOGRAPHY REFINEMENT — CLEAN BROADCAST SANS
+   Replace only the slanted Impact display font introduced by the
+   Broadcast Edition. Keep all layouts, imagery, color, track, and data.
+   ========================================================= */
+body.home-v10-page .home10 :is(
+  .h10-hero-copy h1,
+  .h10-upcoming-card h3,
+  .h10-hosted-head strong,
+  .h10-hosted-race>strong,
+  .h10-hosted-winner-copy strong,
+  .h10-section-head h2,
+  .h10-week-card h3,
+  .h20-panel h3,
+  .h20-results-panel h3,
+  .h20-championship-total b,
+  .h10-link-card strong,
+  .h10-footer-brand strong
+){
+  font-family:Inter,"Segoe UI",Arial,sans-serif!important;
+  font-style:normal!important;
+  font-weight:900!important;
+  letter-spacing:-.035em!important;
+}
+body.home-v10-page .home10 .h10-hero-copy h1{
+  letter-spacing:-.055em!important;
+}
+body.home-v10-page .home10 .h10-week-card:before,
+body.home-v10-page .home10 .h20-finish-list li:before{
+  font-family:Inter,"Segoe UI",Arial,sans-serif!important;
+  font-style:normal!important;
+}
