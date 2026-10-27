@@ -1,0 +1,199 @@
+/* HLRN DRIVER SPOTLIGHT BACKDROPS / 2026-10-27
+ * The scene stays BEHIND the existing transparent driver cutout.
+ * No changes to photos, stats, ranking, navigation or race data.
+ */
+#directoryView .driver-grid .driver-card .driver-media{
+  --hlrn-card-accent:#e52648;
+  --hlrn-card-glow:rgba(235,32,72,.38);
+  --hlrn-card-haze:rgba(235,32,72,.15);
+  position:relative!important;
+  isolation:isolate;
+  overflow:hidden!important;
+  background-color:#090e17!important;
+  background-image:
+    radial-gradient(ellipse 67% 58% at 78% 40%,var(--hlrn-card-glow),transparent 82%),
+    linear-gradient(115deg,rgba(15,24,38,.97) 2%,rgba(8,11,17,.96) 56%,rgba(19,25,33,.91)),
+    repeating-linear-gradient(125deg,transparent 0 55px,rgba(255,255,255,.055) 57px 59px,transparent 62px 95px)!important;
+}
+body.monday-league #directoryView .driver-grid .driver-card .driver-media{
+  --hlrn-card-accent:#25b871;
+  --hlrn-card-glow:rgba(33,185,111,.32);
+  --hlrn-card-haze:rgba(33,185,111,.13);
+}
+/* Fade a checkered flag and a set of speed lines into the upper-right.
+   Decoration is intentionally behind the driver portrait. */
+#directoryView .driver-grid .driver-card .driver-media:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  display:block!important;
+  pointer-events:none;
+  background-image:
+    repeating-conic-gradient(from 45deg,rgba(255,255,255,.16) 0% 25%,transparent 0% 50%),
+    repeating-linear-gradient(146deg,transparent 0 42px,rgba(255,255,255,.11) 43px 44px,transparent 45px 69px)!important;
+  background-size:42px 42px,100% 100%;
+  background-position:right top,center;
+  -webkit-mask-image:linear-gradient(115deg,transparent 13%,rgba(0,0,0,.24) 45%,#000 100%);
+  mask-image:linear-gradient(115deg,transparent 13%,rgba(0,0,0,.24) 45%,#000 100%);
+  border:0!important;
+}
+/* The photo has its own foreground. This vignette ends at the floor line. */
+#directoryView .driver-grid .driver-card .driver-media:after{
+  content:"";
+  position:absolute;
+  z-index:2;
+  inset:auto 0 0!important;
+  height:47%!important;
+  background:
+    linear-gradient(180deg,transparent 0%,rgba(2,4,8,.17) 54%,rgba(2,4,8,.73) 100%)!important;
+  pointer-events:none;
+}
+#directoryView .driver-grid .driver-card .driver-media .hlrn-card-circuit{
+  position:absolute;
+  z-index:1;
+  width:150%;
+  height:105%;
+  left:-48%;
+  bottom:-44%;
+  transform:rotate(-24deg);
+  border:19px solid rgba(255,255,255,.105);
+  border-radius:50%;
+  box-shadow:
+    0 0 0 3px rgba(255,255,255,.025),
+    inset 0 0 0 4px rgba(0,0,0,.18),
+    0 -8px 54px rgba(0,0,0,.2);
+  opacity:.9;
+  pointer-events:none;
+}
+#directoryView .driver-grid .driver-card .driver-media .hlrn-card-circuit:after{
+  content:"";
+  position:absolute;
+  inset:13px;
+  border:2px dashed rgba(255,255,255,.24);
+  border-radius:50%;
+  pointer-events:none;
+}
+#directoryView .driver-grid .driver-card .driver-media .hlrn-card-ghost-no{
+  position:absolute;
+  z-index:1;
+  top:22%;
+  left:6%;
+  width:95%;
+  white-space:nowrap;
+  overflow:hidden;
+  pointer-events:none;
+  color:rgba(255,255,255,.075);
+  -webkit-text-stroke:1px rgba(255,255,255,.22);
+  font:italic 900 clamp(110px,10.8vw,165px)/.85 "Barlow Condensed","Arial Narrow",Impact,sans-serif;
+  letter-spacing:-.07em;
+  text-align:left;
+  text-shadow:0 2px 45px var(--hlrn-card-haze);
+}
+#directoryView .driver-grid .driver-card .driver-media .hlrn-card-track-label{
+  position:absolute;
+  z-index:1;
+  left:12px;
+  bottom:17px;
+  color:rgba(255,255,255,.58);
+  font:900 9px/1.2 Inter,"Segoe UI",Arial,sans-serif;
+  letter-spacing:.21em;
+  text-transform:uppercase;
+  white-space:nowrap;
+  pointer-events:none;
+}
+#directoryView .driver-grid .driver-card .driver-media .hlrn-card-track-label:before{
+  content:"";
+  display:inline-block;
+  width:18px;
+  height:3px;
+  background:var(--hlrn-card-accent);
+  margin-right:7px;
+  vertical-align:3px;
+}
+#directoryView .driver-grid .driver-card .driver-media .driver-cutout{
+  position:absolute;
+  z-index:4!important;
+  filter:drop-shadow(-13px 9px 13px rgba(0,0,0,.52))!important;
+  transition:transform .28s ease,filter .28s ease;
+}
+/* The fallback remains available if the image cannot be loaded. */
+#directoryView .driver-grid .driver-card .driver-media .driver-fallback{
+  z-index:1!important;
+  color:rgba(255,255,255,.13)!important;
+  pointer-events:none;
+}
+#directoryView .driver-grid .driver-card .driver-media :is(.number-badge,.status-chip,.rank-chip){
+  z-index:6!important;
+}
+#directoryView .driver-grid .driver-card .driver-media .number-badge:after{
+  background:var(--hlrn-card-accent)!important;
+}
+#directoryView .driver-grid .driver-card:hover .driver-media{
+  background-image:
+    radial-gradient(ellipse 70% 65% at 73% 42%,var(--hlrn-card-glow),transparent 79%),
+    linear-gradient(115deg,rgba(16,24,39,.96) 2%,rgba(9,12,20,.95) 56%,rgba(21,29,39,.89)),
+    repeating-linear-gradient(125deg,transparent 0 55px,rgba(255,255,255,.065) 57px 59px,transparent 62px 95px)!important;
+}
+@media(min-width:621px) and (prefers-reduced-motion:no-preference){
+  #directoryView .driver-grid .driver-card:hover .driver-media .driver-cutout{
+    transform:translateX(-50%) scale(1.035);
+  }
+}
+/* Day mode: asphalt schematic on warm white, preserving black lettering. */
+html[data-hlrn-theme="light"] body #directoryView .driver-grid .driver-card .driver-media{
+  background-color:#e9edf1!important;
+  background-image:
+    radial-gradient(ellipse 66% 56% at 76% 37%,var(--hlrn-card-haze),transparent 78%),
+    linear-gradient(117deg,#edf1f4 0%,#fbfcfd 52%,#dde4ea 100%),
+    repeating-linear-gradient(130deg,transparent 0 55px,rgba(12,21,34,.07) 57px 59px,transparent 62px 95px)!important;
+}
+html[data-hlrn-theme="light"] body #directoryView .driver-grid .driver-card .driver-media:before{
+  background-image:
+    repeating-conic-gradient(from 45deg,rgba(14,23,38,.17) 0% 25%,transparent 0% 50%),
+    repeating-linear-gradient(146deg,transparent 0 42px,rgba(15,25,38,.10) 43px 44px,transparent 45px 69px)!important;
+}
+html[data-hlrn-theme="light"] body #directoryView .driver-grid .driver-card .driver-media:after{
+  background:linear-gradient(180deg,transparent 0%,rgba(17,25,35,.04) 54%,rgba(14,23,35,.23) 100%)!important;
+}
+html[data-hlrn-theme="light"] body #directoryView .driver-grid .driver-card .hlrn-card-circuit{
+  border-color:rgba(15,26,40,.11)!important;
+}
+html[data-hlrn-theme="light"] body #directoryView .driver-grid .driver-card .hlrn-card-circuit:after{
+  border-color:rgba(14,25,41,.23);
+}
+html[data-hlrn-theme="light"] body #directoryView .driver-grid .driver-card .hlrn-card-ghost-no{
+  color:rgba(12,24,38,.045);
+  -webkit-text-stroke:1px rgba(16,29,44,.21);
+}
+html[data-hlrn-theme="light"] body #directoryView .driver-grid .driver-card .hlrn-card-track-label{
+  color:#3b4652;
+}
+html[data-hlrn-theme="light"] body #directoryView .driver-grid .driver-card .driver-fallback{
+  color:rgba(15,24,38,.16)!important;
+}
+@media(max-width:620px){
+  #directoryView .driver-grid .driver-card .driver-media .hlrn-card-circuit{
+    width:195%;
+    height:135%;
+    left:-95%;
+    bottom:-60%;
+    border-width:12px;
+  }
+  #directoryView .driver-grid .driver-card .driver-media .hlrn-card-ghost-no{
+    top:35%;
+    left:5%;
+    font-size:80px;
+  }
+  #directoryView .driver-grid .driver-card .driver-media .hlrn-card-track-label{
+    bottom:8px;
+    left:8px;
+    font-size:7px;
+    letter-spacing:.07em;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  #directoryView .driver-grid .driver-card .driver-media .driver-cutout{
+    transition:none!important;
+  }
+}
