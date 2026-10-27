@@ -1366,6 +1366,7 @@ html[data-hlrn-theme="dark"] #directoryView .driver-card:hover{border-color:#6b7
 .profile-form a.profile-form-race:hover{filter:brightness(1.1)}
 @media(prefers-reduced-motion:reduce){.profile-form a.profile-form-race{transition:none}}
 </style>
+<link rel="stylesheet" href="../assets/drivers/roster-backdrops.css?v=20261027v1">
 </head>
 <body>
 <div id="directoryView" class="driver-page">
@@ -2156,6 +2157,9 @@ function card(d,index=0){
  const eager=index<4;
  return `<button class="driver-card" type="button" data-driver="${esc(name)}" aria-label="Open ${esc(name)} profile">
    <div class="driver-media">
+     <span class="hlrn-card-circuit" aria-hidden="true"></span>
+     <span class="hlrn-card-ghost-no" aria-hidden="true">${esc(n)}</span>
+     <span class="hlrn-card-track-label" aria-hidden="true">HIGH LINE // RACE TEAM</span>
      <div class="number-badge">${esc(n)}</div><div class="status-chip">HLRN DRIVER</div><div class="rank-chip">CHAMP <b>P${esc(leagueRank)}</b></div>
      <div class="driver-fallback">${n==="—"?"HLRN":"#"+esc(n)}</div>
      ${photo?`<img class="driver-cutout" src="${esc(photo)}" alt="${esc(name)}" onerror="this.onerror=null;this.src=\'${esc(fallbackPhoto)}\'" loading="${eager?"eager":"lazy"}" decoding="async" ${eager?'fetchpriority="high"':'fetchpriority="low"'}>`:``}
