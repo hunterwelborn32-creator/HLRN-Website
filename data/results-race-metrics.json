@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-27T02:11:16.578Z",
+  "generatedAt": "2026-10-27T07:54:02.829Z",
   "source": "SimRacerHub race pages",
   "races": [
     {
@@ -226,6 +226,31 @@
         "driverId": "87070",
         "carNumber": "012",
         "lap": 100
+      }
+    },
+    {
+      "key": "monday|10|387749",
+      "league": "monday",
+      "raceNumber": 10,
+      "raceId": "387749",
+      "track": "Michigan International Speedway",
+      "date": "Mon Oct 26 2026 00:00:00 GMT-0400 (Eastern Daylight Time)",
+      "source": "SimRacerHub",
+      "sourceRaceId": "387749",
+      "duration": "1h 28m",
+      "raceLaps": 125,
+      "leaders": 3,
+      "leadChanges": 6,
+      "cautions": 0,
+      "cautionLaps": null,
+      "penalties": 0,
+      "fastestLap": {
+        "time": 39.123,
+        "formatted": "39.123",
+        "driver": "Hunter Welborn",
+        "driverId": "135679",
+        "carNumber": "66",
+        "lap": 3
       }
     },
     {
