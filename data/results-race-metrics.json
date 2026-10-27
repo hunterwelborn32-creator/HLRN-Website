@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-26T06:46:30.664Z",
+  "generatedAt": "2026-10-27T02:11:16.578Z",
   "source": "SimRacerHub race pages",
   "races": [
     {
@@ -226,6 +226,31 @@
         "driverId": "87070",
         "carNumber": "012",
         "lap": 100
+      }
+    },
+    {
+      "key": "monday||387749",
+      "league": "monday",
+      "raceNumber": null,
+      "raceId": "387749",
+      "track": "",
+      "date": null,
+      "source": "SimRacerHub",
+      "sourceRaceId": "387749",
+      "duration": "1h 28m",
+      "raceLaps": 125,
+      "leaders": 3,
+      "leadChanges": 6,
+      "cautions": 0,
+      "cautionLaps": null,
+      "penalties": 0,
+      "fastestLap": {
+        "time": 39.123,
+        "formatted": "39.123",
+        "driver": "Hunter Welborn",
+        "driverId": "135679",
+        "carNumber": "66",
+        "lap": 3
       }
     },
     {
