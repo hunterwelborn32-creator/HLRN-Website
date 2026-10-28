@@ -1,0 +1,156 @@
+/*
+ * HLRN HOSTED WALLPAPER FIX — 2026-10-28
+ * Hosted alone uses opaque iframe dashboards that previously concealed the
+ * page artwork. This layer exposes the original uploaded day/night wallpapers
+ * without changing data, frame height, scrolling, navigation or scripts.
+ */
+
+/* Show the fixed HLRN artwork in genuine, generously sized side gutters. */
+html[data-hlrn-theme] body.nascar-hosted-page > .hosted-hub{
+  position:relative!important;
+  isolation:isolate!important;
+  z-index:1!important;
+  box-sizing:border-box!important;
+  display:block!important;
+  width:min(1450px,calc(100% - clamp(32px,9vw,200px)))!important;
+  max-width:1450px!important;
+  min-width:0!important;
+  margin:clamp(22px,2.7vw,46px) auto clamp(55px,6vw,110px)!important;
+  padding:0!important;
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  box-shadow:0 24px 90px rgba(0,0,0,.12)!important;
+}
+html[data-hlrn-theme="dark"] body.nascar-hosted-page > .hosted-hub{
+  box-shadow:0 25px 100px rgba(0,0,0,.58),0 0 0 1px rgba(255,255,255,.06)!important;
+}
+
+/* A permanent image-backed header, like the Sunday/Monday championship mastheads.
+   It sits OUTSIDE the hosted iframe, so iframe data never needs modification. */
+html[data-hlrn-theme] body.nascar-hosted-page > .hosted-hub > .hlrn-hosted-wallpaper-mast{
+  position:relative!important;
+  isolation:isolate!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:flex-end!important;
+  gap:10px!important;
+  min-height:clamp(210px,20vw,315px)!important;
+  width:100%!important;
+  padding:clamp(25px,4vw,52px)!important;
+  box-sizing:border-box!important;
+  margin:0!important;
+  overflow:hidden!important;
+  border:1px solid rgba(135,150,169,.3)!important;
+  border-top:5px solid #e31d3f!important;
+  border-bottom:4px solid #edbd38!important;
+  border-radius:5px 5px 0 0!important;
+  background-position:center,center center!important;
+  background-size:cover,cover!important;
+  background-repeat:no-repeat!important;
+}
+html[data-hlrn-theme="light"] body.nascar-hosted-page > .hosted-hub > .hlrn-hosted-wallpaper-mast{
+  background-color:#f8fafc!important;
+  background-image:
+    linear-gradient(90deg,rgba(255,255,255,.96) 0%,rgba(255,255,255,.82) 37%,rgba(255,255,255,.10) 100%),
+    url("./HLRN_Standings_Day_Background.png")!important;
+  color:#111821!important;
+}
+html[data-hlrn-theme="dark"] body.nascar-hosted-page > .hosted-hub > .hlrn-hosted-wallpaper-mast{
+  background-color:#090d14!important;
+  background-image:
+    linear-gradient(90deg,rgba(4,7,12,.94) 0%,rgba(4,7,12,.80) 37%,rgba(4,7,12,.10) 100%),
+    url("./HLRN_Standings_Night_Background.png")!important;
+  color:#fff!important;
+}
+html[data-hlrn-theme] body.nascar-hosted-page > .hosted-hub > .hlrn-hosted-wallpaper-mast:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  opacity:.4;
+  background:repeating-linear-gradient(115deg,transparent 0 88px,rgba(255,255,255,.035) 89px 90px);
+}
+html[data-hlrn-theme] body.nascar-hosted-page > .hosted-hub > .hlrn-hosted-wallpaper-mast > *{
+  position:relative;
+  z-index:1;
+}
+html[data-hlrn-theme] body.nascar-hosted-page .hlrn-hosted-wallpaper-mast .hlrn-hosted-mast-kicker{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  margin:0!important;
+  font:900 clamp(10px,1vw,13px)/1.35 "Inter","Segoe UI",Arial,sans-serif!important;
+  letter-spacing:.19em!important;
+  text-transform:uppercase!important;
+}
+html[data-hlrn-theme] body.nascar-hosted-page .hlrn-hosted-wallpaper-mast .hlrn-hosted-mast-kicker:before{
+  content:"";
+  display:inline-block;
+  width:33px;
+  height:3px;
+  background:#e31d3f;
+  flex:none;
+}
+html[data-hlrn-theme] body.nascar-hosted-page .hlrn-hosted-wallpaper-mast h1{
+  display:block;
+  margin:0!important;
+  font:900 clamp(39px,5.1vw,85px)/.94 "Barlow Condensed","Arial Narrow",Impact,sans-serif!important;
+  letter-spacing:-.035em!important;
+  text-transform:uppercase!important;
+  text-shadow:none!important;
+}
+html[data-hlrn-theme="light"] body.nascar-hosted-page .hlrn-hosted-wallpaper-mast h1{
+  color:#0b121c!important;
+  -webkit-text-fill-color:#0b121c!important;
+}
+html[data-hlrn-theme="dark"] body.nascar-hosted-page .hlrn-hosted-wallpaper-mast h1{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+html[data-hlrn-theme] body.nascar-hosted-page .hlrn-hosted-wallpaper-mast .hlrn-hosted-mast-sub{
+  display:block;
+  max-width:46ch;
+  margin:0!important;
+  font:600 clamp(13px,1.1vw,16px)/1.5 "Inter","Segoe UI",Arial,sans-serif!important;
+}
+html[data-hlrn-theme="light"] body.nascar-hosted-page .hlrn-hosted-mast-sub{
+  color:#343f4d!important;
+}
+html[data-hlrn-theme="dark"] body.nascar-hosted-page .hlrn-hosted-mast-sub{
+  color:#e0e7ef!important;
+}
+
+/* The actual tabs/iframes remain unmodified and legible. Keep their area
+   transparent around the edges, but NOT the embedded information panels. */
+html[data-hlrn-theme] body.nascar-hosted-page > .hosted-hub > .hosted-hub-stage{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+}
+html[data-hlrn-theme] body.nascar-hosted-page > .hosted-hub > .hosted-hub-tabs{
+  margin:0!important;
+  border-radius:0!important;
+}
+@media(max-width:920px){
+  html[data-hlrn-theme] body.nascar-hosted-page > .hosted-hub{
+    width:calc(100% - 24px)!important;
+    max-width:none!important;
+    margin:16px auto 42px!important;
+  }
+}
+@media(max-width:600px){
+  html[data-hlrn-theme] body.nascar-hosted-page > .hosted-hub{
+    width:calc(100% - 12px)!important;
+    padding:0!important;
+    margin:9px auto 30px!important;
+  }
+  html[data-hlrn-theme] body.nascar-hosted-page > .hosted-hub > .hlrn-hosted-wallpaper-mast{
+    min-height:200px!important;
+    padding:24px!important;
+    background-position:center,60% center!important;
+  }
+}
