@@ -19,8 +19,10 @@ let raceUpdateTimer = null;
    in the official standings/race history so their rank does not get rewritten,
    but they are not selected as current contenders or trend picks. */
 const EXCLUDED_DRIVERS = [
-  "trace mcdowell"
+  "trace mcdowell",
+  "matthew brown"
 ];
+const EXCLUDED_DRIVER_IDS = new Set(["116507"]);
 const PAUSED_DRIVERS = [
   "benjamin richards",
   "sebastian michaels",
@@ -351,13 +353,13 @@ async function loadLeague(league,options={}){
        skip them without changing official championship positions. */
     const excludedDriverIds = new Set(
       rawDrivers
-        .filter(d => isExcludedDriverName(d?.driver ?? d?.name ?? d?.displayName ?? d?.display_name ?? ""))
+        .filter(d => EXCLUDED_DRIVER_IDS.has(String(d?.driverId ?? d?.id ?? "")) || isExcludedDriverName(d?.driver ?? d?.name ?? d?.displayName ?? d?.display_name ?? ""))
         .map(d => String(d?.driverId ?? d?.id ?? ""))
         .filter(Boolean)
     );
 
-    drivers = rawDrivers.filter(d => !isExcludedDriverName(d?.driver ?? d?.name ?? d?.displayName ?? d?.display_name ?? ""));
-    results = rawResults.filter(r => !excludedDriverIds.has(String(r?.driverId ?? r?.id ?? "")));
+    drivers = rawDrivers.filter(d => !EXCLUDED_DRIVER_IDS.has(String(d?.driverId ?? d?.id ?? "")) && !isExcludedDriverName(d?.driver ?? d?.name ?? d?.displayName ?? d?.display_name ?? ""));
+    results = rawResults.filter(r => !EXCLUDED_DRIVER_IDS.has(String(r?.driverId ?? r?.id ?? "")) && !excludedDriverIds.has(String(r?.driverId ?? r?.id ?? "")) && !isExcludedDriverName(r?.driver ?? r?.name ?? ""));
 
     buildAnalytics();
     chooseCategories();
