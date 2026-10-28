@@ -446,6 +446,7 @@ def render_page(driver):
         '<img class="hlrn-ban-stamp" src="/assets/banned-driver.png?v=20261028banfix2" '
         'alt="BANNED" loading="eager" decoding="async">' if is_banned else ""
     )
+    ban_photo_attribute = ' data-hlrn-banned-photo="1"' if is_banned else ""
     ban_status_html = (
         '<div class="hlrn-ban-status" role="status">DRIVER STATUS — BANNED</div>'
         if is_banned else ""
@@ -738,7 +739,7 @@ html[data-hlrn-theme="dark"] .updated{{color:#aaa!important}}
   <section class="hero">
     <div class="hero-media">
       <div class="hero-fallback">#{esc(number)}</div>
-      <img class="hero-photo" src="{esc(photo)}" alt="{esc(name)}" loading="eager" decoding="async" onerror="this.remove()">
+      <img class="hero-photo"{ban_photo_attribute} src="{esc(photo)}" alt="{esc(name)}" loading="eager" decoding="async" onerror="this.remove()">
       {ban_image_html}
     </div>
     <div class="hero-copy">
