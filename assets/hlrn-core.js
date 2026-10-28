@@ -24,41 +24,6 @@
   let status = { state: 'loading', message: 'Loading HLRN data', updatedAt: null };
   let pending = null;
 
-  // Defense-in-depth: never resurrect excluded drivers from a browser's old offline cache.
-  // Stable exclusion: driver 116507 / Matthew Brown (including numbered and surname-first aliases).
-  function excludedName(value) {
-    if (!value) return false;
-    let name = String(value).trim().toLowerCase();
-    if (name.includes(',')) {
-      const [last, ...first] = name.split(',');
-      name = first.join(',').trim() + ' ' + last.trim();
-    }
-    return name.replace(/\d+$/, '').replace(/[^a-z]/g, '') === 'matthewbrown';
-  }
-  function excludedRecord(row) {
-    if (!row || typeof row !== 'object' || Array.isArray(row)) return false;
-    if (String(row.driverId ?? row.driverID ?? '') === '116507') return true;
-    if (String(row.id ?? '') === '116507' && (row.name != null || row.series != null)) return true;
-    if (row.slug === 'matthew-brown49') return true;
-    return ['driver', 'name', 'driverName', 'sourceName', 'displayName', 'driver_name']
-      .some(key => excludedName(row[key]));
-  }
-  function enforceDriverExclusions(value) {
-    if (Array.isArray(value)) {
-      return value
-        .filter(row => !(typeof row === 'string' ? excludedName(row) : excludedRecord(row)))
-        .map(enforceDriverExclusions);
-    }
-    if (!value || typeof value !== 'object') return value;
-    const result = {};
-    for (const [key, row] of Object.entries(value)) {
-      if (key === '116507' || key === 'matthew-brown49' || excludedName(key)) continue;
-      if (typeof row === 'string' && excludedName(row)) continue;
-      if (excludedRecord(row)) continue;
-      result[key] = enforceDriverExclusions(row);
-    }
-    return result;
-  }
   function validate(payload) {
     if (!payload || payload.schemaVersion !== 1 || !payload.leagues || typeof payload.leagues !== 'object') {
       throw new Error('Invalid HLRN data schema');
@@ -72,7 +37,7 @@
         throw new Error('Incomplete data for ' + key);
       }
     }
-    return enforceDriverExclusions(payload);
+    return payload;
   }
   function notify() {
     const detail = { snapshot, status: { ...status } };
