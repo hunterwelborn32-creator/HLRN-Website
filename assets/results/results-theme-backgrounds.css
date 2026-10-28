@@ -1,0 +1,155 @@
+
+/*
+ * HLRN RESULTS BROADCAST BACKGROUNDS — 2026-10-28
+ * Uses only the two uploaded Results images. Scoped to the Results route;
+ * does not modify stats, schedules, race records, nav, or theme controls.
+ *
+ * IMPORTANT: results-schedule-v1.js mounts .ns-schedule-app inside the
+ * .hlrn-race-center root. The app formerly forced a full opaque surface.
+ * Therefore both possible content roots get the wallpaper directly.
+ */
+
+/* Day mode: white HLRN speedway with racing red/gold accents. */
+html[data-hlrn-theme="light"] body:has(> .hlrn-race-center){
+  background-color:#f4f7fa!important;
+}
+html[data-hlrn-theme="light"] body > .hlrn-race-center,
+html[data-hlrn-theme="light"] body > .hlrn-race-center > .ns-schedule-app{
+  background-color:#f4f7fa!important;
+  background-image:
+    linear-gradient(90deg,rgba(255,255,255,.08),transparent 25%,transparent 75%,rgba(255,255,255,.08)),
+    url("./HLRN_Results_Day_Background.png")!important;
+  background-repeat:no-repeat,no-repeat!important;
+  background-position:center center,center center!important;
+  background-size:cover,cover!important;
+  background-attachment:fixed,fixed!important;
+}
+
+/* Night mode: redline raceway / checkered flag under the lights. */
+html[data-hlrn-theme="dark"] body:has(> .hlrn-race-center){
+  background-color:#05070e!important;
+}
+html[data-hlrn-theme="dark"] body > .hlrn-race-center,
+html[data-hlrn-theme="dark"] body > .hlrn-race-center > .ns-schedule-app{
+  background-color:#05070e!important;
+  background-image:
+    linear-gradient(90deg,rgba(4,6,12,.07),transparent 25%,transparent 75%,rgba(4,6,12,.07)),
+    url("./HLRN_Results_Night_Background.png")!important;
+  background-repeat:no-repeat,no-repeat!important;
+  background-position:center center,center center!important;
+  background-size:cover,cover!important;
+  background-attachment:fixed,fixed!important;
+}
+
+/*
+ * All the wide schedule/layout wrappers previously painted white or black
+ * over the artwork. Clear only those wrappers; individual result cards,
+ * race details and important data retain their existing readable surfaces.
+ */
+html[data-hlrn-theme] body > .hlrn-race-center > .ns-schedule-app .ns-wrap,
+html[data-hlrn-theme] body > .hlrn-race-center > .ns-schedule-app :is(
+  .ns-titlebar,.ns-race-summary,.ns-controls,.ns-schedule,.ns-month,.ns-races
+){
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+}
+
+/* Add a generous, photographic Results title treatment. */
+html[data-hlrn-theme] body > .hlrn-race-center > .ns-schedule-app .ns-titlebar{
+  margin:0 0 18px!important;
+  min-height:clamp(230px,25vw,335px)!important;
+  padding:clamp(40px,6vw,82px) clamp(23px,4vw,56px)!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  position:relative!important;
+  border:1px solid rgba(123,139,160,.28)!important;
+  border-top:5px solid #e22242!important;
+  border-bottom:4px solid #efbd36!important;
+  border-radius:5px!important;
+  background-size:cover,cover!important;
+  background-repeat:no-repeat,no-repeat!important;
+  box-shadow:0 16px 60px rgba(6,14,26,.14)!important;
+}
+html[data-hlrn-theme="light"] body > .hlrn-race-center > .ns-schedule-app .ns-titlebar{
+  background-color:#f8fafc!important;
+  background-image:
+    linear-gradient(90deg,rgba(255,255,255,.96) 0%,rgba(255,255,255,.82) 44%,rgba(255,255,255,.10) 100%),
+    url("./HLRN_Results_Day_Background.png")!important;
+  background-position:center,center 42%!important;
+}
+html[data-hlrn-theme="dark"] body > .hlrn-race-center > .ns-schedule-app .ns-titlebar{
+  background-color:#080c14!important;
+  background-image:
+    linear-gradient(90deg,rgba(4,6,12,.94) 0%,rgba(4,6,12,.79) 44%,rgba(4,6,12,.10) 100%),
+    url("./HLRN_Results_Night_Background.png")!important;
+  background-position:center,center 42%!important;
+  box-shadow:0 25px 65px rgba(0,0,0,.46)!important;
+}
+html[data-hlrn-theme] body > .hlrn-race-center > .ns-schedule-app .ns-titlebar h1{
+  font-size:clamp(42px,5vw,81px)!important;
+  line-height:.96!important;
+  letter-spacing:-.045em!important;
+  position:relative!important;
+  z-index:1!important;
+}
+html[data-hlrn-theme] body > .hlrn-race-center > .ns-schedule-app .ns-titlebar p{
+  max-width:58ch!important;
+  font-size:clamp(13px,1.25vw,16px)!important;
+  line-height:1.65!important;
+  position:relative!important;
+  z-index:1!important;
+}
+html[data-hlrn-theme="light"] body > .hlrn-race-center > .ns-schedule-app .ns-titlebar :is(h1,p){
+  color:#111923!important;
+  text-shadow:none!important;
+}
+html[data-hlrn-theme="dark"] body > .hlrn-race-center > .ns-schedule-app .ns-titlebar :is(h1,p){
+  color:#f4f7fc!important;
+  text-shadow:0 2px 22px rgba(0,0,0,.52)!important;
+}
+html[data-hlrn-theme] body > .hlrn-race-center > .ns-schedule-app .ns-race-summary{
+  padding-top:16px!important;
+}
+
+/* Solid, contrast-safe cards ensure important schedule/result text remains legible. */
+html[data-hlrn-theme="light"] body .ns-schedule-app :is(
+  .ns-summary-card,.ns-feature,.ns-race-row,.ns-detail
+){
+  box-shadow:0 12px 35px rgba(14,24,40,.10)!important;
+}
+html[data-hlrn-theme="dark"] body .ns-schedule-app :is(
+  .ns-summary-card,.ns-feature,.ns-race-row,.ns-detail
+){
+  box-shadow:0 18px 45px rgba(0,0,0,.28)!important;
+}
+
+/* Desktop leaves the racetrack visible in the outside gutters. */
+@media(min-width:1100px){
+  html[data-hlrn-theme] body > .hlrn-race-center > .ns-schedule-app .ns-wrap{
+    width:min(1270px,calc(100% - 100px))!important;
+  }
+}
+@media(max-width:750px){
+  html[data-hlrn-theme] body > .hlrn-race-center,
+  html[data-hlrn-theme] body > .hlrn-race-center > .ns-schedule-app{
+    background-attachment:scroll,scroll!important;
+    background-size:cover,auto 100vh!important;
+    background-position:center,center top!important;
+    background-repeat:no-repeat,repeat-y!important;
+  }
+  html[data-hlrn-theme] body > .hlrn-race-center > .ns-schedule-app .ns-wrap{
+    width:calc(100% - 22px)!important;
+  }
+  html[data-hlrn-theme] body > .hlrn-race-center > .ns-schedule-app .ns-titlebar{
+    min-height:210px!important;
+    padding:28px 20px!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html[data-hlrn-theme] body > .hlrn-race-center,
+  html[data-hlrn-theme] body > .hlrn-race-center > .ns-schedule-app{
+    background-attachment:scroll,scroll!important;
+  }
+}
