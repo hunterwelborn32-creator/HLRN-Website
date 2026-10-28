@@ -88,3 +88,77 @@ html[data-hlrn-theme="dark"] body > .page-wrap :is(.cc-card,.cc-hero-side,.last-
     padding:10px!important;
   }
 }
+
+
+/* ================================================================
+   VISIBLE STANDINGS WALLPAPER V2 — legacy standings styles force
+   opaque body backgrounds and negative-z-index body pseudo layers.
+   A dedicated positive stacking layer is reliable across all 3 pages.
+   ================================================================ */
+html[data-hlrn-theme] body{
+  isolation:isolate!important;
+}
+html[data-hlrn-theme] body > .hlrn-standings-wallpaper{
+  position:fixed!important;
+  display:block!important;
+  inset:0!important;
+  width:100%!important;
+  height:100vh!important;
+  height:100dvh!important;
+  z-index:0!important;
+  opacity:1!important;
+  pointer-events:none!important;
+  background-repeat:no-repeat!important;
+  background-position:center center!important;
+  background-size:cover!important;
+}
+html[data-hlrn-theme="light"] body > .hlrn-standings-wallpaper{
+  background-color:#f7f8fa!important;
+  background-image:url("./HLRN_Standings_Day_Background.png")!important;
+}
+html[data-hlrn-theme="dark"] body > .hlrn-standings-wallpaper{
+  background-color:#05070c!important;
+  background-image:url("./HLRN_Standings_Night_Background.png")!important;
+}
+html[data-hlrn-theme] body > .page-wrap,
+html[data-hlrn-theme] body > .hosted-hub{
+  position:relative!important;
+  z-index:1!important;
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+}
+html[data-hlrn-theme] body > .hlrn-series-switcher{
+  position:relative!important;
+  z-index:50!important;
+}
+/* Let the sides of the wallpaper show without changing the layout
+   of the real standings tables, data cards or section switching. */
+@media(min-width:1100px){
+  html[data-hlrn-theme] body > .page-wrap{
+    width:calc(100% - 64px)!important;
+    max-width:1690px!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+}
+/* Make the prominent championship masthead participate in the artwork. */
+html[data-hlrn-theme="light"] body > .page-wrap > .hero{
+  background-image:
+    linear-gradient(95deg,rgba(255,255,255,.93),rgba(255,255,255,.75)),
+    url("./HLRN_Standings_Day_Background.png")!important;
+  background-size:cover,cover!important;
+  background-position:center,center 38%!important;
+}
+html[data-hlrn-theme="dark"] body > .page-wrap > .hero{
+  background-image:
+    linear-gradient(95deg,rgba(4,7,13,.91),rgba(5,8,15,.73)),
+    url("./HLRN_Standings_Night_Background.png")!important;
+  background-size:cover,cover!important;
+  background-position:center,center 38%!important;
+}
+@media(max-width:600px){
+  html[data-hlrn-theme] body > .page-wrap{
+    width:100%!important;
+  }
+}
