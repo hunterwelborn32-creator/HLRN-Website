@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T16:25:56.475Z",
+  "generatedAt": "2026-10-28T16:32:01.855Z",
   "reports": [
     {
       "key": "monday:387749",
@@ -1092,7 +1092,7 @@
         "id": "99085",
         "carNumber": "99"
       },
-      "classified": 29,
+      "classified": 28,
       "top10": [
         {
           "id": "99085",
@@ -1344,6 +1344,34 @@
           "irating": 5124,
           "qualifyingTime": 51.044,
           "iracingLicense": "Class A",
+          "source": "SimRacerHub"
+        },
+        {
+          "id": "93056",
+          "name": "Eric Hayden",
+          "start": 19,
+          "finish": 11,
+          "gain": 8,
+          "points": 40,
+          "totalPoints": 40,
+          "bonusPoints": null,
+          "penaltyPoints": null,
+          "interval": -7.926,
+          "lapsCompleted": 100,
+          "lapsLed": null,
+          "fastestLap": 47.594,
+          "fastLapNumber": 10,
+          "avgLap": 1,
+          "incidents": 12,
+          "status": "Running",
+          "avgPosition": 18.4,
+          "carNumber": "100",
+          "driverRating": 77.3,
+          "stagePoints": null,
+          "safetyRating": 3.27,
+          "irating": 1988,
+          "qualifyingTime": 51.07,
+          "iracingLicense": "Class B",
           "source": "SimRacerHub"
         }
       ],
@@ -2189,6 +2217,34 @@
           "qualifyingTime": null,
           "iracingLicense": "Class A",
           "source": "SimRacerHub"
+        },
+        {
+          "id": "63510",
+          "name": "Benjamin Richards",
+          "start": 26,
+          "finish": 15,
+          "gain": 11,
+          "points": 36,
+          "totalPoints": 36,
+          "bonusPoints": null,
+          "penaltyPoints": null,
+          "interval": -20.018,
+          "lapsCompleted": 100,
+          "lapsLed": null,
+          "fastestLap": 47.212,
+          "fastLapNumber": 29,
+          "avgLap": 1,
+          "incidents": 17,
+          "status": "Running",
+          "avgPosition": 16.6,
+          "carNumber": "156",
+          "driverRating": 73,
+          "stagePoints": null,
+          "safetyRating": 2.21,
+          "irating": 1784,
+          "qualifyingTime": null,
+          "iracingLicense": "Class A",
+          "source": "SimRacerHub"
         }
       ],
       "raceIntelligence": {
@@ -2851,7 +2907,7 @@
         "id": "33901",
         "carNumber": "82"
       },
-      "classified": 25,
+      "classified": 24,
       "top10": [
         {
           "id": "33901",
@@ -3928,7 +3984,7 @@
         "id": "101093",
         "carNumber": "22"
       },
-      "classified": 28,
+      "classified": 27,
       "top10": [
         {
           "id": "101093",
@@ -4179,6 +4235,34 @@
           "safetyRating": 2.35,
           "irating": 2686,
           "qualifyingTime": 30.419,
+          "iracingLicense": "Class A",
+          "source": "SimRacerHub"
+        },
+        {
+          "id": "56823",
+          "name": "Shawn Stamper",
+          "start": 24,
+          "finish": 11,
+          "gain": 13,
+          "points": 40,
+          "totalPoints": 41,
+          "bonusPoints": 1,
+          "penaltyPoints": null,
+          "interval": -5.788,
+          "lapsCompleted": 133,
+          "lapsLed": null,
+          "fastestLap": 30.107,
+          "fastLapNumber": 60,
+          "avgLap": 39.435,
+          "incidents": 10,
+          "status": "Running",
+          "avgPosition": 15.9,
+          "carNumber": "09",
+          "driverRating": 85.8,
+          "stagePoints": null,
+          "safetyRating": 4.35,
+          "irating": 3044,
+          "qualifyingTime": null,
           "iracingLicense": "Class A",
           "source": "SimRacerHub"
         }
@@ -5061,7 +5145,7 @@
         "id": "87070",
         "carNumber": "012"
       },
-      "classified": 28,
+      "classified": 27,
       "top10": [
         {
           "id": "87070",
@@ -6222,7 +6306,7 @@
         "id": "99085",
         "carNumber": "99"
       },
-      "classified": 29,
+      "classified": 28,
       "top10": [
         {
           "id": "99085",
@@ -6473,6 +6557,34 @@
           "safetyRating": 4.35,
           "irating": 3044,
           "qualifyingTime": 29.719,
+          "iracingLicense": "Class A",
+          "source": "SimRacerHub"
+        },
+        {
+          "id": "98282",
+          "name": "Brandon Showers",
+          "start": 2,
+          "finish": 11,
+          "gain": -9,
+          "points": 40,
+          "totalPoints": 40,
+          "bonusPoints": null,
+          "penaltyPoints": null,
+          "interval": -1.122,
+          "lapsCompleted": 130,
+          "lapsLed": null,
+          "fastestLap": 29.35,
+          "fastLapNumber": 110,
+          "avgLap": 40.741,
+          "incidents": 3,
+          "status": "Running",
+          "avgPosition": 10.6,
+          "carNumber": "5",
+          "driverRating": 85,
+          "stagePoints": null,
+          "safetyRating": 2.74,
+          "irating": 3366,
+          "qualifyingTime": 29.277,
           "iracingLicense": "Class A",
           "source": "SimRacerHub"
         }
@@ -7383,7 +7495,7 @@
         "id": "93794",
         "carNumber": "91"
       },
-      "classified": 26,
+      "classified": 25,
       "top10": [
         {
           "id": "93794",
@@ -7635,6 +7747,34 @@
           "irating": 1652,
           "qualifyingTime": 40.007,
           "iracingLicense": "Class B",
+          "source": "SimRacerHub"
+        },
+        {
+          "id": "118360",
+          "name": "Donny Beach",
+          "start": 17,
+          "finish": 11,
+          "gain": 6,
+          "points": 41,
+          "totalPoints": 41,
+          "bonusPoints": null,
+          "penaltyPoints": null,
+          "interval": -17.148,
+          "lapsCompleted": 75,
+          "lapsLed": null,
+          "fastestLap": 39.46,
+          "fastLapNumber": 6,
+          "avgLap": 43.115,
+          "incidents": 8,
+          "status": "Running",
+          "avgPosition": 15.1,
+          "carNumber": "11",
+          "driverRating": 88.9,
+          "stagePoints": null,
+          "safetyRating": 4.29,
+          "irating": 2230,
+          "qualifyingTime": 39.949,
+          "iracingLicense": "Class A",
           "source": "SimRacerHub"
         }
       ],
@@ -8460,7 +8600,7 @@
         "id": "55541",
         "carNumber": "12"
       },
-      "classified": 32,
+      "classified": 31,
       "top10": [
         {
           "id": "55541",
@@ -10894,7 +11034,7 @@
         "id": "55541",
         "carNumber": "12"
       },
-      "classified": 36,
+      "classified": 35,
       "top10": [
         {
           "id": "55541",
@@ -13412,7 +13552,7 @@
         "id": "115869",
         "carNumber": "8"
       },
-      "classified": 36,
+      "classified": 35,
       "top10": [
         {
           "id": "115869",
@@ -13664,6 +13804,34 @@
           "irating": 2032,
           "qualifyingTime": 39.753,
           "iracingLicense": "Class A",
+          "source": "SimRacerHub"
+        },
+        {
+          "id": "135679",
+          "name": "Hunter Welborn",
+          "start": 18,
+          "finish": 11,
+          "gain": 7,
+          "points": 40,
+          "totalPoints": 40,
+          "bonusPoints": null,
+          "penaltyPoints": null,
+          "interval": -13.095,
+          "lapsCompleted": 125,
+          "lapsLed": null,
+          "fastestLap": 39.288,
+          "fastLapNumber": 3,
+          "avgLap": 48.805,
+          "incidents": 0,
+          "status": "Running",
+          "avgPosition": 10.2,
+          "carNumber": "66",
+          "driverRating": 81.7,
+          "stagePoints": null,
+          "safetyRating": 3.6,
+          "irating": 1453,
+          "qualifyingTime": 39.788,
+          "iracingLicense": "Class B",
           "source": "SimRacerHub"
         }
       ],
@@ -15958,7 +16126,7 @@
         "id": "13461",
         "carNumber": "56"
       },
-      "classified": 36,
+      "classified": 35,
       "top10": [
         {
           "id": "13461",
@@ -18588,7 +18756,7 @@
         "id": "51327",
         "carNumber": "24"
       },
-      "classified": 39,
+      "classified": 38,
       "top10": [
         {
           "id": "51327",
@@ -19993,6 +20161,34 @@
           "qualifyingTime": null,
           "iracingLicense": "Class A",
           "source": "SimRacerHub"
+        },
+        {
+          "id": "77498",
+          "name": "Ethan Moreno",
+          "start": 22,
+          "finish": 3,
+          "gain": 19,
+          "points": 48,
+          "totalPoints": 48,
+          "bonusPoints": null,
+          "penaltyPoints": null,
+          "interval": -0.057,
+          "lapsCompleted": 107,
+          "lapsLed": 3,
+          "fastestLap": 48.401,
+          "fastLapNumber": 107,
+          "avgLap": 1,
+          "incidents": 6,
+          "status": "Running",
+          "avgPosition": 11.5,
+          "carNumber": "88",
+          "driverRating": 92.7,
+          "stagePoints": null,
+          "safetyRating": 3.32,
+          "irating": 4416,
+          "qualifyingTime": 53.991,
+          "iracingLicense": "Class A",
+          "source": "SimRacerHub"
         }
       ],
       "raceIntelligence": {
@@ -21274,7 +21470,7 @@
         "id": "95192",
         "carNumber": "97"
       },
-      "classified": 41,
+      "classified": 40,
       "top10": [
         {
           "id": "95192",
@@ -24128,7 +24324,7 @@
         "id": "95192",
         "carNumber": "97"
       },
-      "classified": 41,
+      "classified": 40,
       "top10": [
         {
           "id": "95192",
@@ -25653,7 +25849,7 @@
         "id": "95192",
         "carNumber": "97"
       },
-      "classified": 40,
+      "classified": 39,
       "top10": [
         {
           "id": "95192",
@@ -25904,6 +26100,34 @@
           "safetyRating": 4.02,
           "irating": 5124,
           "qualifyingTime": 29.156,
+          "iracingLicense": "Class A",
+          "source": "SimRacerHub"
+        },
+        {
+          "id": "103956",
+          "name": "Evan Parry",
+          "start": 8,
+          "finish": 11,
+          "gain": -3,
+          "points": 40,
+          "totalPoints": 40,
+          "bonusPoints": null,
+          "penaltyPoints": null,
+          "interval": -2.847,
+          "lapsCompleted": 150,
+          "lapsLed": null,
+          "fastestLap": 29.056,
+          "fastLapNumber": 94,
+          "avgLap": 42.167,
+          "incidents": 9,
+          "status": "Running",
+          "avgPosition": 13,
+          "carNumber": "72",
+          "driverRating": 73.4,
+          "stagePoints": null,
+          "safetyRating": 4.09,
+          "irating": 2444,
+          "qualifyingTime": 29.11,
           "iracingLicense": "Class A",
           "source": "SimRacerHub"
         }
@@ -27122,7 +27346,7 @@
         "id": "51327",
         "carNumber": "24"
       },
-      "classified": 43,
+      "classified": 42,
       "top10": [
         {
           "id": "51327",
@@ -28703,7 +28927,7 @@
         "id": "77498",
         "carNumber": "88"
       },
-      "classified": 39,
+      "classified": 38,
       "top10": [
         {
           "id": "77498",
@@ -28954,6 +29178,34 @@
           "safetyRating": 2.93,
           "irating": 3062,
           "qualifyingTime": 30.228,
+          "iracingLicense": "Class A",
+          "source": "SimRacerHub"
+        },
+        {
+          "id": "105882",
+          "name": "Bryce Hinton2",
+          "start": 3,
+          "finish": 11,
+          "gain": -8,
+          "points": 40,
+          "totalPoints": 79,
+          "bonusPoints": null,
+          "penaltyPoints": null,
+          "interval": -2.408,
+          "lapsCompleted": 175,
+          "lapsLed": 17,
+          "fastestLap": 29.623,
+          "fastLapNumber": 175,
+          "avgLap": 41.891,
+          "incidents": 16,
+          "status": "Running",
+          "avgPosition": 9.1,
+          "carNumber": "28",
+          "driverRating": 89.5,
+          "stagePoints": 39,
+          "safetyRating": 3.47,
+          "irating": 2827,
+          "qualifyingTime": 29.985,
           "iracingLicense": "Class A",
           "source": "SimRacerHub"
         }
@@ -30080,6 +30332,34 @@
           "qualifyingTime": 30.552,
           "iracingLicense": "Class A",
           "source": "SimRacerHub"
+        },
+        {
+          "id": "37043",
+          "name": "Cori Cooke",
+          "start": 30,
+          "finish": 13,
+          "gain": 17,
+          "points": 38,
+          "totalPoints": 87,
+          "bonusPoints": 2,
+          "penaltyPoints": null,
+          "interval": -3.428,
+          "lapsCompleted": 175,
+          "lapsLed": null,
+          "fastestLap": 29.779,
+          "fastLapNumber": 88,
+          "avgLap": 41.897,
+          "incidents": 15,
+          "status": "Running",
+          "avgPosition": 8.6,
+          "carNumber": "7",
+          "driverRating": 80.5,
+          "stagePoints": 47,
+          "safetyRating": 4.3,
+          "irating": 3791,
+          "qualifyingTime": 30.32,
+          "iracingLicense": "Class A",
+          "source": "SimRacerHub"
         }
       ],
       "raceIntelligence": {
@@ -30089,7 +30369,14 @@
         "leadChanges": 17,
         "cautions": 15,
         "cautionLaps": 41,
-        "penalties": 0
+        "penalties": 0,
+        "fastestLap": {
+          "time": 29.623,
+          "driver": "Bryce Hinton2",
+          "driverId": "105882",
+          "carNumber": "28",
+          "lap": 175
+        }
       },
       "dataNotes": [
         "Race results and race intelligence are sourced from SimRacerHub when published.",
@@ -30109,7 +30396,7 @@
         "id": "95192",
         "carNumber": "97"
       },
-      "classified": 40,
+      "classified": 39,
       "top10": [
         {
           "id": "95192",
@@ -31606,7 +31893,7 @@
         "id": "77498",
         "carNumber": "88"
       },
-      "classified": 42,
+      "classified": 41,
       "top10": [
         {
           "id": "77498",
