@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T17:16:07Z",
+  "generatedAt": "2026-10-28T17:43:48Z",
   "count": 87,
   "drivers": [
     {
@@ -1208,8 +1208,8 @@
       "slug": "matthew-brown49",
       "url": "/drivers/matthew-brown49/",
       "number": "14",
-      "photoSlug": "",
-      "hasPhoto": false,
+      "photoSlug": "matthew-brown",
+      "hasPhoto": true,
       "iRating": 3069,
       "series": [
         "monday",
