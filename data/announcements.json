@@ -1,12 +1,28 @@
 {
   "success": true,
-  "updatedAt": "2026-10-28T01:59:44Z",
+  "updatedAt": "2026-10-28T08:07:45Z",
   "channel": {
     "id": "1529356159906222201",
     "name": "🚨-high-line-announcements",
     "guild_id": "1401318372075114636"
   },
   "announcements": [
+    {
+      "id": "1564855370747215955",
+      "content": "OFFICIAL STATEMENT — HIGH LINE RACING NETWORK\n\nEffective immediately, Matthew Brown is no longer eligible to participate in any High Line Racing Network league or hosted race.\n\nThis decision follows his actions in tonight’s Carson Hocevar $10,000 race. While a lap down, Brown drove through the grass and back onto the racing surface, wrecking multiple competitors and compromising their chances at the $10,000 prize. Brown also admitted that he wrecked them intentionally.\n\nThis was more than a racing mistake. Intentionally ruining other competitors’ races shows a disregard for their time, effort, and opportunity to compete. That behavior is unacceptable and has no place in our fields.\n\nAs we have stated before, we will protect the integrity of our races. We must be able to trust every driver on our grid to compete with respect and sportsmanship. Brown’s actions and admission have broken that trust.\n\nHLRN stands behind the drivers who race fairly and respect their fellow competitors. We will uphold those standards through our decisions and our actions.",
+      "timestamp": "2026-10-28T04:16:33.993000+00:00",
+      "edited_timestamp": null,
+      "pinned": false,
+      "author": {
+        "id": "810534889610674196",
+        "username": "Tommy Rogers",
+        "global_name": "Tommy Rogers",
+        "avatar": "95f66064c31c01cef63626bc34897fe0"
+      },
+      "attachments": [],
+      "embeds": [],
+      "jump_url": "https://discord.com/channels/1401318372075114636/1529356159906222201/1564855370747215955"
+    },
     {
       "id": "1559192242953134222",
       "content": "",
@@ -239,8 +255,8 @@
         {
           "id": "1552368105835991182",
           "filename": "file_0000000048088211b06edcb185f03ea7.png",
-          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1552368105835991182/file_0000000048088211b06edcb185f03ea7.png?ex=6ae22df6&is=6ae0dc76&hm=97975c6b76061f785069ee59c71b1bc9df224015ba4b6345de4e82e378647179&",
-          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1552368105835991182/file_0000000048088211b06edcb185f03ea7.png?ex=6ae22df6&is=6ae0dc76&hm=97975c6b76061f785069ee59c71b1bc9df224015ba4b6345de4e82e378647179&",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1552368105835991182/file_0000000048088211b06edcb185f03ea7.png?ex=6ae2d6b6&is=6ae18536&hm=6b0bf46ece69ca89f4cb08e122b5a39f7a0a113bab1057a385b2361ebe3fa1d8&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1552368105835991182/file_0000000048088211b06edcb185f03ea7.png?ex=6ae2d6b6&is=6ae18536&hm=6b0bf46ece69ca89f4cb08e122b5a39f7a0a113bab1057a385b2361ebe3fa1d8&",
           "size": 2310631,
           "content_type": "image/png",
           "width": 1672,
@@ -615,8 +631,8 @@
         {
           "id": "1544005650927976468",
           "filename": "1029454B-56D5-453A-822D-26DEB63DB106.png",
-          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1544005650927976468/1029454B-56D5-453A-822D-26DEB63DB106.png?ex=6ae21451&is=6ae0c2d1&hm=21ce56c149d7f85af7851da60f4d992607089bfec3231e28351b67c7fe8e56e8&",
-          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1544005650927976468/1029454B-56D5-453A-822D-26DEB63DB106.png?ex=6ae21451&is=6ae0c2d1&hm=21ce56c149d7f85af7851da60f4d992607089bfec3231e28351b67c7fe8e56e8&",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1544005650927976468/1029454B-56D5-453A-822D-26DEB63DB106.png?ex=6ae2bd11&is=6ae16b91&hm=bd40cfa527b31f788811ab68269197821b2029080bc9ad0f740a42a6b2024f86&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1544005650927976468/1029454B-56D5-453A-822D-26DEB63DB106.png?ex=6ae2bd11&is=6ae16b91&hm=bd40cfa527b31f788811ab68269197821b2029080bc9ad0f740a42a6b2024f86&",
           "size": 3527518,
           "content_type": "image/png",
           "width": 1254,
@@ -669,8 +685,8 @@
         {
           "id": "1542988316197134356",
           "filename": "CB3741E3-DCB4-4731-AB8E-A230C4E5A875.png",
-          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1542988316197134356/CB3741E3-DCB4-4731-AB8E-A230C4E5A875.png?ex=6ae25559&is=6ae103d9&hm=342bd07706f260b154dd62914f00e73c3a8773ec3cd748051202f31af9583402&",
-          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1542988316197134356/CB3741E3-DCB4-4731-AB8E-A230C4E5A875.png?ex=6ae25559&is=6ae103d9&hm=342bd07706f260b154dd62914f00e73c3a8773ec3cd748051202f31af9583402&",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1542988316197134356/CB3741E3-DCB4-4731-AB8E-A230C4E5A875.png?ex=6ae2fe19&is=6ae1ac99&hm=bbf91c71350863cf5ed1192515bbf12d85ad03967d5513717f61e8dbd2bf5e61&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1542988316197134356/CB3741E3-DCB4-4731-AB8E-A230C4E5A875.png?ex=6ae2fe19&is=6ae1ac99&hm=bbf91c71350863cf5ed1192515bbf12d85ad03967d5513717f61e8dbd2bf5e61&",
           "size": 3500048,
           "content_type": "image/png",
           "width": 1122,
@@ -777,8 +793,8 @@
         {
           "id": "1541514823668465684",
           "filename": "AAE4A234-EF63-4DF8-9AD3-52DFABB1BC8C.png",
-          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1541514823668465684/AAE4A234-EF63-4DF8-9AD3-52DFABB1BC8C.png?ex=6ae23f0d&is=6ae0ed8d&hm=f264db8e73e03e84f82e8363ec7d4ed409d71d63d61dc4f8259c62ce3ea19bb2&",
-          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1541514823668465684/AAE4A234-EF63-4DF8-9AD3-52DFABB1BC8C.png?ex=6ae23f0d&is=6ae0ed8d&hm=f264db8e73e03e84f82e8363ec7d4ed409d71d63d61dc4f8259c62ce3ea19bb2&",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1541514823668465684/AAE4A234-EF63-4DF8-9AD3-52DFABB1BC8C.png?ex=6ae2e7cd&is=6ae1964d&hm=009f1c67e7442215535fd697ab2b0343bfc00bfe7a433a1eed72ebce624e6630&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1541514823668465684/AAE4A234-EF63-4DF8-9AD3-52DFABB1BC8C.png?ex=6ae2e7cd&is=6ae1964d&hm=009f1c67e7442215535fd697ab2b0343bfc00bfe7a433a1eed72ebce624e6630&",
           "size": 3502215,
           "content_type": "image/png",
           "width": 1672,
@@ -804,8 +820,8 @@
         {
           "id": "1540445434739167394",
           "filename": "ChatGPT_Image_Aug_21_2026_12_39_08_PM.png",
-          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1540445434739167394/ChatGPT_Image_Aug_21_2026_12_39_08_PM.png?ex=6ae24f9b&is=6ae0fe1b&hm=4e3c6ccaa959fc0543c7a1f75785f3a388c241b39bf1aab2ab9ec410914cf5e4&",
-          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1540445434739167394/ChatGPT_Image_Aug_21_2026_12_39_08_PM.png?ex=6ae24f9b&is=6ae0fe1b&hm=4e3c6ccaa959fc0543c7a1f75785f3a388c241b39bf1aab2ab9ec410914cf5e4&",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1540445434739167394/ChatGPT_Image_Aug_21_2026_12_39_08_PM.png?ex=6ae2f85b&is=6ae1a6db&hm=64aae4fb13f31ce4aad9bd6d6277835e8886a82fee2a2d51ced863d2d4f377ec&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1540445434739167394/ChatGPT_Image_Aug_21_2026_12_39_08_PM.png?ex=6ae2f85b&is=6ae1a6db&hm=64aae4fb13f31ce4aad9bd6d6277835e8886a82fee2a2d51ced863d2d4f377ec&",
           "size": 2604456,
           "content_type": "image/png",
           "width": 1672,
@@ -831,8 +847,8 @@
         {
           "id": "1540428506633342976",
           "filename": "ChatGPT_Image_Aug_21_2026_11_32_10_AM.png",
-          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1540428506633342976/ChatGPT_Image_Aug_21_2026_11_32_10_AM.png?ex=6ae23fd7&is=6ae0ee57&hm=9e7e05098e44d966d2bd2442802e1959a88c1f26798aa7d4d34a584d5524ee5b&",
-          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1540428506633342976/ChatGPT_Image_Aug_21_2026_11_32_10_AM.png?ex=6ae23fd7&is=6ae0ee57&hm=9e7e05098e44d966d2bd2442802e1959a88c1f26798aa7d4d34a584d5524ee5b&",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1540428506633342976/ChatGPT_Image_Aug_21_2026_11_32_10_AM.png?ex=6ae2e897&is=6ae19717&hm=3580210092046ce144c592ac6c6b42009d19ecb34fed1e2ad784c3c6db267b51&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1540428506633342976/ChatGPT_Image_Aug_21_2026_11_32_10_AM.png?ex=6ae2e897&is=6ae19717&hm=3580210092046ce144c592ac6c6b42009d19ecb34fed1e2ad784c3c6db267b51&",
           "size": 2723948,
           "content_type": "image/png",
           "width": 1672,
@@ -944,8 +960,8 @@
         {
           "id": "1538941741065965598",
           "filename": "76E3DBCC-EE08-470E-BD06-BDE3A14695D4.png",
-          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1538941741065965598/76E3DBCC-EE08-470E-BD06-BDE3A14695D4.png?ex=6ae21d2f&is=6ae0cbaf&hm=8f655d3d54fbf9740f02977f3e06ddbf58f646e0e7f743f14b31af1b7f4c7f01&",
-          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1538941741065965598/76E3DBCC-EE08-470E-BD06-BDE3A14695D4.png?ex=6ae21d2f&is=6ae0cbaf&hm=8f655d3d54fbf9740f02977f3e06ddbf58f646e0e7f743f14b31af1b7f4c7f01&",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1538941741065965598/76E3DBCC-EE08-470E-BD06-BDE3A14695D4.png?ex=6ae2c5ef&is=6ae1746f&hm=79252e1a39c6e92c707ded3dc2a5c83e607a32bdcc5e20d60637c3be5a6aa6d9&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1538941741065965598/76E3DBCC-EE08-470E-BD06-BDE3A14695D4.png?ex=6ae2c5ef&is=6ae1746f&hm=79252e1a39c6e92c707ded3dc2a5c83e607a32bdcc5e20d60637c3be5a6aa6d9&",
           "size": 2430483,
           "content_type": "image/png",
           "width": 1149,
@@ -1023,8 +1039,8 @@
         {
           "id": "1534592099117170729",
           "filename": "file_000000002070820ba3e3d746037778f3.png",
-          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1534592099117170729/file_000000002070820ba3e3d746037778f3.png?ex=6ae21c43&is=6ae0cac3&hm=4ecf4cc1a56a20d3a96199c964b06af0420cc4db076a96d470adcb9d59943fa2&",
-          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1534592099117170729/file_000000002070820ba3e3d746037778f3.png?ex=6ae21c43&is=6ae0cac3&hm=4ecf4cc1a56a20d3a96199c964b06af0420cc4db076a96d470adcb9d59943fa2&",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1534592099117170729/file_000000002070820ba3e3d746037778f3.png?ex=6ae2c503&is=6ae17383&hm=fadefc5a2abcddbd6c5d28fd37ea289c780a12b781fb72eb42cb62682d32b0a9&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1534592099117170729/file_000000002070820ba3e3d746037778f3.png?ex=6ae2c503&is=6ae17383&hm=fadefc5a2abcddbd6c5d28fd37ea289c780a12b781fb72eb42cb62682d32b0a9&",
           "size": 2254763,
           "content_type": "image/png",
           "width": 1536,
@@ -1050,8 +1066,8 @@
         {
           "id": "1530963939238612992",
           "filename": "1BDAB76D-4D3F-45D4-B081-FEC88A7AD480.png",
-          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1530963939238612992/1BDAB76D-4D3F-45D4-B081-FEC88A7AD480.png?ex=6ae21847&is=6ae0c6c7&hm=f45aa0b729ecd3c3eb32e2d787db966b56d154659c53555fed9048e7e3133804&",
-          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1530963939238612992/1BDAB76D-4D3F-45D4-B081-FEC88A7AD480.png?ex=6ae21847&is=6ae0c6c7&hm=f45aa0b729ecd3c3eb32e2d787db966b56d154659c53555fed9048e7e3133804&",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1530963939238612992/1BDAB76D-4D3F-45D4-B081-FEC88A7AD480.png?ex=6ae2c107&is=6ae16f87&hm=2ca8321e198707b8e39ebf234b2358a77be43d81f71776777a3e2964582d8d82&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1530963939238612992/1BDAB76D-4D3F-45D4-B081-FEC88A7AD480.png?ex=6ae2c107&is=6ae16f87&hm=2ca8321e198707b8e39ebf234b2358a77be43d81f71776777a3e2964582d8d82&",
           "size": 2532576,
           "content_type": "image/png",
           "width": 1024,
@@ -1136,8 +1152,8 @@
         {
           "id": "1529880609483395255",
           "filename": "file_00000000182481f583ef1a19ad1ff1a2.png",
-          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1529880609483395255/file_00000000182481f583ef1a19ad1ff1a2.png?ex=6ae21bd9&is=6ae0ca59&hm=caac8db1c6c546844585f8b70303320e8c644b4f70babc4696775c1fa9cce6f5&",
-          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1529880609483395255/file_00000000182481f583ef1a19ad1ff1a2.png?ex=6ae21bd9&is=6ae0ca59&hm=caac8db1c6c546844585f8b70303320e8c644b4f70babc4696775c1fa9cce6f5&",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1529880609483395255/file_00000000182481f583ef1a19ad1ff1a2.png?ex=6ae2c499&is=6ae17319&hm=b7621dfee846fcab1659d2dfd57ffaa8ef82b091153b24bbc207ad01148c7600&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1529880609483395255/file_00000000182481f583ef1a19ad1ff1a2.png?ex=6ae2c499&is=6ae17319&hm=b7621dfee846fcab1659d2dfd57ffaa8ef82b091153b24bbc207ad01148c7600&",
           "size": 2391765,
           "content_type": "image/png",
           "width": 1536,
@@ -1163,8 +1179,8 @@
         {
           "id": "1529869447706181632",
           "filename": "7EA7A848-F091-434D-BE56-B060D1E0E09E.png",
-          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1529869447706181632/7EA7A848-F091-434D-BE56-B060D1E0E09E.png?ex=6ae21173&is=6ae0bff3&hm=0b65f3f269e5098167a352ef3de83666bdc3f1e61ff1eb82d0b51e19892839ae&",
-          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1529869447706181632/7EA7A848-F091-434D-BE56-B060D1E0E09E.png?ex=6ae21173&is=6ae0bff3&hm=0b65f3f269e5098167a352ef3de83666bdc3f1e61ff1eb82d0b51e19892839ae&",
+          "url": "https://cdn.discordapp.com/attachments/1529356159906222201/1529869447706181632/7EA7A848-F091-434D-BE56-B060D1E0E09E.png?ex=6ae2ba33&is=6ae168b3&hm=57799a43cd866f8685bb90f353967c47d393c3b82626a5b7cc07adae989911a4&",
+          "proxy_url": "https://media.discordapp.net/attachments/1529356159906222201/1529869447706181632/7EA7A848-F091-434D-BE56-B060D1E0E09E.png?ex=6ae2ba33&is=6ae168b3&hm=57799a43cd866f8685bb90f353967c47d393c3b82626a5b7cc07adae989911a4&",
           "size": 2529744,
           "content_type": "image/png",
           "width": 1254,
