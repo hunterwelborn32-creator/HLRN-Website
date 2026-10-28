@@ -40,6 +40,20 @@
       "excludedFrom": [
         "race-intelligence"
       ]
+    },
+    {
+      "driverId": "118777",
+      "name": "TJ Lunn",
+      "aliases": [
+        "Tj Lunn",
+        "Lunn, TJ",
+        "Lunn, Tj"
+      ],
+      "status": "BANNED",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
     }
   ]
 }
