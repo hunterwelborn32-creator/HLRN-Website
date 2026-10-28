@@ -164,7 +164,8 @@ body.home-v10-page .home10 .h10-hero-copy h1{filter:drop-shadow(0 9px 24px rgba(
 /* Sports broadcast ticker: informative identity, never fake live results */
 .home10 .h29-speed-strip{position:relative;z-index:1;background:#d71939;color:#fff;overflow:hidden;border-bottom:4px solid #090e15}
 .home10 .h29-speed-track{display:flex;width:max-content;gap:0;align-items:center;animation:h29-ticker 44s linear infinite}
-.home10 .h29-speed-group{display:flex;flex:none}\n.home10 .h29-speed-track span{
+.home10 .h29-speed-group{display:flex;flex:none}
+.home10 .h29-speed-track span{
   display:inline-flex;align-items:center;gap:24px;white-space:nowrap;
   padding:16px 25px;font:900 clamp(14px,1.45vw,19px)/1 var(--h29-display);
   letter-spacing:.13em;text-transform:uppercase
