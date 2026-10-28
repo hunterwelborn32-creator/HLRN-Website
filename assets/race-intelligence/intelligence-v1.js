@@ -21,9 +21,11 @@ let raceUpdateTimer = null;
 const EXCLUDED_DRIVERS = [
   "trace mcdowell",
   "matthew brown",
-  "bryce hinton"
+  "bryce hinton",
+  "joshua spragg",
+  "josh spragg"
 ];
-const EXCLUDED_DRIVER_IDS = new Set(["116507","105882"]);
+const EXCLUDED_DRIVER_IDS = new Set(["116507","105882","109865"]);
 const PAUSED_DRIVERS = [
   "benjamin richards",
   "sebastian michaels",

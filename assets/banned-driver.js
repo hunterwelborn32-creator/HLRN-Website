@@ -4,8 +4,8 @@
 if(/\/race-intelligence(?:\/|$)/.test(location.pathname)||window.__HLRN_BANNED_VISUAL_V1__)return;
 window.__HLRN_BANNED_VISUAL_V1__=true;
 const BADGE="/assets/banned-driver.png?v=20261028banned1";
-const PATTERN=/\b(?:Matthew\s+Brown(?:49)?|Brown49\s*,\s*Matthew|Bryce\s+Hinton(?:2)?|Hinton2?\s*,\s*Bryce)\b/gi;
-function hasName(s){return /\b(?:matthew\s+brown(?:49)?|brown49\s*,\s*matthew|bryce\s+hinton(?:2)?|hinton2?\s*,\s*bryce)\b/i.test(String(s||""));}
+const PATTERN=/\b(?:Matthew\s+Brown(?:49)?|Brown49\s*,\s*Matthew|Bryce\s+Hinton(?:2)?|Hinton2?\s*,\s*Bryce|Josh(?:ua)?\s+Spragg|Spragg\s*,\s*Josh(?:ua)?)\b/gi;
+function hasName(s){return /\b(?:matthew\s+brown(?:49)?|brown49\s*,\s*matthew|bryce\s+hinton(?:2)?|hinton2?\s*,\s*bryce|josh(?:ua)?\s+spragg|spragg\s*,\s*josh(?:ua)?)\b/i.test(String(s||""));}
 function normalize(s){
   s=String(s||"").trim().toLowerCase();
   if(s.includes(",")){const [last,...first]=s.split(",");s=first.join(",").trim()+" "+last.trim();}
@@ -13,9 +13,9 @@ function normalize(s){
 }
 function bannedPhoto(img){
   const src=String(img.getAttribute("src")||"").toLowerCase();
-  if(/(?:matthew[-_]?brown|bryce[-_]?hinton)/.test(src)||hasName(img.alt)||["matthewbrown","brycehinton"].includes(normalize(img.dataset.hlrnDriverName||img.dataset.driverName)))return true;
+  if(/(?:matthew[-_]?brown|bryce[-_]?hinton|josh(?:ua)?[-_]?spragg)/.test(src)||hasName(img.alt)||["matthewbrown","brycehinton","joshuaspragg","joshspragg"].includes(normalize(img.dataset.hlrnDriverName||img.dataset.driverName)))return true;
   const named=img.closest("[data-hlrn-driver-name],[data-driver-name],[data-driver-id]");
-  if(named&&(["116507","105882"].includes(String(named.dataset.driverId))||["matthewbrown","brycehinton"].includes(normalize(named.dataset.hlrnDriverName||named.dataset.driverName))))return true;
+  if(named&&(["116507","105882","109865"].includes(String(named.dataset.driverId))||["matthewbrown","brycehinton","joshuaspragg","joshspragg"].includes(normalize(named.dataset.hlrnDriverName||named.dataset.driverName))))return true;
   const card=img.closest(".driver-card,.driver-stat-card,.driver-tile,.driver-row,.driver-profile,.driver-directory-item,.hlrn-driver-card,.leader-card,.hx-podium-card,.hero,.profile-header,tbody tr");
   return !!card&&card.querySelectorAll("img:not(.hlrn-banned-overlay)").length<=2&&hasName(card.textContent);
 }

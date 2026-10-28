@@ -26,6 +26,20 @@
       "excludedFrom": [
         "race-intelligence"
       ]
+    },
+    {
+      "driverId": "109865",
+      "name": "Joshua Spragg",
+      "aliases": [
+        "Josh Spragg",
+        "Spragg, Joshua",
+        "Spragg, Josh"
+      ],
+      "status": "BANNED",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
     }
   ]
 }
