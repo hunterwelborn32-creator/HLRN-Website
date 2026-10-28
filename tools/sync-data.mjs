@@ -5,6 +5,7 @@
 import { readFile, writeFile, rename } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { excludeDrivers } from './exclude-drivers.mjs';
 
 const OUT = resolve(dirname(fileURLToPath(import.meta.url)), '../data/hlrn.json');
 const METRICS_OUT = resolve(dirname(fileURLToPath(import.meta.url)), '../data/results-race-metrics.json');
@@ -907,12 +908,12 @@ export async function sync({
     console.log('HLRN_HOSTED_WEBAPP_URL not configured; existing Hosted snapshot retained.');
   }
 
-  const next = buildSnapshot(payloads, old, hosted, seasonRaw, teamRosters, stageTotals);
+  const next = excludeDrivers(buildSnapshot(payloads, old, hosted, seasonRaw, teamRosters, stageTotals));
   const dataChanged = !sameData(old, next);
 
-  const metricRaces=[...metricsByKey.values()]
+  const metricRaces=excludeDrivers([...metricsByKey.values()]
     .filter(item=>item&&['sunday','monday'].includes(String(item.league||'')))
-    .sort((a,b)=>String(a.league).localeCompare(String(b.league))||(num(a.raceNumber)??999)-(num(b.raceNumber)??999)||String(a.raceId).localeCompare(String(b.raceId)));
+    .sort((a,b)=>String(a.league).localeCompare(String(b.league))||(num(a.raceNumber)??999)-(num(b.raceNumber)??999)||String(a.raceId).localeCompare(String(b.raceId))));
   const metricsChanged = JSON.stringify(oldMetrics?.races||[]) !== JSON.stringify(metricRaces);
 
   if (!dataChanged && !metricsChanged) {
