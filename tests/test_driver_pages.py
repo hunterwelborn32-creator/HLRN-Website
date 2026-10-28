@@ -50,12 +50,13 @@ class DriverPageTests(unittest.TestCase):
             ("matthew-brown49", "Matthew Brown49", "matthew-brown-profile-cutout-20261028.webp"),
             ("bryce-hinton2", "Bryce Hinton2", "bryce-hinton-profile-cutout-20261028.webp"),
             ("joshua-spragg", "Joshua Spragg", "joshua-spragg-profile-cutout-20261028.webp"),
+            ("tj-lunn", "Tj Lunn", "tj-lunn-profile-cutout-20261028.webp"),
         ):
             with self.subTest(slug=slug):
                 driver = {
                     "name": name,
                     "slug": slug,
-                    "number": {"matthew-brown49": "14", "bryce-hinton2": "28", "joshua-spragg": "37"}[slug],
+                    "number": {"matthew-brown49": "14", "bryce-hinton2": "28", "joshua-spragg": "37", "tj-lunn": "02"}[slug],
                     "photoSlug": "",
                     "teams": {"sunday": None},
                     "records": {"sunday": {"rank": 1, "points": 0, "races": 0, "wins": 0, "top5": 0, "top10": 0, "results": []}},
