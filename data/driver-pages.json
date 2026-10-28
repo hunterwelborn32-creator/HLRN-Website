@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T14:09:47Z",
-  "count": 87,
+  "generatedAt": "2026-10-28T16:30:48Z",
+  "count": 86,
   "drivers": [
     {
       "name": "Aaron Treubig",
@@ -1200,28 +1200,6 @@
       },
       "teams": {
         "sunday": null
-      },
-      "aliases": []
-    },
-    {
-      "name": "Matthew Brown49",
-      "slug": "matthew-brown49",
-      "url": "/drivers/matthew-brown49/",
-      "number": "14",
-      "photoSlug": "matthew-brown",
-      "hasPhoto": true,
-      "iRating": 3069,
-      "series": [
-        "monday",
-        "sunday"
-      ],
-      "ids": {
-        "sunday": "116507",
-        "monday": "116507"
-      },
-      "teams": {
-        "sunday": "TWM",
-        "monday": null
       },
       "aliases": []
     },
