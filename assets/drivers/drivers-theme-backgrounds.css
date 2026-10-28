@@ -1,0 +1,152 @@
+/*
+ * HLRN DRIVERS — CINEMATIC DAY/NIGHT BACKGROUNDS
+ * 2026-10-28. Display-only and scoped to the driver directory.
+ * Preserves all photos, driver cutouts, stats, navigation and data scripts.
+ */
+
+/* The older roster rules set background-image:none!important in dark mode.
+   Override that specifically on the directory root, never individual cards. */
+html[data-hlrn-theme="light"] body #directoryView.driver-page{
+  background-color:#eef2f6!important;
+  background-image:
+    linear-gradient(90deg,rgba(255,255,255,.06),transparent 28%,transparent 72%,rgba(255,255,255,.06)),
+    url("./HLRN_Drivers_Day_Background.png")!important;
+  background-position:center center,center center!important;
+  background-size:cover,cover!important;
+  background-repeat:no-repeat,no-repeat!important;
+  background-attachment:fixed,fixed!important;
+}
+html[data-hlrn-theme="dark"] body #directoryView.driver-page{
+  background-color:#04060b!important;
+  background-image:
+    linear-gradient(90deg,rgba(4,7,13,.07),transparent 28%,transparent 72%,rgba(4,7,13,.07)),
+    url("./HLRN_Drivers_Night_Background.png")!important;
+  background-position:center center,center center!important;
+  background-size:cover,cover!important;
+  background-repeat:no-repeat,no-repeat!important;
+  background-attachment:fixed,fixed!important;
+}
+
+/* The roster grid used to paint an opaque black rectangular sheet;
+   clearing the grid — not the driver cards — reveals the HLRN imagery. */
+html[data-hlrn-theme] body #directoryView.driver-page > .driver-grid,
+html[data-hlrn-theme] body #directoryView.driver-page .driver-grid{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+}
+
+/* Bring the exact same artwork into the roster masthead so it is
+   immediately visible without having to scroll behind driver cards. */
+html[data-hlrn-theme] body #directoryView.driver-page > .driver-heading{
+  position:relative!important;
+  isolation:isolate!important;
+  min-height:clamp(250px,26vw,405px)!important;
+  overflow:hidden!important;
+  border-bottom:4px solid #df2346!important;
+  background-position:center center,center center!important;
+  background-size:cover,cover!important;
+  background-repeat:no-repeat,no-repeat!important;
+  box-shadow:0 20px 60px rgba(0,0,0,.16)!important;
+}
+html[data-hlrn-theme="light"] body #directoryView.driver-page > .driver-heading{
+  background-color:#f3f6fa!important;
+  background-image:
+    linear-gradient(90deg,rgba(255,255,255,.95) 0%,rgba(255,255,255,.86) 30%,rgba(255,255,255,.52) 58%,rgba(255,255,255,.10) 100%),
+    url("./HLRN_Drivers_Day_Background.png")!important;
+}
+html[data-hlrn-theme="dark"] body #directoryView.driver-page > .driver-heading{
+  background-color:#080b13!important;
+  background-image:
+    linear-gradient(90deg,rgba(4,6,13,.94) 0%,rgba(4,6,13,.83) 31%,rgba(4,6,13,.58) 60%,rgba(4,6,13,.14) 100%),
+    url("./HLRN_Drivers_Night_Background.png")!important;
+}
+/* Remove the obsolete near-opaque overlay that hid any photograph. */
+html[data-hlrn-theme] body #directoryView.driver-page > .driver-heading:before{
+  opacity:0!important;
+  display:none!important;
+}
+html[data-hlrn-theme] body #directoryView.driver-page > .driver-heading:after{
+  opacity:.21!important;
+  pointer-events:none!important;
+}
+html[data-hlrn-theme] body #directoryView.driver-page > .driver-heading .driver-heading-inner{
+  position:relative!important;
+  z-index:2!important;
+  min-height:clamp(250px,26vw,405px)!important;
+  display:grid!important;
+  align-items:center!important;
+  background:transparent!important;
+  background-image:none!important;
+}
+html[data-hlrn-theme="light"] body #directoryView.driver-page > .driver-heading :is(h1,p,.eyebrow){
+  color:#111822!important;
+  -webkit-text-fill-color:#111822!important;
+  text-shadow:none!important;
+}
+html[data-hlrn-theme="dark"] body #directoryView.driver-page > .driver-heading :is(h1,p,.eyebrow){
+  color:#f6f8fa!important;
+  -webkit-text-fill-color:#f6f8fa!important;
+  text-shadow:0 3px 18px rgba(0,0,0,.65)!important;
+}
+/* The league color in the headline stays intentionally accented. */
+html[data-hlrn-theme="light"] body #directoryView.driver-page > .driver-heading h1 span{
+  color:#cf1739!important;
+  -webkit-text-fill-color:#cf1739!important;
+}
+html[data-hlrn-theme="dark"] body #directoryView.driver-page > .driver-heading h1 span{
+  color:#ff3454!important;
+  -webkit-text-fill-color:#ff3454!important;
+}
+html[data-hlrn-theme="light"] body.monday-league #directoryView.driver-page > .driver-heading h1 span,
+html[data-hlrn-theme="dark"] body.monday-league #directoryView.driver-page > .driver-heading h1 span{
+  color:#23ad68!important;
+  -webkit-text-fill-color:#23ad68!important;
+}
+
+/* Contrast-safe dashboard and driver cards stay solid on the new backdrop.
+   No changes to image sources, drivers, standings, or text in cards. */
+html[data-hlrn-theme="light"] body #directoryView.driver-page .driver-command{
+  background-color:rgba(255,255,255,.97)!important;
+  box-shadow:0 22px 58px rgba(13,23,39,.14)!important;
+}
+html[data-hlrn-theme="dark"] body #directoryView.driver-page .driver-command{
+  background-color:rgba(5,9,16,.96)!important;
+  box-shadow:0 23px 60px rgba(0,0,0,.43)!important;
+}
+html[data-hlrn-theme="light"] body #directoryView.driver-page .driver-card{
+  box-shadow:0 18px 42px rgba(12,22,37,.11)!important;
+}
+html[data-hlrn-theme="dark"] body #directoryView.driver-page .driver-card{
+  box-shadow:0 20px 50px rgba(0,0,0,.35)!important;
+}
+html[data-hlrn-theme] body #directoryView.driver-page .driver-grid{
+  padding-bottom:clamp(30px,4vw,65px)!important;
+}
+
+@media(max-width:830px){
+  html[data-hlrn-theme] body #directoryView.driver-page > .driver-heading,
+  html[data-hlrn-theme] body #directoryView.driver-page > .driver-heading .driver-heading-inner{
+    min-height:245px!important;
+  }
+}
+@media(max-width:620px){
+  html[data-hlrn-theme] body #directoryView.driver-page{
+    background-attachment:scroll,scroll!important;
+    background-size:cover,auto 100vh!important;
+    background-position:center,center top!important;
+    background-repeat:no-repeat,repeat-y!important;
+  }
+  html[data-hlrn-theme] body #directoryView.driver-page > .driver-heading,
+  html[data-hlrn-theme] body #directoryView.driver-page > .driver-heading .driver-heading-inner{
+    min-height:215px!important;
+  }
+  html[data-hlrn-theme] body #directoryView.driver-page > .driver-heading{
+    background-position:center center,62% center!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html[data-hlrn-theme] body #directoryView.driver-page{
+    background-attachment:scroll,scroll!important;
+  }
+}
