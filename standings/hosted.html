@@ -987,13 +987,6 @@ const HOSTED_DOCS={
 };
 const hostedLoaded={racing:false,drivers:false,records:false,h2h:false};
 const hostedObservers={};
-/* Apply the same named-driver exclusion inside each self-contained Hosted iframe.
-   The embedded tools fetch their own data and do not necessarily use data/hlrn.json. */
-function hlrnExcludeHostedDoc(markup){
-  const boot="(function(){\n'use strict';\nvar blockedIds=new Set(['116507']);\nfunction key(value){\n var s=String(value==null?'':value).trim().toLowerCase();\n if(s.includes(',')){var parts=s.split(',');s=parts.slice(1).join(',').trim()+' '+parts[0].trim();}\n return s.replace(/\\d+$/,'').replace(/[^a-z]/g,'');\n}\nfunction blockedName(value){return !!value && key(value)==='matthewbrown';}\nfunction blockedRow(row){\n if(!row||typeof row!=='object'||Array.isArray(row))return false;\n if(blockedIds.has(String(row.driverId??row.driverID??'')))return true;\n if(blockedIds.has(String(row.id??'')) && (row.name!=null||row.sourceName!=null||row.series!=null))return true;\n if(String(row.slug||'').toLowerCase()==='matthew-brown49')return true;\n return ['driver','name','driverName','driver_name','displayName','fullName','sourceName','winnerName'].some(function(k){return blockedName(row[k]);});\n}\nfunction clean(value){\n if(Array.isArray(value))return value.filter(function(item){return !(typeof item==='string'?blockedName(item):blockedRow(item));}).map(clean);\n if(!value||typeof value!=='object')return value;\n var result={};\n for(var entry of Object.entries(value)){\n  var k=entry[0],v=entry[1];\n  if(blockedIds.has(k)||blockedName(k)||k.toLowerCase()==='matthew-brown49')continue;\n  if(typeof v==='string'&&blockedName(v))continue;\n  if(blockedRow(v))continue;\n  result[k]=clean(v);\n }\n return result;\n}\nvar nativeFetch=window.fetch;\nif(typeof nativeFetch==='function'){\n window.fetch=function(){\n  return nativeFetch.apply(this,arguments).then(function(response){\n   if(response&&typeof response.json==='function'){\n    var originalJson=response.json.bind(response);\n    response.json=function(){return originalJson().then(clean);};\n   }\n   return response;\n  });\n };\n}\nfunction scrub(){\n var selector='tbody tr,.driver-stat-card,.record-card,.hx-podium-card,.search-option,.incident-row,.m-driver,.watch-driver,.incident-streak-driver,.leader-card,.driver-row,.standings-row,.result-row,.driver-card';\n document.querySelectorAll(selector).forEach(function(el){\n  if(/matthew\\s*brown(?:\\s*49)?|brown49\\s*,?\\s*matthew/i.test(el.textContent||''))el.remove();\n });\n}\nfunction start(){\n scrub();\n if(document.body&&typeof MutationObserver==='function'){\n  new MutationObserver(scrub).observe(document.body,{childList:true,subtree:true});\n }\n}\nif(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});\nelse start();\n})();";
-  const tag='<scr'+'ipt data-hlrn-driver-exclusion>'+boot+'</scr'+'ipt>';
-  return markup.replace(/<head\b[^>]*>/i,match=>match+tag);
-}
 function decodeHostedDoc(v){
   const bytes=Uint8Array.from(atob(v),c=>c.charCodeAt(0));
   return new TextDecoder("utf-8").decode(bytes);
@@ -2930,7 +2923,7 @@ function loadHostedTab(key){
   frame.onload=finish;
   try{
     const raw=decodeHostedDoc(HOSTED_DOCS[key]);
-    frame.srcdoc=hlrnLightHostedDoc(hlrnExcludeHostedDoc(raw),key);
+    frame.srcdoc=hlrnLightHostedDoc(raw,key);
   }catch(err){
     if(loading){
       loading.style.display="block";
