@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "drivers": [
+    {
+      "driverId": "116507",
+      "name": "Matthew Brown",
+      "aliases": [
+        "Matthew Brown49",
+        "Brown49, Matthew"
+      ],
+      "status": "BANNED",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    }
+  ]
+}
