@@ -23,9 +23,10 @@ const EXCLUDED_DRIVERS = [
   "matthew brown",
   "bryce hinton",
   "joshua spragg",
-  "josh spragg"
+  "josh spragg",
+  "tj lunn"
 ];
-const EXCLUDED_DRIVER_IDS = new Set(["116507","105882","109865"]);
+const EXCLUDED_DRIVER_IDS = new Set(["116507","105882","109865","118777"]);
 const PAUSED_DRIVERS = [
   "benjamin richards",
   "sebastian michaels",
