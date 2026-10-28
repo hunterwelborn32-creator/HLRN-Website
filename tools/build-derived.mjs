@@ -4,7 +4,6 @@
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { excludeDrivers } from './exclude-drivers.mjs';
 const ROOT=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const num=x=>(x===null||x===undefined||String(x).trim()==='')?null:(Number.isFinite(Number(x))?Number(x):null);
 const str=x=>String(x??'').trim();
@@ -27,10 +26,6 @@ function identityMatch(row, mappings, series) {
   })||null;
 }
 export function buildDerived(snapshot, mappings={drivers:[]}, oldReports={reports:[]}, raceMetrics={races:[]}) {
-  snapshot=excludeDrivers(snapshot);
-  mappings=excludeDrivers(mappings);
-  oldReports=excludeDrivers(oldReports);
-  raceMetrics=excludeDrivers(raceMetrics);
   if(snapshot.schemaVersion!==1 || !snapshot.generatedAt || !snapshot.leagues) throw new Error('Invalid source snapshot');
   const drivers=[];const reports=[];const seen=new Set();
   const metricsByKey=new Map(
@@ -165,8 +160,8 @@ export function buildDerived(snapshot, mappings={drivers:[]}, oldReports={report
   // Keep previously published historical reports if the active source no longer includes the race.
   for(const r of (oldReports.reports||[]))if(r&&str(r.key)&&!seen.has(str(r.key)))reports.push(r);
   reports.sort((a,b)=>(Date.parse(b.date)||0)-(Date.parse(a.date)||0)||String(b.key).localeCompare(String(a.key)));
-  return excludeDrivers({profiles:{schemaVersion:1,generatedAt:snapshot.generatedAt,drivers},
-          reports:{schemaVersion:1,generatedAt:snapshot.generatedAt,reports}});
+  return {profiles:{schemaVersion:1,generatedAt:snapshot.generatedAt,drivers},
+          reports:{schemaVersion:1,generatedAt:snapshot.generatedAt,reports}};
 }
 export async function run({root=ROOT}={}){
   const source=JSON.parse(await readFile(resolve(root,'data/hlrn.json'),'utf8'));
