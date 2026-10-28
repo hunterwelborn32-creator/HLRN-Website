@@ -447,10 +447,8 @@ def render_page(driver):
         'alt="BANNED" loading="eager" decoding="async">' if is_banned else ""
     )
     ban_photo_attribute = ' data-hlrn-banned-photo="1"' if is_banned else ""
-    ban_status_html = (
-        '<div class="hlrn-ban-status" role="status">DRIVER STATUS — BANNED</div>'
-        if is_banned else ""
-    )
+    # Keep the banned photo stamp; the shared script adds a single BANNED badge after his name.
+    ban_status_html = ""
     number = driver["number"]
     records = driver["records"]
     teams = driver["teams"]
@@ -935,7 +933,8 @@ def main():
                 rating_candidates.append(irating_by_id[did])
         i_rating = max(rating_candidates, key=lambda item: item[0])[1] if rating_candidates else 0
 
-        candidate_photo_slug = photo_slug_by_name.get(name, slug)
+        # The league roster uses a "49" suffix but his uploaded portrait is named matthew-brown.webp.
+        candidate_photo_slug = "matthew-brown" if keyify(name) == "matthewbrown49" else photo_slug_by_name.get(name, slug)
         has_photo = bool(candidate_photo_slug and (CUTOUT_ROOT / f"{candidate_photo_slug}.webp").is_file())
         photo_slug = candidate_photo_slug if has_photo else ""
 
