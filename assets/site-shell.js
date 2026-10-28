@@ -1366,4 +1366,15 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 else simplifyHostedProfileStats();
 
 start();
+
+/* Load site-wide banned status badges and photo overlay without altering race data. */
+(function installBannedDriverVisual(){
+  if(/\/race-intelligence(?:\/|$)/.test(location.pathname))return;
+  if(document.querySelector('script[data-hlrn-banned-driver]'))return;
+  const tag=document.createElement("script");
+  tag.src="/assets/banned-driver.js?v=20261028banned1";
+  tag.defer=true;
+  tag.setAttribute("data-hlrn-banned-driver","");
+  document.head.appendChild(tag);
+})();
 })();
