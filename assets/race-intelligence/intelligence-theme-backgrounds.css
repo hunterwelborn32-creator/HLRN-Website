@@ -7,12 +7,14 @@
 
 /* The existing page stylesheet forces opaque black/white shells.
    Paint the uploaded wallpaper on the page, and clear only its frame. */
+html[data-hlrn-route="race-intelligence"][data-hlrn-theme="light"] body.ri-cinematic-page,
 html[data-hlrn-theme="light"] body.ri-cinematic-page{
   background-color:#eef2f6!important;
   background-image:
     linear-gradient(90deg,rgba(255,255,255,.10),rgba(255,255,255,.02) 24%,rgba(255,255,255,.02) 76%,rgba(255,255,255,.10)),
     url("./HLRN_Race_Intelligence_Full_Page_Day_Background.png")!important;
 }
+html[data-hlrn-route="race-intelligence"][data-hlrn-theme="dark"] body.ri-cinematic-page,
 html[data-hlrn-theme="dark"] body.ri-cinematic-page{
   background-color:#040811!important;
   background-image:
@@ -29,9 +31,12 @@ html[data-hlrn-theme] body.ri-cinematic-page > .shell{
   background:transparent!important;
   background-color:transparent!important;
   background-image:none!important;
-  width:min(1540px,calc(100% - 72px))!important;
-  max-width:1540px!important;
-  padding-bottom:60px!important;
+  /* Restore the original full-width Race Intelligence shell. The page's
+     internal content regions already implement their own centering. */
+  width:100%!important;
+  max-width:none!important;
+  margin:0 auto!important;
+  padding:0 0 64px!important;
   position:relative;
 }
 html[data-hlrn-theme] body.ri-cinematic-page > .shell:before,
@@ -102,8 +107,7 @@ html[data-hlrn-theme] body.ri-cinematic-page > .shell .hero:after{
   display:none!important;
 }
 html[data-hlrn-theme] body.ri-cinematic-page > .shell .hero-inner{
-  padding:24px 28px!important;
-  max-width:100%!important;
+  /* Let the native .hero-inner width, margins and padding center content. */
   background:transparent!important;
   background-color:transparent!important;
   background-image:none!important;
@@ -165,22 +169,10 @@ html[data-hlrn-theme="dark"] body.ri-cinematic-page > .shell :is(
   text-shadow:0 2px 16px rgba(0,0,0,.65);
 }
 
-@media(max-width:940px){
-  html[data-hlrn-theme] body.ri-cinematic-page > .shell{
-    width:calc(100% - 28px)!important;
-    max-width:none!important;
-  }
-}
 @media(max-width:650px){
   html[data-hlrn-theme] body.ri-cinematic-page > .ri-cinematic-banner{
     height:clamp(170px,42vw,255px);
     background-position:center center!important;
-  }
-  html[data-hlrn-theme] body.ri-cinematic-page > .shell{
-    width:calc(100% - 14px)!important;
-  }
-  html[data-hlrn-theme] body.ri-cinematic-page > .shell .hero-inner{
-    padding:17px!important;
   }
   html[data-hlrn-theme] body.ri-cinematic-page{
     background-attachment:scroll,scroll!important;
