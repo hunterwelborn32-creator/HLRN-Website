@@ -20,7 +20,7 @@ function bannedPhoto(img){
   return !!card&&card.querySelectorAll("img:not(.hlrn-banned-overlay)").length<=2&&hasName(card.textContent);
 }
 function overlay(img){
-  if(img.classList.contains("hlrn-banned-overlay")||img.dataset.hlrnBannedPhoto==="1"||!bannedPhoto(img))return;
+  if(img.classList.contains("hlrn-banned-overlay")||img.classList.contains("hlrn-ban-stamp")||img.dataset.hlrnBannedPhoto==="1"||/(?:^|\/)banned-driver\.png(?:[?#]|$)/i.test(img.getAttribute("src")||"")||!bannedPhoto(img))return;
   const parent=img.parentElement;if(!parent)return;
   img.dataset.hlrnBannedPhoto="1";
   if(getComputedStyle(parent).position==="static")parent.style.position="relative";
@@ -65,7 +65,7 @@ function markNames(){
 }
 function scan(){
   markNames();
-  document.querySelectorAll("img:not(.hlrn-banned-overlay):not([data-hlrn-banned-photo='1'])").forEach(overlay);
+  document.querySelectorAll("img:not(.hlrn-banned-overlay):not(.hlrn-ban-stamp):not([data-hlrn-banned-photo='1'])").forEach(overlay);
 }
 const style=document.createElement("style");style.id="hlrn-banned-driver-styles";
 style.textContent=[
