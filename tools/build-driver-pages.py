@@ -34,6 +34,23 @@ PHOTO_BASE = "/assets/driver-photos/cutout/"
 FALLBACK_PHOTO_BASE = "/assets/driver-photos/fallback/"
 CUTOUT_ROOT = ROOT / "assets" / "driver-photos" / "cutout"
 
+EXCLUSIONS_PATH = ROOT / "data" / "driver-exclusions.json"
+EXCLUSIONS = json.loads(EXCLUSIONS_PATH.read_text(encoding="utf-8"))
+BLOCKED_IDS = {str(i) for i in EXCLUSIONS.get("driverIds", [])}
+BLOCKED_SLUGS = {str(s).lower() for s in EXCLUSIONS.get("profileSlugs", [])}
+
+def excluded_name_key(value):
+    value = str(value or "").strip().lower()
+    if "," in value:
+        surname, *given = value.split(",")
+        value = " ".join(given).strip() + " " + surname.strip()
+    return re.sub(r"[^a-z]", "", re.sub(r"\\d+$", "", value))
+
+BLOCKED_NAMES = {excluded_name_key(n) for n in EXCLUSIONS.get("names", [])}
+
+def is_excluded_driver(name="", driver_id=""):
+    return str(driver_id or "") in BLOCKED_IDS or excluded_name_key(name) in BLOCKED_NAMES
+
 SERIES_LABEL = {
     "sunday": "Sunday Night League",
     "monday": "Monday Night League",
@@ -874,7 +891,7 @@ def main():
     for rec in profiles.get("drivers") or []:
         name = str(rec.get("name") or "").strip()
         series = str(rec.get("series") or "").lower()
-        if not name or series not in ("sunday", "monday"):
+        if not name or series not in ("sunday", "monday") or is_excluded_driver(name, rec.get("id")):
             continue
         merged_rec = dict(rec)
         did = str(rec.get("id") or "").strip()
@@ -888,6 +905,8 @@ def main():
         id_by_series_name[(series, name)] = str(rec.get("id") or "")
 
     for name, rec in hosted_records.items():
+        if is_excluded_driver(name, rec.get("id")):
+            continue
         grouped[name]["hosted"] = rec
 
     pages = []
@@ -951,6 +970,12 @@ def main():
             "teams": {s: teams.get(s) for s in records},
             "aliases": hosted_aliases.get(name, []),
         })
+
+    # A previously generated profile must not survive merely because it is no longer generated.
+    for slug in BLOCKED_SLUGS:
+        stale_profile = DRIVERS_ROOT / slug
+        if stale_profile.is_dir():
+            shutil.rmtree(stale_profile)
 
     manifest = {
         "schemaVersion": 1,
