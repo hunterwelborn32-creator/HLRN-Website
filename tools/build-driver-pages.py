@@ -440,6 +440,16 @@ def driver_profile_v2(history, records, teams):
 def render_page(driver):
     name = driver["name"]
     slug = driver["slug"]
+    # Direct markup so banned status survives page generation and does not rely on the global JS loader.
+    is_banned = slug == "matthew-brown49"
+    ban_image_html = (
+        '<img class="hlrn-ban-stamp" src="/assets/banned-driver.png?v=20261028banfix2" '
+        'alt="BANNED" loading="eager" decoding="async">' if is_banned else ""
+    )
+    ban_status_html = (
+        '<div class="hlrn-ban-status" role="status">DRIVER STATUS — BANNED</div>'
+        if is_banned else ""
+    )
     number = driver["number"]
     records = driver["records"]
     teams = driver["teams"]
@@ -540,6 +550,9 @@ def render_page(driver):
 .hero{{position:relative;display:grid;grid-template-columns:minmax(330px,.82fr) minmax(0,1.18fr);min-height:500px;background:#fff;color:var(--ink);overflow:hidden;border:1px solid var(--line);border-bottom:6px solid var(--red)}}
 .hero-media{{position:relative;min-height:500px;background:#fff;overflow:hidden;border-right:1px solid var(--line)}}
 .hero-media:after{{content:"";display:none}}
+.hlrn-ban-stamp{{position:absolute!important;z-index:30!important;top:50%!important;left:50%!important;transform:translate(-50%,-50%) rotate(-8deg)!important;width:min(95%,520px)!important;height:auto!important;max-height:95%!important;object-fit:contain!important;filter:drop-shadow(0 9px 19px rgba(170,0,0,.7))!important;pointer-events:none!important}}
+.hlrn-ban-status{{align-self:flex-start;max-width:100%;padding:10px 18px;margin-bottom:18px;border:2px solid #f44;background:linear-gradient(120deg,#970000,#f00);color:white!important;font:900 clamp(14px,2vw,23px)/1.2 "Barlow Condensed",sans-serif!important;letter-spacing:.12em;box-shadow:0 0 26px rgba(255,0,0,.35);text-transform:uppercase}}
+
 .hero-photo{{position:absolute;z-index:2;left:50%;bottom:-2px;transform:translateX(-50%);height:95%;max-width:94%;object-fit:contain;filter:drop-shadow(0 14px 15px rgba(0,0,0,.35))}}
 .hero-fallback{{position:absolute;inset:0;display:grid;place-items:center;color:rgba(17,22,28,.05);font:900 italic 210px/1 "Barlow Condensed",sans-serif}}
 .hero-copy{{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:center;padding:48px 48px 42px;background:#fff}}
@@ -726,8 +739,10 @@ html[data-hlrn-theme="dark"] .updated{{color:#aaa!important}}
     <div class="hero-media">
       <div class="hero-fallback">#{esc(number)}</div>
       <img class="hero-photo" src="{esc(photo)}" alt="{esc(name)}" loading="eager" decoding="async" onerror="this.remove()">
+      {ban_image_html}
     </div>
     <div class="hero-copy">
+      {ban_status_html}
       <div class="kicker">OFFICIAL HLRN DRIVER PROFILE</div>
       <h1>{esc(name)}</h1>
       <div class="carline">
@@ -770,7 +785,7 @@ document.querySelectorAll(".race-link[data-href]").forEach(row=>{{
   }});
 }});
 </script>
-<script src="/assets/site-shell.js?v=20261007photos1"></script>
+<script src="/assets/site-shell.js?v=20261028banfix2"></script>
 </body>
 </html>
 """
