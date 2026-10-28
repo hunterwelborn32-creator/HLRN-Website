@@ -44,7 +44,7 @@ def excluded_name_key(value):
     if "," in value:
         surname, *given = value.split(",")
         value = " ".join(given).strip() + " " + surname.strip()
-    return re.sub(r"[^a-z]", "", re.sub(r"\\d+$", "", value))
+    return re.sub(r"[^a-z]", "", re.sub(r"\d+$", "", value))
 
 BLOCKED_NAMES = {excluded_name_key(n) for n in EXCLUSIONS.get("names", [])}
 
