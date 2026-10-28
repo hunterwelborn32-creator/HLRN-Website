@@ -441,7 +441,7 @@ def render_page(driver):
     name = driver["name"]
     slug = driver["slug"]
     # Direct markup so banned status survives page generation and does not rely on the global JS loader.
-    is_banned = slug in ("matthew-brown49", "bryce-hinton2", "joshua-spragg")
+    is_banned = slug in ("matthew-brown49", "bryce-hinton2", "joshua-spragg", "tj-lunn")
     ban_image_html = (
         '<img class="hlrn-ban-stamp" src="/assets/banned-driver.png?v=20261028banfix2" '
         'alt="BANNED" loading="eager" decoding="async">' if is_banned else ""
@@ -449,7 +449,7 @@ def render_page(driver):
     ban_photo_attribute = ' data-hlrn-banned-photo="1"' if is_banned else ""
     # Keep the banned photo stamp; the shared script adds a single BANNED badge after his name.
     ban_status_html = ""
-    site_shell_version = "20261028joshban1"
+    site_shell_version = "20261028tjban1"
     number = driver["number"]
     records = driver["records"]
     teams = driver["teams"]
@@ -467,6 +467,8 @@ def render_page(driver):
         photo = "/assets/bryce-hinton-profile-cutout-20261028.webp"
     elif slug == "joshua-spragg":
         photo = "/assets/joshua-spragg-profile-cutout-20261028.webp"
+    elif slug == "tj-lunn":
+        photo = "/assets/tj-lunn-profile-cutout-20261028.webp"
 
     starts = sum(num(r.get("races")) for r in records.values())
     wins = sum(num(r.get("wins")) for r in records.values())
