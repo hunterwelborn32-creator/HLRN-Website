@@ -460,6 +460,10 @@ def render_page(driver):
         has_photo = bool(photo_slug and (CUTOUT_ROOT / f"{photo_slug}.webp").is_file())
     fallback_photo = irating_fallback_photo(driver.get("iRating"))
     photo = PHOTO_BASE + quote(photo_slug) + ".webp" if has_photo and photo_slug else fallback_photo
+    if is_banned:
+        # Dedicated, transparent driver portrait (not the promotional/full photo).
+        # Stable unique filename avoids previously cached full-image variants.
+        photo = "/assets/matthew-brown-profile-cutout-20261028.webp"
 
     starts = sum(num(r.get("races")) for r in records.values())
     wins = sum(num(r.get("wins")) for r in records.values())
