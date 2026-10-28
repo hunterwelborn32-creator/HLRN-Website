@@ -343,7 +343,15 @@
       "leadChanges": 17,
       "cautions": 15,
       "cautionLaps": 41,
-      "penalties": 0
+      "penalties": 0,
+      "fastestLap": {
+        "time": 29.613,
+        "formatted": "29.613",
+        "driver": "Matthew Brown49",
+        "driverId": "116507",
+        "carNumber": "14",
+        "lap": 175
+      }
     },
     {
       "key": "sunday|4|367816",
