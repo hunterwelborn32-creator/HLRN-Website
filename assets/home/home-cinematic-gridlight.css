@@ -9,8 +9,8 @@ body.home-v10-page .home10{
   --h29-gold:#ffc73f;
   --h29-ink:#0c1119;
   --h29-line:rgba(148,163,184,.25);
-  --h29-display:"Saira Condensed","Barlow Condensed",Impact,sans-serif;
-  --h29-ui:"Rajdhani",Inter,"Segoe UI",sans-serif;
+  --h29-display:"Archivo Black","Arial Black",Arial,sans-serif;
+  --h29-ui:"Barlow",Inter,"Segoe UI",Arial,sans-serif;
   isolation:isolate;
 }
 html[data-hlrn-theme="dark"] body.home-v10-page .home10{
@@ -344,4 +344,169 @@ html[data-hlrn-theme="dark"] body.home-v10-page .home10 .h10-link-card{box-shado
   .home10 .h29-reveal{opacity:1!important;transform:none!important}
   .home10 :is(.h10-week-card,.h20-panel,.h20-results-panel,.h10-link-card):hover{transform:none!important}
   .home10 .h10-actions .h10-btn:after{display:none}
+}
+
+/* ============================================================
+   HOMEPAGE FONT REFINEMENT — October 28, 2026
+   Bold, wide racing headlines; readable broadcast UI.
+   Completely scoped to home, leaving the shared nav/track alone.
+   ============================================================ */
+body.home-v10-page .home10{
+  font-family:var(--h29-ui)!important;
+}
+body.home-v10-page .home10 :is(
+ .h10-hero-copy h1,.h10-section-head h2,.h10-week-card h3,
+ .h20-panel h3,.h20-results-panel h3,.h10-link-card strong,
+ .h10-hosted-race>strong,.h10-hosted-winner-copy strong,
+ .h10-hosted-head strong,.h10-upcoming-card h3,.h10-info-item strong,
+ .h10-footer-brand strong,.h20-championship-total b
+){
+  font-family:var(--h29-display)!important;
+  font-style:normal!important;
+  font-weight:400!important; /* Archivo Black is a single heavy weight. */
+  letter-spacing:-.045em!important;
+  line-height:1.08!important;
+}
+body.home-v10-page .home10 :is(
+ .h10-hero-copy>p,.h10-upcoming-card p,.h10-upcoming-card a,
+ .h10-week-card p,.h20-panel p,.h20-results-panel p,
+ .h10-link-card small,.h20-finish-list,.h20-utility a,
+ .h10-hosted-race-meta,.h10-hosted-winner-copy span
+){
+  font-family:var(--h29-ui)!important;
+  font-weight:500;
+  letter-spacing:0!important;
+  line-height:1.5;
+}
+body.home-v10-page .home10 .h10-hero-copy h1{
+  gap:0!important;
+  text-transform:uppercase;
+  overflow:visible;
+}
+body.home-v10-page .home10 .h10-hero-copy h1 .h28-title-overline{
+  font-family:var(--h29-ui)!important;
+  font-weight:800!important;
+  letter-spacing:.19em!important;
+  font-size:clamp(16px,1.45vw,21px)!important;
+  line-height:1.25!important;
+}
+body.home-v10-page .home10 .h10-hero-copy h1 .h28-title-main{
+  font-family:var(--h29-display)!important;
+  font-weight:400!important;
+  font-size:clamp(80px,8.5vw,133px)!important;
+  line-height:.99!important;
+  letter-spacing:-.075em!important;
+  margin-top:11px!important;
+}
+body.home-v10-page .home10 .h10-hero-copy h1 .h28-title-final{
+  font-family:var(--h29-display)!important;
+  font-weight:400!important;
+  font-size:clamp(43px,4.9vw,77px)!important;
+  line-height:1.08!important;
+  letter-spacing:-.075em!important;
+  margin-top:2px!important;
+  white-space:normal!important;
+  overflow-wrap:normal;
+}
+body.home-v10-page .home10 .h10-hero-copy>p{
+  font-size:clamp(16px,1.45vw,20px)!important;
+  font-weight:500!important;
+  line-height:1.65!important;
+}
+body.home-v10-page .home10 .h10-section-head h2{
+  font-size:clamp(43px,5vw,76px)!important;
+  line-height:1.03!important;
+  letter-spacing:-.063em!important;
+  text-wrap:balance;
+}
+body.home-v10-page .home10 .h10-week-card h3{
+  font-size:clamp(35px,3.6vw,55px)!important;
+  line-height:1.06!important;
+}
+body.home-v10-page .home10 .h20-panel h3,
+body.home-v10-page .home10 .h20-results-panel h3{
+  font-size:clamp(32px,3.25vw,50px)!important;
+}
+body.home-v10-page .home10 .h10-quick-links .h10-link-card strong{
+  font-size:clamp(26px,2.6vw,39px)!important;
+}
+body.home-v10-page .home10 .h10-hosted-race>strong{
+  font-size:clamp(28px,2.75vw,41px)!important;
+}
+body.home-v10-page .home10 .h10-hosted-winner-feature .h10-hosted-winner-copy strong{
+  font-size:clamp(23px,2.5vw,35px)!important;
+  line-height:1.08!important;
+}
+body.home-v10-page .home10 .h10-upcoming-card h3{
+  font-size:clamp(22px,2vw,31px)!important;
+}
+body.home-v10-page .home10 .h10-info-item strong{
+  font-size:clamp(24px,2.6vw,38px)!important;
+}
+body.home-v10-page .home10 .h20-championship-total b{
+  font-size:clamp(55px,5vw,78px)!important;
+}
+body.home-v10-page .home10 .h29-speed-track span{
+  font-family:var(--h29-ui)!important;
+  font-size:clamp(13px,1.25vw,17px)!important;
+  font-weight:900!important;
+  letter-spacing:.09em!important;
+}
+body.home-v10-page .home10 :is(
+ .h10-section-head small,.h10-eyebrow,.h10-info-item small,
+ .h20-panel-top,.h20-results-header,.h10-upcoming-card small,
+ .h10-hosted-head small,.h29-edition-tag,.h29-hero-bottomline
+){
+  font-family:var(--h29-ui)!important;
+  letter-spacing:.12em!important;
+}
+@media(max-width:1180px){
+  body.home-v10-page .home10 .h10-hero-copy h1 .h28-title-main{
+    font-size:clamp(71px,8.7vw,108px)!important;
+  }
+  body.home-v10-page .home10 .h10-hero-copy h1 .h28-title-final{
+    font-size:clamp(38px,4.85vw,61px)!important;
+  }
+}
+@media(max-width:900px){
+  body.home-v10-page .home10 .h10-hero-copy h1 .h28-title-main{
+    font-size:clamp(76px,12.5vw,110px)!important;
+  }
+  body.home-v10-page .home10 .h10-hero-copy h1 .h28-title-final{
+    font-size:clamp(42px,6.8vw,68px)!important;
+  }
+}
+@media(max-width:650px){
+  body.home-v10-page .home10 .h10-hero-copy h1 .h28-title-overline{
+    font-size:14px!important;
+    letter-spacing:.15em!important;
+  }
+  body.home-v10-page .home10 .h10-hero-copy h1 .h28-title-main{
+    font-size:clamp(50px,15vw,87px)!important;
+    letter-spacing:-.085em!important;
+  }
+  body.home-v10-page .home10 .h10-hero-copy h1 .h28-title-final{
+    font-size:clamp(30px,7.8vw,46px)!important;
+    letter-spacing:-.08em!important;
+  }
+  body.home-v10-page .home10 .h10-section-head h2{
+    font-size:clamp(34px,8.8vw,53px)!important;
+    line-height:1.08!important;
+  }
+  body.home-v10-page .home10 .h10-week-card h3{
+    font-size:clamp(30px,8vw,45px)!important;
+  }
+  body.home-v10-page .home10 .h20-panel h3,
+  body.home-v10-page .home10 .h20-results-panel h3{
+    font-size:clamp(29px,7.3vw,43px)!important;
+  }
+  body.home-v10-page .home10 .h10-quick-links .h10-link-card strong{
+    font-size:clamp(25px,6.8vw,37px)!important;
+  }
+  body.home-v10-page .home10 .h10-upcoming-card h3{
+    font-size:clamp(22px,6.2vw,29px)!important;
+  }
+  body.home-v10-page .home10 .h10-hosted-race>strong{
+    font-size:clamp(26px,7vw,38px)!important;
+  }
 }
