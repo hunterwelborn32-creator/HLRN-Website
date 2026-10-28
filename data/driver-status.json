@@ -13,6 +13,19 @@
       "excludedFrom": [
         "race-intelligence"
       ]
+    },
+    {
+      "driverId": "105882",
+      "name": "Bryce Hinton",
+      "aliases": [
+        "Bryce Hinton2",
+        "Hinton2, Bryce"
+      ],
+      "status": "BANNED",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
     }
   ]
 }

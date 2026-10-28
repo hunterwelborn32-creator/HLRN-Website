@@ -11,8 +11,8 @@
 <meta property="og:title" content="Bryce Hinton2 | HLRN Driver Profile">
 <meta property="og:description" content="Bryce Hinton2&#x27;s official High Line Racing Network driver profile with Sunday and Monday statistics, race history, team information and recent results.">
 <meta property="og:url" content="https://highlineracingnetwork.com/drivers/bryce-hinton2/">
-<meta property="og:image" content="/assets/driver-photos/cutout/bryce-hinton.webp">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "name": "Bryce Hinton2", "url": "https://highlineracingnetwork.com/drivers/bryce-hinton2/", "image": "/assets/driver-photos/cutout/bryce-hinton.webp", "memberOf": [{"@type": "SportsOrganization", "name": "Sunday Night League", "url": "https://highlineracingnetwork.com/standings/"}, {"@type": "SportsOrganization", "name": "Monday Night League", "url": "https://highlineracingnetwork.com/standings/"}]}</script>
+<meta property="og:image" content="/assets/bryce-hinton-profile-cutout-20261028.webp">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "name": "Bryce Hinton2", "url": "https://highlineracingnetwork.com/drivers/bryce-hinton2/", "image": "/assets/bryce-hinton-profile-cutout-20261028.webp", "memberOf": [{"@type": "SportsOrganization", "name": "Sunday Night League", "url": "https://highlineracingnetwork.com/standings/"}, {"@type": "SportsOrganization", "name": "Monday Night League", "url": "https://highlineracingnetwork.com/standings/"}]}</script>
 <link rel="stylesheet" href="/assets/site-shell.css?v=20261001control1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,6 +25,7 @@
 .hero{position:relative;display:grid;grid-template-columns:minmax(330px,.82fr) minmax(0,1.18fr);min-height:500px;background:#fff;color:var(--ink);overflow:hidden;border:1px solid var(--line);border-bottom:6px solid var(--red)}
 .hero-media{position:relative;min-height:500px;background:#fff;overflow:hidden;border-right:1px solid var(--line)}
 .hero-media:after{content:"";display:none}
+.hlrn-ban-stamp{position:absolute!important;z-index:30!important;top:50%!important;left:50%!important;transform:translate(-50%,-50%) rotate(-8deg)!important;width:min(95%,520px)!important;height:auto!important;max-height:95%!important;object-fit:contain!important;filter:drop-shadow(0 9px 19px rgba(170,0,0,.7))!important;pointer-events:none!important}
 .hlrn-ban-stamp{position:absolute!important;z-index:30!important;top:50%!important;left:50%!important;transform:translate(-50%,-50%) rotate(-8deg)!important;width:min(95%,520px)!important;height:auto!important;max-height:95%!important;object-fit:contain!important;filter:drop-shadow(0 9px 19px rgba(170,0,0,.7))!important;pointer-events:none!important}
 .hlrn-ban-status{align-self:flex-start;max-width:100%;padding:10px 18px;margin-bottom:18px;border:2px solid #f44;background:linear-gradient(120deg,#970000,#f00);color:white!important;font:900 clamp(14px,2vw,23px)/1.2 "Barlow Condensed",sans-serif!important;letter-spacing:.12em;box-shadow:0 0 26px rgba(255,0,0,.35);text-transform:uppercase}
 
@@ -213,8 +214,8 @@ html[data-hlrn-theme="dark"] .updated{color:#aaa!important}
   <section class="hero">
     <div class="hero-media">
       <div class="hero-fallback">#28</div>
-      <img class="hero-photo" src="/assets/driver-photos/cutout/bryce-hinton.webp" alt="Bryce Hinton2" loading="eager" decoding="async" onerror="this.remove()">
-      
+      <img class="hero-photo" data-hlrn-banned-photo="1" src="/assets/bryce-hinton-profile-cutout-20261028.webp" alt="Bryce Hinton2" loading="eager" decoding="async" onerror="this.remove()">
+      <img class="hlrn-ban-stamp" src="/assets/banned-driver.png?v=20261028banfix2" alt="BANNED" loading="eager" decoding="async">
     </div>
     <div class="hero-copy">
       
@@ -287,6 +288,6 @@ document.querySelectorAll(".race-link[data-href]").forEach(row=>{
   });
 });
 </script>
-<script src="/assets/site-shell.js?v=20261028banfix2"></script>
+<script src="/assets/site-shell.js?v=20261028bryceban1"></script>
 </body>
 </html>

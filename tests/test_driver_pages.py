@@ -45,6 +45,26 @@ class DriverPageTests(unittest.TestCase):
         self.assertIn("HLR", html)
         self.assertIn('"@type": "Person"', html)
 
+    def test_banned_drivers_use_one_stamp_and_a_cutout(self):
+        for slug, name, portrait in (
+            ("matthew-brown49", "Matthew Brown49", "matthew-brown-profile-cutout-20261028.webp"),
+            ("bryce-hinton2", "Bryce Hinton2", "bryce-hinton-profile-cutout-20261028.webp"),
+        ):
+            with self.subTest(slug=slug):
+                driver = {
+                    "name": name,
+                    "slug": slug,
+                    "number": "14" if slug.startswith("matthew") else "28",
+                    "photoSlug": "",
+                    "teams": {"sunday": None},
+                    "records": {"sunday": {"rank": 1, "points": 0, "races": 0, "wins": 0, "top5": 0, "top10": 0, "results": []}},
+                }
+                page = mod.render_page(driver)
+                self.assertEqual(page.count('class="hlrn-ban-stamp"'), 1)
+                self.assertIn('data-hlrn-banned-photo="1"', page)
+                self.assertIn(portrait, page)
+                self.assertNotIn('class="hlrn-ban-status"', page)
+
     def test_hosted_alias_and_records(self):
         hlrn = {
             "hosted": {

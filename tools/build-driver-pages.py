@@ -441,7 +441,7 @@ def render_page(driver):
     name = driver["name"]
     slug = driver["slug"]
     # Direct markup so banned status survives page generation and does not rely on the global JS loader.
-    is_banned = slug == "matthew-brown49"
+    is_banned = slug in ("matthew-brown49", "bryce-hinton2")
     ban_image_html = (
         '<img class="hlrn-ban-stamp" src="/assets/banned-driver.png?v=20261028banfix2" '
         'alt="BANNED" loading="eager" decoding="async">' if is_banned else ""
@@ -449,7 +449,7 @@ def render_page(driver):
     ban_photo_attribute = ' data-hlrn-banned-photo="1"' if is_banned else ""
     # Keep the banned photo stamp; the shared script adds a single BANNED badge after his name.
     ban_status_html = ""
-    site_shell_version = "20261028banfix4" if is_banned else "20261028banfix2"
+    site_shell_version = "20261028bryceban1"
     number = driver["number"]
     records = driver["records"]
     teams = driver["teams"]
@@ -460,10 +460,11 @@ def render_page(driver):
         has_photo = bool(photo_slug and (CUTOUT_ROOT / f"{photo_slug}.webp").is_file())
     fallback_photo = irating_fallback_photo(driver.get("iRating"))
     photo = PHOTO_BASE + quote(photo_slug) + ".webp" if has_photo and photo_slug else fallback_photo
-    if is_banned:
-        # Dedicated, transparent driver portrait (not the promotional/full photo).
-        # Stable unique filename avoids previously cached full-image variants.
+    # Dedicated, transparent portraits; avoid cached promotional full-image graphics.
+    if slug == "matthew-brown49":
         photo = "/assets/matthew-brown-profile-cutout-20261028.webp"
+    elif slug == "bryce-hinton2":
+        photo = "/assets/bryce-hinton-profile-cutout-20261028.webp"
 
     starts = sum(num(r.get("races")) for r in records.values())
     wins = sum(num(r.get("wins")) for r in records.values())

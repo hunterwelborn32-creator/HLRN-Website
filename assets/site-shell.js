@@ -1372,7 +1372,7 @@ start();
   if(/\/race-intelligence(?:\/|$)/.test(location.pathname))return;
   if(document.querySelector('script[data-hlrn-banned-driver]'))return;
   const tag=document.createElement("script");
-  tag.src="/assets/banned-driver.js?v=20261028banned4";
+  tag.src="/assets/banned-driver.js?v=20261028banned5";
   tag.defer=true;
   tag.setAttribute("data-hlrn-banned-driver","");
   document.head.appendChild(tag);

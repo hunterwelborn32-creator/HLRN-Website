@@ -20,9 +20,10 @@ let raceUpdateTimer = null;
    but they are not selected as current contenders or trend picks. */
 const EXCLUDED_DRIVERS = [
   "trace mcdowell",
-  "matthew brown"
+  "matthew brown",
+  "bryce hinton"
 ];
-const EXCLUDED_DRIVER_IDS = new Set(["116507"]);
+const EXCLUDED_DRIVER_IDS = new Set(["116507","105882"]);
 const PAUSED_DRIVERS = [
   "benjamin richards",
   "sebastian michaels",
