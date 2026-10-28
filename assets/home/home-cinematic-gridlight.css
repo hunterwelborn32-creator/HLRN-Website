@@ -510,3 +510,70 @@ body.home-v10-page .home10 :is(
     font-size:clamp(26px,7vw,38px)!important;
   }
 }
+
+
+/* ============================================================
+   HLRN CUSTOM PAGE BACKGROUNDS — 2026-10-28
+   The user's uploaded artwork is exclusive to the home content.
+   Do not paint over .h10-hero (the existing car photograph),
+   global nav / track, automatic race-night overlay, or live page.
+   ============================================================ */
+html[data-hlrn-theme="light"] body.home-v10-page .home10 main{
+  background-color:#f5f6f8;
+  background-image:
+    linear-gradient(90deg,rgba(255,255,255,.04),transparent 28%,transparent 72%,rgba(255,255,255,.04)),
+    url("HLRN_Day_Mode_Background.png");
+  background-position:center center,center center;
+  background-repeat:no-repeat,no-repeat;
+  background-size:cover,cover;
+  background-attachment:fixed,fixed;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page .home10 main{
+  background-color:#050810;
+  background-image:
+    linear-gradient(90deg,rgba(4,7,12,.07),transparent 28%,transparent 72%,rgba(4,7,12,.07)),
+    url("HLRN_Night_Mode_Background.png");
+  background-position:center center,center center;
+  background-repeat:no-repeat,no-repeat;
+  background-size:cover,cover;
+  background-attachment:fixed,fixed;
+}
+/* Reduce the old decorative grid so the uploaded HLRN artwork can shine. */
+body.home-v10-page .home10 main:before{
+  opacity:.10;
+}
+/* Light translucent broadcast breaks keep the background visibly continuous. */
+html[data-hlrn-theme="light"] body.home-v10-page .home10 main > section.h10-section:nth-of-type(even){
+  background:rgba(255,255,255,.27)!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page .home10 main > section.h10-section:nth-of-type(even){
+  background:rgba(6,9,15,.34)!important;
+}
+/* Keep text and race stats readable in front of the artwork. */
+html[data-hlrn-theme="light"] body.home-v10-page .home10 main :is(.h10-week-card,.h20-panel,.h20-results-panel,.h10-link-card,.h20-utility a){
+  background-color:rgba(255,255,255,.97)!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page .home10 main :is(.h10-week-card,.h20-panel,.h20-results-panel,.h10-link-card,.h20-utility a){
+  background-color:rgba(9,13,21,.94)!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page .home10 main .h10-section-head{
+  text-shadow:0 1px 0 rgba(255,255,255,.9);
+}
+html[data-hlrn-theme="dark"] body.home-v10-page .home10 main .h10-section-head{
+  text-shadow:0 2px 15px rgba(0,0,0,.60);
+}
+/* Mobile browsers often scroll fixed backgrounds as ordinary images.
+   Keep a dependable HLRN treatment without creating horizontal overflow. */
+@media(max-width:900px){
+  html[data-hlrn-theme] body.home-v10-page .home10 main{
+    background-attachment:scroll,scroll;
+    background-position:center center,center top;
+    background-size:cover,auto 100vh;
+    background-repeat:no-repeat,repeat-y;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html[data-hlrn-theme] body.home-v10-page .home10 main{
+    background-attachment:scroll,scroll;
+  }
+}
