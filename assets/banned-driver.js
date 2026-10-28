@@ -55,11 +55,10 @@ function markNames(){
     let match,start=0;PATTERN.lastIndex=0;
     while((match=PATTERN.exec(s))){
       f.appendChild(document.createTextNode(s.slice(start,match.index)));
-      const wrap=document.createElement("span"),pill=document.createElement("span");
+      const wrap=document.createElement("span");
       wrap.className="hlrn-banned-name";wrap.textContent=match[0];
-      pill.className="hlrn-banned-label";pill.textContent="BANNED";
-      pill.setAttribute("aria-label","Banned driver");
-      wrap.appendChild(pill);f.appendChild(wrap);start=match.index+match[0].length;
+      wrap.setAttribute("title","Driver status: BANNED");
+      f.appendChild(wrap);start=match.index+match[0].length;
     }
     f.appendChild(document.createTextNode(s.slice(start)));node.replaceWith(f);
   }
@@ -80,7 +79,7 @@ function scan(){
 const style=document.createElement("style");style.id="hlrn-banned-driver-styles";
 style.textContent=[
 ".hlrn-banned-name{display:inline;white-space:normal}",
-".hlrn-banned-label{display:inline-block;vertical-align:middle;margin:0 .3em;padding:.15em .5em;border-radius:3px;border:1px solid #ff6666;background:#b00000;color:#fff!important;font-family:Arial,sans-serif;font-size:.66em;font-weight:900;line-height:1.35;letter-spacing:.06em;white-space:nowrap;text-shadow:none;box-shadow:0 1px 4px #0005}",
+".hlrn-banned-name::after{content:'BANNED';display:inline-block;vertical-align:middle;margin:0 .3em;padding:.15em .5em;border-radius:3px;border:1px solid #ff6666;background:#b00000;color:#fff!important;font-family:Arial,sans-serif;font-size:.66em;font-weight:900;line-height:1.35;letter-spacing:.06em;white-space:nowrap;text-shadow:none;box-shadow:0 1px 4px #0005}",
 ".hlrn-banned-overlay{position:absolute!important;max-width:none!important;min-width:0!important;object-fit:contain!important;z-index:25!important;pointer-events:none!important;display:block!important;opacity:1!important;filter:drop-shadow(0 2px 4px #0009)}",
 ".hlrn-banned-banner{display:block;width:max-content;max-width:100%;margin:0 0 14px;padding:10px 16px;background:linear-gradient(120deg,#750000,#ef1313);border:2px solid #fa7777;border-radius:4px;color:#fff!important;font:900 clamp(14px,2.5vw,23px)/1.25 Arial,sans-serif;letter-spacing:.12em;box-shadow:0 6px 22px #f0000052}"
 ].join("");
