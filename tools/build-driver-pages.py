@@ -449,6 +449,7 @@ def render_page(driver):
     ban_photo_attribute = ' data-hlrn-banned-photo="1"' if is_banned else ""
     # Keep the banned photo stamp; the shared script adds a single BANNED badge after his name.
     ban_status_html = ""
+    site_shell_version = "20261028banfix3" if is_banned else "20261028banfix2"
     number = driver["number"]
     records = driver["records"]
     teams = driver["teams"]
@@ -784,7 +785,7 @@ document.querySelectorAll(".race-link[data-href]").forEach(row=>{{
   }});
 }});
 </script>
-<script src="/assets/site-shell.js?v=20261028banfix2"></script>
+<script src="/assets/site-shell.js?v={site_shell_version}"></script>
 </body>
 </html>
 """
