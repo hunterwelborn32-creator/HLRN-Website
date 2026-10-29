@@ -181,7 +181,7 @@ function render(){
       : "LATEST RACE RESULTS →";
   }
 
-  $("[data-results-series]").forEach(link=>{
+  $$("[data-results-series]").forEach(link=>{
     const league=link.dataset.resultsSeries;
     const race=latestRace[league];
     link.href=raceResultsUrl(league);
