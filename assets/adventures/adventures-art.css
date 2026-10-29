@@ -1,0 +1,159 @@
+/* Adventures 2026: compact illustration banners and theme-matched full-page art.
+   Scope: /adventures/ landing page only. Episode pages stay untouched. */
+html body.hlrn-adventures-page {
+  position:relative;
+  isolation:isolate;
+}
+/* The global theme manager paints body solid white/black. Keep our background
+   independent so it remains visible in both modes without altering the shell. */
+html body.hlrn-adventures-page > .hlrn-adventures-backdrop {
+  position:fixed!important;
+  display:block!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  z-index:0!important;
+  pointer-events:none!important;
+  background-color:#07090e;
+  background-image:
+    linear-gradient(180deg,rgba(6,8,14,.12),rgba(6,8,14,.24)),
+    url("./HLRN-Adventures-Night-Full-Background.webp");
+  background-position:center,center;
+  background-size:cover,cover;
+  background-repeat:no-repeat,no-repeat;
+}
+html[data-hlrn-theme="light"] body.hlrn-adventures-page > .hlrn-adventures-backdrop {
+  background-color:#f6f8fb;
+  background-image:
+    linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.18)),
+    url("./HLRN-Adventures-Day-Full-Background.webp");
+}
+html[data-hlrn-theme="dark"] body.hlrn-adventures-page > .hlrn-adventures-backdrop {
+  background-color:#07090e;
+  background-image:
+    linear-gradient(180deg,rgba(6,8,14,.12),rgba(6,8,14,.24)),
+    url("./HLRN-Adventures-Night-Full-Background.webp");
+}
+/* All content stays above the fixed background artwork. */
+html body.hlrn-adventures-page > main#series,
+html body.hlrn-adventures-page > footer.foot {
+  position:relative!important;
+  z-index:1!important;
+}
+html[data-hlrn-theme] body.hlrn-adventures-page main#series,
+html[data-hlrn-theme] body.hlrn-adventures-page main#series > .wrap {
+  background:transparent!important;
+  background-image:none!important;
+}
+/* Both uploaded banners share the same dimensions (1920x410).
+   Display at a compact, matched height; keep their built-in lettering clear. */
+html body.hlrn-adventures-page main#series > .hero {
+  position:relative!important;
+  display:block!important;
+  width:100%!important;
+  height:clamp(145px,17vw,315px)!important;
+  min-height:0!important;
+  max-height:315px!important;
+  aspect-ratio:auto!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+  background-color:#07090e!important;
+  background-image:url("./HLRN-Adventures-Night-Banner.webp")!important;
+  background-repeat:no-repeat!important;
+  background-position:center center!important;
+  background-size:cover!important;
+  border-bottom:3px solid #e72b44!important;
+  box-shadow:none!important;
+}
+html[data-hlrn-theme="light"] body.hlrn-adventures-page main#series > .hero {
+  background-color:#f7f8fa!important;
+  background-image:url("./HLRN-Adventures-Day-Banner.webp")!important;
+}
+html[data-hlrn-theme="dark"] body.hlrn-adventures-page main#series > .hero {
+  background-color:#07090e!important;
+  background-image:url("./HLRN-Adventures-Night-Banner.webp")!important;
+}
+html body.hlrn-adventures-page main#series > .hero::after {
+  display:none!important;
+}
+/* Existing overlay repeats information already baked into both banners. */
+html body.hlrn-adventures-page main#series > .hero .hero-topline,
+html body.hlrn-adventures-page main#series > .hero .hero-bottomline {
+  display:none!important;
+}
+/* A compact intro leaves the original description, metadata and read buttons.
+   The H1 remains available to assistive technology without a second title. */
+html body.hlrn-adventures-page main#series > .series-intro .intro-copy h1 {
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;
+  clip-path:inset(50%)!important;
+  white-space:nowrap!important;
+  margin:-1px!important;
+  padding:0!important;
+  border:0!important;
+}
+html[data-hlrn-theme] body.hlrn-adventures-page main#series > .series-intro {
+  position:relative!important;
+  background:rgba(9,12,18,.91)!important;
+  border-bottom:1px solid rgba(218,47,67,.48)!important;
+}
+html[data-hlrn-theme="light"] body.hlrn-adventures-page main#series > .series-intro {
+  background:rgba(255,255,255,.94)!important;
+  border-bottom-color:rgba(197,207,220,.85)!important;
+}
+html body.hlrn-adventures-page .series-intro-inner {
+  padding-top:24px!important;
+  padding-bottom:25px!important;
+}
+html[data-hlrn-theme="light"] body.hlrn-adventures-page .series-intro p {
+  color:#29323e!important;
+}
+html[data-hlrn-theme="light"] body.hlrn-adventures-page .series-intro .section-kicker {
+  color:#c51632!important;
+}
+html[data-hlrn-theme="dark"] body.hlrn-adventures-page .series-intro p {
+  color:#d8dde5!important;
+}
+/* Preserve existing readable solid episode tiles and cover photos. */
+html[data-hlrn-theme="light"] body.hlrn-adventures-page .episode-tile {
+  background:#fff!important;
+}
+html[data-hlrn-theme="dark"] body.hlrn-adventures-page .episode-tile {
+  background:#17191f!important;
+}
+html body.hlrn-adventures-page .section-top {
+  padding:12px 14px;
+  border-radius:5px;
+  background:rgba(11,14,19,.80);
+}
+html[data-hlrn-theme="light"] body.hlrn-adventures-page .section-top {
+  background:rgba(255,255,255,.90)!important;
+}
+html[data-hlrn-theme="dark"] body.hlrn-adventures-page .section-top {
+  background:rgba(11,14,19,.80)!important;
+}
+html[data-hlrn-theme] body.hlrn-adventures-page > footer.foot {
+  background:rgba(9,12,17,.94)!important;
+}
+html[data-hlrn-theme="light"] body.hlrn-adventures-page > footer.foot {
+  background:rgba(255,255,255,.95)!important;
+}
+@media(max-width:750px) {
+  html body.hlrn-adventures-page main#series > .hero {
+    height:clamp(145px,34vw,225px)!important;
+    background-position:center center!important;
+  }
+  html body.hlrn-adventures-page .series-intro-inner {
+    padding-top:19px!important;
+    padding-bottom:21px!important;
+  }
+}
+@media(max-width:420px) {
+  html body.hlrn-adventures-page main#series > .hero {
+    height:146px!important;
+  }
+}
