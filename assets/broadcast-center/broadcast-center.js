@@ -221,7 +221,7 @@ function render(){
 }
 
 function bind(){
-  $(".bc-archive-filter").forEach(btn=>btn.addEventListener("click",()=>{archiveFilter=btn.dataset.archive;$(".bc-archive-filter").forEach(x=>x.classList.toggle("active",x===btn));renderPastRaces()}));
+  // Old archive controls are no longer part of Watch HLRN.
   $$(".bc-tab").forEach(btn=>btn.addEventListener("click",()=>{
     active=btn.dataset.series;
     const u=new URL(location.href);u.searchParams.set("league",active);history.replaceState(null,"",u);
