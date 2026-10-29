@@ -523,6 +523,10 @@ html[data-hlrn-theme="light"] body.home-v10-page .home10 main{
   background-image:
     linear-gradient(90deg,rgba(255,255,255,.04),transparent 28%,transparent 72%,rgba(255,255,255,.04)),
     url("HLRN_Day_Mode_Background.png");
+  background-image:
+    linear-gradient(90deg,rgba(255,255,255,.04),transparent 28%,transparent 72%,rgba(255,255,255,.04)),
+    image-set(url("HLRN_Day_Mode_Background.webp") type("image/webp"),
+              url("HLRN_Day_Mode_Background.png") type("image/png"));
   background-position:center center,center center;
   background-repeat:no-repeat,no-repeat;
   background-size:cover,cover;
@@ -533,6 +537,10 @@ html[data-hlrn-theme="dark"] body.home-v10-page .home10 main{
   background-image:
     linear-gradient(90deg,rgba(4,7,12,.07),transparent 28%,transparent 72%,rgba(4,7,12,.07)),
     url("HLRN_Night_Mode_Background.png");
+  background-image:
+    linear-gradient(90deg,rgba(4,7,12,.07),transparent 28%,transparent 72%,rgba(4,7,12,.07)),
+    image-set(url("HLRN_Night_Mode_Background.webp") type("image/webp"),
+              url("HLRN_Night_Mode_Background.png") type("image/png"));
   background-position:center center,center center;
   background-repeat:no-repeat,no-repeat;
   background-size:cover,cover;
