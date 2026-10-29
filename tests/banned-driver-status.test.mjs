@@ -17,10 +17,21 @@ test('Matthew Brown remains present in published racing records, but is banned',
   assert.ok(JSON.parse(read('data/driver-pages.json')).drivers.some(row=>row.slug==='matthew-brown49'));
 });
 
-test('Race Intelligence alone excludes driver ID 116507 and Matthew Brown',()=>{
+test('Race Intelligence excludes all banned drivers without removing their racing records',()=>{
   const intel=read('assets/race-intelligence/intelligence-v1.js');
-  assert.match(intel,/EXCLUDED_DRIVER_IDS\s*=\s*new Set\(\["116507"\]\)/);
-  assert.match(intel,/"matthew brown"/);
+  const statuses=JSON.parse(read('data/driver-status.json')).drivers;
+  const banned=statuses.filter(d=>d.status==='BANNED' && d.excludedFrom?.includes('race-intelligence'));
+  assert.ok(banned.length>0);
+
+  const match=intel.match(/EXCLUDED_DRIVER_IDS\s*=\s*new Set\(\s*(\[[^\]]*\])\s*\)/);
+  assert.ok(match,'Race Intelligence must define its excluded driver IDs');
+  const excludedIds=JSON.parse(match[1]);
+  assert.deepEqual([...excludedIds].sort(),banned.map(d=>d.driverId).sort());
+
+  for(const driver of banned){
+    assert.ok(intel.includes('"'+driver.name.toLowerCase()+'"'),'Missing excluded driver name: '+driver.name);
+  }
+  assert.match(intel,/EXCLUDED_DRIVER_IDS\.has\(/);
   assert.doesNotMatch(read('tools/sync-data.mjs'),/excludeDrivers/);
   assert.doesNotMatch(read('tools/build-derived.mjs'),/excludeDrivers/);
 });
