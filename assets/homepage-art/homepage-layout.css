@@ -262,32 +262,79 @@ body.home-v10-page .home10 .home30-shortcut {
   position:relative;
   display:flex;
   flex-direction:column;
-  justify-content:end;
+  justify-content:flex-end;
   min-height:138px;
   padding:15px 17px;
   border-radius:8px;
-  border:1px solid rgba(255,255,255,.30);
+  border:1px solid rgba(255,255,255,.32);
   overflow:hidden;
   text-decoration:none;
   color:#fff!important;
-  background-color:#111925;
-  background-image:
-    linear-gradient(0deg,rgba(5,9,16,.97) 0%,rgba(5,9,16,.46) 67%,rgba(6,10,17,.12)),
-    url("./HLRN-Homepage-Night-Full-Background.webp?v=20261029newart4");
+  background-color:#101b29;
   background-size:cover,cover;
-  background-position:center center,center center;
+  background-position:center,center;
+  background-repeat:no-repeat,no-repeat;
   box-shadow:0 10px 22px rgba(0,0,0,.20);
   transition:transform .18s,box-shadow .18s,border-color .18s;
 }
-html[data-hlrn-theme="light"] body.home-v10-page .home10 .home30-shortcut{
+/* Eight individually art-directed scenes — different content for every
+   destination, plus true day/night matches. The text/links remain real HTML
+   and the gradient keeps the labels accessible. No artwork is repeated. */
+body.home-v10-page .home10 > .home30-shortcuts > .home30-shortcut:nth-child(1){
   background-image:
-    linear-gradient(0deg,rgba(8,15,24,.92),rgba(8,15,24,.39) 67%,rgba(8,15,24,.09)),
-    url("./HLRN-Homepage-Day-Full-Background.webp?v=20261029newart4");
+    linear-gradient(0deg,rgba(2,5,11,.94) 0%,rgba(2,5,11,.54) 55%,rgba(2,5,11,.12) 100%),
+    url("./HLRN-Card-Drivers-Night.webp?v=20261029cardsv2")!important;
+  background-position:center,center!important;
 }
-body.home-v10-page .home10 .home30-shortcut:nth-child(1){background-position:center,12% 50%}
-body.home-v10-page .home10 .home30-shortcut:nth-child(2){background-position:center,40% 50%}
-body.home-v10-page .home10 .home30-shortcut:nth-child(3){background-position:center,72% 50%}
-body.home-v10-page .home10 .home30-shortcut:nth-child(4){background-position:center,92% 50%}
+
+body.home-v10-page .home10 > .home30-shortcuts > .home30-shortcut:nth-child(2){
+  background-image:
+    linear-gradient(0deg,rgba(2,5,11,.94) 0%,rgba(2,5,11,.54) 55%,rgba(2,5,11,.12) 100%),
+    url("./HLRN-Card-Teams-Night.webp?v=20261029cardsv2")!important;
+  background-position:center,center!important;
+}
+
+body.home-v10-page .home10 > .home30-shortcuts > .home30-shortcut:nth-child(3){
+  background-image:
+    linear-gradient(0deg,rgba(2,5,11,.94) 0%,rgba(2,5,11,.54) 55%,rgba(2,5,11,.12) 100%),
+    url("./HLRN-Card-Standings-Night.webp?v=20261029cardsv2")!important;
+  background-position:center,center!important;
+}
+
+body.home-v10-page .home10 > .home30-shortcuts > .home30-shortcut:nth-child(4){
+  background-image:
+    linear-gradient(0deg,rgba(2,5,11,.94) 0%,rgba(2,5,11,.54) 55%,rgba(2,5,11,.12) 100%),
+    url("./HLRN-Card-Schedule-Night.webp?v=20261029cardsv2")!important;
+  background-position:center,center!important;
+}
+
+html[data-hlrn-theme="light"] body.home-v10-page .home10 > .home30-shortcuts > .home30-shortcut:nth-child(1){
+  background-image:
+    linear-gradient(0deg,rgba(5,12,22,.91) 0%,rgba(5,12,22,.47) 55%,rgba(5,12,22,.07) 100%),
+    url("./HLRN-Card-Drivers-Day.webp?v=20261029cardsv2")!important;
+  background-position:center,center!important;
+}
+
+html[data-hlrn-theme="light"] body.home-v10-page .home10 > .home30-shortcuts > .home30-shortcut:nth-child(2){
+  background-image:
+    linear-gradient(0deg,rgba(5,12,22,.91) 0%,rgba(5,12,22,.47) 55%,rgba(5,12,22,.07) 100%),
+    url("./HLRN-Card-Teams-Day.webp?v=20261029cardsv2")!important;
+  background-position:center,center!important;
+}
+
+html[data-hlrn-theme="light"] body.home-v10-page .home10 > .home30-shortcuts > .home30-shortcut:nth-child(3){
+  background-image:
+    linear-gradient(0deg,rgba(5,12,22,.91) 0%,rgba(5,12,22,.47) 55%,rgba(5,12,22,.07) 100%),
+    url("./HLRN-Card-Standings-Day.webp?v=20261029cardsv2")!important;
+  background-position:center,center!important;
+}
+
+html[data-hlrn-theme="light"] body.home-v10-page .home10 > .home30-shortcuts > .home30-shortcut:nth-child(4){
+  background-image:
+    linear-gradient(0deg,rgba(5,12,22,.91) 0%,rgba(5,12,22,.47) 55%,rgba(5,12,22,.07) 100%),
+    url("./HLRN-Card-Schedule-Day.webp?v=20261029cardsv2")!important;
+  background-position:center,center!important;
+}
 body.home-v10-page .home10 .home30-shortcut:hover{
   transform:translateY(-3px);
   border-color:#ef304b;
