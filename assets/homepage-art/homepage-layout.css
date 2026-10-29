@@ -583,91 +583,154 @@ html[data-hlrn-theme="dark"] body.home-v10-page #hlrnRaceDayHome>.h10-info{backg
 
 
 
-/* ========================================================
-   Homepage logo/background system — PNG edition.
-   No separate banner: images already contain the HLRN logo.
-   Keep the artwork anchored to the TOP OF THE DOCUMENT (not
-   fixed to the viewport), so the logo scrolls out of sight.
-   ======================================================== */
+/* ================================================================
+   HLRN HOMEPAGE FULL-PAGE ART — DAY / NIGHT
+   The two-layer system is deliberate:
+   (1) Logo-free speedway art remains visible behind ALL page sections.
+   (2) The PNG with the HLRN logo is absolutely anchored to the
+       document top and fades away as the page scrolls.
+   This fixes the gray cutoff after the initial race dashboard.
+   ================================================================ */
 html[data-hlrn-theme] body.home-v10-page #hlrnRaceDayHome{
-  --home32-base:#070b13;
-  background-color:var(--home32-base)!important;
   position:relative!important;
   isolation:isolate!important;
+  overflow:clip!important;
+  background:#f1f5fa!important;
 }
-html[data-hlrn-theme="light"] body.home-v10-page #hlrnRaceDayHome{
-  --home32-base:#f0f5fb;
+html[data-hlrn-theme="dark"] body.home-v10-page #hlrnRaceDayHome{
+  background:#070b13!important;
 }
-/* Explicitly defeat the earlier fixed-position backdrop.
-   This absolutely positioned top image belongs to the page,
-   not the viewport, and cannot follow the user down on scroll. */
-html body.home-v10-page #hlrnRaceDayHome > .home30-full-backdrop{
-  position:absolute!important;
+
+/* Continuous racetrack underneath the entire homepage, not a 650px
+   introductory scene. The image itself contains NO logo. */
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home30-full-backdrop{
+  position:fixed!important;
+  inset:0!important;
+  width:100vw!important;
+  height:100vh!important;
   display:block!important;
-  inset:0 0 auto 0!important;
-  width:100%!important;
-  height:clamp(640px,62vw,1150px)!important;
   z-index:0!important;
   transform:none!important;
   pointer-events:none!important;
-  background-color:transparent!important;
+  background-color:#07101b!important;
   background-image:
-    linear-gradient(to bottom, transparent 0%,rgba(7,11,19,.06) 25%,rgba(7,11,19,.28) 54%,#070b13 97%),
-    url("./HLRN-Homepage-Night-Logo-Background.png?v=20261029pnglogo6")!important;
-  background-size:100% 100%,100% auto!important;
-  background-position:center top,center top!important;
-  background-attachment:scroll,scroll!important;
+    linear-gradient(180deg,rgba(5,9,16,.19),rgba(5,9,16,.51)),
+    url("./HLRN-Homepage-Night-Full-Background.webp?v=20261029fullpage7")!important;
+  background-size:cover,cover!important;
+  background-position:center,center!important;
   background-repeat:no-repeat,no-repeat!important;
+  background-attachment:fixed,fixed!important;
 }
-html[data-hlrn-theme="light"] body.home-v10-page #hlrnRaceDayHome > .home30-full-backdrop{
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home30-full-backdrop{
+  background-color:#eaf3fb!important;
   background-image:
-    linear-gradient(to bottom,transparent 0%,rgba(240,245,251,.04) 25%,rgba(240,245,251,.30) 52%,#f0f5fb 97%),
-    url("./HLRN-Homepage-Day-Logo-Background.png?v=20261029pnglogo6")!important;
+    linear-gradient(180deg,rgba(249,252,255,.19),rgba(249,252,255,.48)),
+    url("./HLRN-Homepage-Day-Full-Background.webp?v=20261029fullpage7")!important;
 }
-html[data-hlrn-theme="dark"] body.home-v10-page #hlrnRaceDayHome > .home30-full-backdrop{
+html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home30-full-backdrop{
+  background-color:#07101b!important;
   background-image:
-    linear-gradient(to bottom,transparent 0%,rgba(7,11,19,.06) 25%,rgba(7,11,19,.28) 54%,#070b13 97%),
-    url("./HLRN-Homepage-Night-Logo-Background.png?v=20261029pnglogo6")!important;
+    linear-gradient(180deg,rgba(5,9,16,.19),rgba(5,9,16,.51)),
+    url("./HLRN-Homepage-Night-Full-Background.webp?v=20261029fullpage7")!important;
 }
-/* Keep the original compact live race dashboard just BELOW the logo.
-   No extra element or photo banner is inserted into document flow. */
+
+/* Logo appears ONCE, at the top, and scrolls away naturally.
+   Fading this top scene over the logo-free full-page background
+   avoids repeating the HLRN mark further down the site. */
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene{
+  display:block!important;
+  position:absolute!important;
+  inset:0 0 auto!important;
+  width:100%!important;
+  height:clamp(570px,58vw,1030px)!important;
+  z-index:1!important;
+  pointer-events:none!important;
+  background-color:transparent!important;
+  background-image:url("./HLRN-Homepage-Night-Logo-Background.png?v=20261029fullpage7")!important;
+  background-position:center top!important;
+  background-repeat:no-repeat!important;
+  background-size:100% auto!important;
+  -webkit-mask-image:linear-gradient(to bottom,black 0%,black 40%,rgba(0,0,0,.9) 55%,transparent 100%);
+  mask-image:linear-gradient(to bottom,black 0%,black 40%,rgba(0,0,0,.9) 55%,transparent 100%);
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene{
+  background-image:url("./HLRN-Homepage-Day-Logo-Background.png?v=20261029fullpage7")!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene{
+  background-image:url("./HLRN-Homepage-Night-Logo-Background.png?v=20261029fullpage7")!important;
+}
+
+/* Every content area stays transparent so the track is continuous,
+   including Race Week, points, results, quick links and the footer. */
+html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > :is(header.h10-hero,nav.home30-shortcuts,section.h10-info,main,footer.h10-footer){
+  position:relative!important;
+  z-index:2!important;
+}
+html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > main{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+}
+html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > main > .h10-section{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > main > .h10-section:nth-of-type(even){
+  background:rgba(255,255,255,.14)!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > main > .h10-section:nth-of-type(even){
+  background:rgba(5,9,16,.17)!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .h10-info{
+  background:rgba(255,255,255,.17)!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .h10-info{
+  background:rgba(6,12,20,.19)!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .h10-footer{
+  background:rgba(255,255,255,.69)!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .h10-footer{
+  background:rgba(7,11,19,.74)!important;
+}
+/* Small readable panels retain dark-on-light or light-on-dark contrast. */
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-info-item{
+  background:rgba(255,255,255,.76)!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-info-item{
+  background:rgba(9,15,24,.73)!important;
+}
+/* Logo space on first screen only; never fixed position. */
 html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero{
+  min-height:0!important;
+  margin-top:0!important;
   padding-top:clamp(250px,21.5vw,415px)!important;
   padding-bottom:15px!important;
-  margin-top:0!important;
-  min-height:0!important;
   background:transparent!important;
   background-image:none!important;
 }
-html[data-hlrn-theme] body.home-v10-page #hlrnRaceDayHome > main{
-  background:transparent!important;
-  background-image:none!important;
-}
-html body.home-v10-page #hlrnRaceDayHome > :is(.h10-hero,.home30-shortcuts,.h10-info,main,.h10-footer){
-  position:relative!important;
-  z-index:1!important;
-}
-/* Race-night takeover is still allowed to replace the regular hero.
-   Don't display the normal homepage artwork over its own live layout. */
-html body.home-v10-page.rn-active #hlrnRaceDayHome > .home30-full-backdrop{
+html body.home-v10-page.rn-active #hlrnRaceDayHome > :is(.home30-full-backdrop,.home33-top-logo-scene){
   display:none!important;
 }
 @media(max-width:980px){
-  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero{
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero{
     padding-top:clamp(190px,23vw,255px)!important;
   }
-  html body.home-v10-page #hlrnRaceDayHome > .home30-full-backdrop{
-    height:clamp(625px,78vw,850px)!important;
-    background-size:100% 100%,125% auto!important;
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene{
+    height:clamp(520px,72vw,790px)!important;
+    background-size:125% auto!important;
   }
 }
 @media(max-width:650px){
-  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero{
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero{
     padding-top:clamp(145px,40vw,205px)!important;
   }
-  html body.home-v10-page #hlrnRaceDayHome > .home30-full-backdrop{
-    height:650px!important;
-    background-size:100% 100%,185% auto!important;
-    background-position:center top,center top!important;
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene{
+    height:clamp(425px,105vw,580px)!important;
+    background-size:185% auto!important;
+  }
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home30-full-backdrop{
+    background-attachment:scroll,scroll!important;
   }
 }
