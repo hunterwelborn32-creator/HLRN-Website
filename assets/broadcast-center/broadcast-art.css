@@ -29,8 +29,8 @@ html body.bc-page{
 html[data-hlrn-theme="light"] body.bc-page{
   background-color:#f6f8fa!important;
   background-image:
-    linear-gradient(180deg,rgba(255,255,255,.84),rgba(255,255,255,.89)),
-    url("./HLRN-Broadcast-Full-Background.webp")!important;
+    linear-gradient(180deg,rgba(255,255,255,.42),rgba(255,255,255,.63)),
+    url("./HLRN-Broadcast-Day-Full-Background.webp")!important;
   background-position:center top,center center!important;
   background-repeat:no-repeat,no-repeat!important;
   background-size:cover,cover!important;
@@ -159,4 +159,53 @@ html[data-hlrn-theme="light"] body.bc-page :is(.bc-rail,.bc-footer,.bc-section-h
 }
 @media(prefers-reduced-motion:reduce){
   html body.bc-page{background-attachment:scroll,scroll!important}
+}
+
+/* HLRN theme-specific top banner images. CSS chooses only the active image,
+   including for the site's manual day/night toggle (not OS preference). */
+html body.bc-page .bc-hero-banner{
+  aspect-ratio:1916 / 821;
+}
+html body.bc-page .bc-hero-art{
+  position:absolute;
+  inset:0;
+  display:block;
+  background-image:url("./HLRN-Broadcast-Top-Banner.webp");
+  background-color:#080b10;
+  background-position:center center;
+  background-repeat:no-repeat;
+  background-size:cover;
+}
+html[data-hlrn-theme="light"] body.bc-page .bc-hero-banner{
+  aspect-ratio:1942 / 275;
+  background:#f8f9fb;
+}
+html[data-hlrn-theme="light"] body.bc-page .bc-hero-art{
+  background-color:#f8f9fb;
+  background-image:url("./HLRN-Broadcast-Day-Top-Banner.webp");
+}
+html[data-hlrn-theme="light"] body.bc-page .bc-hero-banner:after{
+  background:linear-gradient(to bottom,transparent,rgba(232,236,242,.12));
+}
+@media(max-width:760px){
+  /* Both modes use a properly sized crop with readable overlaid text. */
+  html body.bc-page .bc-hero-banner{
+    aspect-ratio:auto;
+  }
+  html body.bc-page .bc-hero-art{
+    background-position:left center;
+  }
+  html[data-hlrn-theme="light"] body.bc-page .bc-hero-banner:after{
+    background:linear-gradient(0deg,rgba(255,255,255,.96) 0%,rgba(255,255,255,.35) 45%,transparent 85%);
+  }
+  html[data-hlrn-theme="light"] body.bc-page .bc-hero-mobile-title{
+    color:#11161c;
+    text-shadow:0 1px 6px rgba(255,255,255,.75);
+  }
+  html[data-hlrn-theme="light"] body.bc-page .bc-hero-mobile-title strong span{
+    color:#db1635;
+  }
+  html[data-hlrn-theme="light"] body.bc-page .bc-hero-mobile-title em{
+    color:#343b46;
+  }
 }

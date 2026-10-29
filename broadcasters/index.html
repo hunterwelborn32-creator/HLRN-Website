@@ -9,6 +9,15 @@
 <link rel="canonical" href="https://highlineracingnetwork.com/broadcasters/">
 <meta name="theme-color" content="#07090d">
 <link rel="icon" href="../favicon.ico">
+<!-- Set the saved theme before styles load to prevent the wrong banner flashing. -->
+<script id="bc-theme-early-boot">
+(function(){
+  var t="light";
+  try {t=localStorage.getItem("hlrn_site_theme_v2")==="dark"?"dark":"light";} catch(e){}
+  document.documentElement.setAttribute("data-hlrn-theme",t);
+  document.documentElement.style.colorScheme=t;
+})();
+</script>
 <link rel="stylesheet" href="../assets/site-shell.css?v=20261020nightmatch5">
 <link rel="stylesheet" href="../assets/broadcast-center/broadcast-center.css?v=20260929bc2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -232,7 +241,7 @@ html[data-hlrn-theme="dark"] .bc-replay-results{
 
 <link rel="stylesheet" href="../assets/phase2-pages-polish.css?v=20261008p2">
 <style id="hlrn-race-moments-style">.bc-moments-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}.bc-moment{display:block;padding:17px;border:1px solid #363c45;background:var(--bc-panel,#141920);text-decoration:none;color:inherit!important}.bc-moment:hover{border-color:#e31837}.bc-moment strong{display:block;font-size:15px;margin:6px 0}.bc-moment small,.bc-moment span{font-size:11px}#bcMomentsStatus{font-size:12px;opacity:.85;line-height:1.6}</style>
-<link rel="stylesheet" href="../assets/broadcast-center/broadcast-art.css?v=20261029art1">
+<link rel="stylesheet" href="../assets/broadcast-center/broadcast-art.css?v=20261029daynight2">
 </head>
 <body class="bc-page">
 
@@ -240,9 +249,7 @@ html[data-hlrn-theme="dark"] .bc-replay-results{
   <!-- The banner artwork includes the network name and headline. Keep the
        original heading accessible, but don't display the same words twice. -->
   <div class="bc-hero-banner">
-    <img src="../assets/broadcast-center/HLRN-Broadcast-Top-Banner.webp"
-         alt="HLRN official broadcast network — Watch HLRN — Sunday and Monday live coverage"
-         width="1916" height="821" fetchpriority="high" decoding="async">
+    <div class="bc-hero-art" role="img" aria-label="HLRN official broadcast network — Watch HLRN — Sunday and Monday live coverage"></div>
     <div class="bc-hero-mobile-title" aria-hidden="true">
       <small>HLRN // OFFICIAL BROADCAST NETWORK</small>
       <strong>WATCH <span>HLRN</span></strong>
