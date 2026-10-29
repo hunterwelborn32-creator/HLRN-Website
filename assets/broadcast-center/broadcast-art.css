@@ -1,0 +1,162 @@
+/* HLRN Broadcast Center: dedicated banner and page artwork.
+   Only this page is affected. All functional broadcast cards remain intact. */
+
+/* Screen-reader heading preserves semantics while the image carries the
+   visible text on desktop. */
+.bc-page .bc-visually-hidden{
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  padding:0!important;
+  margin:-1px!important;
+  overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;
+  white-space:nowrap!important;
+  border:0!important;
+}
+
+/* Same full-page image in both modes, with different contrast treatments. */
+html body.bc-page{
+  background-color:#05070d;
+  background-image:
+    linear-gradient(180deg,rgba(4,6,11,.65),rgba(4,6,11,.81)),
+    url("./HLRN-Broadcast-Full-Background.webp");
+  background-position:center top,center center;
+  background-repeat:no-repeat,no-repeat;
+  background-size:cover,cover;
+  background-attachment:fixed,fixed;
+}
+html[data-hlrn-theme="light"] body.bc-page{
+  background-color:#f6f8fa!important;
+  background-image:
+    linear-gradient(180deg,rgba(255,255,255,.84),rgba(255,255,255,.89)),
+    url("./HLRN-Broadcast-Full-Background.webp")!important;
+  background-position:center top,center center!important;
+  background-repeat:no-repeat,no-repeat!important;
+  background-size:cover,cover!important;
+  background-attachment:fixed,fixed!important;
+  color:#11161c!important;
+}
+html[data-hlrn-theme="light"] body.bc-page :is(.bc-main,.bc-section,.bc-filterbar,.bc-people,.bc-side-stack){
+  background:transparent!important;
+  background-image:none!important;
+}
+html body.bc-page .bc-main{
+  background:transparent;
+}
+
+/* True full-width photo banner with the pre-rendered title built into it. */
+html body.bc-page .bc-mast{
+  padding:0;
+  background:transparent!important;
+  background-image:none!important;
+  overflow:hidden;
+}
+.bc-page .bc-mast:before{display:none!important}
+.bc-page .bc-hero-banner{
+  position:relative;
+  display:block;
+  width:100%;
+  overflow:hidden;
+  background:#080b10;
+  border-bottom:3px solid #db203b;
+}
+.bc-page .bc-hero-banner img{
+  display:block;
+  width:100%;
+  height:auto;
+  max-width:none;
+}
+.bc-page .bc-hero-banner:after{
+  content:"";
+  position:absolute;
+  inset:auto 0 0;
+  height:12%;
+  pointer-events:none;
+  background:linear-gradient(to bottom,transparent,rgba(3,5,9,.34));
+}
+.bc-page .bc-hero-mobile-title{display:none}
+.bc-page .bc-mast-grid{
+  align-items:center;
+  padding-top:25px;
+  padding-bottom:30px;
+}
+.bc-page .bc-mast-intro p{
+  margin:0;
+  max-width:780px;
+  font-size:clamp(14px,1.3vw,17px);
+  line-height:1.65;
+  color:#e9edf4;
+  text-wrap:pretty;
+}
+html[data-hlrn-theme="light"] .bc-page .bc-mast-intro p{
+  color:#11161c!important;
+}
+.bc-page .bc-network-card{
+  box-shadow:0 18px 55px rgba(0,0,0,.25);
+}
+
+/* Light mode keeps the existing white cards and black lettering, while
+   the backdrop remains visible around and between those cards. */
+html[data-hlrn-theme="light"] body.bc-page :is(.bc-player-card,.bc-sidecard,.bc-replay-card,.bc-person,.bc-flow-card,.bc-network-card){
+  background:#fff!important;
+  color:#11161c!important;
+}
+html[data-hlrn-theme="light"] body.bc-page :is(.bc-rail,.bc-footer,.bc-section-head){
+  background:transparent!important;
+  background-image:none!important;
+}
+
+@media(max-width:1050px){
+  .bc-page .bc-mast-grid{padding-top:20px;padding-bottom:25px}
+}
+@media(max-width:760px){
+  /* On narrow phones, focus on the race scene rather than shrinking the
+     desktop baked-in lettering to an unreadable size. */
+  .bc-page .bc-hero-banner{height:clamp(245px,64vw,390px)}
+  .bc-page .bc-hero-banner img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:left center;
+  }
+  .bc-page .bc-hero-banner:after{
+    inset:0;
+    height:auto;
+    background:linear-gradient(0deg,rgba(3,4,9,.93),rgba(3,5,9,.23) 58%,transparent);
+  }
+  .bc-page .bc-hero-mobile-title{
+    position:absolute;
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+    z-index:1;
+    left:20px;
+    right:16px;
+    bottom:19px;
+    color:#fff;
+    text-shadow:0 3px 16px #000;
+    pointer-events:none;
+  }
+  .bc-page .bc-hero-mobile-title small{
+    font:900 10px/1.25 "Barlow Condensed",Arial,sans-serif;
+    letter-spacing:.12em;
+  }
+  .bc-page .bc-hero-mobile-title strong{
+    font:italic 900 clamp(42px,11vw,74px)/.91 "Barlow Condensed",Arial,sans-serif;
+    letter-spacing:-.03em;
+  }
+  .bc-page .bc-hero-mobile-title strong span{color:#ff4157}
+  .bc-page .bc-hero-mobile-title em{
+    color:#f5f6f8;
+    font:italic 900 clamp(12px,3.2vw,17px)/1.2 "Barlow Condensed",Arial,sans-serif;
+    letter-spacing:.055em;
+  }
+  html body.bc-page,
+  html[data-hlrn-theme="light"] body.bc-page{
+    background-attachment:scroll,scroll!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html body.bc-page{background-attachment:scroll,scroll!important}
+}

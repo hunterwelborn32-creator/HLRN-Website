@@ -232,14 +232,27 @@ html[data-hlrn-theme="dark"] .bc-replay-results{
 
 <link rel="stylesheet" href="../assets/phase2-pages-polish.css?v=20261008p2">
 <style id="hlrn-race-moments-style">.bc-moments-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}.bc-moment{display:block;padding:17px;border:1px solid #363c45;background:var(--bc-panel,#141920);text-decoration:none;color:inherit!important}.bc-moment:hover{border-color:#e31837}.bc-moment strong{display:block;font-size:15px;margin:6px 0}.bc-moment small,.bc-moment span{font-size:11px}#bcMomentsStatus{font-size:12px;opacity:.85;line-height:1.6}</style>
+<link rel="stylesheet" href="../assets/broadcast-center/broadcast-art.css?v=20261029art1">
 </head>
 <body class="bc-page">
 
 <header class="bc-mast">
+  <!-- The banner artwork includes the network name and headline. Keep the
+       original heading accessible, but don't display the same words twice. -->
+  <div class="bc-hero-banner">
+    <img src="../assets/broadcast-center/HLRN-Broadcast-Top-Banner.webp"
+         alt="HLRN official broadcast network — Watch HLRN — Sunday and Monday live coverage"
+         width="1916" height="821" fetchpriority="high" decoding="async">
+    <div class="bc-hero-mobile-title" aria-hidden="true">
+      <small>HLRN // OFFICIAL BROADCAST NETWORK</small>
+      <strong>WATCH <span>HLRN</span></strong>
+      <em>SUNDAY + MONDAY LIVE COVERAGE</em>
+    </div>
+  </div>
   <div class="bc-shell bc-mast-grid">
-    <div>
-      <div class="bc-kicker"><span>HLRN //</span> OFFICIAL BROADCAST NETWORK</div>
-      <h1>WATCH <span>HLRN</span></h1>
+    <div class="bc-mast-intro">
+      <div class="bc-kicker bc-visually-hidden"><span>HLRN //</span> OFFICIAL BROADCAST NETWORK</div>
+      <h1 class="bc-visually-hidden">WATCH <span>HLRN</span></h1>
       <p>The television home of High Line Racing Network. Watch Sunday and Monday race coverage, jump into the live race center, catch the latest replay and follow the full race-week story from green flag to the newsroom.</p>
     </div>
 
