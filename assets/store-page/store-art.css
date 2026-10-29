@@ -1,0 +1,232 @@
+/* HLRN Store: coordinated compact day/night merch hauler artwork.
+   Scope exclusively to /store/; catalog images, prices, buy links, filters
+   and cart/store navigation are unchanged. */
+
+/* The site theme manager paints body with solid !important colors. A fixed
+   decorative layer puts the racetrack behind the site instead of under it. */
+html body.hlrn-store-art-page { position:relative; isolation:isolate; }
+html body.hlrn-store-art-page > .hlrn-store-backdrop {
+  display:block!important;
+  position:fixed!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  z-index:0!important;
+  pointer-events:none!important;
+  background-color:#080b10;
+  background-image:
+    linear-gradient(180deg,rgba(3,6,11,.40),rgba(3,6,11,.70)),
+    url("./HLRN-Store-Night-Full-Background.webp");
+  background-size:cover,cover;
+  background-position:center,center;
+  background-repeat:no-repeat,no-repeat;
+}
+html[data-hlrn-theme="light"] body.hlrn-store-art-page > .hlrn-store-backdrop {
+  background-color:#f5f7fa;
+  background-image:
+    linear-gradient(180deg,rgba(255,255,255,.46),rgba(255,255,255,.78)),
+    url("./HLRN-Store-Day-Full-Background.webp");
+}
+html[data-hlrn-theme="dark"] body.hlrn-store-art-page > .hlrn-store-backdrop {
+  background-color:#080b10;
+  background-image:
+    linear-gradient(180deg,rgba(3,6,11,.40),rgba(3,6,11,.70)),
+    url("./HLRN-Store-Night-Full-Background.webp");
+}
+
+/* Keep merchandise above the background; maintain existing legible cards. */
+html[data-hlrn-theme] body.hlrn-store-art-page > .page {
+  position:relative!important;
+  z-index:1!important;
+  background:transparent!important;
+  background-image:none!important;
+}
+html[data-hlrn-theme] body.hlrn-store-art-page .hlrn-shop-hero {
+  background:transparent!important;
+  padding:13px 14px 9px!important;
+}
+
+/* The store script injects a complete newer shopping shell.
+   Suppress the obsolete giant masthead only when the modern one exists.
+   If scripts fail, the original header remains as a fallback. */
+html[data-hlrn-theme] body.hlrn-store-art-page .page:has(> .hlrn-shop-shell) > .hero {
+  display:none!important;
+}
+
+/* Keep the artwork and the description/CTA physically separate so neither
+   theme overlays live copy on lettering baked into the image. */
+html[data-hlrn-theme] body.hlrn-store-art-page .hlrn-shop-hero-box {
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  justify-content:flex-start!important;
+  min-height:0!important;
+  height:auto!important;
+  padding:0!important;
+  border:1px solid rgba(125,139,155,.35)!important;
+  border-radius:9px!important;
+  box-shadow:0 12px 30px rgba(5,12,20,.15)!important;
+  background:none!important;
+  overflow:hidden!important;
+}
+html[data-hlrn-theme] body.hlrn-store-art-page .hlrn-shop-hero-box::before {
+  content:""!important;
+  display:block!important;
+  position:relative!important;
+  flex:none!important;
+  width:100%!important;
+  height:clamp(145px,21vw,270px)!important;
+  background-image:url("./HLRN-Store-Night-Banner.webp")!important;
+  background-color:#0c1017!important;
+  background-size:cover!important;
+  background-position:center center!important;
+  background-repeat:no-repeat!important;
+  border-bottom:3px solid #e31837!important;
+  opacity:1!important;
+  transform:none!important;
+  animation:none!important;
+  pointer-events:none!important;
+}
+html[data-hlrn-theme="light"] body.hlrn-store-art-page .hlrn-shop-hero-box::before {
+  background-color:#f7f9fb!important;
+  background-image:url("./HLRN-Store-Day-Banner.webp")!important;
+}
+html[data-hlrn-theme="dark"] body.hlrn-store-art-page .hlrn-shop-hero-box::before {
+  background-color:#0c1017!important;
+  background-image:url("./HLRN-Store-Night-Banner.webp")!important;
+}
+html[data-hlrn-theme] body.hlrn-store-art-page .hlrn-shop-hero-box::after {
+  display:none!important;
+  content:none!important;
+}
+
+/* A compact, clear information bar under the full-image banner. */
+html[data-hlrn-theme] body.hlrn-store-art-page .hlrn-shop-hero-copy {
+  position:relative!important;
+  z-index:1!important;
+  max-width:none!important;
+  width:100%!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:6px 20px!important;
+  padding:16px clamp(15px,2.5vw,30px)!important;
+}
+html[data-hlrn-theme="light"] body.hlrn-store-art-page .hlrn-shop-hero-copy {
+  background:rgba(255,255,255,.97)!important;
+  color:#11161c!important;
+}
+html[data-hlrn-theme="dark"] body.hlrn-store-art-page .hlrn-shop-hero-copy {
+  background:rgba(12,17,24,.97)!important;
+  color:#f6f8fa!important;
+}
+html[data-hlrn-theme] body.hlrn-store-art-page .hlrn-shop-hero-copy .hlrn-shop-eyebrow {
+  display:none!important;
+}
+html[data-hlrn-theme] body.hlrn-store-art-page .hlrn-shop-hero-copy h1 {
+  grid-column:1!important;
+  grid-row:1!important;
+  display:block!important;
+  margin:0!important;
+  max-width:none!important;
+  font:italic 1000 clamp(19px,2vw,28px)/1.1 Arial,sans-serif!important;
+  letter-spacing:-.035em!important;
+  text-transform:uppercase!important;
+}
+html[data-hlrn-theme="light"] body.hlrn-store-art-page .hlrn-shop-hero-copy h1 {
+  color:#171e27!important;
+}
+html[data-hlrn-theme="dark"] body.hlrn-store-art-page .hlrn-shop-hero-copy h1 {
+  color:#fff!important;
+}
+html[data-hlrn-theme] body.hlrn-store-art-page .hlrn-shop-hero-copy p {
+  grid-column:1!important;
+  grid-row:2!important;
+  margin:0!important;
+  max-width:850px!important;
+  font-size:clamp(12px,1.05vw,14px)!important;
+  line-height:1.5!important;
+}
+html[data-hlrn-theme="light"] body.hlrn-store-art-page .hlrn-shop-hero-copy p {
+  color:#3d4957!important;
+}
+html[data-hlrn-theme="dark"] body.hlrn-store-art-page .hlrn-shop-hero-copy p {
+  color:#d0d7e0!important;
+}
+html[data-hlrn-theme] body.hlrn-store-art-page #hlrnShopHeroButton {
+  grid-column:2!important;
+  grid-row:1 / span 2!important;
+  align-self:center!important;
+  margin:0!important;
+  white-space:nowrap!important;
+}
+
+/* Make the store shell coherent while leaving the merchandise itself opaque
+   and easy to shop. */
+html[data-hlrn-theme="light"] body.hlrn-store-art-page .hlrn-shop-shell {
+  background:rgba(255,255,255,.92)!important;
+  border-color:#d7dfe8!important;
+}
+html[data-hlrn-theme="dark"] body.hlrn-store-art-page .hlrn-shop-shell {
+  background:rgba(13,18,25,.95)!important;
+  border-color:#343f4b!important;
+}
+html[data-hlrn-theme="light"] body.hlrn-store-art-page .hlrn-shop-cats {
+  background:rgba(255,255,255,.95)!important;
+}
+html[data-hlrn-theme="dark"] body.hlrn-store-art-page .hlrn-shop-cats {
+  background:rgba(13,18,25,.95)!important;
+}
+html[data-hlrn-theme] body.hlrn-store-art-page .page > :is(
+  .mh-dashboard,.mh-featured,.notice,.mh-filterbar,.section-heading
+) {
+  position:relative!important;
+  z-index:1!important;
+}
+html[data-hlrn-theme="light"] body.hlrn-store-art-page .page > :is(
+  .mh-dashboard,.mh-featured,.notice,.mh-filterbar
+) {
+  background:rgba(255,255,255,.96)!important;
+}
+html[data-hlrn-theme="dark"] body.hlrn-store-art-page .page > :is(
+  .mh-dashboard,.mh-featured,.notice,.mh-filterbar
+) {
+  background:rgba(12,17,24,.95)!important;
+}
+html[data-hlrn-theme="light"] body.hlrn-store-art-page .page > .section-heading {
+  background:rgba(255,255,255,.90)!important;
+}
+html[data-hlrn-theme="dark"] body.hlrn-store-art-page .page > .section-heading {
+  background:rgba(12,17,24,.90)!important;
+}
+
+/* Both theme banners keep the same compact dimensions. On phones use a
+   taller crop but keep the shopping description and action below the art. */
+@media(max-width:720px){
+  html[data-hlrn-theme] body.hlrn-store-art-page .hlrn-shop-hero {
+    padding:10px!important;
+  }
+  html[data-hlrn-theme] body.hlrn-store-art-page .hlrn-shop-hero-box::before {
+    height:clamp(130px,33vw,195px)!important;
+    background-position:center center!important;
+  }
+  html[data-hlrn-theme] body.hlrn-store-art-page .hlrn-shop-hero-copy {
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:10px!important;
+    padding:15px!important;
+  }
+  html[data-hlrn-theme] body.hlrn-store-art-page .hlrn-shop-hero-copy h1 {
+    grid-column:1!important;
+    grid-row:1!important;
+  }
+  html[data-hlrn-theme] body.hlrn-store-art-page .hlrn-shop-hero-copy p {
+    grid-column:1!important;
+    grid-row:2!important;
+  }
+  html[data-hlrn-theme] body.hlrn-store-art-page #hlrnShopHeroButton {
+    grid-column:1!important;
+    grid-row:3!important;
+    justify-self:start!important;
+    min-height:40px!important;
+  }
+}
