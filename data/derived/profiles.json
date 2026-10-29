@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T13:05:54.711Z",
+  "generatedAt": "2026-10-29T17:50:53.355Z",
   "drivers": [
     {
       "series": "sunday",
@@ -12670,11 +12670,11 @@
       "photoSlug": "jim-segredo",
       "rank": 5,
       "points": null,
-      "races": 178,
+      "races": 179,
       "wins": 5,
       "top5": 26,
-      "top10": 66,
-      "avgFinish": 16.2,
+      "top10": 67,
+      "avgFinish": 16.16,
       "results": []
     },
     {
@@ -12685,11 +12685,11 @@
       "photoSlug": "tommy-rogers",
       "rank": 6,
       "points": null,
-      "races": 145,
+      "races": 146,
       "wins": 5,
       "top5": 26,
       "top10": 54,
-      "avgFinish": 14.83,
+      "avgFinish": 14.86,
       "results": []
     },
     {
@@ -12700,11 +12700,11 @@
       "photoSlug": "bill-daniels",
       "rank": 7,
       "points": null,
-      "races": 55,
+      "races": 56,
       "wins": 5,
-      "top5": 19,
-      "top10": 26,
-      "avgFinish": 16.18,
+      "top5": 20,
+      "top10": 27,
+      "avgFinish": 15.95,
       "results": []
     },
     {
@@ -12775,11 +12775,11 @@
       "photoSlug": "jerry-fassett",
       "rank": 12,
       "points": null,
-      "races": 186,
+      "races": 187,
       "wins": 4,
       "top5": 23,
       "top10": 63,
-      "avgFinish": 15.04,
+      "avgFinish": 15.1,
       "results": []
     },
     {
@@ -12790,11 +12790,11 @@
       "photoSlug": "chris-james",
       "rank": 13,
       "points": null,
-      "races": 83,
+      "races": 84,
       "wins": 4,
       "top5": 20,
       "top10": 40,
-      "avgFinish": 11.9,
+      "avgFinish": 11.94,
       "results": []
     },
     {
@@ -12850,11 +12850,11 @@
       "photoSlug": "shawn-stamper",
       "rank": 17,
       "points": null,
-      "races": 124,
+      "races": 125,
       "wins": 4,
       "top5": 12,
       "top10": 32,
-      "avgFinish": 21.03,
+      "avgFinish": 21.13,
       "results": []
     },
     {
@@ -12865,11 +12865,11 @@
       "photoSlug": "john-miles",
       "rank": 18,
       "points": null,
-      "races": 103,
+      "races": 104,
       "wins": 4,
       "top5": 11,
       "top10": 24,
-      "avgFinish": 17.59,
+      "avgFinish": 17.72,
       "results": []
     },
     {
