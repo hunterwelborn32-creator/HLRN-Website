@@ -124,4 +124,8 @@ test('Watch HLRN loads schedule, replays, league tabs, result links and filters'
   assert.equal(cards[1].style.display, 'none');
   filters[0].click();
   assert.equal(cards[1].style.display, '');
+  tabs[0].click();
+  assert.match(location.search, /league=sunday/);
+  assert.equal(tabs[0].classList.contains('active'), true);
+  assert.match(nodes.get('#bcResultsLink').href, /league=sunday&race=5/);
 });
