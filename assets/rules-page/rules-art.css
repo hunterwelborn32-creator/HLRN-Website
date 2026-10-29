@@ -1,0 +1,127 @@
+/* HLRN Rules hero and theme-aware full-page artwork.
+   Purposefully scoped to /rules/ to preserve other HLRN pages. */
+
+html body > .hlrn-rules-backdrop {
+  display:block!important;
+  position:fixed!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  z-index:0!important;
+  pointer-events:none!important;
+  background-color:#07090d;
+  background-image:
+    linear-gradient(180deg,rgba(5,7,13,.10),rgba(5,7,13,.30)),
+    url("./midnight_oval_racing_rules_backdrop.png");
+  background-size:cover,cover;
+  background-position:center center,center center;
+  background-repeat:no-repeat,no-repeat;
+}
+html[data-hlrn-theme="light"] body > .hlrn-rules-backdrop {
+  background-color:#f7f8fa;
+  background-image:
+    linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.25)),
+    url("./high_key_motorsport_rules_header.png");
+}
+html[data-hlrn-theme="dark"] body > .hlrn-rules-backdrop {
+  background-color:#07090d;
+  background-image:
+    linear-gradient(180deg,rgba(5,7,13,.10),rgba(5,7,13,.30)),
+    url("./midnight_oval_racing_rules_backdrop.png");
+}
+
+/* Baked-in titles in both images; one banner height for both modes. */
+html body > .hlrn-rules-art-banner {
+  display:block!important;
+  position:relative!important;
+  z-index:1!important;
+  width:100%!important;
+  height:clamp(155px,15.5vw,310px)!important;
+  margin:0!important;
+  overflow:hidden;
+  border-bottom:3px solid #e31837;
+  background-color:#07090d;
+  background-image:url("./hlrn_rules_night_race_authority.png");
+  background-repeat:no-repeat;
+  background-size:cover;
+  background-position:center 15%;
+}
+html[data-hlrn-theme="light"] body > .hlrn-rules-art-banner {
+  background-color:#f7f8fa;
+  background-image:url("./hlrn_official_racing_rules.png");
+}
+html[data-hlrn-theme="dark"] body > .hlrn-rules-art-banner {
+  background-color:#07090d;
+  background-image:url("./hlrn_rules_night_race_authority.png");
+}
+
+/* Prevent legacy solid page surfaces from covering the full-page artwork. */
+html[data-hlrn-theme] body > .page {
+  position:relative!important;
+  z-index:1!important;
+  background:transparent!important;
+  background-image:none!important;
+  isolation:isolate;
+}
+
+/* The text in the artwork already names the rulebook. Preserve the semantic
+   page heading for accessibility without visually repeating a giant title. */
+html[data-hlrn-theme] body .page > .hero {
+  padding:12px 20px 16px!important;
+  margin:8px 0 17px!important;
+  min-height:0!important;
+  border:1px solid rgba(130,140,152,.28)!important;
+  border-left:4px solid #e31837!important;
+  background:rgba(255,255,255,.95)!important;
+  background-image:none!important;
+}
+html[data-hlrn-theme="dark"] body .page > .hero {
+  background:rgba(13,17,23,.94)!important;
+  border-color:rgba(139,150,165,.28)!important;
+  border-left-color:#e31837!important;
+}
+html[data-hlrn-theme] body .page > .hero > :is(.logo,h1) {
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  margin:-1px!important;
+  padding:0!important;
+  overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;
+  clip-path:inset(50%)!important;
+  white-space:nowrap!important;
+  border:0!important;
+}
+html[data-hlrn-theme] body .page > .hero p {
+  margin:0!important;
+  max-width:none!important;
+  font:800 clamp(13px,1.2vw,17px)/1.45 "Inter","Segoe UI",Arial,sans-serif!important;
+  letter-spacing:.01em!important;
+  color:#17202a!important;
+  text-align:center!important;
+}
+html[data-hlrn-theme="dark"] body .page > .hero p {
+  color:#f3f5f8!important;
+}
+html[data-hlrn-theme] body .page > .hero .hero-line {
+  display:none!important;
+}
+/* Opaque cards retain the existing contrast in both themes, while
+   the gaps around them show the full-page artwork. */
+@media (max-width:760px) {
+  html body > .hlrn-rules-art-banner {
+    height:clamp(170px,52vw,280px)!important;
+    background-position:center 17%;
+  }
+  html[data-hlrn-theme] body .page > .hero {
+    padding:13px 12px!important;
+    margin-bottom:14px!important;
+  }
+  html[data-hlrn-theme] body .page > .hero p {
+    font-size:12px!important;
+    line-height:1.45!important;
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  html body > .hlrn-rules-backdrop { background-attachment:scroll!important; }
+}

@@ -3471,9 +3471,15 @@ html[data-hlrn-theme="dark"] .rules-jump-btn:focus-visible{
 </style>
 
 <link rel="stylesheet" href="../assets/phase2-pages-polish.css?v=20261008p2">
+<link rel="stylesheet" href="../assets/rules-page/rules-art.css?v=20261029rules1">
 </head>
 
 <body>
+<!-- Artwork is separate from body::before because the legacy Rules styles
+     explicitly hide that pseudo-element and override body background. -->
+<div class="hlrn-rules-backdrop" aria-hidden="true"></div>
+<div class="hlrn-rules-art-banner" role="img"
+     aria-label="HLRN Official Rulebook — HLRN Rules — Policies, Penalties, Procedures"></div>
 
 <div class="page">
 
