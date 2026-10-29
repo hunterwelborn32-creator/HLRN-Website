@@ -373,9 +373,6 @@ body.home-v10-page.rn-active .home10 > .h10-hero{display:none!important}
   }
 }
 @media(max-width:620px){
-  body.home-v10-page .home10 > .home30-art-banner{
-    height:clamp(135px,33vw,210px);
-  }
   body.home-v10-page .home10 > .home30-shortcuts{gap:9px;margin-bottom:14px;}
   body.home-v10-page .home10 .home30-shortcut{min-height:117px;padding:12px}
   body.home-v10-page .home10 .home30-shortcut strong{font-size:17px}
@@ -559,31 +556,44 @@ html[data-hlrn-theme] body.home-v10-page #hlrnRaceDayHome>main:before{opacity:.0
 html[data-hlrn-theme="light"] body.home-v10-page #hlrnRaceDayHome>main>section.h10-section:nth-of-type(even){background:rgba(255,255,255,.12)!important}
 html[data-hlrn-theme="dark"] body.home-v10-page #hlrnRaceDayHome>main>section.h10-section:nth-of-type(even){background:rgba(5,10,18,.12)!important}
 
-/* Banner contains the HLRN logo already: never overlay a second wordmark. */
-html body.home-v10-page #hlrnRaceDayHome>.home30-art-banner{
-  display:block!important;position:relative!important;width:100%!important;
-  height:clamp(165px,19vw,310px)!important;min-height:0!important;margin:0!important;padding:0!important;
-  background-color:#09111e!important;background-image:url("./HLRN-Homepage-Night-Banner.webp?v=20261029newart4")!important;
-  background-size:cover!important;background-position:center center!important;background-repeat:no-repeat!important;
-  border:none!important;border-radius:0!important;box-shadow:none!important;overflow:hidden!important;
+
+/* Place the HLRN banner directly after the existing global nav, outside the
+   old homepage wrapper that created unwanted sky space above the logo. */
+html body.home-v10-page > .home30-art-banner{
+  position:relative!important;z-index:5!important;box-sizing:border-box!important;
+  display:block!important;width:100%!important;height:clamp(180px,14.5vw,285px)!important;
+  min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important;
+  border:0!important;border-bottom:2px solid rgba(230,30,57,.75)!important;
+  border-radius:0!important;box-shadow:none!important;
+  background-color:#09101c!important;
+  background-image:url("./HLRN-Homepage-Night-Banner.webp?v=20261029newart4")!important;
+  background-size:cover!important;background-position:center 40%!important;
+  background-repeat:no-repeat!important;
 }
-html[data-hlrn-theme="light"] body.home-v10-page #hlrnRaceDayHome>.home30-art-banner{
-  background-color:#e6f4ff!important;background-image:url("./HLRN-Homepage-Day-Banner.webp?v=20261029newart4")!important;
+html[data-hlrn-theme="light"] body.home-v10-page > .home30-art-banner{
+  background-color:#e7f4ff!important;
+  background-image:url("./HLRN-Homepage-Day-Banner.webp?v=20261029newart4")!important;
 }
-html[data-hlrn-theme="dark"] body.home-v10-page #hlrnRaceDayHome>.home30-art-banner{
-  background-color:#09111e!important;background-image:url("./HLRN-Homepage-Night-Banner.webp?v=20261029newart4")!important;
+html[data-hlrn-theme="dark"] body.home-v10-page > .home30-art-banner{
+  background-color:#09101c!important;
+  background-image:url("./HLRN-Homepage-Night-Banner.webp?v=20261029newart4")!important;
 }
-html body.home-v10-page #hlrnRaceDayHome>.home30-art-banner:after{
-  content:"";position:absolute;bottom:0;left:0;right:0;height:66px;pointer-events:none;
-  background:linear-gradient(to bottom,transparent,rgba(8,14,23,.36));
+html body.home-v10-page > .home30-art-banner::after{
+  content:"";position:absolute;inset:auto 0 0;height:32px;pointer-events:none;
+  background:linear-gradient(to top,rgba(5,10,18,.22),transparent);
 }
-html[data-hlrn-theme="light"] body.home-v10-page #hlrnRaceDayHome>.home30-art-banner:after{
-  background:linear-gradient(to bottom,transparent,rgba(237,246,254,.43));
+html[data-hlrn-theme="light"] body.home-v10-page > .home30-art-banner::after{
+  background:linear-gradient(to top,rgba(239,247,255,.25),transparent);
 }
-html body.home-v10-page.rn-active #hlrnRaceDayHome>.home30-art-banner{display:none!important}
-html body.home-v10-page.rn-active #hlrnRaceDayHome>.home30-full-backdrop{visibility:hidden!important}
+html body.home-v10-page.rn-active > .home30-art-banner{display:none!important}
+@media(max-width:650px){
+ html body.home-v10-page > .home30-art-banner{
+   height:clamp(145px,37vw,190px)!important;
+   background-position:center 42%!important;
+ }
+}
 html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome>header.h10-hero{
-  margin-top:-14px!important;padding-bottom:14px!important;z-index:2!important;
+  margin-top:0!important;padding-top:13px!important;padding-bottom:14px!important;z-index:2!important;
   background:transparent!important;background-image:none!important;
 }
 html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hero-copy{
@@ -600,7 +610,6 @@ html[data-hlrn-theme="dark"] body.home-v10-page #hlrnRaceDayHome>.h10-info{backg
  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hero-grid{grid-template-columns:1fr!important}
 }
 @media(max-width:650px){
- html body.home-v10-page #hlrnRaceDayHome>.home30-art-banner{height:clamp(145px,34vw,205px)!important}
  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hero-copy{grid-template-columns:1fr!important;gap:10px!important}
  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .home30-next-heading{grid-column:1!important;grid-row:1!important}
  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-actions{grid-column:1!important;grid-row:2!important;justify-content:start!important}
