@@ -168,3 +168,198 @@ html[data-hlrn-theme="dark"] body.hlrn-admins-page :is(
     height:135px!important;
   }
 }
+
+/* HLRN ADMIN PAGE VISUAL HARMONY — cohesive masthead & calmer page (2026-10-29).
+   Only changes presentation; photo cards, filter controls and modals are untouched. */
+
+/* Make the scenery atmospheric instead of competing with the banner and
+   team portraits. The underlying uploaded artwork remains the same. */
+html body.hlrn-admins-page > .hlrn-admins-backdrop {
+  filter:blur(2px) saturate(.86);
+  transform:scale(1.015);
+}
+html[data-hlrn-theme="light"] body.hlrn-admins-page > .hlrn-admins-backdrop {
+  background-image:
+    linear-gradient(180deg,rgba(248,250,253,.48) 0%,rgba(248,250,253,.69) 52%,rgba(248,250,253,.84) 100%),
+    url("./HLRN-Admins-Day-Full-Background.webp");
+}
+html[data-hlrn-theme="dark"] body.hlrn-admins-page > .hlrn-admins-backdrop {
+  background-image:
+    linear-gradient(180deg,rgba(5,7,12,.48) 0%,rgba(5,7,12,.66) 54%,rgba(5,7,12,.80) 100%),
+    url("./HLRN-Admins-Night-Full-Background.webp");
+}
+
+/* A very subtle surface within the 1500px site grid links all the sections
+   together while still allowing the full-page image to show around it. */
+html[data-hlrn-theme="light"] body.hlrn-admins-page > main.admin-page {
+  background:linear-gradient(180deg,rgba(255,255,255,.13),rgba(255,255,255,.38))!important;
+}
+html[data-hlrn-theme="dark"] body.hlrn-admins-page > main.admin-page {
+  background:linear-gradient(180deg,rgba(5,9,15,.08),rgba(5,9,15,.35))!important;
+}
+
+/* Status bar, banner, intro and ticker form one continuous network masthead.
+   The small red rules and crisp borders give it a deliberate racing identity. */
+html[data-hlrn-theme] body.hlrn-admins-page main.admin-page > .team-status {
+  margin:0!important;
+  min-height:48px!important;
+  border-radius:10px 10px 0 0!important;
+  border-bottom:0!important;
+  border-left-width:4px!important;
+  border-left-color:#df203e!important;
+  padding:8px 13px!important;
+  box-shadow:0 3px 15px rgba(10,18,30,.06)!important;
+}
+html[data-hlrn-theme="light"] body.hlrn-admins-page main.admin-page > .team-status {
+  background:rgba(255,255,255,.94)!important;
+  border-color:#d9e0e8!important;
+  border-left-color:#df203e!important;
+}
+html[data-hlrn-theme="dark"] body.hlrn-admins-page main.admin-page > .team-status {
+  background:rgba(12,17,24,.94)!important;
+  border-color:#36404c!important;
+  border-left-color:#df203e!important;
+}
+html[data-hlrn-theme] body.hlrn-admins-page main.admin-page > .team-hero {
+  border-radius:0!important;
+  border-top:0!important;
+  border-bottom:0!important;
+  box-shadow:none!important;
+}
+
+/* Show more of the top and bottom of the baked-in title. Keep the same height
+   in both theme modes and still far shorter than the old large hero. */
+html[data-hlrn-theme] body.hlrn-admins-page .hlrn-admins-hero-art {
+  height:clamp(170px,21.5vw,332px)!important;
+  background-position:center center!important;
+  border-bottom:3px solid #df203e!important;
+}
+html[data-hlrn-theme] body.hlrn-admins-page .team-hero > .hero-copy {
+  padding:13px 21px 14px!important;
+}
+html[data-hlrn-theme="light"] body.hlrn-admins-page .team-hero > .hero-copy {
+  background:rgba(255,255,255,.94)!important;
+  border-bottom:1px solid #dce2ea!important;
+}
+html[data-hlrn-theme="dark"] body.hlrn-admins-page .team-hero > .hero-copy {
+  background:rgba(13,18,25,.94)!important;
+  border-bottom:1px solid #37414b!important;
+}
+html[data-hlrn-theme] body.hlrn-admins-page .team-hero .hero-kickers {
+  margin-top:9px!important;
+}
+html[data-hlrn-theme] body.hlrn-admins-page .team-hero .hero-copy > p {
+  font-weight:600!important;
+  letter-spacing:.006em!important;
+}
+
+/* A single, slim ticker forms the bottom edge of the masthead. */
+html[data-hlrn-theme] body.hlrn-admins-page main.admin-page > .team-ticker {
+  margin:0!important;
+  min-height:38px!important;
+  border-radius:0 0 10px 10px!important;
+  border-top:0!important;
+  overflow:hidden!important;
+  box-shadow:0 15px 30px rgba(8,14,24,.11)!important;
+}
+html[data-hlrn-theme="light"] body.hlrn-admins-page main.admin-page > .team-ticker {
+  background:rgba(255,255,255,.94)!important;
+  border-color:#dce2ea!important;
+}
+html[data-hlrn-theme="dark"] body.hlrn-admins-page main.admin-page > .team-ticker {
+  background:rgba(13,18,25,.94)!important;
+  border-color:#35404c!important;
+}
+html[data-hlrn-theme="light"] body.hlrn-admins-page .team-ticker :is(.ticker-label,.ticker-window,.ticker-track,.ticker-network) {
+  background:transparent!important;
+}
+html[data-hlrn-theme="dark"] body.hlrn-admins-page .team-ticker :is(.ticker-label,.ticker-window,.ticker-track,.ticker-network) {
+  background:transparent!important;
+}
+
+/* Introduce calm, consistent panels underneath the main hero. Keep the
+   actual card colors and imagery untouched, especially driver portraits. */
+html[data-hlrn-theme] body.hlrn-admins-page .team-summary {
+  margin:16px 0!important;
+  border-radius:9px!important;
+  box-shadow:0 12px 28px rgba(9,16,25,.12)!important;
+}
+html[data-hlrn-theme="light"] body.hlrn-admins-page .team-summary {
+  border-color:#d4dce6!important;
+}
+html[data-hlrn-theme="dark"] body.hlrn-admins-page .team-summary {
+  border-color:#34404c!important;
+}
+html[data-hlrn-theme] body.hlrn-admins-page .team-tools {
+  margin:16px 0 18px!important;
+  border-radius:9px!important;
+  box-shadow:0 10px 25px rgba(9,16,25,.09)!important;
+}
+html[data-hlrn-theme="light"] body.hlrn-admins-page .team-tools {
+  background:rgba(255,255,255,.94)!important;
+  border-color:#d7dfe8!important;
+}
+html[data-hlrn-theme="dark"] body.hlrn-admins-page .team-tools {
+  background:rgba(13,18,25,.95)!important;
+  border-color:#36414d!important;
+}
+html[data-hlrn-theme] body.hlrn-admins-page .team-section-head {
+  margin:24px 0 14px!important;
+  padding:15px 20px!important;
+  border-radius:9px!important;
+  border-left:4px solid #e31837!important;
+}
+html[data-hlrn-theme="light"] body.hlrn-admins-page .team-section-head {
+  background:rgba(255,255,255,.94)!important;
+  box-shadow:0 5px 18px rgba(10,18,28,.07)!important;
+}
+html[data-hlrn-theme="dark"] body.hlrn-admins-page .team-section-head {
+  background:rgba(13,18,25,.94)!important;
+  box-shadow:0 5px 18px rgba(0,0,0,.15)!important;
+}
+html[data-hlrn-theme="light"] body.hlrn-admins-page .team-section-head :is(h2,.result-count,.result-count strong) {
+  color:#11161c!important;
+}
+html[data-hlrn-theme="dark"] body.hlrn-admins-page .team-section-head :is(h2,.result-count,.result-count strong) {
+  color:#f7f8fa!important;
+}
+html[data-hlrn-theme] body.hlrn-admins-page .team-section-head h2 span {
+  color:#e31837!important;
+}
+
+/* On phones keep the title artwork in a short, readable banner and do not
+   force the masthead status pills or ticker into awkward fixed widths. */
+@media(max-width:760px){
+  html[data-hlrn-theme] body.hlrn-admins-page .hlrn-admins-hero-art {
+    height:clamp(155px,36vw,225px)!important;
+  }
+  html[data-hlrn-theme] body.hlrn-admins-page .team-hero > .hero-copy {
+    padding:12px 13px!important;
+  }
+  html[data-hlrn-theme] body.hlrn-admins-page .team-section-head {
+    padding:13px 14px!important;
+  }
+  html[data-hlrn-theme] body.hlrn-admins-page main.admin-page > .team-status {
+    min-height:44px!important;
+    padding:7px 9px!important;
+  }
+}
+
+/* Override the earlier page-wrapper transparency rule with its full path.
+   These are reading panels, not background-covering solid sections. */
+html[data-hlrn-theme="light"] body.hlrn-admins-page > main.admin-page > .team-tools {
+  background:rgba(255,255,255,.94)!important;
+  border-color:#d7dfe8!important;
+}
+html[data-hlrn-theme="dark"] body.hlrn-admins-page > main.admin-page > .team-tools {
+  background:rgba(13,18,25,.95)!important;
+  border-color:#36414d!important;
+}
+html[data-hlrn-theme="light"] body.hlrn-admins-page > main.admin-page > .team-section-head {
+  background:rgba(255,255,255,.94)!important;
+  border-left:4px solid #e31837!important;
+}
+html[data-hlrn-theme="dark"] body.hlrn-admins-page > main.admin-page > .team-section-head {
+  background:rgba(13,18,25,.94)!important;
+  border-left:4px solid #e31837!important;
+}
