@@ -164,7 +164,8 @@ html[data-hlrn-theme="light"] body.bc-page :is(.bc-rail,.bc-footer,.bc-section-h
 /* HLRN theme-specific top banner images. CSS chooses only the active image,
    including for the site's manual day/night toggle (not OS preference). */
 html body.bc-page .bc-hero-banner{
-  aspect-ratio:1916 / 821;
+  /* Match the Day Mode banner's exact on-screen proportions. */
+  aspect-ratio:1942 / 275;
 }
 html body.bc-page .bc-hero-art{
   position:absolute;
@@ -172,7 +173,8 @@ html body.bc-page .bc-hero-art{
   display:block;
   background-image:url("./HLRN-Broadcast-Top-Banner.webp");
   background-color:#080b10;
-  background-position:center center;
+  /* Keep both WATCH HLRN and the Sunday + Monday caption inside the crop. */
+  background-position:center 12%;
   background-repeat:no-repeat;
   background-size:cover;
 }
