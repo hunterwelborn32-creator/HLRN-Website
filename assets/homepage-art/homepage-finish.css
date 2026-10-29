@@ -1,0 +1,327 @@
+/* HLRN HOMEPAGE FINISH — redesign the oversized masthead as a compact
+   reference-inspired race hub. All racing data remains live in original HTML. */
+html body.home-v10-page #hlrnRaceDayHome{
+  --home31-accent:#ed1839;
+  background:transparent!important;
+}
+/* Global HLRN navigation already provides these links. The additional
+   dark "HLRN // RACE NETWORK" rail was duplicating navigation. */
+html body.home-v10-page #hlrnRaceDayHome > .h27-network-rail{
+  display:none!important;
+}
+html body.home-v10-page #hlrnRaceDayHome > .h29-speed-strip{
+  display:none!important;
+}
+
+/* Remove the billboard-sized logo that was baked into the supplied banner.
+   Reuse the real racetrack photography, with a modest custom wordmark. */
+html body.home-v10-page #hlrnRaceDayHome > .home31-masthead{
+  display:grid!important;
+  place-items:center!important;
+  height:clamp(180px,15vw,258px)!important;
+  min-height:0!important;
+  width:100%!important;
+  margin:0!important;
+  padding:24px 20px!important;
+  border:0!important;
+  border-bottom:2px solid rgba(226,27,57,.7)!important;
+  box-shadow:inset 0 -28px 43px rgba(6,9,15,.23)!important;
+  overflow:hidden!important;
+  background-color:#090e17!important;
+  background-image:
+    linear-gradient(90deg,rgba(4,7,12,.24),rgba(4,7,12,.08) 45%,rgba(4,7,12,.22)),
+    url("./HLRN-Homepage-Night-Full-Background.webp")!important;
+  background-position:center center,center 43%!important;
+  background-size:cover,110% auto!important;
+  background-repeat:no-repeat,no-repeat!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page #hlrnRaceDayHome > .home31-masthead{
+  background-color:#dbe9f6!important;
+  background-image:
+    linear-gradient(90deg,rgba(255,255,255,.22),rgba(255,255,255,.07) 50%,rgba(255,255,255,.22)),
+    url("./HLRN-Homepage-Day-Full-Background.webp")!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page #hlrnRaceDayHome > .home31-masthead{
+  background-color:#090e17!important;
+  background-image:
+    linear-gradient(90deg,rgba(4,7,12,.24),rgba(4,7,12,.08) 45%,rgba(4,7,12,.22)),
+    url("./HLRN-Homepage-Night-Full-Background.webp")!important;
+}
+html body.home-v10-page #hlrnRaceDayHome .home31-masthead-content{
+  position:relative;
+  display:flex;
+  align-items:center;
+  flex-direction:column;
+  justify-content:center;
+  width:min(95%,750px);
+  margin:0 auto;
+  padding:8px 24px 10px;
+  color:#fff;
+  text-align:center;
+  isolation:isolate;
+}
+html body.home-v10-page #hlrnRaceDayHome .home31-masthead-content:before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:-10px -30px;
+  border-radius:50%;
+  background:radial-gradient(ellipse,rgba(4,8,15,.42),rgba(4,8,15,0) 72%);
+  pointer-events:none;
+}
+html[data-hlrn-theme="light"] body.home-v10-page #hlrnRaceDayHome .home31-masthead-content:before{
+  background:radial-gradient(ellipse,rgba(255,255,255,.90),rgba(255,255,255,0) 73%);
+}
+html body.home-v10-page #hlrnRaceDayHome .home31-brand-line{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  font-size:clamp(9px,1.0vw,12px);
+  line-height:1.2;
+  font-weight:900;
+  letter-spacing:.25em;
+  text-shadow:0 2px 9px #000;
+}
+html body.home-v10-page #hlrnRaceDayHome .home31-mark{
+  display:block;
+  width:25px;
+  height:2px;
+  background:#f12443;
+  transform:skewX(-25deg);
+  box-shadow:8px 0 0 rgba(255,255,255,.82);
+}
+html body.home-v10-page #hlrnRaceDayHome .home31-wordmark{
+  display:block;
+  font:italic 1000 clamp(66px,8.4vw,142px)/.99 "Archivo Black","Arial Black",Arial,sans-serif;
+  letter-spacing:-.095em;
+  padding-right:.11em;
+  color:#ed1736;
+  -webkit-text-stroke:1px rgba(255,255,255,.85);
+  text-shadow:3px 4px 0 rgba(0,0,0,.91),0 8px 22px rgba(0,0,0,.48);
+}
+html[data-hlrn-theme="light"] body.home-v10-page #hlrnRaceDayHome .home31-wordmark{
+  -webkit-text-stroke:1px rgba(255,255,255,.8);
+  text-shadow:3px 4px 0 rgba(8,18,30,.92),0 8px 22px rgba(9,28,48,.21);
+}
+html body.home-v10-page #hlrnRaceDayHome .home31-tagline{
+  margin-top:3px;
+  font-size:clamp(10px,1.05vw,14px);
+  font-weight:950;
+  line-height:1.2;
+  letter-spacing:.26em;
+  color:#fff;
+  text-shadow:0 2px 9px rgba(0,0,0,.9);
+}
+html[data-hlrn-theme="light"] body.home-v10-page #hlrnRaceDayHome :is(.home31-brand-line,.home31-tagline){
+  color:#172432!important;
+  text-shadow:0 1px 6px rgba(255,255,255,.96);
+}
+/* Keep the automatic race-night takeover in full control. */
+html body.home-v10-page.rn-active #hlrnRaceDayHome > .home31-masthead{
+  display:none!important;
+}
+
+/* Let the dashboard overlap the photo slightly, rather than appearing as
+   two giant, unconnected blocks with a hard cutoff. */
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero{
+  z-index:3!important;
+  margin-top:-19px!important;
+  padding:0 0 13px!important;
+  background:transparent!important;
+  background-image:none!important;
+  border:0!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hero-inner{
+  width:min(calc(100% - 42px),1380px)!important;
+  padding:0!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hero-grid{
+  display:grid!important;
+  grid-template-columns:minmax(0,1.75fr) minmax(300px,.88fr)!important;
+  align-items:start!important;
+  gap:14px!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hero-copy{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-content:start!important;
+  column-gap:15px!important;
+  padding:18px 20px 20px!important;
+  border-left:3px solid var(--home31-accent)!important;
+  box-shadow:0 10px 24px rgba(0,0,0,.16)!important;
+  backdrop-filter:blur(14px);
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hero-copy{
+  background:rgba(255,255,255,.95)!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hero-copy{
+  background:rgba(11,15,23,.94)!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .home30-next-heading{
+  grid-column:1!important;
+  grid-row:1!important;
+  align-self:center;
+  font-size:clamp(13px,1.15vw,17px)!important;
+  letter-spacing:.025em!important;
+  white-space:nowrap;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .home30-next-heading small{
+  display:none!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hero-copy > p{
+  display:none!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-actions{
+  grid-column:2!important;
+  grid-row:1!important;
+  display:flex!important;
+  flex-wrap:wrap!important;
+  align-items:center;
+  justify-content:end;
+  margin:0!important;
+  gap:7px!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-actions .h10-btn{
+  min-height:36px!important;
+  padding:0 12px!important;
+  font-size:10px!important;
+  border-radius:4px!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-upcoming{
+  grid-column:1/-1!important;
+  grid-row:2!important;
+  padding:12px 0 0!important;
+  border-top:1px solid rgba(122,140,160,.25)!important;
+  margin:12px 0 0!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-upcoming-card{
+  min-height:118px!important;
+  padding:12px 15px!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-upcoming-card h3{
+  font-size:clamp(17px,1.55vw,23px)!important;
+}
+
+/* Compact hosted results, without losing the stats or driver's photo. */
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hosted-card{
+  align-self:start!important;
+  min-height:0!important;
+  box-shadow:0 10px 24px rgba(0,0,0,.16)!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hosted-head{
+  min-height:52px!important;
+  padding:9px 15px!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hosted-race{
+  padding-top:10px!important;
+  padding-bottom:11px!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hosted-race-stats>div{
+  padding-top:10px!important;
+  padding-bottom:10px!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hosted-winner-feature{
+  min-height:75px!important;
+  padding-top:9px!important;
+  padding-bottom:9px!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hosted-winner-photo{
+  height:72px!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hosted-link{
+  min-height:42px!important;
+}
+
+/* The four image-led shortcuts should sit close to the dashboard, exactly as
+   in the supplied compact reference instead of being buried below a ticker. */
+html body.home-v10-page #hlrnRaceDayHome > .home30-shortcuts{
+  margin:0 auto 16px!important;
+  width:min(calc(100% - 42px),1380px)!important;
+  gap:10px!important;
+}
+html body.home-v10-page #hlrnRaceDayHome .home30-shortcut{
+  min-height:125px!important;
+}
+html body.home-v10-page #hlrnRaceDayHome .home30-shortcut strong{
+  font-size:clamp(15px,1.35vw,22px)!important;
+}
+
+/* Crop the bright image border baked into the uploaded source art. */
+html body.home-v10-page #hlrnRaceDayHome > .home30-full-backdrop{
+  transform:scale(1.07)!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page #hlrnRaceDayHome > .home30-full-backdrop{
+  background-image:
+    linear-gradient(180deg,rgba(250,252,255,.15),rgba(250,252,255,.32)),
+    url("./HLRN-Homepage-Day-Full-Background.webp")!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page #hlrnRaceDayHome > .home30-full-backdrop{
+  background-image:
+    linear-gradient(180deg,rgba(4,7,13,.16),rgba(4,7,13,.40)),
+    url("./HLRN-Homepage-Night-Full-Background.webp")!important;
+}
+html[data-hlrn-theme] body.home-v10-page #hlrnRaceDayHome > main{
+  background:transparent!important;
+}
+/* Side winner tiles remain separate from the photographic masthead. */
+html body.home-v10-page #hlrnRaceDayHome > .h10-info{
+  background:transparent!important;
+}
+
+/* Preserve a compact layout at tablet and mobile widths. */
+@media(max-width:980px){
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hero-grid{
+    grid-template-columns:1fr!important;
+  }
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hosted-card{
+    max-width:none!important;
+  }
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero{
+    margin-top:-12px!important;
+  }
+}
+@media(max-width:650px){
+  html body.home-v10-page #hlrnRaceDayHome > .home31-masthead{
+    height:185px!important;
+    background-size:cover,auto 100%!important;
+    background-position:center,center!important;
+  }
+  html body.home-v10-page #hlrnRaceDayHome .home31-wordmark{
+    font-size:clamp(68px,15vw,90px);
+  }
+  html body.home-v10-page #hlrnRaceDayHome .home31-brand-line{
+    font-size:8px;
+    letter-spacing:.12em;
+  }
+  html body.home-v10-page #hlrnRaceDayHome .home31-tagline{
+    font-size:9px;
+    letter-spacing:.14em;
+  }
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hero-inner{
+    width:min(calc(100% - 22px),1380px)!important;
+  }
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hero-copy{
+    grid-template-columns:1fr!important;
+    gap:10px!important;
+  }
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .home30-next-heading{
+    grid-column:1!important;
+    grid-row:1!important;
+  }
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-actions{
+    grid-column:1!important;
+    grid-row:2!important;
+    justify-content:start!important;
+  }
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-upcoming{
+    grid-column:1!important;
+    grid-row:3!important;
+    margin-top:0!important;
+  }
+  html body.home-v10-page #hlrnRaceDayHome > .home30-shortcuts{
+    width:min(calc(100% - 22px),1380px)!important;
+  }
+  html body.home-v10-page #hlrnRaceDayHome .home30-shortcut{
+    min-height:112px!important;
+  }
+}
