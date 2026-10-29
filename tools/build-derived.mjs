@@ -163,6 +163,12 @@ export function buildDerived(snapshot, mappings={drivers:[]}, oldReports={report
   return {profiles:{schemaVersion:1,generatedAt:snapshot.generatedAt,drivers},
           reports:{schemaVersion:1,generatedAt:snapshot.generatedAt,reports}};
 }
+export function versionManifest(snapshot) {
+  if (!snapshot || snapshot.schemaVersion !== 1 || !snapshot.generatedAt)
+    throw new Error('Cannot publish version marker without a valid HLRN snapshot');
+  return { schemaVersion: 1, version: snapshot.generatedAt };
+}
+
 export async function run({root=ROOT}={}){
   const source=JSON.parse(await readFile(resolve(root,'data/hlrn.json'),'utf8'));
   let mappings={drivers:[]}, old={reports:[]}, raceMetrics={races:[]};
@@ -170,6 +176,14 @@ export async function run({root=ROOT}={}){
   try{old=JSON.parse(await readFile(resolve(root,'data/derived/reports.json'),'utf8'));}catch(e){if(e.code!=='ENOENT')throw e;}
   try{raceMetrics=JSON.parse(await readFile(resolve(root,'data/results-race-metrics.json'),'utf8'));}catch(e){if(e.code!=='ENOENT')throw e;}
   const out=buildDerived(source,mappings,old,raceMetrics);
+  // Update the tiny marker only when the published snapshot changes.
+  const versionPath = resolve(root, 'data/hlrn-version.json');
+  const versionText = JSON.stringify(versionManifest(source), null, 2) + '\n';
+  let previousVersionText = null;
+  try { previousVersionText = await readFile(versionPath, 'utf8'); }
+  catch (e) { if (e.code !== 'ENOENT') throw e; }
+  if (previousVersionText !== versionText) await writeFile(versionPath, versionText);
+
   await mkdir(resolve(root,'data/derived'),{recursive:true});
   await writeFile(resolve(root,'data/derived/profiles.json'),JSON.stringify(out.profiles,null,2)+'\n');
   await writeFile(resolve(root,'data/derived/reports.json'),JSON.stringify(out.reports,null,2)+'\n');

@@ -71,6 +71,16 @@ export function mergeHostedDriverRatings(previousHosted, refreshedHosted) {
     };
   }
 
+  // Preserve the observation date when a refresh reports the same rating.
+  // Otherwise a no-op profile lookup creates a GitHub Pages rebuild.
+  for (const [key, current] of Object.entries(ratings)) {
+    const previous = previousHosted?.driverRatings?.[key];
+    if (previous && previous.date &&
+        Number(previous.iRating) === Number(current?.iRating) &&
+        String(previous.driver || '') === String(current?.driver || '')) {
+      ratings[key] = { ...current, date: previous.date };
+    }
+  }
   return ratings;
 }
 

@@ -18,6 +18,7 @@
   }
 
   const DATA_URL = new URL('../data/hlrn.json', script ? script.src : location.href).href;
+  const VERSION_URL = new URL('../data/hlrn-version.json', script ? script.src : location.href).href;
   const CACHE_NAME = 'hlrn-data-v1';
   const subscribers = new Set();
   let snapshot = null;
@@ -64,17 +65,47 @@
     if (!cached) return null;
     return validate(await cached.json());
   }
+  async function fetchTimed(url, options, timeoutMs) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), timeoutMs);
+    try { return await fetch(url, { ...options, signal: controller.signal }); }
+    finally { clearTimeout(timeout); }
+  }
+  async function publishedVersion() {
+    // Check a tiny marker instead of re-downloading ~1 MB every 30 seconds.
+    const response = await fetchTimed(VERSION_URL, { cache: 'no-store' }, 8000);
+    if (!response.ok) throw new Error('Version check HTTP ' + response.status);
+    const marker = await response.json();
+    if (marker?.schemaVersion !== 1 || typeof marker.version !== 'string' || !marker.version)
+      throw new Error('Invalid HLRN version marker');
+    return marker.version;
+  }
   async function load() {
     if (pending) return pending;
     pending = (async function () {
       try {
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 12000);
-        let response;
-        try { response = await fetch(DATA_URL, { cache: 'no-store', signal: controller.signal }); }
-        finally { clearTimeout(timeout); }
+        if (snapshot) {
+          try {
+            const version = await publishedVersion();
+            if (version === snapshot.generatedAt) {
+              if (status.state !== 'current')
+                setStatus('current', 'Data loaded · ' + new Date(snapshot.generatedAt).toLocaleString());
+              return snapshot;
+            }
+          } catch (_) {
+            // Old deployment or unavailable marker: fall back to revalidating
+            // the real data rather than leaving an outdated snapshot pinned.
+          }
+        }
+        // Browser ETag revalidation avoids unnecessary full-body downloads.
+        const response = await fetchTimed(DATA_URL, { cache: 'no-cache' }, 12000);
         if (!response.ok) throw new Error('HTTP ' + response.status);
         const data = validate(await response.clone().json());
+        if (snapshot && snapshot.generatedAt === data.generatedAt) {
+          if (status.state !== 'current')
+            setStatus('current', 'Data loaded · ' + new Date(data.generatedAt).toLocaleString());
+          return snapshot;
+        }
         snapshot = data;
         await saveResponse(response.clone());
         setStatus('current', 'Data loaded · ' + new Date(data.generatedAt).toLocaleString());
@@ -121,4 +152,7 @@
   else notify();
   // Refresh only while a page is visible. Existing page code remains untouched until migrated.
   setInterval(() => { if (!document.hidden) load().catch(() => {}); }, 30 * 1000);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) load().catch(() => {});
+  });
 })(window);

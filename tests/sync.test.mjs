@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { validateAction, buildSnapshot, sameData, seasonDriverTotals, mergeSeasonDriverTotals, parseTeamRostersHtml, parseStageBonusBreakdownHtml, combineStageAwardMaps, applyStageBonusReclassification, parseSimRacerHubRaceResultsHtml, parseSimRacerHubRaceMetricsHtml, mergeSimRacerHubRaceResults } from '../tools/sync-data.mjs';
+import { validateAction, buildSnapshot, sameData, seasonDriverTotals, mergeHostedDriverRatings, mergeSeasonDriverTotals, parseTeamRostersHtml, parseStageBonusBreakdownHtml, combineStageAwardMaps, applyStageBonusReclassification, parseSimRacerHubRaceResultsHtml, parseSimRacerHubRaceMetricsHtml, mergeSimRacerHubRaceResults } from '../tools/sync-data.mjs';
+import { versionManifest } from '../tools/build-derived.mjs';
 const payloads = Object.fromEntries(['sunday','monday'].map(l => [l, {
   drivers: { success:true, drivers:[{driverId:l+'-1',name:'Example'}] },
   teams: { success:true, teams:[] },
@@ -20,6 +21,25 @@ test('failed, incomplete and empty driver responses are rejected', () => {
 test('unchanged data does not create a new publish', () => {
  const one = buildSnapshot(payloads); const two = buildSnapshot(payloads);
  assert.ok(sameData(one,two));
+});
+
+test('unchanged Hosted iRatings keep the existing observation date', () => {
+ const prev={driverRatings:{driver1:{driver:'Example',iRating:2450,date:'2026-10-01T10:00:00Z'}}};
+ const next={latest:{results:[]},driverRatings:{driver1:{driver:'Example',iRating:2450,date:'2026-10-29T12:00:00Z'}}};
+ const merged=mergeHostedDriverRatings(prev,next);
+ assert.equal(merged.driver1.date,'2026-10-01T10:00:00Z');
+ assert.equal(merged.driver1.iRating,2450);
+ assert.equal(sameData({leagues:{},hosted:{driverRatings:prev.driverRatings}},
+                      {leagues:{},hosted:{driverRatings:merged}}),true);
+ next.driverRatings.driver1.iRating=2451;
+ assert.equal(mergeHostedDriverRatings(prev,next).driver1.date,'2026-10-29T12:00:00Z');
+});
+
+test('tiny version marker changes only when the snapshot version changes', () => {
+ const old=buildSnapshot(payloads);
+ assert.deepEqual(versionManifest(old),{schemaVersion:1,version:old.generatedAt});
+ assert.deepEqual(versionManifest({...old,leagues:{...old.leagues}}),versionManifest(old));
+ assert.notDeepEqual(versionManifest({...old,generatedAt:'2026-10-29T12:10:00Z'}),versionManifest(old));
 });
 
 test('SimRacerHub aggregate driver totals are merged without replacing verified fields', () => {

@@ -51,7 +51,7 @@ jobs:
               python tools/build-sitemap.py
             fi
 
-            git add data/hlrn.json data/derived
+            git add data/hlrn.json data/hlrn-version.json data/derived
             if [ -f data/results-race-metrics.json ]; then git add data/results-race-metrics.json; fi
             if [ -f sitemap.xml ]; then git add sitemap.xml; fi
 

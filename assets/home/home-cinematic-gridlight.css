@@ -577,3 +577,12 @@ html[data-hlrn-theme="dark"] body.home-v10-page .home10 main .h10-section-head{
     background-attachment:scroll,scroll;
   }
 }
+
+/* Skip initial layout and paint for homepage sections below the viewport.
+   Keep the original day/night background artwork and theme rules intact. */
+@supports (content-visibility: auto) {
+  body.home-v10-page .home10 main > section.h10-section {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 680px;
+  }
+}
