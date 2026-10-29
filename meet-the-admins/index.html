@@ -2,6 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <!-- Honor saved HLRN Day/Night setting before the artwork first paints. -->
+  <script id="hlrn-admins-early-theme">
+  (function(){
+    var theme='light';
+    try { theme=localStorage.getItem('hlrn_site_theme_v2')==='dark' ? 'dark' : 'light'; } catch(e){}
+    document.documentElement.setAttribute('data-hlrn-theme',theme);
+    document.documentElement.style.colorScheme=theme;
+  })();
+  </script>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#090b0f">
   <title>Meet the Admins | High Line Racing Network</title>
@@ -1359,8 +1368,10 @@ html[data-hlrn-theme="dark"] .profile-links a{
 </style>
 
 <link rel="stylesheet" href="../assets/phase2-pages-polish.css?v=20261008p2">
+<link rel="stylesheet" href="../assets/meet-the-admins/admins-art.css?v=20261029adm1">
 </head>
-<body>
+<body class="hlrn-admins-page">
+<div class="hlrn-admins-backdrop" aria-hidden="true"></div>
 
 <main class="admin-page">
   <div class="team-status" aria-label="HLRN team status">
@@ -1372,10 +1383,11 @@ html[data-hlrn-theme="dark"] .profile-links a{
     <div class="team-pill">Broadcasting</div>
   </div>
 
-  <section class="team-hero">
+  <section class="team-hero" aria-label="Meet the Admins — HLRN team directory">
+    <div class="hlrn-admins-hero-art" role="img" aria-label="HLRN Meet the Admins — High Line Racing Network"></div>
     <div class="hero-copy">
       <div class="eyebrow">High Line Racing Network // Official Team Directory</div>
-      <h1>Meet the <span>Admins</span></h1>
+      <h1 class="hlrn-admins-visually-hidden">Meet the <span>Admins</span></h1>
       <p>The people behind HLRN race administration, race control, broadcasting and weekly league operations.</p>
       <div class="hero-kickers">
         <span class="hero-kicker red">12 Active Team Members</span>

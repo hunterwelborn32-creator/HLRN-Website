@@ -1,0 +1,170 @@
+/* HLRN Meet the Admins: theme-aware banners and full-page background.
+   Scoped exclusively to the admin directory; member portraits & modal remain unchanged. */
+html body.hlrn-admins-page {
+  position:relative;
+  isolation:isolate;
+}
+/* The global theme manager makes body opaque, so a real fixed layer is used
+   instead of background-image on body or the body::before pseudo-element. */
+html body.hlrn-admins-page > .hlrn-admins-backdrop {
+  display:block!important;
+  position:fixed!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  z-index:0!important;
+  pointer-events:none!important;
+  background-color:#080b10;
+  background-image:
+    linear-gradient(180deg,rgba(4,7,12,.14),rgba(4,7,12,.30)),
+    url("./HLRN-Admins-Night-Full-Background.webp");
+  background-position:center center;
+  background-repeat:no-repeat;
+  background-size:cover;
+}
+html[data-hlrn-theme="light"] body.hlrn-admins-page > .hlrn-admins-backdrop {
+  background-color:#f6f8fb;
+  background-image:
+    linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.26)),
+    url("./HLRN-Admins-Day-Full-Background.webp");
+}
+html[data-hlrn-theme="dark"] body.hlrn-admins-page > .hlrn-admins-backdrop {
+  background-color:#080b10;
+  background-image:
+    linear-gradient(180deg,rgba(4,7,12,.14),rgba(4,7,12,.30)),
+    url("./HLRN-Admins-Night-Full-Background.webp");
+}
+/* Main area must stay transparent; solid readable card surfaces stay intact. */
+html[data-hlrn-theme] body.hlrn-admins-page > main.admin-page {
+  position:relative!important;
+  z-index:1!important;
+  background-color:transparent!important;
+  background-image:none!important;
+}
+html[data-hlrn-theme] body.hlrn-admins-page > main.admin-page > :is(
+  .team-summary,.team-tools,.team-section-head,.team-grid,.team-closing
+) {
+  background-color:transparent!important;
+  background-image:none!important;
+}
+/* The artwork contains the title already. Keep the real H1 for accessibility. */
+html body.hlrn-admins-page .hlrn-admins-visually-hidden {
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  padding:0!important;
+  margin:-1px!important;
+  overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;
+  clip-path:inset(50%)!important;
+  white-space:nowrap!important;
+  border:0!important;
+}
+/* Hero becomes a banner with a separate short description below it.
+   This stops overlay copy from obscuring the words baked into the artwork. */
+html[data-hlrn-theme] body.hlrn-admins-page main.admin-page > .team-hero {
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  justify-content:start!important;
+  min-height:0!important;
+  height:auto!important;
+  padding:0!important;
+  overflow:hidden!important;
+  border-radius:9px!important;
+  border:1px solid rgba(131,143,157,.28)!important;
+  box-shadow:0 12px 36px rgba(0,0,0,.18)!important;
+  background:transparent!important;
+  background-image:none!important;
+}
+html body.hlrn-admins-page main.admin-page > .team-hero::before,
+html body.hlrn-admins-page main.admin-page > .team-hero::after {
+  display:none!important;
+}
+html body.hlrn-admins-page .hlrn-admins-hero-art {
+  display:block!important;
+  position:relative!important;
+  z-index:1!important;
+  flex:none!important;
+  width:100%!important;
+  height:clamp(160px,17vw,285px)!important;
+  border-bottom:3px solid #e31837;
+  background-color:#090b0f;
+  background-image:url("./HLRN-Admins-Night-Banner.webp");
+  background-size:cover;
+  background-position:center center;
+  background-repeat:no-repeat;
+}
+html[data-hlrn-theme="light"] body.hlrn-admins-page .hlrn-admins-hero-art {
+  background-color:#f8fafc;
+  background-image:url("./HLRN-Admins-Day-Banner.webp");
+}
+html[data-hlrn-theme="dark"] body.hlrn-admins-page .hlrn-admins-hero-art {
+  background-color:#090b0f;
+  background-image:url("./HLRN-Admins-Night-Banner.webp");
+}
+html[data-hlrn-theme] body.hlrn-admins-page .team-hero > .hero-copy {
+  display:block!important;
+  position:relative!important;
+  z-index:1!important;
+  width:100%!important;
+  max-width:none!important;
+  padding:15px clamp(16px,2.3vw,32px) 17px!important;
+  background:rgba(10,14,20,.94)!important;
+  color:#eef1f6!important;
+}
+html[data-hlrn-theme="light"] body.hlrn-admins-page .team-hero > .hero-copy {
+  background:rgba(255,255,255,.96)!important;
+  color:#11161c!important;
+}
+html[data-hlrn-theme] body.hlrn-admins-page .team-hero .eyebrow {
+  display:none!important;
+}
+html[data-hlrn-theme] body.hlrn-admins-page .team-hero .hero-copy > p {
+  max-width:none!important;
+  margin:0!important;
+  font-size:clamp(12px,1.2vw,15px)!important;
+  line-height:1.55!important;
+  text-align:center!important;
+}
+html[data-hlrn-theme="light"] body.hlrn-admins-page .team-hero .hero-copy > p {
+  color:#151c24!important;
+}
+html[data-hlrn-theme="dark"] body.hlrn-admins-page .team-hero .hero-copy > p {
+  color:#e8edf4!important;
+}
+html[data-hlrn-theme] body.hlrn-admins-page .team-hero .hero-kickers {
+  display:flex!important;
+  justify-content:center!important;
+  margin-top:12px!important;
+  gap:7px!important;
+}
+/* Preserve readable cards in day/night without painting over the gaps. */
+html[data-hlrn-theme="light"] body.hlrn-admins-page :is(
+ .summary-card,.member-card,.closing-panel,.closing-stat
+) {
+  background:#fff!important;
+}
+html[data-hlrn-theme="dark"] body.hlrn-admins-page :is(
+ .summary-card,.member-card,.closing-panel,.closing-stat
+) {
+  background:#11161d!important;
+}
+@media(max-width:760px){
+  html body.hlrn-admins-page .hlrn-admins-hero-art {
+    height:clamp(135px,34vw,205px)!important;
+    background-position:center center;
+  }
+  html[data-hlrn-theme] body.hlrn-admins-page .team-hero > .hero-copy {
+    padding:12px 13px 14px!important;
+  }
+  html[data-hlrn-theme] body.hlrn-admins-page .team-hero .hero-kickers {
+    gap:5px!important;
+    margin-top:8px!important;
+  }
+}
+@media(max-width:420px){
+  html body.hlrn-admins-page .hlrn-admins-hero-art {
+    height:135px!important;
+  }
+}
