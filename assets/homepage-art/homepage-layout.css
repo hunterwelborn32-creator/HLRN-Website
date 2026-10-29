@@ -12,36 +12,6 @@ body.home-v10-page .home10 {
   overflow:hidden;
 }
 
-/* The artwork is a compact, separate masthead, not a replacement for any
-   schedule, results or Hosted cards. Both modes have the same dimensions. */
-body.home-v10-page .home10 > .home30-art-banner {
-  position:relative;
-  display:block;
-  width:100%;
-  height:clamp(174px,21.875vw,350px);
-  min-height:0;
-  margin:0;
-  border-bottom:3px solid #e31837;
-  background-color:#0a0e16;
-  background-image:url("./HLRN-Homepage-Night-Banner.webp");
-  background-size:cover;
-  background-position:center center;
-  background-repeat:no-repeat;
-  box-shadow:0 12px 26px rgba(0,0,0,.16);
-}
-html[data-hlrn-theme="light"] body.home-v10-page .home10 > .home30-art-banner{
-  background-color:#f8fafc;
-  background-image:url("./HLRN-Homepage-Day-Banner.webp");
-}
-html[data-hlrn-theme="dark"] body.home-v10-page .home10 > .home30-art-banner{
-  background-color:#0a0e16;
-  background-image:url("./HLRN-Homepage-Night-Banner.webp");
-}
-/* On race nights the original live takeover remains the primary masthead. */
-body.home-v10-page.rn-active .home10 > .home30-art-banner{
-  display:none!important;
-}
-
 /* Replace the huge photo-led hero with a compact data dashboard.
    Keep the original heading accessible so the page still has an H1. */
 body.home-v10-page:not(.rn-active) .home10 > .h10-hero {
@@ -303,7 +273,7 @@ body.home-v10-page .home10 .home30-shortcut {
   background-color:#111925;
   background-image:
     linear-gradient(0deg,rgba(5,9,16,.97) 0%,rgba(5,9,16,.46) 67%,rgba(6,10,17,.12)),
-    url("./HLRN-Homepage-Night-Full-Background.webp");
+    url("./HLRN-Homepage-Night-Full-Background.webp?v=20261029newart4");
   background-size:cover,cover;
   background-position:center center,center center;
   box-shadow:0 10px 22px rgba(0,0,0,.20);
@@ -312,7 +282,7 @@ body.home-v10-page .home10 .home30-shortcut {
 html[data-hlrn-theme="light"] body.home-v10-page .home10 .home30-shortcut{
   background-image:
     linear-gradient(0deg,rgba(8,15,24,.92),rgba(8,15,24,.39) 67%,rgba(8,15,24,.09)),
-    url("./HLRN-Homepage-Day-Full-Background.webp");
+    url("./HLRN-Homepage-Day-Full-Background.webp?v=20261029newart4");
 }
 body.home-v10-page .home10 .home30-shortcut:nth-child(1){background-position:center,12% 50%}
 body.home-v10-page .home10 .home30-shortcut:nth-child(2){background-position:center,40% 50%}
@@ -353,26 +323,8 @@ body.home-v10-page .home10 .home30-shortcut small{
 
 /* Four supplied images, not fake UI screenshots. Only the page main uses
    background artwork, leaving navigation and the auto race-night overlay alone. */
-html[data-hlrn-theme="light"] body.home-v10-page .home10 main{
-  background-color:#f5f7fa!important;
-  background-image:
-    linear-gradient(180deg,rgba(250,252,255,.74),rgba(250,252,255,.82)),
-    url("./HLRN-Homepage-Day-Full-Background.webp")!important;
-  background-size:cover,cover!important;
-  background-position:center center,center center!important;
-  background-repeat:no-repeat,no-repeat!important;
-  background-attachment:fixed,fixed!important;
-}
-html[data-hlrn-theme="dark"] body.home-v10-page .home10 main{
-  background-color:#060910!important;
-  background-image:
-    linear-gradient(180deg,rgba(5,8,14,.73),rgba(5,8,14,.82)),
-    url("./HLRN-Homepage-Night-Full-Background.webp")!important;
-  background-size:cover,cover!important;
-  background-position:center center,center center!important;
-  background-repeat:no-repeat,no-repeat!important;
-  background-attachment:fixed,fixed!important;
-}
+
+
 /* Cards are readable, with clear structured sections like the reference. */
 body.home-v10-page .home10 main > .h10-section{
   padding-top:clamp(26px,3vw,44px)!important;
@@ -439,83 +391,218 @@ body.home-v10-page.rn-active .home10 > .h10-hero{display:none!important}
   }
 }
 @media(max-width:900px){
-  html[data-hlrn-theme] body.home-v10-page .home10 main{
-    background-attachment:scroll,scroll!important;
-  }
+
 }
 @media(prefers-reduced-motion:reduce){
   body.home-v10-page .home10 .home30-shortcut{transition:none!important}
-  html[data-hlrn-theme] body.home-v10-page .home10 main{
-    background-attachment:scroll,scroll!important;
-  }
+
 }
 
-/* =========================================================
-   HLRN HOMEPAGE BACKDROP REPAIR — Oct 29, 2026
-   The race dashboard and shortcut cards are BEFORE <main>.
-   Styling only main therefore left that area dark. This fixed,
-   separate layer stays behind the ENTIRE homepage and switches
-   with the existing HLRN day/night theme attribute.
-   ========================================================= */
-html body.home-v10-page #hlrnRaceDayHome{
-  position:relative;
-  isolation:isolate;
-}
-html body.home-v10-page #hlrnRaceDayHome > .home30-full-backdrop{
-  position:fixed!important;
-  display:block!important;
-  inset:0!important;
-  height:100vh!important;
-  width:100vw!important;
-  z-index:0!important;
-  pointer-events:none!important;
-  background-color:#090b12;
-  background-image:
-    linear-gradient(180deg,rgba(5,8,14,.22),rgba(5,8,14,.42)),
-    url("./HLRN-Homepage-Night-Full-Background.webp");
-  background-size:cover,cover;
-  background-position:center center,center center;
-  background-repeat:no-repeat,no-repeat;
-}
-html[data-hlrn-theme="light"] body.home-v10-page #hlrnRaceDayHome > .home30-full-backdrop{
-  background-color:#f5f7fa;
-  background-image:
-    linear-gradient(180deg,rgba(255,255,255,.17),rgba(255,255,255,.40)),
-    url("./HLRN-Homepage-Day-Full-Background.webp");
-}
-html[data-hlrn-theme="dark"] body.home-v10-page #hlrnRaceDayHome > .home30-full-backdrop{
-  background-color:#090b12;
-  background-image:
-    linear-gradient(180deg,rgba(5,8,14,.22),rgba(5,8,14,.42)),
-    url("./HLRN-Homepage-Night-Full-Background.webp");
-}
-/* Keep the real page and its click targets ABOVE the decorative backdrop. */
-html body.home-v10-page #hlrnRaceDayHome > :is(
-  .h27-network-rail,.home30-art-banner,.h10-hero,.h29-speed-strip,
-  .home30-shortcuts,.h10-info,main,.h10-footer,.rn-takeover
-){
-  position:relative;
-  z-index:1;
-}
-/* Critical: both the old home styles and the previous layout paint solid
-   opaque backgrounds. Those wrappers must not cover the new fixed layer. */
-html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero{
+
+
+/* Consolidated compact dashboard and cards (formerly in homepage-finish.css) */
+/* Let the dashboard overlap the photo slightly, rather than appearing as
+   two giant, unconnected blocks with a hard cutoff. */
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero{
+  z-index:3!important;
+  margin-top:-19px!important;
+  padding:0 0 13px!important;
   background:transparent!important;
-  background-color:transparent!important;
   background-image:none!important;
+  border:0!important;
 }
-html[data-hlrn-theme] body.home-v10-page #hlrnRaceDayHome > main{
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hero-inner{
+  width:min(calc(100% - 42px),1380px)!important;
+  padding:0!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hero-grid{
+  display:grid!important;
+  grid-template-columns:minmax(0,1.75fr) minmax(300px,.88fr)!important;
+  align-items:start!important;
+  gap:14px!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hero-copy{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-content:start!important;
+  column-gap:15px!important;
+  padding:18px 20px 20px!important;
+  border-left:3px solid var(--home31-accent)!important;
+  box-shadow:0 10px 24px rgba(0,0,0,.16)!important;
+  backdrop-filter:blur(14px);
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hero-copy{
+  background:rgba(255,255,255,.95)!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hero-copy{
+  background:rgba(11,15,23,.94)!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .home30-next-heading{
+  grid-column:1!important;
+  grid-row:1!important;
+  align-self:center;
+  font-size:clamp(13px,1.15vw,17px)!important;
+  letter-spacing:.025em!important;
+  white-space:nowrap;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .home30-next-heading small{
+  display:none!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hero-copy > p{
+  display:none!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-actions{
+  grid-column:2!important;
+  grid-row:1!important;
+  display:flex!important;
+  flex-wrap:wrap!important;
+  align-items:center;
+  justify-content:end;
+  margin:0!important;
+  gap:7px!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-actions .h10-btn{
+  min-height:36px!important;
+  padding:0 12px!important;
+  font-size:10px!important;
+  border-radius:4px!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-upcoming{
+  grid-column:1/-1!important;
+  grid-row:2!important;
+  padding:12px 0 0!important;
+  border-top:1px solid rgba(122,140,160,.25)!important;
+  margin:12px 0 0!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-upcoming-card{
+  min-height:118px!important;
+  padding:12px 15px!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-upcoming-card h3{
+  font-size:clamp(17px,1.55vw,23px)!important;
+}
+
+/* Compact hosted results, without losing the stats or driver's photo. */
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hosted-card{
+  align-self:start!important;
+  min-height:0!important;
+  box-shadow:0 10px 24px rgba(0,0,0,.16)!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hosted-head{
+  min-height:52px!important;
+  padding:9px 15px!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hosted-race{
+  padding-top:10px!important;
+  padding-bottom:11px!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hosted-race-stats>div{
+  padding-top:10px!important;
+  padding-bottom:10px!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hosted-winner-feature{
+  min-height:75px!important;
+  padding-top:9px!important;
+  padding-bottom:9px!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hosted-winner-photo{
+  height:72px!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hosted-link{
+  min-height:42px!important;
+}
+
+/* The four image-led shortcuts should sit close to the dashboard, exactly as
+   in the supplied compact reference instead of being buried below a ticker. */
+html body.home-v10-page #hlrnRaceDayHome > .home30-shortcuts{
+  margin:0 auto 16px!important;
+  width:min(calc(100% - 42px),1380px)!important;
+  gap:10px!important;
+}
+html body.home-v10-page #hlrnRaceDayHome .home30-shortcut{
+  min-height:125px!important;
+}
+html body.home-v10-page #hlrnRaceDayHome .home30-shortcut strong{
+  font-size:clamp(15px,1.35vw,22px)!important;
+}
+
+
+/* Side winner tiles remain separate from the photographic masthead. */
+html body.home-v10-page #hlrnRaceDayHome > .h10-info{
   background:transparent!important;
-  background-color:transparent!important;
-  background-image:none!important;
 }
-html[data-hlrn-theme] body.home-v10-page #hlrnRaceDayHome > main:before{
-  opacity:.045!important;
+
+
+/* HLRN home: one banner, one page backdrop, independent day/night scenes. */
+html body.home-v10-page #hlrnRaceDayHome{position:relative;isolation:isolate;overflow:hidden}
+html body.home-v10-page #hlrnRaceDayHome>.home30-full-backdrop{
+  display:block!important;position:fixed!important;inset:0!important;z-index:0!important;
+  pointer-events:none!important;background-color:#07101b;
+  background-image:linear-gradient(180deg,rgba(4,8,15,.39),rgba(4,8,15,.60)),url("./HLRN-Homepage-Night-Full-Background.webp?v=20261029newart4");
+  background-position:center,center;background-size:cover,cover;background-repeat:no-repeat,no-repeat;
 }
-@media(max-width:900px){
-  html body.home-v10-page #hlrnRaceDayHome > .home30-full-backdrop{
-    /* Fixed painted layer works on mobile without scroll-time repaints. */
-    background-size:cover,cover!important;
-    background-position:center,center!important;
-  }
+html[data-hlrn-theme="light"] body.home-v10-page #hlrnRaceDayHome>.home30-full-backdrop{
+  background-color:#f4f8fc;
+  background-image:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,.53)),url("./HLRN-Homepage-Day-Full-Background.webp?v=20261029newart4");
+}
+html[data-hlrn-theme="dark"] body.home-v10-page #hlrnRaceDayHome>.home30-full-backdrop{
+  background-color:#07101b;
+  background-image:linear-gradient(180deg,rgba(4,8,15,.39),rgba(4,8,15,.60)),url("./HLRN-Homepage-Night-Full-Background.webp?v=20261029newart4");
+}
+html body.home-v10-page #hlrnRaceDayHome>:is(.home30-art-banner,.h10-hero,.home30-shortcuts,.h10-info,main,.h10-footer){
+  position:relative!important;z-index:1!important;
+}
+html[data-hlrn-theme] body.home-v10-page #hlrnRaceDayHome>main{
+  background:transparent!important;background-image:none!important;background-color:transparent!important;
+}
+html[data-hlrn-theme] body.home-v10-page #hlrnRaceDayHome>main:before{opacity:.055!important}
+html[data-hlrn-theme="light"] body.home-v10-page #hlrnRaceDayHome>main>section.h10-section:nth-of-type(even){background:rgba(255,255,255,.12)!important}
+html[data-hlrn-theme="dark"] body.home-v10-page #hlrnRaceDayHome>main>section.h10-section:nth-of-type(even){background:rgba(5,10,18,.12)!important}
+
+/* Banner contains the HLRN logo already: never overlay a second wordmark. */
+html body.home-v10-page #hlrnRaceDayHome>.home30-art-banner{
+  display:block!important;position:relative!important;width:100%!important;
+  height:clamp(165px,19vw,310px)!important;min-height:0!important;margin:0!important;padding:0!important;
+  background-color:#09111e!important;background-image:url("./HLRN-Homepage-Night-Banner.webp?v=20261029newart4")!important;
+  background-size:cover!important;background-position:center center!important;background-repeat:no-repeat!important;
+  border:none!important;border-radius:0!important;box-shadow:none!important;overflow:hidden!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page #hlrnRaceDayHome>.home30-art-banner{
+  background-color:#e6f4ff!important;background-image:url("./HLRN-Homepage-Day-Banner.webp?v=20261029newart4")!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page #hlrnRaceDayHome>.home30-art-banner{
+  background-color:#09111e!important;background-image:url("./HLRN-Homepage-Night-Banner.webp?v=20261029newart4")!important;
+}
+html body.home-v10-page #hlrnRaceDayHome>.home30-art-banner:after{
+  content:"";position:absolute;bottom:0;left:0;right:0;height:66px;pointer-events:none;
+  background:linear-gradient(to bottom,transparent,rgba(8,14,23,.36));
+}
+html[data-hlrn-theme="light"] body.home-v10-page #hlrnRaceDayHome>.home30-art-banner:after{
+  background:linear-gradient(to bottom,transparent,rgba(237,246,254,.43));
+}
+html body.home-v10-page.rn-active #hlrnRaceDayHome>.home30-art-banner{display:none!important}
+html body.home-v10-page.rn-active #hlrnRaceDayHome>.home30-full-backdrop{visibility:hidden!important}
+html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome>header.h10-hero{
+  margin-top:-14px!important;padding-bottom:14px!important;z-index:2!important;
+  background:transparent!important;background-image:none!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hero-copy{
+  background:rgba(255,255,255,.95)!important;color:#17202b!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hero-copy{
+  background:rgba(10,15,24,.94)!important;color:#f5f8fc!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hosted-card{background:rgba(255,255,255,.96)!important}
+html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hosted-card{background:rgba(11,17,27,.94)!important}
+html[data-hlrn-theme="light"] body.home-v10-page #hlrnRaceDayHome>.h10-info{background:rgba(255,255,255,.78)!important}
+html[data-hlrn-theme="dark"] body.home-v10-page #hlrnRaceDayHome>.h10-info{background:rgba(8,14,24,.72)!important}
+@media(max-width:980px){
+ html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hero-grid{grid-template-columns:1fr!important}
+}
+@media(max-width:650px){
+ html body.home-v10-page #hlrnRaceDayHome>.home30-art-banner{height:clamp(145px,34vw,205px)!important}
+ html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-hero-copy{grid-template-columns:1fr!important;gap:10px!important}
+ html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .home30-next-heading{grid-column:1!important;grid-row:1!important}
+ html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-actions{grid-column:1!important;grid-row:2!important;justify-content:start!important}
+ html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-upcoming{grid-column:1!important;grid-row:3!important}
 }
