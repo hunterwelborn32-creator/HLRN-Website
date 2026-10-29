@@ -211,3 +211,54 @@ html[data-hlrn-theme="light"] body.bc-page .bc-hero-banner:after{
     color:#343b46;
   }
 }
+
+/* BROADCAST FULL-PAGE BACKDROP FIX — Oct 29, 2026
+   The shared theme manager injects !important solid backgrounds on body and
+   on .bc-main. Paint the art on a fixed decorative layer instead, and keep
+   the page wrappers transparent. Broadcast cards stay opaque/readable. */
+html body.bc-page{
+  position:relative;
+}
+html body.bc-page::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background-color:#05070d;
+  background-image:
+    linear-gradient(180deg,rgba(3,5,10,.15),rgba(3,5,10,.32)),
+    url("./HLRN-Broadcast-Full-Background.webp");
+  background-position:center center;
+  background-repeat:no-repeat;
+  background-size:cover;
+}
+html[data-hlrn-theme="light"] body.bc-page::before{
+  background-color:#f5f7fa;
+  background-image:
+    linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.28)),
+    url("./HLRN-Broadcast-Day-Full-Background.webp");
+}
+html[data-hlrn-theme="dark"] body.bc-page::before{
+  background-color:#05070d;
+  background-image:
+    linear-gradient(180deg,rgba(3,5,10,.15),rgba(3,5,10,.32)),
+    url("./HLRN-Broadcast-Full-Background.webp");
+}
+html[data-hlrn-theme] body.bc-page > .bc-mast,
+html[data-hlrn-theme] body.bc-page > main.bc-main{
+  position:relative;
+  z-index:1;
+}
+html[data-hlrn-theme] body.bc-page > main.bc-main{
+  background:transparent!important;
+  background-image:none!important;
+}
+/* The shared Day Mode runtime also paints all .bc-section wrappers white.
+   Only the individual content cards should have their own solid background. */
+html[data-hlrn-theme] body.bc-page main.bc-main :is(
+  .bc-section,.bc-section-head,.bc-filterbar,.bc-side-stack,.bc-people
+){
+  background-color:transparent!important;
+  background-image:none!important;
+}
