@@ -449,3 +449,73 @@ body.home-v10-page.rn-active .home10 > .h10-hero{display:none!important}
     background-attachment:scroll,scroll!important;
   }
 }
+
+/* =========================================================
+   HLRN HOMEPAGE BACKDROP REPAIR — Oct 29, 2026
+   The race dashboard and shortcut cards are BEFORE <main>.
+   Styling only main therefore left that area dark. This fixed,
+   separate layer stays behind the ENTIRE homepage and switches
+   with the existing HLRN day/night theme attribute.
+   ========================================================= */
+html body.home-v10-page #hlrnRaceDayHome{
+  position:relative;
+  isolation:isolate;
+}
+html body.home-v10-page #hlrnRaceDayHome > .home30-full-backdrop{
+  position:fixed!important;
+  display:block!important;
+  inset:0!important;
+  height:100vh!important;
+  width:100vw!important;
+  z-index:0!important;
+  pointer-events:none!important;
+  background-color:#090b12;
+  background-image:
+    linear-gradient(180deg,rgba(5,8,14,.22),rgba(5,8,14,.42)),
+    url("./HLRN-Homepage-Night-Full-Background.webp");
+  background-size:cover,cover;
+  background-position:center center,center center;
+  background-repeat:no-repeat,no-repeat;
+}
+html[data-hlrn-theme="light"] body.home-v10-page #hlrnRaceDayHome > .home30-full-backdrop{
+  background-color:#f5f7fa;
+  background-image:
+    linear-gradient(180deg,rgba(255,255,255,.17),rgba(255,255,255,.40)),
+    url("./HLRN-Homepage-Day-Full-Background.webp");
+}
+html[data-hlrn-theme="dark"] body.home-v10-page #hlrnRaceDayHome > .home30-full-backdrop{
+  background-color:#090b12;
+  background-image:
+    linear-gradient(180deg,rgba(5,8,14,.22),rgba(5,8,14,.42)),
+    url("./HLRN-Homepage-Night-Full-Background.webp");
+}
+/* Keep the real page and its click targets ABOVE the decorative backdrop. */
+html body.home-v10-page #hlrnRaceDayHome > :is(
+  .h27-network-rail,.home30-art-banner,.h10-hero,.h29-speed-strip,
+  .home30-shortcuts,.h10-info,main,.h10-footer,.rn-takeover
+){
+  position:relative;
+  z-index:1;
+}
+/* Critical: both the old home styles and the previous layout paint solid
+   opaque backgrounds. Those wrappers must not cover the new fixed layer. */
+html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+}
+html[data-hlrn-theme] body.home-v10-page #hlrnRaceDayHome > main{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+}
+html[data-hlrn-theme] body.home-v10-page #hlrnRaceDayHome > main:before{
+  opacity:.045!important;
+}
+@media(max-width:900px){
+  html body.home-v10-page #hlrnRaceDayHome > .home30-full-backdrop{
+    /* Fixed painted layer works on mobile without scroll-time repaints. */
+    background-size:cover,cover!important;
+    background-position:center,center!important;
+  }
+}
