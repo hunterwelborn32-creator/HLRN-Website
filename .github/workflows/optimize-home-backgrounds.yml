@@ -1,0 +1,45 @@
+name: Optimize HLRN home backgrounds
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/optimize-home-images.py'
+      - '.github/workflows/optimize-home-backgrounds.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: hlrn-home-image-optimization
+  cancel-in-progress: false
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install image optimizer
+        run: python -m pip install --disable-pip-version-check Pillow
+      - name: Convert original HLRN artwork
+        run: python tools/optimize-home-images.py
+      - name: Commit optimized images only if smaller
+        run: |
+          git config user.name "hlrn-image-bot"
+          git config user.email "actions@users.noreply.github.com"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if [ "$(git rev-parse HEAD)" != "$(git rev-parse origin/main)" ]; then
+              git reset --hard origin/main
+              python tools/optimize-home-images.py
+            fi
+            git add assets/home/HLRN_Day_Mode_Background.webp assets/home/HLRN_Night_Mode_Background.webp
+            if git diff --cached --quiet; then
+              echo "Already optimized; no commit necessary."
+              exit 0
+            fi
+            git commit -m "Publish smaller HLRN day and night WebP backgrounds"
+            if git push origin main; then exit 0; fi
+          done
+          echo "Unable to commit optimized images after 3 attempts."
+          exit 1
