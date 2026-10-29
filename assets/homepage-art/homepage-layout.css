@@ -1,0 +1,451 @@
+/*
+ * HLRN HOMEPAGE — Reference-inspired Day / Night layout
+ * Only presentation and four already-uploaded assets; no changes to data,
+ * JS selectors, navigation, the Hosted race widgets or race-night takeover.
+ */
+body.home-v10-page {
+  position:relative;
+}
+body.home-v10-page .home10 {
+  --home30-red:#e31837;
+  position:relative;
+  overflow:hidden;
+}
+
+/* The artwork is a compact, separate masthead, not a replacement for any
+   schedule, results or Hosted cards. Both modes have the same dimensions. */
+body.home-v10-page .home10 > .home30-art-banner {
+  position:relative;
+  display:block;
+  width:100%;
+  height:clamp(174px,21.875vw,350px);
+  min-height:0;
+  margin:0;
+  border-bottom:3px solid #e31837;
+  background-color:#0a0e16;
+  background-image:url("./HLRN-Homepage-Night-Banner.webp");
+  background-size:cover;
+  background-position:center center;
+  background-repeat:no-repeat;
+  box-shadow:0 12px 26px rgba(0,0,0,.16);
+}
+html[data-hlrn-theme="light"] body.home-v10-page .home10 > .home30-art-banner{
+  background-color:#f8fafc;
+  background-image:url("./HLRN-Homepage-Day-Banner.webp");
+}
+html[data-hlrn-theme="dark"] body.home-v10-page .home10 > .home30-art-banner{
+  background-color:#0a0e16;
+  background-image:url("./HLRN-Homepage-Night-Banner.webp");
+}
+/* On race nights the original live takeover remains the primary masthead. */
+body.home-v10-page.rn-active .home10 > .home30-art-banner{
+  display:none!important;
+}
+
+/* Replace the huge photo-led hero with a compact data dashboard.
+   Keep the original heading accessible so the page still has an H1. */
+body.home-v10-page:not(.rn-active) .home10 > .h10-hero {
+  display:block!important;
+  min-height:0!important;
+  height:auto!important;
+  overflow:visible!important;
+  padding:19px 0 13px!important;
+  border:0!important;
+  background:transparent!important;
+  background-image:none!important;
+}
+body.home-v10-page:not(.rn-active) .home10 > .h10-hero > img,
+body.home-v10-page:not(.rn-active) .home10 > .h10-hero > .h29-hero-atmosphere,
+body.home-v10-page:not(.rn-active) .home10 > .h10-hero > .h29-hero-bottomline{
+  display:none!important;
+}
+body.home-v10-page:not(.rn-active) .home10 > .h10-hero:before,
+body.home-v10-page:not(.rn-active) .home10 > .h10-hero:after{
+  content:none!important;
+  display:none!important;
+}
+body.home-v10-page:not(.rn-active) .home10 .h10-hero-inner {
+  position:relative!important;
+  width:min(100% - 34px,1380px)!important;
+  max-width:1380px!important;
+  padding:0!important;
+  margin:0 auto!important;
+  z-index:2!important;
+}
+body.home-v10-page:not(.rn-active) .home10 .h10-hero-grid{
+  display:grid!important;
+  grid-template-columns:minmax(0,1.4fr) minmax(285px,.65fr)!important;
+  align-items:stretch!important;
+  gap:14px!important;
+}
+body.home-v10-page:not(.rn-active) .home10 .h10-hero-copy{
+  min-width:0!important;
+  border:1px solid rgba(149,163,181,.29)!important;
+  border-left:4px solid var(--home30-red)!important;
+  border-radius:10px!important;
+  padding:clamp(16px,2vw,28px)!important;
+  box-shadow:0 14px 34px rgba(5,10,19,.12)!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) .home10 .h10-hero-copy{
+  background:rgba(255,255,255,.96)!important;
+  border-color:#d5dfe9!important;
+  border-left-color:var(--home30-red)!important;
+  color:#151b26!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) .home10 .h10-hero-copy{
+  background:rgba(11,16,25,.96)!important;
+  border-color:#303c4c!important;
+  border-left-color:var(--home30-red)!important;
+  color:#f5f8fb!important;
+}
+body.home-v10-page:not(.rn-active) .home10 .h10-hero-copy :is(.h29-edition-tag,.h10-eyebrow){
+  display:none!important;
+}
+body.home-v10-page:not(.rn-active) .home10 .h10-hero-copy > h1{
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  padding:0!important;
+  margin:-1px!important;
+  overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;
+  clip-path:inset(50%)!important;
+  white-space:nowrap!important;
+  border:0!important;
+}
+body.home-v10-page .home10 .home30-next-heading {
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-family:"Barlow",Arial,sans-serif;
+  font-size:clamp(15px,1.45vw,20px);
+  line-height:1.2;
+  letter-spacing:.05em;
+  font-weight:900;
+}
+body.home-v10-page .home10 .home30-next-heading small {
+  margin-left:auto;
+  font-size:10px;
+  letter-spacing:.13em;
+  color:var(--home30-red);
+}
+body.home-v10-page .home10 .home30-status-dot{
+  width:9px;
+  height:9px;
+  flex:0 0 auto;
+  border-radius:50%;
+  background:#e31837;
+  box-shadow:0 0 0 4px rgba(227,24,55,.13);
+}
+html[data-hlrn-theme="light"] body.home-v10-page .home30-next-heading{
+  color:#141c26!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page .home30-next-heading{
+  color:#f6f7fa!important;
+}
+body.home-v10-page:not(.rn-active) .home10 .h10-hero-copy > p{
+  max-width:unset!important;
+  font-size:clamp(12px,1.15vw,14px)!important;
+  line-height:1.55!important;
+  padding:0!important;
+  margin:9px 0 0!important;
+  text-shadow:none!important;
+  font-weight:600!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) .home10 .h10-hero-copy > p{
+  color:#4a5767!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) .home10 .h10-hero-copy > p{
+  color:#b9c4d2!important;
+}
+body.home-v10-page:not(.rn-active) .home10 .h10-actions{
+  margin-top:12px!important;
+  gap:8px!important;
+}
+body.home-v10-page:not(.rn-active) .home10 .h10-actions .h10-btn{
+  min-height:40px!important;
+  padding:0 17px!important;
+  font-size:11px!important;
+  letter-spacing:.08em!important;
+  clip-path:none!important;
+  border-radius:5px!important;
+  box-shadow:none!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) .home10 .h10-actions .h10-btn:not(.primary){
+  background:#fff!important;
+  color:#141b25!important;
+  border-color:#a5b3c2!important;
+}
+body.home-v10-page:not(.rn-active) .home10 .h10-upcoming{
+  max-width:none!important;
+  margin:17px 0 0!important;
+}
+body.home-v10-page:not(.rn-active) .home10 .h10-upcoming-title{
+  font-size:11px!important;
+  margin:0 0 8px!important;
+  line-height:1.25!important;
+  letter-spacing:.11em!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) .home10 .h10-upcoming-title{
+  color:#344153!important;
+}
+body.home-v10-page:not(.rn-active) .home10 .h10-upcoming-grid{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:10px!important;
+}
+body.home-v10-page:not(.rn-active) .home10 .h10-upcoming-card{
+  padding:14px 15px!important;
+  border-radius:7px!important;
+  box-shadow:none!important;
+  min-width:0!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) .home10 .h10-upcoming-card{
+  background:#f6f8fb!important;
+  color:#141b25!important;
+  border-color:#dae1e8!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) .home10 .h10-upcoming-card{
+  background:#151c27!important;
+  color:#f7f9fb!important;
+  border-color:#344154!important;
+}
+body.home-v10-page:not(.rn-active) .home10 .h10-upcoming-card h3{
+  font-size:clamp(17px,1.55vw,22px)!important;
+  line-height:1.1!important;
+  margin:8px 0 6px!important;
+  overflow-wrap:anywhere;
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) .home10 .h10-upcoming-card :is(h3,p,a){
+  color:#17212d!important;
+}
+body.home-v10-page:not(.rn-active) .home10 .h10-upcoming-card :is(small,p,a){
+  font-size:11px!important;
+  letter-spacing:0!important;
+}
+body.home-v10-page:not(.rn-active) .home10 .h10-upcoming-card:after{
+  display:none!important;
+}
+
+/* Latest Hosted keeps all the live IDs and data hookups unchanged. */
+body.home-v10-page:not(.rn-active) .home10 .h10-hosted-card{
+  display:flex!important;
+  flex-direction:column!important;
+  min-height:0!important;
+  height:auto!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:0!important;
+  transform:none!important;
+  border-radius:10px!important;
+  overflow:hidden!important;
+  box-shadow:0 14px 34px rgba(5,10,19,.12)!important;
+}
+body.home-v10-page:not(.rn-active) .home10 .h10-hosted-head,
+body.home-v10-page:not(.rn-active) .home10 .h10-hosted-race,
+body.home-v10-page:not(.rn-active) .home10 .h10-hosted-race-stats,
+body.home-v10-page:not(.rn-active) .home10 .h10-hosted-winner-feature{
+  padding-left:18px!important;
+  padding-right:18px!important;
+}
+body.home-v10-page:not(.rn-active) .home10 .h10-hosted-race > strong{
+  font-size:clamp(22px,2.1vw,29px)!important;
+}
+body.home-v10-page:not(.rn-active) .home10 .h10-hosted-head strong{
+  font-size:clamp(22px,2.1vw,28px)!important;
+}
+body.home-v10-page:not(.rn-active) .home10 .h10-hosted-winner-copy strong{
+  font-size:clamp(18px,1.7vw,23px)!important;
+}
+body.home-v10-page:not(.rn-active) .home10 .h10-hosted-card .h10-hosted-link{
+  margin-top:auto!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) .home10 .h10-hosted-card{
+  background:rgba(255,255,255,.97)!important;
+  color:#141b25!important;
+  border:1px solid #d5dfe9!important;
+  border-top:4px solid #e31837!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) .home10 .h10-hosted-card :is(
+  .h10-hosted-head strong,.h10-hosted-race>strong,.h10-hosted-winner-copy strong,.h10-hosted-race-meta span,
+  .h10-hosted-race-stats b,.h10-hosted-race-stats span,.h10-hosted-winner-copy small
+){
+  color:#15202d!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) .home10 .h10-hosted-card{
+  background:rgba(12,16,24,.96)!important;
+  border:1px solid #364151!important;
+  border-top:4px solid #e31837!important;
+}
+
+/* 4 image-backed shortcuts, like the reference homepage. */
+body.home-v10-page .home10 > .home30-shortcuts {
+  position:relative;
+  z-index:2;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+  width:min(100% - 34px,1380px);
+  margin:5px auto 21px;
+}
+body.home-v10-page .home10 .home30-shortcut {
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  justify-content:end;
+  min-height:138px;
+  padding:15px 17px;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,.30);
+  overflow:hidden;
+  text-decoration:none;
+  color:#fff!important;
+  background-color:#111925;
+  background-image:
+    linear-gradient(0deg,rgba(5,9,16,.97) 0%,rgba(5,9,16,.46) 67%,rgba(6,10,17,.12)),
+    url("./HLRN-Homepage-Night-Full-Background.webp");
+  background-size:cover,cover;
+  background-position:center center,center center;
+  box-shadow:0 10px 22px rgba(0,0,0,.20);
+  transition:transform .18s,box-shadow .18s,border-color .18s;
+}
+html[data-hlrn-theme="light"] body.home-v10-page .home10 .home30-shortcut{
+  background-image:
+    linear-gradient(0deg,rgba(8,15,24,.92),rgba(8,15,24,.39) 67%,rgba(8,15,24,.09)),
+    url("./HLRN-Homepage-Day-Full-Background.webp");
+}
+body.home-v10-page .home10 .home30-shortcut:nth-child(1){background-position:center,12% 50%}
+body.home-v10-page .home10 .home30-shortcut:nth-child(2){background-position:center,40% 50%}
+body.home-v10-page .home10 .home30-shortcut:nth-child(3){background-position:center,72% 50%}
+body.home-v10-page .home10 .home30-shortcut:nth-child(4){background-position:center,92% 50%}
+body.home-v10-page .home10 .home30-shortcut:hover{
+  transform:translateY(-3px);
+  border-color:#ef304b;
+  box-shadow:0 15px 28px rgba(0,0,0,.27);
+}
+body.home-v10-page .home10 .home30-shortcut:focus-visible{
+  outline:3px solid #f3c140;
+  outline-offset:3px;
+}
+body.home-v10-page .home10 .home30-shortcut-icon {
+  position:absolute;
+  top:14px;
+  left:15px;
+  color:#ff354f;
+  font-weight:900;
+  font-size:19px;
+  opacity:.9;
+}
+body.home-v10-page .home10 .home30-shortcut strong {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  font:900 clamp(18px,2vw,27px)/1 "Archivo Black","Arial Black",Arial,sans-serif;
+  letter-spacing:-.04em;
+}
+body.home-v10-page .home10 .home30-shortcut strong span{color:#fa3a53}
+body.home-v10-page .home10 .home30-shortcut small{
+  font-size:12px;
+  margin-top:7px;
+  color:#dce2e9;
+}
+
+/* Four supplied images, not fake UI screenshots. Only the page main uses
+   background artwork, leaving navigation and the auto race-night overlay alone. */
+html[data-hlrn-theme="light"] body.home-v10-page .home10 main{
+  background-color:#f5f7fa!important;
+  background-image:
+    linear-gradient(180deg,rgba(250,252,255,.74),rgba(250,252,255,.82)),
+    url("./HLRN-Homepage-Day-Full-Background.webp")!important;
+  background-size:cover,cover!important;
+  background-position:center center,center center!important;
+  background-repeat:no-repeat,no-repeat!important;
+  background-attachment:fixed,fixed!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page .home10 main{
+  background-color:#060910!important;
+  background-image:
+    linear-gradient(180deg,rgba(5,8,14,.73),rgba(5,8,14,.82)),
+    url("./HLRN-Homepage-Night-Full-Background.webp")!important;
+  background-size:cover,cover!important;
+  background-position:center center,center center!important;
+  background-repeat:no-repeat,no-repeat!important;
+  background-attachment:fixed,fixed!important;
+}
+/* Cards are readable, with clear structured sections like the reference. */
+body.home-v10-page .home10 main > .h10-section{
+  padding-top:clamp(26px,3vw,44px)!important;
+  padding-bottom:clamp(28px,3.5vw,48px)!important;
+}
+body.home-v10-page .home10 main .h10-section-head{
+  align-items:center!important;
+  margin-bottom:15px!important;
+}
+body.home-v10-page .home10 main .h10-section-head h2{
+  font-size:clamp(24px,3vw,42px)!important;
+  line-height:1.1!important;
+  letter-spacing:-.04em!important;
+}
+body.home-v10-page .home10 main .h10-week-card h3,
+body.home-v10-page .home10 main .h20-panel h3,
+body.home-v10-page .home10 main .h20-results-panel h3{
+  font-size:clamp(21px,2.1vw,31px)!important;
+  line-height:1.16!important;
+}
+body.home-v10-page .home10 main :is(.h10-week-card,.h20-panel,.h20-results-panel,.h10-link-card){
+  border-radius:10px!important;
+}
+body.home-v10-page .home10 main .h20-results-panel{
+  padding:clamp(17px,2.2vw,26px)!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page .home10 main .h10-section-head h2{
+  color:#171c25!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page .home10 main .h10-section-head h2{
+  color:#f7f8fa!important;
+}
+/* Keep race-night panels at their own established style and structure. */
+body.home-v10-page.rn-active .home10 > .h10-hero{display:none!important}
+
+/* Responsive: banner stays short; race controls and all cards stay visible. */
+@media(max-width:980px){
+  body.home-v10-page:not(.rn-active) .home10 .h10-hero-grid{
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+  body.home-v10-page .home10 > .home30-shortcuts{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  body.home-v10-page:not(.rn-active) .home10 .h10-hosted-card{
+    max-width:none!important;
+  }
+}
+@media(max-width:620px){
+  body.home-v10-page .home10 > .home30-art-banner{
+    height:clamp(135px,33vw,210px);
+  }
+  body.home-v10-page .home10 > .home30-shortcuts{gap:9px;margin-bottom:14px;}
+  body.home-v10-page .home10 .home30-shortcut{min-height:117px;padding:12px}
+  body.home-v10-page .home10 .home30-shortcut strong{font-size:17px}
+  body.home-v10-page .home10 .home30-shortcut small{font-size:10px}
+  body.home-v10-page:not(.rn-active) .home10 .h10-hero-inner{width:min(100% - 22px,1380px)!important;}
+  body.home-v10-page:not(.rn-active) .home10 .h10-hero-copy{padding:16px!important;}
+  body.home-v10-page:not(.rn-active) .home10 .h10-upcoming-grid{
+    grid-template-columns:1fr!important;
+  }
+  body.home-v10-page:not(.rn-active) .home10 .h10-actions{flex-wrap:wrap!important;}
+  body.home-v10-page:not(.rn-active) .home10 .h10-actions .h10-btn{
+    flex:1 1 120px!important;
+  }
+}
+@media(max-width:900px){
+  html[data-hlrn-theme] body.home-v10-page .home10 main{
+    background-attachment:scroll,scroll!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  body.home-v10-page .home10 .home30-shortcut{transition:none!important}
+  html[data-hlrn-theme] body.home-v10-page .home10 main{
+    background-attachment:scroll,scroll!important;
+  }
+}
