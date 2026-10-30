@@ -830,45 +830,41 @@ html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scen
 
 
 /* ==============================================================
-   HLRN SHORT MASTHEAD V3 — compact logo and immediate dashboard
-   Previous logo restore made the image visible but left a 510px
-   top reserve. Keep the existing transparent artwork, render it
-   at a broadcast-friendly scale and lift it within a 290px header.
-   Scoped to normal homepage, never to the Race Night takeover.
+   HLRN SMART-CROPPED COMPACT LOGO — activated ONLY after successful
+   alpha measurement by smart-logo-crop.js. Prior known-visible
+   logo layout remains the fallback if JS or image loading fails.
    ============================================================== */
-@media (min-width:1051px) {
-  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero {
-    padding-top:290px!important;
-    padding-bottom:12px!important;
-    margin-top:0!important;
-  }
-  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene {
-    height:290px!important;
-    background-size:600px auto!important;
-    background-position:center -185px!important;
-  }
+html[data-hlrn-theme] body.home-v10-page.hlrn-logo-smart-active:not(.rn-active) #hlrnRaceDayHome > header.h10-hero {
+  min-height:0!important;
+  height:auto!important;
+  margin-top:0!important;
+  padding-top:245px!important;
+  padding-bottom:12px!important;
+}
+html[data-hlrn-theme] body.home-v10-page.hlrn-logo-smart-active:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene.hlrn-logo-cropped {
+  top:0!important;
+  height:225px!important;
+  background-image:none!important;
+  background-color:transparent!important;
+  background-size:auto!important;
+  background-position:center!important;
+  background-repeat:no-repeat!important;
+  overflow:hidden!important;
 }
 @media (min-width:651px) and (max-width:1050px) {
-  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero {
-    padding-top:clamp(230px,29vw,285px)!important;
-    padding-bottom:12px!important;
-    margin-top:0!important;
+  html[data-hlrn-theme] body.home-v10-page.hlrn-logo-smart-active:not(.rn-active) #hlrnRaceDayHome > header.h10-hero {
+    padding-top:207px!important;
   }
-  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene {
-    height:clamp(230px,29vw,285px)!important;
-    background-size:min(72vw,570px) auto!important;
-    background-position:center -15vw!important;
+  html[data-hlrn-theme] body.home-v10-page.hlrn-logo-smart-active:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene.hlrn-logo-cropped {
+    height:190px!important;
   }
 }
 @media (max-width:650px) {
-  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero {
-    padding-top:clamp(165px,40vw,220px)!important;
+  html[data-hlrn-theme] body.home-v10-page.hlrn-logo-smart-active:not(.rn-active) #hlrnRaceDayHome > header.h10-hero {
+    padding-top:159px!important;
     padding-bottom:10px!important;
-    margin-top:0!important;
   }
-  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene {
-    height:clamp(165px,40vw,220px)!important;
-    background-size:92vw auto!important;
-    background-position:center -22vw!important;
+  html[data-hlrn-theme] body.home-v10-page.hlrn-logo-smart-active:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene.hlrn-logo-cropped {
+    height:145px!important;
   }
 }
