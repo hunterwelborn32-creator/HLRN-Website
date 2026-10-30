@@ -1,0 +1,128 @@
+/*
+ * HLRN RESULTS & SCHEDULE — day/night illustrated banner
+ * Artwork prepared October 30, 2026.
+ * Only replaces the .ns-titlebar visual treatment.
+ * The original title and description remain in DOM for accessibility.
+ * Other results, schedule, and archive functionality is untouched.
+ */
+
+/* Full-fidelity illustration (3:1 aspect matches both authored images). */
+html[data-hlrn-theme] body > .hlrn-race-center > .ns-schedule-app .ns-titlebar {
+  position:relative!important;
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  aspect-ratio:3 / 1!important;
+  margin:0 0 20px!important;
+  padding:0!important;
+  box-sizing:border-box!important;
+  overflow:hidden!important;
+  border:1px solid rgba(175,188,204,.24)!important;
+  border-top:4px solid #e31837!important;
+  border-bottom:0!important;
+  border-radius:10px!important;
+  background-size:100% 100%!important;
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+  box-shadow:0 15px 36px rgba(0,0,0,.20)!important;
+}
+html[data-hlrn-theme="light"] body > .hlrn-race-center > .ns-schedule-app .ns-titlebar {
+  background-color:#eaf3fc!important;
+  background-image:url("./HLRN-Results-Banner-Day.webp")!important;
+}
+html[data-hlrn-theme="dark"] body > .hlrn-race-center > .ns-schedule-app .ns-titlebar {
+  background-color:#080a11!important;
+  background-image:url("./HLRN-Results-Banner-Night.webp")!important;
+  box-shadow:0 22px 48px rgba(0,0,0,.4)!important;
+}
+/* Previous oversized ghost text / decorative layers are redundant
+   because the panorama artwork already contains the finished banner. */
+html[data-hlrn-theme] body > .hlrn-race-center > .ns-schedule-app .ns-titlebar::before,
+html[data-hlrn-theme] body > .hlrn-race-center > .ns-schedule-app .ns-titlebar::after {
+  content:none!important;
+  display:none!important;
+}
+/* Hide redundant visible page text but preserve accessible semantics.
+   The original title remains searchable and screen-reader accessible. */
+@media (min-width:781px) {
+  html[data-hlrn-theme] body > .hlrn-race-center > .ns-schedule-app .ns-titlebar > :is(.ns-eyebrow,h1,p) {
+    position:absolute!important;
+    width:1px!important;
+    height:1px!important;
+    padding:0!important;
+    margin:-1px!important;
+    overflow:hidden!important;
+    clip:rect(0,0,0,0)!important;
+    clip-path:inset(50%)!important;
+    white-space:nowrap!important;
+    border:0!important;
+  }
+}
+/* Phone-sized layouts show actual responsive text, rather than
+   shrinking raster lettering to an unreadable size. Crop the
+   rightmost portion of each panorama so baked-in desktop words
+   do not duplicate the accessible heading on small screens. */
+@media (max-width:780px) {
+  html[data-hlrn-theme] body > .hlrn-race-center > .ns-schedule-app .ns-titlebar {
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:flex-start!important;
+    justify-content:center!important;
+    aspect-ratio:auto!important;
+    min-height:205px!important;
+    padding:24px 20px!important;
+    background-size:100% 100%,auto 270%!important;
+    background-position:center,right center!important;
+    background-repeat:no-repeat,no-repeat!important;
+  }
+  html[data-hlrn-theme="light"] body > .hlrn-race-center > .ns-schedule-app .ns-titlebar {
+    background-image:
+      linear-gradient(90deg,rgba(255,255,255,.97) 0%,rgba(255,255,255,.91) 60%,rgba(255,255,255,.76) 100%),
+      url("./HLRN-Results-Banner-Day.webp")!important;
+  }
+  html[data-hlrn-theme="dark"] body > .hlrn-race-center > .ns-schedule-app .ns-titlebar {
+    background-image:
+      linear-gradient(90deg,rgba(5,8,15,.96) 0%,rgba(6,9,17,.90) 60%,rgba(6,10,19,.75) 100%),
+      url("./HLRN-Results-Banner-Night.webp")!important;
+  }
+  html[data-hlrn-theme] body > .hlrn-race-center > .ns-schedule-app .ns-titlebar > :is(.ns-eyebrow,h1,p) {
+    position:relative!important;
+    z-index:1!important;
+    display:block!important;
+    width:auto!important;
+    height:auto!important;
+    max-width:100%!important;
+    margin:0!important;
+    overflow:visible!important;
+    clip:auto!important;
+    clip-path:none!important;
+    white-space:normal!important;
+  }
+  html[data-hlrn-theme] body > .hlrn-race-center > .ns-schedule-app .ns-titlebar h1 {
+    font-size:clamp(36px,9vw,56px)!important;
+    line-height:.99!important;
+    margin:11px 0 12px!important;
+    overflow-wrap:normal!important;
+    text-wrap:balance!important;
+  }
+  html[data-hlrn-theme] body > .hlrn-race-center > .ns-schedule-app .ns-titlebar p {
+    font-size:clamp(12px,3vw,15px)!important;
+    line-height:1.4!important;
+    max-width:42ch!important;
+  }
+  html[data-hlrn-theme="light"] body > .hlrn-race-center > .ns-schedule-app .ns-titlebar :is(.ns-eyebrow,h1,p) {
+    color:#101721!important;
+    -webkit-text-fill-color:#101721!important;
+    text-shadow:none!important;
+  }
+  html[data-hlrn-theme="dark"] body > .hlrn-race-center > .ns-schedule-app .ns-titlebar :is(.ns-eyebrow,h1,p) {
+    color:#f8fbff!important;
+    -webkit-text-fill-color:#f8fbff!important;
+    text-shadow:0 2px 10px rgba(0,0,0,.55)!important;
+  }
+  html[data-hlrn-theme] body > .hlrn-race-center > .ns-schedule-app .ns-titlebar h1 span {
+    color:#e31837!important;
+    -webkit-text-fill-color:#e31837!important;
+  }
+}
