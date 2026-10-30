@@ -635,3 +635,117 @@ html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10
     transition:none!important;
   }
 }
+
+
+/* ==============================================================
+   HLRN RACE WEEK SCENE ASSETS — Sunday / Monday schedule cards
+   One panoramic race scene per theme, offset across the two cards.
+   After placing HLRN-Race-Week-Day.png and -Night.png beside this
+   stylesheet, both cards receive their matching theme artwork.
+   Layered gradients remain as a readable fallback before upload.
+   ============================================================== */
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome main a.h10-week-card {
+  position:relative!important;
+  isolation:isolate!important;
+  border-radius:12px!important;
+  overflow:hidden!important;
+  border-top-width:4px!important;
+  box-shadow:0 12px 35px rgba(8,21,38,.19)!important;
+  -webkit-backdrop-filter:blur(5px);
+  backdrop-filter:blur(5px);
+  background-repeat:no-repeat,no-repeat!important;
+  background-size:100% 100%,200% 100%!important;
+  transition:transform .2s ease,box-shadow .2s ease!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome main a.h10-week-card.sunday {
+  background-position:center center,left center!important;
+  border-top-color:#df2444!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome main a.h10-week-card.monday {
+  background-position:center center,right center!important;
+  border-top-color:#269e62!important;
+}
+/* Remove old giant SUNDAY/MONDAY words and orbit rings: the artwork
+   replaces those decorations without interfering with live data. */
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome main a.h10-week-card::before,
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome main a.h10-week-card::after {
+  content:none!important;
+  display:none!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome main a.h10-week-card {
+  background-color:#e6eff7!important;
+  background-image:
+    linear-gradient(90deg,rgba(255,255,255,.87) 0%,rgba(255,255,255,.81) 48%,rgba(249,252,255,.53) 100%),
+    url("./HLRN-Race-Week-Day.png")!important;
+  border-color:rgba(255,255,255,.65)!important;
+  border-top-color:#df2444!important;
+  color:#172232!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome main a.h10-week-card.monday {
+  border-top-color:#269e62!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome main a.h10-week-card {
+  background-color:#0b1522!important;
+  background-image:
+    linear-gradient(90deg,rgba(6,13,24,.86) 0%,rgba(7,15,27,.77) 48%,rgba(8,16,29,.40) 100%),
+    url("./HLRN-Race-Week-Night.png")!important;
+  border-color:rgba(162,187,216,.20)!important;
+  border-top-color:#ff4565!important;
+  color:#f8fbff!important;
+  box-shadow:0 16px 40px rgba(0,0,0,.34)!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome main a.h10-week-card.monday {
+  border-top-color:#34c77d!important;
+}
+/* Preserve text contrast when schedule data updates automatically. */
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome main a.h10-week-card :is(h3,.h10-week-details strong) {
+  color:#101b29!important;
+  text-shadow:none!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome main a.h10-week-card :is(small,p,.h10-week-details>span) {
+  color:#334459!important;
+  text-shadow:none!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome main a.h10-week-card :is(h3,.h10-week-details strong) {
+  color:#ffffff!important;
+  text-shadow:0 2px 8px rgba(0,0,0,.42)!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome main a.h10-week-card :is(small,p,.h10-week-details>span) {
+  color:#e0ebf6!important;
+  text-shadow:0 1px 5px rgba(0,0,0,.4)!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome main a.h10-week-card b {
+  color:#bd1634!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome main a.h10-week-card.monday b {
+  color:#146e43!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome main a.h10-week-card b {
+  color:#ff8396!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome main a.h10-week-card.monday b {
+  color:#7cf0ae!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome main a.h10-week-card .h10-week-details {
+  border-top-color:rgba(131,151,171,.38)!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome main a.h10-week-card:focus-visible {
+  outline:3px solid #f0bc35!important;
+  outline-offset:3px!important;
+}
+@media(max-width:760px) {
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome main a.h10-week-card {
+    /* Mobile cards stack; show each artwork without horizontal squeezing. */
+    background-size:100% 100%,cover!important;
+    min-height:260px!important;
+  }
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome main a.h10-week-card.sunday {
+    background-position:center center,36% center!important;
+  }
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome main a.h10-week-card.monday {
+    background-position:center center,70% center!important;
+  }
+}
+@media(prefers-reduced-motion:reduce) {
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome main a.h10-week-card {transition:none!important;}
+}
