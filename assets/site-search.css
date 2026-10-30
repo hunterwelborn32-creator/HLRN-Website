@@ -765,3 +765,26 @@ html body #hlrn-site-search :is(.hgs-result,.hgs-tabs button,.hgs-suggestions bu
   html body #hlrn-site-search .hgs-result,
   html body #hlrn-global-nav .hgn-search{transition:none!important;transform:none!important}
 }
+
+/* HLRN SEARCH FLEX SCROLL FIX V2 — ensure results, not the footer, own the remaining space
+   whether quick suggestions are shown or hidden. */
+html body #hlrn-site-search .hgs-dialog {
+  display:flex!important;
+  flex-direction:column!important;
+  height:min(790px,calc(100dvh - 35px))!important;
+  grid-template-rows:none!important;
+}
+html body #hlrn-site-search .hgs-dialog > :not(.hgs-results){
+  flex:0 0 auto!important;
+}
+html body #hlrn-site-search .hgs-results {
+  flex:1 1 auto!important;
+  min-height:0!important;
+  overflow:auto!important;
+}
+@media(max-width:650px){
+  html body #hlrn-site-search .hgs-dialog {
+    height:100dvh!important;
+    max-height:100dvh!important;
+  }
+}
