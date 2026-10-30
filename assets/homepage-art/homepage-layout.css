@@ -747,3 +747,46 @@ html body.home-v10-page.rn-active #hlrnRaceDayHome > :is(.home30-full-backdrop,.
     mask-image:none!important;
   }
 }
+
+
+/* ===============================================================
+   HLRN COMPACT LOGO HEADER — remove oversized empty sky
+   The transparent logo PNG has substantial clear space above its
+   visible lettering. Shift the image upward inside the existing
+   absolute scene and reduce the hero's reserved top padding.
+   Logo still scrolls naturally; background, panels, nav, data and
+   automatic Race Night takeover are not modified.
+   =============================================================== */
+html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero {
+  min-height:0!important;
+  height:auto!important;
+  margin-top:0!important;
+  padding-top:310px!important;
+  padding-bottom:13px!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene {
+  height:310px!important;
+  background-size:min(72vw,840px) auto!important;
+  background-position:center -240px!important;
+}
+@media (min-width:651px) and (max-width:1050px) {
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero {
+    padding-top:clamp(275px,36vw,345px)!important;
+  }
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene {
+    height:clamp(275px,36vw,345px)!important;
+    background-size:min(76vw,760px) auto!important;
+    background-position:center -16vw!important;
+  }
+}
+@media (max-width:650px) {
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero {
+    padding-top:clamp(188px,45vw,285px)!important;
+    padding-bottom:12px!important;
+  }
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene {
+    height:clamp(188px,45vw,285px)!important;
+    background-size:min(92vw,530px) auto!important;
+    background-position:center -15vw!important;
+  }
+}
