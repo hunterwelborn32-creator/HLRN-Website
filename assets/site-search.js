@@ -75,9 +75,9 @@ function boot(){
     var text=String(value==null?"":value);
     var terms=tokens.filter(function(t){return t.length>1}).sort(function(a,b){return b.length-a.length});
     if(!terms.length)return esc(text);
-    var expression=new RegExp("("+terms.map(function(t){return t.replace(/[.*+?^$\{\}()|[\]\\]/g,"\\  function pretty(name){")}).join("|")+")","ig");
-    var bits=text.split(expression);
-    return bits.map(function(part){
+    /* tokens come from norm(), so the regex is safe and predictable. */
+    var expression=new RegExp("("+terms.join("|")+")","ig");
+    return text.split(expression).map(function(part){
       return terms.some(function(t){return part.toLowerCase()===t})?"<mark>"+esc(part)+"</mark>":esc(part);
     }).join("");
   }
