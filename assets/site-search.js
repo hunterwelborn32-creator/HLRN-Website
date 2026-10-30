@@ -16,12 +16,12 @@ function boot(){
   desktop.className="hgn-search";
   desktop.type="button";
   desktop.setAttribute("aria-label","Search HLRN");
-  desktop.innerHTML='<span aria-hidden="true">⌕</span> SEARCH';
+  desktop.innerHTML='<span class="hgs-search-trigger-icon" aria-hidden="true">⌕</span><span>SEARCH</span><kbd class="hgs-trigger-shortcut" aria-hidden="true">⌘ K</kbd>';
 
   var mobile=document.createElement("button");
   mobile.className="hgn-mobile-search";
   mobile.type="button";
-  mobile.innerHTML='<span aria-hidden="true">⌕</span> SEARCH HLRN';
+  mobile.innerHTML='<span class="hgs-search-trigger-icon" aria-hidden="true">⌕</span> SEARCH HLRN';
 
   var login=nav.querySelector(".hgn-login");
   var mobileLogin=nav.querySelector(".hgn-mobile-login");
@@ -35,10 +35,10 @@ function boot(){
     '<div class="hgs-backdrop" data-hgs-close></div>'+
     '<section class="hgs-dialog" role="dialog" aria-modal="true" aria-label="Search High Line Racing Network">'+
       '<header class="hgs-head">'+
-        '<div class="hgs-brand"><span>HLRN</span><div><strong>SEARCH</strong><small>FIND ANYTHING ON THE NETWORK</small></div></div>'+
+        '<div class="hgs-brand"><span>HLRN</span><div><small>THE HIGH LINE NETWORK</small><strong>SEARCH COMMAND</strong></div></div><span class="hgs-live-pill"><i></i> NETWORK INDEX</span>'+
         '<button class="hgs-close" type="button" data-hgs-close aria-label="Close search">×</button>'+
       '</header>'+
-      '<div class="hgs-input-wrap"><span class="hgs-icon" aria-hidden="true">⌕</span><input class="hgs-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search drivers, teams, races, tracks, news, Adventures…" aria-label="Search HLRN"><kbd>ESC</kbd></div>'+
+      '<div class="hgs-input-wrap"><span class="hgs-icon" aria-hidden="true">⌕</span><input class="hgs-input" type="search" autocomplete="off" spellcheck="false" placeholder="Driver, team, racetrack, or anything HLRN…" aria-label="Search HLRN"><button type="button" class="hgs-clear" aria-label="Clear search" hidden>✕</button><kbd>ESC</kbd></div>'+
       '<div class="hgs-tabs" role="tablist" aria-label="Search categories">'+
         '<button class="active" type="button" data-hgs-cat="all">ALL</button>'+
         '<button type="button" data-hgs-cat="driver">DRIVERS</button>'+
@@ -47,13 +47,17 @@ function boot(){
         '<button type="button" data-hgs-cat="adventure">ADVENTURES</button>'+
         '<button type="button" data-hgs-cat="page">PAGES</button>'+
       '</div>'+
-      '<div class="hgs-status"><span class="hgs-status-dot"></span><b class="hgs-status-text">BUILDING HLRN SEARCH INDEX…</b><span class="hgs-count"></span></div>'+
+      '<div class="hgs-status"><span class="hgs-status-dot"></span><b class="hgs-status-text">CONNECTING TO THE NETWORK…</b><span class="hgs-count" aria-live="polite"></span></div>'+
+      '<div class="hgs-suggestions" aria-label="Quick search suggestions"></div>'+
       '<div class="hgs-results" role="listbox" aria-label="Search results"></div>'+
       '<footer class="hgs-foot"><span><kbd>↑</kbd><kbd>↓</kbd> MOVE</span><span><kbd>ENTER</kbd> OPEN</span><span><kbd>CTRL</kbd> + <kbd>K</kbd> SEARCH</span></footer>'+
     '</section>';
   document.body.appendChild(overlay);
 
   var input=overlay.querySelector(".hgs-input");
+  var clearButton=overlay.querySelector(".hgs-clear");
+  var suggestions=overlay.querySelector(".hgs-suggestions");
+  var lastFocus=null;
   var results=overlay.querySelector(".hgs-results");
   var status=overlay.querySelector(".hgs-status-text");
   var count=overlay.querySelector(".hgs-count");
@@ -66,6 +70,16 @@ function boot(){
 
   function esc(v){
     return String(v==null?"":v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+  }
+  function highlight(value,tokens){
+    var text=String(value==null?"":value);
+    var terms=tokens.filter(function(t){return t.length>1}).sort(function(a,b){return b.length-a.length});
+    if(!terms.length)return esc(text);
+    var expression=new RegExp("("+terms.map(function(t){return t.replace(/[.*+?^$\{\}()|[\]\\]/g,"\\  function pretty(name){")}).join("|")+")","ig");
+    var bits=text.split(expression);
+    return bits.map(function(part){
+      return terms.some(function(t){return part.toLowerCase()===t})?"<mark>"+esc(part)+"</mark>":esc(part);
+    }).join("");
   }
   function pretty(name){
     var raw=String(name||"").trim();
@@ -138,7 +152,7 @@ function boot(){
             title:name||"HLRN Driver",
             subtitle:leagueName+" driver"+(d.rank?" • P"+d.rank:"")+(d.points!=null?" • "+d.points+" pts":""),
             url:driverUrl(leagueKey,d),
-            keywords:[d.driver,d.driverId,"driver",leagueName,d.rank?("rank "+d.rank):"",d.wins?("wins "+d.wins):""].join(" "),
+            keywords:[d.driver,d.driverId,d.carNumber,d.car,d.number,d.team,"driver",leagueName,d.rank?("rank "+d.rank):"",d.wins?("wins "+d.wins):""].join(" "),
             meta:leagueName.toUpperCase()+" DRIVER"
           });
         });
@@ -203,20 +217,36 @@ function boot(){
     }
     render();
   }
+  function editOne(a,b){
+    if(Math.abs(a.length-b.length)>1)return false;
+    var i=0,j=0,edits=0;
+    while(i<a.length && j<b.length){
+      if(a[i]===b[j]){i++;j++;continue}
+      if(++edits>1)return false;
+      if(a.length>b.length)i++;
+      else if(a.length<b.length)j++;
+      else {i++;j++}
+    }
+    return edits+((i<a.length||j<b.length)?1:0)<=1;
+  }
   function score(item,tokens,phrase){
     if(!tokens.length)return 0;
     var title=norm(item.title),hay=item._hay||"";
-    if(!tokens.every(function(t){return hay.indexOf(t)>=0}))return -1;
-    var s=0;
-    if(title===phrase)s+=200;
-    if(title.indexOf(phrase)===0)s+=110;
-    else if(title.indexOf(phrase)>=0)s+=75;
-    tokens.forEach(function(t){
-      if(title.split(" ").indexOf(t)>=0)s+=24;
-      else if(title.indexOf(t)>=0)s+=14;
-      else s+=5;
-    });
-    return s;
+    var words=hay.split(" ");
+    var grade=0;
+    for(var i=0;i<tokens.length;i++){
+      var token=tokens[i];
+      if(hay.indexOf(token)>=0){
+        grade+=title.indexOf(token)>=0?26:7;
+      }else if(token.length>=4 && words.some(function(w){return w.length>=4&&editOne(token,w)})){
+        grade+=1;
+      }else return -1;
+    }
+    if(title===phrase)grade+=200;
+    else if(title.indexOf(phrase)===0)grade+=110;
+    else if(title.indexOf(phrase)>=0)grade+=75;
+    if(item.type==="driver"&&title.indexOf(phrase)>=0)grade+=15;
+    return grade;
   }
   function icon(type){
     return {driver:"66",team:"T",race:"🏁",adventure:"A",page:"HL"}[type]||"HL";
@@ -225,6 +255,15 @@ function boot(){
     var q=input.value.trim();
     var phrase=norm(q);
     var tokens=phrase.split(" ").filter(Boolean);
+    clearButton.hidden=!q;
+    var showSuggestions=!q && category==="all" && ready;
+    suggestions.hidden=!showSuggestions;
+    if(showSuggestions){
+      suggestions.innerHTML='<span class="hgs-suggestion-label">QUICK START <b>↘</b></span>'+
+        ["Drivers","Sunday","Daytona","Standings","Adventures"].map(function(text){
+          return '<button type="button" data-hgs-suggest="'+esc(text)+'">'+esc(text)+' <span aria-hidden="true">↗</span></button>';
+        }).join("");
+    }
     var rows;
     if(tokens.length){
       rows=index.map(function(item){return {item:item,score:score(item,tokens,phrase)}})
@@ -236,20 +275,20 @@ function boot(){
     }
     visible=rows;
     selected=Math.min(selected,Math.max(0,rows.length-1));
-    count.textContent=rows.length+(q?(" RESULT"+(rows.length===1?"":"S")):"");
+    count.textContent=q?(rows.length+" MATCH"+(rows.length===1?"":"ES")):(index.length+" INDEXED");
 
     if(!ready){
-      results.innerHTML='<div class="hgs-empty"><b>BUILDING SEARCH INDEX</b><span>Connecting to current HLRN data…</span></div>';
+      results.innerHTML='<div class="hgs-empty"><b>CHECKING THE GRID</b><span>Loading live drivers, teams and race results…</span></div>';
       return;
     }
     if(!rows.length){
-      results.innerHTML='<div class="hgs-empty"><b>NO RESULTS FOR “'+esc(q)+'”</b><span>Try a driver, team, track, race number, page, or Adventures episode.</span></div>';
+      results.innerHTML='<div class="hgs-empty"><div class="hgs-empty-symbol">⌕</div><b>NO MATCHES ON THE GRID</b><span>Try a different driver, team, track, or race number.</span><button type="button" class="hgs-reset">CLEAR SEARCH ↗</button></div>';
       return;
     }
     results.innerHTML=rows.map(function(item,i){
-      return '<a class="hgs-result '+(i===selected?"selected":"")+'" href="'+esc(item.url)+'" data-hgs-index="'+i+'">'+
+      return '<a class="hgs-result '+(i===selected?"selected":"")+'" href="'+esc(item.url)+'" data-hgs-index="'+i+'" role="option" aria-selected="'+(i===selected?"true":"false")+'">'+
         '<span class="hgs-result-icon '+esc(item.type)+'">'+esc(icon(item.type))+'</span>'+
-        '<span class="hgs-result-copy"><small>'+esc(item.meta||item.type.toUpperCase())+'</small><strong>'+esc(item.title)+'</strong><span>'+esc(item.subtitle||"")+'</span></span>'+
+        '<span class="hgs-result-copy"><small>'+esc(item.meta||item.type.toUpperCase())+(i===0&&q?' <b class="hgs-top-hit">TOP MATCH</b>':'')+'</small><strong>'+highlight(item.title,tokens)+'</strong><span>'+highlight(item.subtitle||"",tokens)+'</span></span>'+
         '<span class="hgs-result-open">OPEN <b>→</b></span>'+
       '</a>';
     }).join("");
@@ -257,6 +296,7 @@ function boot(){
     if(chosen)chosen.scrollIntoView({block:"nearest"});
   }
   function open(){
+    lastFocus=document.activeElement;
     overlay.hidden=false;
     document.documentElement.classList.add("hlrn-search-open");
     setTimeout(function(){input.focus();input.select()},0);
@@ -265,11 +305,22 @@ function boot(){
   function close(){
     overlay.hidden=true;
     document.documentElement.classList.remove("hlrn-search-open");
+    if(lastFocus&&lastFocus.isConnected&&typeof lastFocus.focus==="function")lastFocus.focus();
   }
 
   [desktop,mobile].forEach(function(btn){btn.addEventListener("click",open)});
   [].slice.call(overlay.querySelectorAll("[data-hgs-close]")).forEach(function(el){el.addEventListener("click",close)});
   input.addEventListener("input",function(){selected=0;render()});
+  clearButton.addEventListener("click",function(){input.value="";selected=0;render();input.focus()});
+  suggestions.addEventListener("click",function(e){
+    var choice=e.target.closest("[data-hgs-suggest]");
+    if(!choice)return;
+    input.value=choice.getAttribute("data-hgs-suggest")||"";
+    selected=0;render();input.focus();
+  });
+  results.addEventListener("click",function(e){
+    if(e.target.closest(".hgs-reset")){input.value="";selected=0;render();input.focus()}
+  });
   tabs.forEach(function(tab){
     tab.addEventListener("click",function(){
       category=tab.getAttribute("data-hgs-cat")||"all";
@@ -283,7 +334,7 @@ function boot(){
     var row=e.target.closest("[data-hgs-index]");
     if(!row)return;
     selected=Number(row.getAttribute("data-hgs-index"))||0;
-    [].slice.call(results.querySelectorAll(".hgs-result")).forEach(function(el,i){el.classList.toggle("selected",i===selected)});
+    [].slice.call(results.querySelectorAll(".hgs-result")).forEach(function(el,i){el.classList.toggle("selected",i===selected);el.setAttribute("aria-selected",i===selected?"true":"false")});
   });
   input.addEventListener("keydown",function(e){
     if(e.key==="ArrowDown"&&visible.length){e.preventDefault();selected=(selected+1)%visible.length;render()}
