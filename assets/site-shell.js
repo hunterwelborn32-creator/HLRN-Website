@@ -1244,13 +1244,13 @@ function start(){
   if(!document.querySelector('link[data-hlrn-site-search]')){
     const searchCss=document.createElement("link");
     searchCss.rel="stylesheet";
-    searchCss.href=url("assets/site-search.css?v=20261030command2");
+    searchCss.href=url("assets/site-search.css?v=20261030command3");
     searchCss.setAttribute("data-hlrn-site-search","");
     document.head.appendChild(searchCss);
   }
   if(!document.querySelector('script[data-hlrn-site-search]')){
     const searchScript=document.createElement("script");
-    searchScript.src=url("assets/site-search.js?v=20261030command2");
+    searchScript.src=url("assets/site-search.js?v=20261030command3");
     searchScript.defer=true;
     searchScript.setAttribute("data-hlrn-site-search","");
     document.head.appendChild(searchScript);
