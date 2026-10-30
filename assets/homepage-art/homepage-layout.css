@@ -827,3 +827,48 @@ html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scen
     background-position:center 0px!important;
   }
 }
+
+
+/* ==============================================================
+   HLRN SHORT MASTHEAD V3 — compact logo and immediate dashboard
+   Previous logo restore made the image visible but left a 510px
+   top reserve. Keep the existing transparent artwork, render it
+   at a broadcast-friendly scale and lift it within a 290px header.
+   Scoped to normal homepage, never to the Race Night takeover.
+   ============================================================== */
+@media (min-width:1051px) {
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero {
+    padding-top:290px!important;
+    padding-bottom:12px!important;
+    margin-top:0!important;
+  }
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene {
+    height:290px!important;
+    background-size:600px auto!important;
+    background-position:center -185px!important;
+  }
+}
+@media (min-width:651px) and (max-width:1050px) {
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero {
+    padding-top:clamp(230px,29vw,285px)!important;
+    padding-bottom:12px!important;
+    margin-top:0!important;
+  }
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene {
+    height:clamp(230px,29vw,285px)!important;
+    background-size:min(72vw,570px) auto!important;
+    background-position:center -15vw!important;
+  }
+}
+@media (max-width:650px) {
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero {
+    padding-top:clamp(165px,40vw,220px)!important;
+    padding-bottom:10px!important;
+    margin-top:0!important;
+  }
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene {
+    height:clamp(165px,40vw,220px)!important;
+    background-size:92vw auto!important;
+    background-position:center -22vw!important;
+  }
+}
