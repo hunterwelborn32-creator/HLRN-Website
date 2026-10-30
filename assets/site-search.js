@@ -107,7 +107,7 @@ function boot(){
       ["Results & Schedule","Upcoming races, schedules and completed race archive","results/","results schedule race archive post race report"],
       ["Race Week Preview","Automatic pre-race preview and drivers to watch","race-preview/","race week preview pre race track history drivers to watch"],
       ["Drivers","HLRN driver directory and profiles","drivers/","drivers profiles statistics directory"],
-      ["Teams","HLRN team profiles and championship data","teams/","teams roster profiles championship"],
+      ["Teams","HLRN team profiles and championship data","team-pages/","teams roster profiles championship"],
       ["News & Blogs","HLRN news, announcements and stories","news/","news blogs announcements stories"],
       ["Fantasy","HLRN fantasy racing","fantasy/","fantasy picks leaderboard"],
       ["Adventures of High Line","HLRN original illustrated racing series","adventures/","adventures high line episode series"],
@@ -127,7 +127,7 @@ function boot(){
     return window.HLRNDrivers?.profileUrl?.({driverId:d&&d.driverId,driver:d&&d.driver}) || u("drivers/");
   }
   function teamUrl(league,name){
-    return u("teams/")+"?"+new URLSearchParams({league:league,team:name}).toString();
+    return u("team-pages/")+"?"+new URLSearchParams({league:league,team:name}).toString();
   }
   function raceUrl(league,race){
     return u("results/")+"?"+new URLSearchParams({league:league,race:String(race)}).toString();
