@@ -790,3 +790,40 @@ html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scen
     background-position:center -15vw!important;
   }
 }
+
+/* ==============================================================
+   HLRN LOGO VISIBILITY FIX V2
+   Restore the transparent PNG after an overly aggressive negative
+   background offset hid it entirely. Crop the surrounding sky more
+   conservatively. No alteration to logo assets or card styling.
+   ============================================================== */
+@media (min-width:1051px) {
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero {
+    padding-top:510px!important;
+  }
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene {
+    height:515px!important;
+    background-size:min(72vw,920px) auto!important;
+    background-position:center -70px!important;
+  }
+}
+@media (min-width:651px) and (max-width:1050px) {
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero {
+    padding-top:clamp(335px,47vw,440px)!important;
+  }
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene {
+    height:clamp(335px,47vw,440px)!important;
+    background-size:min(85vw,790px) auto!important;
+    background-position:center -38px!important;
+  }
+}
+@media (max-width:650px) {
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero {
+    padding-top:clamp(190px,55vw,290px)!important;
+  }
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene {
+    height:clamp(190px,55vw,290px)!important;
+    background-size:96vw auto!important;
+    background-position:center 0px!important;
+  }
+}
