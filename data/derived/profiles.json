@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-01T08:15:32.865Z",
+  "generatedAt": "2026-11-01T16:00:43.039Z",
   "drivers": [
     {
       "series": "sunday",
@@ -12640,11 +12640,26 @@
       "photoSlug": "ryan-wilson",
       "rank": 3,
       "points": null,
-      "races": 123,
+      "races": 124,
+      "wins": 6,
+      "top5": 28,
+      "top10": 48,
+      "avgFinish": 14.41,
+      "results": []
+    },
+    {
+      "series": "hosted",
+      "id": "jim-segredo",
+      "name": "Jim Segredo",
+      "sourceName": "Jim Segredo",
+      "photoSlug": "jim-segredo",
+      "rank": 4,
+      "points": null,
+      "races": 180,
       "wins": 6,
       "top5": 27,
-      "top10": 47,
-      "avgFinish": 14.51,
+      "top10": 68,
+      "avgFinish": 16.07,
       "results": []
     },
     {
@@ -12653,7 +12668,7 @@
       "name": "Ethan Fonseca Moreno",
       "sourceName": "Ethan Fonseca Moreno",
       "photoSlug": "ethan-moreno",
-      "rank": 4,
+      "rank": 5,
       "points": null,
       "races": 19,
       "wins": 6,
@@ -12668,28 +12683,13 @@
       "name": "Tommy Rogers",
       "sourceName": "Tommy Rogers",
       "photoSlug": "tommy-rogers",
-      "rank": 5,
+      "rank": 6,
       "points": null,
-      "races": 147,
+      "races": 148,
       "wins": 5,
       "top5": 27,
       "top10": 55,
-      "avgFinish": 14.78,
-      "results": []
-    },
-    {
-      "series": "hosted",
-      "id": "jim-segredo",
-      "name": "Jim Segredo",
-      "sourceName": "Jim Segredo",
-      "photoSlug": "jim-segredo",
-      "rank": 6,
-      "points": null,
-      "races": 179,
-      "wins": 5,
-      "top5": 26,
-      "top10": 67,
-      "avgFinish": 16.16,
+      "avgFinish": 14.84,
       "results": []
     },
     {
@@ -12760,11 +12760,11 @@
       "photoSlug": "eric-hayden",
       "rank": 11,
       "points": null,
-      "races": 186,
+      "races": 187,
       "wins": 4,
-      "top5": 36,
-      "top10": 78,
-      "avgFinish": 13.81,
+      "top5": 37,
+      "top10": 79,
+      "avgFinish": 13.75,
       "results": []
     },
     {
@@ -12775,11 +12775,11 @@
       "photoSlug": "josh-mckinney",
       "rank": 12,
       "points": null,
-      "races": 114,
+      "races": 115,
       "wins": 4,
       "top5": 24,
       "top10": 47,
-      "avgFinish": 14.17,
+      "avgFinish": 14.4,
       "results": []
     },
     {
@@ -12790,11 +12790,11 @@
       "photoSlug": "jerry-fassett",
       "rank": 13,
       "points": null,
-      "races": 188,
+      "races": 189,
       "wins": 4,
       "top5": 23,
       "top10": 63,
-      "avgFinish": 15.14,
+      "avgFinish": 15.12,
       "results": []
     },
     {
@@ -12835,11 +12835,11 @@
       "photoSlug": "juan-escamilla",
       "rank": 16,
       "points": null,
-      "races": 46,
+      "races": 47,
       "wins": 4,
       "top5": 19,
-      "top10": 23,
-      "avgFinish": 15.43,
+      "top10": 24,
+      "avgFinish": 15.32,
       "results": []
     },
     {
@@ -12865,11 +12865,11 @@
       "photoSlug": "shawn-stamper",
       "rank": 18,
       "points": null,
-      "races": 126,
+      "races": 127,
       "wins": 4,
       "top5": 12,
-      "top10": 32,
-      "avgFinish": 21.19,
+      "top10": 33,
+      "avgFinish": 21.09,
       "results": []
     },
     {
@@ -12880,11 +12880,11 @@
       "photoSlug": "john-miles",
       "rank": 19,
       "points": null,
-      "races": 105,
+      "races": 106,
       "wins": 4,
-      "top5": 11,
-      "top10": 25,
-      "avgFinish": 17.64,
+      "top5": 12,
+      "top10": 26,
+      "avgFinish": 17.51,
       "results": []
     },
     {
