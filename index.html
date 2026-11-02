@@ -104,6 +104,7 @@
 .h20-results-panel>a:focus-visible{outline:3px solid var(--h10-red);outline-offset:4px}
 @media(max-width:720px){.h20-results-grid{grid-template-columns:1fr}.h20-results-panel{padding:20px}}
 </style>
+<link rel="stylesheet" href="assets/sunday/sunday-season-finale.css?v=20261102finale1">
 </head>
 
 <body class="hlrn-v3 rd-v5 home-v10-page">
@@ -252,6 +253,14 @@
       </div>
     </section>
 
+    <div class="h10-shell">
+      <a id="hlrnSundayFinaleHome" href="standings/sunday.html" class="hlrn-sunday-finale-home" hidden aria-label="Sunday Season 2 final standings">
+        <span><span class="sunday-final-kicker">🏁 Sunday Night League • Season 2 Complete</span>
+          <strong>THE CHECKERED FLAG HAS FALLEN.</strong>
+          <span class="sunday-final-sub">Back-to-back champion Trevor Haley • Final standings and race results.</span></span>
+        <span class="sunday-final-cta">VIEW FINAL STANDINGS →</span>
+      </a>
+    </div>
     <section id="hlrnLatestRaceRecapSection" class="h10-section h10-story-section" hidden aria-label="Latest HLRN race story">
       <div class="h10-shell">
         <div class="h10-section-head">
@@ -507,5 +516,6 @@ async function load(){
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",load,{once:true});else load();
 })();
 </script>
+<script defer src="assets/sunday/sunday-season-finale.js?v=20261102finale1"></script>
 </body>
 </html>

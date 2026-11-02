@@ -1,0 +1,70 @@
+/* HLRN Sunday Season 2 finish — Sunday-only, responsive, day/night. */
+#hlrnSundaySeasonFinished[hidden],#hlrnSundayFinaleHome[hidden]{display:none!important}
+#hlrnSundaySeasonFinished,#hlrnSundayFinaleHome{position:relative;isolation:isolate;overflow:hidden;border-radius:11px}
+#hlrnSundaySeasonFinished::before,#hlrnSundayFinaleHome::before{
+ content:"";position:absolute;inset:0 0 0 auto;width:29%;pointer-events:none;opacity:.13;
+ background:conic-gradient(#fff 25%,transparent 0 50%,#fff 0 75%,transparent 0) 0 0/32px 32px;transform:skewX(-15deg)}
+#hlrnSundaySeasonFinished{
+ display:flex;align-items:center;justify-content:space-between;gap:24px;max-width:1500px;
+ margin:-8px auto 24px;padding:18px clamp(16px,3vw,28px);border:1px solid #b18a48;
+ background:linear-gradient(110deg,#12161e,#232022 70%,#392b19);color:#fff;
+ box-shadow:0 9px 24px rgba(0,0,0,.17)}
+#hlrnSundaySeasonFinished .sunday-final-copy,#hlrnSundaySeasonFinished .sunday-final-actions,
+#hlrnSundayFinaleHome>span{position:relative;z-index:1}
+.sunday-final-kicker{display:block;color:#f6cd74;font-size:11px;font-weight:900;letter-spacing:.13em;text-transform:uppercase}
+#hlrnSundaySeasonFinished h2{font-family:Impact,"Arial Narrow",Arial,sans-serif;font-size:clamp(27px,3.4vw,48px);
+ line-height:1.08;margin:5px 0 6px;letter-spacing:.01em;text-transform:uppercase;color:#fff}
+#hlrnSundaySeasonFinished h2 em{font-style:normal;color:#eec36d}
+#hlrnSundaySeasonFinished p{margin:0;font-size:clamp(12px,1.1vw,15px);line-height:1.5;color:#e8e1d4}
+#hlrnSundaySeasonFinished .sunday-final-actions{flex:0 0 auto;display:grid;gap:9px}
+#hlrnSundaySeasonFinished .sunday-final-stamp{font-size:10px;letter-spacing:.12em;font-weight:900;color:#f4cf7e}
+#hlrnSundaySeasonFinished .sunday-final-link,#sundayComplete .sunday-final-link{
+ display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:10px 15px;
+ border:1px solid #f7d48a;border-radius:5px;background:#e8bd64;color:#171512!important;
+ text-decoration:none!important;font-size:12px;font-weight:900;white-space:nowrap}
+#hlrnSundaySeasonFinished .sunday-final-link:hover,#sundayComplete .sunday-final-link:hover{filter:brightness(1.1)}
+#hlrnSundaySeasonFinished .sunday-final-link:focus-visible,#hlrnSundayFinaleHome:focus-visible,
+#sundayComplete .sunday-final-link:focus-visible{outline:3px solid #e5ba57;outline-offset:4px}
+body.hlrn-sunday-season-done .cc-hero-main .cc-title span{color:#eabf65!important}
+body.hlrn-sunday-season-done .cc-hero-side{border-color:#d4ae5a!important}
+body.hlrn-sunday-season-done .cc-pill.green{display:none!important}
+body.hlrn-sunday-season-done #drivers tbody tr:has(.position.top1){
+ background:linear-gradient(90deg,rgba(207,154,63,.15),transparent 70%)!important}
+#hlrnSundayFinaleHome{
+ display:flex;align-items:center;justify-content:space-between;gap:15px;
+ margin:16px 0 0;padding:18px clamp(16px,2.5vw,26px);
+ background:linear-gradient(110deg,#121720,#29221a);border:1px solid #b18a48;
+ border-left:5px solid #e8bb61;text-decoration:none!important;color:#fff!important;
+ box-shadow:0 8px 22px rgba(0,0,0,.14)}
+#hlrnSundayFinaleHome strong{display:block;font-family:Impact,"Arial Narrow",Arial,sans-serif;
+ font-size:clamp(23px,3vw,38px);line-height:1.1;margin:5px 0;color:#fff}
+#hlrnSundayFinaleHome .sunday-final-sub{font-size:12px;color:#e9dfcf;line-height:1.5}
+#hlrnSundayFinaleHome .sunday-final-cta{font-size:12px;font-weight:900;color:#f6d48b;white-space:nowrap}
+#hlrnSundayFinaleHome:hover .sunday-final-cta{text-decoration:underline;text-underline-offset:4px}
+.h10-upcoming-card.sunday.hlrn-sunday-card-done,.h10-week-card.sunday.hlrn-sunday-card-done{
+ border-color:#b88d4a!important}
+#sundayComplete.hlrn-sunday-results-done.active{
+ padding:22px clamp(16px,2.5vw,28px);border:1px solid #bd9554;border-radius:9px;
+ background:linear-gradient(135deg,#171920,#312718);color:#fff;text-align:left}
+#sundayComplete.hlrn-sunday-results-done h2{
+ font-family:Impact,"Arial Narrow",Arial,sans-serif;font-size:clamp(25px,2.8vw,39px);
+ line-height:1.1;color:#fff;margin:7px 0}
+#sundayComplete.hlrn-sunday-results-done p{font-size:14px;color:#ebe0cf;line-height:1.5;margin:0 0 14px}
+html[data-hlrn-theme="light"] #hlrnSundaySeasonFinished,
+html[data-hlrn-theme="light"] #hlrnSundayFinaleHome,
+html[data-hlrn-theme="light"] #sundayComplete.hlrn-sunday-results-done.active{
+ background:linear-gradient(110deg,#fff,#fffaf0 74%,#f3e7cf);color:#171717!important;
+ border-color:#bb9b5e;box-shadow:0 8px 22px rgba(25,23,18,.08)}
+html[data-hlrn-theme="light"] :is(#hlrnSundaySeasonFinished h2,#hlrnSundayFinaleHome strong,
+ #sundayComplete.hlrn-sunday-results-done h2){color:#141414}
+html[data-hlrn-theme="light"] :is(#hlrnSundaySeasonFinished p,#hlrnSundayFinaleHome .sunday-final-sub,
+ #sundayComplete.hlrn-sunday-results-done p){color:#39352e}
+html[data-hlrn-theme="light"] :is(.sunday-final-kicker,#hlrnSundaySeasonFinished .sunday-final-stamp,
+ #hlrnSundayFinaleHome .sunday-final-cta){color:#76531e}
+html[data-hlrn-theme="light"] :is(#hlrnSundaySeasonFinished,#hlrnSundayFinaleHome)::before{
+ opacity:.07;background:conic-gradient(#684c19 25%,transparent 0 50%,#684c19 0 75%,transparent 0) 0 0/32px 32px}
+@media(max-width:760px){
+ #hlrnSundaySeasonFinished,#hlrnSundayFinaleHome{flex-direction:column;align-items:flex-start;gap:10px;padding:16px}
+ #hlrnSundaySeasonFinished .sunday-final-actions{display:flex;flex-wrap:wrap;align-items:center}
+ #hlrnSundayFinaleHome .sunday-final-cta{white-space:normal}
+}
