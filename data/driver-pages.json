@@ -458,9 +458,9 @@
       "name": "Edward Fiedler",
       "slug": "edward-fiedler",
       "url": "/drivers/edward-fiedler/",
-      "number": "66",
-      "photoSlug": "",
-      "hasPhoto": false,
+      "number": "166",
+      "photoSlug": "edward-fiedler",
+      "hasPhoto": true,
       "iRating": 2495,
       "series": [
         "sunday"

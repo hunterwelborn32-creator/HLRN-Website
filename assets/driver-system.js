@@ -194,7 +194,7 @@
     // These drivers have uploaded transparent cutouts, but not separate full photos.
     // Always use their real cutouts rather than attempting a missing full image
     // and cycling between a failed URL and the rating-based fallback.
-    if(folder==="full" && (slug==="justin-lee-pearson" || slug==="zachary-cato")) folder="cutout";
+    if(folder==="full" && (slug==="justin-lee-pearson" || slug==="zachary-cato" || slug==="edward-fiedler")) folder="cutout";
     const photoPath=PHOTO_BASE+folder+"/"+encodeURIComponent(slug)+".webp";
     // Cache-bust the two newly restored Hosted driver cutouts after earlier 404s.
     return slug==="justin-lee-pearson"||slug==="zachary-cato"
