@@ -784,7 +784,7 @@ function start(){
 
   // Always use the current shared shell stylesheet. This gives every page
   // the same global mobile layer without requiring page-by-page CSS edits.
-  const SHELL_CSS_VERSION="20261102newheader1";
+  const SHELL_CSS_VERSION="20261102navblend2";
   let shellCss=[...document.querySelectorAll('link[rel="stylesheet"]')].find(link=>/\/site-shell\.css(?:\?|$)/i.test(link.getAttribute("href")||""));
   if(!shellCss){
     shellCss=document.createElement("link");
@@ -1161,7 +1161,7 @@ function start(){
   if(!document.querySelector('link[data-hlrn-site-search]')){
     const searchCss=document.createElement("link");
     searchCss.rel="stylesheet";
-    searchCss.href=url("assets/site-search.css?v=20261030command4");
+    searchCss.href=url("assets/site-search.css?v=20261102navblend2");
     searchCss.setAttribute("data-hlrn-site-search","");
     document.head.appendChild(searchCss);
   }
