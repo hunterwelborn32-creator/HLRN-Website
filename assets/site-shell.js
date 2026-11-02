@@ -784,7 +784,7 @@ function start(){
 
   // Always use the current shared shell stylesheet. This gives every page
   // the same global mobile layer without requiring page-by-page CSS edits.
-  const SHELL_CSS_VERSION="20261102naturalproportions4";
+  const SHELL_CSS_VERSION="20261102harvesteffects1";
   let shellCss=[...document.querySelectorAll('link[rel="stylesheet"]')].find(link=>/\/site-shell\.css(?:\?|$)/i.test(link.getAttribute("href")||""));
   if(!shellCss){
     shellCss=document.createElement("link");
@@ -904,13 +904,48 @@ function start(){
 
   // Seasonal artwork belongs in the shared top navigation, not the homepage hero.
   // Check Eastern calendar month so November artwork automatically disappears Dec 1.
+  // Holiday atmosphere is visual only: no race data, navigation, focus, or
+  // click targets are changed. Every decorative leaf ignores pointer events.
+  const harvestLeafSpecs=[
+    ["2%","45px","28s","-8s","16px","gold"],
+    ["6%","-26px","36s","-21s","13px","copper"],
+    ["95%","-54px","32s","-15s","18px","russet"],
+    ["91%","36px","39s","-29s","12px","gold"],
+    ["3%","61px","43s","-35s","19px","russet"],
+    ["97%","-24px","29s","-24s","14px","copper"],
+    ["9%","-47px","46s","-39s","11px","gold"],
+    ["89%","56px","42s","-6s","16px","copper"],
+    ["1%","38px","47s","-31s","14px","russet"],
+    ["99%","-44px","48s","-17s","13px","gold"]
+  ];
+  function syncHarvestEffects(enabled){
+    let field=document.getElementById("hlrn-harvest-fall");
+    if(!enabled){if(field)field.remove();return;}
+    if(field)return;
+    field=document.createElement("div");
+    field.id="hlrn-harvest-fall";
+    field.setAttribute("aria-hidden","true");
+    harvestLeafSpecs.forEach(([x,drift,duration,delay,size,color])=>{
+      const leaf=document.createElement("span");
+      leaf.className="hlrn-harvest-leaf hlrn-harvest-"+color;
+      leaf.style.setProperty("--leaf-x",x);
+      leaf.style.setProperty("--leaf-drift",drift);
+      leaf.style.setProperty("--leaf-duration",duration);
+      leaf.style.setProperty("--leaf-delay",delay);
+      leaf.style.setProperty("--leaf-size",size);
+      field.appendChild(leaf);
+    });
+    document.body.appendChild(field);
+  }
   function syncThanksgivingNav(){
     const parts=new Intl.DateTimeFormat("en-US",{
       timeZone:"America/New_York",year:"numeric",month:"2-digit"
     }).formatToParts(new Date());
     const y=parts.find(part=>part.type==="year")?.value;
     const m=parts.find(part=>part.type==="month")?.value;
-    document.documentElement.classList.toggle("hlrn-thanksgiving-2026",y==="2026"&&m==="11");
+    const isNovember2026=y==="2026"&&m==="11";
+    document.documentElement.classList.toggle("hlrn-thanksgiving-2026",isNovember2026);
+    syncHarvestEffects(isNovember2026);
   }
   syncThanksgivingNav();
   window.setInterval(syncThanksgivingNav,60000);
@@ -1179,7 +1214,7 @@ function start(){
   if(!document.querySelector('link[data-hlrn-site-search]')){
     const searchCss=document.createElement("link");
     searchCss.rel="stylesheet";
-    searchCss.href=url("assets/site-search.css?v=20261102harvestnav3");
+    searchCss.href=url("assets/site-search.css?v=20261102harvesteffects1");
     searchCss.setAttribute("data-hlrn-site-search","");
     document.head.appendChild(searchCss);
   }

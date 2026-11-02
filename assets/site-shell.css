@@ -3059,3 +3059,101 @@ html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-mobile-more-m
   }
   html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-inner{gap:5px!important}
 }
+
+/* ================================================================
+   HLRN NOVEMBER HARVEST EFFECTS — automatically removed 1 Dec 2026
+   Decoration ONLY. Light GPU load, no hit testing, reduced-motion safe.
+   ================================================================ */
+html.hlrn-thanksgiving-2026 #hlrn-harvest-fall{
+  position:fixed!important;
+  inset:0!important;
+  width:100%!important;height:100dvh!important;
+  overflow:hidden!important;
+  pointer-events:none!important;
+  user-select:none!important;
+  z-index:1000!important;
+  contain:layout style paint!important;
+}
+html:not(.hlrn-thanksgiving-2026) #hlrn-harvest-fall{display:none!important}
+html.hlrn-thanksgiving-2026 #hlrn-harvest-fall .hlrn-harvest-leaf{
+  position:absolute!important;
+  top:-12vh!important;
+  left:var(--leaf-x)!important;
+  display:block!important;
+  width:var(--leaf-size)!important;
+  height:calc(var(--leaf-size) * .72)!important;
+  border-radius:3% 86% 6% 82%!important;
+  background:linear-gradient(145deg,var(--leaf-light),var(--leaf-mid) 52%,var(--leaf-dark))!important;
+  box-shadow:inset 1px 1px 1px rgba(255,255,255,.21),0 1px 2px rgba(45,19,5,.12)!important;
+  opacity:.37!important;
+  filter:none!important;
+  transform-origin:center center!important;
+  will-change:transform!important;
+  animation:hlrn-harvest-drift var(--leaf-duration) linear var(--leaf-delay) infinite!important;
+}
+html.hlrn-thanksgiving-2026 #hlrn-harvest-fall .hlrn-harvest-leaf::before{
+  content:""!important;
+  position:absolute!important;
+  width:72%!important;
+  height:1px!important;
+  left:10%!important;
+  top:53%!important;
+  background:rgba(80,31,8,.35)!important;
+  transform:rotate(-30deg)!important;
+  transform-origin:left center!important;
+}
+html.hlrn-thanksgiving-2026 #hlrn-harvest-fall .hlrn-harvest-gold{
+  --leaf-light:#ffe19a;--leaf-mid:#cc913f;--leaf-dark:#9f5c22;
+}
+html.hlrn-thanksgiving-2026 #hlrn-harvest-fall .hlrn-harvest-copper{
+  --leaf-light:#e6a35e;--leaf-mid:#af582c;--leaf-dark:#683421;
+}
+html.hlrn-thanksgiving-2026 #hlrn-harvest-fall .hlrn-harvest-russet{
+  --leaf-light:#c97145;--leaf-mid:#8f3225;--leaf-dark:#612620;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme="light"] #hlrn-harvest-fall .hlrn-harvest-leaf{opacity:.27!important}
+html.hlrn-thanksgiving-2026[data-hlrn-theme="dark"] #hlrn-harvest-fall .hlrn-harvest-leaf{opacity:.43!important}
+@keyframes hlrn-harvest-drift{
+  0%{transform:translate3d(0,-8vh,0) rotate(-28deg)}
+  25%{transform:translate3d(12px,26vh,0) rotate(70deg)}
+  50%{transform:translate3d(-8px,58vh,0) rotate(153deg)}
+  75%{transform:translate3d(13px,90vh,0) rotate(245deg)}
+  100%{transform:translate3d(var(--leaf-drift),128vh,0) rotate(335deg)}
+}
+/* Small glowing details on already-functional navigation controls. */
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-links>.hgn-link.active,
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-more-wrap.active>.hgn-more-btn{
+  box-shadow:inset 0 1px 0 rgba(255,245,215,.22),0 0 13px rgba(214,117,39,.14)!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-links>.hgn-link:hover,
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-more-wrap>.hgn-more-btn:hover,
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-login:hover,
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-theme-toggle:hover{
+  box-shadow:0 0 0 1px rgba(216,126,53,.22),0 0 16px rgba(226,136,55,.17)!important;
+  transition:background .2s ease,border-color .2s ease,box-shadow .25s ease!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-links>.hgn-link.active::after,
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-more-wrap.active>.hgn-more-btn::after{
+  animation:hlrn-harvest-glint 5.5s ease-in-out infinite!important;
+}
+@keyframes hlrn-harvest-glint{
+  0%,100%{opacity:.6;box-shadow:0 0 3px rgba(225,148,61,.1)}
+  50%{opacity:1;box-shadow:0 0 13px rgba(234,159,72,.54)}
+}
+/* Homepage race buttons are highlighted only on hover, never repositioned. */
+html.hlrn-thanksgiving-2026 body.home-v10-page :is(.h10-btn,.home30-shortcut):hover,
+html.hlrn-thanksgiving-2026 body.home-v10-page :is(.h10-btn,.home30-shortcut):focus-visible{
+  box-shadow:0 0 0 1px rgba(234,155,74,.28),0 9px 28px rgba(186,91,29,.22)!important;
+  transition:box-shadow .2s ease!important;
+}
+@media(max-width:760px){
+  html.hlrn-thanksgiving-2026 #hlrn-harvest-fall .hlrn-harvest-leaf:nth-child(n+5){display:none!important}
+  html.hlrn-thanksgiving-2026 #hlrn-harvest-fall .hlrn-harvest-leaf{opacity:.20!important}
+}
+@media(prefers-reduced-motion:reduce){
+  html.hlrn-thanksgiving-2026 #hlrn-harvest-fall{display:none!important}
+  html.hlrn-thanksgiving-2026 #hlrn-global-nav .hgn-links>.hgn-link.active::after,
+  html.hlrn-thanksgiving-2026 #hlrn-global-nav .hgn-more-wrap.active>.hgn-more-btn::after{
+    animation:none!important;
+  }
+}

@@ -869,3 +869,12 @@ html.hlrn-thanksgiving-2026[data-hlrn-theme] body #hlrn-global-nav .hgs-trigger-
 @media(max-width:1280px){
   html.hlrn-thanksgiving-2026[data-hlrn-theme] body #hlrn-global-nav .hgn-search{display:none!important}
 }
+
+/* Soft Thanksgiving search-button glow; command palette remains unchanged. */
+html.hlrn-thanksgiving-2026[data-hlrn-theme] body #hlrn-global-nav .hgn-search:hover,
+html.hlrn-thanksgiving-2026[data-hlrn-theme] body #hlrn-global-nav .hgn-search:focus-visible,
+html.hlrn-thanksgiving-2026[data-hlrn-theme] body #hlrn-global-nav .hgn-mobile-search:hover{
+  border-color:var(--harvest-accent,#cc772d)!important;
+  box-shadow:0 0 0 1px rgba(229,152,65,.24),0 0 17px rgba(214,119,40,.19)!important;
+  transition:background .2s ease,border-color .2s ease,box-shadow .25s ease!important;
+}
