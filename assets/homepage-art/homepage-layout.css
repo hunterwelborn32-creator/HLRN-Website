@@ -645,7 +645,7 @@ html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scen
   transform:none!important;
   opacity:1!important;
   background-color:transparent!important;
-  background-image:url("./Glossy%20HLRN%20Racing%20Network%20Logo.png?v=20261029transparent9")!important;
+  background-image:url("./HLRN-New-Header-Day.png?v=20261102banner1")!important;
   background-size:min(72vw,990px) auto!important;
   background-position:center 30px!important;
   background-repeat:no-repeat!important;
@@ -654,10 +654,10 @@ html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scen
   filter:none!important;
 }
 html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene{
-  background-image:url("./Glossy%20HLRN%20Racing%20Network%20Logo.png?v=20261029transparent9")!important;
+  background-image:url("./HLRN-New-Header-Day.png?v=20261102banner1")!important;
 }
 html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene{
-  background-image:url("./HLRN%20Metallic%20Racing%20Network%20Logo.png?v=20261029transparent9")!important;
+  background-image:url("./HLRN-New-Header-Night.png?v=20261102banner1")!important;
 }
 
 /* Real content above both image layers. Never repaint the page
@@ -866,5 +866,31 @@ html[data-hlrn-theme] body.home-v10-page.hlrn-logo-smart-active:not(.rn-active) 
   }
   html[data-hlrn-theme] body.home-v10-page.hlrn-logo-smart-active:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene.hlrn-logo-cropped {
     height:145px!important;
+  }
+}
+
+/* HLRN NOVEMBER 2026 PANORAMIC MASTHEAD: original selected day/night artwork.
+   Keep the full wide logo visible with no old transparent-logo crop offsets. */
+html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene {
+  top:0!important;
+  height:clamp(112px,18.5vw,350px)!important;
+  background-size:min(96vw,1920px) auto!important;
+  background-position:center clamp(3px,0.75vw,14px)!important;
+  background-repeat:no-repeat!important;
+  overflow:hidden!important;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,black 3%,black 97%,transparent 100%)!important;
+  mask-image:linear-gradient(90deg,transparent 0%,black 3%,black 97%,transparent 100%)!important;
+}
+html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero {
+  padding-top:clamp(120px,19.5vw,365px)!important;
+}
+@media (max-width:650px) {
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene {
+    height:clamp(80px,20vw,128px)!important;
+    background-size:98vw auto!important;
+    background-position:center 6px!important;
+  }
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero {
+    padding-top:clamp(95px,23vw,145px)!important;
   }
 }
