@@ -37,7 +37,7 @@ const SCHEDULES={
     {week:8,date:"2026-10-12",track:"TALLADEGA",car:"TRUCKS",laps:100},
     {week:9,date:"2026-10-19",track:"HOMESTEAD-MIAMI",car:"GEN 7",laps:175},
     {week:10,date:"2026-10-26",track:"MICHIGAN",car:"TRUCKS",laps:125},
-    {week:11,date:"2026-11-02",track:"MARTINSVILLE",car:"ARCA",laps:100},
+    {week:11,date:"2026-11-02",track:"INDIANAPOLIS",car:"ARCA",laps:80},
     {week:12,date:"2026-11-09",track:"IRACING SUPERSPEEDWAY",car:"TRUCKS",laps:100},
     {week:13,date:"2026-11-16",track:"KANSAS",car:"GEN 7",laps:175},
     {week:14,date:"2026-11-23",track:"LAS VEGAS",car:"TRUCKS",laps:175},

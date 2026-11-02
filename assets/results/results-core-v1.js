@@ -467,16 +467,16 @@ const mondaySchedule = [
     {
         week: 11,
         date: "2026-11-02",
-        track: "MARTINSVILLE",
+        track: "INDIANAPOLIS",
         car: "ARCA",
-        laps: 100,
+        laps: 80,
         tires: "5 SETS",
-        miles: "0.526",
-        banking: "12°",
-        location: "RIDGEWAY, VA",
-        type: "SHORT OVAL",
+        miles: "2.50",
+        banking: "9°",
+        location: "INDIANAPOLIS, IN",
+        type: "OVAL",
         description:
-            "Martinsville Speedway is a historic short track famous for tight corners, heavy braking and intense short-track racing."
+            "Indianapolis Motor Speedway is one of the most historic racing venues in the world and features a flat, demanding oval."
     },
 
     {
