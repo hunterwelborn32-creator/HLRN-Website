@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-02T16:05:51.470Z",
+  "generatedAt": "2026-11-02T16:10:54.350Z",
   "source": "SimRacerHub race pages",
   "races": [
     {
@@ -651,6 +651,31 @@
         "driverId": "112020",
         "carNumber": "87",
         "lap": 18
+      }
+    },
+    {
+      "key": "sunday|16|389145",
+      "league": "sunday",
+      "raceNumber": 16,
+      "raceId": "389145",
+      "track": "Talladega Superspeedway",
+      "date": "Sun Nov 01 2026 00:00:00 GMT-0400 (Eastern Daylight Time)",
+      "source": "SimRacerHub",
+      "sourceRaceId": "389145",
+      "duration": "1h 38m",
+      "raceLaps": 101,
+      "leaders": 13,
+      "leadChanges": 26,
+      "cautions": 4,
+      "cautionLaps": 12,
+      "penalties": 0,
+      "fastestLap": {
+        "time": 48.134,
+        "formatted": "48.134",
+        "driver": "Jared Philpott",
+        "driverId": "115869",
+        "carNumber": "8",
+        "lap": 93
       }
     },
     {
