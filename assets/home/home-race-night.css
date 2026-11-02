@@ -183,3 +183,388 @@ body.rn-live .v7-status-brand strong:after{
 @media(prefers-reduced-motion:reduce){
   body.rn-live .rn-pulse{animation:none}
 }
+/* ================================================================
+   HLRN INDIANAPOLIS BRICKYARD BROADCAST 2026
+   Only Monday Nov 2, 2026 (class managed by home-race-night.js).
+   No changes to the live data, countdown, routes or ordinary races.
+   ================================================================ */
+.rn-broadcast-topline,.rn-indy-kicker,.rn-indy-statline,.rn-indy-board-title,.rn-indy-timing-strip{display:none}
+body.home-v10-page.rn-active.rn-indy-20261102 #hlrnRaceNightTakeover{
+  --rn-accent:#efa44b;
+  --rn-fire:#ed7041;
+  --rn-glow:rgba(240,149,57,.3);
+  --rn-stroke:rgba(243,188,113,.24);
+  min-height:0!important;
+  isolation:isolate;
+  background:
+    radial-gradient(ellipse at 79% 19%,rgba(213,93,35,.25),transparent 43%),
+    radial-gradient(ellipse at 16% 86%,rgba(146,46,29,.22),transparent 47%),
+    linear-gradient(115deg,#090c12 6%,#11131b 50%,#21150e 100%)!important;
+  border-top:1px solid rgba(255,201,134,.17)!important;
+  border-bottom:3px solid #dc7834!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover::before{
+  background:
+    repeating-linear-gradient(128deg,transparent 0 85px,rgba(255,255,255,.013) 85px 86px,transparent 86px 140px),
+    linear-gradient(98deg,rgba(4,8,13,.66),transparent 60%)!important;
+  pointer-events:none!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover::after{
+  content:"80"!important;
+  position:absolute!important;
+  z-index:0!important;
+  top:45px!important;
+  right:clamp(20px,16vw,300px)!important;
+  font:900 italic clamp(240px,27vw,470px)/.8 "Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
+  letter-spacing:-.095em!important;
+  color:rgba(255,212,143,.048)!important;
+  transform:skewX(-9deg)!important;
+  pointer-events:none!important;
+  user-select:none!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-grid{
+  opacity:.36!important;
+  background:
+    repeating-linear-gradient(90deg,transparent 0 125px,rgba(241,166,80,.075) 125px 126px),
+    repeating-linear-gradient(0deg,transparent 0 94px,rgba(241,166,80,.065) 94px 95px)!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-broadcast-topline{
+  position:relative;
+  z-index:3;
+  min-height:38px;
+  padding:6px max(20px,calc((100% - 1430px)/2));
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  border-bottom:1px solid rgba(241,166,80,.25);
+  background:linear-gradient(90deg,#271b15,rgba(55,32,17,.94) 50%,#211a18);
+  color:#f3e2c9;
+  font:800 10px/1.25 Inter,Arial,sans-serif;
+  letter-spacing:.13em;
+  white-space:nowrap;
+}
+body.rn-indy-20261102 .rn-broadcast-topline span:nth-child(2){color:#ffc67e}
+body.rn-indy-20261102 .rn-broadcast-topline i{color:#e98141;font-style:normal;padding:0 4px}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-inner{
+  width:min(calc(100% - 46px),1430px)!important;
+  min-height:570px!important;
+  grid-template-columns:minmax(0,1fr) minmax(335px,398px)!important;
+  gap:clamp(24px,4vw,64px)!important;
+  align-items:center!important;
+  padding:clamp(42px,5vw,72px) 0 52px!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-copy{min-width:0}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-indy-kicker{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:10px;
+  color:#f6ba6d;
+  font:800 11px/1.25 Inter,Arial,sans-serif;
+  letter-spacing:.115em;
+  margin-bottom:16px;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-indy-kicker b{
+  color:#fff2db!important;
+  font-weight:900;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-indy-kicker span:last-child{
+  color:#bca894;
+  font-size:9px;
+  border-left:1px solid rgba(246,186,109,.48);
+  padding-left:10px;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-indy-kicker-bars{
+  color:#17110e!important;
+  background:#f3ac58;
+  display:grid;
+  place-items:center;
+  width:29px;height:24px;
+  font-size:18px;
+  line-height:1;
+  transform:skewX(-10deg);
+  border-radius:2px;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-eyebrow{
+  color:#bdad9c!important;
+  font-size:clamp(10px,.8vw,12px)!important;
+  letter-spacing:.13em!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-eyebrow b{color:#ffe9c8!important}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-trackline{margin-top:18px!important;gap:7px!important}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-trackline span{
+  padding:8px 12px!important;
+  color:#f8d0a0!important;
+  background:rgba(245,178,92,.08)!important;
+  border:1px solid rgba(239,171,89,.3)!important;
+  border-radius:4px!important;
+  font-size:clamp(9px,.64vw,11px)!important;
+  letter-spacing:.095em!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-trackline span:nth-child(3){
+  background:linear-gradient(130deg,#bf592f,#9b3e29)!important;
+  border-color:#e18c4b!important;
+  color:#fff!important;
+}
+body.home-v10-page.rn-indy-20261102 #hlrnRaceNightTakeover .rn-copy h1{
+  margin:21px 0 0!important;
+  color:#fff8ec!important;
+  font:900 italic clamp(62px,6.8vw,113px)/.83 "Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
+  letter-spacing:-.037em!important;
+  text-shadow:0 4px 35px rgba(0,0,0,.38)!important;
+  text-transform:uppercase!important;
+  white-space:normal!important;
+  overflow-wrap:normal!important;
+}
+body.home-v10-page.rn-indy-20261102 #hlrnRaceNightTakeover .rn-copy h2{
+  margin:14px 0 0!important;
+  color:#f5ae58!important;
+  font:900 italic clamp(25px,3.1vw,42px)/1 "Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
+  letter-spacing:.015em!important;
+  text-transform:uppercase!important;
+  white-space:normal!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-copy>p{
+  margin:18px 0 0!important;
+  max-width:690px!important;
+  color:#dfd3c6!important;
+  font:500 clamp(13px,.95vw,15px)/1.6 Inter,Arial,sans-serif!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-indy-statline{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  margin:26px 0 0;
+  padding:11px 0;
+  border-top:1px solid var(--rn-stroke);
+  border-bottom:1px solid var(--rn-stroke);
+  background:linear-gradient(90deg,rgba(237,128,53,.09),rgba(255,255,255,.012));
+}
+body.rn-indy-20261102 .rn-indy-statline>div{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:5px clamp(6px,.8vw,15px);
+  border-right:1px solid rgba(243,188,113,.2);
+}
+body.rn-indy-20261102 .rn-indy-statline>div:last-child{border-right:0}
+body.home-v10-page.rn-indy-20261102 #hlrnRaceNightTakeover .rn-indy-statline b{
+  color:#fff3e2!important;
+  font:900 clamp(21px,2.25vw,32px)/1 "Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
+  letter-spacing:.025em!important;
+  font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+}
+body.rn-indy-20261102 .rn-indy-statline small{
+  margin-top:5px;
+  color:#d2a87e!important;
+  font:800 9px/1.25 Inter,Arial,sans-serif!important;
+  letter-spacing:.09em;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-actions{
+  margin-top:26px!important;
+  max-width:none!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:9px!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-btn{
+  min-height:66px!important;
+  padding:10px 13px!important;
+  background:rgba(13,17,24,.85)!important;
+  border:1px solid rgba(239,172,99,.28)!important;
+  border-radius:7px!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.045)!important;
+  color:#fff5e8!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-btn.primary{
+  background:linear-gradient(120deg,#d45b31,#a93b27)!important;
+  border-color:#f19c61!important;
+  box-shadow:0 9px 25px rgba(201,74,32,.2)!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-btn.live{border-left:3px solid #ffb85e!important}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-btn-icon{
+  background:rgba(255,198,123,.12)!important;
+  color:#ffc67e!important;
+  border-radius:4px!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-btn.primary .rn-btn-icon{
+  color:#fff!important;
+  background:rgba(17,10,9,.16)!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-btn small{
+  color:#b8a999!important;
+  font-size:9px!important;
+  letter-spacing:.12em!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-btn.primary small{color:#ffe1c3!important}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-btn strong{
+  color:#fff8ef!important;
+  font-size:clamp(10px,.8vw,12px)!important;
+  letter-spacing:.02em!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-btn:hover,
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-btn:focus-visible{
+  border-color:#ffc67e!important;
+  background:rgba(83,46,23,.91)!important;
+  box-shadow:0 0 0 2px rgba(238,157,65,.2),0 10px 24px rgba(0,0,0,.24)!important;
+  transform:translateY(-2px)!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-btn.primary:hover{background:linear-gradient(120deg,#e96a36,#b94129)!important}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-btn:focus-visible{outline:2px solid #ffcc7d!important;outline-offset:2px!important}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-board{
+  border:1px solid rgba(245,180,104,.39)!important;
+  border-top:4px solid #e9a04a!important;
+  border-radius:9px!important;
+  overflow:hidden!important;
+  background:linear-gradient(145deg,rgba(24,24,29,.97),rgba(12,15,20,.98))!important;
+  box-shadow:0 25px 68px rgba(0,0,0,.55),0 0 39px rgba(226,119,42,.1)!important;
+  backdrop-filter:blur(12px)!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-indy-board-title{
+  display:flex;
+  gap:9px;
+  align-items:center;
+  justify-content:space-between;
+  padding:11px 15px;
+  min-height:46px;
+  background:linear-gradient(100deg,rgba(203,97,42,.29),rgba(19,19,25,.76))!important;
+  border-bottom:1px solid rgba(243,188,113,.24)!important;
+  font:900 10px/1.3 Inter,Arial,sans-serif;
+  color:#eed2b1!important;
+  letter-spacing:.12em;
+}
+body.rn-indy-20261102 .rn-indy-board-title>span:nth-child(2){flex:1}
+body.rn-indy-20261102 .rn-indy-board-title strong{color:#fff0d4!important}
+body.rn-indy-20261102 .rn-indy-board-icon{font-size:24px;color:#f6bb72!important}
+body.rn-indy-20261102 .rn-indy-board-num{color:#ffc478!important;font-size:9px!important}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-board-head{
+  min-height:80px!important;
+  border-bottom-color:rgba(239,184,116,.21)!important;
+  padding:13px 18px!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-board-head small{
+  font-size:10px!important;
+  color:#c6a786!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-board-head strong{
+  color:#f8f3e9!important;
+  font:900 20px/1.1 "Barlow Condensed",Inter,sans-serif!important;
+  letter-spacing:.07em!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-clock{border-bottom:1px solid rgba(239,184,116,.18)!important}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-clock div{
+  padding:24px 4px 22px!important;
+  background:radial-gradient(circle at 50% 45%,rgba(227,140,50,.09),transparent 70%)!important;
+  border-right-color:rgba(239,184,116,.13)!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-clock strong{
+  color:#fff8ec!important;
+  font:900 italic clamp(34px,3.3vw,49px)/1 "Barlow Condensed","Arial Narrow",Arial,sans-serif!important;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.015em!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-clock span{
+  color:#c6ae92!important;
+  font-size:9px!important;
+  letter-spacing:.09em!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-live-now{
+  min-height:45px!important;
+  background:linear-gradient(110deg,rgba(218,105,41,.2),rgba(239,179,92,.08))!important;
+  color:#ffbd70!important;
+  border-bottom-color:rgba(239,184,116,.2)!important;
+  font-size:10px!important;
+  letter-spacing:.1em!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover.is-live .rn-live-now{
+  background:linear-gradient(110deg,#bd4f28,#8b3326)!important;
+  color:#fff!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-indy-timing-strip{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:11px 16px;
+  border-bottom:1px solid rgba(239,184,116,.2)!important;
+  background:rgba(232,146,66,.055)!important;
+  color:#efd9be!important;
+  font:800 9px/1.3 Inter,Arial,sans-serif;
+  letter-spacing:.09em;
+}
+body.rn-indy-20261102 .rn-indy-timing-strip b{color:#f5b66d!important;white-space:nowrap}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-info>div{
+  min-height:48px!important;
+  border-bottom-color:rgba(239,184,116,.14)!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-info span{
+  color:#bea58a!important;
+  font-size:9px!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-info strong{
+  color:#fff1df!important;
+  font-size:12px!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-crawl{
+  min-height:46px!important;
+  background:linear-gradient(90deg,#291b15,#11141a 45%,#2c1b13)!important;
+  border-top:1px solid rgba(240,166,86,.25)!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-crawl .v7-shell{
+  min-height:46px!important;
+  justify-content:space-between!important;
+  color:#d8be9d!important;
+  font-size:10px!important;
+  gap:14px!important;
+  letter-spacing:.075em!important;
+}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-crawl b{color:#ffbd71!important}
+body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-crawl span:nth-child(even){color:#a96e40!important}
+@media(max-width:1100px){
+  body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-inner{
+    grid-template-columns:minmax(0,1fr)!important;
+    width:min(calc(100% - 36px),880px)!important;
+    gap:29px!important;
+    min-height:0!important;
+    padding:42px 0 40px!important;
+  }
+  body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-board{max-width:none!important}
+  body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-copy h1{font-size:clamp(62px,11vw,112px)!important}
+  body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-copy h2{font-size:clamp(27px,5vw,43px)!important}
+}
+@media(max-width:680px){
+  body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-broadcast-topline{
+    min-height:36px;
+    padding:7px 15px;
+    gap:8px;
+    justify-content:space-between;
+    font-size:8px;
+    letter-spacing:.045em;
+  }
+  body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-broadcast-topline span:nth-child(2){display:none}
+  body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-inner{width:calc(100% - 28px)!important;padding:32px 0 30px!important}
+  body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-indy-kicker{gap:7px;font-size:9px;margin-bottom:12px}
+  body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-indy-kicker span:last-child{font-size:8px}
+  body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-copy h1{
+    font-size:clamp(48px,12.4vw,82px)!important;
+    line-height:.9!important;
+    letter-spacing:-.055em!important;
+  }
+  body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-copy h2{font-size:clamp(23px,5.7vw,37px)!important}
+  body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-copy>p{font-size:13px!important}
+  body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-indy-statline{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:10px;margin-top:18px}
+  body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-indy-statline>div:nth-child(2){border-right:0}
+  body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-actions{grid-template-columns:1fr!important;margin-top:19px!important}
+  body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-btn{min-height:61px!important}
+  body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-crawl .v7-shell{justify-content:flex-start!important;font-size:9px!important}
+}
+@media(max-width:380px){
+  body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-copy h1{font-size:clamp(42px,11.6vw,52px)!important}
+  body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-indy-kicker span:last-child{display:none}
+  body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-indy-timing-strip{font-size:8px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-btn{transform:none!important;transition:none!important}
+  body.rn-indy-20261102 #hlrnRaceNightTakeover .rn-pulse{animation:none!important}
+}

@@ -104,14 +104,17 @@ function ensurePanel(){
   panel.className="rn-takeover";
   panel.setAttribute("aria-label","HLRN Race Night");
   panel.innerHTML=
+    '<div class="rn-broadcast-topline" aria-hidden="true"><span>HLRN <i>//</i> MONDAY NIGHT RACING</span><span>ARCA <i>◆</i> INDIANAPOLIS MOTOR SPEEDWAY <i>◆</i> 80 LAPS</span><span>WEEK 11</span></div>'+
     '<div class="rn-grid" aria-hidden="true"></div>'+
     '<div class="v7-shell rn-inner">'+
       '<div class="rn-copy">'+
+        '<div class="rn-indy-kicker" aria-hidden="true"><span class="rn-indy-kicker-bars">▥</span><b>THE BRICKYARD</b><span>MONDAY NIGHT • ARCA FEATURE</span></div>'+
         '<div class="rn-eyebrow"><span class="rn-pulse"></span><b id="rnPhaseLabel">RACE DAY</b><i>//</i><span id="rnSeries">HLRN</span></div>'+
         '<div class="rn-trackline"><span id="rnWeek">WEEK --</span><span id="rnCar">--</span><span id="rnLaps">-- LAPS</span></div>'+
         '<h1 id="rnHeadline">HLRN RACE DAY</h1>'+
         '<h2 id="rnTrack">--</h2>'+
         '<p id="rnMessage">The HLRN race-night system is preparing today’s event.</p>'+
+        '<div class="rn-indy-statline" aria-label="Indianapolis race details"><div><b>80</b><small>RACE LAPS</small></div><div><b>ARCA</b><small>RACE CAR</small></div><div><b>2.5 MI</b><small>OVAL</small></div><div><b>8:30</b><small>GREEN FLAG • ET</small></div></div>'+
         '<div class="rn-actions">'+
           '<a class="rn-btn primary" href="broadcasters/"><span class="rn-btn-icon">▶</span><span><small>WATCH</small><strong>WATCH BROADCAST</strong></span><b>↗</b></a>'+
           '<a class="rn-btn live" href="live/"><span class="rn-btn-icon">●</span><span><small>RACE CONTROL</small><strong>LIVE RACE CENTER</strong></span><b>→</b></a>'+
@@ -120,6 +123,7 @@ function ensurePanel(){
         '</div>'+
       '</div>'+
       '<aside class="rn-board">'+
+        '<div class="rn-indy-board-title"><span class="rn-indy-board-icon" aria-hidden="true">◈</span><span>HLRN <strong>RACE CONTROL</strong></span><span class="rn-indy-board-num">80 LAP MAIN</span></div>'+
         '<div class="rn-board-head"><span class="rn-pulse"></span><div><small id="rnBoardLabel">GREEN FLAG</small><strong>8:30 PM EASTERN</strong></div></div>'+
         '<div class="rn-clock">'+
           '<div><strong id="rnHours">00</strong><span>HOURS</span></div>'+
@@ -127,6 +131,7 @@ function ensurePanel(){
           '<div><strong id="rnSeconds">00</strong><span>SECONDS</span></div>'+
         '</div>'+
         '<div class="rn-live-now"><span id="rnLiveText">COUNTDOWN TO GREEN</span></div>'+
+        '<div class="rn-indy-timing-strip"><span>INDIANAPOLIS MOTOR SPEEDWAY</span><b>2.5 MILE OVAL</b></div>'+
         '<div class="rn-info">'+
           '<div><span>NETWORK</span><strong>HLRN</strong></div>'+
           '<div><span>SERIES</span><strong id="rnBoardSeries">--</strong></div>'+
@@ -166,6 +171,10 @@ function apply(today,mode){
   document.body.classList.add("rn-active","rn-"+league,"rn-"+mode);
   p.classList.toggle("is-live",mode==="live");
   p.classList.toggle("is-countdown",mode==="countdown");
+  const isIndy=league==="monday"&&race.date==="2026-11-02";
+  document.body.classList.toggle("rn-indy-20261102",isIndy);
+  p.classList.toggle("rn-indy-feature",isIndy);
+  p.setAttribute("aria-label",isIndy?"HLRN ARCA at Indianapolis Motor Speedway — 80 laps":"HLRN Race Night");
 
   text("rnSeries",seriesName(league));
   text("rnBoardSeries",league.toUpperCase());
@@ -206,10 +215,28 @@ function apply(today,mode){
     text("rnCrawlLead","HLRN IS LIVE");
     text("rnHours","LIVE");text("rnMinutes","NOW");text("rnSeconds","●");
   }
+  // Premium event-specific copy is isolated to the real Monday, Nov 2 race.
+  // The existing countdown, live window, links and championship observer remain intact.
+  if(isIndy){
+    text("rnHeadline","THE BRICKYARD");
+    text("rnTrack","INDIANAPOLIS MOTOR SPEEDWAY");
+    text("rnCrawlTrack","INDIANAPOLIS MOTOR SPEEDWAY • ARCA • 80 LAPS • 8:30 PM ET");
+    if(mode==="raceday"){
+      text("rnMessage","The Monday night ARCA field takes on the legendary 2.5-mile Indianapolis oval for 80 laps. Race coverage begins with the 8:30 PM Eastern green flag.");
+      text("rnCrawlLead","BRICKYARD RACE DAY");
+    }else if(mode==="countdown"){
+      text("rnMessage","The final hour is here. Eighty laps of ARCA racing at Indianapolis Motor Speedway are next — preview the field, watch the broadcast and follow the Live Race Center.");
+      text("rnCrawlLead","INDIANAPOLIS • COUNTDOWN");
+    }else{
+      text("rnMessage","The Indianapolis 80-lap ARCA feature is in its scheduled race-night window. Follow the broadcast and Live Race Center for actual race updates.");
+      text("rnCrawlLead","INDIANAPOLIS RACE NIGHT");
+    }
+  }
   syncLeader(league);
 }
 function clear(){
-  document.body.classList.remove("rn-active","rn-raceday","rn-countdown","rn-live","rn-sunday","rn-monday");
+  document.body.classList.remove("rn-active","rn-raceday","rn-countdown","rn-live","rn-sunday","rn-monday","rn-indy-20261102");
+  if(panel)panel.classList.remove("rn-indy-feature");
 }
 function update(){
   const now=new Date();
