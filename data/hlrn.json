@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-02T16:10:54.327Z",
+  "generatedAt": "2026-11-02T16:16:37.832Z",
   "leagues": {
     "sunday": {
       "drivers": [
@@ -1886,19 +1886,19 @@
           "team": "Rowdy",
           "rank": 7,
           "change": 1,
-          "starts": 60,
-          "racesCounted": 63,
+          "starts": 61,
+          "racesCounted": 64,
           "wins": 0,
           "top5": 0.45,
-          "top10": 2.9666666666666663,
-          "points": 495.6666666666667,
-          "racePoints": 471.44999999999993,
+          "top10": 2.9166666666666665,
+          "points": 495.3666666666667,
+          "racePoints": 471.19999999999993,
           "stagePoints": 21.333333333333332,
-          "bonus": 2.8833333333333333,
+          "bonus": 2.8333333333333335,
           "penalty": 0,
-          "laps": 2067.616666666667,
-          "lapsLed": 3.25,
-          "incidents": 296.5
+          "laps": 2069.7166666666667,
+          "lapsLed": 3.1,
+          "incidents": 295.7
         },
         {
           "team": "TWM",
@@ -1940,19 +1940,19 @@
           "team": "GEN X",
           "rank": 10,
           "change": 0,
-          "starts": 5,
-          "racesCounted": 5,
+          "starts": 4,
+          "racesCounted": 4,
           "wins": 0,
-          "top5": 0.5,
-          "top10": 2.5,
-          "points": 158.5,
-          "racePoints": 158.5,
+          "top5": 1,
+          "top10": 3,
+          "points": 167,
+          "racePoints": 167,
           "stagePoints": 0,
           "bonus": 0,
           "penalty": 0,
-          "laps": 439,
-          "lapsLed": 11,
-          "incidents": 45
+          "laps": 440,
+          "lapsLed": 12,
+          "incidents": 46
         }
       ],
       "results": [
