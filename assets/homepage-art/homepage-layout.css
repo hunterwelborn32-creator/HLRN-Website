@@ -922,3 +922,39 @@ html.hlrn-thanksgiving-2026[data-hlrn-theme] body.home-v10-page:not(.rn-active) 
   padding-top:clamp(130px,40vw,200px)!important;
  }
 }
+
+/* Thanksgiving logo on scheduled race days.
+   Earlier CSS intentionally hides the normal logo scene during .rn-active.
+   Override only for the November seasonal artwork, without changing the takeover. */
+html.hlrn-thanksgiving-2026[data-hlrn-theme] body.home-v10-page.rn-active #hlrnRaceDayHome > .home33-top-logo-scene {
+ display:block!important;
+ position:relative!important;
+ box-sizing:border-box!important;
+ left:auto!important;
+ right:auto!important;
+ top:auto!important;
+ width:100%!important;
+ height:clamp(140px,24vw,300px)!important;
+ margin:0 auto!important;
+ padding:0!important;
+ z-index:3!important;
+ pointer-events:none!important;
+ opacity:1!important;
+ background-color:transparent!important;
+ background-position:center!important;
+ background-repeat:no-repeat!important;
+ background-size:contain!important;
+ -webkit-mask-image:none!important;
+ mask-image:none!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme="light"] body.home-v10-page.rn-active #hlrnRaceDayHome > .home33-top-logo-scene {
+ background-image:url("./HLRN-Thanksgiving-Day.png?v=20261102thanks-race-day")!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme="dark"] body.home-v10-page.rn-active #hlrnRaceDayHome > .home33-top-logo-scene {
+ background-image:url("./HLRN-Thanksgiving-Night.png?v=20261102thanks-race-day")!important;
+}
+@media(max-width:650px) {
+ html.hlrn-thanksgiving-2026[data-hlrn-theme] body.home-v10-page.rn-active #hlrnRaceDayHome > .home33-top-logo-scene {
+  height:clamp(95px,30vw,165px)!important;
+ }
+}
