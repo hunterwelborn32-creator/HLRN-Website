@@ -2455,3 +2455,70 @@ html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-more-wrap.active>.hgn-more-bt
 #hlrn-race-weekend-strip{display:none!important;}
 /* Keep standings-series selection usable as content tabs, not another site-wide header. */
 .hlrn-series-switcher{max-width:960px!important;margin:12px auto 16px!important;border-radius:12px!important;overflow:hidden!important;}
+
+
+/* ------------------------------------------------------------------
+   HLRN CUSTOM HEADER ART • 2026-11-02
+   Replaces ONLY the old miniature race oval + HL wordmark with the
+   commissioned Day/Night image pair. Navigation controls stay intact.
+   Images sit in assets/homepage-art alongside the other HLRN artwork.
+   ------------------------------------------------------------------ */
+#hlrn-global-nav .hgn-mini-track.hgn-header-art,
+html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track.hgn-header-art,
+html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track.hgn-header-art{
+  position:relative!important;
+  display:block!important;
+  flex:0 0 420px!important;
+  width:420px!important;
+  height:68px!important;
+  min-width:0!important;
+  isolation:isolate!important;
+  border:0!important;
+  border-radius:0!important;
+  overflow:hidden!important;
+  box-shadow:none!important;
+  background-color:transparent!important;
+  background-image:url("homepage-art/HLRN-New-Header-Night.png")!important;
+  background-position:center center!important;
+  background-repeat:no-repeat!important;
+  background-size:contain!important;
+}
+html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track.hgn-header-art{
+  background-image:url("homepage-art/HLRN-New-Header-Day.png")!important;
+}
+html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track.hgn-header-art{
+  background-image:url("homepage-art/HLRN-New-Header-Night.png")!important;
+}
+/* Remove the old background oval and its visual pieces completely. */
+#hlrn-global-nav .hgn-mini-track.hgn-header-art::before,
+html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track.hgn-header-art::before,
+html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track.hgn-header-art::before{
+  display:none!important;
+  content:none!important;
+}
+#hlrn-global-nav .hgn-mini-track.hgn-header-art .hgn-mini-canvas,
+#hlrn-global-nav .hgn-mini-track.hgn-header-art .hgn-mark,
+#hlrn-global-nav .hgn-mini-track.hgn-header-art .hgn-name{
+  display:none!important;
+}
+@media(max-width:1350px){
+  #hlrn-global-nav .hgn-mini-track.hgn-header-art,
+  html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track.hgn-header-art,
+  html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track.hgn-header-art{
+    flex-basis:335px!important;width:335px!important;height:64px!important;
+  }
+}
+@media(max-width:700px){
+  #hlrn-global-nav .hgn-mini-track.hgn-header-art,
+  html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track.hgn-header-art,
+  html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track.hgn-header-art{
+    flex-basis:275px!important;width:275px!important;height:61px!important;
+  }
+}
+@media(max-width:390px){
+  #hlrn-global-nav .hgn-mini-track.hgn-header-art,
+  html[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track.hgn-header-art,
+  html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track.hgn-header-art{
+    flex-basis:240px!important;width:240px!important;height:58px!important;
+  }
+}

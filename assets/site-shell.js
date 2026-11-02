@@ -784,7 +784,7 @@ function start(){
 
   // Always use the current shared shell stylesheet. This gives every page
   // the same global mobile layer without requiring page-by-page CSS edits.
-  const SHELL_CSS_VERSION="20261023onenav1";
+  const SHELL_CSS_VERSION="20261102newheader1";
   let shellCss=[...document.querySelectorAll('link[rel="stylesheet"]')].find(link=>/\/site-shell\.css(?:\?|$)/i.test(link.getAttribute("href")||""));
   if(!shellCss){
     shellCss=document.createElement("link");
@@ -871,7 +871,7 @@ function start(){
   nav.innerHTML=`
     <div class="hgn-inner">
       <a class="hgn-brand" href="${url("")}" aria-label="High Line Racing Network home">
-        <span class="hgn-mini-track"><canvas class="hgn-mini-canvas" width="420" height="68" aria-hidden="true"></canvas><span class="hgn-mark">HL</span><span class="hgn-name">HIGH LINE RACING NETWORK<small>HLRN // OFFICIAL NETWORK</small></span></span>
+        <span class="hgn-mini-track hgn-header-art" aria-hidden="true"></span>
       </a>
       <div class="hgn-links">
         ${primaryLinks}
@@ -903,90 +903,7 @@ function start(){
   document.body.insertBefore(nav,document.body.firstChild);
 
 
-// HLRN Broadcast Racing Header V6: responsive full-brand superspeedway animation.
-(function(){
- const canvas=nav.querySelector(".hgn-mini-canvas");if(!canvas)return;
- const ctx=canvas.getContext("2d");if(!ctx)return;
- const rules=document.createElement("style");rules.id="hlrn-racing-broadcast-v6";
- rules.textContent=[
- "#hlrn-global-nav .hgn-mini-track{position:relative;display:block;flex:0 0 420px;width:420px;height:68px;overflow:hidden;pointer-events:none;isolation:isolate}",
- "#hlrn-global-nav .hgn-mini-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}",
- "#hlrn-global-nav .hgn-mini-track .hgn-mark{position:absolute!important;left:35px!important;top:19px!important;width:46px!important;height:34px!important;z-index:2}",
- "#hlrn-global-nav .hgn-mini-track .hgn-name{position:absolute!important;left:96px!important;top:24px!important;font-size:11px!important;z-index:2;text-shadow:0 1px 2px #000}",
- "@media(max-width:1350px){#hlrn-global-nav .hgn-mini-track{width:335px;flex-basis:335px}#hlrn-global-nav .hgn-mini-track .hgn-name{left:79px!important;font-size:9px!important}#hlrn-global-nav .hgn-mini-track .hgn-mark{left:25px!important;width:40px!important;height:30px!important;top:21px!important}}",
- "@media(max-width:700px){#hlrn-global-nav .hgn-mini-track{width:275px;flex-basis:275px;height:62px}#hlrn-global-nav .hgn-mini-track .hgn-name{left:68px!important;top:22px!important;font-size:8px!important}#hlrn-global-nav .hgn-mini-track .hgn-mini-mark{display:none}#hlrn-global-nav .hgn-mini-track .hgn-name small{font-size:6px!important}#hlrn-global-nav .hgn-mini-track .hgn-mark{left:19px!important;top:18px!important;width:36px!important;height:28px!important}}",
- "@media(max-width:390px){#hlrn-global-nav .hgn-mini-track{width:240px;flex-basis:240px}#hlrn-global-nav .hgn-mini-track .hgn-name{left:61px!important;font-size:7px!important}#hlrn-global-nav .hgn-mini-track .hgn-mark{left:15px!important}}"
- ].join("\n");document.head.appendChild(rules);
- const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
- const palette=["#ff3551","#257bff","#ffcd2c","#24c99d","#ba71fa","#ff8736","#f8f8fb","#ec53af","#76df58","#5bdaf9","#db3441","#7f8bf9","#f3b849","#a2dc58","#f66c5e","#21c9db","#dedfe8","#cb4dee","#5cafff","#e7ce50"];
- const cars=palette.map((color,i)=>({no:(i*17+31)%99+1,color,p:-i*.0148,lane:(i%3-1)*3.0,target:(i%3-1)*3.0,base:.168+Math.random()*.023,phase:i*1.17,change:Math.random()*2,damage:0}));
- const L=46,R=374,CY=34,RX=37,RY=22,pts=[];
- const N=140;
- for(let i=0;i<N;i++)pts.push({x:L+(R-L)*i/N,y:CY-RY});
- for(let i=0;i<=90;i++){const t=-Math.PI/2+Math.PI*i/90;pts.push({x:R+RX*Math.cos(t),y:CY+RY*Math.sin(t)})}
- for(let i=1;i<=N;i++)pts.push({x:R-(R-L)*i/N,y:CY+RY});
- for(let i=1;i<90;i++){const t=Math.PI/2+Math.PI*i/90;pts.push({x:L+RX*Math.cos(t),y:CY+RY*Math.sin(t)})}
- const lengths=[0];for(let i=1;i<=pts.length;i++){const p=pts[i-1],q=pts[i%pts.length];lengths.push(lengths[i-1]+Math.hypot(q.x-p.x,q.y-p.y))}
- const perimeter=lengths[lengths.length-1];
- function point(progress){
-  const dist=(1-((progress%1+1)%1))*perimeter;
-  let lo=0,hi=pts.length;while(lo+1<hi){const mid=(lo+hi)>>1;if(lengths[mid]<=dist)lo=mid;else hi=mid}
-  const a=pts[lo],b=pts[(lo+1)%pts.length],f=Math.min(1,(dist-lengths[lo])/(lengths[lo+1]-lengths[lo]||1));
-  const dx=a.x-b.x,dy=a.y-b.y,d=Math.hypot(dx,dy)||1;
-  return{x:a.x+(b.x-a.x)*f,y:a.y+(b.y-a.y)*f,dx:dx/d,dy:dy/d};
- }
- const track=new Path2D();pts.forEach((p,i)=>i?track.lineTo(p.x,p.y):track.moveTo(p.x,p.y));track.closePath();
- let last=0,finished=false,finishTime=0,state="GREEN",yellowUntil=0,incidentAt=18000,race=1;
- function paintTrack(){
-  ctx.clearRect(0,0,420,68);ctx.save();ctx.lineJoin="round";ctx.lineCap="round";
-  ctx.shadowColor="#000";ctx.shadowBlur=3;ctx.strokeStyle="#131d29";ctx.lineWidth=18;ctx.stroke(track);ctx.shadowBlur=0;
-  ctx.strokeStyle="#39444f";ctx.lineWidth=14;ctx.stroke(track);
-  ctx.strokeStyle="#505a65";ctx.lineWidth=10;ctx.stroke(track);
-  ctx.strokeStyle="#ffffff6b";ctx.setLineDash([5,9]);ctx.lineWidth=.65;ctx.stroke(track);ctx.setLineDash([]);
-  ctx.strokeStyle="#e9274b";ctx.lineWidth=1.5;ctx.stroke(track);
-  // Exact transverse start/finish grid along the frontstretch.
-  for(let i=0;i<2;i++)for(let j=0;j<4;j++){ctx.fillStyle=(i+j)%2?"#121824":"#f8f8fb";ctx.fillRect(207+i*4,CY+RY-6+j*3,4,3)}
-  ctx.restore();
- }
- function drawCar(c){
-  const q=point(c.p),x=q.x-q.dy*c.lane,y=q.y+q.dx*c.lane;
-  ctx.save();ctx.translate(x,y);ctx.rotate(Math.atan2(q.dy,q.dx)-Math.PI/2);
-  ctx.fillStyle="#03080d";ctx.fillRect(-3.5,-5.4,7,10.8);
-  ctx.fillStyle=c.color;ctx.beginPath();ctx.roundRect(-2.9,-5,5.8,10,1.25);ctx.fill();
-  ctx.fillStyle="#162132";ctx.fillRect(-2.1,-2.6,4.2,1.7);ctx.fillRect(-2.1,2.7,4.2,1.1);
-  ctx.fillStyle="#f7faff";ctx.font="900 5px Arial";ctx.strokeStyle="#090e15";ctx.lineWidth=1.7;ctx.textAlign="center";
-  ctx.strokeText(c.no,0,1.7);ctx.fillText(c.no,0,1.7);ctx.restore();
- }
- function tick(t){
-  const dt=Math.min(.06,last?(t-last)/1000:0);last=t;
-  if(!reduced){
-   if(finished){if(t-finishTime>3500){finished=false;state="GREEN";race++;cars.forEach((c,i)=>{c.p=-i*.0148;c.lane=(i%3-1)*3;c.target=c.lane;c.damage=0})}}
-   else{
-    const lead=Math.max(...cars.map(c=>c.p));
-    if(state==="YELLOW"&&lead>=yellowUntil)state="GREEN";
-    if(state==="GREEN"&&lead>4&&lead<95&&t>incidentAt){state="YELLOW";yellowUntil=lead+2.0;incidentAt=t+22000+Math.random()*14000;let v=cars[Math.floor(Math.random()*cars.length)];v.damage=Math.min(.14,v.damage+.025);v.p-=.02}
-    for(const c of cars){
-     c.change-=dt;
-     let near=cars.filter(a=>a!==c&&a.p>c.p&&a.p-c.p<.05).sort((a,b)=>a.p-b.p)[0];
-     if(c.change<=0){
-      let lanes=[-3.3,0,3.3];
-      c.target=near&&Math.abs(near.lane-c.lane)<2.3?lanes.filter(x=>Math.abs(x-near.lane)>2.4)[Math.floor(Math.random()*2)]??0:lanes[Math.floor(Math.random()*3)];
-      c.change=1.4+Math.random()*2.8;
-     }
-     if(state==="YELLOW")c.target=(c.no%3-1)*2.6;
-     c.lane+=(c.target-c.lane)*Math.min(1,dt*1.1);
-     const draft=near&&near.p-c.p<.026?.012:0;
-     c.p+=dt*(state==="YELLOW"?.078:(c.base+draft+.007*Math.sin(c.p*24+c.phase)))*(1-c.damage);
-    }
-    if(Math.max(...cars.map(c=>c.p))>=100){finished=true;state="CHECKERED";finishTime=t}
-   }
-  }
-  paintTrack();for(const c of [...cars].sort((a,b)=>a.p-b.p))drawCar(c);
-  if(document.visibilityState==="visible")requestAnimationFrame(tick);
- }
- document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){last=0;requestAnimationFrame(tick)}});
- requestAnimationFrame(tick);
-})();
+// New HLRN brand artwork is theme-switched by CSS; no animated canvas is needed.
 
 
   // -----------------------------
