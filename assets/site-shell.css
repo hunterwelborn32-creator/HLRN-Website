@@ -2762,3 +2762,26 @@ html[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-theme-toggle .hgn-theme-statu
   html[data-hlrn-theme] #hlrn-global-nav .hgn-link,
   html[data-hlrn-theme] #hlrn-global-nav .hgn-theme-toggle{transition:none!important}
 }
+
+/* November 2026 HLRN Thanksgiving artwork — ONLY the shared top-navigation logo.
+   All other homepage imagery and race-day layouts remain unchanged.
+   Class is maintained by site-shell.js using America/New_York time. */
+html.hlrn-thanksgiving-2026[data-hlrn-theme="light"] #hlrn-global-nav .hgn-mini-track.hgn-header-art {
+  background-image:url("homepage-art/HLRN-Thanksgiving-Day.png?v=20261102thanksgivingnav1")!important;
+  background-size:auto 128%!important;
+  background-position:center center!important;
+  background-repeat:no-repeat!important;
+  background-color:transparent!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-track.hgn-header-art {
+  background-image:url("homepage-art/HLRN-Thanksgiving-Night.png?v=20261102thanksgivingnav1")!important;
+  background-size:auto 128%!important;
+  background-position:center center!important;
+  background-repeat:no-repeat!important;
+  background-color:transparent!important;
+}
+/* The older photograph-fade overlay would wash out the transparent emblem. */
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-mini-track.hgn-header-art::after {
+  display:none!important;
+  content:none!important;
+}

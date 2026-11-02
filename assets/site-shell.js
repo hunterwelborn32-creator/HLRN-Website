@@ -784,7 +784,7 @@ function start(){
 
   // Always use the current shared shell stylesheet. This gives every page
   // the same global mobile layer without requiring page-by-page CSS edits.
-  const SHELL_CSS_VERSION="20261102navblend2";
+  const SHELL_CSS_VERSION="20261102thanksgivingnav1";
   let shellCss=[...document.querySelectorAll('link[rel="stylesheet"]')].find(link=>/\/site-shell\.css(?:\?|$)/i.test(link.getAttribute("href")||""));
   if(!shellCss){
     shellCss=document.createElement("link");
@@ -901,6 +901,24 @@ function start(){
     </div>`;
 
   document.body.insertBefore(nav,document.body.firstChild);
+
+  // Seasonal artwork belongs in the shared top navigation, not the homepage hero.
+  // Check Eastern calendar month so November artwork automatically disappears Dec 1.
+  function syncThanksgivingNav(){
+    const parts=new Intl.DateTimeFormat("en-US",{
+      timeZone:"America/New_York",year:"numeric",month:"2-digit"
+    }).formatToParts(new Date());
+    const y=parts.find(part=>part.type==="year")?.value;
+    const m=parts.find(part=>part.type==="month")?.value;
+    document.documentElement.classList.toggle("hlrn-thanksgiving-2026",y==="2026"&&m==="11");
+  }
+  syncThanksgivingNav();
+  window.setInterval(syncThanksgivingNav,60000);
+  window.addEventListener("pageshow",syncThanksgivingNav);
+  document.addEventListener("visibilitychange",()=>{
+    if(document.visibilityState==="visible")syncThanksgivingNav();
+  });
+
 
 
 // New HLRN brand artwork is theme-switched by CSS; no animated canvas is needed.

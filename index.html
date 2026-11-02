@@ -7,19 +7,6 @@
 (function(){try{var t=localStorage.getItem("hlrn_site_theme_v2")==="dark"?"dark":"light";document.documentElement.setAttribute("data-hlrn-theme",t);document.documentElement.style.colorScheme=t;}catch(e){document.documentElement.setAttribute("data-hlrn-theme","light");document.documentElement.style.colorScheme="light";}})();
 </script>
 
-<!-- Thanksgiving logos: active only during November 2026, Eastern time. -->
-<script id="hlrn-thanksgiving-logo-season">
-(function(){
-  function seasonLogo(){
-    var parts = new Intl.DateTimeFormat("en-US",{timeZone:"America/New_York",year:"numeric",month:"2-digit"}).formatToParts(new Date());
-    var year = parts.find(function(part){return part.type==="year";});
-    var month = parts.find(function(part){return part.type==="month";});
-    document.documentElement.classList.toggle("hlrn-thanksgiving-2026",!!(year&&month&&year.value==="2026"&&month.value==="11"));
-  }
-  seasonLogo();
-  window.setInterval(seasonLogo,60000);
-})();
-</script>
 <!-- HLRN browser-tab and mobile icons -->
 <link rel="icon" type="image/x-icon" href="/favicon.ico?v=3">
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=3">
@@ -72,7 +59,7 @@
 <link rel="stylesheet" href="assets/home/home-day-contrast.css?v=20261021dayfix1">
 <link rel="stylesheet" href="assets/hlrn-broadcast-edition.css?v=20261027premiere1">
 <link rel="stylesheet" href="assets/home/home-cinematic-gridlight.css?v=20261029webp1">
-<link rel="stylesheet" href="assets/homepage-art/homepage-layout.css?v=20261102thanksrace3">
+<link rel="stylesheet" href="assets/homepage-art/homepage-layout.css?v=20261102banner1">
 <link rel="stylesheet" href="assets/homepage-art/race-week-glass.css?v=20261030explore1">
 
 <meta name="theme-color" content="#07090d">
@@ -439,7 +426,7 @@
 <script defer src="assets/home/home-race-night.js?v=20260928p1"></script>
 <script defer src="assets/home/home-v10-hosted.js?v=20261022directrefresh2"></script>
 <script defer src="assets/race-recaps.js?v=1"></script>
-<script defer src="assets/site-shell.js?v=20261030searchcommand4"></script>
+<script defer src="assets/site-shell.js?v=20261102thanksgivingnav1"></script>
 <script defer src="assets/home/home-cinematic-gridlight.js?v=20261028a"></script>
 <!-- Full-width HLRN masthead uses themed CSS; transparent-logo smart crop is intentionally disabled. -->
 <script id="hlrn-home-v20-data">
