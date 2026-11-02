@@ -2773,7 +2773,7 @@ html.hlrn-thanksgiving-2026[data-hlrn-theme="dark"] #hlrn-global-nav .hgn-mini-t
   opacity:1!important;
   background-repeat:no-repeat!important;
   background-position:center center!important;
-  background-size:100% 100%!important;
+  background-size:contain!important;
   background-color:transparent!important;
   -webkit-mask-image:none!important;
   mask-image:none!important;
@@ -2846,7 +2846,7 @@ html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-mini-track.hg
   width:clamp(280px,18vw,340px)!important;
   height:64px!important;
   background-position:center!important;
-  background-size:100% 100%!important;
+  background-size:contain!important;
 }
 html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-links{
   flex:1 1 0!important;
