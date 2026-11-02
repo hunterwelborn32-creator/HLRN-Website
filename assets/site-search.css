@@ -829,3 +829,43 @@ html[data-hlrn-theme] body #hlrn-global-nav .hgs-trigger-shortcut{
 @media(max-width:1280px){
   html[data-hlrn-theme] body #hlrn-global-nav .hgn-search{display:none!important}
 }
+
+/* November-only harvest treatment for the dynamically inserted nav search. */
+html.hlrn-thanksgiving-2026[data-hlrn-theme] body #hlrn-global-nav .hgn-search,
+html.hlrn-thanksgiving-2026[data-hlrn-theme] body #hlrn-global-nav .hgn-mobile-search{
+  flex:0 0 auto!important;
+  height:40px!important;min-height:40px!important;
+  padding:0 10px!important;
+  gap:5px!important;
+  border:1px solid var(--hgn-line)!important;
+  border-radius:9px!important;
+  background:var(--hgn-tile)!important;
+  color:var(--hgn-ink)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06)!important;
+  font-size:10px!important;letter-spacing:.015em!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] body #hlrn-global-nav .hgn-search:hover,
+html.hlrn-thanksgiving-2026[data-hlrn-theme] body #hlrn-global-nav .hgn-search:focus-visible,
+html.hlrn-thanksgiving-2026[data-hlrn-theme] body #hlrn-global-nav .hgn-mobile-search:hover{
+  border-color:var(--harvest-accent)!important;
+  background:var(--hgn-hover)!important;
+  box-shadow:none!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] body #hlrn-global-nav .hgn-search .hgs-search-trigger-icon,
+html.hlrn-thanksgiving-2026[data-hlrn-theme] body #hlrn-global-nav .hgn-mobile-search .hgs-search-trigger-icon{
+  color:var(--harvest-accent)!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] body #hlrn-global-nav .hgs-trigger-shortcut{
+  background:var(--hgn-bar)!important;
+  color:var(--hgn-muted)!important;
+  border-color:var(--hgn-line)!important;
+}
+@media(min-width:1281px) and (max-width:1510px){
+  html.hlrn-thanksgiving-2026[data-hlrn-theme] body #hlrn-global-nav .hgn-search{
+    padding-inline:7px!important;gap:4px!important;font-size:9px!important;
+  }
+  html.hlrn-thanksgiving-2026[data-hlrn-theme] body #hlrn-global-nav .hgs-trigger-shortcut{display:none!important}
+}
+@media(max-width:1280px){
+  html.hlrn-thanksgiving-2026[data-hlrn-theme] body #hlrn-global-nav .hgn-search{display:none!important}
+}

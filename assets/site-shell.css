@@ -2792,3 +2792,270 @@ html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-mini-track.hg
   display:none!important;
   content:none!important;
 }
+
+/* ===========================================================
+   HLRN HARVEST NAVIGATION V3 | NOVEMBER 2026 ONLY
+   Scoped to the November class so December restores HLRN's
+   standard racing nav, unchanged. All controls remain functional.
+   =========================================================== */
+html.hlrn-thanksgiving-2026[data-hlrn-theme="light"] #hlrn-global-nav{
+  --hgn-bar:#fff8eb;--hgn-ink:#392312;--hgn-muted:#76543a;
+  --hgn-tile:#fff1d8;--hgn-line:rgba(142,82,29,.25);
+  --hgn-hover:#ffe5bd;--hgn-select:#f9d8a4;
+  --harvest-accent:#b75e25;--harvest-bright:#d48230;
+  background:
+    radial-gradient(ellipse at 18% 0%,rgba(249,186,84,.17),transparent 36%),
+    linear-gradient(105deg,#fffdf8,#fff6e8 54%,#ffefd7)!important;
+  border-top:3px solid #c7752d!important;
+  border-bottom:1px solid #d9a36c!important;
+  box-shadow:0 7px 24px rgba(120,70,18,.12)!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme="dark"] #hlrn-global-nav{
+  --hgn-bar:#140f0c;--hgn-ink:#fff4e1;--hgn-muted:#dec7a5;
+  --hgn-tile:#231a13;--hgn-line:rgba(238,166,77,.29);
+  --hgn-hover:#382517;--hgn-select:#462914;
+  --harvest-accent:#ffad51;--harvest-bright:#ffc56c;
+  background:
+    radial-gradient(ellipse at 16% -45%,rgba(218,105,30,.25),transparent 53%),
+    linear-gradient(110deg,#110d0c,#1c1510 52%,#100d0b)!important;
+  border-top:3px solid #e7953c!important;
+  border-bottom:1px solid #78431e!important;
+  box-shadow:0 8px 28px rgba(0,0,0,.34)!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav::after{
+  height:2px!important;
+  opacity:1!important;
+  background:linear-gradient(90deg,#a74821 0%,#e69d47 30%,#f7d99d 51%,#d66b2c 76%,#8f351f 100%)!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-inner{
+  width:min(100%,1840px)!important;
+  min-height:74px!important;
+  padding-inline:clamp(12px,1.3vw,24px)!important;
+  gap:clamp(7px,.65vw,13px)!important;
+  flex-wrap:nowrap!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-brand{
+  flex:0 1 auto!important;
+  min-width:0!important;
+  margin-right:clamp(3px,.45vw,9px)!important;
+  padding-right:clamp(4px,.55vw,12px)!important;
+  border-right:1px solid var(--hgn-line)!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-mini-track.hgn-header-art{
+  flex:0 0 clamp(280px,18vw,340px)!important;
+  width:clamp(280px,18vw,340px)!important;
+  height:64px!important;
+  background-position:center!important;
+  background-size:100% 100%!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-links{
+  flex:1 1 0!important;
+  min-width:0!important;
+  align-items:center!important;
+  align-self:stretch!important;
+  justify-content:space-between!important;
+  gap:clamp(2px,.2vw,6px)!important;
+  padding:0!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-links>.hgn-link,
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-more-wrap>.hgn-more-btn{
+  flex:0 1 auto!important;
+  min-width:0!important;
+  height:41px!important;
+  min-height:41px!important;
+  padding:0 clamp(6px,.54vw,11px)!important;
+  color:var(--hgn-muted)!important;
+  border:1px solid transparent!important;
+  border-radius:9px!important;
+  font-size:clamp(9px,.53vw,11px)!important;
+  font-weight:900!important;
+  letter-spacing:.015em!important;
+  background:transparent!important;
+  text-shadow:none!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-links>.hgn-link:hover,
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-more-wrap>.hgn-more-btn:hover,
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-links>.hgn-link:focus-visible,
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-more-wrap>.hgn-more-btn:focus-visible{
+  color:var(--hgn-ink)!important;
+  background:var(--hgn-hover)!important;
+  border-color:var(--hgn-line)!important;
+  box-shadow:none!important;
+  transform:none!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-links>.hgn-link.active,
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-more-wrap.active>.hgn-more-btn{
+  color:var(--hgn-ink)!important;
+  background:var(--hgn-select)!important;
+  border:1px solid var(--harvest-accent)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 3px 11px rgba(134,68,18,.09)!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-links>.hgn-link.active::after,
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-more-wrap.active>.hgn-more-btn::after{
+  background:var(--harvest-accent)!important;
+  height:2px!important;
+  bottom:4px!important;
+  left:12px!important;
+  right:12px!important;
+  box-shadow:none!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-more-menu,
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-account-panel{
+  background:var(--hgn-bar)!important;
+  color:var(--hgn-ink)!important;
+  border:1px solid var(--hgn-line)!important;
+  border-top:3px solid var(--harvest-accent)!important;
+  border-radius:12px!important;
+  box-shadow:0 18px 40px rgba(39,20,8,.23)!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-more-item,
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-account-title,
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-account-name{
+  color:var(--hgn-ink)!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-more-item:hover,
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-more-item:focus-visible{
+  background:var(--hgn-hover)!important;
+  color:var(--hgn-ink)!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-login,
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-theme-toggle,
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-menu{
+  flex-shrink:0!important;
+  min-height:40px!important;height:40px!important;
+  border:1px solid var(--hgn-line)!important;
+  border-radius:9px!important;
+  background:var(--hgn-tile)!important;
+  color:var(--hgn-ink)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06)!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-login{
+  flex:0 1 130px!important;
+  width:auto!important;
+  min-width:76px!important;
+  max-width:130px!important;
+  padding-inline:9px!important;
+  font-size:9px!important;
+  text-overflow:ellipsis!important;
+  overflow:hidden!important;
+  letter-spacing:0!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-theme-toggle{
+  flex:0 0 122px!important;
+  min-width:122px!important;width:122px!important;
+  gap:7px!important;
+  padding-inline:7px!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-theme-toggle .hgn-theme-label{
+  font-size:9px!important;
+  color:var(--hgn-ink)!important;
+  -webkit-text-fill-color:var(--hgn-ink)!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-theme-toggle .hgn-theme-status{
+  color:var(--hgn-muted)!important;
+  -webkit-text-fill-color:var(--hgn-muted)!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-theme-switch{
+  background:#67432c!important;
+  border:1px solid #99613a!important;
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.24)!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-theme-toggle[aria-checked="true"] .hgn-theme-switch{
+  background:#c86d28!important;
+  border-color:#f5b15f!important;
+  box-shadow:0 0 10px rgba(230,138,55,.24)!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-theme-toggle[aria-checked="true"] .hgn-theme-knob{
+  background:#fff0cb!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-login:hover,
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-theme-toggle:hover,
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-menu:hover{
+  background:var(--hgn-hover)!important;
+  border-color:var(--harvest-accent)!important;
+  color:var(--hgn-ink)!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav :is(.hgn-brand,.hgn-link,.hgn-login,.hgn-theme-toggle,.hgn-menu,.hgn-more-btn,.hgn-more-item):focus-visible{
+  outline:2px solid var(--harvest-bright)!important;
+  outline-offset:2px!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-mobile.open,
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-mobile-more-menu.open{
+  background:var(--hgn-bar)!important;
+  border-color:var(--hgn-line)!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-mobile.open :is(a,button),
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-mobile-more-menu a{
+  background:var(--hgn-tile)!important;
+  border:1px solid var(--hgn-line)!important;
+  color:var(--hgn-ink)!important;
+  border-radius:9px!important;
+}
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-mobile.open a.active,
+html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-mobile-more-menu a.active{
+  background:var(--hgn-select)!important;
+  border-color:var(--harvest-accent)!important;
+}
+@media(min-width:1281px) and (max-width:1510px){
+  html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-inner{gap:7px!important;padding-inline:10px!important;}
+  html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-mini-track.hgn-header-art{
+    flex-basis:clamp(232px,18vw,273px)!important;
+    width:clamp(232px,18vw,273px)!important;
+    height:60px!important;
+  }
+  html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-links>.hgn-link,
+  html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-more-wrap>.hgn-more-btn{
+    padding-inline:5px!important;
+    font-size:9px!important;
+  }
+  html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-login{
+    max-width:112px!important;font-size:8px!important;
+  }
+  html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-theme-toggle{
+    flex-basis:112px!important;min-width:112px!important;width:112px!important;
+    padding-inline:5px!important;
+  }
+}
+@media(max-width:1280px){
+  html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-inner{
+    min-height:66px!important;gap:10px!important;
+  }
+  html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-mini-track.hgn-header-art{
+    flex-basis:clamp(240px,29vw,330px)!important;
+    width:clamp(240px,29vw,330px)!important;
+    height:60px!important;
+  }
+  html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-theme-toggle{
+    order:90!important;flex-basis:116px!important;
+    width:116px!important;min-width:116px!important;
+    margin-left:auto!important;
+  }
+  html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-menu{
+    order:100!important;flex:0 0 42px!important;width:42px!important;
+    margin-left:0!important;
+  }
+}
+@media(max-width:760px){
+  html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-inner{
+    min-height:60px!important;gap:7px!important;padding-inline:8px!important;
+  }
+  html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-brand{
+    margin-right:0!important;padding-right:0!important;border-right:0!important;
+  }
+  html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-mini-track.hgn-header-art{
+    flex-basis:min(53vw,280px)!important;
+    width:min(53vw,280px)!important;
+    height:53px!important;
+  }
+  html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-theme-toggle{
+    flex:0 0 52px!important;width:52px!important;min-width:52px!important;
+    padding:5px!important;margin-left:auto!important;
+  }
+  html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-theme-toggle .hgn-theme-copy{display:none!important}
+}
+@media(max-width:390px){
+  html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-mini-track.hgn-header-art{
+    flex-basis:54vw!important;width:54vw!important;height:50px!important;
+  }
+  html.hlrn-thanksgiving-2026[data-hlrn-theme] #hlrn-global-nav .hgn-inner{gap:5px!important}
+}
