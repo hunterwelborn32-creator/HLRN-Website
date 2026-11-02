@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-02T14:20:12Z",
+  "generatedAt": "2026-11-02T17:37:06Z",
   "count": 87,
   "drivers": [
     {
@@ -48,7 +48,7 @@
       "number": "56",
       "photoSlug": "benjamin-richards",
       "hasPhoto": true,
-      "iRating": 1784,
+      "iRating": 1795,
       "series": [
         "monday",
         "sunday"
@@ -592,7 +592,7 @@
       "number": "72",
       "photoSlug": "evan-parry",
       "hasPhoto": true,
-      "iRating": 2717,
+      "iRating": 2546,
       "series": [
         "monday",
         "sunday"
@@ -1308,7 +1308,7 @@
       "number": "97",
       "photoSlug": "nicholas-baumann",
       "hasPhoto": true,
-      "iRating": 4952,
+      "iRating": 4941,
       "series": [
         "hosted",
         "sunday"
