@@ -441,7 +441,7 @@ def render_page(driver):
     name = driver["name"]
     slug = driver["slug"]
     # Direct markup so banned status survives page generation and does not rely on the global JS loader.
-    is_banned = slug in ("matthew-brown49", "bryce-hinton2", "joshua-spragg", "tj-lunn")
+    is_banned = slug in ("matthew-brown49", "bryce-hinton2", "joshua-spragg", "tj-lunn", "ethan-eckert")
     ban_image_html = (
         '<img class="hlrn-ban-stamp" src="/assets/banned-driver.png?v=20261028banfix2" '
         'alt="BANNED" loading="eager" decoding="async">' if is_banned else ""
