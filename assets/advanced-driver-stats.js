@@ -97,7 +97,7 @@ function renderDriver(){
 }
 function renderRecords(){
  const target=document.querySelector("#adsRecords");if(!target)return;
- const rows=distinct((state.payload?.drivers||[]).flatMap(p=>(p.results||[]).map(r=>({...r,series:p.series,name:p.name,id:p.id}))));
+ const rows=(state.payload?.drivers||[]).flatMap(p=>distinct((p.results||[]).map(r=>({...r,series:p.series,name:p.name,id:p.id}))));
  const byDriver=new Map();
  for(const r of rows){const k=r.series+":"+r.id;if(!byDriver.has(k))byDriver.set(k,[]);byDriver.get(k).push(r);}
  const ranked=[...byDriver].map(([key,list])=>({key,name:list[0].name,series:list[0].series,...stats(list)}));
