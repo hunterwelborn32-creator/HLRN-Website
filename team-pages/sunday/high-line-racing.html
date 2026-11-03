@@ -62,4 +62,5 @@ function openSunday(el){
 }
 function closeSunday(){overlay.hidden=true;overlay.setAttribute('aria-hidden','true');document.body.style.overflow='';lastTrigger?.focus()}
 document.querySelectorAll('.driver').forEach(el=>{el.addEventListener('click',()=>openSunday(el));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openSunday(el)}})});closeBtn.addEventListener('click',closeSunday);overlay.addEventListener('click',e=>{if(e.target===overlay)closeSunday()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!overlay.hidden)closeSunday();if(e.key==='Tab'&&!overlay.hidden){const a=[...dialog.querySelectorAll('button,a[href]')];if(e.shiftKey&&document.activeElement===a[0]){e.preventDefault();a.at(-1).focus()}else if(!e.shiftKey&&document.activeElement===a.at(-1)){e.preventDefault();a[0].focus()}}});
-</script></body></html>
+</script><script defer src="/assets/banned-driver.js?v=20261103team48v1" data-hlrn-team-banned="1"></script>
+</body></html>
