@@ -1,48 +1,553 @@
 {
   "schemaVersion": 1,
+  "effectiveDate": "2026-11-02",
   "drivers": [
     {
-      "driverId": "116507",
-      "name": "Matthew Brown",
+      "name": "Alex Schumacher",
       "aliases": [
-        "Matthew Brown49",
-        "Brown49, Matthew"
+        "Schumacher, Alex"
       ],
       "status": "BANNED",
+      "reason": "Trash Talk",
       "badgeImage": "/assets/banned-driver.png",
       "excludedFrom": [
         "race-intelligence"
       ]
     },
     {
-      "driverId": "105882",
+      "name": "Andrew Schuler2",
+      "aliases": [
+        "Andrew Schuler",
+        "Schuler, Andrew",
+        "Schuler2, Andrew"
+      ],
+      "status": "BANNED",
+      "reason": "Racism",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Andy Bowman",
+      "aliases": [
+        "Bowman, Andy"
+      ],
+      "status": "BANNED",
+      "reason": "Retaliation",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Benjamin Farnham-Johnson",
+      "aliases": [
+        "Farnham-Johnson, Benjamin",
+        "Benjamin Farnham Johnson"
+      ],
+      "status": "BANNED",
+      "reason": "Intentional Wrecking",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Ben Walker2",
+      "aliases": [
+        "Ben Walker",
+        "Walker, Ben",
+        "Walker2, Ben"
+      ],
+      "status": "BANNED",
+      "reason": "Lack of Skill",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Brogan Roberts",
+      "aliases": [
+        "Roberts, Brogan"
+      ],
+      "status": "BANNED",
+      "reason": "Intentional Wrecking",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
       "name": "Bryce Hinton",
       "aliases": [
         "Bryce Hinton2",
-        "Hinton2, Bryce"
+        "Hinton2, Bryce",
+        "Hinton, Bryce"
       ],
       "status": "BANNED",
+      "reason": "Arrogance",
+      "driverId": "105882",
       "badgeImage": "/assets/banned-driver.png",
       "excludedFrom": [
         "race-intelligence"
       ]
     },
     {
-      "driverId": "109865",
-      "name": "Joshua Spragg",
+      "name": "Christopher Rashaad Craig",
       "aliases": [
-        "Josh Spragg",
-        "Spragg, Joshua",
-        "Spragg, Josh"
+        "Craig, Christopher Rashaad"
       ],
       "status": "BANNED",
+      "reason": "Retaliation",
       "badgeImage": "/assets/banned-driver.png",
       "excludedFrom": [
         "race-intelligence"
       ]
     },
     {
-      "driverId": "118777",
+      "name": "Dave B. Schutt",
+      "aliases": [
+        "Schutt, Dave B.",
+        "Dave B Schutt",
+        "Schutt, Dave B"
+      ],
+      "status": "BANNED",
+      "reason": "Subversion, Undermining, Manipulation",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Darrel Ceballos",
+      "aliases": [
+        "Ceballos, Darrel"
+      ],
+      "status": "BANNED",
+      "reason": "Anger Issue, Lack of Skill",
+      "driverId": "126078",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Ed Ryan",
+      "aliases": [
+        "Ryan, Ed"
+      ],
+      "status": "BANNED",
+      "reason": "Retaliation, Disregard for Rules",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Ethan Eckert",
+      "aliases": [
+        "Eckert, Ethan",
+        "Ethan Eckert012"
+      ],
+      "status": "BANNED",
+      "reason": "Retaliation, Lack of Respect, Arrogance",
+      "driverId": "87070",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Hunter Funderburke",
+      "aliases": [
+        "Funderburke, Hunter"
+      ],
+      "status": "BANNED",
+      "reason": "Intentional Wrecking",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Isaiah Watrous",
+      "aliases": [
+        "Watrous, Isaiah"
+      ],
+      "status": "BANNED",
+      "reason": "Fabrication, Disregard for Rules",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Jackson Barrie",
+      "aliases": [
+        "Barrie, Jackson"
+      ],
+      "status": "BANNED",
+      "reason": "Intentional Wrecking",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Jacob Major",
+      "aliases": [
+        "Major, Jacob"
+      ],
+      "status": "BANNED",
+      "reason": "Intentional Wrecking, Retaliation, Manipulation",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Jeff Connors",
+      "aliases": [
+        "Connors, Jeff"
+      ],
+      "status": "BANNED",
+      "reason": "Intentional Wrecking",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Jeremy Coggin",
+      "aliases": [
+        "Coggin, Jeremy"
+      ],
+      "status": "BANNED",
+      "reason": "Intentional Wrecking",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Josh Ryder",
+      "aliases": [
+        "Ryder, Josh"
+      ],
+      "status": "BANNED",
+      "reason": "Retaliation",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Josh Spragg",
+      "aliases": [
+        "Spragg, Joshua",
+        "Spragg, Josh",
+        "Joshua Spragg"
+      ],
+      "status": "BANNED",
+      "reason": "Troll",
+      "driverId": "109865",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Justin Thomas",
+      "aliases": [
+        "Thomas, Justin"
+      ],
+      "status": "BANNED",
+      "reason": "Intentional Wrecking",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Larry Eddy",
+      "aliases": [
+        "Eddy, Larry"
+      ],
+      "status": "BANNED",
+      "reason": "racism",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Logan Ramsdell2",
+      "aliases": [
+        "Logan Ramsdell",
+        "Ramsdell, Logan",
+        "Ramsdell2, Logan"
+      ],
+      "status": "BANNED",
+      "reason": "Intentional Wrecking",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Luke Gauthier",
+      "aliases": [
+        "Gauthier, Luke"
+      ],
+      "status": "BANNED",
+      "reason": "Disregarding Rules",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Magnum Tate",
+      "aliases": [
+        "Tate, Magnum"
+      ],
+      "status": "BANNED",
+      "reason": "Terry Wilson 2.0",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Matthew Brown49",
+      "aliases": [
+        "Brown49, Matthew",
+        "Matthew Brown",
+        "Brown, Matthew"
+      ],
+      "status": "BANNED",
+      "reason": "Intentional Wrecking",
+      "driverId": "116507",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Mario Dinatale",
+      "aliases": [
+        "Dinatale, Mario"
+      ],
+      "status": "BANNED",
+      "reason": "Intentional Wrecking",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Michael Wiesner2",
+      "aliases": [
+        "Michael Wiesner",
+        "Wiesner, Michael",
+        "Wiesner2, Michael"
+      ],
+      "status": "BANNED",
+      "reason": "Retaliation",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Mike Donell",
+      "aliases": [
+        "Donell, Mike"
+      ],
+      "status": "BANNED",
+      "reason": "Intentional Wrecking",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Nathan Fryer",
+      "aliases": [
+        "Fryer, Nathan"
+      ],
+      "status": "BANNED",
+      "reason": "Fabrication",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Nicholas Gibson",
+      "aliases": [
+        "Gibson, Nicholas"
+      ],
+      "status": "BANNED",
+      "reason": "Intentional Wrecking",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Paul Flye2",
+      "aliases": [
+        "Paul Flye",
+        "Flye, Paul",
+        "Flye2, Paul"
+      ],
+      "status": "BANNED",
+      "reason": "Intentional Wrecking",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Payson Lindsay",
+      "aliases": [
+        "Lindsay, Payson"
+      ],
+      "status": "BANNED",
+      "reason": "Retaliation, Langauge",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Petr Smegma",
+      "aliases": [
+        "Smegma, Petr"
+      ],
+      "status": "BANNED",
+      "reason": "Lack of Respect for Admins",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Peyton Klebba",
+      "aliases": [
+        "Klebba, Peyton"
+      ],
+      "status": "BANNED",
+      "reason": "Lack of Skill",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Primo Pasqualini",
+      "aliases": [
+        "Pasqualini, Primo"
+      ],
+      "status": "BANNED",
+      "reason": "Intentional Wrecking",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Rey Garcia",
+      "aliases": [
+        "Garcia, Rey"
+      ],
+      "status": "BANNED",
+      "reason": "Retaliation, Langauge",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Ryan Carlson9",
+      "aliases": [
+        "Ryan Carlson",
+        "Carlson, Ryan",
+        "Carlson9, Ryan"
+      ],
+      "status": "BANNED",
+      "reason": "Intentional Wrecking",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Scott D Howell",
+      "aliases": [
+        "Howell, Scott D",
+        "Scott D. Howell",
+        "Howell, Scott D."
+      ],
+      "status": "BANNED",
+      "reason": "Disregard for Rules",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Sebastien Rogier",
+      "aliases": [
+        "Rogier, Sebastien"
+      ],
+      "status": "BANNED",
+      "reason": "Disregard for Rules",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Shane Harbin",
+      "aliases": [
+        "Harbin, Shane"
+      ],
+      "status": "BANNED",
+      "reason": "Intentional Wrecking",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Samarth Rao",
+      "aliases": [
+        "Rao, Samarth"
+      ],
+      "status": "BANNED",
+      "reason": "Retaliation",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Terry Wilson",
+      "aliases": [
+        "Wilson, Terry"
+      ],
+      "status": "BANNED",
+      "reason": "Obvious Reasons",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
       "name": "TJ Lunn",
       "aliases": [
         "Tj Lunn",
@@ -50,19 +555,57 @@
         "Lunn, Tj"
       ],
       "status": "BANNED",
+      "reason": "Unnecessary Language",
+      "driverId": "118777",
       "badgeImage": "/assets/banned-driver.png",
       "excludedFrom": [
         "race-intelligence"
       ]
     },
     {
-      "driverId": "87070",
-      "name": "Ethan Eckert",
+      "name": "Trace McDowell",
       "aliases": [
-        "Eckert, Ethan",
-        "Ethan Eckert012"
+        "McDowell, Trace"
       ],
       "status": "BANNED",
+      "reason": "Disregard for Rules",
+      "driverId": "110198",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Travis Dyke",
+      "aliases": [
+        "Dyke, Travis"
+      ],
+      "status": "BANNED",
+      "reason": "Intentional Wrecking",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "William Trusty",
+      "aliases": [
+        "Trusty, William"
+      ],
+      "status": "BANNED",
+      "reason": "Intentional Wrecking",
+      "badgeImage": "/assets/banned-driver.png",
+      "excludedFrom": [
+        "race-intelligence"
+      ]
+    },
+    {
+      "name": "Zander Haislip",
+      "aliases": [
+        "Haislip, Zander"
+      ],
+      "status": "BANNED",
+      "reason": "Retaliation",
       "badgeImage": "/assets/banned-driver.png",
       "excludedFrom": [
         "race-intelligence"
