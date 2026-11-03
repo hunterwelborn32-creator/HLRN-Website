@@ -33,3 +33,17 @@ test("recorded event groups keep hosted, sunday, monday separate",()=>{
  assert.ok(all.length>0);
  assert.ok(all.every(x=>series.has(x.series)));
 });
+
+test("leaderboards preserve different drivers competing in the same race",()=>{
+ const all=data.drivers.flatMap(p=>p.results.map(r=>({series:p.series,driver:p.id,raceId:r.raceId||r.raceNumber,date:r.date})));
+ const unique=new Set(all.map(r=>[r.series,r.driver,r.raceId,r.date].join(":")));
+ assert.equal(unique.size,all.length,"do not collapse competitors from the same race");
+ const raceOnly=new Set(all.map(r=>[r.series,r.raceId,r.date].join(":")));
+ assert.ok(raceOnly.size<all.length,"the archive contains multiple drivers per race");
+});
+test("Hosted official season totals are available without inventing race rows",()=>{
+ const hosted=data.drivers.filter(p=>p.series==="hosted");
+ assert.ok(hosted.length>0);
+ assert.ok(hosted.some(p=>Number(p.races)>0&&Number(p.wins)>0));
+ for(const p of hosted)assert.ok(Array.isArray(p.results));
+});
