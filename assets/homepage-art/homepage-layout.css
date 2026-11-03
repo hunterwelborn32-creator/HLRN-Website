@@ -895,38 +895,39 @@ html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > head
   }
 }
 
-
-/* 2026-11-03 — Restore the original RGBA HLRN logo pair.
-   Keep the single full-page racetrack background; switch only the logo by
-   saved light/dark theme. The source images have a 3:1 aspect ratio.
-   This overrides the November full-width banner geometry without touching
-   Race Night's own takeover layout. */
+/* 2026-11-03 — FIX: original transparent HLRN logo, fully visible and compact.
+   Contain preserves the full 3:1 image including HIGH LINE RACING NETWORK.
+   Keep page scenery and race-night takeover unchanged. */
 html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene {
   top:0!important;
-  height:clamp(170px,31vw,410px)!important;
+  left:0!important;
+  width:100%!important;
+  height:clamp(160px,24vw,300px)!important;
   background-color:transparent!important;
-  background-size:min(83vw,1140px) auto!important;
-  background-position:center clamp(9px,1.2vw,18px)!important;
+  background-size:contain!important;
+  background-position:center center!important;
   background-repeat:no-repeat!important;
+  overflow:visible!important;
   -webkit-mask-image:none!important;
   mask-image:none!important;
+  filter:none!important;
 }
 html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene {
-  background-image:url("./Glossy%20HLRN%20Racing%20Network%20Logo.png?v=20261103restore1")!important;
+  background-image:url("./Glossy%20HLRN%20Racing%20Network%20Logo.png?v=20261103fix2")!important;
 }
 html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene {
-  background-image:url("./HLRN%20Metallic%20Racing%20Network%20Logo.png?v=20261103restore1")!important;
+  background-image:url("./HLRN%20Metallic%20Racing%20Network%20Logo.png?v=20261103fix2")!important;
 }
 html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero {
-  padding-top:clamp(180px,32vw,425px)!important;
+  padding-top:clamp(173px,25vw,315px)!important;
 }
 @media (max-width:650px) {
   html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene {
-    height:clamp(128px,37vw,220px)!important;
-    background-size:96vw auto!important;
-    background-position:center 10px!important;
+    height:clamp(126px,31vw,190px)!important;
+    background-size:contain!important;
+    background-position:center center!important;
   }
   html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero {
-    padding-top:clamp(143px,40vw,235px)!important;
+    padding-top:clamp(139px,34vw,203px)!important;
   }
 }
