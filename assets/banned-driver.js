@@ -3,6 +3,43 @@
 "use strict";
 if(/\/race-intelligence(?:\/|$)/.test(location.pathname)||window.__HLRN_BANNED_VISUAL_V1__)return;
 window.__HLRN_BANNED_VISUAL_V1__=true;
+
+// Every standalone team profile gets a return link to its originating HLRN page.
+(function installTeamReturnButton(){
+  if(!/^\/team-pages\/(?!index(?:\.html)?$)(?:(?:monday|sunday)\/)?[^/]+\.html$/i.test(location.pathname))return;
+  function init(){
+    if(document.getElementById("hlrn-team-return"))return;
+    const params=new URLSearchParams(location.search);
+    let destination="/team-pages/";
+    const requested=params.get("hlrn_return");
+    if(requested){
+      try{
+        const target=new URL(requested,location.origin);
+        if(target.origin===location.origin && /^\/(?!\/)/.test(requested) && !/^\/team-pages\//i.test(target.pathname)){
+          destination=target.pathname+target.search+target.hash;
+        }
+      }catch(e){}
+    }else if(document.referrer){
+      try{
+        const previous=new URL(document.referrer);
+        if(previous.origin===location.origin && !/^\/team-pages\//i.test(previous.pathname)){
+          destination=previous.pathname+previous.search+previous.hash;
+        }
+      }catch(e){}
+    }
+    const css=document.createElement("style");
+    css.textContent="#hlrn-team-return{position:fixed;top:max(14px,env(safe-area-inset-top));right:max(14px,env(safe-area-inset-right));z-index:2147483000;display:inline-flex;align-items:center;gap:9px;max-width:calc(100vw - 28px);padding:11px 17px;border:1px solid #8bc9ff;border-radius:9px;background:linear-gradient(125deg,#112b47,#071322);box-shadow:0 5px 22px #000b,0 0 0 1px #ffffff1c inset;color:#fff!important;font:800 12px/1.2 Arial,sans-serif;letter-spacing:.07em;text-decoration:none!important;text-transform:uppercase;transition:transform .15s,background .15s}#hlrn-team-return:hover{transform:translateY(-2px);background:#214b70}#hlrn-team-return:focus-visible{outline:3px solid #fff;outline-offset:3px}@media(max-width:600px){#hlrn-team-return{top:max(9px,env(safe-area-inset-top));right:max(9px,env(safe-area-inset-right));padding:9px 11px;font-size:10px;letter-spacing:.025em}}";
+    document.head.appendChild(css);
+    const back=document.createElement("a");
+    back.id="hlrn-team-return";
+    back.href=destination;
+    back.innerHTML='<span aria-hidden="true">←</span><span>Back to HLRN</span>';
+    back.setAttribute("aria-label","Return to the HLRN page you came from");
+    document.body.appendChild(back);
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});else init();
+})();
+
 const BADGE="/assets/banned-driver.png?v=20261028banned1";
 /* Generated from data/driver-status.json (official November 2, 2026 roster).
    Show a single status beside the name and stamp photos wherever present. */
