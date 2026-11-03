@@ -62,7 +62,7 @@ function profileHTML(identity){
  const {matches,rows}=selectRecords(identity);
  if(!matches.length)return '<p class="ads-muted">Advanced statistics are not available for this driver in the published archive.</p>';
  const leagues=[...new Set(rows.map(r=>r.series))],years=[...new Set(rows.map(r=>String(r.date||"").slice(0,4)))].filter(Boolean).sort().reverse();
- return '<div class="ads-intro"><h2>Advanced Driver Statistics</h2><p>Verified results in the available HLRN archive. Existing official career totals remain unchanged.</p></div>'+
+ return '<div class="ads-intro"><h2>Advanced Driver Statistics</h2><p>Verified results in the available HLRN archive. Existing official career totals remain unchanged. <a href="/stats/">View HLRN records →</a></p></div>'+
  '<div class="ads-filters"><label>Series <select data-ads-series><option value="all">All recorded series</option>'+leagues.map(l=>'<option value="'+safe(l)+'">'+safe(leagueNames[l]||l)+'</option>').join("")+'</select></label><label>Year <select data-ads-year><option value="all">All recorded years</option>'+years.map(y=>'<option value="'+safe(y)+'">'+safe(y)+'</option>').join("")+'</select></label></div>'+
  '<div data-ads-body></div>';
 }
@@ -118,6 +118,8 @@ async function load(force=false){
 }
 async function refresh(force=false){try{await load(force);renderDriver();renderRecords();}catch(e){console.warn("HLRN advanced stats unavailable",e);const target=document.querySelector("#adsRecords");if(target)target.textContent="Verified statistics are temporarily unavailable.";}}
 function boot(){
+ const directory=document.querySelector("#directoryView");
+ if(directory&&!directory.querySelector("[data-ads-records-link]")){const p=document.createElement("p");p.dataset.adsRecordsLink="1";p.style.cssText="padding:10px 16px;text-align:right";const a=document.createElement("a");a.href="/stats/";a.textContent="View HLRN Driver Records →";a.style.cssText="font-weight:900;color:#e31837";p.appendChild(a);directory.prepend(p);}
  refresh();
  let queued=false;
  const host=document.querySelector("#profileContent");
