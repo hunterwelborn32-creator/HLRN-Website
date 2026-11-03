@@ -125,6 +125,7 @@ function boot(){
  const host=document.querySelector("#profileContent");
  if(host)new MutationObserver(()=>{if(queued)return;queued=true;queueMicrotask(()=>{queued=false;renderDriver();});}).observe(host,{childList:true});
  document.addEventListener("visibilitychange",()=>{if(!document.hidden&&Date.now()-state.loaded>300000)refresh(true);});
+ setInterval(()=>{if(!document.hidden&&Date.now()-state.loaded>=300000)refresh(true);},300000);
  window.addEventListener("popstate",()=>queueMicrotask(renderDriver));
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot,{once:true});else boot();
