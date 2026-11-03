@@ -1335,6 +1335,22 @@ function simplifyHostedProfileStats(){
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",simplifyHostedProfileStats,{once:true});
 else simplifyHostedProfileStats();
 
+// Preserve the exact HLRN page when visitors open a standalone team profile,
+// including links that open in a new tab.
+(function installTeamReturnLinks(){
+  if(/^\/team-pages\//i.test(location.pathname))return;
+  document.addEventListener("click",function(event){
+    const link=event.target.closest&&event.target.closest("a[href]");
+    if(!link)return;
+    let url;
+    try{url=new URL(link.href,location.href);}catch(e){return;}
+    if(url.origin!==location.origin || !/^\/team-pages\/(?!index(?:\.html)?$)(?:(?:monday|sunday)\/)?[^/]+\.html$/i.test(url.pathname))return;
+    const from=location.pathname+location.search+location.hash;
+    url.searchParams.set("hlrn_return",from);
+    link.href=url.href;
+  },true);
+})();
+
 start();
 
 /* Load site-wide banned status badges and photo overlay without altering race data. */
