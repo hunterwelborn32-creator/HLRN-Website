@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-03T20:56:46.468Z",
+  "generatedAt": "2026-11-03T23:50:50.809Z",
   "source": "SimRacerHub race pages",
   "races": [
     {
@@ -251,6 +251,31 @@
         "driverId": "135679",
         "carNumber": "66",
         "lap": 3
+      }
+    },
+    {
+      "key": "monday|11|389335",
+      "league": "monday",
+      "raceNumber": 11,
+      "raceId": "389335",
+      "track": "Indianapolis Motor Speedway",
+      "date": "Mon Nov 02 2026 00:00:00 GMT-0500 (Eastern Standard Time)",
+      "source": "SimRacerHub",
+      "sourceRaceId": "389335",
+      "duration": "1h 45m",
+      "raceLaps": 85,
+      "leaders": 7,
+      "leadChanges": 11,
+      "cautions": 11,
+      "cautionLaps": 25,
+      "penalties": 0,
+      "fastestLap": {
+        "time": 51.068,
+        "formatted": "51.068",
+        "driver": "Juan Escamilla",
+        "driverId": "99085",
+        "carNumber": "99",
+        "lap": 70
       }
     },
     {
