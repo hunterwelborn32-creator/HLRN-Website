@@ -81,6 +81,30 @@ def load_json(path):
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
 
+# All BANNED profile treatments are driven by the same dated roster that
+# powers the site-wide badges and Race Intelligence exclusions.
+BANNED_ROSTER = load_json(ROOT / "data" / "driver-status.json").get("drivers", [])
+BANNED_DRIVER_KEYS = {
+    keyify(alias)
+    for driver_status in BANNED_ROSTER
+    if driver_status.get("status") == "BANNED"
+    for alias in [driver_status.get("name", ""), *(driver_status.get("aliases") or [])]
+}
+BANNED_DRIVER_IDS = {
+    str(driver_status.get("driverId"))
+    for driver_status in BANNED_ROSTER
+    if driver_status.get("status") == "BANNED" and driver_status.get("driverId")
+}
+
+
+def is_banned_driver(driver):
+    names = [driver.get("name", ""), driver.get("slug", "").replace("-", "")]
+    if any(keyify(name) in BANNED_DRIVER_KEYS for name in names):
+        return True
+    return any(str(ident) in BANNED_DRIVER_IDS for ident in
+               (driver.get("ids") or {}).values() if ident)
+
+
 def irating_fallback_photo(irating):
     """Return the HLRN fallback suit for a verified/current iRating."""
     rating = num(irating, 0)
@@ -441,7 +465,7 @@ def render_page(driver):
     name = driver["name"]
     slug = driver["slug"]
     # Direct markup so banned status survives page generation and does not rely on the global JS loader.
-    is_banned = slug in ("matthew-brown49", "bryce-hinton2", "joshua-spragg", "tj-lunn", "ethan-eckert")
+    is_banned = is_banned_driver(driver)
     ban_image_html = (
         '<img class="hlrn-ban-stamp" src="/assets/banned-driver.png?v=20261028banfix2" '
         'alt="BANNED" loading="eager" decoding="async">' if is_banned else ""
@@ -449,7 +473,7 @@ def render_page(driver):
     ban_photo_attribute = ' data-hlrn-banned-photo="1"' if is_banned else ""
     # Keep the banned photo stamp; the shared script adds a single BANNED badge after his name.
     ban_status_html = ""
-    site_shell_version = "20261103ethanban1"
+    site_shell_version = "20261103banlist48v1"
     number = driver["number"]
     records = driver["records"]
     teams = driver["teams"]
