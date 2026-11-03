@@ -4,18 +4,54 @@
 if(/\/race-intelligence(?:\/|$)/.test(location.pathname)||window.__HLRN_BANNED_VISUAL_V1__)return;
 window.__HLRN_BANNED_VISUAL_V1__=true;
 const BADGE="/assets/banned-driver.png?v=20261028banned1";
-const PATTERN=/\b(?:Matthew\s+Brown(?:49)?|Brown49\s*,\s*Matthew|Bryce\s+Hinton(?:2)?|Hinton2?\s*,\s*Bryce|Josh(?:ua)?\s+Spragg|Spragg\s*,\s*Josh(?:ua)?|TJ\s+Lunn|Lunn\s*,\s*TJ|Ethan\s+Eckert(?:012)?|Eckert(?:012)?\s*,\s*Ethan)\b/gi;
-function hasName(s){return /\b(?:matthew\s+brown(?:49)?|brown49\s*,\s*matthew|bryce\s+hinton(?:2)?|hinton2?\s*,\s*bryce|josh(?:ua)?\s+spragg|spragg\s*,\s*josh(?:ua)?|tj\s+lunn|lunn\s*,\s*tj|ethan\s+eckert(?:012)?|eckert(?:012)?\s*,\s*ethan)\b/i.test(String(s||""));}
+/* Generated from data/driver-status.json (official November 2, 2026 roster).
+   Show a single status beside the name and stamp photos wherever present. */
+const ENTRIES = [{"name":"Alex Schumacher","aliases":["Schumacher, Alex"],"driverId":null},{"name":"Andrew Schuler2","aliases":["Andrew Schuler","Schuler, Andrew","Schuler2, Andrew"],"driverId":null},{"name":"Andy Bowman","aliases":["Bowman, Andy"],"driverId":null},{"name":"Benjamin Farnham-Johnson","aliases":["Farnham-Johnson, Benjamin","Benjamin Farnham Johnson"],"driverId":null},{"name":"Ben Walker2","aliases":["Ben Walker","Walker, Ben","Walker2, Ben"],"driverId":null},{"name":"Brogan Roberts","aliases":["Roberts, Brogan"],"driverId":null},{"name":"Bryce Hinton","aliases":["Bryce Hinton2","Hinton2, Bryce","Hinton, Bryce"],"driverId":"105882"},{"name":"Christopher Rashaad Craig","aliases":["Craig, Christopher Rashaad"],"driverId":null},{"name":"Dave B. Schutt","aliases":["Schutt, Dave B.","Dave B Schutt","Schutt, Dave B"],"driverId":null},{"name":"Darrel Ceballos","aliases":["Ceballos, Darrel"],"driverId":"126078"},{"name":"Ed Ryan","aliases":["Ryan, Ed"],"driverId":null},{"name":"Ethan Eckert","aliases":["Eckert, Ethan","Ethan Eckert012"],"driverId":"87070"},{"name":"Hunter Funderburke","aliases":["Funderburke, Hunter"],"driverId":null},{"name":"Isaiah Watrous","aliases":["Watrous, Isaiah"],"driverId":null},{"name":"Jackson Barrie","aliases":["Barrie, Jackson"],"driverId":null},{"name":"Jacob Major","aliases":["Major, Jacob"],"driverId":null},{"name":"Jeff Connors","aliases":["Connors, Jeff"],"driverId":null},{"name":"Jeremy Coggin","aliases":["Coggin, Jeremy"],"driverId":null},{"name":"Josh Ryder","aliases":["Ryder, Josh"],"driverId":null},{"name":"Josh Spragg","aliases":["Spragg, Joshua","Spragg, Josh","Joshua Spragg"],"driverId":"109865"},{"name":"Justin Thomas","aliases":["Thomas, Justin"],"driverId":null},{"name":"Larry Eddy","aliases":["Eddy, Larry"],"driverId":null},{"name":"Logan Ramsdell2","aliases":["Logan Ramsdell","Ramsdell, Logan","Ramsdell2, Logan"],"driverId":null},{"name":"Luke Gauthier","aliases":["Gauthier, Luke"],"driverId":null},{"name":"Magnum Tate","aliases":["Tate, Magnum"],"driverId":null},{"name":"Matthew Brown49","aliases":["Brown49, Matthew","Matthew Brown","Brown, Matthew"],"driverId":"116507"},{"name":"Mario Dinatale","aliases":["Dinatale, Mario"],"driverId":null},{"name":"Michael Wiesner2","aliases":["Michael Wiesner","Wiesner, Michael","Wiesner2, Michael"],"driverId":null},{"name":"Mike Donell","aliases":["Donell, Mike"],"driverId":null},{"name":"Nathan Fryer","aliases":["Fryer, Nathan"],"driverId":null},{"name":"Nicholas Gibson","aliases":["Gibson, Nicholas"],"driverId":null},{"name":"Paul Flye2","aliases":["Paul Flye","Flye, Paul","Flye2, Paul"],"driverId":null},{"name":"Payson Lindsay","aliases":["Lindsay, Payson"],"driverId":null},{"name":"Petr Smegma","aliases":["Smegma, Petr"],"driverId":null},{"name":"Peyton Klebba","aliases":["Klebba, Peyton"],"driverId":null},{"name":"Primo Pasqualini","aliases":["Pasqualini, Primo"],"driverId":null},{"name":"Rey Garcia","aliases":["Garcia, Rey"],"driverId":null},{"name":"Ryan Carlson9","aliases":["Ryan Carlson","Carlson, Ryan","Carlson9, Ryan"],"driverId":null},{"name":"Scott D Howell","aliases":["Howell, Scott D","Scott D. Howell","Howell, Scott D."],"driverId":null},{"name":"Sebastien Rogier","aliases":["Rogier, Sebastien"],"driverId":null},{"name":"Shane Harbin","aliases":["Harbin, Shane"],"driverId":null},{"name":"Samarth Rao","aliases":["Rao, Samarth"],"driverId":null},{"name":"Terry Wilson","aliases":["Wilson, Terry"],"driverId":null},{"name":"TJ Lunn","aliases":["Tj Lunn","Lunn, TJ","Lunn, Tj"],"driverId":"118777"},{"name":"Trace McDowell","aliases":["McDowell, Trace"],"driverId":"110198"},{"name":"Travis Dyke","aliases":["Dyke, Travis"],"driverId":null},{"name":"William Trusty","aliases":["Trusty, William"],"driverId":null},{"name":"Zander Haislip","aliases":["Haislip, Zander"],"driverId":null}];
+const KNOWN_IDS = new Set(ENTRIES.map(e=>String(e.driverId||"")).filter(Boolean));
 function normalize(s){
   s=String(s||"").trim().toLowerCase();
-  if(s.includes(",")){const [last,...first]=s.split(",");s=first.join(",").trim()+" "+last.trim();}
-  return s.replace(/\d+$/,"").replace(/[^a-z]/g,"");
+  if(s.includes(",")){
+    const parts=s.split(",");s=parts.slice(1).join(" ").trim()+" "+parts[0].trim();
+  }
+  return s.replace(/([a-z])\d+\b/g,"$1").replace(/[^a-z]/g,"");
 }
+const KNOWN_NAMES=new Set();
+const aliases=[];
+for(const entry of ENTRIES){
+  for(const label of [entry.name,...entry.aliases]){
+    const s=String(label||"").trim();
+    if(!s)continue;
+    KNOWN_NAMES.add(normalize(s));
+    aliases.push(s);
+  }
+}
+const escapePattern=s=>String(s).split("").map(c=>{
+  if(/\s/.test(c))return "\\s+";
+  if(c==="-")return "[-\\s]+";
+  if(c===".")return "\\.?";
+  return /[\\^$*+?()[\]{}|]/.test(c)?"\\"+c:c;
+}).join("");
+const seen=new Set();
+const variants=aliases
+  .map(s=>s.replace(/\.$/,""))
+  .filter(s=>{const k=s.toLowerCase();if(seen.has(k))return false;seen.add(k);return true;})
+  .sort((a,b)=>b.length-a.length)
+  .map(escapePattern);
+const PATTERN=new RegExp("\\b(?:"+variants.join("|")+")\\b","gi");
+const LOOKUP=new RegExp(PATTERN.source,"i");
+function hasName(s){return LOOKUP.test(String(s||""));}
 function bannedPhoto(img){
-  const src=String(img.getAttribute("src")||"").toLowerCase();
-  if(/(?:matthew[-_]?brown|bryce[-_]?hinton|josh(?:ua)?[-_]?spragg|tj[-_]?lunn|ethan[-_]?eckert)/.test(src)||hasName(img.alt)||["matthewbrown","brycehinton","joshuaspragg","joshspragg","tjlunn","ethaneckert"].includes(normalize(img.dataset.hlrnDriverName||img.dataset.driverName)))return true;
+  const source=String(img.getAttribute("src")||"");
+  const filename=decodeURIComponent(source.split(/[?#]/)[0].split("/").pop()||"")
+    .replace(/\.(?:png|jpe?g|webp)$/i,"")
+    .replace(/-profile-cutout-\d+$/i,"")
+    .replace(/[-_]/g," ");
+  if([img.alt,img.dataset.hlrnDriverName,img.dataset.driverName,filename]
+    .some(n=>n&&KNOWN_NAMES.has(normalize(n))))return true;
   const named=img.closest("[data-hlrn-driver-name],[data-driver-name],[data-driver-id]");
-  if(named&&(["116507","105882","109865","118777","87070"].includes(String(named.dataset.driverId))||["matthewbrown","brycehinton","joshuaspragg","joshspragg","tjlunn","ethaneckert"].includes(normalize(named.dataset.hlrnDriverName||named.dataset.driverName))))return true;
+  if(named&&(KNOWN_IDS.has(String(named.dataset.driverId||""))||
+    [named.dataset.hlrnDriverName,named.dataset.driverName]
+      .some(n=>n&&KNOWN_NAMES.has(normalize(n)))))return true;
   const card=img.closest(".driver-card,.driver-stat-card,.driver-tile,.driver-row,.driver-profile,.driver-directory-item,.hlrn-driver-card,.leader-card,.hx-podium-card,.hero,.profile-header,tbody tr");
   return !!card&&card.querySelectorAll("img:not(.hlrn-banned-overlay)").length<=2&&hasName(card.textContent);
 }
