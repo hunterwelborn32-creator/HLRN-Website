@@ -645,7 +645,7 @@ html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scen
   transform:none!important;
   opacity:1!important;
   background-color:transparent!important;
-  background-image:url("./HLRN-New-Header-Day.png?v=20261102banner1")!important;
+  background-image:url("./Glossy%20HLRN%20Racing%20Network%20Logo.png?v=20261103restore1")!important;
   background-size:min(72vw,990px) auto!important;
   background-position:center 30px!important;
   background-repeat:no-repeat!important;
@@ -654,10 +654,10 @@ html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scen
   filter:none!important;
 }
 html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene{
-  background-image:url("./HLRN-New-Header-Day.png?v=20261102banner1")!important;
+  background-image:url("./Glossy%20HLRN%20Racing%20Network%20Logo.png?v=20261103restore1")!important;
 }
 html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene{
-  background-image:url("./HLRN-New-Header-Night.png?v=20261102banner1")!important;
+  background-image:url("./HLRN%20Metallic%20Racing%20Network%20Logo.png?v=20261103restore1")!important;
 }
 
 /* Real content above both image layers. Never repaint the page
@@ -892,5 +892,41 @@ html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > head
   }
   html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero {
     padding-top:clamp(95px,23vw,145px)!important;
+  }
+}
+
+
+/* 2026-11-03 — Restore the original RGBA HLRN logo pair.
+   Keep the single full-page racetrack background; switch only the logo by
+   saved light/dark theme. The source images have a 3:1 aspect ratio.
+   This overrides the November full-width banner geometry without touching
+   Race Night's own takeover layout. */
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene {
+  top:0!important;
+  height:clamp(170px,31vw,410px)!important;
+  background-color:transparent!important;
+  background-size:min(83vw,1140px) auto!important;
+  background-position:center clamp(9px,1.2vw,18px)!important;
+  background-repeat:no-repeat!important;
+  -webkit-mask-image:none!important;
+  mask-image:none!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene {
+  background-image:url("./Glossy%20HLRN%20Racing%20Network%20Logo.png?v=20261103restore1")!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene {
+  background-image:url("./HLRN%20Metallic%20Racing%20Network%20Logo.png?v=20261103restore1")!important;
+}
+html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero {
+  padding-top:clamp(180px,32vw,425px)!important;
+}
+@media (max-width:650px) {
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene {
+    height:clamp(128px,37vw,220px)!important;
+    background-size:96vw auto!important;
+    background-position:center 10px!important;
+  }
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero {
+    padding-top:clamp(143px,40vw,235px)!important;
   }
 }
