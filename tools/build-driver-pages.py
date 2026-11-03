@@ -449,7 +449,7 @@ def render_page(driver):
     ban_photo_attribute = ' data-hlrn-banned-photo="1"' if is_banned else ""
     # Keep the banned photo stamp; the shared script adds a single BANNED badge after his name.
     ban_status_html = ""
-    site_shell_version = "20261028tjban1"
+    site_shell_version = "20261103ethanban1"
     number = driver["number"]
     records = driver["records"]
     teams = driver["teams"]
