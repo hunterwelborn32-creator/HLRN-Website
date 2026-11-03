@@ -20,8 +20,11 @@ async function run() {
 
     await page.goto(BASE + "/drivers/trevor-haley/", { waitUntil: "domcontentloaded" });
     await page.locator("#hlrnAdvancedStats .ads-card").first().waitFor({ timeout: 30000 });
-    assert.ok((await page.locator("#hlrnAdvancedStats").innerText()).includes("Track-by-Track Performance"));
-    assert.ok((await page.locator("#hlrnAdvancedStats").innerText()).includes("Full Recorded Race History"));
+    const panelText = await page.locator("#hlrnAdvancedStats").textContent();
+    console.log("DEBUG profile advanced stats headings:", (await page.locator("#hlrnAdvancedStats h3").allTextContents()).join(" | "));
+    console.log("DEBUG profile visibility:", await page.locator("#hlrnAdvancedStats").isVisible());
+    assert.ok(panelText.includes("Track-by-Track Performance"), panelText.slice(0, 700));
+    assert.ok(panelText.includes("Full Recorded Race History"), panelText.slice(0, 700));
     await page.screenshot({ path: screenshots + "/desktop-driver-light.png", fullPage: true });
     await page.locator("#hlrnAdvancedStats [data-ads-series]").selectOption("hosted");
     assert.ok((await page.locator("#hlrnAdvancedStats").innerText()).includes("Hosted Racing"));
