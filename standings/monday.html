@@ -5132,15 +5132,62 @@ dnf:dnf
 /* =========================
    TEAM STANDINGS
 ========================= */
+const HLRN_EXISTING_TEAM_PAGES = {
+  monday: {
+    jsr:"monday/jack-shack-racing.html",
+    jackshackracing:"monday/jack-shack-racing.html",
+    awr:"monday/angry-wives-racing.html",
+    angrywivesracing:"monday/angry-wives-racing.html",
+    hlr:"monday/high-line-racing.html",
+    highlineracing:"monday/high-line-racing.html",
+    smt:"monday/smt-inc.html",
+    smtinc:"monday/smt-inc.html",
+    smtincorporated:"monday/smt-inc.html",
+    genx:"monday/gen-x-racing.html",
+    genxracing:"monday/gen-x-racing.html"
+  },
+  sunday: {
+    hlr:"sunday/high-line-racing.html",
+    highlineracing:"sunday/high-line-racing.html",
+    lbs:"sunday/lbs-racing.html",
+    lbsracing:"sunday/lbs-racing.html",
+    smt:"sunday/smt-racing.html",
+    smtracing:"sunday/smt-racing.html",
+    smtracinginc:"sunday/smt-racing.html",
+    dhr:"sunday/dark-horse-racing.html",
+    darkhorseracing:"sunday/dark-horse-racing.html",
+    tw:"sunday/torqued-wrench.html",
+    twm:"sunday/torqued-wrench.html",
+    torquedwrench:"sunday/torqued-wrench.html",
+    torquedwrenchmotorsports:"sunday/torqued-wrench.html",
+    vrx:"sunday/vrx-simulators.html",
+    vrxsimulators:"sunday/vrx-simulators.html",
+    px:"sunday/primex-racing.html",
+    primex:"sunday/primex-racing.html",
+    primexracing:"sunday/primex-racing.html"
+  }
+};
+
+/* Standings names can be abbreviations (JSR/AWR/HLR/GENX).
+   Prefer the existing page for this league; fall back to the other
+   league only if it is the only published page for that team.
+   Unknown teams open the real Teams Hub, never the nonexistent /teams/. */
+function hLrnTeamProfileHref(teamName){
+  const label=String(teamName||"").trim();
+  const key=label.toLowerCase().replace(/[^a-z0-9]/g,"");
+  const league="monday";
+  const other=league==="monday"?"sunday":"monday";
+  const rel=HLRN_EXISTING_TEAM_PAGES[league][key]||HLRN_EXISTING_TEAM_PAGES[other][key];
+  return rel?"../team-pages/"+rel:
+    "../team-pages/index.html?league="+encodeURIComponent(league)+"&team="+encodeURIComponent(label);
+}
 function hLrnTeamProfileLink(teamName){
-const shown=String(teamName||"").trim();
-const safe=escapeHTML(shown);
-const params=new URLSearchParams();
-params.set("league","monday");
-params.set("team",shown);
-return '<a class="hlrn-team-profile-link" href="../teams/?'+params.toString()+'" target="_top" '
-+'aria-label="Open '+safe+' team profile" title="View '+safe+' team profile">'
-+'<span>'+safe+'</span><span class="hlrn-team-profile-arrow" aria-hidden="true">›</span></a>';
+  const shown=String(teamName||"").trim();
+  const safe=escapeHTML(shown);
+  const href=hLrnTeamProfileHref(shown);
+  return '<a class="hlrn-team-profile-link" href="'+escapeHTML(href)+'" target="_top" '
+    +'aria-label="Open '+safe+' team page" title="View '+safe+' team page">'
+    +'<span>'+safe+'</span><span class="hlrn-team-profile-arrow" aria-hidden="true">›</span></a>';
 }
 function renderTeams(){
 const body =
@@ -5908,7 +5955,7 @@ message
       const ts=teams.slice().sort((a,b)=>safeNum(a.rank)-safeNum(b.rank)||safeNum(b.points)-safeNum(a.points));
       const t=ts[0],t2=ts[1];
       if(t){
-        const teamLink='../teams/?league=monday&team='+encodeURIComponent(t.team||'');
+        const teamLink=hLrnTeamProfileHref(t.team||'');
         document.getElementById('ccTeamBattleLeader').innerHTML='<a href="'+teamLink+'" target="_top">'+escapeHTML(t.team||'Unknown')+'</a>';
         document.getElementById('ccTeamBattleValue').textContent=formatNumber(t.points,1)+' team points';
         document.getElementById('ccTeamLeader').textContent=t.team||'Unknown';
