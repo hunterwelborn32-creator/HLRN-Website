@@ -60,8 +60,11 @@ class DriverPageTests(unittest.TestCase):
                     "name": name,
                     "slug": slug,
                     "number": {"matthew-brown49": "14", "bryce-hinton2": "28", "joshua-spragg": "37", "tj-lunn": "02", "ethan-eckert": "012", "darrel-ceballos": "9", "trace-mcdowell": "20"}[slug],
-                    "photoSlug": "darrel-ceballos" if slug == "darrel-ceballos" else "",
-                    "hasPhoto": slug == "darrel-ceballos",
+                    # Real cutouts exist for Ethan and Darrel. Match their
+                    # published driver manifests instead of inventing an
+                    # empty photo record and expecting a cutout to render.
+                    "photoSlug": slug if slug in ("ethan-eckert", "darrel-ceballos") else "",
+                    "hasPhoto": slug in ("ethan-eckert", "darrel-ceballos"),
                     "teams": {"sunday": None},
                     "records": {"sunday": {"rank": 1, "points": 0, "races": 0, "wins": 0, "top5": 0, "top10": 0, "results": []}},
                 }
