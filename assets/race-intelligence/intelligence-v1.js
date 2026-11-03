@@ -18,16 +18,8 @@ let raceUpdateTimer = null;
 /* Permanently excluded drivers are removed from the model. Paused drivers stay
    in the official standings/race history so their rank does not get rewritten,
    but they are not selected as current contenders or trend picks. */
-const EXCLUDED_DRIVERS = [
-  "trace mcdowell",
-  "matthew brown",
-  "bryce hinton",
-  "joshua spragg",
-  "josh spragg",
-  "tj lunn",
-  "ethan eckert"
-];
-const EXCLUDED_DRIVER_IDS = new Set(["116507","105882","109865","118777","87070"]);
+const EXCLUDED_DRIVERS = new Set(["Alex Schumacher","Schumacher, Alex","Andrew Schuler2","Andrew Schuler","Schuler, Andrew","Schuler2, Andrew","Andy Bowman","Bowman, Andy","Benjamin Farnham-Johnson","Farnham-Johnson, Benjamin","Benjamin Farnham Johnson","Ben Walker2","Ben Walker","Walker, Ben","Walker2, Ben","Brogan Roberts","Roberts, Brogan","Bryce Hinton","Bryce Hinton2","Hinton2, Bryce","Hinton, Bryce","Christopher Rashaad Craig","Craig, Christopher Rashaad","Dave B. Schutt","Schutt, Dave B.","Dave B Schutt","Schutt, Dave B","Darrel Ceballos","Ceballos, Darrel","Ed Ryan","Ryan, Ed","Ethan Eckert","Eckert, Ethan","Ethan Eckert012","Hunter Funderburke","Funderburke, Hunter","Isaiah Watrous","Watrous, Isaiah","Jackson Barrie","Barrie, Jackson","Jacob Major","Major, Jacob","Jeff Connors","Connors, Jeff","Jeremy Coggin","Coggin, Jeremy","Josh Ryder","Ryder, Josh","Josh Spragg","Spragg, Joshua","Spragg, Josh","Joshua Spragg","Justin Thomas","Thomas, Justin","Larry Eddy","Eddy, Larry","Logan Ramsdell2","Logan Ramsdell","Ramsdell, Logan","Ramsdell2, Logan","Luke Gauthier","Gauthier, Luke","Magnum Tate","Tate, Magnum","Matthew Brown49","Brown49, Matthew","Matthew Brown","Brown, Matthew","Mario Dinatale","Dinatale, Mario","Michael Wiesner2","Michael Wiesner","Wiesner, Michael","Wiesner2, Michael","Mike Donell","Donell, Mike","Nathan Fryer","Fryer, Nathan","Nicholas Gibson","Gibson, Nicholas","Paul Flye2","Paul Flye","Flye, Paul","Flye2, Paul","Payson Lindsay","Lindsay, Payson","Petr Smegma","Smegma, Petr","Peyton Klebba","Klebba, Peyton","Primo Pasqualini","Pasqualini, Primo","Rey Garcia","Garcia, Rey","Ryan Carlson9","Ryan Carlson","Carlson, Ryan","Carlson9, Ryan","Scott D Howell","Howell, Scott D","Scott D. Howell","Howell, Scott D.","Sebastien Rogier","Rogier, Sebastien","Shane Harbin","Harbin, Shane","Samarth Rao","Rao, Samarth","Terry Wilson","Wilson, Terry","TJ Lunn","Tj Lunn","Lunn, TJ","Lunn, Tj","Trace McDowell","McDowell, Trace","Travis Dyke","Dyke, Travis","William Trusty","Trusty, William","Zander Haislip","Haislip, Zander"].map(name=>normalizeDriverName(formatDriverName(name))));
+const EXCLUDED_DRIVER_IDS = new Set(["105882","126078","87070","109865","116507","118777","110198"]);
 const PAUSED_DRIVERS = [
   "benjamin richards",
   "sebastian michaels",
@@ -35,12 +27,12 @@ const PAUSED_DRIVERS = [
 ];
 
 function normalizeDriverName(name){
-  return String(name || "").trim().toLowerCase().replace(/\s+/g," ");
+  return String(name || "").trim().toLowerCase().replace(/[^a-z0-9]/g,"");
 }
 
 function isExcludedDriverName(name){
   const normalized = normalizeDriverName(formatDriverName(name));
-  return EXCLUDED_DRIVERS.some(excluded => normalized === normalizeDriverName(formatDriverName(excluded)));
+  return EXCLUDED_DRIVERS.has(normalized);
 }
 
 function isPausedDriverName(name){
