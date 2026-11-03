@@ -52,13 +52,16 @@ class DriverPageTests(unittest.TestCase):
             ("joshua-spragg", "Joshua Spragg", "joshua-spragg-profile-cutout-20261028.webp"),
             ("tj-lunn", "Tj Lunn", "tj-lunn-profile-cutout-20261028.webp"),
             ("ethan-eckert", "Ethan Eckert", "ethan-eckert.webp"),
+            ("darrel-ceballos", "Darrel Ceballos", "darrel-ceballos.webp"),
+            ("trace-mcdowell", "Trace McDowell", "yellow.webp"),
         ):
             with self.subTest(slug=slug):
                 driver = {
                     "name": name,
                     "slug": slug,
-                    "number": {"matthew-brown49": "14", "bryce-hinton2": "28", "joshua-spragg": "37", "tj-lunn": "02", "ethan-eckert": "012"}[slug],
-                    "photoSlug": "",
+                    "number": {"matthew-brown49": "14", "bryce-hinton2": "28", "joshua-spragg": "37", "tj-lunn": "02", "ethan-eckert": "012", "darrel-ceballos": "9", "trace-mcdowell": "20"}[slug],
+                    "photoSlug": "darrel-ceballos" if slug == "darrel-ceballos" else "",
+                    "hasPhoto": slug == "darrel-ceballos",
                     "teams": {"sunday": None},
                     "records": {"sunday": {"rank": 1, "points": 0, "races": 0, "wins": 0, "top5": 0, "top10": 0, "results": []}},
                 }
@@ -67,6 +70,23 @@ class DriverPageTests(unittest.TestCase):
                 self.assertIn('data-hlrn-banned-photo="1"', page)
                 self.assertIn(portrait, page)
                 self.assertNotIn('class="hlrn-ban-status"', page)
+
+    def test_november_banned_registry_is_authoritative(self):
+        self.assertEqual(len(mod.BANNED_ROSTER), 48)
+        for name, slug in [
+            ("Darrel Ceballos", "darrel-ceballos"),
+            ("Trace McDowell", "trace-mcdowell"),
+            ("Ethan Eckert", "ethan-eckert"),
+            ("Matthew Brown49", "matthew-brown49"),
+            ("Joshua Spragg", "joshua-spragg"),
+            ("Andrew Schuler2", "andrew-schuler2"),
+            ("Alex Schumacher", "alex-schumacher"),
+        ]:
+            with self.subTest(name=name):
+                self.assertTrue(mod.is_banned_driver({"name": name, "slug": slug}))
+        self.assertTrue(mod.is_banned_driver({"name": "Unknown", "slug": "unknown", "ids": {"sunday": "126078"}}))
+        self.assertFalse(mod.is_banned_driver({"name": "Hunter Welborn", "slug": "hunter-welborn"}))
+        self.assertFalse(mod.is_banned_driver({"name": "Ethan Moreno", "slug": "ethan-moreno"}))
 
     def test_hosted_alias_and_records(self):
         hlrn = {
