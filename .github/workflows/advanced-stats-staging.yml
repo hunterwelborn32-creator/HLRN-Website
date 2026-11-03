@@ -1,0 +1,70 @@
+name: HLRN Advanced Stats - Isolated Staging Preview
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'assets/advanced-driver-stats.*'
+      - 'assets/site-shell.js'
+      - 'stats/**'
+      - 'tests/advanced-driver-stats*'
+      - 'tools/build-staging-preview.py'
+      - '.github/workflows/advanced-stats-staging.yml'
+  workflow_dispatch:
+
+# No write permissions, secrets, DNS changes, or Pages deployment.
+permissions:
+  contents: read
+
+concurrency:
+  group: hlrn-stats-staging-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  staging-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout feature for isolated staging
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run driver stats regression tests
+        run: node --test tests/advanced-driver-stats.test.cjs
+
+      - name: Assemble disposable staging site
+        run: python3 tools/build-staging-preview.py
+
+      - name: Install browser test tools
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install --with-deps chromium
+
+      - name: Test staging in desktop and mobile Chromium
+        shell: bash
+        run: |
+          python3 -m http.server 8765 --directory _staging_preview > /tmp/hlrn-staging.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          for i in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:8765/stats/ > /dev/null; then break; fi
+            sleep 1
+          done
+          node tests/advanced-driver-stats.browser.cjs
+
+      - name: Upload temporary preview and screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hlrn-stats-staging-${{ github.event.pull_request.number || 'manual' }}
+          path: |
+            _staging_preview/
+            staging-screenshots/
+          if-no-files-found: warn
+          retention-days: 7

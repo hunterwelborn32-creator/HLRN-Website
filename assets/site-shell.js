@@ -1363,4 +1363,13 @@ start();
   tag.setAttribute("data-hlrn-banned-driver","");
   document.head.appendChild(tag);
 })();
+/* Advanced stats: only load on driver profiles and directory.
+   /stats/ loads its own script; other pages remain untouched. */
+(function installAdvancedDriverStats(){
+  if(!/^\/drivers(?:\/|$)/i.test(location.pathname))return;
+  if(document.querySelector("script[data-hlrn-advanced-stats]"))return;
+  const css=document.createElement("link");css.rel="stylesheet";css.href="/assets/advanced-driver-stats.css?v=1";document.head.appendChild(css);
+  const script=document.createElement("script");script.src="/assets/advanced-driver-stats.js?v=1";script.defer=true;script.dataset.hlrnAdvancedStats="1";document.head.appendChild(script);
+})();
+
 })();
