@@ -42,17 +42,21 @@ const LOOKUP=new RegExp(PATTERN.source,"i");
 function hasName(s){return LOOKUP.test(String(s||""));}
 function bannedPhoto(img){
   const source=String(img.getAttribute("src")||"");
-  const filename=decodeURIComponent(source.split(/[?#]/)[0].split("/").pop()||"")
-    .replace(/\.(?:png|jpe?g|webp)$/i,"")
-    .replace(/-profile-cutout-\d+$/i,"")
-    .replace(/[-_]/g," ");
-  if([img.alt,img.dataset.hlrnDriverName,img.dataset.driverName,filename]
+  // Custom team pages embed large photos as data: URLs; only read a filename
+  // for regular asset paths so we never process a megabyte of base64 as a name.
+  const filename=source.startsWith("data:") ? "" :
+    decodeURIComponent(source.split(/[?#]/)[0].split("/").pop()||"")
+      .replace(/\.(?:png|jpe?g|webp)$/i,"")
+      .replace(/-profile-cutout-\d+$/i,"")
+      .replace(/[-_]/g," ");
+  const altName=String(img.alt||"").replace(/\s+(?:driver\s+)?(?:portrait|photo|cutout)$/i,"").trim();
+  if([img.alt,altName,img.dataset.hlrnDriverName,img.dataset.driverName,filename]
     .some(n=>n&&KNOWN_NAMES.has(normalize(n))))return true;
   const named=img.closest("[data-hlrn-driver-name],[data-driver-name],[data-driver-id]");
   if(named&&(KNOWN_IDS.has(String(named.dataset.driverId||""))||
     [named.dataset.hlrnDriverName,named.dataset.driverName]
       .some(n=>n&&KNOWN_NAMES.has(normalize(n)))))return true;
-  const card=img.closest(".driver-card,.driver-stat-card,.driver-tile,.driver-row,.driver-profile,.driver-directory-item,.hlrn-driver-card,.leader-card,.hx-podium-card,.hero,.profile-header,tbody tr");
+  const card=img.closest(".driver,.roster-driver,.team-driver,.driver-card,.driver-stat-card,.driver-tile,.driver-row,.driver-profile,.driver-directory-item,.hlrn-driver-card,.leader-card,.hx-podium-card,.hero,.profile-header,tbody tr");
   return !!card&&card.querySelectorAll("img:not(.hlrn-banned-overlay)").length<=2&&hasName(card.textContent);
 }
 function overlay(img){
