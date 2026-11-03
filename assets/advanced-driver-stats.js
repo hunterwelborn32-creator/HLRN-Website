@@ -61,7 +61,7 @@ function heading(title){return '<h3 class="ads-heading">'+safe(title)+'</h3>';}
 function profileHTML(identity){
  const {matches,rows}=selectRecords(identity);
  if(!matches.length)return '<p class="ads-muted">Advanced statistics are not available for this driver in the published archive.</p>';
- const leagues=[...new Set(rows.map(r=>r.series))],years=[...new Set(rows.map(r=>String(r.date||"").slice(0,4)))].filter(Boolean).sort().reverse();
+ const leagues=[...new Set(matches.map(p=>p.series))],years=[...new Set(rows.map(r=>String(r.date||"").slice(0,4)))].filter(Boolean).sort().reverse();
  return '<div class="ads-intro"><h2>Advanced Driver Statistics</h2><p>Verified results in the available HLRN archive. Existing official career totals remain unchanged. <a href="/stats/">View HLRN records →</a></p></div>'+
  '<div class="ads-filters"><label>Series <select data-ads-series><option value="all">All recorded series</option>'+leagues.map(l=>'<option value="'+safe(l)+'">'+safe(leagueNames[l]||l)+'</option>').join("")+'</select></label><label>Year <select data-ads-year><option value="all">All recorded years</option>'+years.map(y=>'<option value="'+safe(y)+'">'+safe(y)+'</option>').join("")+'</select></label></div>'+
  '<div data-ads-body></div>';
@@ -71,8 +71,12 @@ function renderProfileBody(section,identity){
  const filterSeries=section.querySelector("[data-ads-series]")?.value||"all",year=section.querySelector("[data-ads-year]")?.value||"all";
  const subset=rows.filter(r=>(filterSeries==="all"||r.series===filterSeries)&&(year==="all"||String(r.date||"").startsWith(year))),s=stats(subset),badges=achievements(subset);
  const bySeries=[...new Set(subset.map(r=>r.series))].map(k=>({k,s:stats(subset.filter(r=>r.series===k))}));
- const summary=heading("Recorded Career & Season Summary")+'<div class="ads-cards">'+cards(s)+'</div>'+
- (bySeries.length?'<div class="ads-series-grid">'+bySeries.map(x=>'<div class="ads-series"><strong>'+safe(leagueNames[x.k])+'</strong><span>'+x.s.starts+' starts · '+x.s.wins+' wins · '+x.s.top5+' top 5s</span></div>').join("")+'</div>':"");
+ const hosted=selectRecords(identity).matches.find(p=>p.series==="hosted");
+ const hostedOnly=filterSeries==="hosted";
+ const hostedSnapshot=hosted&&(filterSeries==="all"||hostedOnly)&&(year==="all"||!year);
+ const officialHosted=hostedSnapshot?'<div class="ads-series"><strong>Hosted Racing — official current snapshot</strong><span>'+int(hosted.races)+' starts · '+int(hosted.wins)+' wins · '+int(hosted.top5)+' top 5s · '+int(hosted.top10)+' top 10s. Individual Hosted race history is not in this verified archive and is not combined with Sunday/Monday recorded totals.</span></div>':"";
+ const summary=heading(hostedOnly?"Hosted Career Snapshot":"Recorded Career & Season Summary")+(hostedOnly&&hostedSnapshot?'<div class="ads-cards">'+cards({starts:hosted.races??"—",wins:hosted.wins??"—",top5:hosted.top5??"—",top10:hosted.top10??"—",avgFinish:hosted.avgFinish??"—",lapsLed:"—"})+'</div>':'<div class="ads-cards">'+cards(s)+'</div>')+
+ ((bySeries.length||officialHosted)?'<div class="ads-series-grid">'+bySeries.map(x=>'<div class="ads-series"><strong>'+safe(leagueNames[x.k])+'</strong><span>'+x.s.starts+' starts · '+x.s.wins+' wins · '+x.s.top5+' top 5s</span></div>').join("")+officialHosted+'</div>':"");
  const tracks=heading("Track-by-Track Performance")+'<div class="ads-scroll"><table class="ads-table"><thead><tr><th>Track</th><th>Starts</th><th>Wins</th><th>Best</th><th>Avg Finish</th></tr></thead><tbody>'+trackTable(subset)+'</tbody></table></div>';
  const awards=heading("Automatic Milestones & Achievements")+(badges.length?'<div class="ads-badges">'+badges.map(a=>'<div class="ads-achievement"><strong>★ '+safe(a[0])+'</strong><span>'+safe(a[1])+'</span></div>').join("")+'</div>':'<p class="ads-muted">Milestones appear as verified race results are added.</p>');
  const history=heading("Full Recorded Race History")+'<div class="ads-scroll"><table class="ads-table"><thead><tr><th>Series</th><th>Date</th><th>Track</th><th>Start</th><th>Finish</th><th>Points</th><th>Led</th><th>Status</th></tr></thead><tbody>'+historyTable(subset)+'</tbody></table></div>';
@@ -98,12 +102,13 @@ function renderDriver(){
 function renderRecords(){
  const target=document.querySelector("#adsRecords");if(!target)return;
  const rows=(state.payload?.drivers||[]).flatMap(p=>distinct((p.results||[]).map(r=>({...r,series:p.series,name:p.name,id:p.id}))));
+ const hostedProfiles=(state.payload?.drivers||[]).filter(p=>p.series==="hosted");
  const byDriver=new Map();
  for(const r of rows){const k=r.series+":"+r.id;if(!byDriver.has(k))byDriver.set(k,[]);byDriver.get(k).push(r);}
  const ranked=[...byDriver].map(([key,list])=>({key,name:list[0].name,series:list[0].series,...stats(list)}));
  const sortFor=(metric)=>[...ranked].sort((a,b)=>b[metric]-a[metric]||a.name.localeCompare(b.name)).slice(0,15);
  const table=(metric,label)=>'<section class="ads-record"><h2>'+safe(label)+'</h2><div class="ads-scroll"><table class="ads-table"><thead><tr><th>Rank</th><th>Driver</th><th>Series</th><th>'+safe(label)+'</th></tr></thead><tbody>'+sortFor(metric).map((x,i)=>'<tr><td>'+(i+1)+'</td><td>'+safe(x.name)+'</td><td>'+safe(leagueNames[x.series])+'</td><td>'+int(x[metric])+'</td></tr>').join("")+'</tbody></table></div></section>';
- target.innerHTML='<p class="ads-muted">These are records within the verified results currently published in HLRN’s archive, not complete all-time historical records. Rankings update when the official derived profiles file is published.</p>'+table("wins","Recorded Wins")+table("top5","Recorded Top 5s")+table("top10","Recorded Top 10s")+table("lapsLed","Recorded Laps Led")+table("starts","Recorded Starts");
+ target.innerHTML='<p class="ads-muted">These are records within the verified results currently published in HLRN’s archive, not complete all-time historical records. Rankings update when the official derived profiles file is published.</p>'+table("wins","Recorded Wins")+table("top5","Recorded Top 5s")+table("top10","Recorded Top 10s")+table("lapsLed","Recorded Laps Led")+table("starts","Recorded Starts")+(hostedProfiles.length?'<section class="ads-record"><h2>Hosted Racing — Official Snapshot</h2><p class="ads-muted">Source-provided Hosted career totals, separate from verified race-by-race rankings.</p><div class="ads-scroll"><table class="ads-table"><thead><tr><th>Driver</th><th>Starts</th><th>Wins</th><th>Top 5s</th><th>Top 10s</th></tr></thead><tbody>'+hostedProfiles.slice().sort((a,b)=>(Number(b.wins)||0)-(Number(a.wins)||0)).map(p=>'<tr><td>'+safe(p.name)+'</td><td>'+int(p.races)+'</td><td>'+int(p.wins)+'</td><td>'+int(p.top5)+'</td><td>'+int(p.top10)+'</td></tr>').join("")+'</tbody></table></div></section>':"");
 }
 async function load(force=false){
  if(state.busy)return state.busy;
