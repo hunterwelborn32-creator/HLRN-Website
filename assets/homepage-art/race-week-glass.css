@@ -1554,3 +1554,111 @@ html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome
     transition:none!important;
   }
 }
+
+/* HLRN WINNER TILES v3 — correct the screenshot's undersized copy and
+   pale double-frame. Dedicated copy stack, large winner, single live arrow. */
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday){
+  display:flex!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  height:auto!important;
+  min-height:174px!important;
+  padding:20px 86px 20px 33px!important;
+  gap:0!important;
+  background-size:108% 150%!important;
+  background-position:center center!important;
+  background-repeat:no-repeat!important;
+  border-radius:15px!important;
+  overflow:hidden!important;
+  box-shadow:0 12px 24px rgba(10,26,48,.16)!important;
+  text-decoration:none!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday) .h10-winner-copy{
+  position:relative!important;
+  z-index:2!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  gap:9px!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday) .h10-winner-copy > small{
+  display:flex!important;
+  align-items:center!important;
+  gap:0!important;
+  margin:0!important;
+  padding:0!important;
+  font-family:"Barlow",Arial,sans-serif!important;
+  font-size:12px!important;
+  font-weight:900!important;
+  line-height:1.2!important;
+  letter-spacing:.11em!important;
+  text-transform:uppercase!important;
+  text-decoration:none!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday) .h10-winner-copy > strong{
+  display:block!important;
+  flex:none!important;
+  width:auto!important;
+  max-width:100%!important;
+  margin:0!important;
+  padding:0!important;
+  font-family:"Barlow Condensed","Archivo Black",Impact,sans-serif!important;
+  font-size:clamp(32px,3.25vw,52px)!important;
+  font-style:normal!important;
+  font-weight:900!important;
+  letter-spacing:-.025em!important;
+  line-height:1.05!important;
+  text-transform:uppercase!important;
+  text-overflow:clip!important;
+  overflow:visible!important;
+  white-space:normal!important;
+  word-break:normal!important;
+  overflow-wrap:break-word!important;
+  text-decoration:none!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday) .h10-winner-copy > .h10-winner-cta{
+  display:inline-flex!important;
+  align-items:center!important;
+  margin:0!important;
+  padding:0 0 4px!important;
+  font:900 11px/1.25 "Barlow",Arial,sans-serif!important;
+  letter-spacing:.095em!important;
+  text-transform:uppercase!important;
+  text-decoration:none!important;
+  border-bottom:2px solid var(--winner-accent)!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday)::after{
+  right:24px!important;
+  width:45px!important;
+  height:45px!important;
+  box-sizing:border-box!important;
+  background:color-mix(in srgb,var(--winner-accent) 11%,transparent)!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday) .h10-winner-copy :is(small,strong,.h10-winner-cta){
+  color:#17243a!important;
+  -webkit-text-fill-color:#17243a!important;
+  text-shadow:0 1px 9px rgba(250,253,255,.95)!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday) .h10-winner-copy :is(small,strong,.h10-winner-cta){
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  text-shadow:0 2px 8px rgba(0,0,0,.78)!important;
+}
+@media(max-width:760px){
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday){
+    min-height:158px!important;
+    padding:18px 70px 18px 22px!important;
+    background-size:112% 145%!important;
+  }
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday) .h10-winner-copy > strong{
+    font-size:clamp(30px,7.7vw,43px)!important;
+  }
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday) .h10-winner-copy > small{
+    font-size:10px!important;
+  }
+}
