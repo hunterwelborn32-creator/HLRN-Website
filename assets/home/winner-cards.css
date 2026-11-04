@@ -123,7 +123,7 @@ body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .hlrn-victory-name{
   margin:0!important;
   padding:0!important;
   font-family:Impact,"Arial Narrow",Arial,sans-serif!important;
-  font-size:clamp(35px,3vw,50px)!important;
+  font-size:clamp(46px,4.1vw,68px)!important;
   font-weight:900!important;
   font-style:normal!important;
   line-height:1.02!important;
@@ -205,7 +205,7 @@ body.home-v10-page:not(.rn-active) #hlrnRaceDayHome a.hlrn-victory-tile:focus-vi
     background-size:125% 160%!important;
   }
   body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .hlrn-victory-name{
-    font-size:clamp(32px,7.5vw,44px)!important;
+    font-size:clamp(39px,9vw,54px)!important;
   }
   body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .hlrn-victory-arrow{
     width:38px!important;
