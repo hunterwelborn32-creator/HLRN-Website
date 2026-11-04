@@ -62,15 +62,20 @@
     const scale = Math.min(widthLimit / asset.bounds.width, (h * 0.80) / asset.bounds.height);
     if (!(scale > 0 && Number.isFinite(scale))) return;
     const logo = asset.image;
-    logo.style.position = "absolute";
-    logo.style.maxWidth = "none";
-    logo.style.width = (asset.image.naturalWidth * scale) + "px";
-    logo.style.height = (asset.image.naturalHeight * scale) + "px";
-    logo.style.left = ((w - asset.bounds.width * scale) / 2 - asset.bounds.x * scale) + "px";
-    logo.style.top = ((h - asset.bounds.height * scale) / 2 - asset.bounds.y * scale) + "px";
-    logo.style.display = "block";
-    logo.style.opacity = "1";
-    logo.style.pointerEvents = "none";
+    // Set important inline geometry because old homepage artwork rules
+    // also use !important, and can otherwise reset the cropped logo.
+    const put=(name,value)=>logo.style.setProperty(name,value,"important");
+    put("position","absolute");
+    put("max-width","none");
+    put("width",(asset.image.naturalWidth * scale) + "px");
+    put("height",(asset.image.naturalHeight * scale) + "px");
+    put("left",((w - asset.bounds.width * scale) / 2 - asset.bounds.x * scale) + "px");
+    put("top",((h - asset.bounds.height * scale) / 2 - asset.bounds.y * scale) + "px");
+    put("display","block");
+    put("transform","none");
+    put("object-fit","fill");
+    put("opacity","1");
+    put("pointer-events","none");
     if (scene.firstElementChild !== logo) scene.replaceChildren(logo);
   }
 
@@ -84,6 +89,7 @@
     }
     const image = new Image();
     image.alt = "";
+    image.className = key === "dark" ? "hlrn-original-logo-night" : "hlrn-original-logo-day";
     image.decoding = "async";
     image.onload = () => {
       try {
