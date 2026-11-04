@@ -75,40 +75,90 @@ html[data-hlrn-theme=dark] #hlrnNextGen .ng-series{color:#ff6279}
 @media(max-width:760px){#hlrnNextGen{width:calc(100% - 24px);margin:22px auto 28px}#hlrnNextGen .ng-grid{grid-template-columns:minmax(0,1fr);grid-template-areas:"live" "spot" "count" "victory";gap:13px}#hlrnNextGen .ng-section-head{align-items:flex-start;flex-direction:column;gap:10px}#hlrnNextGen .ng-spotlight-person{grid-template-columns:110px minmax(0,1fr)}#hlrnNextGen .ng-spotlight-photo{width:110px;height:133px}#hlrnNextGen .ng-card-body{padding:15px}#hlrnNextGen .ng-live-head{padding:17px}#hlrnNextGen .ng-live-metrics>div{padding:10px}#hlrnNextGen .ng-clock{font-size:clamp(26px,8vw,43px)}}
 @media(max-width:380px){#hlrnNextGen .ng-spotlight-person{grid-template-columns:84px minmax(0,1fr)}#hlrnNextGen .ng-spotlight-photo{width:84px;height:114px}#hlrnNextGen .ng-spotlight h3{font-size:27px}#hlrnNextGen .ng-mini-stats span{padding:10px 7px}}
 
-/* Day-mode readability: keep dark broadcast panels dark AND their copy light.
-   Scoped to Next Gen so the site's global light-theme text normalizer cannot
-   override the contrast on these intentionally dark surfaces. */
+/* HLRN NEXT GEN DAY MODE — light, clean broadcast cards.
+   The dark colorway belongs exclusively to Night mode. */
+html[data-hlrn-theme="light"] body.home-v10-page #hlrnNextGen{
+  --ng-panel:#ffffff;
+  --ng-ink:#142033;
+  --ng-muted:#43556f;
+  --ng-line:#cfd9e5;
+  --ng-tint:#edf3fa;
+}
 html[data-hlrn-theme="light"] body.home-v10-page #hlrnNextGen .ng-intro{
   color:#24354d!important;
 }
 html[data-hlrn-theme="light"] body.home-v10-page #hlrnNextGen .ng-live{
-  color:#f8fbff!important;
+  background:#ffffff!important;
+  background-image:none!important;
+  color:#142033!important;
+  border-color:#c6d3e3!important;
+  border-top:3px solid #dc1736!important;
+  box-shadow:0 12px 28px rgba(20,42,69,.12)!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page #hlrnNextGen .ng-live .ng-card-head{
+  background:#edf3fa!important;
+  border-bottom:1px solid #ccd7e5!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page #hlrnNextGen .ng-live .ng-live-head{
+  background:linear-gradient(115deg,#f8fbff,#edf4fc)!important;
+  border-bottom:1px solid #cdd8e6!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page #hlrnNextGen .ng-live .ng-live-metrics{
+  background:#f8fafc!important;
+  border-top:1px solid #d7e0eb!important;
+  border-bottom:1px solid #d7e0eb!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page #hlrnNextGen .ng-live .ng-live-metrics>div,
+html[data-hlrn-theme="light"] body.home-v10-page #hlrnNextGen .ng-live .ng-live-row{
+  border-color:#d7e0eb!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page #hlrnNextGen .ng-live .ng-live-table{
+  background:#ffffff!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page #hlrnNextGen .ng-live .ng-live-foot{
+  background:#edf3fa!important;
+  border-top:1px solid #cdd8e6!important;
 }
 html[data-hlrn-theme="light"] body.home-v10-page #hlrnNextGen .ng-live :is(
-  .ng-card-head h3,.ng-live-head small,#ngLiveLeader,#ngLiveFlag,
-  .ng-live-metrics b,.ng-live-row strong,.ng-live-row>b,
-  .ng-live-row em,.ng-live-foot a,.ng-live-table .ng-empty,
-  .ng-live-status
+ .ng-card-head h3,.ng-live-head small,#ngLiveLeader,
+ .ng-live-metrics b,.ng-live-row strong,.ng-live-row>b,
+ .ng-live-row em,.ng-live-foot a,.ng-live-table .ng-empty
 ){
-  color:#f8fbff!important;
-  -webkit-text-fill-color:#f8fbff!important;
+  color:#142033!important;
+  -webkit-text-fill-color:#142033!important;
+  text-shadow:none!important;
 }
 html[data-hlrn-theme="light"] body.home-v10-page #hlrnNextGen .ng-live :is(
-  .ng-live-metrics small,.ng-live-row small,.ng-live-foot,
-  .ng-live-head small,.ng-live .ng-tag
+ .ng-live-metrics small,.ng-live-row small,.ng-live-foot,
+ .ng-live .ng-tag
 ){
-  color:#cbd8e9!important;
-  -webkit-text-fill-color:#cbd8e9!important;
+  color:#4e6078!important;
+  -webkit-text-fill-color:#4e6078!important;
 }
-html[data-hlrn-theme="light"] body.home-v10-page #hlrnNextGen .ng-countdown .ng-clock{
-  background:#111b2b!important;
+html[data-hlrn-theme="light"] body.home-v10-page #hlrnNextGen .ng-live #ngLiveFlag,
+html[data-hlrn-theme="light"] body.home-v10-page #hlrnNextGen .ng-live .ng-live-status{
+  background:#e6edf6!important;
+  border:1px solid #c5d2e2!important;
+  color:#263c58!important;
+  -webkit-text-fill-color:#263c58!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page #hlrnNextGen .ng-live[data-status="active"] :is(#ngLiveFlag,.ng-live-status){
+  background:#d51a38!important;
+  border-color:#d51a38!important;
   color:#fff!important;
   -webkit-text-fill-color:#fff!important;
-  text-shadow:0 1px 2px rgba(0,0,0,.28)!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page #hlrnNextGen .ng-countdown .ng-clock{
+  background:#edf3fa!important;
+  border:1px solid #cdd9e7!important;
+  border-left:4px solid #dc1736!important;
+  color:#13223a!important;
+  -webkit-text-fill-color:#13223a!important;
+  text-shadow:none!important;
 }
 html[data-hlrn-theme="light"] body.home-v10-page #hlrnNextGen :is(
-  .ng-countdown-info>span:not(.ng-series),.ng-note,
-  .ng-winner-data>span:last-child
+ .ng-countdown-info>span:not(.ng-series),.ng-note,
+ .ng-winner-data>span:last-child
 ){
   color:#41536e!important;
 }
