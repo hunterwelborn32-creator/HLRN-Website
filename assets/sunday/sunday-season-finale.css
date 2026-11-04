@@ -79,7 +79,8 @@ html[data-hlrn-theme] body.home-v10-page #hlrnRaceDayHome .h10-upcoming-card.sun
   min-height:213px!important;
   padding:18px 18px 17px!important;
   border:1px solid rgba(212,216,225,.92)!important;
-  border-top:4px solid #e31837!important;
+  /* The background artwork already includes its own red top stripe. */
+  border-top:0!important;
   border-radius:13px!important;
   background:#f9fafc url('/assets/home/hlrn_sunday_champion_background.webp?v=20261104champion1') center right/100% 100% no-repeat!important;
   color:#111827!important;
