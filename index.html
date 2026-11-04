@@ -172,6 +172,56 @@ html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > head
   width:94vw!important;
  }
 }
+
+/* 2026-11-04: definitive masthead layout.
+   The old Race-Week-Panel photos contain another baked-in HLRN mark.
+   Show one standalone logo against an existing, logo-free racetrack photo.
+   Remove the real gap: legacy padding on .h10-hero-inner, not the hero. */
+html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene{
+  height:clamp(125px,15vw,175px)!important;
+  min-height:clamp(125px,15vw,175px)!important;
+  overflow:visible!important;
+}
+html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene > img{
+  width:min(58vw,570px)!important;
+  max-width:calc(100% - 18px)!important;
+  transform:none!important;
+}
+html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero{
+  padding:0 0 12px!important;
+  min-height:0!important;
+  height:auto!important;
+  margin:0!important;
+}
+html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero > .h10-hero-inner{
+  padding-top:0!important;
+  padding-bottom:0!important;
+  margin-top:0!important;
+  margin-bottom:0!important;
+}
+html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero > .h10-hero-inner > .h10-hero-grid{
+  margin-top:0!important;
+  margin-bottom:0!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home30-full-backdrop{
+  background-image:linear-gradient(180deg,rgba(245,250,255,.12),rgba(235,244,255,.38)),url("/assets/homepage-art/HLRN-Card-Schedule-Day.webp?v=20261104logo-free1")!important;
+  background-size:cover,cover!important;
+  background-position:center,center!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home30-full-backdrop{
+  background-image:linear-gradient(180deg,rgba(4,9,20,.18),rgba(4,9,20,.48)),url("/assets/homepage-art/HLRN-Card-Schedule-Night.webp?v=20261104logo-free1")!important;
+  background-size:cover,cover!important;
+  background-position:center,center!important;
+}
+@media(max-width:650px){
+ html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene{
+  height:clamp(90px,24vw,125px)!important;
+  min-height:clamp(90px,24vw,125px)!important;
+ }
+ html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene > img{
+  width:90vw!important;
+ }
+}
 </style>
 </head>
 
