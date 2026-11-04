@@ -993,3 +993,22 @@ html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > head
     padding-top:clamp(130px,calc(94vw / 3 + 22px),220px)!important;
   }
 }
+
+/* Homepage masthead spacing: move the existing transparent HLRN logo upward,
+   and remove matching blank hero height. Keep aspect ratio and both themes. */
+@media(min-width:651px){
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene{
+    transform:translateY(-80px)!important;
+  }
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero{
+    padding-top:clamp(90px,calc(74vw / 3 - 52px),220px)!important;
+  }
+}
+@media(max-width:650px){
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene{
+    transform:translateY(-25px)!important;
+  }
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero{
+    padding-top:clamp(90px,calc(94vw / 3 - 3px),185px)!important;
+  }
+}
