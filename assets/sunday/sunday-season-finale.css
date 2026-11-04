@@ -148,6 +148,25 @@ html[data-hlrn-theme] body.home-v10-page #hlrnRaceDayHome .h10-upcoming-card.sun
   outline:3px solid #e31837!important;
   outline-offset:4px;
 }
+/* Night mode: reuse the exact Sunday champion composition with the uploaded
+   dark image. Keep its painted red stripe as the only top border. */
+html[data-hlrn-theme="dark"] body.home-v10-page #hlrnRaceDayHome .h10-upcoming-card.sunday.hlrn-sunday-champion-card{
+  background:#08101d url('/assets/home/hlrn_sunday_champion_background_night.webp?v=20261104night1') center right/100% 100% no-repeat!important;
+  border-top:0!important;
+  border-color:#1b2940!important;
+  color:#f8fbff!important;
+  box-shadow:0 10px 26px rgba(0,0,0,.35)!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page #hlrnRaceDayHome .h10-upcoming-card.sunday.hlrn-sunday-champion-card small{
+  color:#ff4965!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page #hlrnRaceDayHome .h10-upcoming-card.sunday.hlrn-sunday-champion-card :is(h3,p,a){
+  color:#f8fbff!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page #hlrnRaceDayHome .h10-upcoming-card.sunday.hlrn-sunday-champion-card h3::after{
+  color:#fff!important;
+}
+
 @media(max-width:440px){
   html[data-hlrn-theme] body.home-v10-page #hlrnRaceDayHome .h10-upcoming-card.sunday.hlrn-sunday-champion-card{
     min-height:200px!important;
