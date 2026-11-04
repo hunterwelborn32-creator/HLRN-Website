@@ -68,3 +68,99 @@ html[data-hlrn-theme="light"] :is(#hlrnSundaySeasonFinished,#hlrnSundayFinaleHom
  #hlrnSundaySeasonFinished .sunday-final-actions{display:flex;flex-wrap:wrap;align-items:center}
  #hlrnSundayFinaleHome .sunday-final-cta{white-space:normal}
 }
+
+/* Season 2 champion feature — image supplied for the Sunday race-week card only.
+   High-specificity selectors protect the image and dark ink from global light/dark
+   readability layers; no changes to Monday or future Sunday schedules. */
+html[data-hlrn-theme] body.home-v10-page #hlrnRaceDayHome .h10-upcoming-card.sunday.hlrn-sunday-champion-card{
+  position:relative!important;
+  isolation:isolate;
+  overflow:hidden!important;
+  min-height:213px!important;
+  padding:18px 18px 17px!important;
+  border:1px solid rgba(212,216,225,.92)!important;
+  border-top:4px solid #e31837!important;
+  border-radius:13px!important;
+  background:#f9fafc url('/assets/home/hlrn_sunday_champion_background.webp?v=20261104champion1') center right/100% 100% no-repeat!important;
+  color:#111827!important;
+  box-shadow:0 10px 26px rgba(17,27,46,.12)!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+}
+html[data-hlrn-theme] body.home-v10-page #hlrnRaceDayHome .h10-upcoming-card.sunday.hlrn-sunday-champion-card :is(small,h3,p,a){
+  position:relative;
+  z-index:1;
+  text-shadow:none!important;
+}
+html[data-hlrn-theme] body.home-v10-page #hlrnRaceDayHome .h10-upcoming-card.sunday.hlrn-sunday-champion-card small{
+  color:#cc1736!important;
+  font-size:11px!important;
+  letter-spacing:.08em!important;
+  text-transform:uppercase;
+}
+html[data-hlrn-theme] body.home-v10-page #hlrnRaceDayHome .h10-upcoming-card.sunday.hlrn-sunday-champion-card h3{
+  color:#101726!important;
+  font-family:Impact,'Barlow Condensed','Arial Narrow',sans-serif!important;
+  font-style:italic;
+  font-size:clamp(26px,2.7vw,37px)!important;
+  line-height:1!important;
+  letter-spacing:-.02em!important;
+  max-width:76%;
+  margin:12px 0 7px!important;
+  overflow-wrap:normal!important;
+  text-transform:uppercase;
+}
+html[data-hlrn-theme] body.home-v10-page #hlrnRaceDayHome .h10-upcoming-card.sunday.hlrn-sunday-champion-card h3::after{
+  content:'SEASON 2 CHAMPION';
+  display:block;
+  width:max-content;
+  max-width:100%;
+  margin:8px 0 1px;
+  padding:7px 13px 6px;
+  border-radius:2px;
+  background:linear-gradient(105deg,#b90027,#ee193f 52%,#b1002b);
+  color:#fff!important;
+  box-shadow:0 3px 10px rgba(198,0,39,.18);
+  font-family:'Barlow Condensed',Impact,'Arial Narrow',sans-serif;
+  font-size:clamp(15px,1.75vw,22px)!important;
+  font-style:italic;
+  font-weight:900;
+  letter-spacing:.04em;
+  line-height:1;
+  white-space:nowrap;
+}
+html[data-hlrn-theme] body.home-v10-page #hlrnRaceDayHome .h10-upcoming-card.sunday.hlrn-sunday-champion-card p{
+  color:#243048!important;
+  max-width:78%;
+  font-weight:650;
+  margin:0 0 12px!important;
+  font-size:11px!important;
+}
+html[data-hlrn-theme] body.home-v10-page #hlrnRaceDayHome .h10-upcoming-card.sunday.hlrn-sunday-champion-card a{
+  color:#111827!important;
+  font-weight:900!important;
+  margin-top:auto!important;
+  border-bottom:2px solid #e31837!important;
+  align-self:flex-start;
+}
+html[data-hlrn-theme] body.home-v10-page #hlrnRaceDayHome .h10-upcoming-card.sunday.hlrn-sunday-champion-card a:focus-visible{
+  outline:3px solid #e31837!important;
+  outline-offset:4px;
+}
+@media(max-width:440px){
+  html[data-hlrn-theme] body.home-v10-page #hlrnRaceDayHome .h10-upcoming-card.sunday.hlrn-sunday-champion-card{
+    min-height:200px!important;
+    padding:16px 14px!important;
+  }
+  html[data-hlrn-theme] body.home-v10-page #hlrnRaceDayHome .h10-upcoming-card.sunday.hlrn-sunday-champion-card h3{
+    font-size:27px!important;
+    max-width:78%;
+  }
+  html[data-hlrn-theme] body.home-v10-page #hlrnRaceDayHome .h10-upcoming-card.sunday.hlrn-sunday-champion-card h3::after{
+    font-size:15px!important;
+    padding:6px 8px!important;
+  }
+  html[data-hlrn-theme] body.home-v10-page #hlrnRaceDayHome .h10-upcoming-card.sunday.hlrn-sunday-champion-card p{
+    max-width:74%;
+  }
+}
