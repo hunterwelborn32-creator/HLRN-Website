@@ -226,7 +226,7 @@ body.home-v10-page .home10{
 
 /* Massive race-poster hero, photographic on both modes. */
 body.home-v10-page:not(.rn-active) .home10 .h10-hero{
-  min-height:min(850px,calc(100svh - 90px));
+  min-height:0;
   overflow:hidden;
   isolation:isolate;
   background:#080b10!important;
@@ -811,11 +811,11 @@ html[data-hlrn-theme="light"] body.home-v10-page .home10 .h10-hero-copy h1 .h28-
 }
 .home10 .h10-eyebrow:before{width:30px;height:3px}
 body.home-v10-page:not(.rn-active) .home10 .h10-hero{
-  min-height:min(820px,calc(100svh - 55px));
+  min-height:0;
 }
 .home10 .h10-hero-inner{
-  padding-top:clamp(65px,7vw,112px)!important;
-  padding-bottom:clamp(65px,7vw,112px)!important;
+  padding-top:0!important;
+  padding-bottom:0!important;
 }
 .home10 .h10-hero-grid{
   grid-template-columns:minmax(0,1.24fr) minmax(315px,.76fr);
