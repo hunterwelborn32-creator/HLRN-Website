@@ -18,11 +18,11 @@
   if(hasNextSeason)return; // Real published Season 3 dates take priority in upcoming cards.
   const card=document.querySelector(".h10-upcoming-card.sunday");
   const week=document.querySelector(".h10-week-card.sunday");
-  if(card)card.classList.add("hlrn-sunday-card-done");
+  if(card){card.classList.add("hlrn-sunday-card-done","hlrn-sunday-champion-card");card.setAttribute("aria-label","Trevor Haley — Sunday Night League Season 2 Champion");}
   if(week)week.classList.add("hlrn-sunday-card-done");
   function refresh(){
-   text(byId("h10UpcomingSundayTrack"),"SUNDAY SEASON COMPLETE");
-   text(byId("h10UpcomingSundayDate"),"Season 2 • Championship decided");
+   text(byId("h10UpcomingSundayTrack"),"TREVOR HALEY");
+   text(byId("h10UpcomingSundayDate"),"Sunday Night League • Season 2 Champion");
    const time=byId("h10UpcomingSundayTime");if(time)time.hidden=true;
    const link=card&&card.querySelector("a");
    if(link){link.href="standings/sunday.html";text(link,"Sunday Final Standings →")}
