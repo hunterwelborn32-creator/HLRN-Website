@@ -29,7 +29,7 @@ body.home-v10-page .home10 :is(.h10-eyebrow,.h10-section-head small,.h10-hosted-
 }
 /* CINEMATIC HERO — readable in both site themes */
 body.home-v10-page:not(.rn-active) .home10 .h10-hero{
-  min-height:clamp(700px,calc(100svh - 65px),1000px)!important;
+  min-height:0!important;
   background:#05070c;
   isolation:isolate;
   border-bottom:0!important;
@@ -81,7 +81,7 @@ body.home-v10-page .home10 .h10-hero:after{
 }
 .home10 .h29-hero-gridmark:before{width:35px;height:4px;right:0;top:-2px}
 .home10 .h29-hero-gridmark:after{width:4px;height:35px;right:-2px;top:0}
-.home10 .h10-hero-inner{z-index:3;padding-top:clamp(86px,9vw,155px)!important;padding-bottom:clamp(110px,10vw,162px)!important}
+.home10 .h10-hero-inner{z-index:3;padding-top:0!important;padding-bottom:0!important}
 .home10 .h10-hero-grid{gap:clamp(26px,4.5vw,72px)!important}
 .home10 .h10-hero-copy{position:relative;min-width:0}
 .home10 .h29-edition-tag{
@@ -307,7 +307,7 @@ html[data-hlrn-theme="dark"] body.home-v10-page .home10 .h10-link-card{box-shado
 }
 @media(max-width:900px){
   body.home-v10-page .home10 .h10-hero{min-height:0!important}
-  .home10 .h10-hero-inner{padding-top:70px!important;padding-bottom:110px!important}
+  .home10 .h10-hero-inner{padding-top:0!important;padding-bottom:0!important}
   .home10 .h10-hero-copy h1 .h28-title-main{font-size:clamp(100px,16vw,165px)!important}
   .home10 .h10-hero-copy h1 .h28-title-final{font-size:clamp(59px,9.4vw,100px)!important}
   .home10 .h10-hosted-card{max-width:650px!important}
@@ -322,7 +322,7 @@ html[data-hlrn-theme="dark"] body.home-v10-page .home10 .h10-link-card{box-shado
   .home10 .h10-hero-copy h1 .h28-title-final{font-size:clamp(45px,10.6vw,72px)!important}
   .home10 .h10-hero-copy>p{font-size:15px!important;padding-left:15px!important}
   .home10 .h10-actions .h10-btn{min-height:54px!important;font-size:13px!important;padding:0 18px!important}
-  .home10 .h10-hero-inner{padding-top:50px!important;padding-bottom:88px!important}
+  .home10 .h10-hero-inner{padding-top:0!important;padding-bottom:0!important}
   .home10 .h29-hero-bottomline{padding:16px;font-size:9px;letter-spacing:.1em}
   .home10 .h29-hero-bottomline .h29-bottom-rule{max-width:36px}
   .home10 .h29-speed-track span{padding:13px 16px;font-size:15px}
