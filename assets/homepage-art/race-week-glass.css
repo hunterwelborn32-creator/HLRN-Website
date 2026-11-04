@@ -1394,3 +1394,50 @@ html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome main .h10-quick-links .
     transition:none!important;
   }
 }
+
+/* HLRN winner cards: four uploaded artwork-only backgrounds.
+   The actual winner labels, names and card links remain dynamic HTML.
+   Use 100% / 100% to keep the artwork's custom rounded border visible. */
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item.sunday{
+  background:linear-gradient(90deg,rgba(248,252,255,.12),rgba(248,252,255,.03)),url("/assets/home/hlrn_sunday_winner_day.webp?v=20261104winner1") center/100% 100% no-repeat!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item.monday{
+  background:linear-gradient(90deg,rgba(248,252,255,.12),rgba(248,252,255,.03)),url("/assets/home/hlrn_monday_winner_day.webp?v=20261104winner1") center/100% 100% no-repeat!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item.sunday{
+  background:linear-gradient(90deg,rgba(4,10,22,.20),rgba(4,10,22,.03)),url("/assets/home/hlrn_sunday_winner_night.webp?v=20261104winner1") center/100% 100% no-repeat!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item.monday{
+  background:linear-gradient(90deg,rgba(4,10,22,.20),rgba(4,10,22,.03)),url("/assets/home/hlrn_monday_winner_night.webp?v=20261104winner1") center/100% 100% no-repeat!important;
+}
+html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday){
+  border:0!important;
+  border-radius:12px!important;
+  box-shadow:0 10px 25px rgba(7,16,32,.18)!important;
+  min-height:122px!important;
+  background-color:transparent!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday) :is(small,strong){
+  color:#17243b!important;
+  -webkit-text-fill-color:#17243b!important;
+  text-shadow:0 1px 6px rgba(255,255,255,.75)!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday) :is(small,strong){
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  text-shadow:0 1px 7px rgba(0,0,0,.75)!important;
+}
+html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday)::before{
+  background:none!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday)::after{
+  color:#202d40!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday)::after{
+  color:#fff!important;
+}
+@media(max-width:650px){
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday){
+    min-height:112px!important;
+  }
+}
