@@ -106,6 +106,66 @@
 @media(max-width:720px){.h20-results-grid{grid-template-columns:1fr}.h20-results-panel{padding:20px}}
 </style>
 <link rel="stylesheet" href="assets/sunday/sunday-season-finale.css?v=20261104nightchampion3">
+<style id="hlrn-home-logo-no-jump">
+/* Fixed structural masthead. Keep the logo IN document flow rather than
+   placing it absolutely over a separately padded hero. No load-time JS crop. */
+html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene{
+  position:relative!important;
+  inset:auto!important;
+  top:auto!important;
+  left:auto!important;
+  right:auto!important;
+  display:flex!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  width:100%!important;
+  height:205px!important;
+  min-height:205px!important;
+  overflow:hidden!important;
+  padding:0!important;
+  margin:0!important;
+  transform:none!important;
+  background:none!important;
+  background-image:none!important;
+  -webkit-mask-image:none!important;
+  mask-image:none!important;
+  z-index:1!important;
+  pointer-events:none!important;
+}
+html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene > img{
+  position:relative!important;
+  width:min(74vw,800px)!important;
+  max-width:100%!important;
+  height:auto!important;
+  aspect-ratio:3 / 1!important;
+  object-fit:contain!important;
+  transform:translateY(-65px)!important;
+  margin:0!important;
+  padding:0!important;
+  filter:none!important;
+}
+html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero{
+  min-height:0!important;
+  height:auto!important;
+  padding-top:0!important;
+}
+@media(max-width:1050px) and (min-width:651px){
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene{
+    height:185px!important;min-height:185px!important;
+  }
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene > img{
+    transform:translateY(-38px)!important;
+  }
+}
+@media(max-width:650px){
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene{
+    height:128px!important;min-height:128px!important;
+  }
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene > img{
+    width:94vw!important;transform:translateY(-12px)!important;
+  }
+}
+</style>
 </head>
 
 <body class="hlrn-v3 rd-v5 home-v10-page">
@@ -565,6 +625,6 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 </script>
 <script defer src="assets/sunday/sunday-season-finale.js?v=20261104trevorchampion1"></script>
 <script defer src="assets/home/home-nextgen.js?v=20261104preview1"></script>
-<script defer src="assets/homepage-art/smart-logo-crop.js?v=20261104alpha-crop3"></script>
+
 </body>
 </html>
