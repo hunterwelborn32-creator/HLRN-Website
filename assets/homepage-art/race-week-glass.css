@@ -1441,3 +1441,116 @@ html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome
     min-height:112px!important;
   }
 }
+
+/* VICTORY LANE WINNER TILES — premium interior typography and layout.
+   Artwork is already framed, so avoid adding duplicate borders.
+   Names and links continue to be populated from live site data. */
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday){
+  justify-content:center!important;
+  align-items:flex-start!important;
+  min-height:150px!important;
+  gap:8px!important;
+  padding:20px 75px 19px 31px!important;
+  isolation:isolate!important;
+  transition:transform .22s ease,filter .22s ease,box-shadow .22s ease!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday) small{
+  display:inline-flex!important;
+  align-items:center!important;
+  font-family:"Barlow",Arial,sans-serif!important;
+  font-size:11px!important;
+  font-weight:900!important;
+  line-height:1.2!important;
+  letter-spacing:.105em!important;
+  text-transform:uppercase!important;
+  opacity:1!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday) small::before{
+  content:""!important;
+  width:7px!important;
+  height:7px!important;
+  flex:none!important;
+  margin-right:9px!important;
+  border-radius:50%!important;
+  background:var(--winner-accent)!important;
+  box-shadow:0 0 10px color-mix(in srgb,var(--winner-accent) 58%,transparent)!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday) strong{
+  font-family:"Barlow Condensed","Archivo Black",Impact,Arial,sans-serif!important;
+  font-size:clamp(31px,2.9vw,47px)!important;
+  line-height:.95!important;
+  font-weight:1000!important;
+  letter-spacing:-.015em!important;
+  text-transform:uppercase!important;
+  max-width:100%!important;
+  text-wrap:balance!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday) .h10-winner-cta{
+  position:relative!important;
+  z-index:1!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:8px!important;
+  padding:0 0 3px!important;
+  border-bottom:2px solid var(--winner-accent)!important;
+  font:900 10px/1.25 "Barlow",Arial,sans-serif!important;
+  letter-spacing:.095em!important;
+  text-transform:uppercase!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday) .h10-winner-cta > span{
+  font-size:15px!important;
+  line-height:10px!important;
+  transition:transform .2s ease!important;
+}
+html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday)::after{
+  width:43px!important;
+  height:43px!important;
+  right:24px!important;
+  font-size:22px!important;
+  font-weight:800!important;
+  background:color-mix(in srgb,var(--winner-accent) 13%,transparent)!important;
+  border:2px solid var(--winner-accent)!important;
+  color:var(--winner-accent)!important;
+  box-shadow:0 0 18px color-mix(in srgb,var(--winner-accent) 17%,transparent)!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday) .h10-winner-cta{
+  color:#18243a!important;
+  -webkit-text-fill-color:#18243a!important;
+  text-shadow:0 1px 4px rgba(255,255,255,.7)!important;
+}
+html[data-hlrn-theme="dark"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday) .h10-winner-cta{
+  color:#f9fcff!important;
+  -webkit-text-fill-color:#f9fcff!important;
+  text-shadow:0 1px 6px rgba(0,0,0,.65)!important;
+}
+@media(hover:hover){
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday):hover{
+    transform:translateY(-3px)!important;
+    filter:saturate(1.12)!important;
+    box-shadow:0 18px 36px rgba(8,18,35,.24)!important;
+  }
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday):hover .h10-winner-cta > span{
+    transform:translate(2px,-2px)!important;
+  }
+}
+@media(max-width:760px){
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday){
+    min-height:135px!important;
+    padding:18px 68px 17px 23px!important;
+    gap:7px!important;
+  }
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday) strong{
+    font-size:clamp(29px,7vw,40px)!important;
+  }
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday)::after{
+    right:18px!important;
+    width:36px!important;
+    height:36px!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday),
+  html body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > section.h10-info .h10-info-item:is(.sunday,.monday) .h10-winner-cta > span{
+    transition:none!important;
+  }
+}
