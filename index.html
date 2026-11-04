@@ -62,6 +62,7 @@
 <link rel="stylesheet" href="assets/homepage-art/homepage-layout.css?v=20261104no-legacy-spacers5">
 <link rel="stylesheet" href="assets/homepage-art/race-week-glass.css?v=20261104winner-clean-reset4">
 <link rel="stylesheet" href="assets/home/home-nextgen.css?v=20261104eight-backgrounds1">
+<link rel="stylesheet" href="assets/home/winner-cards.css?v=20261104rebuilt1">
 
 <meta name="theme-color" content="#07090d">
 <style id="hlrn-home-v20-pulse">
@@ -304,21 +305,23 @@ html[data-hlrn-theme] body.home-v10-page.rn-active #hlrnRaceDayHome > #hlrnClean
     </div>
   </section>
 
-  <section class="h10-info" aria-label="Latest Sunday and Monday winners">
-    <div class="h10-shell h10-info-grid">
-      <a class="h10-info-item sunday" id="homeSundayWinnerLink" href="drivers/">
-        <span class="h10-winner-copy">
-          <small>Latest Sunday Winner</small>
-          <div class="hlrn-winner-name" id="homeSundayWinner">Connecting…</div>
-          <span class="h10-winner-cta" aria-hidden="true">View Driver Profile</span>
-        </span>
+  <section class="h10-info hlrn-winner-band" aria-label="Latest Sunday and Monday winners">
+    <div class="h10-shell h10-info-grid hlrn-winner-grid">
+      <a class="hlrn-victory-tile sunday" id="homeSundayWinnerLink" href="drivers/">
+        <div class="hlrn-victory-copy">
+          <span class="hlrn-victory-kicker"><span class="hlrn-victory-dot" aria-hidden="true"></span> Latest Sunday Winner</span>
+          <span class="hlrn-victory-name" id="homeSundayWinner">Connecting…</span>
+          <span class="hlrn-victory-footer">VIEW DRIVER PROFILE <span aria-hidden="true">↗</span></span>
+        </div>
+        <span class="hlrn-victory-arrow" aria-hidden="true">↗</span>
       </a>
-      <a class="h10-info-item monday" id="homeMondayWinnerLink" href="drivers/">
-        <span class="h10-winner-copy">
-          <small>Latest Monday Winner</small>
-          <div class="hlrn-winner-name" id="homeMondayWinner">Connecting…</div>
-          <span class="h10-winner-cta" aria-hidden="true">View Driver Profile</span>
-        </span>
+      <a class="hlrn-victory-tile monday" id="homeMondayWinnerLink" href="drivers/">
+        <div class="hlrn-victory-copy">
+          <span class="hlrn-victory-kicker"><span class="hlrn-victory-dot" aria-hidden="true"></span> Latest Monday Winner</span>
+          <span class="hlrn-victory-name" id="homeMondayWinner">Connecting…</span>
+          <span class="hlrn-victory-footer">VIEW DRIVER PROFILE <span aria-hidden="true">↗</span></span>
+        </div>
+        <span class="hlrn-victory-arrow" aria-hidden="true">↗</span>
       </a>
     </div>
   </section>
