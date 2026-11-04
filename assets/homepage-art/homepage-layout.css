@@ -994,21 +994,52 @@ html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > head
   }
 }
 
-/* Homepage masthead spacing: move the existing transparent HLRN logo upward,
-   and remove matching blank hero height. Keep aspect ratio and both themes. */
-@media(min-width:651px){
-  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene{
+/* One authoritative masthead layout for both initial load and the older
+   smart-logo-crop activated state. Do not translate the entire scene outside
+   the clipped homepage; position both static and dynamically cropped logos. */
+@media(min-width:1051px){
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene,
+  html[data-hlrn-theme] body.home-v10-page.hlrn-logo-smart-active:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene.hlrn-logo-cropped{
+    top:0!important;
+    transform:none!important;
+    padding:0 12px!important;
+    min-height:0!important;
+  }
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene > img{
     transform:translateY(-80px)!important;
   }
-  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero{
-    padding-top:clamp(90px,calc(74vw / 3 - 52px),220px)!important;
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero,
+  html[data-hlrn-theme] body.home-v10-page.hlrn-logo-smart-active:not(.rn-active) #hlrnRaceDayHome > header.h10-hero{
+    padding-top:clamp(110px,calc(74vw / 3 - 48px),215px)!important;
+  }
+}
+@media(min-width:651px) and (max-width:1050px){
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene,
+  html[data-hlrn-theme] body.home-v10-page.hlrn-logo-smart-active:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene.hlrn-logo-cropped{
+    top:0!important;
+    transform:none!important;
+    padding:0 10px!important;
+  }
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene > img{
+    transform:translateY(-42px)!important;
+  }
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero,
+  html[data-hlrn-theme] body.home-v10-page.hlrn-logo-smart-active:not(.rn-active) #hlrnRaceDayHome > header.h10-hero{
+    padding-top:clamp(125px,calc(74vw / 3 - 16px),188px)!important;
   }
 }
 @media(max-width:650px){
-  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene{
-    transform:translateY(-25px)!important;
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene,
+  html[data-hlrn-theme] body.home-v10-page.hlrn-logo-smart-active:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene.hlrn-logo-cropped{
+    top:0!important;
+    transform:none!important;
+    padding:0 6px!important;
   }
-  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero{
-    padding-top:clamp(90px,calc(94vw / 3 - 3px),185px)!important;
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene > img{
+    transform:translateY(-15px)!important;
+  }
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > header.h10-hero,
+  html[data-hlrn-theme] body.home-v10-page.hlrn-logo-smart-active:not(.rn-active) #hlrnRaceDayHome > header.h10-hero{
+    padding-top:clamp(92px,calc(94vw / 3 - 4px),164px)!important;
   }
 }
