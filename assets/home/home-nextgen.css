@@ -1,0 +1,76 @@
+/* HLRN NEXT GEN: scoped, reviewable homepage quartet. */
+#hlrnNextGen{--ng-panel:#fff;--ng-ink:#121c2d;--ng-muted:#536174;--ng-line:#d8dfe8;--ng-tint:#f3f6fb;--ng-red:#dc1736;--ng-red-soft:#fff2f4;--ng-hero:#111a2a;position:relative;isolation:isolate;width:min(calc(100% - 38px),1380px);margin:28px auto 38px;color:var(--ng-ink);font-family:Barlow,Arial,sans-serif}
+html[data-hlrn-theme=dark] #hlrnNextGen{--ng-panel:#111c2d;--ng-ink:#f5f8ff;--ng-muted:#aab9cf;--ng-line:#33445a;--ng-tint:#1b2a40;--ng-red-soft:#301926;--ng-hero:#090f1b}
+#hlrnNextGen *{box-sizing:border-box}
+#hlrnNextGen a{color:inherit}
+#hlrnNextGen .ng-section-head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:17px}
+#hlrnNextGen .ng-kicker{font-weight:900;letter-spacing:.15em;text-transform:uppercase;font-size:11px;color:#cd1d38}
+html[data-hlrn-theme=dark] #hlrnNextGen .ng-kicker{color:#ff5d73}
+#hlrnNextGen .ng-section-head h2{font-family:'Barlow Condensed',Impact,'Arial Narrow',sans-serif;font-size:clamp(30px,3.1vw,47px);font-weight:900;line-height:1.02;margin:6px 0;color:var(--ng-ink);text-transform:uppercase}
+#hlrnNextGen .ng-intro{margin:0;color:var(--ng-muted);font-size:13px;line-height:1.5}
+#hlrnNextGen .ng-preview{flex:none;padding:9px 12px;border:1px solid var(--ng-line);border-radius:25px;background:var(--ng-panel);color:var(--ng-muted);font-size:10px;font-weight:900;letter-spacing:.09em;text-transform:uppercase}
+#hlrnNextGen .ng-grid{display:grid;grid-template-columns:minmax(0,1.18fr) minmax(0,1fr);grid-template-areas:"live spot" "count victory";gap:16px;align-items:stretch}
+#hlrnNextGen .ng-card{min-width:0;border:1px solid var(--ng-line);border-radius:15px;background:var(--ng-panel);color:var(--ng-ink);box-shadow:0 12px 28px rgba(10,20,35,.09);overflow:hidden}
+html[data-hlrn-theme=dark] #hlrnNextGen .ng-card{box-shadow:0 14px 30px rgba(0,0,0,.23)}
+#hlrnNextGen .ng-card-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--ng-line);background:var(--ng-tint)}
+#hlrnNextGen .ng-card-head h3{margin:0;color:var(--ng-ink);font-family:'Barlow Condensed',Impact,sans-serif;font-size:20px;letter-spacing:.015em;font-weight:900;text-transform:uppercase}
+#hlrnNextGen .ng-tag{font-size:10px;font-weight:900;color:var(--ng-muted);letter-spacing:.09em;text-transform:uppercase}
+#hlrnNextGen .ng-card-body{padding:18px}
+#hlrnNextGen .ng-live{grid-area:live;background:var(--ng-hero);border-color:#344156;color:#fff}
+#hlrnNextGen .ng-live .ng-card-head{background:#142037;border-bottom-color:#344156}
+#hlrnNextGen .ng-live .ng-card-head h3{color:#fff}
+#hlrnNextGen .ng-live .ng-tag{color:#cad3e2}
+#hlrnNextGen .ng-live-status{padding:5px 9px;background:#303b4b;border:1px solid #586678;color:#fff;border-radius:3px;font-weight:900;font-size:9px;letter-spacing:.1em}
+#hlrnNextGen .ng-live[data-status=active] .ng-live-status{background:#be1431;border-color:#f45c70}
+#hlrnNextGen .ng-live-head{display:flex;align-items:center;justify-content:space-between;gap:12px;background:linear-gradient(110deg,#1d2c44,#0e1727);padding:19px}
+#hlrnNextGen .ng-live-head small{display:block;font-size:10px;color:#b8c7dd;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+#hlrnNextGen #ngLiveLeader{font-family:'Barlow Condensed',Impact,sans-serif;font-size:clamp(24px,2.4vw,36px);line-height:1.05;color:#fff;margin-top:6px;display:block;max-width:330px}
+#hlrnNextGen #ngLiveFlag{font-weight:900;font-size:11px;letter-spacing:.06em;color:#fff;background:#2f3b4e;border-radius:4px;padding:9px 12px;text-align:center}
+#hlrnNextGen .ng-live[data-status=active] #ngLiveFlag{background:#b31634}
+#hlrnNextGen .ng-live-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-bottom:1px solid #33435b;border-top:1px solid #33435b}
+#hlrnNextGen .ng-live-metrics>div{padding:12px 15px;border-right:1px solid #33435b}
+#hlrnNextGen .ng-live-metrics>div:last-child{border-right:0}
+#hlrnNextGen .ng-live-metrics small{display:block;font-size:9px;color:#b1c1d6;font-weight:800;text-transform:uppercase;letter-spacing:.1em}
+#hlrnNextGen .ng-live-metrics b{display:block;font-size:22px;color:#fff;margin-top:5px;font-variant-numeric:tabular-nums}
+#hlrnNextGen .ng-live-table{padding:10px 17px 15px;min-height:145px}
+#hlrnNextGen .ng-live-row{display:grid;grid-template-columns:32px minmax(0,1fr) 75px;gap:10px;align-items:center;border-bottom:1px solid #344156;padding:8px 4px}
+#hlrnNextGen .ng-live-row>b{color:#ff4f68;font-size:16px}
+#hlrnNextGen .ng-live-row strong{display:block;color:#fff;font-size:12px;overflow-wrap:anywhere}
+#hlrnNextGen .ng-live-row small{font-size:10px;color:#a8b8d1}
+#hlrnNextGen .ng-live-row em{font-size:11px;text-align:right;color:#cbd6e5;font-style:normal;font-variant-numeric:tabular-nums}
+#hlrnNextGen .ng-live-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid #344156;padding:12px 17px;font-size:11px;color:#abbdd3}
+#hlrnNextGen .ng-live-foot a{color:#fff;font-weight:900;text-decoration:underline;text-underline-offset:4px}
+#hlrnNextGen .ng-spotlight{grid-area:spot}
+#hlrnNextGen .ng-spotlight-person{display:grid;grid-template-columns:125px minmax(0,1fr);gap:18px;align-items:center;margin-bottom:15px}
+#hlrnNextGen .ng-spotlight-photo{display:block;width:125px;height:148px;object-fit:contain;object-position:center bottom;background:linear-gradient(135deg,var(--ng-tint),var(--ng-panel));border:1px solid var(--ng-line);border-radius:9px}
+#hlrnNextGen .ng-placeholder{display:grid;place-items:center;font:900 50px 'Barlow Condensed',sans-serif;color:#d51a38}
+#hlrnNextGen .ng-series{font-size:10px;letter-spacing:.1em;color:#be1938;font-weight:900;text-transform:uppercase}
+html[data-hlrn-theme=dark] #hlrnNextGen .ng-series{color:#ff6279}
+#hlrnNextGen .ng-spotlight h3{font-family:'Barlow Condensed',Impact,sans-serif;font-size:clamp(28px,3vw,39px);font-weight:900;line-height:1.02;margin:8px 0 14px;text-transform:uppercase;color:var(--ng-ink)}
+#hlrnNextGen .ng-spotlight a{font-size:12px;font-weight:900;text-decoration:underline;text-decoration-color:#eb2546;text-underline-offset:5px}
+#hlrnNextGen .ng-mini-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+#hlrnNextGen .ng-mini-stats span{display:flex;flex-direction:column;gap:5px;border-radius:7px;padding:13px 10px;background:var(--ng-tint);font-weight:750;font-size:10px;color:var(--ng-muted)}
+#hlrnNextGen .ng-mini-stats b{font-size:23px;line-height:1;color:var(--ng-ink)}
+#hlrnNextGen .ng-note{color:var(--ng-muted);font-size:11px;line-height:1.5;margin:15px 0 0}
+#hlrnNextGen .ng-countdown{grid-area:count;position:relative}
+#hlrnNextGen .ng-countdown .ng-card-body{background:radial-gradient(circle at right top,rgba(209,23,54,.14),transparent 55%),var(--ng-panel)}
+#hlrnNextGen .ng-countdown-info{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+#hlrnNextGen .ng-countdown-info strong{font-family:'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;line-height:1.03;font-size:clamp(29px,3vw,43px);font-weight:900;color:var(--ng-ink)}
+#hlrnNextGen .ng-countdown-info>span:not(.ng-series){color:var(--ng-muted);font-size:12px}
+#hlrnNextGen .ng-countdown-info>a{font-size:12px;font-weight:900;text-decoration:underline;text-decoration-color:#e31837;text-underline-offset:5px}
+#hlrnNextGen .ng-clock{display:block;margin-top:22px;padding:15px 13px;background:#111b2b;color:#fff;border-radius:9px;border-left:4px solid #e31837;font-family:'Barlow Condensed',Impact,sans-serif;font-size:clamp(27px,3.7vw,51px);font-weight:900;letter-spacing:.035em;font-variant-numeric:tabular-nums;line-height:1.15}
+#hlrnNextGen .ng-victory{grid-area:victory}
+#hlrnNextGen .ng-winner{display:grid;grid-template-columns:56px minmax(0,1fr) auto;gap:12px;align-items:center;padding:13px 0;border-bottom:1px solid var(--ng-line)}
+#hlrnNextGen .ng-winner:last-child{border-bottom:0}
+#hlrnNextGen .ng-winner-photo{width:56px;height:62px;object-fit:contain;background:var(--ng-tint);border-radius:7px}
+#hlrnNextGen .ng-winner-data{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0}
+#hlrnNextGen .ng-winner-name{font-size:15px;font-weight:900;color:var(--ng-ink);text-decoration:none}
+#hlrnNextGen .ng-winner-data>span:last-child{font-size:10px;color:var(--ng-muted)}
+#hlrnNextGen .ng-winner-data>span:last-child a{text-decoration:underline;text-underline-offset:3px}
+#hlrnNextGen .ng-number{font:900 24px 'Barlow Condensed',Impact,sans-serif;color:var(--ng-ink)}
+#hlrnNextGen .ng-empty{color:#b8c7da;font-size:12px;line-height:1.5;margin:10px 0}
+#hlrnNextGen .ng-spotlight .ng-empty,#hlrnNextGen .ng-victory .ng-empty{color:var(--ng-muted)}
+#hlrnNextGen :is(a,button):focus-visible{outline:3px solid #e31837;outline-offset:3px}
+@media(max-width:1040px){#hlrnNextGen .ng-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}#hlrnNextGen .ng-spotlight-person{grid-template-columns:90px minmax(0,1fr);gap:12px}#hlrnNextGen .ng-spotlight-photo{width:90px;height:120px}}
+@media(max-width:760px){#hlrnNextGen{width:calc(100% - 24px);margin:22px auto 28px}#hlrnNextGen .ng-grid{grid-template-columns:minmax(0,1fr);grid-template-areas:"live" "spot" "count" "victory";gap:13px}#hlrnNextGen .ng-section-head{align-items:flex-start;flex-direction:column;gap:10px}#hlrnNextGen .ng-spotlight-person{grid-template-columns:110px minmax(0,1fr)}#hlrnNextGen .ng-spotlight-photo{width:110px;height:133px}#hlrnNextGen .ng-card-body{padding:15px}#hlrnNextGen .ng-live-head{padding:17px}#hlrnNextGen .ng-live-metrics>div{padding:10px}#hlrnNextGen .ng-clock{font-size:clamp(26px,8vw,43px)}}
+@media(max-width:380px){#hlrnNextGen .ng-spotlight-person{grid-template-columns:84px minmax(0,1fr)}#hlrnNextGen .ng-spotlight-photo{width:84px;height:114px}#hlrnNextGen .ng-spotlight h3{font-size:27px}#hlrnNextGen .ng-mini-stats span{padding:10px 7px}}
