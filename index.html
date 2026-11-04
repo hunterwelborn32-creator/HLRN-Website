@@ -61,6 +61,7 @@
 <link rel="stylesheet" href="assets/home/home-cinematic-gridlight.css?v=20261029webp1">
 <link rel="stylesheet" href="assets/homepage-art/homepage-layout.css?v=20261104shortcuts-photo-focus2">
 <link rel="stylesheet" href="assets/homepage-art/race-week-glass.css?v=20261030explore1">
+<link rel="stylesheet" href="assets/home/home-nextgen.css?v=20261104preview1">
 
 <meta name="theme-color" content="#07090d">
 <style id="hlrn-home-v20-pulse">
@@ -205,6 +206,49 @@
     <a href="standings/" class="home30-shortcut"><span class="home30-shortcut-icon" aria-hidden="true">03</span><strong>STANDINGS <span aria-hidden="true">↗</span></strong><small>Championship points</small></a>
     <a href="race-preview/" class="home30-shortcut"><span class="home30-shortcut-icon" aria-hidden="true">04</span><strong>SCHEDULE <span aria-hidden="true">↗</span></strong><small>Upcoming race weekends</small></a>
   </nav>
+
+  <!-- HLRN NEXT GEN: four reviewable, read-only modules powered by existing published feeds. -->
+  <section id="hlrnNextGen" aria-labelledby="hlrnNextGenTitle">
+    <div class="ng-section-head">
+      <div>
+        <span class="ng-kicker">HLRN // NEXT GEN</span>
+        <h2 id="hlrnNextGenTitle">The Racing Experience, Upgraded.</h2>
+        <p class="ng-intro">Four new features, powered by official HLRN race data. Review the design in Race Day and Race Night modes.</p>
+      </div>
+      <span class="ng-preview">Design preview · your feedback welcome</span>
+    </div>
+    <div class="ng-grid">
+      <section class="ng-card ng-live" id="ngLivePanel" data-status="idle" aria-label="Live Race Command Center">
+        <header class="ng-card-head"><h3>01 / Live Race Command Center</h3><span class="ng-live-status" id="ngLiveStatus" role="status">CONNECTING</span></header>
+        <div class="ng-live-head">
+          <div><small>Race leader</small><strong id="ngLiveLeader">Waiting for the race feed</strong></div>
+          <span id="ngLiveFlag">NO ACTIVE RACE</span>
+        </div>
+        <div class="ng-live-metrics">
+          <div><small>Current lap</small><b id="ngLiveLap">—</b></div>
+          <div><small>Laps remaining</small><b id="ngLiveRemaining">—</b></div>
+          <div><small>Cautions</small><b id="ngLiveCautions">—</b></div>
+        </div>
+        <div class="ng-live-table" id="ngLiveRows" aria-live="off"><p class="ng-empty">The live leaderboard appears when an active race is transmitting.</p></div>
+        <div class="ng-live-foot"><span id="ngLiveIntervals">Viewer-only live timing</span><a href="/live/">Open full Timing &amp; Scoring →</a></div>
+      </section>
+      <section class="ng-card ng-spotlight" aria-label="Driver Spotlight of the Week">
+        <header class="ng-card-head"><h3>02 / Driver Spotlight</h3><span class="ng-tag">Rotates weekly</span></header>
+        <div class="ng-card-body" id="ngSpotlightBody"><p class="ng-empty">Loading verified driver performance…</p></div>
+      </section>
+      <section class="ng-card ng-countdown" aria-label="Race Weekend Countdown">
+        <header class="ng-card-head"><h3>03 / Race Weekend Countdown</h3><span class="ng-tag">Official schedule</span></header>
+        <div class="ng-card-body">
+          <div class="ng-countdown-info" id="ngCountdownInfo"><strong>Checking the next race…</strong></div>
+          <strong class="ng-clock" id="ngCountdownClock" role="timer">SCHEDULE LOADING</strong>
+        </div>
+      </section>
+      <section class="ng-card ng-victory" aria-label="Victory Lane Showcase">
+        <header class="ng-card-head"><h3>04 / Victory Lane Showcase</h3><span class="ng-tag" id="ngVictoryStatus">Latest verified winners</span></header>
+        <div class="ng-card-body" id="ngVictoryRows"><p class="ng-empty">Loading the latest official winners…</p></div>
+      </section>
+    </div>
+  </section>
 
   <section class="h10-info" aria-label="Latest Sunday and Monday winners">
     <div class="h10-shell h10-info-grid">
@@ -520,5 +564,6 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 })();
 </script>
 <script defer src="assets/sunday/sunday-season-finale.js?v=20261104trevorchampion1"></script>
+<script defer src="assets/home/home-nextgen.js?v=20261104preview1"></script>
 </body>
 </html>
