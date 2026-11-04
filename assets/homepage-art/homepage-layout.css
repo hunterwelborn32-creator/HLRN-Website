@@ -1043,3 +1043,47 @@ html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome > head
     padding-top:clamp(92px,calc(94vw / 3 - 4px),164px)!important;
   }
 }
+
+/* Canonical alpha-cropped logo layout, activated only after the logo has
+   loaded and its real nontransparent bounds have been measured.
+   The original CSS/IMG remains a fallback if loading or canvas fails. */
+html[data-hlrn-theme] body.home-v10-page.hlrn-logo-smart-active:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene.hlrn-logo-cropped{
+  position:absolute!important;
+  top:0!important;
+  left:0!important;
+  right:0!important;
+  height:245px!important;
+  min-height:0!important;
+  padding:0!important;
+  transform:none!important;
+  overflow:hidden!important;
+  background:none!important;
+  -webkit-mask-image:none!important;
+  mask-image:none!important;
+}
+html[data-hlrn-theme] body.home-v10-page.hlrn-logo-smart-active:not(.rn-active) #hlrnRaceDayHome > header.h10-hero{
+  padding-top:260px!important;
+  min-height:0!important;
+}
+html[data-hlrn-theme] body.home-v10-page.hlrn-logo-smart-active:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene.hlrn-logo-cropped > img{
+  transform:none!important;
+  margin:0!important;
+  padding:0!important;
+  filter:none!important;
+}
+@media(min-width:651px) and (max-width:1050px){
+  html[data-hlrn-theme] body.home-v10-page.hlrn-logo-smart-active:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene.hlrn-logo-cropped{
+    height:200px!important;
+  }
+  html[data-hlrn-theme] body.home-v10-page.hlrn-logo-smart-active:not(.rn-active) #hlrnRaceDayHome > header.h10-hero{
+    padding-top:215px!important;
+  }
+}
+@media(max-width:650px){
+  html[data-hlrn-theme] body.home-v10-page.hlrn-logo-smart-active:not(.rn-active) #hlrnRaceDayHome > .home33-top-logo-scene.hlrn-logo-cropped{
+    height:134px!important;
+  }
+  html[data-hlrn-theme] body.home-v10-page.hlrn-logo-smart-active:not(.rn-active) #hlrnRaceDayHome > header.h10-hero{
+    padding-top:145px!important;
+  }
+}
