@@ -1,0 +1,62 @@
+/* HLRN standings broadcast polish — presentation only.
+   Scoped to existing outer elements; no ranking tables, calculations or iframe contents. */
+body {
+ --sb-red:#dc2842;
+ --sb-gold:#dfb158;
+ --sb-line:rgba(185,195,210,.2);
+}
+.hlrn-series-switcher a {
+ text-decoration-thickness:2px;
+ text-underline-offset:4px;
+}
+.hlrn-series-switcher a:focus-visible,
+.tab-btn:focus-visible,
+.hosted-hub-tab:focus-visible {
+ outline:2px solid var(--sb-gold)!important;
+ outline-offset:2px!important;
+}
+.page-wrap .cc-topline {
+ box-shadow:inset 0 -1px 0 var(--sb-line);
+}
+.page-wrap .cc-hero-main .cc-kicker {
+ letter-spacing:.12em;
+}
+.page-wrap .cc-card,
+.page-wrap .cc-momentum-card,
+.page-wrap .cc-spotlight-card {
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.055),0 8px 22px rgba(0,0,0,.16);
+}
+.page-wrap .cc-card-label,
+.page-wrap .cc-card-sub {
+ letter-spacing:.12em;
+}
+.page-wrap .section-header h2 {
+ text-wrap:balance;
+}
+.page-wrap .section-header:before {
+ box-shadow:0 0 9px rgba(223,177,88,.18);
+}
+.hosted-hub .hlrn-hosted-wallpaper-mast h1 {
+ text-wrap:balance;
+}
+.hosted-hub .hosted-hub-tabs {
+ box-shadow:0 8px 24px rgba(0,0,0,.18);
+}
+.hosted-hub .hosted-hub-tab {
+ transition:background-color .18s ease,border-color .18s ease,box-shadow .18s ease!important;
+}
+.hosted-hub .hosted-hub-tab:focus-visible {
+ outline-offset:-3px!important;
+}
+@media (hover:hover) and (pointer:fine) {
+ .page-wrap .cc-card:hover,
+ .page-wrap .cc-momentum-card:hover {
+  box-shadow:inset 0 2px 0 rgba(220,40,66,.24),0 10px 25px rgba(0,0,0,.21);
+ }
+ .hosted-hub .hosted-hub-tab:hover {
+  box-shadow:inset 0 2px 0 rgba(223,177,88,.19),0 10px 25px rgba(0,0,0,.25);
+ }
+}
+@media (prefers-reduced-motion:reduce) {
+ .hosted-hub .hosted-hub-tab {transition:none!important;}
+}
