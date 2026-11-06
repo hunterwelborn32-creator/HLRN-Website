@@ -133,3 +133,41 @@ html[data-hlrn-theme="dark"] #hlrn-home:not(.rn-active) #hlrnRaceDayHome :is(.h1
   transition:none!important;
  }
 }
+
+/* Homepage broadcast detail pass: paint-only rules; no structural or functional changes. */
+#hlrn-home:not(.rn-active) #hlrnRaceDayHome :is(.h10-section-head h2,.ng-section-head h2) {
+ text-shadow:0 1px 0 rgba(0,0,0,.035);
+}
+#hlrn-home:not(.rn-active) #hlrnRaceDayHome :is(.h10-section-head small,.ng-kicker,.h10-eyebrow) {
+ letter-spacing:.13em;
+}
+#hlrn-home:not(.rn-active) #hlrnRaceDayHome :is(.h10-btn,.h10-hosted-link,.h10-section-head>a) {
+ border-radius:7px!important;
+ box-shadow:0 2px 8px rgba(10,20,35,.07);
+}
+#hlrn-home:not(.rn-active) #hlrnRaceDayHome :is(.h10-btn,.h10-hosted-link,.h10-section-head>a):focus-visible {
+ outline:3px solid #d89124!important;
+ outline-offset:3px!important;
+}
+#hlrn-home:not(.rn-active) #hlrnRaceDayHome :is(.h10-hosted-race-stats>div,.ng-mini-stats span,.h20-numbers>div) {
+ border-radius:7px;
+}
+#hlrn-home:not(.rn-active) #hlrnRaceDayHome :is(.h10-hosted-race-stats>div,.ng-mini-stats span) {
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.09);
+}
+#hlrn-home:not(.rn-active) #hlrnRaceDayHome :is(.ng-card-head,.h10-hosted-head) {
+ border-bottom-color:var(--hp-line);
+}
+@media(hover:hover) and (pointer:fine) {
+ #hlrn-home:not(.rn-active) #hlrnRaceDayHome .h10-section-head>a {
+  transition:box-shadow .2s ease,border-color .2s ease!important;
+ }
+ #hlrn-home:not(.rn-active) #hlrnRaceDayHome .h10-section-head>a:hover {
+  box-shadow:0 5px 14px rgba(10,20,35,.12);
+ }
+}
+@media(prefers-reduced-motion:reduce) {
+ #hlrn-home:not(.rn-active) #hlrnRaceDayHome .h10-section-head>a {
+  transition:none!important;
+ }
+}
