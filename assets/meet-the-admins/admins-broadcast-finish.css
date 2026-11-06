@@ -1,0 +1,54 @@
+/* HLRN Meet the Admins — premium broadcast roster finish.
+   Presentation-only: retains team data, filtering, search, modal, lightbox and all existing sizing. */
+.hlrn-admins-page{
+ --abf-red:#df344d;
+ --abf-gold:#e1b35a;
+ --abf-shadow:rgba(20,31,48,.16);
+}
+.hlrn-admins-page .team-hero{
+ isolation:isolate;
+ box-shadow:0 17px 42px var(--abf-shadow),inset 0 1px 0 rgba(255,255,255,.065);
+}
+.hlrn-admins-page .team-hero h1{text-wrap:balance}
+.hlrn-admins-page .team-status{
+ box-shadow:0 5px 16px var(--abf-shadow);
+}
+.hlrn-admins-page :is(.summary-card,.team-tools,.member-card,.team-closing,.closing-panel){
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.055),0 8px 23px var(--abf-shadow);
+}
+.hlrn-admins-page .member-card{position:relative;isolation:isolate;transition:box-shadow .2s ease,border-color .2s ease,transform .2s ease}
+.hlrn-admins-page .member-card:after{
+ content:"";position:absolute;inset:auto 0 0;height:3px;pointer-events:none;
+ background:linear-gradient(90deg,var(--abf-red),var(--abf-gold) 58%,transparent);
+ opacity:.62;
+}
+.hlrn-admins-page .member-media{isolation:isolate}
+.hlrn-admins-page .member-img{filter:drop-shadow(0 7px 10px rgba(0,0,0,.085))}
+.hlrn-admins-page .member-name{text-wrap:balance;letter-spacing:-.025em}
+.hlrn-admins-page .member-kicker{letter-spacing:.15em}
+.hlrn-admins-page .team-section-head h2{text-wrap:balance}
+.hlrn-admins-page #profileModal .modal-card{box-shadow:0 22px 65px rgba(0,0,0,.33)}
+.hlrn-admins-page :is(.member-card,.filter-btn,.team-search,.profile-btn,.image-btn,.close-btn,.profile-links a):focus-visible{
+ outline:3px solid var(--abf-gold)!important;outline-offset:3px!important;
+}
+@media(hover:hover) and (pointer:fine){
+ .hlrn-admins-page .member-card:hover{
+  box-shadow:0 16px 33px var(--abf-shadow),0 0 0 1px rgba(223,52,77,.18);
+ }
+ .hlrn-admins-page .member-card:hover:after{opacity:1}
+ .hlrn-admins-page .profile-links a:hover{filter:brightness(1.06)}
+}
+html[data-hlrn-theme="light"] .hlrn-admins-page{
+ --abf-shadow:rgba(29,39,56,.14);--abf-gold:#b88435;
+}
+html[data-hlrn-theme="dark"] .hlrn-admins-page{
+ --abf-shadow:rgba(0,0,0,.34);--abf-gold:#f0c56e;
+}
+@media(max-width:560px){
+ .hlrn-admins-page :is(.summary-card,.team-tools,.member-card,.closing-panel){
+  box-shadow:0 5px 16px var(--abf-shadow);
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ .hlrn-admins-page .member-card{transition:none!important}
+}
