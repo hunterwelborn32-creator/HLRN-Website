@@ -1,0 +1,69 @@
+/* HLRN Drivers visual finish — roster directory only.
+   Intentionally does not style profile views, photos, card geometry or data widgets. */
+#directoryView {
+  --dp-red:#c8102e;
+  --dp-gold:#c28a35;
+  --dp-shadow:rgba(13,23,38,.085);
+}
+html[data-hlrn-theme="dark"] #directoryView {
+  --dp-red:#ed3553;
+  --dp-gold:#e2ac53;
+  --dp-shadow:rgba(0,0,0,.28);
+}
+/* Heading and subtle broadcast accent. */
+#directoryView .driver-heading {
+  border-bottom:1px solid var(--roster-stroke,#d9dfe5);
+  box-shadow:inset 0 -2px 0 rgba(200,16,46,.12);
+}
+#directoryView .driver-heading h1,
+#directoryView .roster-title {
+  text-wrap:balance;
+}
+#directoryView .driver-heading .eyebrow:before {
+  background:var(--dp-red);
+}
+#directoryView .driver-command {
+  box-shadow:0 8px 26px var(--dp-shadow)!important;
+}
+#directoryView .driver-metric small,
+#directoryView .roster-count {
+  letter-spacing:.1em;
+}
+#directoryView .search-wrap input,
+#directoryView .driver-sort {
+  box-shadow:inset 0 1px 2px rgba(10,20,35,.04);
+}
+#directoryView :is(.search-wrap input,.driver-sort):focus-visible {
+  outline:2px solid var(--dp-gold)!important;
+  outline-offset:2px;
+}
+/* Existing cards retain their dimensions, content, and image treatment. */
+#directoryView .driver-card {
+  box-shadow:inset 0 2px 0 rgba(200,16,46,.10),0 6px 21px var(--dp-shadow)!important;
+}
+#directoryView .driver-info {
+  border-top-color:var(--roster-stroke,#d9dfe5)!important;
+}
+#directoryView .driver-stats {
+  border-color:var(--roster-stroke,#d9dfe5)!important;
+}
+#directoryView .driver-card:focus-visible {
+  outline:3px solid var(--dp-gold)!important;
+  outline-offset:3px;
+}
+@media(hover:hover) and (pointer:fine) {
+  #directoryView .driver-card:hover {
+    box-shadow:inset 0 2px 0 rgba(200,16,46,.26),0 13px 30px var(--dp-shadow)!important;
+  }
+}
+html[data-hlrn-theme="dark"] #directoryView .driver-card {
+  box-shadow:inset 0 2px 0 rgba(237,53,83,.15),0 8px 23px var(--dp-shadow)!important;
+}
+@media(hover:hover) and (pointer:fine) {
+  html[data-hlrn-theme="dark"] #directoryView .driver-card:hover {
+    box-shadow:inset 0 2px 0 rgba(237,53,83,.32),0 13px 30px rgba(0,0,0,.34)!important;
+  }
+}
+@media(prefers-reduced-motion:reduce) {
+  #directoryView .driver-card {transition:none!important;transform:none!important;}
+}
