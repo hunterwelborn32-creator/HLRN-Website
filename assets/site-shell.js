@@ -784,7 +784,7 @@ function start(){
 
   // Always use the current shared shell stylesheet. This gives every page
   // the same global mobile layer without requiring page-by-page CSS edits.
-  const SHELL_CSS_VERSION="20261102harvesteffects1";
+  const SHELL_CSS_VERSION="20261106foundation1";
   let shellCss=[...document.querySelectorAll('link[rel="stylesheet"]')].find(link=>/\/site-shell\.css(?:\?|$)/i.test(link.getAttribute("href")||""));
   if(!shellCss){
     shellCss=document.createElement("link");
@@ -1310,6 +1310,7 @@ function start(){
     }
   }
 
+  document.body.classList.add("hlrn-foundation");
   document.documentElement.classList.add("hlrn-shell-ready");
 }
 
