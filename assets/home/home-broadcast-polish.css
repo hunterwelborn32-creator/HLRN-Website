@@ -55,3 +55,33 @@ html[data-hlrn-theme="dark"] #hlrn-home { --hp-surface:#141b26; --hp-inset:#1c26
 #hlrn-home:not(.rn-active) #hlrn-home-race-hub { display:none!important; }
 #hlrn-home:not(.rn-active) #hlrnRaceDayHome :is(.h10-upcoming-card h3,.h10-hosted-winner-copy strong,.hlrn-victory-name) > a { font:inherit!important; color:inherit!important; text-decoration:none!important; border:0!important; padding:0!important; }
 #hlrn-home:not(.rn-active) #hlrnRaceDayHome .home30-next-heading { align-self:flex-start!important; }
+
+/* HLRN homepage visual finishing pass — presentation-only; no layout/data changes. */
+@media (hover:hover) and (pointer:fine) {
+ #hlrn-home:not(.rn-active) #hlrnRaceDayHome :is(.h10-hero-copy,.h10-hosted-card,.ng-card,.h10-points-card,.h20-result-card,.h10-upcoming-card) {
+  transition:box-shadow .22s ease,border-color .22s ease,transform .22s ease!important;
+ }
+ #hlrn-home:not(.rn-active) #hlrnRaceDayHome :is(.h10-hero-copy,.h10-hosted-card,.ng-card,.h10-points-card,.h20-result-card,.h10-upcoming-card):hover {
+  box-shadow:0 12px 30px rgba(8,17,30,.13)!important;
+  border-color:var(--hp-red)!important;
+  transform:translateY(-2px);
+ }
+ #hlrn-home:not(.rn-active) #hlrnRaceDayHome :is(.h10-btn,.h10-hosted-link,.ng-card a,.h10-upcoming-card a) {
+  transition:filter .2s ease,box-shadow .2s ease!important;
+ }
+ #hlrn-home:not(.rn-active) #hlrnRaceDayHome :is(.h10-btn,.h10-hosted-link):hover {
+  filter:brightness(1.06);
+  box-shadow:0 5px 15px rgba(8,17,30,.14)!important;
+ }
+}
+#hlrn-home:not(.rn-active) #hlrnRaceDayHome :is(.ng-section-head h2,.h10-section-head h2) {
+ text-wrap:balance;
+}
+html[data-hlrn-theme="dark"] #hlrn-home:not(.rn-active) #hlrnRaceDayHome :is(.h10-hero-copy,.h10-hosted-card,.ng-card,.h10-points-card,.h20-result-card,.h10-upcoming-card):hover {
+ box-shadow:0 14px 32px rgba(0,0,0,.32)!important;
+}
+@media (prefers-reduced-motion:reduce) {
+ #hlrn-home:not(.rn-active) #hlrnRaceDayHome :is(.h10-hero-copy,.h10-hosted-card,.ng-card,.h10-points-card,.h20-result-card,.h10-upcoming-card,.h10-btn,.h10-hosted-link) {
+  transition:none!important;transform:none!important;
+ }
+}
