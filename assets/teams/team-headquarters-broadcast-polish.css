@@ -1,0 +1,47 @@
+/* Team Headquarters broadcast detail polish, visual-only.
+   Directory scope only: no team page, roster, click, or JS changes. */
+body.hlrn-teams-wallpaper-page main.wrap {
+  --th-red:#e62a49;
+  --th-gold:#e4b85b;
+}
+body.hlrn-teams-wallpaper-page main.wrap .intro h1 {
+  text-wrap:balance;
+}
+body.hlrn-teams-wallpaper-page main.wrap .eyebrow {
+  text-decoration-thickness:1px;
+}
+body.hlrn-teams-wallpaper-page main.wrap .section-head {
+  box-shadow:0 4px 14px rgba(10,18,30,.075);
+}
+body.hlrn-teams-wallpaper-page main.wrap .section-head h2 {
+  text-wrap:balance;
+}
+body.hlrn-teams-wallpaper-page main.wrap .tabs {
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 8px 24px rgba(0,0,0,.17);
+}
+body.hlrn-teams-wallpaper-page main.wrap .team {
+  box-shadow:inset 0 2px 0 color-mix(in srgb,var(--team-accent) 25%,transparent),0 8px 22px rgba(0,0,0,.16);
+}
+body.hlrn-teams-wallpaper-page main.wrap .team h3 {
+  text-wrap:balance;
+}
+body.hlrn-teams-wallpaper-page main.wrap :is(.tab,.team):focus-visible {
+  outline:3px solid var(--th-gold)!important;
+  outline-offset:3px!important;
+}
+@media(hover:hover) and (pointer:fine) {
+  body.hlrn-teams-wallpaper-page main.wrap .team:hover {
+    box-shadow:inset 0 2px 0 var(--team-accent),0 13px 28px rgba(0,0,0,.25);
+  }
+}
+html[data-hlrn-theme="light"] body.hlrn-teams-wallpaper-page main.wrap .team {
+  box-shadow:inset 0 2px 0 color-mix(in srgb,var(--team-accent) 20%,transparent),0 7px 20px rgba(15,25,40,.09)!important;
+}
+html[data-hlrn-theme="light"] body.hlrn-teams-wallpaper-page main.wrap .team:hover {
+  box-shadow:inset 0 2px 0 color-mix(in srgb,var(--team-accent) 40%,transparent),0 12px 26px rgba(15,25,40,.15)!important;
+}
+@media(prefers-reduced-motion:reduce) {
+  body.hlrn-teams-wallpaper-page main.wrap .team {
+    transition:none!important;
+  }
+}
