@@ -1,0 +1,33 @@
+/* HLRN Store premium motorsports storefront finish | visual-only.
+   Preserves product image variants, prices, links, filters, search and layout. */
+.hlrn-store-art-page{--sf-red:#df2e49;--sf-gold:#ddb463;--sf-shadow:rgba(24,35,50,.14)}
+.hlrn-store-art-page .hero{isolation:isolate;box-shadow:0 17px 42px var(--sf-shadow),inset 0 1px 0 rgba(255,255,255,.12)}
+.hlrn-store-art-page .hero:after{content:"";pointer-events:none;position:absolute;inset:auto 0 0;height:3px;background:linear-gradient(90deg,transparent,var(--sf-gold) 25%,var(--sf-red) 65%,transparent)}
+.hlrn-store-art-page .hero h1{text-wrap:balance}
+.hlrn-store-art-page :is(.mh-dashboard,.mh-featured,.mh-filterbar,.hlrn-shop-hero,.hlrn-shop-promo){box-shadow:inset 0 1px 0 rgba(255,255,255,.065),0 10px 27px var(--sf-shadow)}
+.hlrn-store-art-page .section-heading h2{text-wrap:balance}
+.hlrn-store-art-page .product{position:relative;isolation:isolate;box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 9px 24px var(--sf-shadow)}
+.hlrn-store-art-page .product:after{content:"";pointer-events:none;position:absolute;inset:auto 0 0;height:3px;background:linear-gradient(90deg,var(--sf-red),var(--sf-gold) 55%,transparent);opacity:.6}
+.hlrn-store-art-page .product-image{isolation:isolate}
+.hlrn-store-art-page .product-photo{filter:drop-shadow(0 9px 11px rgba(0,0,0,.1))}
+.hlrn-store-art-page .product-name{text-wrap:balance;letter-spacing:-.015em}
+.hlrn-store-art-page .product-category{letter-spacing:.14em}
+.hlrn-store-art-page .price{font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.hlrn-store-art-page .shop-button{transition:filter .18s ease,box-shadow .18s ease}
+.hlrn-store-art-page :is(.shop-button,.swatch,.swatch-arrow,.hlrn-shop-cat,.mh-filter-btn,.hlrn-shop-sort,.hlrn-shop-search,.hlrn-product-open,a,button):focus-visible{outline:3px solid var(--sf-gold)!important;outline-offset:3px}
+.hlrn-store-art-page .store-link a{transition:filter .18s ease,box-shadow .18s ease}
+@media(hover:hover) and (pointer:fine){
+ .hlrn-store-art-page .product:hover{box-shadow:0 16px 33px var(--sf-shadow),0 0 0 1px rgba(223,46,73,.17)}
+ .hlrn-store-art-page .product:hover:after{opacity:1}
+ .hlrn-store-art-page :is(.shop-button,.store-link a):hover{filter:brightness(1.06);box-shadow:0 7px 18px rgba(0,0,0,.14)}
+}
+html[data-hlrn-theme="light"] .hlrn-store-art-page{--sf-shadow:rgba(29,37,54,.16);--sf-gold:#bc8733}
+html[data-hlrn-theme="dark"] .hlrn-store-art-page{--sf-shadow:rgba(0,0,0,.33);--sf-gold:#f0c46d}
+html[data-hlrn-theme="dark"] .hlrn-store-art-page .product{box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 10px 26px var(--sf-shadow)}
+@media(max-width:550px){
+ .hlrn-store-art-page .product{box-shadow:0 6px 18px var(--sf-shadow)}
+ .hlrn-store-art-page .hero{box-shadow:0 9px 24px var(--sf-shadow)}
+}
+@media(prefers-reduced-motion:reduce){
+ .hlrn-store-art-page :is(.shop-button,.store-link a){transition:none!important}
+}
