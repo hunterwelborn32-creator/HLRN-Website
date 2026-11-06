@@ -3198,7 +3198,7 @@ html.hlrn-shell-ready[data-hlrn-route]:not([data-hlrn-route="home"]):not([data-h
  html.hlrn-shell-ready[data-hlrn-route][data-hlrn-theme] body.hlrn-foundation #hlrn-global-nav * { animation:none!important; transition:none!important; }
 }
 @media(max-width:600px) {
-  html.hlrn-shell-ready[data-hlrn-route="drivers"][data-hlrn-theme] body.hlrn-foundation .roster-tools { display:grid!important; grid-template-columns:minmax(0,1fr)!important; align-items:stretch!important; }
-  html.hlrn-shell-ready[data-hlrn-route="drivers"][data-hlrn-theme] body.hlrn-foundation .roster-tools > * { width:100%!important; min-width:0!important; }
+  html.hlrn-shell-ready[data-hlrn-route="drivers"][data-hlrn-theme] body.hlrn-foundation .roster-tools:has(#search) { display:grid!important; grid-template-columns:minmax(0,1fr)!important; align-items:stretch!important; }
+  html.hlrn-shell-ready[data-hlrn-route="drivers"][data-hlrn-theme] body.hlrn-foundation .roster-tools:has(#search) > * { width:100%!important; min-width:0!important; grid-column:1!important; grid-row:auto!important; }
   html.hlrn-shell-ready[data-hlrn-route="drivers"][data-hlrn-theme] body.hlrn-foundation .roster-title { white-space:normal!important; }
 }
