@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-03T18:17:56Z",
+  "generatedAt": "2026-11-06T17:15:45Z",
   "count": 87,
   "drivers": [
     {
@@ -95,7 +95,7 @@
       "number": "27",
       "photoSlug": "brandon-beyke",
       "hasPhoto": true,
-      "iRating": 5475,
+      "iRating": 5532,
       "series": [
         "monday",
         "sunday"
@@ -461,7 +461,7 @@
       "number": "166",
       "photoSlug": "edward-fiedler",
       "hasPhoto": true,
-      "iRating": 2452,
+      "iRating": 2500,
       "series": [
         "sunday"
       ],
@@ -505,7 +505,7 @@
       "number": "012",
       "photoSlug": "ethan-eckert",
       "hasPhoto": true,
-      "iRating": 5247,
+      "iRating": 5283,
       "series": [
         "monday",
         "sunday"
@@ -551,7 +551,7 @@
       "number": "76",
       "photoSlug": "evan-fuqua",
       "hasPhoto": true,
-      "iRating": 1329,
+      "iRating": 1283,
       "series": [
         "monday",
         "sunday"
@@ -573,7 +573,7 @@
       "number": "58",
       "photoSlug": "evan-karlbon",
       "hasPhoto": true,
-      "iRating": 4230,
+      "iRating": 4262,
       "series": [
         "monday"
       ],
@@ -592,7 +592,7 @@
       "number": "72",
       "photoSlug": "evan-parry",
       "hasPhoto": true,
-      "iRating": 2546,
+      "iRating": 2576,
       "series": [
         "monday",
         "sunday"
@@ -841,7 +841,7 @@
       "number": "70",
       "photoSlug": "joe-konen",
       "hasPhoto": true,
-      "iRating": 1644,
+      "iRating": 1697,
       "series": [
         "monday"
       ],
@@ -879,7 +879,7 @@
       "number": "69",
       "photoSlug": "john-miles",
       "hasPhoto": true,
-      "iRating": 2162,
+      "iRating": 2099,
       "series": [
         "hosted",
         "monday",
@@ -964,7 +964,7 @@
       "name": "Jt Huskins",
       "slug": "jt-huskins",
       "url": "/drivers/jt-huskins/",
-      "number": "—",
+      "number": "9",
       "photoSlug": "",
       "hasPhoto": false,
       "iRating": 1395,
@@ -986,17 +986,20 @@
       "number": "99",
       "photoSlug": "juan-escamilla",
       "hasPhoto": true,
-      "iRating": 2995,
+      "iRating": 2903,
       "series": [
         "hosted",
+        "monday",
         "sunday"
       ],
       "ids": {
         "sunday": "99085",
+        "monday": "99085",
         "hosted": ""
       },
       "teams": {
         "sunday": "DHR",
+        "monday": null,
         "hosted": null
       },
       "aliases": []
@@ -1661,7 +1664,7 @@
       "number": "89",
       "photoSlug": "trevor-aswarnauth",
       "hasPhoto": true,
-      "iRating": 4155,
+      "iRating": 4291,
       "series": [
         "monday"
       ],
