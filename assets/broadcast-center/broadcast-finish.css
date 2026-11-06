@@ -1,0 +1,36 @@
+/* HLRN Broadcast Center — broadcast-network visual finish, 2026-11-06.
+   Visual-only: preserves all video players, tabs, links, replay filtering and scripts. */
+body.bc-page{--bcf-red:#e13951;--bcf-gold:#d6a64e;--bcf-shadow:rgba(18,27,40,.15)}
+.bc-page .bc-mast{isolation:isolate}
+.bc-page .bc-hero-banner{filter:drop-shadow(0 12px 25px var(--bcf-shadow))}
+.bc-page .bc-mast-intro h1{text-wrap:balance}
+.bc-page :is(.bc-network-card,.bc-player-card,.bc-sidecard,.bc-replay-card,.bc-person,.bc-section,.bc-flow-card){box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 9px 25px var(--bcf-shadow)}
+.bc-page :is(.bc-network-card,.bc-player-card,.bc-sidecard,.bc-replay-card,.bc-person){position:relative;isolation:isolate}
+.bc-page .bc-network-card:after,.bc-page .bc-player-card:after{content:"";position:absolute;z-index:0;pointer-events:none;inset:auto 0 0;height:3px;background:linear-gradient(90deg,var(--bcf-red),var(--bcf-gold) 62%,transparent);opacity:.65}
+.bc-page .bc-section-head h2{text-wrap:balance}
+.bc-page .bc-section-kicker{letter-spacing:.16em}
+.bc-page .bc-person-copy h3{text-wrap:balance}
+.bc-page .bc-person-media img{transition:filter .2s ease}
+.bc-page .bc-replay-card{transition:border-color .18s ease,box-shadow .18s ease}
+.bc-page .bc-replay-head strong{letter-spacing:-.015em}
+.bc-page .bc-live-flag{letter-spacing:.11em}
+.bc-page .bc-countdown{font-variant-numeric:tabular-nums}
+.bc-page .bc-actions .bc-btn{transition:filter .18s ease,box-shadow .18s ease}
+.bc-page :is(a,button,.bc-tab,.bc-filter):focus-visible{outline:3px solid var(--bcf-gold)!important;outline-offset:3px}
+@media(hover:hover) and (pointer:fine){
+ .bc-page .bc-replay-card:hover,.bc-page .bc-person:hover{box-shadow:0 13px 30px var(--bcf-shadow)}
+ .bc-page .bc-actions .bc-btn:hover{filter:brightness(1.06);box-shadow:0 6px 17px rgba(0,0,0,.16)}
+ .bc-page .bc-person:hover .bc-person-media img{filter:contrast(1.045)}
+}
+html[data-hlrn-theme="light"] body.bc-page{--bcf-shadow:rgba(30,41,58,.13);--bcf-gold:#bc8936}
+html[data-hlrn-theme="dark"] body.bc-page{--bcf-shadow:rgba(0,0,0,.33);--bcf-gold:#eac06b}
+html[data-hlrn-theme="light"] .bc-page :is(.bc-network-card,.bc-player-card,.bc-sidecard,.bc-replay-card,.bc-person,.bc-section,.bc-flow-card){
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 8px 23px var(--bcf-shadow)!important;
+}
+@media(max-width:700px){
+ .bc-page :is(.bc-network-card,.bc-player-card,.bc-sidecard,.bc-replay-card,.bc-person,.bc-section,.bc-flow-card){box-shadow:0 5px 14px var(--bcf-shadow)}
+ .bc-page .bc-hero-banner{filter:none}
+}
+@media(prefers-reduced-motion:reduce){
+ .bc-page :is(.bc-person-media img,.bc-replay-card,.bc-actions .bc-btn){transition:none!important}
+}
