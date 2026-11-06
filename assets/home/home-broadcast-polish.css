@@ -230,3 +230,39 @@ html[data-hlrn-theme="dark"] #hlrn-home:not(.rn-active) #hlrnRaceDayHome :is(.ng
  text-decoration-thickness:1.5px;
  text-underline-offset:3px;
 }
+
+/* Homepage lower-section finishing: quick links + footer, no markup or behavior changes. */
+#hlrn-home:not(.rn-active) #hlrnRaceDayHome .h10-quick-links .h10-link-card {
+ border-color:var(--hp-line)!important;
+ border-top-color:var(--ql-accent)!important;
+ border-radius:12px!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 7px 22px rgba(10,20,35,.075)!important;
+}
+#hlrn-home:not(.rn-active) #hlrnRaceDayHome .h10-quick-links .h10-link-card .h10-link-arrow {
+ color:var(--ql-accent)!important;
+ opacity:.85;
+}
+#hlrn-home:not(.rn-active) #hlrnRaceDayHome .h10-quick-links .h10-link-card strong {
+ font-family:"Barlow Condensed",Impact,"Arial Narrow",sans-serif;
+ font-weight:900;
+ letter-spacing:.005em;
+}
+#hlrn-home:not(.rn-active) #hlrnRaceDayHome .h10-quick-links .h10-link-card small {
+ color:var(--hp-muted)!important;
+}
+#hlrn-home:not(.rn-active) #hlrnRaceDayHome .h10-footer {
+ border-top:1px solid var(--hp-line);
+ box-shadow:inset 0 2px 0 rgba(200,16,46,.08);
+}
+@media(hover:hover) and (pointer:fine) {
+ #hlrn-home:not(.rn-active) #hlrnRaceDayHome .h10-quick-links .h10-link-card:hover {
+  border-top-color:var(--ql-accent)!important;
+  box-shadow:inset 0 2px 0 var(--ql-accent),0 12px 28px rgba(10,20,35,.13)!important;
+ }
+}
+html[data-hlrn-theme="dark"] #hlrn-home:not(.rn-active) #hlrnRaceDayHome .h10-quick-links .h10-link-card {
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 9px 26px rgba(0,0,0,.22)!important;
+}
+html[data-hlrn-theme="dark"] #hlrn-home:not(.rn-active) #hlrnRaceDayHome .h10-quick-links .h10-link-card:hover {
+ box-shadow:inset 0 2px 0 var(--ql-accent),0 12px 30px rgba(0,0,0,.30)!important;
+}
