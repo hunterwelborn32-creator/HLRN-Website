@@ -1,12 +1,23 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { validateAction, buildSnapshot, sameData, seasonDriverTotals, mergeHostedDriverRatings, mergeSeasonDriverTotals, parseTeamRostersHtml, parseStageBonusBreakdownHtml, combineStageAwardMaps, applyStageBonusReclassification, parseSimRacerHubRaceResultsHtml, parseSimRacerHubRaceMetricsHtml, mergeSimRacerHubRaceResults } from '../tools/sync-data.mjs';
+import { hostedDataRequestUrl, hostedRaceIdentity, validateAction, buildSnapshot, sameData, seasonDriverTotals, mergeHostedDriverRatings, mergeSeasonDriverTotals, parseTeamRostersHtml, parseStageBonusBreakdownHtml, combineStageAwardMaps, applyStageBonusReclassification, parseSimRacerHubRaceResultsHtml, parseSimRacerHubRaceMetricsHtml, mergeSimRacerHubRaceResults } from '../tools/sync-data.mjs';
 import { versionManifest } from '../tools/build-derived.mjs';
 const payloads = Object.fromEntries(['sunday','monday'].map(l => [l, {
   drivers: { success:true, drivers:[{driverId:l+'-1',name:'Example'}] },
   teams: { success:true, teams:[] },
   results: { success:true, results:[] }
 }]));
+test('Hosted requests bypass cached Apps Script responses', () => {
+ const url=hostedDataRequestUrl('https://example.com/macros/s/test/exec?foo=bar', 123456);
+ assert.equal(url.searchParams.get('action'),'data');
+ assert.equal(url.searchParams.get('_'),'123456');
+ assert.equal(url.searchParams.get('foo'),'bar');
+});
+
+test('Hosted source diagnostic identifies latest race', () => {
+ assert.match(hostedRaceIdentity({latest:{date:'2026-11-02',sessionId:42,track:'Indianapolis',results:[{}]}}),/id=42; track=Indianapolis; results=1/);
+});
+
 test('both leagues are retained without inventing results', () => {
  const v = buildSnapshot(payloads);
  assert.equal(v.leagues.sunday.drivers.length, 1);
