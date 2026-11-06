@@ -34,6 +34,24 @@ export function validateAction(data, action, league) {
   return data[action];
 }
 
+// A unique query parameter prevents caches between Apps Script and GitHub Actions
+// from serving an older Hosted snapshot on otherwise successful sync runs.
+export function hostedDataRequestUrl(endpoint, now = Date.now()) {
+  const url = new URL(endpoint);
+  url.searchParams.set('action', 'data');
+  url.searchParams.set('_', String(now));
+  return url;
+}
+
+export function hostedRaceIdentity(hosted) {
+  const race = hosted?.latest || {};
+  const id = race.subsessionId ?? race.subsession_id ?? race.sessionId ?? race.session_id ?? race.id ?? 'unknown';
+  const date = race.date ?? race.raceDate ?? race.startTime ?? 'unknown';
+  const track = race.track ?? race.trackName ?? 'unknown';
+  const results = Array.isArray(race.results) ? race.results.length : 0;
+  return `date=${date}; id=${id}; track=${track}; results=${results}`;
+}
+
 export function validateHosted(data) {
   if (!data || typeof data !== 'object' || data.success === false || data.ok === false ||
       !data.latest || !Array.isArray(data.latest.results) ||
@@ -892,9 +910,10 @@ export async function sync({
   let hosted = old.hosted ?? null;
   if (hostedEndpoint) {
     try {
-      const url = new URL(hostedEndpoint);
-      url.searchParams.set('action', 'data');
+      const url = hostedDataRequestUrl(hostedEndpoint);
       const refreshedHosted = validateHosted(await request(url, 'hosted/data', {}, 90000));
+      console.log('Hosted source latest:', hostedRaceIdentity(refreshedHosted));
+      console.log('Hosted published latest:', hostedRaceIdentity(old?.hosted));
       const priorHostedCount = Array.isArray(old?.hosted?.sessions) ? old.hosted.sessions.length : 0;
       if (priorHostedCount && refreshedHosted.sessions.length < priorHostedCount) {
         throw new Error(`Hosted source regressed from ${priorHostedCount} to ${refreshedHosted.sessions.length} session rows`);
@@ -909,6 +928,9 @@ export async function sync({
         driverRatings: mergeHostedDriverRatings(old?.hosted, refreshedHosted)
       };
       console.log(`Hosted verified: ${hosted.sessions.length} session rows; ${hosted.rankings.length} rankings; ${Object.keys(hosted.driverRatings || {}).length} remembered iRatings.`);
+      if (hostedRaceIdentity(refreshedHosted) === hostedRaceIdentity(old?.hosted)) {
+        console.log('Hosted latest race unchanged in source; if a newer race has finished, verify the Apps Script action=data response.');
+      }
     } catch (e) {
       console.warn('HOSTED DATA STALE: Hosted refresh failed; retaining last Hosted snapshot:', e.message);
       console.warn('Check the Hosted web app URL, deployment and response time. The homepage cannot show a newer race until this source responds.');
