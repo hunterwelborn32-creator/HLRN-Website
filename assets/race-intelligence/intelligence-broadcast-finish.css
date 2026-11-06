@@ -1,0 +1,43 @@
+/* HLRN Race Intelligence visual finish — cosmetic selectors only.
+   No chart dimensions, metric values, driver imagery, or interaction rules. */
+body.ri-cinematic-page {
+  --rif-red:#df2845;
+  --rif-gold:#d6a74e;
+  --rif-shadow:rgba(5,12,24,.16);
+}
+body.ri-cinematic-page .shell :is(.brand-title,.cc-command-title,.nn-page-title,.story-title,.deep-title) {
+  text-wrap:balance;
+}
+body.ri-cinematic-page .shell :is(.cc-command-kicker,.live-control-label,.deep-label,.stat-label) {
+  letter-spacing:.12em;
+}
+body.ri-cinematic-page .shell :is(.cc-command-deck,.cc-meter-card,.live-control-strip,.category-deep,.story-card) {
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 8px 24px var(--rif-shadow);
+}
+body.ri-cinematic-page .shell :is(.cc-command-deck,.cc-meter-card) {
+  border-color:rgba(160,174,195,.27);
+}
+body.ri-cinematic-page .shell .cc-command-title span {
+  text-shadow:0 0 18px rgba(223,40,69,.1);
+}
+body.ri-cinematic-page .shell :is(.league-btn,.refresh,.deep-action):focus-visible {
+  outline:3px solid var(--rif-gold)!important;
+  outline-offset:3px!important;
+}
+@media (hover:hover) and (pointer:fine) {
+  body.ri-cinematic-page .shell .league-btn {
+    transition:box-shadow .18s ease,filter .18s ease;
+  }
+  body.ri-cinematic-page .shell .league-btn:hover {
+    box-shadow:inset 0 -2px 0 var(--rif-red);
+  }
+}
+html[data-hlrn-theme="light"] body.ri-cinematic-page {
+  --rif-shadow:rgba(15,24,36,.075);
+}
+html[data-hlrn-theme="light"] body.ri-cinematic-page .shell :is(.cc-command-deck,.cc-meter-card,.live-control-strip,.category-deep,.story-card) {
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 7px 20px var(--rif-shadow);
+}
+@media (prefers-reduced-motion:reduce) {
+  body.ri-cinematic-page .shell .league-btn {transition:none!important;}
+}
