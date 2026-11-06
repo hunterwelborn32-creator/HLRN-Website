@@ -1,0 +1,46 @@
+/* HLRN Results page broadcast finish — visual only.
+   No sizing/layout changes, data display overrides, or race-report styling. */
+.hlrn-race-center {
+ --rb-accent-red:#df2c46;
+ --rb-accent-gold:#dfb45e;
+ --rb-shadow:rgba(5,12,24,.19);
+}
+.hlrn-race-center .race-header h1 {
+ text-wrap:balance;
+}
+.hlrn-race-center .header-line {
+ box-shadow:0 0 12px rgba(223,44,70,.17);
+}
+.hlrn-race-center :is(.ultra-raceboard,.race-preview-launch,.bx-statusbar,.league-column .race-card,.next-events-section) {
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.055),0 8px 24px var(--rb-shadow);
+}
+.hlrn-race-center :is(.ultra-board-kicker,.ultra-board-label,.countdown-title,.info-label) {
+ letter-spacing:.12em;
+}
+.hlrn-race-center .league-column .race-card {
+ border-top-color:var(--rb-accent-red);
+}
+.hlrn-race-center .league-column:first-child .race-card {
+ box-shadow:inset 0 2px 0 rgba(223,180,94,.23),0 8px 24px var(--rb-shadow);
+}
+.hlrn-race-center .league-column:last-child .race-card {
+ box-shadow:inset 0 2px 0 rgba(223,44,70,.2),0 8px 24px var(--rb-shadow);
+}
+.hlrn-race-center :is(a,button):focus-visible {
+ outline:3px solid var(--rb-accent-gold);
+ outline-offset:3px;
+}
+@media (hover:hover) and (pointer:fine) {
+ .hlrn-race-center .race-preview-launch-actions a {
+  transition:filter .18s ease,box-shadow .18s ease;
+ }
+ .hlrn-race-center .race-preview-launch-actions a:hover {
+  filter:brightness(1.06);
+  box-shadow:0 5px 17px rgba(0,0,0,.16);
+ }
+}
+@media(prefers-reduced-motion:reduce) {
+ .hlrn-race-center .race-preview-launch-actions a {
+  transition:none!important;
+ }
+}
