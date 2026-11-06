@@ -85,3 +85,51 @@ html[data-hlrn-theme="dark"] #hlrn-home:not(.rn-active) #hlrnRaceDayHome :is(.h1
   transition:none!important;transform:none!important;
  }
 }
+
+/* Homepage navigation + section rhythm: visual-only, scoped away from live race takeover. */
+#hlrn-home:not(.rn-active) #hlrn-global-nav {
+ border-bottom-color:rgba(143,157,175,.25)!important;
+ box-shadow:0 6px 22px rgba(0,0,0,.18)!important;
+}
+#hlrn-home:not(.rn-active) #hlrn-global-nav .hgn-link {
+ transition:background-color .18s ease,color .18s ease,box-shadow .18s ease!important;
+}
+#hlrn-home:not(.rn-active) #hlrn-global-nav .hgn-link:is(:hover,:focus-visible) {
+ box-shadow:inset 0 -2px 0 var(--hp-red)!important;
+}
+#hlrn-home:not(.rn-active) #hlrn-global-nav .hgn-link.active {
+ box-shadow:inset 0 -2px 0 var(--hp-red)!important;
+}
+#hlrn-home:not(.rn-active) #hlrn-global-nav .hgn-brand:focus-visible,
+#hlrn-home:not(.rn-active) #hlrn-global-nav .hgn-link:focus-visible,
+#hlrn-home:not(.rn-active) #hlrn-global-nav .hgn-menu:focus-visible {
+ outline:2px solid #f0bd52!important;outline-offset:-3px!important;
+}
+#hlrn-home:not(.rn-active) #hlrnRaceDayHome .h10-section {
+ padding-top:58px;padding-bottom:58px;
+}
+#hlrn-home:not(.rn-active) #hlrnRaceDayHome .h10-section.compact {
+ padding-top:48px;padding-bottom:48px;
+}
+#hlrn-home:not(.rn-active) #hlrnRaceDayHome .h10-section-head {
+ margin-bottom:20px;
+}
+#hlrn-home:not(.rn-active) #hlrnRaceDayHome #hlrnNextGen .ng-section-head {
+ margin-bottom:18px;
+}
+@media(max-width:720px) {
+ #hlrn-home:not(.rn-active) #hlrnRaceDayHome .h10-section {
+  padding-top:42px;padding-bottom:42px;
+ }
+ #hlrn-home:not(.rn-active) #hlrnRaceDayHome .h10-section.compact {
+  padding-top:38px;padding-bottom:38px;
+ }
+ #hlrn-home:not(.rn-active) #hlrnRaceDayHome .h10-section-head {
+  margin-bottom:16px;
+ }
+}
+@media(prefers-reduced-motion:reduce) {
+ #hlrn-home:not(.rn-active) #hlrn-global-nav .hgn-link {
+  transition:none!important;
+ }
+}
