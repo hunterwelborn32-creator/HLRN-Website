@@ -1,0 +1,36 @@
+/* HLRN Adventures cinematic broadcast finish — visual layer only.
+   Keeps episode links, imagery, shelf geometry, stories and scripts intact. */
+.hlrn-adventures-page{
+ --adv-glow:rgba(233,52,75,.24);
+ --adv-shadow:rgba(8,12,23,.19);
+ --adv-gold:#e8bb6c;
+}
+.hlrn-adventures-page .hero{isolation:isolate;box-shadow:0 16px 38px var(--adv-shadow)}
+.hlrn-adventures-page .hero:before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(110deg,transparent 12%,rgba(255,255,255,.065) 45%,transparent 62%);mix-blend-mode:screen}
+.hlrn-adventures-page .hero-bottomline{filter:drop-shadow(0 2px 8px rgba(0,0,0,.6))}
+.hlrn-adventures-page .series-intro{box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 14px 30px var(--adv-shadow)}
+.hlrn-adventures-page .series-intro h1{text-wrap:balance}
+.hlrn-adventures-page .section-top h2{text-wrap:balance}
+.hlrn-adventures-page .section-kicker{letter-spacing:.19em}
+.hlrn-adventures-page .episode-tile{position:relative;isolation:isolate;box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 9px 23px var(--adv-shadow)}
+.hlrn-adventures-page .episode-tile:after{content:"";position:absolute;inset:auto 0 0;height:3px;pointer-events:none;background:linear-gradient(90deg,#e52e45,var(--adv-gold),transparent 85%);opacity:.58}
+.hlrn-adventures-page .episode-art:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.09),transparent 50%,rgba(0,0,0,.19))}
+.hlrn-adventures-page .episode-numeral{box-shadow:0 4px 13px rgba(0,0,0,.22)}
+.hlrn-adventures-page .episode-details h3{text-wrap:balance}
+.hlrn-adventures-page .episode-bottom{border-top-color:rgba(195,197,209,.23)}
+.hlrn-adventures-page .about-show{box-shadow:0 12px 30px var(--adv-shadow),inset 0 1px 0 rgba(255,255,255,.06)}
+.hlrn-adventures-page :is(a,button):focus-visible{outline:3px solid var(--adv-gold);outline-offset:3px}
+@media(hover:hover) and (pointer:fine){
+ .hlrn-adventures-page a.episode-tile:hover{box-shadow:0 18px 36px var(--adv-shadow),0 0 0 1px var(--adv-glow)}
+ .hlrn-adventures-page a.episode-tile:hover:after{opacity:1}
+ .hlrn-adventures-page .btn:hover{box-shadow:0 7px 18px rgba(0,0,0,.19)}
+}
+html[data-hlrn-theme="light"] .hlrn-adventures-page{--adv-shadow:rgba(26,30,44,.17);--adv-gold:#f5c577}
+html[data-hlrn-theme="dark"] .hlrn-adventures-page{--adv-shadow:rgba(0,0,0,.36);--adv-gold:#ecc16b;--adv-glow:rgba(243,67,88,.29)}
+@media(max-width:560px){
+ .hlrn-adventures-page .episode-tile{box-shadow:0 5px 15px var(--adv-shadow)}
+ .hlrn-adventures-page .hero:before{opacity:.6}
+}
+@media(prefers-reduced-motion:reduce){
+ .hlrn-adventures-page :is(.episode-tile,.episode-art img,.btn){transition:none!important}
+}
