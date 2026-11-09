@@ -121,8 +121,8 @@ body.rn-active #raceWeekend::before {display:none}
   background:var(--rw-art) 62% center/cover;
   clip-path:polygon(8% 0,100% 0,100% 100%,0 100%);
 }
-#raceWeekend[data-vehicle="truck"] .rw-cover {background-image:url("../network-art/trucks-night.webp")}
-html[data-hlrn-theme="light"] #raceWeekend[data-vehicle="truck"] .rw-cover {background-image:url("../network-art/trucks-day.webp")}
+#raceWeekend[data-vehicle="truck"] .rw-cover {background-image:url("../network-art/hlrn-91-night.webp")}
+html[data-hlrn-theme="light"] #raceWeekend[data-vehicle="truck"] .rw-cover {background-image:url("../network-art/hlrn-91-day.webp")}
 #raceWeekend[data-vehicle="stock"] .rw-cover {background-image:url("../network-art/oval-night.webp")}
 html[data-hlrn-theme="light"] #raceWeekend[data-vehicle="stock"] .rw-cover {background-image:url("../network-art/oval-day.webp")}
 #raceWeekend .rw-band {border:0;background:var(--rw-paper);color:var(--rw-ink);padding-block:9px;border-bottom:1px solid var(--rw-line)}

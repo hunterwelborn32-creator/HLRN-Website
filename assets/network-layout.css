@@ -340,8 +340,18 @@ html[data-network-layout="broadcasters"] .bc-player-card {border:1px solid var(-
 html[data-network-layout="broadcasters"] .bc-player-top {border-bottom:3px solid var(--net-accent)!important}
 html[data-network-layout="home"] #hlrnNextGen .ng-section-head {
   padding:clamp(18px,3vw,40px)!important;
-  background:var(--photo-veil),var(--oval-photo) center 56%/cover!important;
+  --inside-race-art:url("./network-art/hlrn-34-day.webp");
+  background:var(--photo-veil),var(--inside-race-art) center 59%/cover!important;
   border-inline-start:4px solid var(--net-accent)!important;
+}
+html[data-network-layout="home"][data-hlrn-theme="dark"] #hlrnNextGen .ng-section-head {
+  --inside-race-art:url("./network-art/hlrn-34-night.webp");
+}
+@media(max-width:650px) {
+  html[data-network-layout="home"] #hlrnNextGen .ng-section-head {
+    padding-bottom:clamp(90px,28vw,150px)!important;
+    background:linear-gradient(var(--net-panel) 50%,transparent 75%),var(--inside-race-art) right bottom/auto 62% no-repeat,var(--net-panel)!important;
+  }
 }
 html[data-network-layout="home"] #hlrnNextGen .ng-section-head :is(h2,p) {color:var(--net-ink)!important}
 html[data-network-layout="home"] #raceWeekend .rw-board {
@@ -449,8 +459,8 @@ html[data-network-layout] .race-program[open] {
 .race-program .rp-picker {display:flex;align-items:center;gap:16px;padding:10px 20px;color:var(--net-muted)!important;font-size:.85rem;font-weight:750}
 .race-program select {flex:1;min-width:0}
 .race-program .rp-art {height:clamp(120px,22vh,230px);background:var(--oval-photo) 65% center/cover}
-.race-program .rp-art[data-vehicle="truck"] {background-image:url("./network-art/trucks-day.webp")}
-html[data-hlrn-theme="dark"] .rp-art[data-vehicle="truck"] {background-image:url("./network-art/trucks-night.webp")}
+.race-program .rp-art[data-vehicle="truck"] {background-image:url("./network-art/hlrn-91-day.webp")}
+html[data-hlrn-theme="dark"] .rp-art[data-vehicle="truck"] {background-image:url("./network-art/hlrn-91-night.webp")}
 .race-program .rp-copy {padding:16px 20px 12px}
 .race-program .rp-copy p {margin:6px 0;color:var(--net-muted)!important;line-height:1.45}
 .race-program .rp-copy .rp-series,.race-program .rp-facts dt {font:750 .72rem/1.35 Inter,Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--net-accent)!important}
