@@ -340,12 +340,12 @@ html[data-network-layout="broadcasters"] .bc-player-card {border:1px solid var(-
 html[data-network-layout="broadcasters"] .bc-player-top {border-bottom:3px solid var(--net-accent)!important}
 html[data-network-layout="home"] #hlrnNextGen .ng-section-head {
   padding:clamp(18px,3vw,40px)!important;
-  --inside-race-art:url("./network-art/hlrn-34-day.webp");
+  --inside-race-art:url("./network-art/hlrn-34-day.webp?v=right1");
   background:var(--photo-veil),var(--inside-race-art) center 59%/cover!important;
   border-inline-start:4px solid var(--net-accent)!important;
 }
 html[data-network-layout="home"][data-hlrn-theme="dark"] #hlrnNextGen .ng-section-head {
-  --inside-race-art:url("./network-art/hlrn-34-night.webp");
+  --inside-race-art:url("./network-art/hlrn-34-night.webp?v=right1");
 }
 @media(max-width:650px) {
   html[data-network-layout="home"] #hlrnNextGen .ng-section-head {
