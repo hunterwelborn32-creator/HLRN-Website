@@ -98,6 +98,7 @@ function phaseFor(today){
     write("rwTrack", race.track);
     write("rwDescription", race.description || "");
     byId("rwLength").parentElement.hidden = !Number(race.miles);
+    panel.dataset.vehicle = /truck/i.test(race.car || "") ? "truck" : "stock";
     write("rwCar", race.car || "TBA");
     write("rwLaps", String(race.laps || "TBA"));
     write("rwLength", Number(race.miles) > 0 ? Number(race.miles) + " mi" : "TBA");
@@ -150,7 +151,10 @@ function phaseFor(today){
     }
     const source = isTiming ? byId("ngLiveLeader") : byId(event.league === "sunday" ? "homeSundayLeader" : "homeMondayLeader");
     const name = source?.textContent.trim();
-    write("rwDetail", name && !/^(connecting[… .]*|--|—)$/i.test(name) ? name : "Pending");
+    const validName = name && !/^(connecting[… .]*|--|—)$/i.test(name);
+    const showBanking = !isTiming && event.race.banking;
+    write("rwDetailLabel", isTiming ? "Race leader" : showBanking ? "Banking" : "Points leader");
+    write("rwDetail", showBanking ? event.race.banking : validName ? name : "Pending");
   }
   function resume() {
     clearInterval(interval);

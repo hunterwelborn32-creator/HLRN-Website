@@ -418,3 +418,65 @@ html[data-network-layout="control-center"][data-network-standalone] .hero :is(h1
   html[data-network-layout="adventures"] .episode-cover {grid-template-columns:1fr;gap:0}
   html[data-network-layout="adventures"] .episode-cover > img {max-height:190px}
 }
+
+html[data-network-layout] .network-related a[data-race-program] {
+  display:inline-flex!important;font-weight:800;color:var(--net-accent)!important;
+}
+html[data-network-layout] .network-related a[data-race-program]::before {
+  content:"";width:14px;height:10px;margin-right:5px;
+  background:repeating-linear-gradient(110deg,var(--net-accent) 0 3px,transparent 3px 5px);
+}
+html[data-network-layout] .race-program:not([open]) {display:none!important}
+html[data-network-layout] .race-program[open] {
+  width:min(780px,calc(100vw - 28px));max-width:100%;max-height:calc(100dvh - 32px);
+  box-sizing:border-box;margin:auto;padding:0;overflow:auto;overscroll-behavior:contain;
+  border:1px solid var(--net-line);border-top:4px solid var(--net-accent);border-radius:6px;
+  background:var(--net-panel);color:var(--net-ink);box-shadow:0 26px 100px #0006;
+  font-family:Inter,"Segoe UI",Arial,sans-serif;
+}
+.race-program::backdrop {background:#060d18b8}
+.race-program .rp-header {
+  display:flex;gap:14px;align-items:center;justify-content:space-between;
+  position:sticky;top:0;background:var(--net-panel);border-bottom:1px solid var(--net-line);
+  padding:9px 20px;z-index:2;
+}
+.race-program .rp-header h2 {margin:0;color:var(--net-ink)!important;font:850 1.65rem/1 var(--display-face)!important;text-transform:uppercase}
+.race-program .rp-close,.race-program select {
+  min-height:44px;border:1px solid var(--net-line);border-radius:4px;
+  background:var(--net-panel);color:var(--net-ink)!important;font:650 .9rem/1.25 Inter,Arial,sans-serif;padding:7px 12px;
+}
+.race-program .rp-close {cursor:pointer}
+.race-program .rp-picker {display:flex;align-items:center;gap:16px;padding:10px 20px;color:var(--net-muted)!important;font-size:.85rem;font-weight:750}
+.race-program select {flex:1;min-width:0}
+.race-program .rp-art {height:clamp(120px,22vh,230px);background:var(--oval-photo) 65% center/cover}
+.race-program .rp-art[data-vehicle="truck"] {background-image:url("./network-art/trucks-day.webp")}
+html[data-hlrn-theme="dark"] .rp-art[data-vehicle="truck"] {background-image:url("./network-art/trucks-night.webp")}
+.race-program .rp-copy {padding:16px 20px 12px}
+.race-program .rp-copy p {margin:6px 0;color:var(--net-muted)!important;line-height:1.45}
+.race-program .rp-copy .rp-series,.race-program .rp-facts dt {font:750 .72rem/1.35 Inter,Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--net-accent)!important}
+.race-program .rp-copy h3 {margin:5px 0;font:900 italic clamp(2rem,5vw,3.8rem)/.98 var(--display-face)!important;color:var(--net-ink)!important;overflow-wrap:anywhere}
+.race-program .rp-copy .rp-start {font-weight:750;color:var(--net-ink)!important}
+.race-program .rp-facts {display:grid;grid-template-columns:repeat(auto-fit,minmax(94px,1fr));gap:1px;border-block:1px solid var(--net-line);background:var(--net-line);margin:0}
+.race-program .rp-facts div {padding:12px;background:var(--net-alt)}
+.race-program .rp-facts dd {margin:4px 0 0;font:750 1.25rem/1.15 var(--display-face);color:var(--net-ink)}
+.race-program .rp-links {display:flex;flex-wrap:wrap;gap:6px 10px;padding:9px 20px}
+.race-program .rp-links a,.race-program .rp-body > a {display:inline-flex;align-items:center;min-height:44px;padding:0 12px;color:var(--net-ink)!important;font-size:.9rem;font-weight:750}
+.race-program .rp-links a:first-child {color:var(--net-panel)!important;background:var(--net-accent);border-radius:3px}
+.race-program .rp-message {margin:20px;color:var(--net-muted)!important}
+@media(max-width:600px) {
+  .race-program .rp-picker {display:grid;gap:4px;padding:8px 12px}
+  .race-program select {width:100%;font-size:16px}
+  .race-program .rp-art {height:122px}
+  .race-program .rp-copy,.race-program .rp-header {padding-inline:12px}
+  .race-program .rp-links {padding:8px;gap:0 4px}
+  .race-program .rp-links a {padding-inline:7px;font-size:.8rem}
+  .race-program .rp-facts {grid-template-columns:repeat(3,minmax(0,1fr))}
+  html[data-network-layout] .network-related:has(a[data-race-program]) a:not([data-race-program]):not(#hlrn-team-return) {display:none}
+}
+html[data-network-layout] #hlrn-network-mode-banner .nx-network-state {font-size:.7rem!important}
+html[data-network-layout] #hlrn-network-mode-banner > strong {font-size:.81rem!important}
+html[data-network-layout] #hlrn-network-mode-banner .nx-network-note {font-size:.79rem!important}
+html[data-network-layout] #hlrn-network-mode-banner > a {min-height:34px!important;font-size:.72rem!important}
+@media(max-width:760px){
+  html[data-network-layout] #hlrn-network-mode-banner > a {min-height:40px!important}
+}

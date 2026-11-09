@@ -238,11 +238,13 @@ ready(async function(){
           ?"Official HLRN results are posted."
           :liveish
             ?"Race Center is active with live HLRN timing and race-control data."
-            :"HLRN race-day coverage is active.");
+            :active?.race
+              ? [active.race.track, active.race.car, active.race.laps && active.race.laps+" laps"].filter(Boolean).join(" · ")
+              : "HLRN race-day coverage is active.");
 
     banner.className="mode-"+mode+" "+(series||"")+" "+(manual?"manual":"automatic");
     banner.innerHTML=`
-      <div class="nx-network-state"><i></i><span>${manual?"NETWORK CONTROL":"AUTOMATIC NETWORK"}</span></div>
+      <div class="nx-network-state"><i></i><span>${manual?"NETWORK CONTROL":"HLRN"}</span></div>
       <strong>${esc(headline)}</strong>
       <span class="nx-network-note">${esc(note)}</span>
       <a href="${mode==="final"?url("results/"):mode==="checkered"?url("live/?section=report"):url("live/")}">${mode==="final"?"OFFICIAL RESULTS":mode==="checkered"?"REVIEW RACE":"RACE CENTER"} →</a>`;
@@ -435,7 +437,7 @@ ready(async function(){
   }
 
   async function installHomeRaceHub(){
-    if(route!=="home"||document.getElementById("hlrn-home-race-hub")) return;
+    if(route!=="home"||document.getElementById("raceWeekend")||document.getElementById("hlrn-home-race-hub")) return;
     const [sch,data]=await Promise.all([loadSchedules(),loadData()]);
     const sunday=nextRace(sch?.leagues?.sunday),monday=nextRace(sch?.leagues?.monday);
     const sunLeader=data?.leagues?.sunday?.drivers?.slice()?.sort((a,b)=>(a.rank||999)-(b.rank||999))[0];

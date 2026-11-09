@@ -767,7 +767,7 @@ function start(){
     const shell = [...document.scripts].find(el => /\/site-shell\.js(?:\?|$)/.test(el.src));
     const layout = document.createElement("script");
     layout.dataset.networkLayout = "";
-    layout.src = new URL("network-layout.js?v=20261109.1", shell?.src || new URL("/assets/site-shell.js", location.origin));
+    layout.src = new URL("network-layout.js?v=20261109.3", shell?.src || new URL("/assets/site-shell.js", location.origin));
     document.head.append(layout);
   }
 
@@ -1252,7 +1252,7 @@ function start(){
   }
   if(!document.querySelector('script[data-hlrn-network-upgrades]')){
     const networkScript=document.createElement("script");
-    networkScript.src=url("assets/network-upgrades.js?v=20261001control1");
+    networkScript.src=url("assets/network-upgrades.js?v=20261109program");
     networkScript.defer=true;
     networkScript.setAttribute("data-hlrn-network-upgrades","");
     document.head.appendChild(networkScript);

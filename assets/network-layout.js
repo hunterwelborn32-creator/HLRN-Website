@@ -30,7 +30,7 @@
   html.dataset.networkGroup = grouped.find(([, routes]) => routes.includes(key))?.[0] || "network";
   const sheet = document.createElement("link");
   sheet.rel = "stylesheet";
-  sheet.href = new URL("network-layout.css?v=20261109.2", script.src);
+  sheet.href = new URL("network-layout.css?v=20261109.3", script.src);
   document.head.append(sheet);
 
   let themeButton;
@@ -54,7 +54,20 @@
     });
   }
   // Keep embedded scoring views and the homepage takeover free of an extra navigation row.
-  if (window.self !== window.top || key === "home") return;
+  if (window.self !== window.top) return;
+  const programModule = new URL("race-program.js?v=1", script.src).href;
+  document.addEventListener("click", async event => {
+    const trigger = event.target.closest?.("a[data-race-program]");
+    if (!trigger || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    try {
+      const { openRaceProgram } = await import(programModule);
+      openRaceProgram(root, trigger);
+    } catch {
+      location.assign(trigger.href);
+    }
+  });
+  if (key === "home") return;
   const related = {
     competition:["race-preview","results","standings"],
     timing:["live","track-map","race-strategy"],
@@ -86,6 +99,10 @@
     const target = name === "news" ? "news/race-recaps/" : name + "/";
     actions.append(link(labels[name], target));
   }
+  const programLink = link("Race program", "race-preview/");
+  programLink.dataset.raceProgram = "";
+  programLink.setAttribute("aria-haspopup", "dialog");
+  actions.prepend(programLink);
   if (standalone) {
     themeButton = document.createElement("button");
     themeButton.type = "button";
