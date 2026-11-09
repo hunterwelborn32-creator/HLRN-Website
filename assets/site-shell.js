@@ -763,6 +763,14 @@ function start(){
     }
   }
 
+  if (!document.querySelector("script[data-network-layout]")) {
+    const shell = [...document.scripts].find(el => /\/site-shell\.js(?:\?|$)/.test(el.src));
+    const layout = document.createElement("script");
+    layout.dataset.networkLayout = "";
+    layout.src = new URL("network-layout.js?v=20261109.1", shell?.src || new URL("/assets/site-shell.js", location.origin));
+    document.head.append(layout);
+  }
+
   // Keep only one shared HLRN navigation instance.
   document.querySelectorAll("#hlrn-global-nav").forEach((el,i)=>{if(i>0)el.remove();});
   if(document.getElementById("hlrn-global-nav")) return;
@@ -826,7 +834,7 @@ function start(){
   document.documentElement.classList.toggle("hlrn-mobile-specialized",specializedMobile);
   document.documentElement.classList.toggle("hlrn-mobile-global",!specializedMobile);
 
-  let active="home";
+  let active=route==="indexhtml"?"home":route;
   if(path.includes("/live/")) active="live";
   else if(path.includes("/standings/")) active="standings";
   else if(path.includes("/intelligence/")||path.includes("/race-intelligence/")) active="intelligence";
@@ -852,6 +860,13 @@ function start(){
     ["intelligence","Intelligence","race-intelligence/"],
   ];
   const more=[
+    ["race-preview","Race Preview","race-preview/"],
+    ["race-reports","Race Reports","race-reports/"],
+    ["race-strategy","Race Strategy","race-strategy/"],
+    ["track-map","Track Map","track-map/"],
+    ["stats","Driver Statistics","stats/"],
+    ["fantasy","Fantasy","fantasy/"],
+    ["news","Race Recaps","news/race-recaps/"],
     ["broadcast","Watch HLRN","broadcasters/"],
     ["rules","Rules","rules/"],
     ["adventures","Adventures","adventures/"],

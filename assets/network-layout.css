@@ -1,0 +1,209 @@
+/* Site section identity follows the shared Day Race / Night Race preference. */
+html[data-network-layout] {
+  --net-bg:#eaf0f2; --net-panel:#fffdf8; --net-alt:#e6ecee; --net-line:#c3ced1;
+  --net-ink:#142334; --net-muted:#465b67; --net-accent:#993b22; --net-bright:#f5a073;
+  --net-shadow:0 8px 22px #15233114;
+  --net-day:url("./homepage-art/HLRN-Race-Week-Panel-Day.webp");
+  --net-night:url("./homepage-art/HLRN-Race-Week-Panel-Night.webp"); --net-art:var(--net-day);
+}
+html[data-network-layout][data-hlrn-theme="dark"] {
+  --net-bg:#09111c; --net-panel:#101e2c; --net-alt:#172737; --net-line:#384c5f;
+  --net-ink:#f3f6fa; --net-muted:#b3c4cf; --net-accent:var(--net-bright);
+  --net-shadow:0 12px 28px #0005; --net-art:var(--net-night);
+}
+html[data-network-group="garage"] {
+  --net-day:url("./homepage-art/HLRN-Team-Headquarters-Day.webp"); --net-night:url("./homepage-art/HLRN-Team-Headquarters-Night.webp");
+  --net-accent:#9b401c; --net-bright:#ffb179;
+}
+html[data-network-group="competition"] {
+  --net-day:url("./homepage-art/HLRN-Standings-Day.webp"); --net-night:url("./homepage-art/HLRN-Standings-Night.webp");
+  --net-accent:#825408; --net-bright:#ffcf62;
+}
+html[data-network-group="timing"] {
+  --net-day:url("./homepage-art/HLRN-Race-Intelligence-Day.webp"); --net-night:url("./homepage-art/HLRN-Race-Intelligence-Night.webp");
+  --net-accent:#145e80; --net-bright:#71d8fc;
+}
+html[data-network-group="features"] {
+  --net-day:url("./homepage-art/HLRN-Adventures-Day.webp"); --net-night:url("./homepage-art/HLRN-Adventures-Night.webp");
+  --net-accent:#9a314e; --net-bright:#ffa2b4;
+}
+html[data-network-layout="drivers"] {
+  --net-day:url("./homepage-art/HLRN-Drivers-Day.webp"); --net-night:url("./homepage-art/HLRN-Drivers-Night.webp");
+}
+html[data-network-layout] .network-section-bar {
+  position:relative; isolation:isolate; box-sizing:border-box; width:100%; margin:0;
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0 20px;
+  padding:0 max(4%,calc((100% - 1400px)/2)); min-height:50px;
+  border:0; border-block:1px solid var(--net-line); color:var(--net-ink);
+  background:linear-gradient(100deg,var(--net-panel) 18%,color-mix(in srgb,var(--net-panel) 88%,transparent) 52%,color-mix(in srgb,var(--net-panel) 95%,transparent)),var(--net-art) center 56%/cover,var(--net-panel);
+  font:650 .85rem/1.2 Inter,"Segoe UI",Arial,sans-serif;
+}
+html[data-network-layout] .network-trail,html[data-network-layout] .network-related {
+  display:flex; align-items:center; flex-wrap:wrap; min-width:0; gap:0 12px;
+}
+html[data-network-layout] .network-section-bar :is(a,button,span[aria-current]) {
+  display:inline-flex;align-items:center; min-height:44px; background:transparent; border:0; margin:0;
+  color:var(--net-ink)!important; text-decoration:none; white-space:normal; line-height:1.2;
+}
+html[data-network-layout] .network-section-bar a:hover {text-decoration:underline;text-underline-offset:4px}
+html[data-network-layout] .network-trail > :first-child {font-weight:900;letter-spacing:.08em;color:var(--net-accent)!important}
+html[data-network-layout] .network-trail > :last-child {font-weight:800}
+html[data-network-layout] .network-trail > :last-child::before {content:"";width:2px;height:13px;transform:skew(-18deg);background:var(--net-accent);margin-right:12px}
+html[data-network-layout] .network-related a {font-size:.8rem;color:var(--net-muted)!important}
+html[data-network-layout] .network-related button {cursor:pointer;font:inherit;padding:0 12px;border-inline-start:1px solid var(--net-line)}
+html[data-network-layout] .network-related button::before {content:"";width:10px;height:10px;border-radius:50%;background:var(--net-accent);margin-right:7px}
+html[data-network-layout] :is(a,button,input,select,summary):focus-visible {outline:3px solid var(--net-accent)!important;outline-offset:3px}
+html[data-network-layout] #hlrn-global-nav .hgn-links > a.active {box-shadow:inset 0 -3px var(--net-accent)!important}
+html[data-network-layout] #hlrn-global-footer {border-top:3px solid var(--net-accent)!important}
+html[data-network-layout] :is(.table-shell,.table-scroll,.tablewrap,.table-wrap) {max-width:100%;overflow-x:auto;scrollbar-color:var(--net-line) var(--net-panel)}
+html[data-network-layout] :is(.table-shell,.table-scroll,.tablewrap,.table-wrap) :is(td,th),
+html[data-network-layout] :is(.stat-value,.summary-value,.score-num,.career-stat,.pv-fact,.ads-value) {font-variant-numeric:tabular-nums}
+
+/* Section titles keep their original content and wallpaper. */
+html[data-network-layout] body :is(.pv-section-head,.bc-section-head,.profile-section-heading,.driver-v2-snapshot-head,.myh-section-head,.hlrn-recap-section-head,.cc-panel-head,.panel-head,.section-header,.team-tools h2,.h10-section-head,.h20-head,.section-top,.ads-top,.mastinner) {
+  border-inline-start:4px solid var(--net-accent)!important; padding-inline-start:clamp(12px,1.5vw,22px)!important;
+}
+html[data-network-layout] :is(.driver-metric,.career-stat,.pv-fact,.statbox,.status-box,.scanner-stat,.summary-card,.cc-meter-card,.team-tools,.quick-card,.product,.bc-flow-card,.bc-person,.bc-replay-card,.myh-section,.report-card,.driver-v2-intel-card,.episode-tile,.hlrn-recap-card,.cc-panel,.ads-record-card) {
+  border-color:var(--net-line)!important;box-shadow:var(--net-shadow); min-width:0;
+}
+html[data-network-layout] :is(.driver-metric,.career-stat,.pv-fact,.scanner-stat,.cc-meter-card,.statbox,.driver-v2-intel-card) {
+  background:linear-gradient(130deg,var(--net-panel),var(--net-alt))!important;color:var(--net-ink)!important;
+}
+html[data-network-layout] :is(.driver-metric,.career-stat,.pv-fact,.scanner-stat,.statbox,.driver-v2-intel-card) :is(b,strong) {color:var(--net-ink)!important}
+html[data-network-layout] :is(.pv-section,.myh-section,.cc-panel,.league-column,.bc-section,.hlrn-recap-section,.rc-rule-tools,.driver-command,.ads-top,.race-preview-launch) {border-block-start:2px solid var(--net-accent)!important}
+html[data-network-layout] :is(.toolbar,.roster-tools,.cc-panel,.myh-section,.pv-section,.bc-section) :is(input[type="search"],select) {min-height:44px;border-color:var(--net-line)}
+html[data-network-layout="drivers"] .page .hero-copy,html[data-network-layout="news"] .page > .hero,
+html[data-network-layout="race-reports"] .masthead,html[data-network-layout="race-strategy"] .strategy > .top {
+  background:linear-gradient(105deg,var(--net-panel) 10%,color-mix(in srgb,var(--net-panel) 90%,transparent) 65%,color-mix(in srgb,var(--net-panel) 75%,transparent)),var(--net-art) right center/cover!important;
+  color:var(--net-ink)!important;border-bottom-color:var(--net-accent)!important;
+}
+html[data-network-layout="drivers"] .hero-copy h1,html[data-network-layout="news"] .hero h1,html[data-network-layout="race-reports"] .masthead h1 {color:var(--net-ink)!important}
+html[data-network-layout="drivers"] .career-strip {border-block:1px solid var(--net-line)!important}
+html[data-network-layout="drivers"] :is(.series-card,.driver-v2-snapshot) {border-radius:10px;border-color:var(--net-line)!important}
+html[data-network-layout="standings"] :is(.table-shell,.hosted-hub,.monday-ticker),html[data-network-layout="results"] .league-column {
+  box-shadow:var(--net-shadow);border-color:var(--net-line)!important;
+}
+html[data-network-layout="standings"] :is(.table-shell,.table-wrap) th,
+html[data-network-layout="race-reports"] .tablewrap th {
+  background:var(--net-alt)!important;color:var(--net-ink)!important;font-weight:800;letter-spacing:.045em;
+}
+html[data-network-layout="live"] .event-shell :is(.panel-head,.status-box),
+html[data-network-layout="track-map"] :is(.kpi,.heading),
+html[data-network-layout="race-strategy"] .metrics > *,
+html[data-network-layout="race-intelligence"] .cc-command-stat {
+  background:linear-gradient(110deg,var(--net-panel),var(--net-alt))!important;color:var(--net-ink)!important;
+  border-color:var(--net-line)!important;
+}
+html[data-network-layout="live"] .panel-title,html[data-network-layout="live"] .panel-mini-meta,
+html[data-network-layout="track-map"] .kpi :is(small,strong) {color:var(--net-ink)!important}
+html[data-network-layout="adventures"] .story {
+  background:var(--net-panel)!important;border-inline-start:4px solid var(--net-accent)!important;
+  padding:clamp(16px,3vw,32px);color:var(--net-ink)!important;line-height:1.7;box-shadow:var(--net-shadow);
+}
+html[data-network-layout="adventures"] .story p {max-width:72ch;margin-inline:auto;color:var(--net-ink)!important}
+html[data-network-layout="adventures"] :is(figure img,.story-image) {max-width:100%;height:auto}
+html[data-network-layout="rules"] .rule {border-bottom:1px solid var(--net-line)!important;line-height:1.55}
+html[data-network-layout="store"] .product-bottom {border-top:1px solid var(--net-line);padding-top:12px;align-items:center}
+html[data-network-layout="store"] .shop-button {min-height:44px;display:inline-flex;align-items:center}
+html[data-network-layout="store"] .price {font-variant-numeric:tabular-nums}
+html[data-network-layout="fantasy"] .weekstrip,html[data-network-layout="fantasy"] .entrybar {border-block-end:2px solid var(--net-accent)}
+html[data-network-layout="home"] :is(.h20-panel,.h20-results-panel) {border-color:var(--net-line)!important;box-shadow:var(--net-shadow)}
+
+/* Team garages and standalone utilities previously carried fixed palettes. */
+html[data-network-standalone] body {background-color:var(--net-bg)!important;color:var(--net-ink)!important}
+html[data-network-standalone][data-network-layout="team-pages"] body,
+html[data-network-standalone][data-network-layout="control-center"] body,
+html[data-network-layout="404"] body {
+  background:linear-gradient(115deg,color-mix(in srgb,var(--net-bg) 94%,transparent),color-mix(in srgb,var(--net-bg) 83%,transparent)),var(--net-art) center/cover fixed!important;
+}
+html[data-network-standalone][data-network-layout="team-pages"] .page > .hero {
+  background:radial-gradient(ellipse at 50% 20%,color-mix(in srgb,var(--net-panel) 78%,transparent),var(--net-panel) 80%),var(--net-art) center/cover!important;
+  border-bottom:3px solid var(--net-accent)!important;color:var(--net-ink)!important;
+}
+html[data-network-standalone][data-network-layout="team-pages"] :is(.driver,.panel,.dialog,.hlrn-combined-facts,.hlrn-combined-fact,.fact,.stat),
+html[data-network-layout="racing"] .aside,
+html[data-network-layout="control-center"][data-network-standalone] .card,
+html[data-network-layout="foundation-check.html"] .hlrn-foundation-panel,
+html[data-network-layout="404"] main {
+  color:var(--net-ink)!important;background:var(--net-panel)!important;border-color:var(--net-line)!important;box-shadow:var(--net-shadow);
+}
+html[data-network-standalone][data-network-layout="team-pages"] :is(.hero h1,.id strong,.num,.dialog h2,.panel h2,.fact strong,.hlrn-combined-fact strong,.stat strong) {color:var(--net-ink)!important;text-shadow:none!important}
+html[data-network-standalone][data-network-layout="team-pages"] :is(.sub,.hint,.eyebrow,.preview,.panel p,.dialog p,.fact small,.stat span,.id small,.hlrn-combined-fact small,footer),
+html[data-network-layout="control-center"][data-network-standalone] :is(.card p,.foot),
+html[data-network-layout="404"] p,html[data-network-layout="racing"] :is(main>p,.ticker,.driver .lap),html[data-network-layout="foundation-check.html"] p {color:var(--net-muted)!important}
+html[data-network-layout="racing"] .stage {color:white}
+html[data-network-layout="racing"] .controls :is(button,select) {min-height:44px}
+html[data-network-layout="404"] body {display:flex;flex-direction:column;justify-content:flex-start;align-items:stretch;padding:0}
+html[data-network-layout="404"] main {align-self:center;margin:clamp(36px,12vh,160px) 16px;width:min(calc(100% - 32px),580px);border-top:5px solid var(--net-accent)!important}
+html[data-network-standalone] .network-section-bar {text-align:start}
+@media (hover:hover) and (pointer:fine) {
+  html[data-network-layout] :is(a.episode-tile,a.team,button.driver,.report-card:has(a),.product:has(a)):hover {
+    outline:1px solid var(--net-accent);outline-offset:-1px;box-shadow:var(--net-shadow);
+  }
+}
+@media (max-width:760px) {
+  html[data-network-layout] .network-section-bar {padding-inline:12px;gap:0 12px;min-height:44px}
+  html[data-network-layout] .network-related {gap:0 10px}
+  html[data-network-layout] .network-trail > :last-child::before {margin-right:8px}
+  html[data-network-layout] .network-trail {gap:0 8px}
+  html[data-network-layout] .network-related a {font-size:.76rem}
+  html[data-network-layout] #hlrn-global-nav :is(.hgn-menu,.hgn-theme-toggle) {min-height:44px;min-width:44px}
+  html[data-network-layout] :is(.toolbar,.roster-tools,.team-tools,.pv-section,.bc-section,.cc-panel,.myh-section,.table-wrap,.table-shell,.section-head,.section-header) {min-width:0}
+  html[data-network-layout] .toolbar > :is(input,select) {min-width:0;max-width:100%;font-size:16px}
+  html[data-network-layout="team-pages"] .lower,html[data-network-layout="control-center"] .grid {grid-template-columns:minmax(0,1fr)}
+  html[data-network-layout="team-pages"] .dialog {box-sizing:border-box;max-height:calc(100dvh - 32px);overscroll-behavior:contain}
+  html[data-network-layout="adventures"] .story {line-height:1.6;margin-block:16px}
+  html[data-network-layout="drivers"] .page .hero-copy {padding:22px 16px!important}
+  html[data-network-layout="drivers"] .hero-copy h1 {font-size:clamp(30px,9vw,57px)!important;overflow-wrap:anywhere}
+  html[data-network-layout="racing"] .aside {max-height:36vh}
+  html[data-network-layout="404"] main {padding:25px 16px}
+}
+@media (max-width:540px) {
+  html[data-network-layout] .network-section-bar {justify-content:space-between}
+  html[data-network-layout] .network-related a:nth-child(2) {display:none}
+  html[data-network-standalone] .network-related a {display:none}
+}
+html[data-network-layout] .network-related #hlrn-team-return {
+  position:static;z-index:auto;display:inline-flex;min-height:44px;padding:0 9px;max-width:none;
+  font-size:.75rem;letter-spacing:0;color:var(--net-ink)!important;background:transparent;
+  border:0;border-inline-start:1px solid var(--net-line);box-shadow:none;
+}
+html[data-network-layout] .network-related #hlrn-team-return span {min-height:0}
+html[data-network-layout="team-pages"][data-hlrn-theme="light"] .page > .hero h1 em {color:#34557d}
+html[data-network-layout="team-pages"] .id {border-top-color:var(--net-accent)}
+html[data-network-layout="team-pages"] .roster .driver {border-radius:4px;overflow:hidden}
+html[data-network-layout="stats"] .ads-record,
+html[data-network-layout="stats"] .ads-card,
+html[data-network-layout="race-preview"] .pv-card,
+html[data-network-layout="fantasy"] .statbox {border-left:3px solid var(--net-accent)!important;box-shadow:var(--net-shadow)}
+html[data-network-layout="stats"] .ads-scroll {max-width:100%;overflow-x:auto;font-variant-numeric:tabular-nums}
+html[data-network-layout="stats"] .ads-table thead th {background:var(--net-alt)!important;color:var(--net-ink)!important}
+html[data-network-layout="rules"] .tab.active,html[data-network-layout="meet-the-admins"] .filter-btn.active {
+  box-shadow:inset 0 -3px var(--net-accent)!important;
+}
+html[data-network-layout="rules"] :is(.rules-jump-btn,.tab),html[data-network-layout="race-preview"] .pv-tab,
+html[data-network-layout="meet-the-admins"] .filter-btn {min-height:44px}
+html[data-network-layout="broadcasters"] :is(.bc-flow-card,.bc-replay-card),
+html[data-network-layout="store"] .product,
+html[data-network-layout="adventures"] .episode-tile {border-bottom:3px solid var(--net-accent)!important}
+html[data-network-layout="store"] .product-bottom :is(a,.price) {font-weight:800}
+@media(max-width:540px){
+  html[data-network-layout="team-pages"] .network-section-bar:has(#hlrn-team-return) .network-related {
+    flex:1 1 100%; justify-content:space-between; border-top:1px solid var(--net-line);
+  }
+  html[data-network-layout="team-pages"] .network-related #hlrn-team-return {margin-inline-start:auto}
+}
+/* Broadcast mastheads paired with each section's existing track photography. */
+html[data-network-layout] :is(.pv-mast,.ads-top,.cc-top,.myh-hero,.brandbar,.cc-gate-card,.myh-gate-card,.hlrn-offair-hero) {
+  background:linear-gradient(95deg,var(--net-panel) 12%,color-mix(in srgb,var(--net-panel) 87%,transparent) 56%,color-mix(in srgb,var(--net-panel) 55%,transparent)),var(--net-art) center 55%/cover!important;
+  border-bottom-color:var(--net-accent)!important;color:var(--net-ink)!important;
+}
+html[data-network-layout] :is(.pv-mast,.ads-top,.cc-top,.myh-hero,.brandbar,.cc-gate-card,.myh-gate-card,.hlrn-offair-hero) :is(h1,h2) {color:var(--net-ink)!important}
+html[data-network-layout] :is(.pv-mast,.ads-top,.cc-top,.myh-hero,.hlrn-offair-hero) p {color:var(--net-muted)!important}
+html[data-network-layout] :is(.pv-mast,.hlrn-offair-hero) h1 :is(span,em) {color:var(--net-accent)!important}
+html[data-network-layout][data-hlrn-theme] #hlrn-global-nav .hgn-more-menu {
+  display:grid!important;grid-template-columns:1fr 1fr;gap:2px;
+  width:min(380px,85vw)!important;max-height:70vh;overflow-y:auto;border-top-color:var(--net-accent)!important;
+}
+html[data-network-layout] #hlrn-global-nav .hgn-mobile.open {max-height:calc(100dvh - 60px);overflow-y:auto;overscroll-behavior:contain}
+html[data-network-layout] #hlrn-global-nav .hgn-mobile-more-menu a {min-height:44px!important}

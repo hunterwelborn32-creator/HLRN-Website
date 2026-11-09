@@ -8,6 +8,12 @@ window.__HLRN_BANNED_VISUAL_V1__=true;
 (function installTeamReturnButton(){
   if(!/^\/team-pages\/(?!index(?:\.html)?$)(?:(?:monday|sunday)\/)?[^/]+\.html$/i.test(location.pathname))return;
   function init(){
+    if (!document.querySelector("script[data-standalone]")) {
+      const layout = document.createElement("script");
+      layout.dataset.standalone = "";
+      layout.src = "/assets/network-layout.js?v=20261109.1";
+      document.head.append(layout);
+    }
     if(document.getElementById("hlrn-team-return"))return;
     const params=new URLSearchParams(location.search);
     let destination="/team-pages/";
@@ -35,7 +41,8 @@ window.__HLRN_BANNED_VISUAL_V1__=true;
     back.href=destination;
     back.innerHTML='<span aria-hidden="true">←</span><span>Back to HLRN</span>';
     back.setAttribute("aria-label","Return to the HLRN page you came from");
-    document.body.appendChild(back);
+    const bar = document.querySelector(".network-section-bar .network-related");
+    (bar || document.body).appendChild(back);
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});else init();
 })();
