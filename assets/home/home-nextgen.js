@@ -33,7 +33,10 @@ function photoTag(name,cls){
 }
 async function loadData(){
  const [s,r,p,d,b]=await Promise.allSettled([
-  fetchJson("/data/schedules-2026.json"),fetchJson("/data/derived/reports.json"),
+  fetchJson("/data/schedules-2026.json").then(data=>{
+   document.dispatchEvent(new CustomEvent("hlrn:home-schedule",{detail:data}));
+   return data;
+  }),fetchJson("/data/derived/reports.json"),
   fetchJson("/data/derived/profiles.json"),fetchJson("/data/driver-pages.json"),
   fetchJson("/data/driver-status.json")]);
  if(s.status==="fulfilled")schedule=s.value;
@@ -198,3 +201,4 @@ loadData().catch(()=>{});
 connect();
 setInterval(()=>{if(!document.hidden)loadData().catch(()=>{})},300000);
 })();
+

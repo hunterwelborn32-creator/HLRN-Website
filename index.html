@@ -53,7 +53,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=Barlow:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site-shell.css?v=20261020nightmatch5">
-<link rel="stylesheet" href="assets/home/home-race-night.css?v=20261102brickyardbroadcast2">
 <link rel="stylesheet" href="assets/race-recaps.css?v=1">
 <link rel="stylesheet" href="assets/home/home-v10.css?v=20261019championship2">
 <link rel="stylesheet" href="assets/home/home-day-contrast.css?v=20261021dayfix1">
@@ -162,6 +161,7 @@ html[data-hlrn-theme] body.home-v10-page.rn-active #hlrnRaceDayHome > #hlrnClean
 }
 </style>
 <link rel="stylesheet" href="assets/home/home-broadcast-polish.css?v=20261106g">
+<link rel="stylesheet" href="assets/home/home-race-night.css?v=20261109grid1">
 </head>
 
 <body id="hlrn-home" class="hlrn-v3 rd-v5 home-v10-page">
@@ -174,6 +174,34 @@ html[data-hlrn-theme] body.home-v10-page.rn-active #hlrnRaceDayHome > #hlrnClean
     <img class="hlrn-clean-logo-night" src="assets/homepage-art/HLRN%20Metallic%20Racing%20Network%20Logo.png?v=20261104clean1" alt="High Line Racing Network" width="2172" height="724" decoding="async">
   </div>
 
+  <section id="raceWeekend" aria-labelledby="rwTrack" hidden>
+    <div class="rw-band"><span><b>HLRN</b> Race Weekend</span><span id="rwRound"></span></div>
+    <div class="rw-grid">
+      <div class="rw-story">
+        <p class="rw-series" id="rwSeries"></p>
+        <h1 id="rwTrack"></h1>
+        <p id="rwDescription" class="rw-description"></p>
+        <dl class="rw-specs">
+          <div><dt>Car class</dt><dd id="rwCar"></dd></div>
+          <div><dt>Race laps</dt><dd id="rwLaps"></dd></div>
+          <div><dt>Track length</dt><dd id="rwLength"></dd></div>
+        </dl>
+        <nav class="rw-links" aria-label="Race weekend coverage">
+          <a class="rw-watch" href="/broadcasters/">Watch broadcast <span aria-hidden="true">→</span></a>
+          <a href="/live/">Live timing <span aria-hidden="true">→</span></a>
+        </nav>
+      </div>
+      <aside class="rw-board" aria-label="Race schedule and timing">
+        <div class="rw-status"><span id="rwPhase"></span><time id="rwDate"></time></div>
+        <div class="rw-clockface"><span class="rw-label" id="rwBoardLabel"></span><output id="rwClock" role="timer" aria-live="off"></output></div>
+        <dl class="rw-rows">
+          <div><dt>Green flag</dt><dd id="rwGreen"></dd></div>
+          <div><dt id="rwDetailLabel">Points leader</dt><dd id="rwDetail"></dd></div>
+        </dl>
+        <nav class="rw-boardlinks" aria-label="Race information"><a id="rwPreview" href="/race-preview/">Race preview →</a><a href="/standings/">Standings →</a></nav>
+      </aside>
+    </div>
+  </section>
   <header class="h10-hero" aria-label="High Line Racing Network">
     <div class="h10-hero-inner">
       <div class="h10-hero-grid">
@@ -534,7 +562,7 @@ html[data-hlrn-theme] body.home-v10-page.rn-active #hlrnRaceDayHome > #hlrnClean
 <script defer src="assets/home/home-v8-data.js?v=20261019raceweek2"></script>
 <script defer src="assets/home/home-championship-center.js?v=20261006driverphotos1"></script>
 <script defer src="assets/home/home-login-reveal.js?v=20260929p1"></script>
-<script defer src="assets/home/home-race-night.js?v=20261102brickyardbroadcast1"></script>
+<script defer src="assets/home/home-race-night.js?v=20261109grid1"></script>
 <script defer src="assets/home/home-v10-hosted.js?v=20261022directrefresh2"></script>
 <script defer src="assets/race-recaps.js?v=1"></script>
 <script defer src="assets/site-shell.js?v=20261103banlist48v1"></script>
@@ -628,7 +656,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 })();
 </script>
 <script defer src="assets/sunday/sunday-season-finale.js?v=20261104trevorchampion1"></script>
-<script defer src="assets/home/home-nextgen.js?v=20261109mondayspotlight1"></script>
+<script defer src="assets/home/home-nextgen.js?v=20261109grid1"></script>
 <script defer src="assets/home/home-masthead-gap-guard.js?v=20261104gapguard1"></script>
 
 

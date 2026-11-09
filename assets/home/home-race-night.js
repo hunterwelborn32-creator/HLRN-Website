@@ -1,6 +1,8 @@
-(function(){
-"use strict";
-
+(() => {
+  "use strict";
+  const panel = document.getElementById("raceWeekend");
+  if (!panel) return;
+  const byId = id => document.getElementById(id);
 const ZONE="America/New_York";
 const START_HOUR=20;
 const START_MINUTE=30;
@@ -81,177 +83,88 @@ function phaseFor(today){
   if(sec<liveEnd)return "live";
   return "off";
 }
-function hms(total){
-  total=Math.max(0,Math.floor(total));
-  const h=Math.floor(total/3600);
-  const m=Math.floor((total%3600)/60);
-  const s=total%60;
-  return [h,m,s].map(v=>String(v).padStart(2,"0"));
-}
-function seriesName(league){return league==="sunday"?"SUNDAY NIGHT LEAGUE":"MONDAY NIGHT LEAGUE"}
-function accent(league){return league==="sunday"?"SUNDAY":"MONDAY"}
-
-let panel=null;
-let lastMode="";
-let timer=null;
-
-function ensurePanel(){
-  if(panel)return panel;
-  const host=document.getElementById("hlrnRaceDayHome");
-  if(!host)return null;
-  panel=document.createElement("section");
-  panel.id="hlrnRaceNightTakeover";
-  panel.className="rn-takeover";
-  panel.setAttribute("aria-label","HLRN Race Night");
-  panel.innerHTML=
-    '<div class="rn-broadcast-topline" aria-hidden="true"><span>HLRN <i>//</i> MONDAY NIGHT RACING</span><span>ARCA <i>◆</i> INDIANAPOLIS MOTOR SPEEDWAY <i>◆</i> 80 LAPS</span><span>WEEK 11</span></div>'+
-    '<div class="rn-grid" aria-hidden="true"></div>'+
-    '<div class="v7-shell rn-inner">'+
-      '<div class="rn-copy">'+
-        '<div class="rn-indy-kicker" aria-hidden="true"><span class="rn-indy-kicker-bars">▥</span><b>THE BRICKYARD</b><span>MONDAY NIGHT • ARCA FEATURE</span></div>'+
-        '<div class="rn-eyebrow"><span class="rn-pulse"></span><b id="rnPhaseLabel">RACE DAY</b><i>//</i><span id="rnSeries">HLRN</span></div>'+
-        '<div class="rn-trackline"><span id="rnWeek">WEEK --</span><span id="rnCar">--</span><span id="rnLaps">-- LAPS</span></div>'+
-        '<h1 id="rnHeadline">HLRN RACE DAY</h1>'+
-        '<h2 id="rnTrack">--</h2>'+
-        '<p id="rnMessage">The HLRN race-night system is preparing today’s event.</p>'+
-        '<div class="rn-indy-statline" aria-label="Indianapolis race details"><div><b>80</b><small>RACE LAPS</small></div><div><b>ARCA</b><small>RACE CAR</small></div><div><b>2.5 MI</b><small>OVAL</small></div><div><b>8:30</b><small>GREEN FLAG • ET</small></div></div>'+
-        '<div class="rn-actions">'+
-          '<a class="rn-btn primary" href="broadcasters/"><span class="rn-btn-icon">▶</span><span><small>WATCH</small><strong>WATCH BROADCAST</strong></span><b>↗</b></a>'+
-          '<a class="rn-btn live" href="live/"><span class="rn-btn-icon">●</span><span><small>RACE CONTROL</small><strong>LIVE RACE CENTER</strong></span><b>→</b></a>'+
-          '<a class="rn-btn" id="rnPreview" href="race-preview/"><span class="rn-btn-icon">P</span><span><small>PRE-RACE</small><strong>RACE PREVIEW</strong></span><b>→</b></a>'+
-          '<a class="rn-btn" href="standings/"><span class="rn-btn-icon">#</span><span><small>CHAMPIONSHIP</small><strong>STANDINGS</strong></span><b>→</b></a>'+
-        '</div>'+
-      '</div>'+
-      '<aside class="rn-board">'+
-        '<div class="rn-indy-board-title"><span class="rn-indy-board-icon" aria-hidden="true">◈</span><span>HLRN <strong>RACE CONTROL</strong></span><span class="rn-indy-board-num">80 LAP MAIN</span></div>'+
-        '<div class="rn-board-head"><span class="rn-pulse"></span><div><small id="rnBoardLabel">GREEN FLAG</small><strong>8:30 PM EASTERN</strong></div></div>'+
-        '<div class="rn-clock">'+
-          '<div><strong id="rnHours">00</strong><span>HOURS</span></div>'+
-          '<div><strong id="rnMinutes">00</strong><span>MINUTES</span></div>'+
-          '<div><strong id="rnSeconds">00</strong><span>SECONDS</span></div>'+
-        '</div>'+
-        '<div class="rn-live-now"><span id="rnLiveText">COUNTDOWN TO GREEN</span></div>'+
-        '<div class="rn-indy-timing-strip"><span>INDIANAPOLIS MOTOR SPEEDWAY</span><b>2.5 MILE OVAL</b></div>'+
-        '<div class="rn-info">'+
-          '<div><span>NETWORK</span><strong>HLRN</strong></div>'+
-          '<div><span>SERIES</span><strong id="rnBoardSeries">--</strong></div>'+
-          '<div><span>CHAMP LEADER</span><strong id="rnLeader">CONNECTING</strong></div>'+
-        '</div>'+
-      '</aside>'+
-    '</div>'+
-    '<div class="rn-crawl"><div class="v7-shell"><b id="rnCrawlLead">HLRN RACE DAY</b><span>◆</span><span id="rnCrawlTrack">8:30 PM EASTERN</span><span>◆</span><span>LIVE RACE CENTER</span><span>◆</span><span>RACE PREVIEW</span><span>◆</span><span>CHAMPIONSHIP STANDINGS</span></div></div>';
-  const main=host.querySelector("main");
-  host.insertBefore(panel,main||null);
-  return panel;
-}
-function text(id,value){
-  const el=document.getElementById(id);
-  if(el)el.textContent=value;
-}
-function syncLeader(league){
-  const source=document.getElementById(league==="sunday"?"homeSundayLeader":"homeMondayLeader");
-  const dest=document.getElementById("rnLeader");
-  if(!dest)return;
-  const pull=()=>{
-    const val=(source&&source.textContent||"").trim();
-    if(val&&val!=="CONNECTING"&&val!=="--")dest.textContent=val;
-  };
-  pull();
-  if(source&&!source.dataset.rnObserved){
-    source.dataset.rnObserved="1";
-    new MutationObserver(pull).observe(source,{subtree:true,childList:true,characterData:true});
+  const shortDate = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/New_York", weekday: "short", month: "short", day: "numeric"
+  });
+  let schedule, dayKey, event, phase, interval;
+  function write(id, value) {
+    const el = byId(id);
+    if (el.textContent !== value) el.textContent = value;
   }
-}
-function apply(today,mode){
-  const p=ensurePanel();
-  if(!p)return;
-  const league=today.league,race=today.race;
-  document.body.classList.add("rn-active","rn-"+league,"rn-"+mode);
-  document.body.classList.remove("rn-raceday","rn-countdown","rn-live","rn-sunday","rn-monday");
-  document.body.classList.add("rn-active","rn-"+league,"rn-"+mode);
-  p.classList.toggle("is-live",mode==="live");
-  p.classList.toggle("is-countdown",mode==="countdown");
-  const isIndy=league==="monday"&&race.date==="2026-11-02";
-  document.body.classList.toggle("rn-indy-20261102",isIndy);
-  p.classList.toggle("rn-indy-feature",isIndy);
-  p.setAttribute("aria-label",isIndy?"HLRN ARCA at Indianapolis Motor Speedway — 80 laps":"HLRN Race Night");
-
-  text("rnSeries",seriesName(league));
-  text("rnBoardSeries",league.toUpperCase());
-  text("rnWeek","WEEK "+race.week);
-  text("rnCar",race.car);
-  text("rnLaps",race.laps+" LAPS");
-  text("rnTrack",race.track);
-  text("rnCrawlTrack",race.track+" • WEEK "+race.week+" • "+race.car+" • "+race.laps+" LAPS");
-  const preview=document.getElementById("rnPreview");
-  if(preview)preview.href="race-preview/?league="+league;
-
-  const green=START_HOUR*3600+START_MINUTE*60;
-  const sec=secondsSinceMidnight(today.parts);
-  if(mode==="raceday"){
-    const remaining=green-sec,[h,m,s]=hms(remaining);
-    text("rnPhaseLabel","RACE DAY");
-    text("rnHeadline",league==="sunday"?"SUNDAY IS RACE DAY":"MONDAY IS RACE DAY");
-    text("rnMessage","Tonight at 8:30 PM Eastern, High Line Racing Network goes green at "+race.track+". Get the preview, check the championship battle, then come back for race-night coverage.");
-    text("rnBoardLabel","TIME TO GREEN");
-    text("rnLiveText","RACE DAY • GREEN FLAG 8:30 PM ET");
-    text("rnCrawlLead","HLRN RACE DAY");
-    text("rnHours",h);text("rnMinutes",m);text("rnSeconds",s);
-  }else if(mode==="countdown"){
-    const remaining=green-sec,[h,m,s]=hms(remaining);
-    text("rnPhaseLabel","GREEN FLAG COUNTDOWN");
-    text("rnHeadline","HLRN GOES LIVE IN");
-    text("rnMessage",race.track+" is next. The final hour is underway — open the Race Preview, check the standings, and get ready for the green flag.");
-    text("rnBoardLabel","COUNTDOWN TO GREEN");
-    text("rnLiveText","FINAL HOUR • RACE NIGHT");
-    text("rnCrawlLead","GREEN FLAG COUNTDOWN");
-    text("rnHours",h);text("rnMinutes",m);text("rnSeconds",s);
-  }else{
-    text("rnPhaseLabel","HLRN IS LIVE");
-    text("rnHeadline","HLRN IS LIVE");
-    text("rnMessage",seriesName(league)+" is in its race-night window at "+race.track+". Watch the broadcast or open the Live Race Center for race-night information.");
-    text("rnBoardLabel","RACE STATUS");
-    text("rnLiveText","● LIVE RACE WINDOW");
-    text("rnCrawlLead","HLRN IS LIVE");
-    text("rnHours","LIVE");text("rnMinutes","NOW");text("rnSeconds","●");
+  function renderEvent(now) {
+    const {league, race} = event;
+    write("rwRound", (race.finale ? "Season finale · " : "") + "Round " + race.week);
+    write("rwSeries", league + " Night League");
+    write("rwTrack", race.track);
+    write("rwDescription", race.description || "");
+    byId("rwLength").parentElement.hidden = !Number(race.miles);
+    write("rwCar", race.car || "TBA");
+    write("rwLaps", String(race.laps || "TBA"));
+    write("rwLength", Number(race.miles) > 0 ? Number(race.miles) + " mi" : "TBA");
+    write("rwDate", shortDate.format(now));
+    byId("rwDate").dateTime = race.date;
+    byId("rwPreview").href = "/race-preview/?league=" + league;
   }
-  // Premium event-specific copy is isolated to the real Monday, Nov 2 race.
-  // The existing countdown, live window, links and championship observer remain intact.
-  if(isIndy){
-    text("rnHeadline","THE BRICKYARD");
-    text("rnTrack","INDIANAPOLIS MOTOR SPEEDWAY");
-    text("rnCrawlTrack","INDIANAPOLIS MOTOR SPEEDWAY • ARCA • 80 LAPS • 8:30 PM ET");
-    if(mode==="raceday"){
-      text("rnMessage","The Monday night ARCA field takes on the legendary 2.5-mile Indianapolis oval for 80 laps. Race coverage begins with the 8:30 PM Eastern green flag.");
-      text("rnCrawlLead","BRICKYARD RACE DAY");
-    }else if(mode==="countdown"){
-      text("rnMessage","The final hour is here. Eighty laps of ARCA racing at Indianapolis Motor Speedway are next — preview the field, watch the broadcast and follow the Live Race Center.");
-      text("rnCrawlLead","INDIANAPOLIS • COUNTDOWN");
-    }else{
-      text("rnMessage","The Indianapolis 80-lap ARCA feature is in its scheduled race-night window. Follow the broadcast and Live Race Center for actual race updates.");
-      text("rnCrawlLead","INDIANAPOLIS RACE NIGHT");
+  function update() {
+    if (document.hidden) return;
+    const now = new Date();
+    const parts = etParts(now);
+    const date = dateKey(parts);
+    if (date !== dayKey) {
+      dayKey = date;
+      event = raceForToday(now);
+      phase = null;
+      document.body.classList.remove("rn-sunday", "rn-monday", "rn-raceday", "rn-countdown", "rn-live");
+      document.body.classList.toggle("rn-active", Boolean(event));
+      panel.hidden = !event;
+      if (event) {
+        document.body.classList.add("rn-" + event.league);
+        const detail = schedule?.leagues?.[event.league]?.find(row => row.date === date && !row.off);
+        event.race = {...event.race, ...detail};
+        renderEvent(now);
+      }
+    }
+    if (!event) return;
+    event.parts = parts;
+    const mode = phaseFor(event);
+    const greenFlag = "8:30 PM ET";
+    const left = (START_HOUR * 60 + START_MINUTE) * 60 - secondsSinceMidnight(parts);
+    const isTiming = mode === "live" && byId("ngLivePanel")?.dataset.status === "active";
+    const nextPhase = mode === "raceday" ? "Race day" : mode === "countdown" ? "Final hour" : isTiming ? "Timing live" : "Race night";
+    if (phase !== nextPhase) {
+      phase = nextPhase;
+      for (const name of ["raceday", "countdown", "live"]) {
+        document.body.classList.toggle("rn-" + name, name === mode);
+      }
+      write("rwPhase", phase);
+      write("rwGreen", greenFlag);
+      write("rwBoardLabel", left > 0 ? "Time to green" : isTiming ? "Live scoring lap" : "Timing feed");
+      write("rwDetailLabel", isTiming ? "Race leader" : "Points leader");
+      panel.dataset.phase = isTiming ? "timing" : left <= 0 ? "night" : "prerace";
+    }
+    if (left > 0) {
+      const clock = [Math.floor(left / 3600), Math.floor(left % 3600 / 60), left % 60];
+      write("rwClock", clock.map(v => String(v).padStart(2, "0")).join(":"));
+    } else {
+      write("rwClock", isTiming ? "Lap " + byId("ngLiveLap").textContent : "Awaiting timing");
+    }
+    const source = isTiming ? byId("ngLiveLeader") : byId(event.league === "sunday" ? "homeSundayLeader" : "homeMondayLeader");
+    const name = source?.textContent.trim();
+    write("rwDetail", name && !/^(connecting[… .]*|--|—)$/i.test(name) ? name : "Pending");
+  }
+  function resume() {
+    clearInterval(interval);
+    if (!document.hidden) {
+      update();
+      interval = setInterval(update, 1000);
     }
   }
-  syncLeader(league);
-}
-function clear(){
-  document.body.classList.remove("rn-active","rn-raceday","rn-countdown","rn-live","rn-sunday","rn-monday","rn-indy-20261102");
-  if(panel)panel.classList.remove("rn-indy-feature");
-}
-function update(){
-  const now=new Date();
-  const today=raceForToday(now);
-  if(!today){clear();lastMode="";return}
-  const mode=phaseFor(today);
-  if(mode==="off"){clear();lastMode="";return}
-  apply(today,mode);
-  lastMode=today.league+"-"+mode+"-"+today.race.week;
-}
-function start(){
-  ensurePanel();
-  update();
-  timer=setInterval(update,1000);
-  document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")update()});
-}
-if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});else start();
+  document.addEventListener("hlrn:home-schedule", ({detail}) => {
+    if (!detail?.leagues) return;
+    schedule = detail;
+    dayKey = null;
+    resume();
+  });
+  document.addEventListener("visibilitychange", resume);
+  resume();
 })();
