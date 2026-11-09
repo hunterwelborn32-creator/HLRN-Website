@@ -11,7 +11,15 @@ const etKey=date=>{const parts=new Intl.DateTimeFormat("en-US",{timeZone:"Americ
 const fmtDate=value=>{const d=new Date(isoDate(value)+"T12:00:00Z");return Number.isFinite(d.getTime())?new Intl.DateTimeFormat("en-US",{timeZone:"America/New_York",month:"short",day:"numeric"}).format(d):"TBA"};
 const fetchJson=async path=>{const r=await fetch(path,{cache:"no-store"});if(!r.ok)throw Error(path+" "+r.status);return r.json()};
 const profileMap=new Map(),profileIdMap=new Map();
-let schedule=null,reports=[],profiles=[];
+let schedule=null,reports=[],profiles=[],bannedDriverNames=new Set(),bannedDriverIds=new Set(),banStatusReady=false;
+const normalizeDriverName=value=>{
+ const raw=String(value||"").trim().toLowerCase().replace(/\\s+/g," ");
+ return raw.includes(",")?raw.split(",").slice(1).join(",").trim()+" "+raw.split(",")[0].trim():raw;
+};
+function isBannedSpotlightDriver(name,id){
+ return (id!==null&&id!==undefined&&String(id).trim()&&bannedDriverIds.has(String(id).trim()))||
+  bannedDriverNames.has(normalizeDriverName(name));
+}
 function portrait(driver){
  const p=profileMap.get(String(driver||"").toLowerCase());
  return p?.hasPhoto&&p.photoSlug?"/assets/driver-photos/cutout/"+encodeURIComponent(p.photoSlug)+".webp":"";
@@ -24,9 +32,10 @@ function photoTag(name,cls){
  const p=portrait(name);return p?'<img class="'+cls+'" src="'+escape(p)+'" alt="" loading="lazy" onerror="this.remove()">':'<span class="'+cls+' ng-placeholder" aria-hidden="true">#</span>';
 }
 async function loadData(){
- const [s,r,p,d]=await Promise.allSettled([
+ const [s,r,p,d,b]=await Promise.allSettled([
   fetchJson("/data/schedules-2026.json"),fetchJson("/data/derived/reports.json"),
-  fetchJson("/data/derived/profiles.json"),fetchJson("/data/driver-pages.json")]);
+  fetchJson("/data/derived/profiles.json"),fetchJson("/data/driver-pages.json"),
+  fetchJson("/data/driver-status.json")]);
  if(s.status==="fulfilled")schedule=s.value;
  if(r.status==="fulfilled")reports=Array.isArray(r.value?.reports)?r.value.reports:[];
  if(p.status==="fulfilled")profiles=Array.isArray(p.value?.drivers)?p.value.drivers:[];
@@ -34,6 +43,16 @@ async function loadData(){
   profileMap.set(String(x.name).toLowerCase(),x);
   for(const id of Object.values(x.ids||{}))profileIdMap.set(String(id),x);
  }}
+ if(b.status==="fulfilled"&&Array.isArray(b.value?.drivers)){
+  for(const driver of b.value.drivers){
+   if(String(driver?.status||"").toUpperCase()!=="BANNED")continue;
+   for(const name of [driver.name,...(Array.isArray(driver.aliases)?driver.aliases:[])]){
+    if(name)bannedDriverNames.add(normalizeDriverName(name));
+   }
+   if(driver.driverId!==null&&driver.driverId!==undefined)bannedDriverIds.add(String(driver.driverId).trim());
+  }
+  banStatusReady=true;
+ }
  drawCountdown();drawSpotlight();drawWinners();
 }
 function latestReport(series){
@@ -62,7 +81,8 @@ function spotlightCandidates(){
   .sort((a,b)=>(Date.parse(b.date)||0)-(Date.parse(a.date)||0)).slice(0,8);
  const score=new Map();
  for(const race of last)for(const row of race.top10){
-  const finish=Number(row.finish);if(!row.name||!Number.isInteger(finish)||finish<1||finish>10)continue;
+  const finish=Number(row.finish);
+  if(!row.name||!Number.isInteger(finish)||finish<1||finish>10||isBannedSpotlightDriver(row.name,row.id))continue;
   const id=String(row.id||row.name),entry=score.get(id)||{name:row.name,id:row.id||"",top5:0,wins:0,top10:0,finishes:[],series:new Set()};
   entry.top10++;if(finish<=5)entry.top5++;if(finish===1)entry.wins++;
   entry.finishes.push(finish);entry.series.add(race.series);
@@ -72,6 +92,8 @@ function spotlightCandidates(){
 }
 function drawSpotlight(){
  const host=$("ngSpotlightBody");if(!host)return;
+ // Never feature someone as eligible when the official status list is unavailable.
+ if(!banStatusReady){host.innerHTML='<p class="ng-empty">Driver eligibility is temporarily unavailable.</p>';return;}
  const candidates=spotlightCandidates();
  if(!candidates.length){host.innerHTML='<p class="ng-empty">Waiting for published race results.</p>';return;}
  // UTC calendar week is stable for every viewer; selection changes each Monday.
