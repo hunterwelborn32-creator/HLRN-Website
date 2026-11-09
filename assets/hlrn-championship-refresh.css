@@ -1,0 +1,54 @@
+/* HLRN championship + results refresh — 2026-11-09
+   Visual-only enhancement. Live data, sorting, search and sticky-column JS remain unchanged. */
+body:has(#driverBody) { --hlrn-rank-accent:#e31837; --hlrn-table-ink:#f4f7fc; --hlrn-table-muted:#a9b5c7; }
+body:has(#driverBody):has(.monday-ticker) { --hlrn-rank-accent:#91ee51; }
+body:has(#driverBody) .panel > .section-header {gap:12px;flex-wrap:wrap;padding:0 2px}
+body:has(#driverBody) .panel > .section-header h2 {font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif;font-size:clamp(23px,3vw,34px);font-weight:900;letter-spacing:.045em;text-transform:uppercase}
+body:has(#driverBody) .panel > .section-header .count {font-size:12px;letter-spacing:.04em;font-weight:700}
+body:has(#driverBody) .panel > .table-shell {border:1px solid rgba(150,170,199,.28);border-radius:14px;box-shadow:0 18px 38px rgba(0,0,0,.18);scrollbar-width:thin;scrollbar-color:#667589 transparent}
+body:has(#driverBody) .panel > .table-shell table {border-collapse:separate;border-spacing:0;font-variant-numeric:tabular-nums}
+body:has(#driverBody) .panel > .table-shell thead th {background:#142033;color:#dfe9fa;border-bottom:2px solid var(--hlrn-rank-accent);padding:16px 12px;letter-spacing:.095em;font-size:11px;line-height:1.35;font-weight:900}
+body:has(#driverBody) .panel > .table-shell tbody td {padding:15px 12px;border-bottom:1px solid rgba(125,146,177,.18);font-size:13px;line-height:1.35;transition:background-color .15s ease;vertical-align:middle}
+body:has(#driverBody) .panel > .table-shell tbody tr:nth-child(even) {background:rgba(125,145,175,.045)}
+body:has(#driverBody) .panel > .table-shell tbody tr:not(:has(.message)):hover {background:rgba(97,134,188,.14)}
+body:has(#driverBody) .panel > .table-shell tbody tr:not(:has(.message)):focus-within {outline:2px solid var(--hlrn-rank-accent);outline-offset:-2px}
+body:has(#driverBody) .panel > .table-shell .name-col {min-width:185px;font-weight:900;letter-spacing:.005em;text-align:left}
+body:has(#driverBody) .panel > .table-shell tbody .name-col {font-size:14px}
+body:has(#driverBody) .panel > .table-shell td .position {display:inline-flex;align-items:center;justify-content:center;min-width:36px;min-height:33px;padding:3px 7px;border-radius:7px;background:rgba(137,153,173,.16);color:inherit;font-size:14px;font-weight:900}
+body:has(#driverBody) .panel > .table-shell td .position.top1 {background:#f7cc54;color:#22200f;box-shadow:inset 0 -2px 0 rgba(0,0,0,.16)}
+body:has(#driverBody) .panel > .table-shell td .position.top2 {background:#c9d3e1;color:#202a39}
+body:has(#driverBody) .panel > .table-shell td .position.top3 {background:#c78c60;color:#21170f}
+body:has(#driverBody) .panel > .table-shell .points {font-size:16px;font-weight:900;font-variant-numeric:tabular-nums}
+body:has(#driverBody) .panel > .table-shell tbody tr:nth-child(-n+3):not(:has(.message)) {box-shadow:inset 3px 0 0 var(--hlrn-rank-accent)}
+body:has(#driverBody) .panel > .table-shell .movement {min-width:45px;padding:4px 6px;border-radius:6px;background:rgba(127,146,176,.08)}
+body:has(#driverBody) .panel > .table-shell tbody tr :is(a,button):focus-visible {outline:2px solid var(--hlrn-rank-accent);outline-offset:3px}
+body:has(#driverBody) .hlrn-mobile-scroll-hint {font-size:12px;font-weight:750;letter-spacing:.02em}
+@media (max-width:700px) {
+  body:has(#driverBody) .panel > .table-shell {border-radius:10px}
+  body:has(#driverBody) .panel > .table-shell tbody td {padding:12px 9px}
+  body:has(#driverBody) .panel > .table-shell thead th {padding:12px 9px}
+  body:has(#driverBody) .panel > .table-shell .name-col {min-width:145px}
+}
+/* Light theme uses dark ink and understated alternate rows. */
+html[data-hlrn-theme="light"] body:has(#driverBody) .panel > .table-shell {border-color:#cbd5e1;background:#fff;box-shadow:0 12px 32px rgba(31,46,75,.08)}
+html[data-hlrn-theme="light"] body:has(#driverBody) .panel > .table-shell thead th {background:#edf2f8;color:#263449}
+html[data-hlrn-theme="light"] body:has(#driverBody) .panel > .table-shell tbody tr:nth-child(even) {background:#f4f7fb}
+html[data-hlrn-theme="light"] body:has(#driverBody) .panel > .table-shell tbody tr:not(:has(.message)):hover {background:#e9f0fa}
+html[data-hlrn-theme="light"] body:has(#driverBody) .panel > .table-shell tbody td {border-bottom-color:#e2e8f0}
+html[data-hlrn-theme="light"] body:has(#driverBody) .panel > .table-shell td .position:not(.top1):not(.top2):not(.top3) {background:#e7ecf3;color:#28374e}
+/* Results center: winner cards, history, summary and schedule readability. */
+body:has(.hlrn-race-center) .hlrn-archive,
+body:has(.hlrn-race-center) .ns-summary-card,
+body:has(.hlrn-race-center) .race-card {border-radius:14px;box-shadow:0 14px 30px rgba(0,0,0,.14)}
+body:has(.hlrn-race-center) :is(.archive-winner,.ns-summary-winner,.ns-winner) {font-weight:900;letter-spacing:-.015em}
+body:has(.hlrn-race-center) :is(.archive-winner-pos,.archive-podium-row,.ns-row-week) {font-variant-numeric:tabular-nums}
+body:has(.hlrn-race-center) .archive-podium-row {border-bottom:1px solid rgba(135,151,174,.23);padding-block:10px}
+body:has(.hlrn-race-center) .ns-race-row {border-radius:8px;transition:box-shadow .15s ease,transform .15s ease}
+body:has(.hlrn-race-center) .ns-race-row:hover {box-shadow:inset 3px 0 0 #e31837}
+body:has(.hlrn-race-center) .ns-row-track {font-weight:900;letter-spacing:-.01em}
+body:has(.hlrn-race-center) .ns-row-spec {font-variant-numeric:tabular-nums}
+body:has(.hlrn-race-center) .ns-titlebar h1 {text-wrap:balance}
+@media (max-width:650px) {
+  body:has(.hlrn-race-center) .ns-race-row {gap:10px}
+  body:has(.hlrn-race-center) .ns-row-track {overflow-wrap:anywhere}
+}
