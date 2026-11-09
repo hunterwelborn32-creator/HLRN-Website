@@ -11,7 +11,7 @@ window.__HLRN_BANNED_VISUAL_V1__=true;
     if (!document.querySelector("script[data-standalone]")) {
       const layout = document.createElement("script");
       layout.dataset.standalone = "";
-      layout.src = "/assets/network-layout.js?v=20261109.1";
+      layout.src = "/assets/network-layout.js?v=20261109.3";
       document.head.append(layout);
     }
     if(document.getElementById("hlrn-team-return"))return;

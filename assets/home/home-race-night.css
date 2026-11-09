@@ -100,3 +100,80 @@ body.rn-active #hlrnNextGen .ng-grid {grid-template-areas:"live spot" "victory v
   #raceWeekend .rw-specs div:first-child {padding-left:0}
   #raceWeekend .rw-specs dt {font-size:.64rem;letter-spacing:.06em}
 }
+
+/* A race poster gives event information and the class artwork separate space. */
+body.rn-active #raceWeekend {background:var(--rw-paper)}
+body.rn-active #raceWeekend::before {display:none}
+#raceWeekend .rw-grid {
+  width:min(100%,1680px);grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
+  align-items:stretch;gap:0;padding:0;
+}
+#raceWeekend .rw-story {
+  grid-column:1;grid-row:1;align-self:center;
+  padding:clamp(26px,4.3vw,70px) clamp(16px,3.6vw,56px) clamp(26px,4.3vw,70px) max(5%,calc((100vw - 1400px)/2));
+}
+#raceWeekend h1 {
+  font:900 italic clamp(3rem,6.6vw,7rem)/.87 "Barlow Condensed",Impact,"Arial Narrow",sans-serif;
+  letter-spacing:-.035em;margin:.12em 0;text-wrap:balance;
+}
+#raceWeekend .rw-cover {
+  grid-column:2;grid-row:1;min-height:clamp(275px,31vw,495px);align-self:stretch;
+  background:var(--rw-art) 62% center/cover;
+  clip-path:polygon(8% 0,100% 0,100% 100%,0 100%);
+}
+#raceWeekend[data-vehicle="truck"] .rw-cover {background-image:url("../network-art/trucks-night.webp")}
+html[data-hlrn-theme="light"] #raceWeekend[data-vehicle="truck"] .rw-cover {background-image:url("../network-art/trucks-day.webp")}
+#raceWeekend[data-vehicle="stock"] .rw-cover {background-image:url("../network-art/oval-night.webp")}
+html[data-hlrn-theme="light"] #raceWeekend[data-vehicle="stock"] .rw-cover {background-image:url("../network-art/oval-day.webp")}
+#raceWeekend .rw-band {border:0;background:var(--rw-paper);color:var(--rw-ink);padding-block:9px;border-bottom:1px solid var(--rw-line)}
+#raceWeekend .rw-series {margin:0;color:var(--rw-ink)}
+#raceWeekend .rw-description {font-size:1rem;line-height:1.5;margin-block:14px}
+#raceWeekend .rw-specs {margin-block:18px}
+#raceWeekend .rw-board {
+  display:grid;grid-template-columns:minmax(120px,.72fr) minmax(165px,1.1fr) minmax(230px,1.6fr) minmax(155px,.78fr);
+  align-items:stretch;width:100%;background:var(--rw-paper);border:0;border-top:4px solid var(--rw-accent);box-shadow:none;
+}
+#raceWeekend .rw-status,#raceWeekend .rw-clockface,#raceWeekend .rw-rows,#raceWeekend .rw-boardlinks {margin:0;padding:12px clamp(12px,2vw,28px);border:0;border-inline-end:1px solid var(--rw-line)}
+#raceWeekend .rw-status {align-items:start;justify-content:center;flex-direction:column;gap:4px}
+#raceWeekend #rwPhase {font-size:.96rem}
+#raceWeekend .rw-clockface {align-content:center}
+#raceWeekend output {font-size:clamp(1.85rem,3.2vw,3.2rem)}
+#raceWeekend .rw-rows {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:center}
+#raceWeekend .rw-rows div {display:block;border:0;padding:0;min-width:0}
+#raceWeekend .rw-rows dd {text-align:start;margin-top:5px;overflow-wrap:anywhere}
+#raceWeekend .rw-boardlinks {display:flex;align-content:center;justify-content:flex-start;gap:0 14px;border:0}
+#raceWeekend .rw-boardlinks a {min-height:30px}
+@media(max-width:900px) {
+  #raceWeekend .rw-board {grid-template-columns:minmax(90px,.72fr) minmax(115px,1fr) minmax(160px,1.4fr)}
+  #raceWeekend .rw-boardlinks {grid-column:1/-1;justify-content:center;border-top:1px solid var(--rw-line);padding-block:0;gap:22px}
+  #raceWeekend .rw-boardlinks a {min-height:44px}
+}
+@media(max-width:650px) {
+  #raceWeekend .rw-grid {display:flex;flex-direction:column}
+  #raceWeekend .rw-cover {height:clamp(144px,43vw,240px);min-height:0;order:0;clip-path:none;background-position:center 52%}
+  #raceWeekend .rw-story {align-self:stretch;order:1;padding:18px 5% 22px}
+  #raceWeekend h1 {font-size:clamp(2.6rem,10vw,4rem);text-wrap:wrap}
+  #raceWeekend .rw-specs {margin-block:13px}
+  #raceWeekend .rw-board {grid-template-columns:minmax(95px,.75fr) minmax(0,1.3fr)}
+  #raceWeekend .rw-rows {grid-column:1/-1;border-block-start:1px solid var(--rw-line)}
+  #raceWeekend .rw-boardlinks {gap:14px;justify-content:space-evenly;padding-inline:8px}
+  #raceWeekend .rw-boardlinks a {font-size:.77rem}
+}
+#hlrn-home.rn-active #hlrn-network-mode-banner.automatic {display:none!important}
+#raceWeekend .rw-edition {display:flex;align-items:center;gap:clamp(10px,2vw,26px)}
+#raceWeekend .rw-edition a {min-height:44px;padding-inline-start:12px;border-left:1px solid var(--rw-line);color:var(--rw-accent)!important}
+#raceWeekend .rw-band {padding-block:0}
+@media(max-width:420px){
+  #raceWeekend .rw-edition {gap:6px}
+  #raceWeekend .rw-edition a {padding-inline-start:6px}
+  #raceWeekend .rw-band b {margin-right:4px}
+}
+#hlrn-home #raceWeekend .rw-specs dd {font:850 clamp(1.25rem,2.1vw,2rem)/1.1 "Barlow Condensed",Impact,"Arial Narrow",sans-serif!important;color:var(--rw-ink)!important}
+#hlrn-home #raceWeekend .rw-specs dt {font:750 .68rem/1.3 Inter,Arial,sans-serif!important;color:var(--rw-muted)!important}
+#hlrn-home #raceWeekend .rw-links a {font:750 .94rem/1.25 Inter,Arial,sans-serif!important}
+@media(max-width:540px){
+  #raceWeekend .rw-band {padding-inline:4%;gap:5px;white-space:nowrap}
+  #raceWeekend .rw-band b {display:none}
+  #raceWeekend .rw-edition a {font-size:.68rem;white-space:nowrap}
+  #raceWeekend #rwRound {white-space:normal;text-align:right}
+}

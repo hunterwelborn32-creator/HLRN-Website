@@ -161,7 +161,7 @@ html[data-hlrn-theme] body.home-v10-page.rn-active #hlrnRaceDayHome > #hlrnClean
 }
 </style>
 <link rel="stylesheet" href="assets/home/home-broadcast-polish.css?v=20261106g">
-<link rel="stylesheet" href="assets/home/home-race-night.css?v=20261109grid1">
+<link rel="stylesheet" href="assets/home/home-race-night.css?v=20261109program">
 </head>
 
 <body id="hlrn-home" class="hlrn-v3 rd-v5 home-v10-page">
@@ -175,8 +175,9 @@ html[data-hlrn-theme] body.home-v10-page.rn-active #hlrnRaceDayHome > #hlrnClean
   </div>
 
   <section id="raceWeekend" aria-labelledby="rwTrack" hidden>
-    <div class="rw-band"><span><b>HLRN</b> Race Weekend</span><span id="rwRound"></span></div>
+    <div class="rw-band"><span><b>HLRN</b> Race Weekend</span><div class="rw-edition"><span id="rwRound"></span><a data-race-program aria-haspopup="dialog" href="/race-preview/">Race program →</a></div></div>
     <div class="rw-grid">
+      <div class="rw-cover" aria-hidden="true"></div>
       <div class="rw-story">
         <p class="rw-series" id="rwSeries"></p>
         <h1 id="rwTrack"></h1>
@@ -191,7 +192,8 @@ html[data-hlrn-theme] body.home-v10-page.rn-active #hlrnRaceDayHome > #hlrnClean
           <a href="/live/">Live timing <span aria-hidden="true">→</span></a>
         </nav>
       </div>
-      <aside class="rw-board" aria-label="Race schedule and timing">
+    </div>
+    <aside class="rw-board" aria-label="Race schedule and timing">
         <div class="rw-status"><span id="rwPhase"></span><time id="rwDate"></time></div>
         <div class="rw-clockface"><span class="rw-label" id="rwBoardLabel"></span><output id="rwClock" role="timer" aria-live="off"></output></div>
         <dl class="rw-rows">
@@ -199,8 +201,7 @@ html[data-hlrn-theme] body.home-v10-page.rn-active #hlrnRaceDayHome > #hlrnClean
           <div><dt id="rwDetailLabel">Points leader</dt><dd id="rwDetail"></dd></div>
         </dl>
         <nav class="rw-boardlinks" aria-label="Race information"><a id="rwPreview" href="/race-preview/">Race preview →</a><a href="/standings/">Standings →</a></nav>
-      </aside>
-    </div>
+    </aside>
   </section>
   <header class="h10-hero" aria-label="High Line Racing Network">
     <div class="h10-hero-inner">
@@ -218,6 +219,7 @@ html[data-hlrn-theme] body.home-v10-page.rn-active #hlrnRaceDayHome > #hlrnClean
           <div class="h10-actions">
             <a class="h10-btn primary" href="broadcasters/">Watch Live →</a>
             <a class="h10-btn" href="results/">Latest Results →</a>
+            <a class="h10-btn" data-race-program href="race-preview/">Race program →</a>
           </div>
           <section class="h10-upcoming" aria-label="Upcoming Sunday and Monday races">
             <h2 class="h10-upcoming-title">Sunday &amp; Monday Racing</h2>
@@ -562,7 +564,7 @@ html[data-hlrn-theme] body.home-v10-page.rn-active #hlrnRaceDayHome > #hlrnClean
 <script defer src="assets/home/home-v8-data.js?v=20261019raceweek2"></script>
 <script defer src="assets/home/home-championship-center.js?v=20261006driverphotos1"></script>
 <script defer src="assets/home/home-login-reveal.js?v=20260929p1"></script>
-<script defer src="assets/home/home-race-night.js?v=20261109grid1"></script>
+<script defer src="assets/home/home-race-night.js?v=20261109program"></script>
 <script defer src="assets/home/home-v10-hosted.js?v=20261022directrefresh2"></script>
 <script defer src="assets/race-recaps.js?v=1"></script>
 <script defer src="assets/site-shell.js?v=20261103banlist48v1"></script>
