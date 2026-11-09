@@ -13,7 +13,7 @@ const fetchJson=async path=>{const r=await fetch(path,{cache:"no-store"});if(!r.
 const profileMap=new Map(),profileIdMap=new Map();
 let schedule=null,reports=[],profiles=[],bannedDriverNames=new Set(),bannedDriverIds=new Set(),banStatusReady=false;
 const normalizeDriverName=value=>{
- const raw=String(value||"").trim().toLowerCase().replace(/\\s+/g," ");
+ const raw=String(value||"").trim().toLowerCase().replace(/\s+/g," ");
  return raw.includes(",")?raw.split(",").slice(1).join(",").trim()+" "+raw.split(",")[0].trim():raw;
 };
 function isBannedSpotlightDriver(name,id){
@@ -75,9 +75,17 @@ function drawWinners(){
  }).join("");
  text("ngVictoryStatus",reports.length?"Latest verified results":"Results feed unavailable");
 }
+function sundaySpotlightActive(){
+ // Sunday returns only when its next scheduled race is published and upcoming.
+ // This avoids recycling completed Sunday-season results during the offseason.
+ const today=etKey(new Date());
+ return Array.isArray(schedule?.leagues?.sunday)&&schedule.leagues.sunday.some(r=>
+  r&&!r.off&&r.track&&r.date>=today);
+}
 function spotlightCandidates(){
  // Use only verified race-by-race appearances. Do not infer Hosted career stats.
- const last=reports.filter(r=>["sunday","monday"].includes(r.series)&&r.top10?.length)
+ const includeSunday=sundaySpotlightActive();
+ const last=reports.filter(r=>(r.series==="monday"||(includeSunday&&r.series==="sunday"))&&r.top10?.length)
   .sort((a,b)=>(Date.parse(b.date)||0)-(Date.parse(a.date)||0)).slice(0,8);
  const score=new Map();
  for(const race of last)for(const row of race.top10){
@@ -104,13 +112,14 @@ function drawSpotlight(){
  const resultProfiles=profiles.filter(p=>String(p.id)===String(chosen.id));
  const totalWins=resultProfiles.reduce((a,p)=>a+(Number(p.wins)||0),0);
  const series=[...chosen.series].map(x=>x.toUpperCase()).join(" / ");
+ const reportScope=sundaySpotlightActive()?"Sunday/Monday":"Monday";
  host.innerHTML='<div class="ng-spotlight-person">'+photoTag(chosen.name,"ng-spotlight-photo")+
   '<div><span class="ng-series">'+escape(series)+' · WEEKLY FEATURE</span><h3>'+escape(chosen.name)+'</h3>'+
   '<a href="'+escape(profileUrl(chosen.name,chosen.id))+'">View driver profile →</a></div></div>'+
   '<div class="ng-mini-stats">'+
   '<span><b>'+chosen.wins+'</b> Recent wins</span><span><b>'+chosen.top5+'</b> Recent top 5s</span>'+
   '<span><b>'+chosen.top10+'</b> Recent top 10s</span></div>'+
-  '<p class="ng-note">Based on the latest eight published Sunday/Monday race reports. Rotates weekly among top performers.</p>';
+  '<p class="ng-note">Based on the latest eight published '+reportScope+' race reports. Rotates weekly among top performers.</p>';
 }
 function nextRace(){
  if(!schedule?.leagues)return null;
