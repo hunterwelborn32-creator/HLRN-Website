@@ -31,6 +31,20 @@ html[data-hlrn-theme="dark"] #hlrn-home { --hp-surface:#141b26; --hp-inset:#1c26
 #hlrn-home:not(.rn-active) #hlrnRaceDayHome .h10-hosted-race-stats > div { background:var(--hp-inset)!important; color:var(--hp-ink)!important; border:0!important; border-radius:6px!important; }
 #hlrn-home:not(.rn-active) #hlrnRaceDayHome .h10-hosted-winner-copy strong { font-size:clamp(30px,2.8vw,42px)!important; color:var(--hp-ink)!important; line-height:1!important; }
 #hlrn-home:not(.rn-active) #hlrnRaceDayHome .h10-hosted-winner-photo { background:linear-gradient(145deg,#e2be72,#9f7029)!important; border:0!important; }
+
+/* Hosted winner car number: prevent the site's light-theme b/strong color reset
+   from turning only the numeric digits dark against the black photo badge. */
+html[data-hlrn-theme="light"] body #hlrnRaceDayHome a.h10-hosted-winner-photo > span,
+html[data-hlrn-theme="light"] body #hlrnRaceDayHome a.h10-hosted-winner-photo > span > b#h10HostedNumber {
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  text-shadow:0 1px 2px rgba(0,0,0,.6)!important;
+}
+html[data-hlrn-theme="light"] body #hlrnRaceDayHome a.h10-hosted-winner-photo > span {
+  background:rgba(5,7,10,.92)!important;
+  white-space:nowrap;
+}
+
 #hlrn-home:not(.rn-active) #hlrnRaceDayHome .h10-hosted-winner-photo:has(img[hidden]) { display:none!important; }
 #hlrn-home:not(.rn-active) #hlrnRaceDayHome .h10-hosted-winner-feature:has(img[hidden]) { grid-template-columns:1fr!important; }
 #hlrn-home:not(.rn-active) #hlrnRaceDayHome .h10-hosted-link { background:#dfb75e!important; color:#241a0a!important; border:0!important; min-height:44px!important; }
