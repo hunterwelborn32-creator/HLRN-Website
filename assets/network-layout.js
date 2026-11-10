@@ -30,7 +30,7 @@
   html.dataset.networkGroup = grouped.find(([, routes]) => routes.includes(key))?.[0] || "network";
   const sheet = document.createElement("link");
   sheet.rel = "stylesheet";
-  sheet.href = new URL("network-layout.css?v=20261109direction", script.src);
+  sheet.href = new URL("network-layout.css?v=20261110carart1", script.src);
   document.head.append(sheet);
 
   let themeButton;
