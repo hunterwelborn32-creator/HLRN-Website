@@ -23,6 +23,10 @@ def convert_image(source: Path):
     target = source.with_suffix(".webp")
     original_size = source.stat().st_size
     temp = target.with_suffix(".webp.tmp")
+    # Never overwrite an existing image: these files may be deliberately curated.
+    if target.exists():
+        print(f"Preserving existing WebP beside {source.relative_to(BASE)}")
+        return None
 
     try:
         with Image.open(source) as image:
@@ -39,6 +43,14 @@ def convert_image(source: Path):
                 optimize=True,
                 exact=has_alpha,
             )
+        # Validate the generated WebP before touching the source artwork.
+        # The file must decode and retain the exact original pixel dimensions.
+        with Image.open(source) as original:
+            source_dimensions = original.size
+        with Image.open(temp) as candidate:
+            if candidate.size != source_dimensions:
+                raise ValueError(f"Image dimensions changed for {source}")
+            candidate.verify()
         new_size = temp.stat().st_size
         # Only replace the original when the optimized asset is meaningfully smaller.
         if new_size >= original_size * 0.95:
