@@ -767,7 +767,7 @@ function start(){
     const shell = [...document.scripts].find(el => /\/site-shell\.js(?:\?|$)/.test(el.src));
     const layout = document.createElement("script");
     layout.dataset.networkLayout = "";
-    layout.src = new URL("network-layout.js?v=20261109.3", shell?.src || new URL("/assets/site-shell.js", location.origin));
+    layout.src = new URL("network-layout.js?v=20261110carart1", shell?.src || new URL("/assets/site-shell.js", location.origin));
     document.head.append(layout);
   }
 
