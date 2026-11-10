@@ -184,3 +184,45 @@ html[data-hlrn-theme="dark"] body.home-v10-page #hlrnRaceDayHome .h10-upcoming-c
     max-width:74%;
   }
 }
+
+
+/* Restore Trevor Haley's trophy watermark in the Sunday Season 2 champion card.
+   Keep it as a dedicated layer so glass/background overrides cannot hide it.
+   The name, champion ribbon and link remain above the trophy in both themes. */
+html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-upcoming-card.sunday.hlrn-sunday-champion-card {
+  position:relative!important;
+  isolation:isolate!important;
+}
+html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-upcoming-card.sunday.hlrn-sunday-champion-card::after {
+  content:"🏆"!important;
+  display:block!important;
+  position:absolute!important;
+  z-index:0!important;
+  top:50%!important;
+  right:5%!important;
+  left:auto!important;
+  bottom:auto!important;
+  width:auto!important;
+  height:auto!important;
+  font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif!important;
+  font-size:clamp(86px,12vw,144px)!important;
+  line-height:1!important;
+  opacity:.48!important;
+  filter:drop-shadow(0 0 18px rgba(230,166,49,.24))!important;
+  transform:translateY(-50%) rotate(-9deg)!important;
+  pointer-events:none!important;
+}
+html[data-hlrn-theme="light"] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-upcoming-card.sunday.hlrn-sunday-champion-card::after {
+  opacity:.33!important;
+}
+html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-upcoming-card.sunday.hlrn-sunday-champion-card > * {
+  position:relative;
+  z-index:1;
+}
+@media(max-width:440px) {
+  html[data-hlrn-theme] body.home-v10-page:not(.rn-active) #hlrnRaceDayHome .h10-upcoming-card.sunday.hlrn-sunday-champion-card::after {
+    right:2%!important;
+    font-size:88px!important;
+    opacity:.32!important;
+  }
+}
