@@ -36,7 +36,7 @@ html[data-hlrn-theme="light"] .pv-race-meta b{
      Keep the existing Race Preview title, links and live countdown untouched.
      Higher specificity overrides the shared site's generic oval-photo rule. -->
 <style id="hlrn-race-preview-home-banners">
-html[data-network-layout="race-preview"] body.pv-page header.pv-mast {
+html[data-network-layout="race-preview"]:not([data-hlrn-theme="dark"]) body.pv-page header.pv-mast {
   background:
     linear-gradient(90deg,
       rgba(255,250,242,.98) 0%,
@@ -57,7 +57,8 @@ html[data-network-layout="race-preview"][data-hlrn-theme="dark"] body.pv-page he
     url("../assets/network-art/hlrn-34-night.webp?v=racepreview-20261110-1") center 55% / cover no-repeat !important;
 }
 @media (max-width:760px) {
-  html[data-network-layout="race-preview"] body.pv-page header.pv-mast {
+  html[data-network-layout="race-preview"]:not([data-hlrn-theme="dark"]) body.pv-page header.pv-mast,
+  html[data-network-layout="race-preview"][data-hlrn-theme="dark"] body.pv-page header.pv-mast {
     background-position:center, 73% center !important;
   }
 }
