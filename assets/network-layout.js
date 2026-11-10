@@ -10,19 +10,19 @@
   const html = document.documentElement;
   const standalone = script.hasAttribute("data-standalone");
   const labels = {
-    "home":"Home", "live":"Live timing", "track-map":"Track map", "racing":"Mini racing",
-    "results":"Race results", "race-reports":"Race reports", "race-preview":"Race preview",
-    "race-intelligence":"Race intelligence", "race-strategy":"Race strategy", "stats":"Statistics",
+    "home":"Home", "live":"Live timing", "racing":"Mini racing",
+    "results":"Race results","race-preview":"Race preview",
+    "race-intelligence":"Race intelligence",
     "drivers":"Driver roster", "team-pages":"Team headquarters", "standings":"Standings",
     "adventures":"Adventures", "news":"Race recaps", "broadcasters":"Broadcasts",
-    "store":"Store", "meet-the-admins":"Meet the admins", "rules":"Rulebook", "fantasy":"Fantasy",
+    "store":"Store", "meet-the-admins":"Meet the admins", "rules":"Rulebook",
     "control-center":"Network control", "my-hlrn":"My HLRN", "foundation-check.html":"Site diagnostics"
   };
   const key = labels[section] ? section : "404";
   const label = labels[key] || "Page not found";
   const grouped = [
-    ["competition", ["standings","results","race-preview","race-reports","fantasy"]],
-    ["timing", ["live","track-map","racing","race-strategy","race-intelligence","stats"]],
+    ["competition", ["standings","results","race-preview"]],
+    ["timing", ["live","racing","race-intelligence"]],
     ["garage", ["drivers","team-pages","my-hlrn","meet-the-admins"]],
     ["features", ["news","broadcasters","adventures","store"]],
   ];
@@ -70,9 +70,9 @@
   if (key === "home") return;
   const related = {
     competition:["race-preview","results","standings"],
-    timing:["live","track-map","race-strategy"],
-    garage:["drivers","team-pages","stats"],
-    features:["broadcasters","news","adventures"],
+    timing:["live","racing","race-intelligence"],
+    garage:["drivers","team-pages","my-hlrn"],
+    features:["broadcasters","adventures","store"],
     network:["rules","meet-the-admins","broadcasters"]
   };
   function link(text, target) {
@@ -96,7 +96,7 @@
   actions.className = "network-related";
   const links = related[html.dataset.networkGroup].filter(name => name !== key).slice(0, 2);
   for (const name of links) {
-    const target = name === "news" ? "news/race-recaps/" : name + "/";
+    const target = name + "/";
     actions.append(link(labels[name], target));
   }
   const programLink = link("Race program", "race-preview/");

@@ -108,8 +108,6 @@ function boot(){
       ["Race Week Preview","Automatic pre-race preview and drivers to watch","race-preview/","race week preview pre race track history drivers to watch"],
       ["Drivers","HLRN driver directory and profiles","drivers/","drivers profiles statistics directory"],
       ["Teams","HLRN team profiles and championship data","team-pages/","teams roster profiles championship"],
-      ["News & Blogs","HLRN news, announcements and stories","news/","news blogs announcements stories"],
-      ["Fantasy","HLRN fantasy racing","fantasy/","fantasy picks leaderboard"],
       ["Adventures of High Line","HLRN original illustrated racing series","adventures/","adventures high line episode series"],
       ["Meet the Admins","Meet the HLRN administration team","meet-the-admins/","admins administration team"],
       ["Rules","HLRN league rules","rules/","rules regulations penalties"],

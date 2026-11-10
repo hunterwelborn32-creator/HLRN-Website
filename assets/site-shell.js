@@ -861,12 +861,6 @@ function start(){
   ];
   const more=[
     ["race-preview","Race Preview","race-preview/"],
-    ["race-reports","Race Reports","race-reports/"],
-    ["race-strategy","Race Strategy","race-strategy/"],
-    ["track-map","Track Map","track-map/"],
-    ["stats","Driver Statistics","stats/"],
-    ["fantasy","Fantasy","fantasy/"],
-    ["news","Race Recaps","news/race-recaps/"],
     ["broadcast","Watch HLRN","broadcasters/"],
     ["rules","Rules","rules/"],
     ["adventures","Adventures","adventures/"],
@@ -1380,7 +1374,7 @@ start();
   document.head.appendChild(tag);
 })();
 /* Advanced stats: only load on driver profiles and directory.
-   /stats/ loads its own script; other pages remain untouched. */
+   Other pages remain untouched. */
 (function installAdvancedDriverStats(){
   if(!/^\/drivers(?:\/|$)/i.test(location.pathname))return;
   if(document.querySelector("script[data-hlrn-advanced-stats]"))return;

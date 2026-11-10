@@ -866,7 +866,7 @@ html[data-hlrn-theme="dark"] .hlrn-league-links a,html[data-hlrn-theme="dark"] .
 
 </style>
 <link rel="stylesheet" href="../assets/site-shell.css?v=20261020nightmatch5">
-<script src="../assets/site-shell.js?v=20261102harvesteffects1" defer></script>
+<script src="../assets/site-shell.js?v=20261110remove-six-sections" defer></script>
 
 <style id="HLRN_LIVE_V10_VISUAL_UPGRADE">
 :root{
@@ -2245,7 +2245,7 @@ html[data-hlrn-theme="dark"] body #tab-report .replay-marker{
   box-shadow:0 0 0 2px #000!important;
 }
 
-/* Same fallback using the color-scheme value applied by site-shell.js?v=20261102harvesteffects1*="color-scheme: dark"] body #tab-report :where(
+/* Same fallback using the color-scheme value applied by site-shell.js?v=20261110remove-six-sections*="color-scheme: dark"] body #tab-report :where(
   .race-replay,.race-replay-controls,.replay-slider-wrap,.replay-slider-rail,
   .replay-jumps,.replay-summary,.replay-summary > div,.replay-lap-events,
   .replay-order,.replay-table,.replay-table thead,.replay-table tbody,
@@ -2626,8 +2626,6 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
       <button class="tab" data-tab="lap-positions">Lap History</button>
       <button class="tab" data-tab="control">Race Control</button>
       <button class="tab" data-tab="stats">Statistics</button>
-      <button class="tab" data-tab="strategy">Race Strategy</button>
-      <button class="tab" data-tab="track-map">Track Map</button>
     </nav>
     <div class="hlrn-more-tools"><button id="hlrnMoreToggle" type="button" aria-expanded="false" aria-controls="hlrnExtraTabs">More race views +</button><nav id="hlrnExtraTabs" class="tabs hlrn-extra-tabs" aria-label="Additional race views" hidden><button class="tab" data-tab="fastest">Fastest Laps</button><button class="tab" data-tab="battles">Battles</button><button class="tab" data-tab="flags">Penalties</button><button class="tab" data-tab="radio">Driver Scanner</button></nav></div>
     <nav class="tabs session-tools" aria-label="Session tools">
@@ -2648,22 +2646,6 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
       </div>
       <div id="hlrnLapOrderContent" class="hlrn-lap-order-content"><div class="archive-empty"><strong>Waiting for completed laps</strong>Driver positions will appear when Cloudflare records the first completed leader lap.</div></div>
     </section>
-    </section>
-
-    <section id="tab-track-map" class="section" aria-label="Live Track Map">
-      <div style="margin:0 0 12px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
-        <strong>HLRN LIVE TRACK MAP</strong>
-        <span><a href="../track-map/?demo=1" target="_blank" rel="noopener">Watch simulated race ↗</a> &nbsp; <a href="../track-map/" target="_blank" rel="noopener">Open full map ↗</a></span>
-      </div>
-      <iframe title="HLRN Live Track Map" src="../track-map/" loading="lazy" style="display:block;width:100%;height:min(1150px,185vh);min-height:740px;border:1px solid var(--line,#b8cce3);border-radius:12px;background:#eaf0f8" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-    </section>
-
-    <section id="tab-strategy" class="section" aria-label="Race Strategy Center">
-      <div style="margin:0 0 12px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap">
-        <strong>HLRN RACE STRATEGY CENTER</strong>
-        <a href="../race-strategy/" target="_blank" rel="noopener">Open full Strategy Center ↗</a>
-      </div>
-      <iframe title="HLRN Race Strategy Center" src="../race-strategy/" loading="lazy" style="display:block;width:100%;height:min(1400px,190vh);min-height:760px;border:1px solid var(--line,#b8cce3);border-radius:12px;background:#eaf0f8" referrerpolicy="strict-origin-when-cross-origin"></iframe>
     </section>
 
     <section id="tab-race" class="section active">
@@ -2880,7 +2862,6 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
           <div class="report-actions">
             <button id="postRacePreviewBtn" class="story-btn recap-preview-btn" type="button" hidden>PREVIEW RACE RECAP</button>
             <a id="postRaceResultsBtn" class="story-btn" href="/results/" hidden>VIEW PUBLISHED RESULTS →</a>
-            <a id="postRaceStoryBtn" class="story-btn" href="/news/race-recaps/" hidden>READ PUBLISHED STORY →</a>
             <button id="copyReportBtn" class="copy-btn">COPY FULL REPORT</button>
           </div>
         </div>
@@ -6362,7 +6343,7 @@ html[data-hlrn-theme="dark"] body #rc2CautionLap{color:#ffe16a!important}
      :"Date unavailable";
    const track=winner?.track||finishers[0]?.track||"Latest completed race";
    let html='<section class="hlrn-league-card" data-league="'+key+'"><header class="hlrn-league-top">'+
-     '<div><small class="hlrn-league-kicker">HLRN • '+label.toUpperCase()+' NIGHT LEAGUE</small><h2>'+label+' Championship</h2><small>2026 STANDINGS & RACE RECAPS</small></div>'+
+     '<div><small class="hlrn-league-kicker">HLRN • '+label.toUpperCase()+' NIGHT LEAGUE</small><h2>'+label+' Championship</h2><small>2026 CHAMPIONSHIP STANDINGS</small></div>'+
      '<a class="hlrn-standings-cta" href="/standings/'+key+'.html">FULL STANDINGS ↗</a></header><div class="hlrn-league-inner">';
    if(leader){
      html+='<div class="hlrn-champ-leader">'+portrait(leader,"leader")+
