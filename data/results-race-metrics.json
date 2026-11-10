@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-10T03:20:38.896Z",
+  "generatedAt": "2026-11-10T03:25:37.936Z",
   "source": "SimRacerHub race pages",
   "races": [
     {
@@ -276,6 +276,31 @@
         "driverId": "99085",
         "carNumber": "99",
         "lap": 70
+      }
+    },
+    {
+      "key": "monday|12|390858",
+      "league": "monday",
+      "raceNumber": 12,
+      "raceId": "390858",
+      "track": "iRacing Superspeedway",
+      "date": "Mon Nov 09 2026 00:00:00 GMT-0500 (Eastern Standard Time)",
+      "source": "SimRacerHub",
+      "sourceRaceId": "390858",
+      "duration": "1h 30m",
+      "raceLaps": 75,
+      "leaders": 13,
+      "leadChanges": 26,
+      "cautions": 8,
+      "cautionLaps": 24,
+      "penalties": 0,
+      "fastestLap": {
+        "time": 51.552,
+        "formatted": "51.552",
+        "driver": "Evan Karlbon",
+        "driverId": "98668",
+        "carNumber": "58",
+        "lap": 72
       }
     },
     {
