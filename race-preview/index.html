@@ -32,6 +32,36 @@ html[data-hlrn-theme="light"] .pv-race-meta b{
 }
 </style>
 <link rel="stylesheet" href="../assets/phase2-pages-polish.css?v=20261008p2">
+<!-- Reuse the already-approved HLRN #34 homepage banners here.
+     Keep the existing Race Preview title, links and live countdown untouched.
+     Higher specificity overrides the shared site's generic oval-photo rule. -->
+<style id="hlrn-race-preview-home-banners">
+html[data-network-layout="race-preview"] body.pv-page header.pv-mast {
+  background:
+    linear-gradient(90deg,
+      rgba(255,250,242,.98) 0%,
+      rgba(255,250,242,.95) 29%,
+      rgba(255,250,242,.80) 45%,
+      rgba(255,250,242,.40) 63%,
+      rgba(255,250,242,.04) 100%),
+    url("../assets/network-art/hlrn-34-day.webp?v=racepreview-20261110-1") center 55% / cover no-repeat !important;
+}
+html[data-network-layout="race-preview"][data-hlrn-theme="dark"] body.pv-page header.pv-mast {
+  background:
+    linear-gradient(90deg,
+      rgba(7,14,26,.97) 0%,
+      rgba(7,14,26,.94) 29%,
+      rgba(7,14,26,.79) 45%,
+      rgba(7,14,26,.40) 63%,
+      rgba(7,14,26,.03) 100%),
+    url("../assets/network-art/hlrn-34-night.webp?v=racepreview-20261110-1") center 55% / cover no-repeat !important;
+}
+@media (max-width:760px) {
+  html[data-network-layout="race-preview"] body.pv-page header.pv-mast {
+    background-position:center, 73% center !important;
+  }
+}
+</style>
 </head>
 <body class="pv-page">
 
