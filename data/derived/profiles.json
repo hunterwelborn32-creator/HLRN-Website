@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-12T05:10:40.438Z",
+  "generatedAt": "2026-11-13T04:50:45.073Z",
   "drivers": [
     {
       "series": "sunday",
@@ -13666,10 +13666,10 @@
       "photoSlug": "trevor-haley",
       "rank": 1,
       "points": null,
-      "races": 95,
+      "races": 96,
       "wins": 25,
       "top5": 57,
-      "top10": 70,
+      "top10": 71,
       "avgFinish": 8.06,
       "results": []
     },
@@ -13741,11 +13741,11 @@
       "photoSlug": "tommy-rogers",
       "rank": 6,
       "points": null,
-      "races": 153,
+      "races": 154,
       "wins": 5,
       "top5": 28,
       "top10": 56,
-      "avgFinish": 14.82,
+      "avgFinish": 14.83,
       "results": []
     },
     {
@@ -13921,11 +13921,11 @@
       "photoSlug": "craig-rowe",
       "rank": 18,
       "points": null,
-      "races": 77,
+      "races": 78,
       "wins": 4,
       "top5": 15,
       "top10": 25,
-      "avgFinish": 20.3,
+      "avgFinish": 20.28,
       "results": []
     },
     {
@@ -13936,11 +13936,11 @@
       "photoSlug": "shawn-stamper",
       "rank": 19,
       "points": null,
-      "races": 132,
+      "races": 133,
       "wins": 4,
       "top5": 12,
       "top10": 33,
-      "avgFinish": 21.3,
+      "avgFinish": 21.36,
       "results": []
     },
     {
