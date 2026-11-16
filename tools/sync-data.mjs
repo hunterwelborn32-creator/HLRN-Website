@@ -67,6 +67,22 @@ export function validateHosted(data) {
   };
 }
 
+// Refuse a regressed Hosted snapshot even when an Apps Script deployment
+// returns HTTP 200. A successful workflow must never erase newer published
+// results or silently roll the latest race back to an older one.
+export function assertHostedNotRegressed(previousHosted, refreshedHosted) {
+  const previousSessions = Array.isArray(previousHosted?.sessions) ? previousHosted.sessions.length : 0;
+  const refreshedSessions = Array.isArray(refreshedHosted?.sessions) ? refreshedHosted.sessions.length : 0;
+  if (previousSessions && refreshedSessions < previousSessions) {
+    throw new Error(`Hosted source regressed from ${previousSessions} to ${refreshedSessions} session rows`);
+  }
+  const previousDate = Date.parse(String(previousHosted?.latest?.date || ''));
+  const refreshedDate = Date.parse(String(refreshedHosted?.latest?.date || ''));
+  if (Number.isFinite(previousDate) && Number.isFinite(refreshedDate) && refreshedDate < previousDate) {
+    throw new Error(`Hosted latest race regressed from ${previousHosted.latest.date} to ${refreshedHosted.latest.date}`);
+  }
+}
+
 const hostedDriverKey = value => String(value || '')
   .trim()
   .replace(/([A-Za-z])\d+$/, '$1')
@@ -914,10 +930,7 @@ export async function sync({
       const refreshedHosted = validateHosted(await request(url, 'hosted/data', {}, 90000));
       console.log('Hosted source latest:', hostedRaceIdentity(refreshedHosted));
       console.log('Hosted published latest:', hostedRaceIdentity(old?.hosted));
-      const priorHostedCount = Array.isArray(old?.hosted?.sessions) ? old.hosted.sessions.length : 0;
-      if (priorHostedCount && refreshedHosted.sessions.length < priorHostedCount) {
-        throw new Error(`Hosted source regressed from ${priorHostedCount} to ${refreshedHosted.sessions.length} session rows`);
-      }
+      assertHostedNotRegressed(old?.hosted, refreshedHosted);
       const profileRatings = await requestHostedProfileRatings(hostedEndpoint, refreshedHosted.rankings);
       refreshedHosted.driverRatings = {
         ...(refreshedHosted.driverRatings || {}),
