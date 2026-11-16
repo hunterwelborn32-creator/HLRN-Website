@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-14T08:35:39.960Z",
+  "generatedAt": "2026-11-16T04:20:43.116Z",
   "drivers": [
     {
       "series": "sunday",
@@ -13666,11 +13666,11 @@
       "photoSlug": "trevor-haley",
       "rank": 1,
       "points": null,
-      "races": 96,
+      "races": 97,
       "wins": 25,
       "top5": 57,
       "top10": 71,
-      "avgFinish": 8.06,
+      "avgFinish": 8.12,
       "results": []
     },
     {
@@ -13696,11 +13696,11 @@
       "photoSlug": "ryan-wilson",
       "rank": 3,
       "points": null,
-      "races": 127,
+      "races": 128,
       "wins": 6,
       "top5": 29,
       "top10": 50,
-      "avgFinish": 14.43,
+      "avgFinish": 14.4,
       "results": []
     },
     {
@@ -13711,11 +13711,26 @@
       "photoSlug": "jim-segredo",
       "rank": 4,
       "points": null,
-      "races": 185,
+      "races": 186,
       "wins": 6,
       "top5": 27,
-      "top10": 72,
-      "avgFinish": 15.93,
+      "top10": 73,
+      "avgFinish": 15.89,
+      "results": []
+    },
+    {
+      "series": "hosted",
+      "id": "hunter-welborn",
+      "name": "Hunter Welborn",
+      "sourceName": "Hunter Welborn",
+      "photoSlug": "hunter-welborn",
+      "rank": 5,
+      "points": null,
+      "races": 83,
+      "wins": 6,
+      "top5": 22,
+      "top10": 41,
+      "avgFinish": 13.99,
       "results": []
     },
     {
@@ -13724,7 +13739,7 @@
       "name": "Ethan Fonseca Moreno",
       "sourceName": "Ethan Fonseca Moreno",
       "photoSlug": "ethan-moreno",
-      "rank": 5,
+      "rank": 6,
       "points": null,
       "races": 19,
       "wins": 6,
@@ -13739,28 +13754,13 @@
       "name": "Tommy Rogers",
       "sourceName": "Tommy Rogers",
       "photoSlug": "tommy-rogers",
-      "rank": 6,
-      "points": null,
-      "races": 154,
-      "wins": 5,
-      "top5": 28,
-      "top10": 56,
-      "avgFinish": 14.83,
-      "results": []
-    },
-    {
-      "series": "hosted",
-      "id": "hunter-welborn",
-      "name": "Hunter Welborn",
-      "sourceName": "Hunter Welborn",
-      "photoSlug": "hunter-welborn",
       "rank": 7,
       "points": null,
-      "races": 82,
+      "races": 155,
       "wins": 5,
-      "top5": 21,
-      "top10": 40,
-      "avgFinish": 14.15,
+      "top5": 29,
+      "top10": 57,
+      "avgFinish": 14.77,
       "results": []
     },
     {
@@ -13771,11 +13771,11 @@
       "photoSlug": "bill-daniels",
       "rank": 8,
       "points": null,
-      "races": 59,
+      "races": 60,
       "wins": 5,
       "top5": 21,
       "top10": 28,
-      "avgFinish": 16.03,
+      "avgFinish": 16.02,
       "results": []
     },
     {
@@ -13831,11 +13831,11 @@
       "photoSlug": "eric-hayden",
       "rank": 12,
       "points": null,
-      "races": 192,
+      "races": 193,
       "wins": 4,
       "top5": 37,
       "top10": 79,
-      "avgFinish": 13.94,
+      "avgFinish": 13.96,
       "results": []
     },
     {
@@ -13846,11 +13846,11 @@
       "photoSlug": "josh-mckinney",
       "rank": 13,
       "points": null,
-      "races": 117,
+      "races": 118,
       "wins": 4,
       "top5": 24,
-      "top10": 48,
-      "avgFinish": 14.41,
+      "top10": 49,
+      "avgFinish": 14.37,
       "results": []
     },
     {
@@ -13936,11 +13936,11 @@
       "photoSlug": "shawn-stamper",
       "rank": 19,
       "points": null,
-      "races": 133,
+      "races": 134,
       "wins": 4,
       "top5": 12,
       "top10": 33,
-      "avgFinish": 21.36,
+      "avgFinish": 21.35,
       "results": []
     },
     {

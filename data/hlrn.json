@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-14T08:35:39.960Z",
+  "generatedAt": "2026-11-16T04:20:43.116Z",
   "leagues": {
     "sunday": {
       "drivers": [
@@ -32781,603 +32781,548 @@
   },
   "hosted": {
     "latest": {
-      "track": "Talladega Superspeedway",
-      "date": "11/12/2026",
-      "totalLaps": "76",
-      "cautions": "6",
-      "totalIncidents": 576,
-      "winner": "William Brittain",
-      "winnerCarNumber": "64",
-      "winnerCar": "NASCAR Truck Ford F150",
+      "track": "Kansas Speedway",
+      "date": "11/15/2026",
+      "totalLaps": "100",
+      "cautions": "3",
+      "totalIncidents": 313,
+      "winner": "Hunter Welborn",
+      "winnerCarNumber": "66",
+      "winnerCar": "NASCAR Cup Series Next Gen Ford Mustang",
       "results": [
         {
           "position": "1",
-          "driver": "William Brittain",
-          "carNumber": "64",
-          "car": "NASCAR Truck Ford F150",
-          "start": "13",
-          "laps": "76",
-          "lapsLed": "9",
-          "incidents": "4",
-          "bestLap": "0:51.456",
-          "averageLap": "1:12.743",
-          "iRating": "1366"
+          "driver": "Hunter Welborn",
+          "carNumber": "66",
+          "car": "NASCAR Cup Series Next Gen Ford Mustang",
+          "start": "5",
+          "laps": "100",
+          "lapsLed": "10",
+          "incidents": "8",
+          "bestLap": "0:29.269",
+          "averageLap": "0:35.983",
+          "iRating": "1453"
         },
         {
           "position": "2",
-          "driver": "Kenneth Dreibelbis",
-          "carNumber": "47",
-          "car": "NASCAR Truck Toyota Tundra TRD Pro",
-          "start": "2",
-          "laps": "76",
-          "lapsLed": "7",
-          "incidents": "22",
-          "bestLap": "0:51.979",
-          "averageLap": "1:12.745",
-          "iRating": "2848"
+          "driver": "Joseph Madigan",
+          "carNumber": "76",
+          "car": "NASCAR Cup Series Next Gen Ford Mustang",
+          "start": "1",
+          "laps": "100",
+          "lapsLed": "22",
+          "incidents": "11",
+          "bestLap": "0:29.241",
+          "averageLap": "0:35.993",
+          "iRating": "4390"
         },
         {
           "position": "3",
-          "driver": "Edward Fiedler",
-          "carNumber": "39",
-          "car": "NASCAR Truck Toyota Tundra TRD Pro",
-          "start": "22",
-          "laps": "76",
-          "lapsLed": "3",
-          "incidents": "14",
-          "bestLap": "0:51.944",
-          "averageLap": "1:12.747",
-          "iRating": "2500"
-        },
-        {
-          "position": "4",
-          "driver": "Brian Duncan3",
-          "carNumber": "14",
-          "car": "NASCAR Truck Chevrolet Silverado",
-          "start": "20",
-          "laps": "76",
-          "lapsLed": "0",
-          "incidents": "24",
-          "bestLap": "0:51.464",
-          "averageLap": "1:12.749",
-          "iRating": "1005"
-        },
-        {
-          "position": "5",
-          "driver": "Mike Rhyno",
-          "carNumber": "17",
-          "car": "NASCAR Truck Ford F150",
-          "start": "21",
-          "laps": "76",
-          "lapsLed": "0",
-          "incidents": "25",
-          "bestLap": "0:51.403",
-          "averageLap": "1:12.750",
-          "iRating": "3174"
-        },
-        {
-          "position": "6",
           "driver": "Donny Beach",
           "carNumber": "11",
-          "car": "NASCAR Truck Chevrolet Silverado",
-          "start": "24",
-          "laps": "76",
-          "lapsLed": "4",
-          "incidents": "23",
-          "bestLap": "0:51.266",
-          "averageLap": "1:12.751",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "10",
+          "laps": "100",
+          "lapsLed": "2",
+          "incidents": "6",
+          "bestLap": "0:29.287",
+          "averageLap": "0:36.027",
           "iRating": "2230"
         },
         {
-          "position": "7",
-          "driver": "James Jepson",
-          "carNumber": "13",
-          "car": "NASCAR Truck Chevrolet Silverado",
-          "start": "10",
-          "laps": "76",
-          "lapsLed": "0",
-          "incidents": "14",
-          "bestLap": "0:51.942",
-          "averageLap": "1:12.787",
-          "iRating": "1005"
-        },
-        {
-          "position": "8",
-          "driver": "Trevor Haley",
-          "carNumber": "21",
-          "car": "NASCAR Truck Chevrolet Silverado",
-          "start": "3",
-          "laps": "76",
-          "lapsLed": "19",
-          "incidents": "10",
-          "bestLap": "0:51.761",
-          "averageLap": "1:12.788",
-          "iRating": "4382"
-        },
-        {
-          "position": "9",
-          "driver": "James DuBose",
-          "carNumber": "5",
-          "car": "NASCAR Truck Ford F150",
-          "start": "23",
-          "laps": "76",
-          "lapsLed": "0",
-          "incidents": "21",
-          "bestLap": "0:51.352",
-          "averageLap": "1:12.798",
-          "iRating": "1667"
-        },
-        {
-          "position": "10",
-          "driver": "Anthony McGuinness",
-          "carNumber": "414",
-          "car": "NASCAR Truck Chevrolet Silverado",
-          "start": "26",
-          "laps": "76",
-          "lapsLed": "0",
-          "incidents": "20",
-          "bestLap": "0:51.572",
-          "averageLap": "1:12.836",
-          "iRating": "2194"
-        },
-        {
-          "position": "11",
-          "driver": "Randy Schweitzer",
-          "carNumber": "78",
-          "car": "NASCAR Truck Toyota Tundra TRD Pro",
-          "start": "4",
-          "laps": "76",
-          "lapsLed": "0",
-          "incidents": "12",
-          "bestLap": "0:51.927",
-          "averageLap": "1:12.875",
-          "iRating": "1237"
-        },
-        {
-          "position": "12",
+          "position": "4",
           "driver": "Ricky Miles",
-          "carNumber": "5",
-          "car": "NASCAR Truck Chevrolet Silverado",
-          "start": "34",
-          "laps": "76",
+          "carNumber": "15",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "18",
+          "laps": "100",
           "lapsLed": "0",
-          "incidents": "15",
-          "bestLap": "0:51.648",
-          "averageLap": "1:12.909",
-          "iRating": "1248"
+          "incidents": "6",
+          "bestLap": "0:29.400",
+          "averageLap": "0:36.064",
+          "iRating": "1342"
         },
         {
-          "position": "13",
-          "driver": "James Smith47",
-          "carNumber": "10",
-          "car": "NASCAR Truck Chevrolet Silverado",
-          "start": "5",
-          "laps": "76",
-          "lapsLed": "0",
-          "incidents": "28",
-          "bestLap": "0:51.643",
-          "averageLap": "1:13.000",
-          "iRating": "1648"
-        },
-        {
-          "position": "14",
-          "driver": "Gerald Pervall",
-          "carNumber": "1",
-          "car": "NASCAR Truck Toyota Tundra TRD Pro",
-          "start": "19",
-          "laps": "76",
-          "lapsLed": "0",
-          "incidents": "29",
-          "bestLap": "0:51.609",
-          "averageLap": "1:13.106",
-          "iRating": "1508"
-        },
-        {
-          "position": "15",
-          "driver": "Steven Harris10",
-          "carNumber": "36",
-          "car": "NASCAR Truck Ford F150",
-          "start": "30",
-          "laps": "76",
-          "lapsLed": "0",
-          "incidents": "32",
-          "bestLap": "0:51.262",
-          "averageLap": "1:13.117",
-          "iRating": "1580"
-        },
-        {
-          "position": "16",
+          "position": "5",
           "driver": "Tommy Rogers",
           "carNumber": "34",
-          "car": "NASCAR Truck RAM",
-          "start": "14",
-          "laps": "76",
-          "lapsLed": "0",
-          "incidents": "32",
-          "bestLap": "0:51.841",
-          "averageLap": "1:13.127",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "9",
+          "laps": "100",
+          "lapsLed": "1",
+          "incidents": "3",
+          "bestLap": "0:29.465",
+          "averageLap": "0:36.151",
           "iRating": "1798"
         },
         {
-          "position": "17",
+          "position": "6",
           "driver": "Jt Huskins",
-          "carNumber": "3",
-          "car": "NASCAR Truck RAM",
-          "start": "18",
-          "laps": "75",
-          "lapsLed": "0",
-          "incidents": "19",
-          "bestLap": "0:51.645",
-          "averageLap": "1:13.021",
+          "carNumber": "45",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "13",
+          "laps": "100",
+          "lapsLed": "1",
+          "incidents": "12",
+          "bestLap": "0:29.334",
+          "averageLap": "0:36.157",
           "iRating": "1335"
         },
         {
-          "position": "18",
-          "driver": "Logan Banks",
-          "carNumber": "27",
-          "car": "NASCAR Truck Toyota Tundra TRD Pro",
-          "start": "31",
-          "laps": "75",
+          "position": "7",
+          "driver": "Steven Harris10",
+          "carNumber": "1",
+          "car": "NASCAR Cup Series Next Gen Ford Mustang",
+          "start": "21",
+          "laps": "100",
           "lapsLed": "0",
-          "incidents": "26",
-          "bestLap": "0:51.478",
-          "averageLap": "1:13.022",
-          "iRating": "1429"
+          "incidents": "10",
+          "bestLap": "0:29.639",
+          "averageLap": "0:36.169",
+          "iRating": "1590"
+        },
+        {
+          "position": "8",
+          "driver": "Jim Segredo",
+          "carNumber": "21",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "11",
+          "laps": "100",
+          "lapsLed": "0",
+          "incidents": "13",
+          "bestLap": "0:29.381",
+          "averageLap": "0:36.203",
+          "iRating": "1272"
+        },
+        {
+          "position": "9",
+          "driver": "Tom Lester",
+          "carNumber": "37",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "25",
+          "laps": "100",
+          "lapsLed": "0",
+          "incidents": "4",
+          "bestLap": "0:29.299",
+          "averageLap": "0:36.224",
+          "iRating": "2225"
+        },
+        {
+          "position": "10",
+          "driver": "Joshua McKinney2",
+          "carNumber": "3",
+          "car": "NASCAR Cup Series Next Gen Ford Mustang",
+          "start": "22",
+          "laps": "99",
+          "lapsLed": "0",
+          "incidents": "24",
+          "bestLap": "0:29.360",
+          "averageLap": "0:36.586",
+          "iRating": "2686"
+        },
+        {
+          "position": "11",
+          "driver": "Ryan Wilson21",
+          "carNumber": "23",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "17",
+          "laps": "97",
+          "lapsLed": "0",
+          "incidents": "23",
+          "bestLap": "0:29.434",
+          "averageLap": "0:37.295",
+          "iRating": "1475"
+        },
+        {
+          "position": "12",
+          "driver": "Patrick Craven",
+          "carNumber": "3",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "12",
+          "laps": "97",
+          "lapsLed": "0",
+          "incidents": "13",
+          "bestLap": "0:29.359",
+          "averageLap": "0:37.335",
+          "iRating": "1393"
+        },
+        {
+          "position": "13",
+          "driver": "Danny Mann",
+          "carNumber": "25",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "8",
+          "laps": "88",
+          "lapsLed": "0",
+          "incidents": "12",
+          "bestLap": "0:29.233",
+          "averageLap": "0:36.499",
+          "iRating": "2811"
+        },
+        {
+          "position": "14",
+          "driver": "Trevor Haley",
+          "carNumber": "12",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "2",
+          "laps": "87",
+          "lapsLed": "18",
+          "incidents": "10",
+          "bestLap": "0:29.255",
+          "averageLap": "0:36.423",
+          "iRating": "4382"
+        },
+        {
+          "position": "15",
+          "driver": "Bill Daniels",
+          "carNumber": "91",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "7",
+          "laps": "87",
+          "lapsLed": "45",
+          "incidents": "0",
+          "bestLap": "0:29.205",
+          "averageLap": "0:36.456",
+          "iRating": "3860"
+        },
+        {
+          "position": "16",
+          "driver": "Ty Fredrickson",
+          "carNumber": "36",
+          "car": "NASCAR Cup Series Next Gen Toyota Camry",
+          "start": "4",
+          "laps": "87",
+          "lapsLed": "0",
+          "incidents": "18",
+          "bestLap": "0:29.296",
+          "averageLap": "0:36.594",
+          "iRating": "4733"
+        },
+        {
+          "position": "17",
+          "driver": "Brian Hebbard2",
+          "carNumber": "87",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "27",
+          "laps": "77",
+          "lapsLed": "0",
+          "incidents": "16",
+          "bestLap": "0:29.571",
+          "averageLap": "0:37.286",
+          "iRating": "1690"
+        },
+        {
+          "position": "18",
+          "driver": "Eric Hayden",
+          "carNumber": "100",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "19",
+          "laps": "68",
+          "lapsLed": "0",
+          "incidents": "22",
+          "bestLap": "0:29.306",
+          "averageLap": "0:40.538",
+          "iRating": "1988"
         },
         {
           "position": "19",
-          "driver": "Craig Rowe",
-          "carNumber": "9",
-          "car": "NASCAR Truck Chevrolet Silverado",
-          "start": "7",
-          "laps": "75",
-          "lapsLed": "24",
-          "incidents": "16",
-          "bestLap": "0:51.741",
-          "averageLap": "1:13.025",
-          "iRating": "2778"
+          "driver": "Matthew Mayes2",
+          "carNumber": "4",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "3",
+          "laps": "67",
+          "lapsLed": "0",
+          "incidents": "12",
+          "bestLap": "0:29.071",
+          "averageLap": "0:35.480",
+          "iRating": "3159"
         },
         {
           "position": "20",
-          "driver": "Jarrod Mcanally",
-          "carNumber": "77",
-          "car": "NASCAR Truck Chevrolet Silverado",
-          "start": "29",
-          "laps": "53",
-          "lapsLed": "0",
-          "incidents": "12",
-          "bestLap": "0:52.062",
-          "averageLap": "1:12.674",
-          "iRating": "1825"
-        },
-        {
-          "position": "21",
-          "driver": "Peyton Hamlett",
-          "carNumber": "42",
-          "car": "NASCAR Truck Ford F150",
-          "start": "8",
-          "laps": "50",
-          "lapsLed": "8",
-          "incidents": "10",
-          "bestLap": "0:51.606",
-          "averageLap": "1:09.319",
-          "iRating": "4478"
-        },
-        {
-          "position": "22",
-          "driver": "William Ransone",
-          "carNumber": "76",
-          "car": "NASCAR Truck Ford F150",
-          "start": "9",
-          "laps": "48",
-          "lapsLed": "0",
-          "incidents": "20",
-          "bestLap": "0:51.631",
-          "averageLap": "1:09.995",
-          "iRating": "2797"
-        },
-        {
-          "position": "23",
-          "driver": "BJ Bodnar",
-          "carNumber": "15",
-          "car": "NASCAR Truck RAM",
-          "start": "36",
-          "laps": "41",
-          "lapsLed": "0",
-          "incidents": "24",
-          "bestLap": "0:51.450",
-          "averageLap": "1:12.119",
-          "iRating": "1109"
-        },
-        {
-          "position": "24",
-          "driver": "John Kinder",
-          "carNumber": "40",
-          "car": "NASCAR Truck Chevrolet Silverado",
-          "start": "12",
-          "laps": "39",
-          "lapsLed": "0",
-          "incidents": "8",
-          "bestLap": "0:51.864",
-          "averageLap": "1:13.095",
-          "iRating": "2839"
-        },
-        {
-          "position": "25",
-          "driver": "Mark Jackson",
-          "carNumber": "26",
-          "car": "NASCAR Truck Chevrolet Silverado",
-          "start": "6",
-          "laps": "34",
-          "lapsLed": "0",
-          "incidents": "14",
-          "bestLap": "0:51.978",
-          "averageLap": "1:16.181",
-          "iRating": "1136"
-        },
-        {
-          "position": "26",
-          "driver": "Cayden Reed",
-          "carNumber": "25",
-          "car": "NASCAR Truck Chevrolet Silverado",
-          "start": "35",
-          "laps": "33",
-          "lapsLed": "0",
-          "incidents": "16",
-          "bestLap": "0:52.616",
-          "averageLap": "1:16.796",
-          "iRating": "1166"
-        },
-        {
-          "position": "27",
-          "driver": "Nathan Yarborough",
-          "carNumber": "29",
-          "car": "NASCAR Truck Ford F150",
-          "start": "32",
-          "laps": "29",
-          "lapsLed": "0",
-          "incidents": "8",
-          "bestLap": "0:51.622",
-          "averageLap": "1:10.883",
-          "iRating": "1418"
-        },
-        {
-          "position": "28",
-          "driver": "Glenn Mckee",
-          "carNumber": "22",
-          "car": "NASCAR Truck Toyota Tundra TRD Pro",
-          "start": "11",
-          "laps": "28",
-          "lapsLed": "0",
-          "incidents": "12",
-          "bestLap": "0:51.616",
-          "averageLap": "1:10.626",
-          "iRating": "1631"
-        },
-        {
-          "position": "29",
           "driver": "Shawn Stamper",
           "carNumber": "9",
-          "car": "NASCAR Truck Ford F150",
-          "start": "1",
-          "laps": "28",
+          "car": "NASCAR Cup Series Next Gen Ford Mustang",
+          "start": "20",
+          "laps": "58",
           "lapsLed": "0",
-          "incidents": "9",
-          "bestLap": "0:51.950",
-          "averageLap": "1:10.629",
+          "incidents": "6",
+          "bestLap": "0:29.343",
+          "averageLap": "0:38.008",
           "iRating": "3107"
         },
         {
-          "position": "30",
-          "driver": "Dylan Butler",
-          "carNumber": "96",
-          "car": "NASCAR Truck Toyota Tundra TRD Pro",
-          "start": "27",
-          "laps": "28",
+          "position": "21",
+          "driver": "Bradley Gratton",
+          "carNumber": "9",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "26",
+          "laps": "53",
           "lapsLed": "0",
-          "incidents": "1",
-          "bestLap": "0:51.612",
-          "averageLap": "1:10.635",
-          "iRating": "2076"
+          "incidents": "14",
+          "bestLap": "0:29.472",
+          "averageLap": "0:37.663",
+          "iRating": "2103"
+        },
+        {
+          "position": "22",
+          "driver": "Dylan J Robinson",
+          "carNumber": "10",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "6",
+          "laps": "39",
+          "lapsLed": "0",
+          "incidents": "3",
+          "bestLap": "0:29.327",
+          "averageLap": "0:38.700",
+          "iRating": "5062"
+        },
+        {
+          "position": "23",
+          "driver": "Mack Vandale",
+          "carNumber": "54",
+          "car": "NASCAR Cup Series Next Gen Toyota Camry",
+          "start": "29",
+          "laps": "37",
+          "lapsLed": "0",
+          "incidents": "9",
+          "bestLap": "0:29.382",
+          "averageLap": "0:38.734",
+          "iRating": "1490"
+        },
+        {
+          "position": "24",
+          "driver": "David Motes",
+          "carNumber": "39",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "14",
+          "laps": "24",
+          "lapsLed": "1",
+          "incidents": "14",
+          "bestLap": "0:29.760",
+          "averageLap": "0:40.338",
+          "iRating": "1055"
+        },
+        {
+          "position": "25",
+          "driver": "Stacy Mathewson",
+          "carNumber": "26",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "32",
+          "laps": "22",
+          "lapsLed": "0",
+          "incidents": "8",
+          "bestLap": "0:30.035",
+          "averageLap": "0:44.678",
+          "iRating": "679"
+        },
+        {
+          "position": "26",
+          "driver": "William George8",
+          "carNumber": "777",
+          "car": "NASCAR Cup Series Next Gen Ford Mustang",
+          "start": "31",
+          "laps": "17",
+          "lapsLed": "0",
+          "incidents": "12",
+          "bestLap": "0:29.554",
+          "averageLap": "0:38.900",
+          "iRating": "1250"
+        },
+        {
+          "position": "27",
+          "driver": "Danny Jierian",
+          "carNumber": "28",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "15",
+          "laps": "17",
+          "lapsLed": "0",
+          "incidents": "4",
+          "bestLap": "0:29.316",
+          "averageLap": "0:38.902",
+          "iRating": "1967"
+        },
+        {
+          "position": "28",
+          "driver": "Billy Vest",
+          "carNumber": "38",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "16",
+          "laps": "16",
+          "lapsLed": "0",
+          "incidents": "6",
+          "bestLap": "0:29.510",
+          "averageLap": "0:43.650",
+          "iRating": "1993"
+        },
+        {
+          "position": "29",
+          "driver": "Ryan Bowers",
+          "carNumber": "32",
+          "car": "NASCAR Cup Series Next Gen Toyota Camry",
+          "start": "23",
+          "laps": "15",
+          "lapsLed": "0",
+          "incidents": "6",
+          "bestLap": "0:30.041",
+          "averageLap": "0:43.307",
+          "iRating": "2376"
+        },
+        {
+          "position": "30",
+          "driver": "Ash Nettle",
+          "carNumber": "18",
+          "car": "NASCAR Cup Series Next Gen Ford Mustang",
+          "start": "28",
+          "laps": "13",
+          "lapsLed": "0",
+          "incidents": "4",
+          "bestLap": "0:30.250",
+          "averageLap": "0:41.090",
+          "iRating": "1684"
         },
         {
           "position": "31",
-          "driver": "Evan Rogers3",
-          "carNumber": "19",
-          "car": "NASCAR Truck Chevrolet Silverado",
-          "start": "33",
-          "laps": "28",
-          "lapsLed": "1",
-          "incidents": "16",
-          "bestLap": "0:51.283",
-          "averageLap": "1:10.641",
-          "iRating": "1334"
+          "driver": "Logan Banks",
+          "carNumber": "14",
+          "car": "NASCAR Cup Series Next Gen Toyota Camry",
+          "start": "30",
+          "laps": "6",
+          "lapsLed": "0",
+          "incidents": "4",
+          "bestLap": "0:31.876",
+          "averageLap": "0:53.681",
+          "iRating": "1429"
         },
         {
           "position": "32",
           "driver": "Derek Jacobs",
-          "carNumber": "99",
-          "car": "NASCAR Truck Ford F150",
-          "start": "16",
-          "laps": "22",
+          "carNumber": "27",
+          "car": "NASCAR Cup Series Next Gen Toyota Camry",
+          "start": "24",
+          "laps": "0",
           "lapsLed": "0",
-          "incidents": "4",
-          "bestLap": "0:53.349",
-          "averageLap": "1:10.112",
+          "incidents": "0",
+          "bestLap": "",
+          "averageLap": "0:00.000",
           "iRating": "2303"
         },
         {
           "position": "33",
-          "driver": "Carl Cowles3",
-          "carNumber": "30",
-          "car": "NASCAR Truck Chevrolet Silverado",
-          "start": "28",
-          "laps": "17",
+          "driver": "Ryan J Rose",
+          "carNumber": "85",
+          "car": "NASCAR Cup Series Next Gen Toyota Camry",
+          "start": "33",
+          "laps": "0",
           "lapsLed": "0",
-          "incidents": "4",
-          "bestLap": "0:51.311",
-          "averageLap": "1:10.241",
-          "iRating": "1905"
+          "incidents": "0",
+          "bestLap": "",
+          "averageLap": "0:00.000",
+          "iRating": "4099"
         },
         {
           "position": "34",
-          "driver": "Royce Valley",
-          "carNumber": "35",
-          "car": "NASCAR Truck Ford F150",
-          "start": "17",
-          "laps": "16",
+          "driver": "Kyle Dean9",
+          "carNumber": "29",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "34",
+          "laps": "0",
           "lapsLed": "0",
-          "incidents": "8",
-          "bestLap": "0:51.391",
-          "averageLap": "1:08.288",
-          "iRating": "2293"
+          "incidents": "0",
+          "bestLap": "",
+          "averageLap": "0:00.000",
+          "iRating": "2608"
         },
         {
           "position": "35",
-          "driver": "Scott Wallace",
-          "carNumber": "38",
-          "car": "NASCAR Truck Chevrolet Silverado",
-          "start": "15",
-          "laps": "3",
+          "driver": "Cameron Williams12",
+          "carNumber": "24",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "35",
+          "laps": "0",
           "lapsLed": "0",
-          "incidents": "4",
-          "bestLap": "1:54.446",
-          "averageLap": "1:21.977",
-          "iRating": "1437"
+          "incidents": "0",
+          "bestLap": "",
+          "averageLap": "0:00.000",
+          "iRating": "2462"
         },
         {
           "position": "36",
-          "driver": "Blake Witkowski",
-          "carNumber": "31",
-          "car": "NASCAR Truck Chevrolet Silverado",
-          "start": "25",
-          "laps": "34",
-          "lapsLed": "1",
-          "incidents": "20",
-          "bestLap": "0:51.394",
-          "averageLap": "1:16.157",
-          "iRating": "3358"
+          "driver": "Daniel Harsey",
+          "carNumber": "5",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
+          "start": "36",
+          "laps": "0",
+          "lapsLed": "0",
+          "incidents": "0",
+          "bestLap": "",
+          "averageLap": "0:00.000",
+          "iRating": "2106"
         },
         {
           "position": "37",
-          "driver": "Emmett Eddolls",
-          "carNumber": "33",
-          "car": "NASCAR Truck RAM",
+          "driver": "Zane Howe",
+          "carNumber": "8",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
           "start": "37",
           "laps": "0",
           "lapsLed": "0",
           "incidents": "0",
           "bestLap": "",
           "averageLap": "0:00.000",
-          "iRating": "3194"
+          "iRating": "1971"
         },
         {
           "position": "38",
-          "driver": "Wiliam Rice",
-          "carNumber": "51",
-          "car": "NASCAR Truck Chevrolet Silverado",
+          "driver": "Chad Waller2",
+          "carNumber": "17",
+          "car": "NASCAR Cup Series Next Gen Ford Mustang",
           "start": "38",
           "laps": "0",
           "lapsLed": "0",
           "incidents": "0",
           "bestLap": "",
           "averageLap": "0:00.000",
-          "iRating": "2161"
+          "iRating": "1957"
         },
         {
           "position": "39",
-          "driver": "Brent Murphy",
-          "carNumber": "6",
-          "car": "NASCAR Truck Ford F150",
+          "driver": "Justin Dues",
+          "carNumber": "16",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
           "start": "39",
           "laps": "0",
           "lapsLed": "0",
           "incidents": "0",
           "bestLap": "",
           "averageLap": "0:00.000",
-          "iRating": "2015"
+          "iRating": "1519"
         },
         {
           "position": "40",
-          "driver": "David Weir3",
-          "carNumber": "66",
-          "car": "NASCAR Truck Chevrolet Silverado",
+          "driver": "Daniel Demir",
+          "carNumber": "30",
+          "car": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1",
           "start": "40",
           "laps": "0",
           "lapsLed": "0",
           "incidents": "0",
           "bestLap": "",
           "averageLap": "0:00.000",
-          "iRating": "1692"
-        },
-        {
-          "position": "41",
-          "driver": "Tyler Creech",
-          "carNumber": "71",
-          "car": "NASCAR Truck Ford F150",
-          "start": "41",
-          "laps": "0",
-          "lapsLed": "0",
-          "incidents": "0",
-          "bestLap": "",
-          "averageLap": "0:00.000",
-          "iRating": "1699"
-        },
-        {
-          "position": "42",
-          "driver": "Brandon Nicholson2",
-          "carNumber": "12",
-          "car": "NASCAR Truck Toyota Tundra TRD Pro",
-          "start": "42",
-          "laps": "0",
-          "lapsLed": "0",
-          "incidents": "0",
-          "bestLap": "",
-          "averageLap": "0:00.000",
-          "iRating": "1614"
-        },
-        {
-          "position": "43",
-          "driver": "Devon Jackson",
-          "carNumber": "75",
-          "car": "NASCAR Truck Toyota Tundra TRD Pro",
-          "start": "43",
-          "laps": "0",
-          "lapsLed": "0",
-          "incidents": "0",
-          "bestLap": "",
-          "averageLap": "0:00.000",
-          "iRating": "1593"
-        },
-        {
-          "position": "44",
-          "driver": "Robert Guthrie",
-          "carNumber": "20",
-          "car": "NASCAR Truck Ford F150",
-          "start": "44",
-          "laps": "0",
-          "lapsLed": "0",
-          "incidents": "0",
-          "bestLap": "",
-          "averageLap": "0:00.000",
-          "iRating": "1391"
-        },
-        {
-          "position": "45",
-          "driver": "Cody Baumeister2",
-          "carNumber": "88",
-          "car": "NASCAR Truck Toyota Tundra TRD Pro",
-          "start": "45",
-          "laps": "0",
-          "lapsLed": "0",
-          "incidents": "0",
-          "bestLap": "",
-          "averageLap": "0:00.000",
-          "iRating": "1075"
+          "iRating": "650"
         }
       ]
     },
     "sessions": [
+      {
+        "date": "11/15/2026",
+        "track": "Kansas Speedway",
+        "carNumber": "66",
+        "driver": "Hunter Welborn",
+        "start": "5",
+        "lapsLed": "10",
+        "incidents": "8",
+        "averageLap": "0:35.983"
+      },
       {
         "date": "11/12/2026",
         "track": "Talladega Superspeedway",
@@ -35793,11 +35738,11 @@
       {
         "rank": "1",
         "driver": "Trevor Haley",
-        "races": "96",
+        "races": "97",
         "wins": "25",
         "top5": "57",
         "top10": "71",
-        "averageFinish": "8.06"
+        "averageFinish": "8.12"
       },
       {
         "rank": "2",
@@ -35811,23 +35756,32 @@
       {
         "rank": "3",
         "driver": "Ryan Wilson21",
-        "races": "127",
+        "races": "128",
         "wins": "6",
         "top5": "29",
         "top10": "50",
-        "averageFinish": "14.43"
+        "averageFinish": "14.4"
       },
       {
         "rank": "4",
         "driver": "Jim Segredo",
-        "races": "185",
+        "races": "186",
         "wins": "6",
         "top5": "27",
-        "top10": "72",
-        "averageFinish": "15.93"
+        "top10": "73",
+        "averageFinish": "15.89"
       },
       {
         "rank": "5",
+        "driver": "Hunter Welborn",
+        "races": "83",
+        "wins": "6",
+        "top5": "22",
+        "top10": "41",
+        "averageFinish": "13.99"
+      },
+      {
+        "rank": "6",
         "driver": "Ethan Fonseca Moreno",
         "races": "19",
         "wins": "6",
@@ -35836,31 +35790,22 @@
         "averageFinish": "11.63"
       },
       {
-        "rank": "6",
-        "driver": "Tommy Rogers",
-        "races": "154",
-        "wins": "5",
-        "top5": "28",
-        "top10": "56",
-        "averageFinish": "14.83"
-      },
-      {
         "rank": "7",
-        "driver": "Hunter Welborn",
-        "races": "82",
+        "driver": "Tommy Rogers",
+        "races": "155",
         "wins": "5",
-        "top5": "21",
-        "top10": "40",
-        "averageFinish": "14.15"
+        "top5": "29",
+        "top10": "57",
+        "averageFinish": "14.77"
       },
       {
         "rank": "8",
         "driver": "Bill Daniels",
-        "races": "59",
+        "races": "60",
         "wins": "5",
         "top5": "21",
         "top10": "28",
-        "averageFinish": "16.03"
+        "averageFinish": "16.02"
       },
       {
         "rank": "9",
@@ -35892,20 +35837,20 @@
       {
         "rank": "12",
         "driver": "Eric Hayden",
-        "races": "192",
+        "races": "193",
         "wins": "4",
         "top5": "37",
         "top10": "79",
-        "averageFinish": "13.94"
+        "averageFinish": "13.96"
       },
       {
         "rank": "13",
         "driver": "Joshua McKinney2",
-        "races": "117",
+        "races": "118",
         "wins": "4",
         "top5": "24",
-        "top10": "48",
-        "averageFinish": "14.41"
+        "top10": "49",
+        "averageFinish": "14.37"
       },
       {
         "rank": "14",
@@ -35955,11 +35900,11 @@
       {
         "rank": "19",
         "driver": "Shawn Stamper",
-        "races": "133",
+        "races": "134",
         "wins": "4",
         "top5": "12",
         "top10": "33",
-        "averageFinish": "21.36"
+        "averageFinish": "21.35"
       },
       {
         "rank": "20",
@@ -36019,8 +35964,8 @@
       },
       "rickymiles": {
         "driver": "Ricky Miles",
-        "iRating": 1248,
-        "date": "11/12/2026"
+        "iRating": 1342,
+        "date": "11/15/2026"
       },
       "coltontutt": {
         "driver": "Colton Tutt",
@@ -36039,8 +35984,8 @@
       },
       "bradleygratton": {
         "driver": "Bradley Gratton",
-        "iRating": 2003,
-        "date": "10/3/2026"
+        "iRating": 2103,
+        "date": "11/15/2026"
       },
       "jimsegredo": {
         "driver": "Jim Segredo",
@@ -36059,8 +36004,8 @@
       },
       "mackvandale": {
         "driver": "Mack Vandale",
-        "iRating": 1285,
-        "date": "10/3/2026"
+        "iRating": 1490,
+        "date": "11/15/2026"
       },
       "kylekammeron": {
         "driver": "Kyle Kammeron",
@@ -36069,8 +36014,8 @@
       },
       "patrickcraven": {
         "driver": "Patrick Craven",
-        "iRating": 1334,
-        "date": "10/22/2026"
+        "iRating": 1393,
+        "date": "11/15/2026"
       },
       "randycoryer": {
         "driver": "Randy Coryer",
@@ -36794,8 +36739,8 @@
       },
       "danieldemir": {
         "driver": "Daniel Demir",
-        "iRating": 622,
-        "date": "10/21/2026"
+        "iRating": 650,
+        "date": "11/15/2026"
       },
       "jakedilger": {
         "driver": "Jake Dilger",
@@ -37064,8 +37009,8 @@
       },
       "kyledean": {
         "driver": "Kyle Dean9",
-        "iRating": 2252,
-        "date": "10/24/2026"
+        "iRating": 2608,
+        "date": "11/15/2026"
       },
       "mikerhyno": {
         "driver": "Mike Rhyno",
@@ -37129,8 +37074,8 @@
       },
       "stevenharris": {
         "driver": "Steven Harris10",
-        "iRating": 1580,
-        "date": "11/12/2026"
+        "iRating": 1590,
+        "date": "11/15/2026"
       },
       "jerrymaggard": {
         "driver": "Jerry Maggard",
@@ -37671,6 +37616,91 @@
         "driver": "Robert Guthrie",
         "iRating": 1391,
         "date": "11/12/2026"
+      },
+      "josephmadigan": {
+        "driver": "Joseph Madigan",
+        "iRating": 4390,
+        "date": "11/15/2026"
+      },
+      "tomlester": {
+        "driver": "Tom Lester",
+        "iRating": 2225,
+        "date": "11/15/2026"
+      },
+      "dannymann": {
+        "driver": "Danny Mann",
+        "iRating": 2811,
+        "date": "11/15/2026"
+      },
+      "tyfredrickson": {
+        "driver": "Ty Fredrickson",
+        "iRating": 4733,
+        "date": "11/15/2026"
+      },
+      "matthewmayes": {
+        "driver": "Matthew Mayes2",
+        "iRating": 3159,
+        "date": "11/15/2026"
+      },
+      "dylanjrobinson": {
+        "driver": "Dylan J Robinson",
+        "iRating": 5062,
+        "date": "11/15/2026"
+      },
+      "davidmotes": {
+        "driver": "David Motes",
+        "iRating": 1055,
+        "date": "11/15/2026"
+      },
+      "stacymathewson": {
+        "driver": "Stacy Mathewson",
+        "iRating": 679,
+        "date": "11/15/2026"
+      },
+      "williamgeorge": {
+        "driver": "William George8",
+        "iRating": 1250,
+        "date": "11/15/2026"
+      },
+      "dannyjierian": {
+        "driver": "Danny Jierian",
+        "iRating": 1967,
+        "date": "11/15/2026"
+      },
+      "billyvest": {
+        "driver": "Billy Vest",
+        "iRating": 1993,
+        "date": "11/15/2026"
+      },
+      "ryanbowers": {
+        "driver": "Ryan Bowers",
+        "iRating": 2376,
+        "date": "11/15/2026"
+      },
+      "ashnettle": {
+        "driver": "Ash Nettle",
+        "iRating": 1684,
+        "date": "11/15/2026"
+      },
+      "ryanjrose": {
+        "driver": "Ryan J Rose",
+        "iRating": 4099,
+        "date": "11/15/2026"
+      },
+      "cameronwilliams": {
+        "driver": "Cameron Williams12",
+        "iRating": 2462,
+        "date": "11/15/2026"
+      },
+      "danielharsey": {
+        "driver": "Daniel Harsey",
+        "iRating": 2106,
+        "date": "11/15/2026"
+      },
+      "zanehowe": {
+        "driver": "Zane Howe",
+        "iRating": 1971,
+        "date": "11/15/2026"
       }
     }
   }
