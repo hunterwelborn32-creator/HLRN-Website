@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { hostedDataRequestUrl, hostedRaceIdentity, validateAction, buildSnapshot, sameData, seasonDriverTotals, mergeHostedDriverRatings, mergeSeasonDriverTotals, parseTeamRostersHtml, parseStageBonusBreakdownHtml, combineStageAwardMaps, applyStageBonusReclassification, parseSimRacerHubRaceResultsHtml, parseSimRacerHubRaceMetricsHtml, mergeSimRacerHubRaceResults } from '../tools/sync-data.mjs';
+import { hostedDataRequestUrl, hostedRaceIdentity, assertHostedNotRegressed, validateAction, buildSnapshot, sameData, seasonDriverTotals, mergeHostedDriverRatings, mergeSeasonDriverTotals, parseTeamRostersHtml, parseStageBonusBreakdownHtml, combineStageAwardMaps, applyStageBonusReclassification, parseSimRacerHubRaceResultsHtml, parseSimRacerHubRaceMetricsHtml, mergeSimRacerHubRaceResults } from '../tools/sync-data.mjs';
 import { versionManifest } from '../tools/build-derived.mjs';
 const payloads = Object.fromEntries(['sunday','monday'].map(l => [l, {
   drivers: { success:true, drivers:[{driverId:l+'-1',name:'Example'}] },
@@ -16,6 +16,14 @@ test('Hosted requests bypass cached Apps Script responses', () => {
 
 test('Hosted source diagnostic identifies latest race', () => {
  assert.match(hostedRaceIdentity({latest:{date:'2026-11-02',sessionId:42,track:'Indianapolis',results:[{}]}}),/id=42; track=Indianapolis; results=1/);
+});
+
+test('Hosted snapshot refuses older races and lost history but allows current corrections', () => {
+ const previous={latest:{date:'11/15/2026'},sessions:[{},{},{}]};
+ assert.throws(() => assertHostedNotRegressed(previous,{latest:{date:'11/12/2026'},sessions:[{},{},{}]}),/latest race regressed/);
+ assert.throws(() => assertHostedNotRegressed(previous,{latest:{date:'11/16/2026'},sessions:[{},{}]}),/session rows/);
+ assert.doesNotThrow(() => assertHostedNotRegressed(previous,{latest:{date:'11/15/2026'},sessions:[{},{},{}]}));
+ assert.doesNotThrow(() => assertHostedNotRegressed(previous,{latest:{date:'11/16/2026'},sessions:[{},{},{},{}]}));
 });
 
 test('both leagues are retained without inventing results', () => {
