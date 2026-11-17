@@ -52,6 +52,8 @@ export function hostedRaceIdentity(hosted) {
   return `date=${date}; id=${id}; track=${track}; results=${results}`;
 }
 
+// Bryce Hinton2 Hosted source restored from verified 2026-09-12 sheet revision on 2026-11-17.
+// Keep all Hosted source race rows and rankings intact when refreshing this snapshot.
 export function validateHosted(data) {
   if (!data || typeof data !== 'object' || data.success === false || data.ok === false ||
       !data.latest || !Array.isArray(data.latest.results) ||
