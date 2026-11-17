@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-17T03:45:35.956Z",
+  "generatedAt": "2026-11-17T03:50:38.493Z",
   "reports": [
     {
       "key": "monday:392310",
@@ -52,8 +52,8 @@
           "finish": 2,
           "gain": 13,
           "points": 49,
-          "totalPoints": 49,
-          "bonusPoints": null,
+          "totalPoints": 50,
+          "bonusPoints": 1,
           "penaltyPoints": null,
           "interval": -0.616,
           "lapsCompleted": 125,
@@ -334,8 +334,8 @@
           "finish": 2,
           "gain": 13,
           "points": 49,
-          "totalPoints": 49,
-          "bonusPoints": null,
+          "totalPoints": 50,
+          "bonusPoints": 1,
           "penaltyPoints": null,
           "interval": -0.616,
           "lapsCompleted": 125,

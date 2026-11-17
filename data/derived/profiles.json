@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-17T03:45:35.956Z",
+  "generatedAt": "2026-11-17T03:50:38.493Z",
   "drivers": [
     {
       "series": "sunday",
@@ -8793,14 +8793,14 @@
       "sourceName": "Ramsey, Kenwood",
       "photoSlug": "kenwood-ramsey",
       "rank": 2,
-      "points": 577,
+      "points": 578,
       "change": 1,
       "races": 13,
       "wins": 1,
       "top5": 6,
       "top10": 9,
       "racePoints": 561,
-      "stagePoints": 3,
+      "stagePoints": 4,
       "bonus": 13,
       "penalty": 0,
       "laps": 1435,
