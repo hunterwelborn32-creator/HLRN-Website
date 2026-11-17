@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-17T03:50:38.493Z",
+  "generatedAt": "2026-11-17T21:53:25.236Z",
   "leagues": {
     "sunday": {
       "drivers": [
@@ -35050,6 +35050,16 @@
         "averageLap": "1:02.587"
       },
       {
+        "date": "7/11/2026",
+        "track": "Daytona International Speedway",
+        "carNumber": "28",
+        "driver": "Bryce Hinton2",
+        "start": "21",
+        "lapsLed": "15",
+        "incidents": "6",
+        "averageLap": "1:02.586"
+      },
+      {
         "date": "7/10/2026",
         "track": "Talladega Superspeedway",
         "carNumber": "12",
@@ -35090,6 +35100,16 @@
         "averageLap": "1:06.928"
       },
       {
+        "date": "7/7/2026",
+        "track": "Daytona International Speedway",
+        "carNumber": "28",
+        "driver": "Bryce Hinton2",
+        "start": "36",
+        "lapsLed": "31",
+        "incidents": "4",
+        "averageLap": "1:06.927"
+      },
+      {
         "date": "7/6/2026",
         "track": "Talladega Superspeedway",
         "carNumber": "29",
@@ -35107,6 +35127,16 @@
         "start": "2",
         "lapsLed": "4",
         "incidents": "8",
+        "averageLap": "1:01.946"
+      },
+      {
+        "date": "7/3/2026",
+        "track": "Talladega Superspeedway",
+        "carNumber": "28",
+        "driver": "Bryce Hinton2",
+        "start": "3",
+        "lapsLed": "10",
+        "incidents": "16",
         "averageLap": "1:01.946"
       },
       {
@@ -35251,6 +35281,16 @@
       },
       {
         "date": "6/19/2026",
+        "track": "Talladega Superspeedway",
+        "carNumber": "28",
+        "driver": "Bryce Hinton2",
+        "start": "1",
+        "lapsLed": "47",
+        "incidents": "10",
+        "averageLap": "1:14.874"
+      },
+      {
+        "date": "6/19/2026",
         "track": "Las Vegas Motor Speedway",
         "carNumber": "9",
         "driver": "Shawn Stamper",
@@ -35390,6 +35430,16 @@
         "averageLap": "1:03.331"
       },
       {
+        "date": "6/2/2026",
+        "track": "Daytona International Speedway",
+        "carNumber": "28",
+        "driver": "Bryce Hinton2",
+        "start": "1",
+        "lapsLed": "59",
+        "incidents": "14",
+        "averageLap": "1:03.331"
+      },
+      {
         "date": "6/1/2026",
         "track": "Michigan International Speedway",
         "carNumber": "58",
@@ -35410,6 +35460,16 @@
         "averageLap": "1:15.301"
       },
       {
+        "date": "5/31/2026",
+        "track": "Talladega Superspeedway",
+        "carNumber": "28",
+        "driver": "Bryce Hinton2",
+        "start": "1",
+        "lapsLed": "22",
+        "incidents": "16",
+        "averageLap": "1:15.299"
+      },
+      {
         "date": "5/29/2026",
         "track": "Talladega Superspeedway",
         "carNumber": "82",
@@ -35418,6 +35478,16 @@
         "lapsLed": "1",
         "incidents": "31",
         "averageLap": "1:06.672"
+      },
+      {
+        "date": "5/29/2026",
+        "track": "Talladega Superspeedway",
+        "carNumber": "28",
+        "driver": "Bryce Hinton2",
+        "start": "4",
+        "lapsLed": "17",
+        "incidents": "20",
+        "averageLap": "1:06.669"
       },
       {
         "date": "5/28/2026",
@@ -35466,6 +35536,16 @@
         "driver": "Pacey E L Wigent",
         "start": "41",
         "lapsLed": "0",
+        "incidents": "28",
+        "averageLap": "1:07.983"
+      },
+      {
+        "date": "5/22/2026",
+        "track": "Talladega Superspeedway",
+        "carNumber": "28",
+        "driver": "Bryce Hinton2",
+        "start": "1",
+        "lapsLed": "41",
         "incidents": "28",
         "averageLap": "1:07.983"
       },
@@ -35800,6 +35880,16 @@
         "averageLap": "1:05.398"
       },
       {
+        "date": "4/18/2026",
+        "track": "Daytona International Speedway",
+        "carNumber": "28",
+        "driver": "Bryce Hinton2",
+        "start": "4",
+        "lapsLed": "46",
+        "incidents": "20",
+        "averageLap": "1:05.397"
+      },
+      {
         "date": "4/17/2026",
         "track": "Talladega Superspeedway",
         "carNumber": "12",
@@ -35828,6 +35918,16 @@
         "lapsLed": "3",
         "incidents": "22",
         "averageLap": "1:09.525"
+      },
+      {
+        "date": "4/15/2026",
+        "track": "Talladega Superspeedway",
+        "carNumber": "28",
+        "driver": "Bryce Hinton2",
+        "start": "37",
+        "lapsLed": "24",
+        "incidents": "21",
+        "averageLap": "1:09.520"
       },
       {
         "date": "4/12/2026",
@@ -35878,6 +35978,16 @@
         "lapsLed": "1",
         "incidents": "20",
         "averageLap": "1:04.619"
+      },
+      {
+        "date": "4/10/2026",
+        "track": "Talladega Superspeedway",
+        "carNumber": "50",
+        "driver": "Bryce Hinton2",
+        "start": "3",
+        "lapsLed": "7",
+        "incidents": "19",
+        "averageLap": "1:04.617"
       },
       {
         "date": "4/9/2026",
@@ -35960,6 +36070,16 @@
         "averageLap": "1:14.722"
       },
       {
+        "date": "3/31/2026",
+        "track": "Talladega Superspeedway",
+        "carNumber": "28",
+        "driver": "Bryce Hinton2",
+        "start": "1",
+        "lapsLed": "32",
+        "incidents": "9",
+        "averageLap": "1:14.719"
+      },
+      {
         "date": "3/30/2026",
         "track": "Michigan International Speedway",
         "carNumber": "36",
@@ -35968,6 +36088,16 @@
         "lapsLed": "14",
         "incidents": "8",
         "averageLap": "0:50.420"
+      },
+      {
+        "date": "3/30/2026",
+        "track": "Michigan International Speedway",
+        "carNumber": "28",
+        "driver": "Bryce Hinton2",
+        "start": "23",
+        "lapsLed": "14",
+        "incidents": "8",
+        "averageLap": "0:50.418"
       },
       {
         "date": "3/29/2026",
@@ -36521,6 +36651,16 @@
       },
       {
         "date": "11/2/2025",
+        "track": "Daytona International Speedway",
+        "carNumber": "28",
+        "driver": "Bryce Hinton2",
+        "start": "28",
+        "lapsLed": "1",
+        "incidents": "8",
+        "averageLap": "1:05.261"
+      },
+      {
+        "date": "11/2/2025",
         "track": "Kansas Speedway",
         "carNumber": "24",
         "driver": "Jordan Whiting",
@@ -36528,6 +36668,16 @@
         "lapsLed": "19",
         "incidents": "4",
         "averageLap": "0:40.525"
+      },
+      {
+        "date": "11/2/2025",
+        "track": "Kansas Speedway",
+        "carNumber": "28",
+        "driver": "Bryce Hinton2",
+        "start": "6",
+        "lapsLed": "11",
+        "incidents": "0",
+        "averageLap": "0:40.524"
       },
       {
         "date": "10/24/2025",
@@ -36572,6 +36722,15 @@
       },
       {
         "rank": "2",
+        "driver": "Bryce Hinton2",
+        "races": "94",
+        "wins": "15",
+        "top5": "57",
+        "top10": "71",
+        "averageFinish": "8.09"
+      },
+      {
+        "rank": "3",
         "driver": "Nicholas Baumann",
         "races": "42",
         "wins": "8",
@@ -36580,7 +36739,7 @@
         "averageFinish": "14.62"
       },
       {
-        "rank": "3",
+        "rank": "4",
         "driver": "Ryan Wilson21",
         "races": "128",
         "wins": "6",
@@ -36589,7 +36748,7 @@
         "averageFinish": "14.4"
       },
       {
-        "rank": "4",
+        "rank": "5",
         "driver": "Jim Segredo",
         "races": "186",
         "wins": "6",
@@ -36598,7 +36757,7 @@
         "averageFinish": "15.89"
       },
       {
-        "rank": "5",
+        "rank": "6",
         "driver": "Hunter Welborn",
         "races": "83",
         "wins": "6",
@@ -36607,7 +36766,7 @@
         "averageFinish": "13.99"
       },
       {
-        "rank": "6",
+        "rank": "7",
         "driver": "Ethan Fonseca Moreno",
         "races": "19",
         "wins": "6",
@@ -36616,7 +36775,7 @@
         "averageFinish": "11.63"
       },
       {
-        "rank": "7",
+        "rank": "8",
         "driver": "Tommy Rogers",
         "races": "155",
         "wins": "5",
@@ -36625,7 +36784,7 @@
         "averageFinish": "14.77"
       },
       {
-        "rank": "8",
+        "rank": "9",
         "driver": "Bill Daniels",
         "races": "60",
         "wins": "5",
@@ -36634,7 +36793,7 @@
         "averageFinish": "16.02"
       },
       {
-        "rank": "9",
+        "rank": "10",
         "driver": "Zachary Cato",
         "races": "49",
         "wins": "5",
@@ -36643,7 +36802,7 @@
         "averageFinish": "12.14"
       },
       {
-        "rank": "10",
+        "rank": "11",
         "driver": "Justin Lee Pearson",
         "races": "52",
         "wins": "5",
@@ -36652,7 +36811,7 @@
         "averageFinish": "19.21"
       },
       {
-        "rank": "11",
+        "rank": "12",
         "driver": "Rusty Chancey",
         "races": "13",
         "wins": "5",
@@ -36661,7 +36820,7 @@
         "averageFinish": "14.31"
       },
       {
-        "rank": "12",
+        "rank": "13",
         "driver": "Eric Hayden",
         "races": "193",
         "wins": "4",
@@ -36670,7 +36829,7 @@
         "averageFinish": "13.96"
       },
       {
-        "rank": "13",
+        "rank": "14",
         "driver": "Joshua McKinney2",
         "races": "118",
         "wins": "4",
@@ -36679,7 +36838,7 @@
         "averageFinish": "14.37"
       },
       {
-        "rank": "14",
+        "rank": "15",
         "driver": "Larkin Boyer",
         "races": "86",
         "wins": "4",
@@ -36688,7 +36847,7 @@
         "averageFinish": "14.98"
       },
       {
-        "rank": "15",
+        "rank": "16",
         "driver": "Jerry Fassett",
         "races": "193",
         "wins": "4",
@@ -36697,7 +36856,7 @@
         "averageFinish": "15.09"
       },
       {
-        "rank": "16",
+        "rank": "17",
         "driver": "Chris James",
         "races": "86",
         "wins": "4",
@@ -36706,7 +36865,7 @@
         "averageFinish": "12.02"
       },
       {
-        "rank": "17",
+        "rank": "18",
         "driver": "Juan Escamilla",
         "races": "49",
         "wins": "4",
@@ -36715,7 +36874,7 @@
         "averageFinish": "15.63"
       },
       {
-        "rank": "18",
+        "rank": "19",
         "driver": "Craig Rowe",
         "races": "78",
         "wins": "4",
@@ -36724,22 +36883,13 @@
         "averageFinish": "20.28"
       },
       {
-        "rank": "19",
+        "rank": "20",
         "driver": "Shawn Stamper",
         "races": "134",
         "wins": "4",
         "top5": "12",
         "top10": "33",
         "averageFinish": "21.35"
-      },
-      {
-        "rank": "20",
-        "driver": "John Miles4",
-        "races": "109",
-        "wins": "4",
-        "top5": "12",
-        "top10": "27",
-        "averageFinish": "17.51"
       }
     ],
     "driverRatings": {
@@ -38527,6 +38677,11 @@
         "driver": "Zane Howe",
         "iRating": 1971,
         "date": "11/15/2026"
+      },
+      "brycehinton": {
+        "driver": "Bryce Hinton2",
+        "iRating": 2827,
+        "date": "2026-11-17T21:53:12.776Z"
       }
     }
   }
