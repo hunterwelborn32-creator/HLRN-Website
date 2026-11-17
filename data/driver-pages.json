@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-17T18:42:16Z",
+  "generatedAt": "2026-11-17T21:54:35Z",
   "count": 86,
   "drivers": [
     {
@@ -220,16 +220,19 @@
       "hasPhoto": true,
       "iRating": 2827,
       "series": [
+        "hosted",
         "monday",
         "sunday"
       ],
       "ids": {
         "sunday": "105882",
-        "monday": "105882"
+        "monday": "105882",
+        "hosted": ""
       },
       "teams": {
         "sunday": "Helix",
-        "monday": null
+        "monday": null,
+        "hosted": null
       },
       "aliases": []
     },
@@ -884,19 +887,16 @@
       "hasPhoto": true,
       "iRating": 2027,
       "series": [
-        "hosted",
         "monday",
         "sunday"
       ],
       "ids": {
         "sunday": "99926",
-        "monday": "99926",
-        "hosted": ""
+        "monday": "99926"
       },
       "teams": {
         "sunday": null,
-        "monday": null,
-        "hosted": null
+        "monday": null
       },
       "aliases": []
     },
