@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-12T04:10:50.432Z",
+  "generatedAt": "2026-11-17T03:45:35.972Z",
   "source": "SimRacerHub race pages",
   "races": [
     {
@@ -301,6 +301,31 @@
         "driverId": "98668",
         "carNumber": "58",
         "lap": 72
+      }
+    },
+    {
+      "key": "monday|13|392310",
+      "league": "monday",
+      "raceNumber": 13,
+      "raceId": "392310",
+      "track": "Kansas Speedway",
+      "date": "Mon Nov 16 2026 00:00:00 GMT-0500 (Eastern Standard Time)",
+      "source": "SimRacerHub",
+      "sourceRaceId": "392310",
+      "duration": "1h 29m",
+      "raceLaps": 125,
+      "leaders": 7,
+      "leadChanges": 11,
+      "cautions": 11,
+      "cautionLaps": 33,
+      "penalties": 0,
+      "fastestLap": {
+        "time": 29.121,
+        "formatted": "29.121",
+        "driver": "Joshua McKinney2",
+        "driverId": "55068",
+        "carNumber": "03",
+        "lap": 117
       }
     },
     {
