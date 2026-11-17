@@ -48,7 +48,6 @@ class DriverPageTests(unittest.TestCase):
     def test_banned_drivers_use_one_stamp_and_a_cutout(self):
         for slug, name, portrait in (
             ("matthew-brown49", "Matthew Brown49", "matthew-brown-profile-cutout-20261028.webp"),
-            ("bryce-hinton2", "Bryce Hinton2", "bryce-hinton-profile-cutout-20261028.webp"),
             ("joshua-spragg", "Joshua Spragg", "joshua-spragg-profile-cutout-20261028.webp"),
             ("tj-lunn", "Tj Lunn", "tj-lunn-profile-cutout-20261028.webp"),
             ("ethan-eckert", "Ethan Eckert", "ethan-eckert.webp"),
@@ -59,7 +58,7 @@ class DriverPageTests(unittest.TestCase):
                 driver = {
                     "name": name,
                     "slug": slug,
-                    "number": {"matthew-brown49": "14", "bryce-hinton2": "28", "joshua-spragg": "37", "tj-lunn": "02", "ethan-eckert": "012", "darrel-ceballos": "9", "trace-mcdowell": "20"}[slug],
+                    "number": {"matthew-brown49": "14", "joshua-spragg": "37", "tj-lunn": "02", "ethan-eckert": "012", "darrel-ceballos": "9", "trace-mcdowell": "20"}[slug],
                     # Real cutouts exist for Ethan and Darrel. Match their
                     # published driver manifests instead of inventing an
                     # empty photo record and expecting a cutout to render.
@@ -75,7 +74,7 @@ class DriverPageTests(unittest.TestCase):
                 self.assertNotIn('class="hlrn-ban-status"', page)
 
     def test_november_banned_registry_is_authoritative(self):
-        self.assertEqual(len(mod.BANNED_ROSTER), 48)
+        self.assertEqual(len(mod.BANNED_ROSTER), 47)
         for name, slug in [
             ("Darrel Ceballos", "darrel-ceballos"),
             ("Trace McDowell", "trace-mcdowell"),
@@ -90,6 +89,21 @@ class DriverPageTests(unittest.TestCase):
         self.assertTrue(mod.is_banned_driver({"name": "Unknown", "slug": "unknown", "ids": {"sunday": "126078"}}))
         self.assertFalse(mod.is_banned_driver({"name": "Hunter Welborn", "slug": "hunter-welborn"}))
         self.assertFalse(mod.is_banned_driver({"name": "Ethan Moreno", "slug": "ethan-moreno"}))
+
+    def test_bryce_hinton_reinstated_with_existing_profile(self):
+        driver = {
+            "name": "Bryce Hinton2", "slug": "bryce-hinton2", "number": "28",
+            "ids": {"sunday": "105882", "monday": "105882"},
+            "photoSlug": "bryce-hinton", "hasPhoto": True,
+            "teams": {"sunday": "Helix", "monday": None},
+            "records": {"sunday": {"rank": 37, "points": 255, "races": 6,
+                                   "wins": 0, "top5": 1, "top10": 2, "results": []}},
+        }
+        self.assertFalse(mod.is_banned_driver(driver))
+        html = mod.render_page(driver)
+        self.assertIn("Bryce Hinton2", html)
+        self.assertNotIn('class="hlrn-ban-stamp"', html)
+        self.assertNotIn('data-hlrn-banned-photo="1"', html)
 
     def test_hosted_alias_and_records(self):
         hlrn = {

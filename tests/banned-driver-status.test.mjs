@@ -58,3 +58,19 @@ test('provided banned overlay is loaded and browser enhancement parses',()=>{
   assert.match(read('assets/site-shell.js'),/banned-driver\.js/);
   assert.match(read('standings/hosted.html'),/hlrnHostedBannedBadgeDoc\(raw\)/);
 });
+
+test('Bryce Hinton is reinstated with verified race stats and no ban treatments',()=>{
+  const statuses=JSON.parse(read('data/driver-status.json')).drivers;
+  assert.equal(statuses.find(d=>String(d.driverId)==='105882'),undefined);
+  const profiles=JSON.parse(read('data/derived/profiles.json')).drivers.filter(d=>String(d.id)==='105882');
+  assert.deepEqual(profiles.map(d=>d.series).sort(),['monday','sunday']);
+  assert.equal(profiles.reduce((sum,d)=>sum+Number(d.races||0),0),7);
+  assert.equal(profiles.reduce((sum,d)=>sum+Number(d.top5||0),0),2);
+  assert.equal(profiles.reduce((sum,d)=>sum+Number(d.top10||0),0),3);
+  assert.doesNotMatch(read('assets/race-intelligence/intelligence-v1.js'),/105882|Bryce Hinton|Hinton2, Bryce/);
+  assert.doesNotMatch(read('assets/banned-driver.js'),/"name":"Bryce Hinton"/);
+  const page=read('drivers/bryce-hinton2/index.html');
+  assert.ok(page.includes('<h1>Bryce Hinton2</h1>'));
+  assert.doesNotMatch(page,/hlrn-ban-stamp|data-hlrn-banned-photo|alt="BANNED"/);
+  assert.match(page,/Race History/);
+});

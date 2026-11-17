@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "effectiveDate": "2026-11-02",
+  "effectiveDate": "2026-11-17",
   "drivers": [
     {
       "name": "Alex Schumacher",
@@ -74,21 +74,6 @@
       ],
       "status": "BANNED",
       "reason": "Intentional Wrecking",
-      "badgeImage": "/assets/banned-driver.png",
-      "excludedFrom": [
-        "race-intelligence"
-      ]
-    },
-    {
-      "name": "Bryce Hinton",
-      "aliases": [
-        "Bryce Hinton2",
-        "Hinton2, Bryce",
-        "Hinton, Bryce"
-      ],
-      "status": "BANNED",
-      "reason": "Arrogance",
-      "driverId": "105882",
       "badgeImage": "/assets/banned-driver.png",
       "excludedFrom": [
         "race-intelligence"

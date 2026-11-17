@@ -989,7 +989,7 @@ const hostedLoaded={racing:false,drivers:false,records:false,h2h:false};
 const hostedObservers={};
 /* The Hosted tabs run independent srcdoc pages; install the same banned status treatment inside each. */
 function hlrnHostedBannedBadgeDoc(markup){
-  const addon='<script src="/assets/banned-driver.js?v=20261028banned1" defer><\/script>';
+  const addon='<script src="/assets/banned-driver.js?v=20261117brycereinstated1" defer><\/script>';
   return markup.replace(/<head\b[^>]*>/i,function(match){return match+addon;});
 }
 function decodeHostedDoc(v){
@@ -3062,6 +3062,6 @@ input,select,button,textarea{background:#000!important;color:#fff!important;bord
   sync();
 })();
 </script>
-<script src="../assets/site-shell.js?v=20261103banlist48v1"></script>
+<script src="../assets/site-shell.js?v=20261117brycereinstated1"></script>
 </body>
 </html>
