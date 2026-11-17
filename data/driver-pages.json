@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-06T17:15:45Z",
-  "count": 87,
+  "generatedAt": "2026-11-17T18:40:22Z",
+  "count": 86,
   "drivers": [
     {
       "name": "Aaron Treubig",
@@ -158,7 +158,7 @@
       "number": "87",
       "photoSlug": "brian-hebbard",
       "hasPhoto": true,
-      "iRating": 1730,
+      "iRating": 1690,
       "series": [
         "monday",
         "sunday"
@@ -240,7 +240,7 @@
       "number": "4",
       "photoSlug": "carson-freeman",
       "hasPhoto": true,
-      "iRating": 3658,
+      "iRating": 4330,
       "series": [
         "monday"
       ],
@@ -573,7 +573,7 @@
       "number": "58",
       "photoSlug": "evan-karlbon",
       "hasPhoto": true,
-      "iRating": 4262,
+      "iRating": 4088,
       "series": [
         "monday"
       ],
@@ -592,7 +592,7 @@
       "number": "72",
       "photoSlug": "evan-parry",
       "hasPhoto": true,
-      "iRating": 2576,
+      "iRating": 2506,
       "series": [
         "monday",
         "sunday"
@@ -701,13 +701,16 @@
       "hasPhoto": true,
       "iRating": 1648,
       "series": [
+        "monday",
         "sunday"
       ],
       "ids": {
-        "sunday": "73693"
+        "sunday": "73693",
+        "monday": "73693"
       },
       "teams": {
-        "sunday": null
+        "sunday": null,
+        "monday": null
       },
       "aliases": []
     },
@@ -841,7 +844,7 @@
       "number": "70",
       "photoSlug": "joe-konen",
       "hasPhoto": true,
-      "iRating": 1697,
+      "iRating": 1735,
       "series": [
         "monday"
       ],
@@ -879,7 +882,7 @@
       "number": "69",
       "photoSlug": "john-miles",
       "hasPhoto": true,
-      "iRating": 2099,
+      "iRating": 2027,
       "series": [
         "hosted",
         "monday",
@@ -964,18 +967,21 @@
       "name": "Jt Huskins",
       "slug": "jt-huskins",
       "url": "/drivers/jt-huskins/",
-      "number": "9",
+      "number": "45",
       "photoSlug": "",
       "hasPhoto": false,
-      "iRating": 1395,
+      "iRating": 1335,
       "series": [
+        "monday",
         "sunday"
       ],
       "ids": {
-        "sunday": "141507"
+        "sunday": "141507",
+        "monday": "141507"
       },
       "teams": {
-        "sunday": null
+        "sunday": null,
+        "monday": null
       },
       "aliases": []
     },
@@ -1174,16 +1180,19 @@
       "hasPhoto": true,
       "iRating": 1903,
       "series": [
+        "hosted",
         "monday",
         "sunday"
       ],
       "ids": {
         "sunday": "120507",
-        "monday": "120507"
+        "monday": "120507",
+        "hosted": ""
       },
       "teams": {
         "sunday": "LBS",
-        "monday": "LBS"
+        "monday": "LBS",
+        "hosted": null
       },
       "aliases": []
     },
@@ -1267,25 +1276,6 @@
       "aliases": []
     },
     {
-      "name": "Michael Tokarz",
-      "slug": "michael-tokarz",
-      "url": "/drivers/michael-tokarz/",
-      "number": "10",
-      "photoSlug": "",
-      "hasPhoto": false,
-      "iRating": 1221,
-      "series": [
-        "hosted"
-      ],
-      "ids": {
-        "hosted": ""
-      },
-      "teams": {
-        "hosted": null
-      },
-      "aliases": []
-    },
-    {
       "name": "Nate Blasdell",
       "slug": "nate-blasdell",
       "url": "/drivers/nate-blasdell/",
@@ -1352,10 +1342,10 @@
       "name": "Patrick Craven",
       "slug": "patrick-craven",
       "url": "/drivers/patrick-craven/",
-      "number": "—",
+      "number": "3",
       "photoSlug": "",
       "hasPhoto": false,
-      "iRating": 1334,
+      "iRating": 1393,
       "series": [
         "sunday"
       ],
@@ -1374,7 +1364,7 @@
       "number": "78",
       "photoSlug": "randy-schweitzer",
       "hasPhoto": true,
-      "iRating": 1253,
+      "iRating": 1237,
       "series": [
         "sunday"
       ],
@@ -1412,7 +1402,7 @@
       "number": "05",
       "photoSlug": "ricky-miles",
       "hasPhoto": true,
-      "iRating": 1331,
+      "iRating": 1276,
       "series": [
         "monday"
       ],
@@ -1664,7 +1654,7 @@
       "number": "89",
       "photoSlug": "trevor-aswarnauth",
       "hasPhoto": true,
-      "iRating": 4291,
+      "iRating": 3962,
       "series": [
         "monday"
       ],
@@ -1762,7 +1752,7 @@
       "number": "07",
       "photoSlug": "",
       "hasPhoto": false,
-      "iRating": 2387,
+      "iRating": 2760,
       "series": [
         "sunday"
       ],
