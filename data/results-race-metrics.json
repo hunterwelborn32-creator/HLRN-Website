@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-17T03:45:35.972Z",
+  "generatedAt": "2026-11-24T02:55:37.386Z",
   "source": "SimRacerHub race pages",
   "races": [
     {
@@ -326,6 +326,31 @@
         "driverId": "55068",
         "carNumber": "03",
         "lap": 117
+      }
+    },
+    {
+      "key": "monday|14|393561",
+      "league": "monday",
+      "raceNumber": 14,
+      "raceId": "393561",
+      "track": "Las Vegas Motor Speedway",
+      "date": "Mon Nov 23 2026 00:00:00 GMT-0500 (Eastern Standard Time)",
+      "source": "SimRacerHub",
+      "sourceRaceId": "393561",
+      "duration": "1h 5m",
+      "raceLaps": 125,
+      "leaders": 5,
+      "leadChanges": 10,
+      "cautions": 0,
+      "cautionLaps": null,
+      "penalties": 0,
+      "fastestLap": {
+        "time": 30.245,
+        "formatted": "30.245",
+        "driver": "Javone Thompson",
+        "driverId": "62821",
+        "carNumber": "93",
+        "lap": 3
       }
     },
     {
