@@ -85,6 +85,70 @@ export function assertHostedNotRegressed(previousHosted, refreshedHosted) {
   }
 }
 
+// The Hosted session feed contains race winners, not full finishing tables.
+// Preserve previously verified sessions when the source omits old history.
+export function reconcileHostedHistory(previous, incoming) {
+  if (!previous) return incoming;
+  const oldDate = Date.parse(String(previous.latest?.date || ''));
+  const newDate = Date.parse(String(incoming.latest?.date || ''));
+  if (!Number.isFinite(newDate) || (Number.isFinite(oldDate) && newDate < oldDate))
+    throw new Error('Hosted latest race regressed or has an invalid date');
+  if (!incoming.latest?.results?.length || !incoming.sessions?.length || !incoming.rankings?.length)
+    throw new Error('Hosted refresh is incomplete');
+  const normalize = v => String(v ?? '').trim().toLowerCase().replace(/\s+/g, ' ');
+  const sessionKey = row => {
+    const id = row.subsessionId ?? row.subsession_id ?? row.sessionId ?? row.session_id;
+    if (id != null && String(id).trim()) return 'id:' + String(id).trim();
+    const date = Date.parse(String(row.date || ''));
+    if (!Number.isFinite(date) || !normalize(row.track) || !normalize(row.driver))
+      throw new Error('Hosted session is missing its race identity');
+    return JSON.stringify([new Date(date).toISOString().slice(0,10), normalize(row.track), normalize(row.driver), normalize(row.carNumber)]);
+  };
+  const index = rows => {
+    const map = new Map();
+    for (const row of rows || []) {
+      const key = sessionKey(row);
+      if (map.has(key)) throw new Error('Ambiguous duplicate Hosted race identity: ' + key);
+      map.set(key,row);
+    }
+    return map;
+  };
+  const historical = index(previous.sessions);
+  const fresh = index(incoming.sessions);
+  const retained = [...historical].filter(([key]) => !fresh.has(key)).map(([,row])=>row);
+  const sessions = [...fresh.values(), ...retained].sort((a,b)=>Date.parse(b.date)-Date.parse(a.date));
+  // Rankings cover every finish, whereas sessions only identify winners.
+  // Never invent missing finishes or overwrite verified totals with smaller ones.
+  const rankingKey = row => normalize(row.driver);
+  const fields = ['races','wins','top5','top10'];
+  const rankings = new Map();
+  for (const row of incoming.rankings) {
+    const key = rankingKey(row);
+    if (!key || rankings.has(key)) throw new Error('Invalid or duplicate Hosted ranking identity');
+    rankings.set(key,row);
+  }
+  let protectedRankings = 0;
+  for (const old of previous.rankings || []) {
+    const key = rankingKey(old);
+    const next = rankings.get(key);
+    if (!next || fields.some(field => num(old[field]) !== null && (num(next[field]) === null || num(next[field]) < num(old[field])))) {
+      rankings.set(key,old);
+      protectedRankings++;
+    }
+  }
+  const ordered = [...rankings.values()].sort((a,b)=>
+    (num(b.wins)??0)-(num(a.wins)??0) ||
+    (num(b.top5)??0)-(num(a.top5)??0) ||
+    (num(b.top10)??0)-(num(a.top10)??0) ||
+    (num(a.rank)??Infinity)-(num(b.rank)??Infinity) ||
+    rankingKey(a).localeCompare(rankingKey(b)));
+  const result = {...incoming,sessions,rankings:ordered.map((row,i)=>({...row,rank:String(i+1)}))};
+  assertHostedNotRegressed(previous,result);
+  if (retained.length) console.warn('Hosted source omitted '+retained.length+' previously verified session rows; historical rows retained.');
+  if (protectedRankings) console.warn('Hosted ranking history incomplete: retained '+protectedRankings+' verified ranking rows; upstream reconciliation required for exact current totals.');
+  return result;
+}
+
 const hostedDriverKey = value => String(value || '')
   .trim()
   .replace(/([A-Za-z])\d+$/, '$1')
@@ -929,9 +993,10 @@ export async function sync({
   if (hostedEndpoint) {
     try {
       const url = hostedDataRequestUrl(hostedEndpoint);
-      const refreshedHosted = validateHosted(await request(url, 'hosted/data', {}, 90000));
+      let refreshedHosted = validateHosted(await request(url, 'hosted/data', {}, 90000));
       console.log('Hosted source latest:', hostedRaceIdentity(refreshedHosted));
       console.log('Hosted published latest:', hostedRaceIdentity(old?.hosted));
+      refreshedHosted = reconcileHostedHistory(old?.hosted, refreshedHosted);
       assertHostedNotRegressed(old?.hosted, refreshedHosted);
       const profileRatings = await requestHostedProfileRatings(hostedEndpoint, refreshedHosted.rankings);
       refreshedHosted.driverRatings = {

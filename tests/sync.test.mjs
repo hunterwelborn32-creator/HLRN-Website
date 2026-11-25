@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { hostedDataRequestUrl, hostedRaceIdentity, assertHostedNotRegressed, validateAction, buildSnapshot, sameData, seasonDriverTotals, mergeHostedDriverRatings, mergeSeasonDriverTotals, parseTeamRostersHtml, parseStageBonusBreakdownHtml, combineStageAwardMaps, applyStageBonusReclassification, parseSimRacerHubRaceResultsHtml, parseSimRacerHubRaceMetricsHtml, mergeSimRacerHubRaceResults } from '../tools/sync-data.mjs';
+import { hostedDataRequestUrl, hostedRaceIdentity, reconcileHostedHistory, assertHostedNotRegressed, validateAction, buildSnapshot, sameData, seasonDriverTotals, mergeHostedDriverRatings, mergeSeasonDriverTotals, parseTeamRostersHtml, parseStageBonusBreakdownHtml, combineStageAwardMaps, applyStageBonusReclassification, parseSimRacerHubRaceResultsHtml, parseSimRacerHubRaceMetricsHtml, mergeSimRacerHubRaceResults } from '../tools/sync-data.mjs';
 import { versionManifest } from '../tools/build-derived.mjs';
 const payloads = Object.fromEntries(['sunday','monday'].map(l => [l, {
   drivers: { success:true, drivers:[{driverId:l+'-1',name:'Example'}] },
@@ -254,4 +254,22 @@ test('SimRacerHub metrics parser leaves unavailable recorder-only data unmade-up
  assert.equal(metrics.penalties,0);
  assert.equal(metrics.fastestLap.time,23.407);
  assert.equal('lapSnapshots' in metrics,false);
+});
+
+test('Hosted reconciliation publishes newer races without losing historical sessions or rankings', () => {
+ const row=(date,driver,carNumber='66')=>({date,track:'Talladega',driver,carNumber,start:'5'});
+ const ranking=(driver,races,wins)=>({driver,races:String(races),wins:String(wins),top5:String(wins),top10:String(wins),rank:'1'});
+ const a=row('11/14/2026','Bryce','28'), b=row('11/15/2026','Hunter'), c=row('11/24/2026','Hunter');
+ const previous={latest:{date:b.date,results:[b]},sessions:[b,a],rankings:[ranking('Bryce',94,15),ranking('Hunter',83,6)]};
+ const incoming={latest:{date:c.date,results:[c]},sessions:[c],rankings:[ranking('Hunter',84,7)]};
+ const merged=reconcileHostedHistory(previous,incoming);
+ assert.deepEqual(merged.sessions,[c,b,a]);
+ assert.equal(merged.latest.date,c.date);
+ assert.equal(merged.rankings.find(r=>r.driver==='Bryce').wins,'15');
+ assert.equal(merged.rankings.find(r=>r.driver==='Hunter').wins,'7');
+ assert.deepEqual(reconcileHostedHistory(merged,incoming),merged);
+ assert.throws(()=>reconcileHostedHistory(merged,{...incoming,latest:previous.latest}),/regressed/);
+ assert.throws(()=>reconcileHostedHistory(previous,{...incoming,sessions:[c,c]}),/duplicate/);
+ const regressed={...incoming,rankings:[ranking('Hunter',70,4)]};
+ assert.equal(reconcileHostedHistory(previous,regressed).rankings.find(r=>r.driver==='Hunter').races,'83');
 });
