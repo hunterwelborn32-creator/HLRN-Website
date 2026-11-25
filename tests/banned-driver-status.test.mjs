@@ -64,9 +64,23 @@ test('Bryce Hinton is reinstated with verified race stats and no ban treatments'
   assert.equal(statuses.find(d=>String(d.driverId)==='105882'),undefined);
   const profiles=JSON.parse(read('data/derived/profiles.json')).drivers.filter(d=>String(d.id)==='105882');
   assert.deepEqual(profiles.map(d=>d.series).sort(),['monday','sunday']);
-  assert.equal(profiles.reduce((sum,d)=>sum+Number(d.races||0),0),7);
-  assert.equal(profiles.reduce((sum,d)=>sum+Number(d.top5||0),0),2);
-  assert.equal(profiles.reduce((sum,d)=>sum+Number(d.top10||0),0),3);
+  // Compare against the current official standings, not a frozen race count.
+  const snapshot=JSON.parse(read('data/hlrn.json'));
+  for(const profile of profiles){
+    const source=snapshot.leagues[profile.series];
+    const standings=source.drivers.filter(d=>String(d.driverId)==='105882');
+    assert.equal(standings.length,1,'Expected one official standings row in '+profile.series);
+    for(const field of ['races','top5','top10']){
+      assert.ok(standings[0][field]!=null && String(standings[0][field]).trim()!=='','Missing official '+field);
+      assert.equal(profile[field],Number(standings[0][field]),profile.series+' '+field+' must match official standings');
+    }
+    const expectedResults=source.results.filter(r=>String(r.driverId)==='105882');
+    assert.equal(profile.results.length,expectedResults.length,profile.series+' race history must be retained');
+  }
+  // Retain the historical reinstatement baseline while allowing new races.
+  for(const [field,minimum] of [['races',7],['top5',2],['top10',3]]){
+    assert.ok(profiles.reduce((sum,d)=>sum+Number(d[field]||0),0)>=minimum,'Reinstated '+field+' history must not be lost');
+  }
   assert.doesNotMatch(read('assets/race-intelligence/intelligence-v1.js'),/105882|Bryce Hinton|Hinton2, Bryce/);
   assert.doesNotMatch(read('assets/banned-driver.js'),/"name":"Bryce Hinton"/);
   const page=read('drivers/bryce-hinton2/index.html');
