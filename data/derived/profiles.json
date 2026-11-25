@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-25T13:22:03.433Z",
+  "generatedAt": "2026-11-25T15:04:38.966Z",
   "drivers": [
     {
       "series": "sunday",
@@ -14287,11 +14287,11 @@
       "photoSlug": "ryan-wilson",
       "rank": 4,
       "points": null,
-      "races": 128,
+      "races": 129,
       "wins": 6,
       "top5": 29,
       "top10": 50,
-      "avgFinish": 14.4,
+      "avgFinish": 14.43,
       "results": []
     },
     {
@@ -14302,11 +14302,11 @@
       "photoSlug": "jim-segredo",
       "rank": 5,
       "points": null,
-      "races": 186,
+      "races": 190,
       "wins": 6,
-      "top5": 27,
-      "top10": 73,
-      "avgFinish": 15.89,
+      "top5": 28,
+      "top10": 74,
+      "avgFinish": 15.93,
       "results": []
     },
     {
@@ -14317,11 +14317,11 @@
       "photoSlug": "hunter-welborn",
       "rank": 6,
       "points": null,
-      "races": 83,
+      "races": 84,
       "wins": 6,
       "top5": 22,
       "top10": 41,
-      "avgFinish": 13.99,
+      "avgFinish": 14.04,
       "results": []
     },
     {
@@ -14347,11 +14347,11 @@
       "photoSlug": "tommy-rogers",
       "rank": 8,
       "points": null,
-      "races": 155,
+      "races": 159,
       "wins": 5,
-      "top5": 29,
-      "top10": 57,
-      "avgFinish": 14.77,
+      "top5": 31,
+      "top10": 60,
+      "avgFinish": 14.59,
       "results": []
     },
     {
@@ -14392,11 +14392,11 @@
       "photoSlug": "justin-lee-pearson",
       "rank": 11,
       "points": null,
-      "races": 52,
+      "races": 53,
       "wins": 5,
       "top5": 13,
       "top10": 15,
-      "avgFinish": 19.21,
+      "avgFinish": 19.57,
       "results": []
     },
     {
@@ -14422,11 +14422,11 @@
       "photoSlug": "eric-hayden",
       "rank": 13,
       "points": null,
-      "races": 193,
+      "races": 195,
       "wins": 4,
       "top5": 37,
-      "top10": 79,
-      "avgFinish": 13.96,
+      "top10": 80,
+      "avgFinish": 13.98,
       "results": []
     },
     {
@@ -14482,11 +14482,11 @@
       "photoSlug": "chris-james",
       "rank": 17,
       "points": null,
-      "races": 86,
+      "races": 88,
       "wins": 4,
-      "top5": 20,
-      "top10": 41,
-      "avgFinish": 12.02,
+      "top5": 21,
+      "top10": 42,
+      "avgFinish": 11.91,
       "results": []
     },
     {
@@ -14527,11 +14527,26 @@
       "photoSlug": "shawn-stamper",
       "rank": 20,
       "points": null,
-      "races": 134,
+      "races": 136,
       "wins": 4,
-      "top5": 12,
-      "top10": 33,
-      "avgFinish": 21.35,
+      "top5": 13,
+      "top10": 34,
+      "avgFinish": 21.31,
+      "results": []
+    },
+    {
+      "series": "hosted",
+      "id": "john-miles",
+      "name": "John Miles4",
+      "sourceName": "John Miles4",
+      "photoSlug": "john-miles",
+      "rank": 21,
+      "points": null,
+      "races": 114,
+      "wins": 4,
+      "top5": 13,
+      "top10": 30,
+      "avgFinish": 17.37,
       "results": []
     }
   ]

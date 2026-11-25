@@ -1,7 +1,325 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-25T13:22:03.433Z",
+  "generatedAt": "2026-11-25T15:04:38.966Z",
   "reports": [
+    {
+      "key": "hosted:latest",
+      "series": "hosted",
+      "raceId": "latest",
+      "raceNumber": null,
+      "track": "Talladega Superspeedway",
+      "date": "2026-11-24T00:00:00.000Z",
+      "winner": {
+        "name": "Brian Hebbard2",
+        "id": "brian-hebbard"
+      },
+      "classified": 17,
+      "top10": [
+        {
+          "id": "brian-hebbard",
+          "name": "Brian Hebbard2",
+          "start": 11,
+          "finish": 1,
+          "gain": 10,
+          "lapsLed": 10,
+          "incidents": 24,
+          "carNumber": "87",
+          "status": ""
+        },
+        {
+          "id": "jim-segredo",
+          "name": "Jim Segredo",
+          "start": 4,
+          "finish": 2,
+          "gain": 2,
+          "lapsLed": 48,
+          "incidents": 0,
+          "carNumber": "21",
+          "status": ""
+        },
+        {
+          "id": "kyle-kammeron",
+          "name": "Kyle Kammeron",
+          "start": 2,
+          "finish": 3,
+          "gain": -1,
+          "lapsLed": 0,
+          "incidents": 20,
+          "carNumber": "55",
+          "status": ""
+        },
+        {
+          "id": "edward-fiedler",
+          "name": "Edward Fiedler",
+          "start": 10,
+          "finish": 4,
+          "gain": 6,
+          "lapsLed": 1,
+          "incidents": 12,
+          "carNumber": "66",
+          "status": ""
+        },
+        {
+          "id": "tommy-rogers",
+          "name": "Tommy Rogers",
+          "start": 7,
+          "finish": 5,
+          "gain": 2,
+          "lapsLed": 3,
+          "incidents": 8,
+          "carNumber": "34",
+          "status": ""
+        },
+        {
+          "id": "brian-duncan",
+          "name": "Brian Duncan3",
+          "start": 3,
+          "finish": 6,
+          "gain": -3,
+          "lapsLed": 1,
+          "incidents": 12,
+          "carNumber": "13",
+          "status": ""
+        },
+        {
+          "id": "eric-hayden",
+          "name": "Eric Hayden",
+          "start": 1,
+          "finish": 7,
+          "gain": -6,
+          "lapsLed": 11,
+          "incidents": 8,
+          "carNumber": "100",
+          "status": ""
+        },
+        {
+          "id": "kenneth-blackburn",
+          "name": "Kenneth Blackburn",
+          "start": 16,
+          "finish": 8,
+          "gain": 8,
+          "lapsLed": 0,
+          "incidents": 12,
+          "carNumber": "155",
+          "status": ""
+        },
+        {
+          "id": "conner-richardson",
+          "name": "Conner Richardson3",
+          "start": 14,
+          "finish": 9,
+          "gain": 5,
+          "lapsLed": 3,
+          "incidents": 24,
+          "carNumber": "36",
+          "status": ""
+        },
+        {
+          "id": "steven-harris",
+          "name": "Steven Harris10",
+          "start": 13,
+          "finish": 10,
+          "gain": 3,
+          "lapsLed": 0,
+          "incidents": 32,
+          "carNumber": "1",
+          "status": ""
+        }
+      ],
+      "results": [
+        {
+          "id": "brian-hebbard",
+          "name": "Brian Hebbard2",
+          "start": 11,
+          "finish": 1,
+          "gain": 10,
+          "lapsLed": 10,
+          "incidents": 24,
+          "carNumber": "87",
+          "status": ""
+        },
+        {
+          "id": "jim-segredo",
+          "name": "Jim Segredo",
+          "start": 4,
+          "finish": 2,
+          "gain": 2,
+          "lapsLed": 48,
+          "incidents": 0,
+          "carNumber": "21",
+          "status": ""
+        },
+        {
+          "id": "kyle-kammeron",
+          "name": "Kyle Kammeron",
+          "start": 2,
+          "finish": 3,
+          "gain": -1,
+          "lapsLed": 0,
+          "incidents": 20,
+          "carNumber": "55",
+          "status": ""
+        },
+        {
+          "id": "edward-fiedler",
+          "name": "Edward Fiedler",
+          "start": 10,
+          "finish": 4,
+          "gain": 6,
+          "lapsLed": 1,
+          "incidents": 12,
+          "carNumber": "66",
+          "status": ""
+        },
+        {
+          "id": "tommy-rogers",
+          "name": "Tommy Rogers",
+          "start": 7,
+          "finish": 5,
+          "gain": 2,
+          "lapsLed": 3,
+          "incidents": 8,
+          "carNumber": "34",
+          "status": ""
+        },
+        {
+          "id": "brian-duncan",
+          "name": "Brian Duncan3",
+          "start": 3,
+          "finish": 6,
+          "gain": -3,
+          "lapsLed": 1,
+          "incidents": 12,
+          "carNumber": "13",
+          "status": ""
+        },
+        {
+          "id": "eric-hayden",
+          "name": "Eric Hayden",
+          "start": 1,
+          "finish": 7,
+          "gain": -6,
+          "lapsLed": 11,
+          "incidents": 8,
+          "carNumber": "100",
+          "status": ""
+        },
+        {
+          "id": "kenneth-blackburn",
+          "name": "Kenneth Blackburn",
+          "start": 16,
+          "finish": 8,
+          "gain": 8,
+          "lapsLed": 0,
+          "incidents": 12,
+          "carNumber": "155",
+          "status": ""
+        },
+        {
+          "id": "conner-richardson",
+          "name": "Conner Richardson3",
+          "start": 14,
+          "finish": 9,
+          "gain": 5,
+          "lapsLed": 3,
+          "incidents": 24,
+          "carNumber": "36",
+          "status": ""
+        },
+        {
+          "id": "steven-harris",
+          "name": "Steven Harris10",
+          "start": 13,
+          "finish": 10,
+          "gain": 3,
+          "lapsLed": 0,
+          "incidents": 32,
+          "carNumber": "1",
+          "status": ""
+        },
+        {
+          "id": "david-collins",
+          "name": "David Collins8",
+          "start": 12,
+          "finish": 11,
+          "gain": 1,
+          "lapsLed": 1,
+          "incidents": 24,
+          "carNumber": "707",
+          "status": ""
+        },
+        {
+          "id": "joshua-harger",
+          "name": "Joshua Harger",
+          "start": 8,
+          "finish": 12,
+          "gain": -4,
+          "lapsLed": 0,
+          "incidents": 32,
+          "carNumber": "6",
+          "status": ""
+        },
+        {
+          "id": "anderson-byrd",
+          "name": "Anderson Byrd",
+          "start": 5,
+          "finish": 13,
+          "gain": -8,
+          "lapsLed": 0,
+          "incidents": 6,
+          "carNumber": "69",
+          "status": ""
+        },
+        {
+          "id": "patrick-craven",
+          "name": "Patrick Craven",
+          "start": 9,
+          "finish": 14,
+          "gain": -5,
+          "lapsLed": 0,
+          "incidents": 8,
+          "carNumber": "3",
+          "status": ""
+        },
+        {
+          "id": "tony-edrington",
+          "name": "Tony Edrington",
+          "start": 6,
+          "finish": 15,
+          "gain": -9,
+          "lapsLed": 0,
+          "incidents": 6,
+          "carNumber": "77",
+          "status": ""
+        },
+        {
+          "id": "toni-richards",
+          "name": "Toni Richards",
+          "start": 15,
+          "finish": 16,
+          "gain": -1,
+          "lapsLed": 0,
+          "incidents": 10,
+          "carNumber": "99",
+          "status": ""
+        },
+        {
+          "id": "paxton-kerr",
+          "name": "Paxton Kerr",
+          "start": 17,
+          "finish": 17,
+          "gain": 0,
+          "lapsLed": 0,
+          "incidents": 0,
+          "carNumber": "10",
+          "status": ""
+        }
+      ],
+      "biggestGainers": [],
+      "dataNotes": [
+        "Hosted latest-race report uses the existing Hosted API. Historical Hosted sessions remain in the original Hosted page."
+      ]
+    },
     {
       "key": "monday:393561",
       "series": "monday",
@@ -2098,577 +2416,6 @@
       "dataNotes": [
         "Race results and race intelligence are sourced from SimRacerHub when published.",
         "HLRN does not invent fields that SimRacerHub does not publish."
-      ]
-    },
-    {
-      "key": "hosted:latest",
-      "series": "hosted",
-      "raceId": "latest",
-      "raceNumber": null,
-      "track": "Kansas Speedway",
-      "date": "2026-11-15T00:00:00.000Z",
-      "winner": {
-        "name": "Hunter Welborn",
-        "id": "hunter-welborn"
-      },
-      "classified": 40,
-      "top10": [
-        {
-          "id": "hunter-welborn",
-          "name": "Hunter Welborn",
-          "start": 5,
-          "finish": 1,
-          "gain": 4,
-          "lapsLed": 10,
-          "incidents": 8,
-          "carNumber": "66",
-          "status": ""
-        },
-        {
-          "id": "joseph-madigan",
-          "name": "Joseph Madigan",
-          "start": 1,
-          "finish": 2,
-          "gain": -1,
-          "lapsLed": 22,
-          "incidents": 11,
-          "carNumber": "76",
-          "status": ""
-        },
-        {
-          "id": "donny-beach",
-          "name": "Donny Beach",
-          "start": 10,
-          "finish": 3,
-          "gain": 7,
-          "lapsLed": 2,
-          "incidents": 6,
-          "carNumber": "11",
-          "status": ""
-        },
-        {
-          "id": "ricky-miles",
-          "name": "Ricky Miles",
-          "start": 18,
-          "finish": 4,
-          "gain": 14,
-          "lapsLed": 0,
-          "incidents": 6,
-          "carNumber": "15",
-          "status": ""
-        },
-        {
-          "id": "tommy-rogers",
-          "name": "Tommy Rogers",
-          "start": 9,
-          "finish": 5,
-          "gain": 4,
-          "lapsLed": 1,
-          "incidents": 3,
-          "carNumber": "34",
-          "status": ""
-        },
-        {
-          "id": "jt-huskins",
-          "name": "Jt Huskins",
-          "start": 13,
-          "finish": 6,
-          "gain": 7,
-          "lapsLed": 1,
-          "incidents": 12,
-          "carNumber": "45",
-          "status": ""
-        },
-        {
-          "id": "steven-harris",
-          "name": "Steven Harris10",
-          "start": 21,
-          "finish": 7,
-          "gain": 14,
-          "lapsLed": 0,
-          "incidents": 10,
-          "carNumber": "1",
-          "status": ""
-        },
-        {
-          "id": "jim-segredo",
-          "name": "Jim Segredo",
-          "start": 11,
-          "finish": 8,
-          "gain": 3,
-          "lapsLed": 0,
-          "incidents": 13,
-          "carNumber": "21",
-          "status": ""
-        },
-        {
-          "id": "tom-lester",
-          "name": "Tom Lester",
-          "start": 25,
-          "finish": 9,
-          "gain": 16,
-          "lapsLed": 0,
-          "incidents": 4,
-          "carNumber": "37",
-          "status": ""
-        },
-        {
-          "id": "josh-mckinney",
-          "name": "Joshua McKinney2",
-          "start": 22,
-          "finish": 10,
-          "gain": 12,
-          "lapsLed": 0,
-          "incidents": 24,
-          "carNumber": "3",
-          "status": ""
-        }
-      ],
-      "results": [
-        {
-          "id": "hunter-welborn",
-          "name": "Hunter Welborn",
-          "start": 5,
-          "finish": 1,
-          "gain": 4,
-          "lapsLed": 10,
-          "incidents": 8,
-          "carNumber": "66",
-          "status": ""
-        },
-        {
-          "id": "joseph-madigan",
-          "name": "Joseph Madigan",
-          "start": 1,
-          "finish": 2,
-          "gain": -1,
-          "lapsLed": 22,
-          "incidents": 11,
-          "carNumber": "76",
-          "status": ""
-        },
-        {
-          "id": "donny-beach",
-          "name": "Donny Beach",
-          "start": 10,
-          "finish": 3,
-          "gain": 7,
-          "lapsLed": 2,
-          "incidents": 6,
-          "carNumber": "11",
-          "status": ""
-        },
-        {
-          "id": "ricky-miles",
-          "name": "Ricky Miles",
-          "start": 18,
-          "finish": 4,
-          "gain": 14,
-          "lapsLed": 0,
-          "incidents": 6,
-          "carNumber": "15",
-          "status": ""
-        },
-        {
-          "id": "tommy-rogers",
-          "name": "Tommy Rogers",
-          "start": 9,
-          "finish": 5,
-          "gain": 4,
-          "lapsLed": 1,
-          "incidents": 3,
-          "carNumber": "34",
-          "status": ""
-        },
-        {
-          "id": "jt-huskins",
-          "name": "Jt Huskins",
-          "start": 13,
-          "finish": 6,
-          "gain": 7,
-          "lapsLed": 1,
-          "incidents": 12,
-          "carNumber": "45",
-          "status": ""
-        },
-        {
-          "id": "steven-harris",
-          "name": "Steven Harris10",
-          "start": 21,
-          "finish": 7,
-          "gain": 14,
-          "lapsLed": 0,
-          "incidents": 10,
-          "carNumber": "1",
-          "status": ""
-        },
-        {
-          "id": "jim-segredo",
-          "name": "Jim Segredo",
-          "start": 11,
-          "finish": 8,
-          "gain": 3,
-          "lapsLed": 0,
-          "incidents": 13,
-          "carNumber": "21",
-          "status": ""
-        },
-        {
-          "id": "tom-lester",
-          "name": "Tom Lester",
-          "start": 25,
-          "finish": 9,
-          "gain": 16,
-          "lapsLed": 0,
-          "incidents": 4,
-          "carNumber": "37",
-          "status": ""
-        },
-        {
-          "id": "josh-mckinney",
-          "name": "Joshua McKinney2",
-          "start": 22,
-          "finish": 10,
-          "gain": 12,
-          "lapsLed": 0,
-          "incidents": 24,
-          "carNumber": "3",
-          "status": ""
-        },
-        {
-          "id": "ryan-wilson",
-          "name": "Ryan Wilson21",
-          "start": 17,
-          "finish": 11,
-          "gain": 6,
-          "lapsLed": 0,
-          "incidents": 23,
-          "carNumber": "23",
-          "status": ""
-        },
-        {
-          "id": "patrick-craven",
-          "name": "Patrick Craven",
-          "start": 12,
-          "finish": 12,
-          "gain": 0,
-          "lapsLed": 0,
-          "incidents": 13,
-          "carNumber": "3",
-          "status": ""
-        },
-        {
-          "id": "danny-mann",
-          "name": "Danny Mann",
-          "start": 8,
-          "finish": 13,
-          "gain": -5,
-          "lapsLed": 0,
-          "incidents": 12,
-          "carNumber": "25",
-          "status": ""
-        },
-        {
-          "id": "trevor-haley",
-          "name": "Trevor Haley",
-          "start": 2,
-          "finish": 14,
-          "gain": -12,
-          "lapsLed": 18,
-          "incidents": 10,
-          "carNumber": "12",
-          "status": ""
-        },
-        {
-          "id": "bill-daniels",
-          "name": "Bill Daniels",
-          "start": 7,
-          "finish": 15,
-          "gain": -8,
-          "lapsLed": 45,
-          "incidents": 0,
-          "carNumber": "91",
-          "status": ""
-        },
-        {
-          "id": "ty-fredrickson",
-          "name": "Ty Fredrickson",
-          "start": 4,
-          "finish": 16,
-          "gain": -12,
-          "lapsLed": 0,
-          "incidents": 18,
-          "carNumber": "36",
-          "status": ""
-        },
-        {
-          "id": "brian-hebbard",
-          "name": "Brian Hebbard2",
-          "start": 27,
-          "finish": 17,
-          "gain": 10,
-          "lapsLed": 0,
-          "incidents": 16,
-          "carNumber": "87",
-          "status": ""
-        },
-        {
-          "id": "eric-hayden",
-          "name": "Eric Hayden",
-          "start": 19,
-          "finish": 18,
-          "gain": 1,
-          "lapsLed": 0,
-          "incidents": 22,
-          "carNumber": "100",
-          "status": ""
-        },
-        {
-          "id": "matthew-mayes",
-          "name": "Matthew Mayes2",
-          "start": 3,
-          "finish": 19,
-          "gain": -16,
-          "lapsLed": 0,
-          "incidents": 12,
-          "carNumber": "4",
-          "status": ""
-        },
-        {
-          "id": "shawn-stamper",
-          "name": "Shawn Stamper",
-          "start": 20,
-          "finish": 20,
-          "gain": 0,
-          "lapsLed": 0,
-          "incidents": 6,
-          "carNumber": "9",
-          "status": ""
-        },
-        {
-          "id": "bradley-gratton",
-          "name": "Bradley Gratton",
-          "start": 26,
-          "finish": 21,
-          "gain": 5,
-          "lapsLed": 0,
-          "incidents": 14,
-          "carNumber": "9",
-          "status": ""
-        },
-        {
-          "id": "dylan-j-robinson",
-          "name": "Dylan J Robinson",
-          "start": 6,
-          "finish": 22,
-          "gain": -16,
-          "lapsLed": 0,
-          "incidents": 3,
-          "carNumber": "10",
-          "status": ""
-        },
-        {
-          "id": "mack-vandale",
-          "name": "Mack Vandale",
-          "start": 29,
-          "finish": 23,
-          "gain": 6,
-          "lapsLed": 0,
-          "incidents": 9,
-          "carNumber": "54",
-          "status": ""
-        },
-        {
-          "id": "david-motes",
-          "name": "David Motes",
-          "start": 14,
-          "finish": 24,
-          "gain": -10,
-          "lapsLed": 1,
-          "incidents": 14,
-          "carNumber": "39",
-          "status": ""
-        },
-        {
-          "id": "stacy-mathewson",
-          "name": "Stacy Mathewson",
-          "start": 32,
-          "finish": 25,
-          "gain": 7,
-          "lapsLed": 0,
-          "incidents": 8,
-          "carNumber": "26",
-          "status": ""
-        },
-        {
-          "id": "william-george",
-          "name": "William George8",
-          "start": 31,
-          "finish": 26,
-          "gain": 5,
-          "lapsLed": 0,
-          "incidents": 12,
-          "carNumber": "777",
-          "status": ""
-        },
-        {
-          "id": "danny-jierian",
-          "name": "Danny Jierian",
-          "start": 15,
-          "finish": 27,
-          "gain": -12,
-          "lapsLed": 0,
-          "incidents": 4,
-          "carNumber": "28",
-          "status": ""
-        },
-        {
-          "id": "billy-vest",
-          "name": "Billy Vest",
-          "start": 16,
-          "finish": 28,
-          "gain": -12,
-          "lapsLed": 0,
-          "incidents": 6,
-          "carNumber": "38",
-          "status": ""
-        },
-        {
-          "id": "ryan-bowers",
-          "name": "Ryan Bowers",
-          "start": 23,
-          "finish": 29,
-          "gain": -6,
-          "lapsLed": 0,
-          "incidents": 6,
-          "carNumber": "32",
-          "status": ""
-        },
-        {
-          "id": "ash-nettle",
-          "name": "Ash Nettle",
-          "start": 28,
-          "finish": 30,
-          "gain": -2,
-          "lapsLed": 0,
-          "incidents": 4,
-          "carNumber": "18",
-          "status": ""
-        },
-        {
-          "id": "logan-banks",
-          "name": "Logan Banks",
-          "start": 30,
-          "finish": 31,
-          "gain": -1,
-          "lapsLed": 0,
-          "incidents": 4,
-          "carNumber": "14",
-          "status": ""
-        },
-        {
-          "id": "derek-jacobs",
-          "name": "Derek Jacobs",
-          "start": 24,
-          "finish": 32,
-          "gain": -8,
-          "lapsLed": 0,
-          "incidents": 0,
-          "carNumber": "27",
-          "status": ""
-        },
-        {
-          "id": "ryan-j-rose",
-          "name": "Ryan J Rose",
-          "start": 33,
-          "finish": 33,
-          "gain": 0,
-          "lapsLed": 0,
-          "incidents": 0,
-          "carNumber": "85",
-          "status": ""
-        },
-        {
-          "id": "kyle-dean",
-          "name": "Kyle Dean9",
-          "start": 34,
-          "finish": 34,
-          "gain": 0,
-          "lapsLed": 0,
-          "incidents": 0,
-          "carNumber": "29",
-          "status": ""
-        },
-        {
-          "id": "cameron-williams",
-          "name": "Cameron Williams12",
-          "start": 35,
-          "finish": 35,
-          "gain": 0,
-          "lapsLed": 0,
-          "incidents": 0,
-          "carNumber": "24",
-          "status": ""
-        },
-        {
-          "id": "daniel-harsey",
-          "name": "Daniel Harsey",
-          "start": 36,
-          "finish": 36,
-          "gain": 0,
-          "lapsLed": 0,
-          "incidents": 0,
-          "carNumber": "5",
-          "status": ""
-        },
-        {
-          "id": "zane-howe",
-          "name": "Zane Howe",
-          "start": 37,
-          "finish": 37,
-          "gain": 0,
-          "lapsLed": 0,
-          "incidents": 0,
-          "carNumber": "8",
-          "status": ""
-        },
-        {
-          "id": "chad-waller",
-          "name": "Chad Waller2",
-          "start": 38,
-          "finish": 38,
-          "gain": 0,
-          "lapsLed": 0,
-          "incidents": 0,
-          "carNumber": "17",
-          "status": ""
-        },
-        {
-          "id": "justin-dues",
-          "name": "Justin Dues",
-          "start": 39,
-          "finish": 39,
-          "gain": 0,
-          "lapsLed": 0,
-          "incidents": 0,
-          "carNumber": "16",
-          "status": ""
-        },
-        {
-          "id": "daniel-demir",
-          "name": "Daniel Demir",
-          "start": 40,
-          "finish": 40,
-          "gain": 0,
-          "lapsLed": 0,
-          "incidents": 0,
-          "carNumber": "30",
-          "status": ""
-        }
-      ],
-      "biggestGainers": [],
-      "dataNotes": [
-        "Hosted latest-race report uses the existing Hosted API. Historical Hosted sessions remain in the original Hosted page."
       ]
     },
     {
